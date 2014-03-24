@@ -1,7 +1,7 @@
 Title: Code Review
 Date: 2014-03-21 16:33
 Category: Others
-Tags: Book Code
+Tags: Book,Code
 Slug: Code Review
 Author: Chien Gu
 Summary: 最近花了一个星期的时间，终于把 Code 看完了，感慨颇深。
