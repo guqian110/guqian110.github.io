@@ -4,10 +4,12 @@ Category: Others
 Tags: Linux,Vim
 Slug: learning Vim (1) —— Survival
 Author: Chien Gu
-Summary: 这个系列的博客是我学习 Vim 过程中的记录和总结，希望可以帮助到和我一样的菜鸟～
-第一篇：入门/存活 Survival
+Summary: 这个系列的博客是我学习 Vim 过程中的记录和总结，希望可以帮助到和我一样的菜鸟～ 第一篇：入门/存活 Survival
 
 这个系列的博客是我学习 Vim 过程中的记录和总结，希望可以帮助到和我一样的菜鸟～
+
+第一篇：入门/存活 Survival
+
 * * *
 <br>
 <nr>
@@ -172,7 +174,7 @@ vim 现在是 [GNU General Public （GPL）][GPL]下的自由软件，几乎在�
 
 + 我写的代码基本只限定在底层开发，主要代码是 C/C++、Shell脚本、Python脚本，不会涉及到 JAVA，更不会涉及前端开发；而且都是我的 ”玩具小程序“，几乎不涉及好几百个源文件的项目，所以我不需要 IDE 的强大的管理能力，写一个 makefile 就 OK 了。
 
-+ 学习过 CPU 知识的人都知道，频繁打断流水线才是最影响效率的东西。在调试代码的时候，显然纯键盘流要比不停的 ”鼠标 -> 键盘 -> 鼠标 -> ...“ 有效率的多，而且省事。http://www.zhihu.com/question/22096642/answer/20290505
++ 学习过 CPU 知识的人都知道，频繁打断流水线才是最影响效率的东西。在调试代码的时候，显然纯键盘流要比不停的 ”鼠标 -> 键盘 -> 鼠标 -> ...“ 有效率的多，而且省事。[](http://www.zhihu.com/question/22096642/answer/20290505)
 
 + 崇尚 Geek 文化，喜欢 ”折腾“，Linux 哲学教导我要学习轻量级的 Vim，而不是笨重的 IDE 。
 

@@ -1,6 +1,6 @@
 Title: Learning Vim (1) —— Survival
 Date: 2014-03-25 21:23
-Category: Others
+Category: Linux
 Tags: Linux,Vim
 Slug: learning Vim (1) —— Survival
 Author: Chien Gu
