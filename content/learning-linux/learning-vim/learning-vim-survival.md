@@ -56,7 +56,7 @@ ex 仍然只显示一行而非一屏的内容。后来，Chuck Haley 退出了�
 
 Joy 使用的是 Lear Siegler ADM3A 终端，如下图所示
 
-![Alt text](images/Terminal_ADM3A.png)
+![Alt text](/home/chien/myblog/images/Terminal_ADM3A.png)
 
 在这个终端上，`ESC` 键的位置是现在 [IBM PC keyboard][IBM_PC_keyboard] 键盘的 `Tab` 键的位置，所以，选择 `ESC` 作为模式切换键是很方便的设计 。同时，`h`、`j`、`k` 和 `l` 键也起方向键的作用，所以，vi 也采用相同的设计 。Joy 解释说，因为他开发软件时使用的 Modem 的速率只有 300 波特，显示器上的刷新速度还没有他的思考速度快，所以他设计了单字符这样的简洁风格的命令。
 
