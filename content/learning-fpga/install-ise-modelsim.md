@@ -68,6 +68,7 @@ Xilinx 官方网站上有[下载链接][ise-download]，但是在校园网内下
 ![ise](/images/install-ise-modelsim/ise_start.png)
 
 P.S.
+
 1. 选择安装版本时，选择 `System Edition`，因为这个版本功能最全
 
 2. 选择安装组件时，不要勾选 `Install Cable Drivers`，我们自己编译安装另外一个驱动（因为此驱动只能在 Linux 内核 < 2.6的版本中使用，所以即使勾选了最后安装完成时会提示 *Driver installation failed*）
