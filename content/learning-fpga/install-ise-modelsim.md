@@ -12,8 +12,9 @@ Summary: 从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也�
 
 Ubuntu 13.10 Desktop amd64 
 
-ISE 14.7
+ISE 14.7 for Linux
 
+ModelSim 6.5b for Linux
 ##Download
 * * *
 
@@ -26,7 +27,7 @@ Xilinx 官方网站上有[下载链接][ise-download]，但是在校园网内下
 
 网上的教程（2011 年前）都说是 [ModelSim 官方网站][modelsim] 上提供 ftp 下载链接，但是好像现在官网上不再提供下载链接了，我只找到 ModelSim PE Student Edition，而且还是 Windows 平台的...
 
-花费了一下午的时间，不停地在各个论坛注册下载附件，终于把 ModelSim_6.5b for linux 下载下来了,结果安装时提示找不到 `libxp.so.6` 库，于是 `apt-get` 到一些 `libxp` 的库，安装后仍然提示找不到，无奈放弃了，准备老老实实用 `ism` 了（以后有时间了再慢慢折腾 T_T）
+花费了一下午的时间，不停地在各个论坛注册下载附件，终于把 ModelSim_6.5b for Linux 下载下来了,结果安装时提示找不到 `libxp.so.6` 库，于是 `apt-get` 到一些 `libxp` 的库，安装后仍然提示找不到，无奈放弃了，准备老老实实用 `ism` 了（以后有时间了再慢慢折腾 T_T）
 
 [ise-download]: https://secure.xilinx.com/webreg/register.do?group=dlc&htmlfile=&emailFile=&cancellink=&eFrom=&eSubject=&version=14.7&akdm=1&filename=Xilinx_ISE_DS_Lin_14.7_1015_1.tar
 [modelsim]: http://www.mentor.com/products/fpga/model
@@ -64,7 +65,7 @@ Xilinx 官方网站上有[下载链接][ise-download]，但是在校园网内下
 
 熟悉的图形界面出来了：
 
-![ise](/images/install-ise-modelsim/ise_start.png,"ISE start")
+![ise](/images/install-ise-modelsim/ise_start.png)
 
 P.S.
 1. 选择安装版本时，选择 `System Edition`，因为这个版本功能最全
@@ -117,7 +118,7 @@ P.S.
     
 这时候，写个小测试的程序，`Systhesize` -> `Implement` -> `Generate Programming File`，打开 `iMPACT`, 如图所示，可以看到已经识别出 JTAG 链上的芯片
 
-![jtag](/images/install-ise-modelsim/jtag.png,"JTAG Chain")
+![jtag](/images/install-ise-modelsim/jtag.png)
 
 ### ModelSim
 
