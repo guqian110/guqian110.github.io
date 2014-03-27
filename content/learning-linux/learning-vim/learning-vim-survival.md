@@ -1,8 +1,8 @@
-Title: Learning Vim (1) —— Survival
+Title: Learning Vim 1 -- Survival
 Date: 2014-03-25 21:23
 Category: Linux
 Tags: Linux,Vim
-Slug: learning Vim (1) —— Survival
+Slug: learning Vim 1 -- Survival
 Author: Chien Gu
 Summary: 这个系列的博客是我学习 Vim 过程中的记录和总结，希望可以帮助到和我一样的菜鸟～ 第一篇：入门/存活 Survival
 
@@ -56,7 +56,7 @@ ex 仍然只显示一行而非一屏的内容。后来，Chuck Haley 退出了�
 
 Joy 使用的是 Lear Siegler ADM3A 终端，如下图所示
 
-![Alt text](/images/Terminal_ADM3A.png)
+![Terminal_ADM3A](/images/learning-vim-survival/Terminal_ADM3A.png,"Terminal ADM3A")
 
 在这个终端上，`ESC` 键的位置是现在 [IBM PC keyboard][IBM_PC_keyboard] 键盘的 `Tab` 键的位置，所以，选择 `ESC` 作为模式切换键是很方便的设计 。同时，`h`、`j`、`k` 和 `l` 键也起方向键的作用，所以，vi 也采用相同的设计 。Joy 解释说，因为他开发软件时使用的 Modem 的速率只有 300 波特，显示器上的刷新速度还没有他的思考速度快，所以他设计了单字符这样的简洁风格的命令。
 
@@ -234,7 +234,7 @@ UNIX 用户中流行一个游戏，考验一个 Emacs 用户对这个编辑器�
 
 闲扯了这么多，终于开始学习 vim 了...
 
-结合我的痛苦的学习过程，至今还在痛苦ing，我觉得一下的学习顺序比较适合我这样的新手：
+结合我的痛苦的学习过程，至今还在痛苦ing，我觉得以下的学习顺序比较适合我这样的新手：
 
 **入门：**
 

@@ -1,5 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-03-25T21:23:00+08:00</updated><entry><title>Learning Vim (1) —— Survival</title><link href="http://guqian110.github.io/pages/2014/03/25/learning%20Vim%20(1)%20%E2%80%94%E2%80%94%20Survival.html" rel="alternate"></link><updated>2014-03-25T21:23:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-03-25:pages/2014/03/25/learning Vim (1) —— Survival.html</id><summary type="html">&lt;p&gt;这个系列的博客是我学习 Vim 过程中的记录和总结，希望可以帮助到和我一样的菜鸟～&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-03-27T20:52:00+08:00</updated><entry><title>Install ISE &amp; ModelSim</title><link href="http://guqian110.github.io/pages/2014/03/27/Install%20ISE%20&amp;%20ModelSim.html" rel="alternate"></link><updated>2014-03-27T20:52:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-03-27:pages/2014/03/27/Install ISE &amp; ModelSim.html</id><summary type="html">&lt;p&gt;从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;软件版本：&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Ubuntu 13.10 Desktop amd64 &lt;/p&gt;
+&lt;p&gt;ISE 14.7&lt;/p&gt;
+&lt;h2&gt;Download&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;ISE Design Suit for Linux&lt;/h3&gt;
+&lt;p&gt;Xilinx 官方网站上有&lt;a href="https://secure.xilinx.com/webreg/register.do?group=dlc&amp;amp;htmlfile=&amp;amp;emailFile=&amp;amp;cancellink=&amp;amp;eFrom=&amp;amp;eSubject=&amp;amp;version=14.7&amp;amp;akdm=1&amp;amp;filename=Xilinx_ISE_DS_Lin_14.7_1015_1.tar"&gt;下载链接&lt;/a&gt;，但是在校园网内下载速度实在是蛋疼，还好有校内 bt 资源。&lt;/p&gt;
+&lt;p&gt;我下载下来的 ISE 版本为 &lt;strong&gt;14.7&lt;/strong&gt;，tar 包大小为 6.5 G 。&lt;/p&gt;
+&lt;h3&gt;ModelSim for Linux&lt;/h3&gt;
+&lt;p&gt;网上的教程（2011 年前）都说是 &lt;a href="http://www.mentor.com/products/fpga/model"&gt;ModelSim 官方网站&lt;/a&gt; 上提供 ftp 下载链接，但是好像现在官网上不再提供下载链接了，我只找到 ModelSim PE Student Edition，而且还是 Windows 平台的...&lt;/p&gt;
+&lt;p&gt;花费了一下午的时间，不停地在各个论坛注册下载附件，终于把 ModelSim_6.5b for linux 下载下来了,结果安装时提示找不到 &lt;code&gt;libxp.so.6&lt;/code&gt; 库，于是 &lt;code&gt;apt-get&lt;/code&gt; 到一些 &lt;code&gt;libxp&lt;/code&gt; 的库，安装后仍然提示找不到，无奈放弃了，准备老老实实用 &lt;code&gt;ism&lt;/code&gt; 了（以后有时间了再慢慢折腾 T_T）&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;ISE DS 14.7&lt;/h3&gt;
+&lt;p&gt;首先解压&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xvf&lt;/span&gt; &lt;span class="n"&gt;Xilinx_ISE_DS_Lin_14&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="n"&gt;_1015_1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;接着进入解压出来的目录并给安装文件赋予执行的权限&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;Xilinx_ISE_DS_Lin_14&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="n"&gt;_1015_1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;xsetup&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后执行 xsetup&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xsetup&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后熟悉的图形界面就出来，和 Windows 下一样，同意安装许可协议，不停地下一步就可以安装成功。&lt;/p&gt;
+&lt;p&gt;安装完成以后，运行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Xilinx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;14.7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISE_DS&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="n"&gt;settings64&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;此时，已经可以从终端运行 ISE 了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;nohup&lt;/span&gt; &lt;span class="n"&gt;ise&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;熟悉的图形界面出来了：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="ise" src="/images/install-ise-modelsim/ise_start.png,&amp;quot;ISE" title="start&amp;quot;" /&gt;&lt;/p&gt;
+&lt;p&gt;P.S.
+1. 选择安装版本时，选择 &lt;code&gt;System Edition&lt;/code&gt;，因为这个版本功能最全&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;选择安装组件时，不要勾选 &lt;code&gt;Install Cable Drivers&lt;/code&gt;，我们自己编译安装另外一个驱动（因为此驱动只能在 Linux 内核 &amp;lt; 2.6的版本中使用，所以即使勾选了最后安装完成时会提示 &lt;em&gt;Driver installation failed&lt;/em&gt;）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Crack&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;又到了该和谐的地方了 =.=&lt;/p&gt;
+&lt;p&gt;第一次打开 ISE 时，会自动弹出 License Management Tools 提示我们添加 License 。网上有一大堆破解包，我使用以前在 Windows 中生成的 Lincese，直接就可以使用了～&lt;/p&gt;
+&lt;p&gt;再次声明：仅供技术交流，请支持正版软件&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;installing Cable Drivers&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;正如前面所说，因为 ISE 自带的驱动程序依赖于一个叫 windrvr 的文件。 而该文件目前只有 Linux 内核 2.4 的二进制版本，因此遇到高于 2.4 内核的 Linux发布版，如我使用的Ubuntu 13.10（Linux version 3.11.0-12-generic ） 就不工作了。&lt;/p&gt;
+&lt;p&gt;好在一个叫 Michael Gernoth 的德国人，大公无私地写了一个 windrvr 的替代版本，并且开放源码，这样，无论碰到什么版本的内核，现场编译一个驱动并安装， 就能解决 Linux 内核版本匹配的问题。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://rmdir.de/~michael/xilinx/"&gt;XILINX JTAG tools on Linux without proprietary kernel modules&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;所以按照说明&lt;/p&gt;
+&lt;p&gt;首先安装 usb 驱动开发包，在 64 位系统下&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;libusb&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;libc6&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i386&lt;/span&gt; &lt;span class="n"&gt;fxload&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;接着下载驱动程序的源代码&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Xilinx&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//git.zerfleddert.de/usb-driver&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后编译驱动程序&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;usb&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;下载下来的源代码中有个脚本可以设置好一切，我们只需要运行脚本就 ok&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;setup_pcusb&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Xilinx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;14.7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISE_DS&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISE&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;把 Xilinx 路径添加到系统 PATH 中&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bashrc&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;export PATH&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bashrc&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这时候，写个小测试的程序，&lt;code&gt;Systhesize&lt;/code&gt; -&amp;gt; &lt;code&gt;Implement&lt;/code&gt; -&amp;gt; &lt;code&gt;Generate Programming File&lt;/code&gt;，打开 &lt;code&gt;iMPACT&lt;/code&gt;, 如图所示，可以看到已经识别出 JTAG 链上的芯片&lt;/p&gt;
+&lt;p&gt;&lt;img alt="jtag" src="/images/install-ise-modelsim/jtag.png,&amp;quot;JTAG" title="Chain&amp;quot;" /&gt;&lt;/p&gt;
+&lt;h3&gt;ModelSim&lt;/h3&gt;
+&lt;p&gt;待续...&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Configure ISE &amp;amp; ModelSim&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;ISE&lt;/h3&gt;
+&lt;p&gt;其实也没有特殊配置的地方，主要是自定义代码编辑器，目前我的主要使用的是 &lt;code&gt;sublime text 2&lt;/code&gt;，正在向 &lt;code&gt;vim&lt;/code&gt; 过度ing&lt;/p&gt;
+&lt;p&gt;具体步骤 Edit -&amp;gt; Preferences -&amp;gt; Editors，选择 &lt;code&gt;custom&lt;/code&gt;，在右侧的 “Command line syntax” 中写自定义编辑器的执行路径&lt;/p&gt;
+&lt;p&gt;配置自定义编辑器为 vim&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;gnome&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;maximize&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;vim&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;ModelSim&lt;/h3&gt;
+&lt;p&gt;ModelSim 编译 Xilinx库，ISE 关联 ModelSim&lt;/p&gt;
+&lt;p&gt;待续...&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://rmdir.de/~michael/xilinx/"&gt;XILINX JTAG tools on Linux without proprietary kernel modules&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.george-smart.co.uk/wiki/Xilinx_JTAG_Linux"&gt;Xilinx JTAG Linux&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.csdn.net/yunz1994/article/details/12350071"&gt;【Linux软件安装】Ubuntu12.04: Xilinx ISE 14.6&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="Linux"></category></entry><entry><title>Learning Vim 1 -- Survival</title><link href="http://guqian110.github.io/pages/2014/03/25/learning%20Vim%201%20--%20Survival.html" rel="alternate"></link><updated>2014-03-25T21:23:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-03-25:pages/2014/03/25/learning Vim 1 -- Survival.html</id><summary type="html">&lt;p&gt;这个系列的博客是我学习 Vim 过程中的记录和总结，希望可以帮助到和我一样的菜鸟～&lt;/p&gt;
 &lt;p&gt;第一篇：入门/存活 Survival&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;br&gt;
@@ -33,7 +144,7 @@
 &lt;/blockquote&gt;
 &lt;p&gt;至于为什么 vi 要设计成这么不友好，其实是有历史原因的：&lt;/p&gt;
 &lt;p&gt;Joy 使用的是 Lear Siegler ADM3A 终端，如下图所示&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Alt text" src="/images/Terminal_ADM3A.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Terminal_ADM3A" src="/images/learning-vim-survival/Terminal_ADM3A.png,&amp;quot;Terminal" title="ADM3A&amp;quot;" /&gt;&lt;/p&gt;
 &lt;p&gt;在这个终端上，&lt;code&gt;ESC&lt;/code&gt; 键的位置是现在 &lt;a href="http://en.wikipedia.org/wiki/IBM_PC_keyboard"&gt;IBM PC keyboard&lt;/a&gt; 键盘的 &lt;code&gt;Tab&lt;/code&gt; 键的位置，所以，选择 &lt;code&gt;ESC&lt;/code&gt; 作为模式切换键是很方便的设计 。同时，&lt;code&gt;h&lt;/code&gt;、&lt;code&gt;j&lt;/code&gt;、&lt;code&gt;k&lt;/code&gt; 和 &lt;code&gt;l&lt;/code&gt; 键也起方向键的作用，所以，vi 也采用相同的设计 。Joy 解释说，因为他开发软件时使用的 Modem 的速率只有 300 波特，显示器上的刷新速度还没有他的思考速度快，所以他设计了单字符这样的简洁风格的命令。&lt;/p&gt;
 &lt;p&gt;1978 年 3 月，Joy 负责的 BSD Unix 发布了，系统自带了 ex 1.1，这为他的编辑器在 UC Berkeley 积攒了大量人气。从那时起，Unix 系统自带的编辑器只有 ed 和 ex 。在 1984 年的一次采访中，Joy 把 vi 的成功归功于免费，当时的其他编辑器，比如 Emacs 要花费数百美金 。&lt;/p&gt;
 &lt;p&gt;观察显示基本上，所有的 ex 用户都是在 visual mode 下工作，所以在 ex 2.0（作为 1979 年 5 月的 BSD Unix 的一部分）中，Joy 把 vi 作为 ex 的硬链接，这样用户一打开 ex，就默认进入 visual mode ，所以说，vi 并不是 ex 的进化，vi 就是 ex 。&lt;/p&gt;
@@ -141,7 +252,7 @@ It's like one of those pinatas—things that have candy inside but has layer aft
 &lt;h2&gt;Getting start&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;闲扯了这么多，终于开始学习 vim 了...&lt;/p&gt;
-&lt;p&gt;结合我的痛苦的学习过程，至今还在痛苦ing，我觉得一下的学习顺序比较适合我这样的新手：&lt;/p&gt;
+&lt;p&gt;结合我的痛苦的学习过程，至今还在痛苦ing，我觉得以下的学习顺序比较适合我这样的新手：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;入门：&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
