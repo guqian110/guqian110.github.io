@@ -1,7 +1,7 @@
 Title: Built-in Types
 Date: 2014-03-31 13:37
-Category: C++
-Tags: C++
+Category: C/C++
+Tags: C/C++
 Slug: Built-in Types
 Author: Chien Gu
 Summary: 重读经典 C++ Primer，总结 C++ 内置数据类型。
@@ -79,6 +79,8 @@ signed/unsigned 可以描述的类型有 int 和 char 两种，在 C 的标准�
 运行结果：
 
 ![char](/images/built-in-types/char.png)
+
+结果说明，gcc 把 char 默认为 signed char 处理。
 
 布尔类型表示 `true` 和 `false` 。可以将任何算术类型的值赋给 `bool` 对象，`0` 表示 `false` ，任何非 `0` 值都表示 `true` 。
 
