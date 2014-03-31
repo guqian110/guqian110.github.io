@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Built-in Types - Coding Life</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="http://guqian110.github.io/theme/images/favicon.png" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                <meta property="og:site_name" content="Coding Life" />
+                    <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Built-in Types"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2014/03/31/Built-in Types.html"/>
+            <meta property="og:description" content="重读经典 C++ Primer，总结 C++ 内置数据类型。"/>
+            <meta property="article:published_time" content="2014-03-31" />
+                        <meta property="article:section" content="C++" />
+                                    <meta property="article:tag" content="C++" />
+                        
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+        <link href="http://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://guqian110.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
+            <link rel="stylesheet" href="http://guqian110.github.io/theme/css/style.css" type="text/css"/>
+    
+            <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Coding Life ATOM Feed"/>
+        
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://guqian110.github.io/" class="navbar-brand">
+                <img src="http://guqian110.github.io/theme/images/favicon.png" width=""/>                 Coding Life            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                                                                                <li class="active">
+                            <a href="http://guqian110.github.io/category/c.html">C++</a>
+                        </li>
+                                            <li >
+                            <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
+                        </li>
+                                            <li >
+                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                                            <li >
+                            <a href="http://guqian110.github.io/category/others.html">Others</a>
+                        </li>
+                                                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://guqian110.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                                        <ol class="breadcrumb">
+                <li><a href="http://guqian110.github.io" title="Coding Life"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="http://guqian110.github.io/category/c.html" title="C++">C++</a></li>
+                <li class="active">Built-in Types</li>
+            </ol>
+            
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://guqian110.github.io/pages/2014/03/31/Built-in Types.html"
+                       rel="bookmark"
+                       title="Permalink to Built-in Types">
+                        Built-in Types
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-03-31T13:37:00"> Mon 31 March 2014</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="http://guqian110.github.io/tag/c.html">C++</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>类型是程序设计的基础。一些程序设计语言，比如 Smalltalk 和 Python，在运行的时候才检查预计中的对象的类型，想反，C++ 是静态类型（statically typed）语言，在编译时执行类型检查。导致的结果是：</p>
+<p><em>变量和函数在使用前必须先声明</em> 。</p>
+<p>每种类型都定义了其存储空间要求和可以在该类型的所有对象上执行的操作。C++ 是 在 C 的基础上扩充得到的，为了和 C 兼容， C++ 在必要时必须能够直接处理硬件，所以 C++ 提供的一组基本内置类型，如int、char等，这些类型与它们在机器硬件上的标示方式紧密相关。（所以，C++ 可以称为 “具有高级语言库的低级语言”）</p>
+<p>本文只限于总结 C++ 的内置类型（Built-in Types），不讨论自定义类型 。</p>
+<p><br></p>
+<h2>Primitive Built-in Types</h2>
+<hr />
+<h3>Arithmetic Types</h3>
+<p>C++ 语言自身定义了一组基本类型来表示不同的数据，如整数、浮点数、字母、bool 类型等，这些类型统称为 <em>算术类型（Arithmetic type）</em> 。</p>
+<p><strong>size</strong></p>
+<p>算术类型的存储空间依机器而定，即用多少二进制位 bit 来表示一个数 。C++ 标准规定了每个算术类型的最小存储空间，但它并不阻止编译器使用更大的存储空间 。事实上，对于 <code>int</code> 类型，几乎所有的编译器使用的存储空间都比所要求的大 。</p>
+<p>使用 <code>sizeof()</code> 操作符可以查询对象或类型的大小（以字节为单位），包含头文件</p>
+<div class="highlight"><pre><span class="c">#include &lt;limits&gt;</span>
+</pre></div>
+
+
+<p>就可以使用 STL 库中的 <code>numeric_limits&lt;T&gt;::max</code> 和 <code>numeric_limits&lt;T&gt;::min</code> 查询各个内置内类类型的最大值和最小值。</p>
+<p>下面是 Ubuntu amd64 版本上的结果：</p>
+<p><img alt="size" src="/images/built-in-types/size.png" /></p>
+<p>算术类型可以分为两类：表示整数的 <em>整型</em> 和表示浮点数的 <em>浮点型</em> 。</p>
+<p><strong>Integral Types</strong></p>
+<p>表示整数、字符、布尔值的算术类型合称为 整型（integral types）。</p>
+<p>整数的基本表示类型是 <code>int</code> 。int 类型前面可以加两类修饰说明，表示数据位数长短的 <code>short</code> 和 <code>long</code> ；表示有无符号的 <code>signed</code> 和 <code>unsigned</code> 。组合出来的结果就有 4 种：</p>
+<div class="highlight"><pre><span class="kt">signed</span> <span class="kt">short</span> <span class="kt">int</span>
+<span class="kt">unsigned</span> <span class="kt">short</span> <span class="kt">int</span>
+<span class="kt">signed</span> <span class="kt">long</span> <span class="kt">int</span>
+<span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">int</span>
+</pre></div>
+
+
+<p>每一种的数据长短和可以表示的范围都不相同。</p>
+<p>字符类型有两种：<code>char</code> 和 <code>wchar_t</code> 。char 用来表示 <em>基本字符集</em> 中的字符，wchar_t 用于 <em>扩展字符集</em> ，比如汉字和日语 。修饰 int 类型有无符号的 signed 和 unsigned 也可以修饰 char 类型 。</p>
+<p><a href="http://book.douban.com/subject/1767741/">C++ Primer</a> (chapter 2) 中写到：</p>
+<blockquote>
+<p>Unlike the other integral types, there are three distinct types for char: plain char, signed char, and unsigned char. Although there are three distinct types, there are only two ways a char can be represented. The char type is respresented using either the signed char or unsigned char version. Which representation is used for char varies by compiler.</p>
+</blockquote>
+<p>为什么会有这么奇怪的事呢？上网搜索了一下，按照自己的理解总结了一下：</p>
+<p>signed/unsigned 可以描述的类型有 int 和 char 两种，在 C 的标准里面规定：对于 int 类型，如果没有在类型前显式地声明，默认 int 是 signed 类型，而对于 char 类型，则是 <em>Implementation Defined</em> 。也就是说由编译器在编译的时候决定具体使用哪一种 。而为什么要作出这么奇怪的规定呢？是因为 char 类型本来就是用来表示字符而非数字的， ASCII 码字只使用 7 bit，所以使用 signed/unsigned 对其没有影响，但是如果使用 char 类型来表示一个 8 bit 的数字（有时候空间不够用时不得不这样做，比如嵌入式系统中），为了可移植性，必须写明 signed/unsigned 。所以，如果用来表示字符，则直接使用 char 就行，如果用来表示整数，则声明是signed/unsigned 。</p>
+<p><a href="http://book.51cto.com/art/200912/166574.htm">Linux C编程一站式学习：整型</a> 中进一步解释：</p>
+<blockquote>
+<p>编译器可以定义char型是无符号的，也可以定义char型是有符号的，在该编译器所对应的体系结构上哪种实现效率高就可以采用哪种，x86平台的gcc定义char型是有符号的。这也是C标准的Rationale之一： <em>优先考虑效率，而可移植性尚在其次。</em> 这就要求程序员非常清楚这些规则，如果你要写可移植的代码，就必须清楚哪些写法是不可移植的，应该避免使用。另一方面，写不可移植的代码有时候也是必要的，比如Linux内核代码使用了很多只有gcc支持的语法特性以得到最佳的执行效率，在写这些代码的时候就没打算用别的编译器编译，也就没考虑可移植性的问题。如果要写不可移植的代码，你也必须清楚代码中的哪些部分是不可移植的，以及为什么要这样写。如果不是为了效率，一般来说就没有理由故意编写不可移植的代码。</p>
+</blockquote>
+<p>网上有<a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx">博客</a>说：</p>
+<blockquote>
+<p>VC 编译器、x86 上的 GCC 都把 char 定义为 signed char，而 arm-linux-gcc 却把 char 定义为 unsigned char 。</p>
+</blockquote>
+<p>于是，编写一个测试小程序就可以知道我们使用的编译器是如何处理的。</p>
+<p>源代码：</p>
+<div class="highlight"><pre><span class="kt">char</span> <span class="n">ch1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;ch1 = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">ch1</span><span class="p">);</span>
+</pre></div>
+
+
+<p>运行结果：</p>
+<p><img alt="char" src="/images/built-in-types/char.png" /></p>
+<p>布尔类型表示 <code>true</code> 和 <code>false</code> 。可以将任何算术类型的值赋给 <code>bool</code> 对象，<code>0</code> 表示 <code>false</code> ，任何非 <code>0</code> 值都表示 <code>true</code> 。</p>
+<p><strong>Floating-Point Types</strong></p>
+<p>类型 <code>float</code> 表示 单精度浮点数</p>
+<p>类型 <code>double</code> 表示 双精度浮点数</p>
+<p>类型 <code>long double</code> 表示 扩展精度浮点数</p>
+<p>从前面的运行结果可以看出在我的电脑上 float 使用 1 个字（32 bit） 表示，double 使用 2 个字（64 bit） 表示，long double 使用 4 个字（128 bit） 表示 。</p>
+<p><a href="http://book.douban.com/subject/1767741/">C++ Primer</a> (chapter 2)：</p>
+<blockquote>
+<p>The float type is usually not precise enough for real programsfloat is guaranteed to offer only 6 significant digits. The double type guarantees at least 10 significant digits, which is sufficient for most calculations.</p>
+<p>Determining which floating-point type to use is easier: It is almost always right to use double. The loss of precision implicit in float is significant, whereas the cost of double precision calculations versus single precision is negligible. In fact, on some machines, double precision is faster than single. The precision offered by long double usually is unnecessary and often entails considerable extra run-time cost.</p>
+</blockquote>
+<h3>void</h3>
+<p>void 类型没有对应的值，仅用在有限的一些情况下，通常用作无返回值函数的返回类型。</p>
+<p><br></p>
+<h2>Initialize</h2>
+<hr />
+<h3>初始化 &amp; 赋值</h3>
+<p>首先是初始化的必要性：</p>
+<p>在 C++ 中，初始化是一个非常重要的概念，给变量一个初始值几乎总是正确的，但不要求必须这么做。定义变量时，应该给变量赋初始值，除非确定将变量用于其他意图之前会覆盖这个初值。如果不能保证读取变量前重置变量，就应该初始化变量。变量没有初始化是很常见的导致程序崩溃/结果错误的原因，而且有时候很难像 Debug 一样找到这个错误（bug 导致程序一定不对，但是没有初始化的变量的结果是随机的）。所以，良好的习惯是对每个变量都进行初始化 。</p>
+<p>其次是初始化和赋值的区别：</p>
+<p>初始化 <code>Initialization</code>：创建变量并且给它赋初始值</p>
+<p>赋值 <code>Assigment</code>：擦除变量的当前值并用新值代替</p>
+<p>C++ 提供两种初始化变量的方法：复制初始化（<code>copy-initialization</code>）和直接初始化（<code>direct-initialization</code>）。复制初始化使用 <code>=</code>，直接初始化使用 <code>()</code> 。</p>
+<div class="highlight"><pre><span class="kt">int</span> <span class="n">ival</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>    <span class="c1">// copy-initialization</span>
+<span class="kt">int</span> <span class="nf">ival</span> <span class="p">(</span><span class="mi">1024</span><span class="p">);</span>    <span class="c1">// direct-initialization</span>
+</pre></div>
+
+
+<p>使用 <code>=</code> 很容易让人把初始化和赋值混淆在一起，但是在 C++ 中这是两种不同的操作，当涉及到类对象时，两种不同的初始化方式的区别是很微妙的。目前先不考虑这点，只需要知道直接初始化语法更灵活而且效率高。</p>
+<h3>内置类型初始化</h3>
+<p>当我们定义一个变量却没有初始化时，系统 <em>有可能</em> 会为我们进行隐式的初始化。至于系统是否帮我们隐式初始化变量，以及为变量赋予一个怎样的初始值，这要取决于 <em>该变量的类型</em> 以及我们 <em>在何处定义的该变量</em> 。</p>
+<p>这里我们只考虑内置类型的初始化：</p>
+<p>内置类型的变量是否自动初始化取决于变量定义的位置。在函数体外（全局范围）定义的变量都初始化为 0，函数体内定义的变量不进行自动初始化 。</p>
+<p><br></p>
+<h2>Arithmetic Conversions</h2>
+<hr />
+<h3>Implicit Type Conversion</h3>
+<p>当两个操作数类型不同时，C++ 并不是直接把两个数加在一起，而是提供了一组转换规则，以便在执行算术操作之前，将两个数转换为同一数据类型。这些转换规则由编译器自动执行，不需要程序眼介入，有时甚至不需要程序员了解。因此，它们被称为 隐式类型转换 (<code>implicit type conversion</code>) 。</p>
+<p>在以下情况会发生隐式类型转换：</p>
+<ul>
+<li>
+<p>混合类型表达式，操作数被转换为相同类型</p>
+<div class="highlight"><pre><span class="kt">int</span> <span class="n">ival</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">dval</span><span class="p">;</span>
+<span class="n">ival</span> <span class="o">&gt;=</span> <span class="n">dval</span><span class="p">;</span>   <span class="c1">// ival converted to double</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>用作条件表达式被转化为 bool 型</p>
+<div class="highlight"><pre><span class="kt">int</span> <span class="n">ival</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">ival</span><span class="p">)</span>       <span class="c1">// ival converted to bool</span>
+<span class="k">while</span> <span class="p">(</span> <span class="n">cin</span><span class="p">)</span>    <span class="c1">// cin converted to bool</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>用表达式初始化（赋值）某一变量，表达式被转化为该变量类型</p>
+<div class="highlight"><pre><span class="kt">int</span> <span class="n">ival</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span>    <span class="c1">// 3.14 converted to int</span>
+<span class="kt">int</span> <span class="o">*</span><span class="n">ip</span><span class="p">;</span>
+<span class="n">ip</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>             <span class="c1">// the int 0 converted to a null pointer of type int *</span>
+</pre></div>
+
+
+</li>
+</ul>
+<p>另外，函数调用时也可能发生隐式类型转化。</p>
+<h3>Arithmetic Conversion</h3>
+<p>C++ 语言为内置类型提供了一组转化规则，其中最常用的就是算术转化（arithmetic conversion）。算术转化规则定义了一个 <em>类型转换层次</em>，该层次规定了操作数应该按照什么次序转换为表达式中最宽的数据类型。</p>
+<p>有两条通用规则：</p>
+<ol>
+<li>
+<p>为了保留精度，如果有必要，数据总是被提升为较宽的类型</p>
+</li>
+<li>
+<p>所有含有小于整形的有序类型的算术表达式在计算之前其类型都会被转换成整型（整型提升 integral promotion）</p>
+</li>
+</ol>
+<p>关于有符号数和无符号数，原则是：</p>
+<ol>
+<li>
+<p>不同级数据转换，若较宽的类型可以表示所有较窄的类型的数，则直接将较窄的类型提升为较宽的类型，否则，把两个数都转换为无符号的较宽的类型 。</p>
+</li>
+<li>
+<p>同级数据转换，unsigned int 和 int ，signed 类型会转换为 unsigned 类型 。</p>
+</li>
+</ol>
+<p>unsigned 操作数的转换依赖于机器中整型的相对大小，所以，这类转换依赖于机器。</p>
+<p>举个栗子：</p>
+<ol>
+<li>
+<p>short 类型 与 int 类型 。在我的机器上，short 类型所占用的宽度为半字（2 Byte），int 类型占用的宽度为 1个字（4 Byte）。所有的 unsigned short 的值都包含在 int 之中，所以，unsigned short 转换为 int 。</p>
+</li>
+<li>
+<p>下面程序</p>
+<div class="highlight"><pre><span class="kt">unsigned</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="kt">signed</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;unsigned int b&#39; = &quot;</span> <span class="o">&lt;&lt;</span> <span class="kt">unsigned</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;c = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</pre></div>
+
+
+<p>运行结果为
+    unsigned int b' = 4294967276
+    c = 1
+因为 <code>b = -2</code> 被转化为一个很大的正数 <code>b' = 4294967276</code></p>
+</li>
+</ol>
+<p><br></p>
+<h2>references</h2>
+<p><a href="http://book.douban.com/subject/1767741/">c++ Primer</a></p>
+<p><a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx">C++之char , signed char , unsigned char，以及Integral Promotion</a></p>
+<p><a href="http://book.51cto.com/art/200912/166574.htm">Linux C编程一站式学习：整型</a></p>
+            </div>
+            <!-- /.entry-content -->
+                                        <hr />
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+                        var disqus_identifier = 'Built-in Types';
+                        var disqus_url = 'http://guqian110.github.io/pages/2014/03/31/Built-in Types.html';
+            var disqus_config = function () {
+                this.language = "zh";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3" id="aboutme">
+            <p>
+    <strong>About Chien Gu</strong><br/>
+    BYR + Programmer + Rocker
+</p>        </div>
+		        <div class="col-sm-3 well well-sm" id="sidebar">
+            
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="https://github.com/guqian110"><i
+                            class="fa fa-github-square fa-lg"></i> GitHub
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/u/0/+QianGu/about"><i
+                            class="fa fa--pluschien-square fa-lg"></i> +Chien
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://weibo.com/u/2108188007"><i
+                            class="fa fa-@chien-square fa-lg"></i> @Chien
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://www.douban.com/people/51504735/"><i
+                            class="fa fa-豆瓣-square fa-lg"></i> 豆瓣
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://www.zhihu.com/people/chiengu"><i
+                            class="fa fa-知乎-square fa-lg"></i> 知乎
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                                                                                <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group " id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C++
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/others.html">
+                                Others
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/book.html">
+                                Book
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                        
+    <li class="list-group-item"><h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+        <div id="gh_repos">
+            <p class="list-group-item">Status updating...</p>
+        </div>
+            </li>
+                            <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+                <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+                <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+                <li class="list-group-item">
+            <a href="http://jinja.pocoo.org/" target="_blank">
+                Jinja2
+            </a>
+        </li>
+              </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Chien Gu
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://guqian110.github.io/theme/js/respond.min.js"></script>
+
+                                    <script type="text/javascript">
+        $(document).ready(function () {
+            if (!window.jXHR) {
+                var jxhr = document.createElement('script');
+                jxhr.type = 'text/javascript';
+                jxhr.src = 'http://guqian110.github.io/theme/js/jXHR.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(jxhr, s);
+            }
+
+            github.showRepos({
+                user: 'guqian110',
+                count: 5,
+                skip_forks: false,
+                target: '#gh_repos'
+            });
+        });
+    </script>
+    <script src="http://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '48826831']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</body>
+</html>
