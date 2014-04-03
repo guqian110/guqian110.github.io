@@ -2,7 +2,7 @@ Title: Learning Vim 1 -- Survival
 Date: 2014-03-25 21:23
 Category: Linux
 Tags: Linux,Vim
-Slug: learning Vim 1 -- Survival
+Slug: learning-vim-1-survival
 Author: Chien Gu
 Summary: 这个系列的博客是我学习 Vim 过程中的记录和总结，希望可以帮助到和我一样的菜鸟～ 第一篇：入门/存活 Survival
 

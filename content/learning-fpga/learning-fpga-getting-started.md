@@ -2,7 +2,7 @@ Title: Learning FPGA 1 -- Getting Started
 Date: 2014-04-03 12:40
 Category: FPGA
 Tags: FPGA
-Slug: Learning FPGA 1 -- Getting Started
+Slug: learning-fpga-1-getting-started
 Author: Chien Gu
 Summary: 总结 FPGA 的学习经历，温故而知新。
 

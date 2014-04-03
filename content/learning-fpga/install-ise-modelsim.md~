@@ -12,8 +12,9 @@ Summary: 从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也�
 
 Ubuntu 13.10 Desktop amd64 
 
-ISE 14.7
+ISE 14.7 for Linux
 
+ModelSim 6.5b for Linux
 ##Download
 * * *
 
@@ -26,7 +27,7 @@ Xilinx 官方网站上有[下载链接][ise-download]，但是在校园网内下
 
 网上的教程（2011 年前）都说是 [ModelSim 官方网站][modelsim] 上提供 ftp 下载链接，但是好像现在官网上不再提供下载链接了，我只找到 ModelSim PE Student Edition，而且还是 Windows 平台的...
 
-花费了一下午的时间，不停地在各个论坛注册下载附件，终于把 ModelSim_6.5b for linux 下载下来了,结果安装时提示找不到 `libxp.so.6` 库，于是 `apt-get` 到一些 `libxp` 的库，安装后仍然提示找不到，无奈放弃了，准备老老实实用 `ism` 了（以后有时间了再慢慢折腾 T_T）
+花费了一下午的时间，不停地在各个论坛注册下载附件，终于把 ModelSim_6.5b for Linux 下载下来了,结果安装时提示找不到 `libxp.so.6` 库，于是 `apt-get` 到一些 `libxp` 的库，安装后仍然提示找不到，无奈放弃了，准备老老实实用 `ism` 了（以后有时间了再慢慢折腾 T_T）
 
 [ise-download]: https://secure.xilinx.com/webreg/register.do?group=dlc&htmlfile=&emailFile=&cancellink=&eFrom=&eSubject=&version=14.7&akdm=1&filename=Xilinx_ISE_DS_Lin_14.7_1015_1.tar
 [modelsim]: http://www.mentor.com/products/fpga/model
@@ -40,33 +41,34 @@ Xilinx 官方网站上有[下载链接][ise-download]，但是在校园网内下
 
 首先解压
 
-    $ tar -xvf Xilinx_ISE_DS_Lin_14.7_1015_1.tar
+    tar -xvf Xilinx_ISE_DS_Lin_14.7_1015_1.tar
 
 接着进入解压出来的目录并给安装文件赋予执行的权限
 
-    $ cd Xilinx_ISE_DS_Lin_14.7_1015_1/
-    $ sudo chmod +x xsetup
+    cd Xilinx_ISE_DS_Lin_14.7_1015_1/
+    sudo chmod +x xsetup
 
 然后执行 xsetup
 
-    $ sudo ./xsetup
+    sudo ./xsetup
 
 然后熟悉的图形界面就出来，和 Windows 下一样，同意安装许可协议，不停地下一步就可以安装成功。
 
 安装完成以后，运行
 
-    $ cd /opt/Xilinx/14.7/ISE_DS
-    $ source settings64.sh
+    cd /opt/Xilinx/14.7/ISE_DS
+    source settings64.sh
     
 此时，已经可以从终端运行 ISE 了
 
-    $ nohup ise&
+    nohup ise&
 
 熟悉的图形界面出来了：
 
-![ise](/images/install-ise-modelsim/ise_start,"ISE start")
+![ise](/images/install-ise-modelsim/ise_start.png)
 
 P.S.
+
 1. 选择安装版本时，选择 `System Edition`，因为这个版本功能最全
 
 2. 选择安装组件时，不要勾选 `Install Cable Drivers`，我们自己编译安装另外一个驱动（因为此驱动只能在 Linux 内核 < 2.6的版本中使用，所以即使勾选了最后安装完成时会提示 *Driver installation failed*）
@@ -94,30 +96,30 @@ P.S.
 
 首先安装 usb 驱动开发包，在 64 位系统下
 
-    $ sudo apt-get install libusb-dev libc6-dev-i386 fxload
+    sudo apt-get install libusb-dev libc6-dev-i386 fxload
 
 接着下载驱动程序的源代码
 
-    $ cd /opt/Xilinx
-    $ sudo git clone git://git.zerfleddert.de/usb-driver
+    cd /opt/Xilinx
+    sudo git clone git://git.zerfleddert.de/usb-driver
 
 然后编译驱动程序
 
-    $ cd usb-driver/
-    $ sudo make
+    cd usb-driver/
+    sudo make
 
 下载下来的源代码中有个脚本可以设置好一切，我们只需要运行脚本就 ok
 
-    $ ./setup_pcusb /opt/Xilinx/14.7/ISE_DS/ISE/
+    ./setup_pcusb /opt/Xilinx/14.7/ISE_DS/ISE/
     
 把 Xilinx 路径添加到系统 PATH 中
 
-    $ echo "PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/" >> ~/.bashrc
-    $ echo "export PATH" >> ~/.bashrc
+    echo "PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/" >> ~/.bashrc
+    echo "export PATH" >> ~/.bashrc
     
 这时候，写个小测试的程序，`Systhesize` -> `Implement` -> `Generate Programming File`，打开 `iMPACT`, 如图所示，可以看到已经识别出 JTAG 链上的芯片
 
-![jtag](/images/install-ise-modelsim/jtag,"JTAG Chain")
+![jtag](/images/install-ise-modelsim/jtag.png)
 
 ### ModelSim
 
@@ -153,6 +155,4 @@ ModelSim 编译 Xilinx库，ISE 关联 ModelSim
 [Xilinx JTAG Linux](http://www.george-smart.co.uk/wiki/Xilinx_JTAG_Linux)
 
 [【Linux软件安装】Ubuntu12.04: Xilinx ISE 14.6](http://blog.csdn.net/yunz1994/article/details/12350071)
-
-
 
