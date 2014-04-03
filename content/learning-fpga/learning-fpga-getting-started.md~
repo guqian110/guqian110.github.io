@@ -1,8 +1,8 @@
-Title: Learning FPGA Getting Started
+Title: Learning FPGA 1 -- Getting Started
 Date: 2014-04-03 12:40
 Category: FPGA
 Tags: FPGA
-Slug: Learning FPGA Getting Started
+Slug: Learning FPGA 1 -- Getting Started
 Author: Chien Gu
 Summary: 总结 FPGA 的学习经历，温故而知新。
 
@@ -205,7 +205,7 @@ FPGA 的制造商主要是 Xilinx 和 Altera 两家，他们合起来市场占�
 ## Xilinx FPGA Architecture
 * * *
 
-FPGA 需奥反复烧写，所以不能像 ASIC 一样通过固定的与非门来完成，只能采用一种易于反复配置的结构，查找表就可以很好的满足这一要求。目前主流 FPGA 都是采用了基于 SRAM 工艺的查找表结构（军品和宇航级 FPGA 采用 Flash或者熔丝/反熔丝工艺），通过烧写文件改变查找表内容的方法来实现对 FPGA 的重复配置。
+FPGA 需要反复烧写，所以不能像 ASIC 一样通过固定的与非门来完成，只能采用一种易于反复配置的结构，查找表就可以很好的满足这一要求。目前主流 FPGA 都是采用了基于 SRAM 工艺的查找表结构（军品和宇航级 FPGA 采用 Flash或者熔丝/反熔丝工艺），通过烧写文件改变查找表内容的方法来实现对 FPGA 的重复配置。
 
 查找表（look-up table，LUT）本质上就是一个 RAM 。当用户通过原理图或 HDL 语言描述了一个电路以后，FPGA 开发软件会计算逻辑电路的所有可能结果，并把真值表事先写入 RAM，这样，每输入一个信号进行逻辑运算就相当于输入一个地址进行查找，这样 LUT 就具有了和逻辑电路相同的功能 。实际上，LUT 具有更快的执行速度和更大的规模 。
 
@@ -239,7 +239,7 @@ CLB（Configurable Logic Block）是 FPGA 内的基本逻辑单元，Xilinx FPGA
 
 ***Xilinx 主流 FPGA***
 
-Xilinx 主流的 FPGA 主要有A系列、K系列、V系列、Spartan系列，如今还有最新的 Znq 系列，官网上有详细介绍 。
+Xilinx 主流的 FPGA 主要有A系列、K系列、V系列、Spartan系列，如今还有最新的 Zynq 系列，官网上有详细介绍 。
 
 <br>
 

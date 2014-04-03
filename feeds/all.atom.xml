@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-03T12:40:00+08:00</updated><entry><title>Learning FPGA Getting Started</title><link href="http://guqian110.github.io/pages/2014/04/03/Learning%20FPGA%20Getting%20Started.html" rel="alternate"></link><updated>2014-04-03T12:40:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-03:pages/2014/04/03/Learning FPGA Getting Started.html</id><summary type="html">&lt;h2&gt;What is FPGA&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-03T12:40:00+08:00</updated><entry><title>Learning FPGA 1 -- Getting Started</title><link href="http://guqian110.github.io/pages/2014/04/03/Learning%20FPGA%201%20--%20Getting%20Started.html" rel="alternate"></link><updated>2014-04-03T12:40:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-03:pages/2014/04/03/Learning FPGA 1 -- Getting Started.html</id><summary type="html">&lt;h2&gt;What is FPGA&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;FPGA 是 PLD 家族中的一员，要说清楚什么是 FPGA，就不得不说一说 PLD 。（&lt;strong&gt;以下内容来自wikipedia&lt;/strong&gt;）&lt;/p&gt;
 &lt;h3&gt;PLD &amp;amp; ASIC&lt;/h3&gt;
@@ -132,7 +132,7 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Xilinx FPGA Architecture&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;p&gt;FPGA 需奥反复烧写，所以不能像 ASIC 一样通过固定的与非门来完成，只能采用一种易于反复配置的结构，查找表就可以很好的满足这一要求。目前主流 FPGA 都是采用了基于 SRAM 工艺的查找表结构（军品和宇航级 FPGA 采用 Flash或者熔丝/反熔丝工艺），通过烧写文件改变查找表内容的方法来实现对 FPGA 的重复配置。&lt;/p&gt;
+&lt;p&gt;FPGA 需要反复烧写，所以不能像 ASIC 一样通过固定的与非门来完成，只能采用一种易于反复配置的结构，查找表就可以很好的满足这一要求。目前主流 FPGA 都是采用了基于 SRAM 工艺的查找表结构（军品和宇航级 FPGA 采用 Flash或者熔丝/反熔丝工艺），通过烧写文件改变查找表内容的方法来实现对 FPGA 的重复配置。&lt;/p&gt;
 &lt;p&gt;查找表（look-up table，LUT）本质上就是一个 RAM 。当用户通过原理图或 HDL 语言描述了一个电路以后，FPGA 开发软件会计算逻辑电路的所有可能结果，并把真值表事先写入 RAM，这样，每输入一个信号进行逻辑运算就相当于输入一个地址进行查找，这样 LUT 就具有了和逻辑电路相同的功能 。实际上，LUT 具有更快的执行速度和更大的规模 。&lt;/p&gt;
 &lt;p&gt;上电时，FPGA将外部存储器中的数据读入片内RAM，完成配置后，进入工作状态；掉电后FPGA恢复为白片，内部逻辑消失。这样FPGA不仅能够反复使用，还无须专门的FPGA编程器，只需通用的EPROM、PROM编程器即可。&lt;/p&gt;
 &lt;p&gt;目前，Xilinx FPGA 仍然是基于查找表技术，但是其概念已经远远超出查找表技术的限制，并且整合了常用功能的硬核模块（如块 RAM，时钟管理和 DSP）。Xilinx FPGA 内部大致可以分为 6 部分：&lt;/p&gt;
@@ -154,7 +154,7 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;h2&gt;Development&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;FPGA 的开发流程如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="design flow" src="/images/learing-fpga-getting-started/design-flow.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="design flow" src="/images/learning-fpga-getting-started/design-flow.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;整个开发过程就是使用开发工具 ISE Design Suite，按照流程图进行 。图示是标准流程，但是实际上并不是严格按照每一个步骤进行 。&lt;/p&gt;
 &lt;p&gt;一般简化过的流程是&lt;/p&gt;
 &lt;ol&gt;
