@@ -1,4 +1,4 @@
-Title: Learning Vim Survival
+Title: 学习 Vim 存活
 Date: 2014-03-25 21:23
 Category: Linux
 Tags: Linux,Vim

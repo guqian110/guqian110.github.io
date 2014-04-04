@@ -1,4 +1,4 @@
-Title: Learning FPGA Getting Started
+Title: 学习 FPGA 入门
 Date: 2014-04-03 12:40
 Category: FPGA
 Tags: FPGA
