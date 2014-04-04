@@ -243,7 +243,6 @@ scp 可以实现把 [[user@]host1:]file1 复制到 [[user@]host2:]file2 的功�
 <br>
 
 ## Reference
-* * *
 
 [数字签名是什么？][blog1]
 
