@@ -1,5 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-04T01:35:00+08:00</updated><entry><title>编写可综合的 Verilog HDL 代码</title><link href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html" rel="alternate"></link><updated>2014-04-04T01:35:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-04:pages/2014/04/04/writing_synthesizable_code.html</id><summary type="html">&lt;p&gt;对电路建模方法有很多种，可以用绘制原理图，也可以用 &lt;em&gt;硬件描述语言（Hardware Description Language）&lt;/em&gt; 建模 。硬件描述语言中最常用的就是 Verlilog 和 VHDL 。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-04T17:00:00+08:00</updated><entry><title>学习 LInux SSH</title><link href="http://guqian110.github.io/pages/2014/04/04/learning_linux_ssh.html" rel="alternate"></link><updated>2014-04-04T17:00:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-04:pages/2014/04/04/learning_linux_ssh.html</id><summary type="html">&lt;p&gt;实验室的师兄师姐毕业了，继承了他们的新电脑 。宿舍的笔记本和实验室的电脑出现了相互之间传送同步文件的需求 。想到了两种方法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;云同步&lt;/li&gt;
+&lt;li&gt;SSH / SCP&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;解决方案 1 是最省事的，也是目前最流行的，目前各大互联网公司都提供各种云服务，比如国外的 Google Drive、Dropbox，国内的百度云、360 网盘什么的。这种方案最大的有点是跨平台，不过这个方案是借助了第三方的服务器，需要连接到互联网才行，而且对网速是有一定要求的。&lt;/p&gt;
+&lt;p&gt;解决方案 2 相比于方案 1 的优势是：不是必须要连接到互联网，在局域网内也可以同步文件 。一般局域网内传输文件的速度要比连外界的服务器快很多 。&lt;/p&gt;
+&lt;p&gt;考虑到校园网的环境，明显方案 2 更加好 。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;什么是 SSH&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑 。&lt;a href="http://en.wikipedia.org/wiki/Secure_Shell"&gt;SSH&lt;/a&gt; 协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为 Linux 系统的标准配置 。&lt;/p&gt;
+&lt;p&gt;最初的 SSH 协议是由芬兰的一家公司的研究员 Tatu Ylönen 于 1995 年设计开发的，但是因为受版权和加密算法等等的限制，现在很多人都转而使用 OpenSSH 。OpenSSH 是 SSH 的替代软件包，而且是开放源代码和免费的 。—— Wikipedia&lt;/p&gt;
+&lt;p&gt;关于 SSH 的原理，找到了一系列 &lt;a href="http://www.ruanyifeng.com/blog/"&gt;阮一峰&lt;/a&gt;的文章，很简洁明了:&lt;/p&gt;
+&lt;h3&gt;SSH&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html"&gt;SSH原理与运用（一）：远程登录&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html"&gt;SSH原理与运用（二）：远程操作与端口转发&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;SSH 的用法&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;最简单明了的教程就是 man page 了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="n"&gt;ssh&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;内容为&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;NAME&lt;/span&gt;
+    &lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="err"&gt;—&lt;/span&gt; &lt;span class="n"&gt;OpenSSH&lt;/span&gt; &lt;span class="n"&gt;SSH&lt;/span&gt; &lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;remote&lt;/span&gt; &lt;span class="n"&gt;login&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;SYNOPSIS&lt;/span&gt;
+ &lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1246&lt;/span&gt;&lt;span class="n"&gt;AaCfgKkMNnqsTtVvXxYy&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;bind_address&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="n"&gt;cipher_spec&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;D&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;bind_address&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt; &lt;span class="n"&gt;escape_char&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;F&lt;/span&gt; &lt;span class="n"&gt;configfile&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt; &lt;span class="n"&gt;pkcs11&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="n"&gt;identity_file&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;bind_address&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;hostport&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="n"&gt;login_name&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;mac_spec&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;O&lt;/span&gt; &lt;span class="n"&gt;ctl_cmd&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;bind_address&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;hostport&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt; &lt;span class="n"&gt;ctl_path&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;W&lt;/span&gt; &lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt; &lt;span class="n"&gt;local_tun&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;remote_tun&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;进阶的书籍有：&lt;a href="http://docstore.mik.ua/orelly/networking_2ndEd/ssh/index.htm"&gt;SSH, The Secure Shell: The Definitive Guide&lt;/a&gt;, O'reilly&lt;/p&gt;
+&lt;p&gt;目前已经有两台安装了 Ubuntu 的电脑，实验室的一台 name 是 &lt;em&gt;lab&lt;/em&gt; ，宿舍的一台 name 是 &lt;em&gt;dom&lt;/em&gt; ，两台电脑上都有一个用户名为 &lt;em&gt;chien&lt;/em&gt; 。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;我们的目的是使两台电脑可以相互之间通过 SSH 访问。&lt;/strong&gt; 下面就是整个过程：&lt;/p&gt;
+&lt;h3&gt;安装 SSH server&lt;/h3&gt;
+&lt;p&gt;SSH 只是一种协议，在 Ubuntu 下，具体实现使用的是 &lt;a href="http://www.openssh.com/"&gt;OpenSSH&lt;/a&gt; 。Ubuntu 默认是安装了 SSH 客户端 &lt;code&gt;openssh-client&lt;/code&gt;，而没有安装 SSH 服务程序 &lt;code&gt;openssh-server&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;检测本机是否已经安装了 SSH server&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;localhost&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果结果是&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;connect&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;host&lt;/span&gt; &lt;span class="n"&gt;localhost&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Connection&lt;/span&gt; &lt;span class="n"&gt;refused&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;说明 SSH server 还没有安装 。&lt;/p&gt;
+&lt;p&gt;安装方法：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;openssh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;启动 SSH 服务&lt;/h3&gt;
+&lt;p&gt;启动 SSH server&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;查询服务是否正确启动&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ps&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;ssh&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;返回结果应该类似于&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="mi"&gt;4156&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt;        &lt;span class="mo"&gt;00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt; &lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;agent&lt;/span&gt;
+ &lt;span class="mi"&gt;4606&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt;        &lt;span class="mo"&gt;00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mo"&gt;00&lt;/span&gt; &lt;span class="n"&gt;sshd&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;则说明服务已经正确启动 。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;因为两台电脑要相互访问，所以它们的角色即使 server，又是 client，所以需要在两台电脑上都执行上面两步 。&lt;/em&gt;&lt;/p&gt;
+&lt;h3&gt;远程访问&lt;/h3&gt;
+&lt;p&gt;首先，查询本机 IP 地址&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ifconfig&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;比如 lab 的 IP 地址是 &lt;code&gt;10.105.55.155&lt;/code&gt;, dom 的 IP 地址是 &lt;code&gt;10.210.111.116&lt;/code&gt; 。（因为是校园网，所以分配到的都是内网地址）&lt;/p&gt;
+&lt;p&gt;然后，在宿舍用 dom 访问 lab 这台机器&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;chien&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="mf"&gt;10.105.55.155&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;实际结果如下图&lt;/p&gt;
+&lt;p&gt;&lt;img alt="login1" src="/images/learning-linux-ssh/login1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;在执行命令前，提示符显示目前的用户是在 dom 这台机器上的用户 chien，本机 home 目录下有 &lt;code&gt;dom&lt;/code&gt; 文件，但是没有 &lt;code&gt;lab&lt;/code&gt; 文件 。执行了登录命令以后，就会切换到以 chien 身份登录到 lab 机器，远程机器 home 目录下有 &lt;code&gt;lab&lt;/code&gt; 文件，但是没有 &lt;code&gt;dom&lt;/code&gt; 文件 。&lt;/p&gt;
+&lt;p&gt;同理，在实验室用 lab 访问 dom 这台机器&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;chien&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="mf"&gt;10.210.111.116&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;实际结果如下图&lt;/p&gt;
+&lt;p&gt;&lt;img alt="login2" src="/images/learning-linux-ssh/login2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;在执行命令前，提示符显示目前的用户是在 lab 这台机器上的用户 chien，本机 home 目录下有 &lt;code&gt;lab&lt;/code&gt; 文件，但是没有 &lt;code&gt;dom&lt;/code&gt; 文件 。执行了登录命令以后，就会切换到以 chien 身份登录到 dom 机器，远程机器 home 目录下有有 &lt;code&gt;dom&lt;/code&gt; 文件，但是没有 &lt;code&gt;lab&lt;/code&gt; 文件 。&lt;/p&gt;
+&lt;h3&gt;省去 IP 地址&lt;/h3&gt;
+&lt;p&gt;每次登录都需要记忆、手动输入 IP 地址，其实只需要改 &lt;code&gt;/etc/hosts&lt;/code&gt; 文件，就能省去手动输入 IP 地址的烦恼。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;vim&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;hosts&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在 dom 的 hosts 文件后面添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;lab&lt;/span&gt;    &lt;span class="mf"&gt;10.105.55.155&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在 lab 的 hosts 文件后面添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;dom&lt;/span&gt;     &lt;span class="mf"&gt;10.210.111.116&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;以后，登录时只需要输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// from dom to lab&lt;/span&gt;
+&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;lab&lt;/span&gt;
+
+&lt;span class="c1"&gt;// from lab to domm&lt;/span&gt;
+&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;dom&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;就可以登录了。&lt;/p&gt;
+&lt;h3&gt;公钥登录&lt;/h3&gt;
+&lt;p&gt;上一步解决了 IP 地址的问题，但是还是需要手动输入密码 。我们可以用公钥登录的方法，免去输密码的烦恼。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;首先，什么是数字签名 Digital Signature&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html"&gt;数字签名是什么？&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.youdzone.com/signature.html"&gt;What is a Digital Signature?&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;其次，生成数字签名&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Ubuntu 默认安装了 &lt;code&gt;ssh-keygen&lt;/code&gt;，可以生成公钥和私钥&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;keygen&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;命令执行过程中会询问保存密钥文件的路径，还可以为密钥文件设置口令（passphrase）。运行结束以后，在 &lt;code&gt;$HOME/.ssh/&lt;/code&gt; 目录下，会新生成两个文件：&lt;code&gt;id_rsa.pub&lt;/code&gt; 和 &lt;code&gt;id_rsa&lt;/code&gt; 。前者是你的公钥，后者是你的私钥。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;然后，发布数字签名&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;使用 &lt;code&gt;ssh-copy-id&lt;/code&gt; 命令可以把公钥复制到远程机器中 。&lt;/p&gt;
+&lt;p&gt;将 dom 的公钥发送到 lab 中&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;di&lt;/span&gt; &lt;span class="n"&gt;chien&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;lab&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;将 lab 的公钥发送到 dom 中&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ssh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;di&lt;/span&gt; &lt;span class="n"&gt;chien&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;dom&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;最后，使用公钥登录&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;此时，远程登录时就不再需要输入密码了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// from dom to lab&lt;/span&gt;
+&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;lab&lt;/span&gt;
+
+&lt;span class="c1"&gt;// from lab to dom&lt;/span&gt;
+&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="n"&gt;dom&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;使用 SCP 传输文件&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;SSH 提供了一些命令和 shell 用来登录远程服务器 。在默认情况下它不允许你拷贝文件,但是还是提供了一个 "scp" 命令 。scp 命令是 SSH 中最方便有用的命令了，试想，在两台服务器之间直接传送文件。仅仅用 scp 一个命令就完全解决了 。&lt;/p&gt;
+&lt;p&gt;man page&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="n"&gt;scp&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;内容为&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;NAME&lt;/span&gt;
+ &lt;span class="n"&gt;scp&lt;/span&gt; &lt;span class="err"&gt;—&lt;/span&gt; &lt;span class="n"&gt;secure&lt;/span&gt; &lt;span class="n"&gt;copy&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;remote&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="n"&gt;copy&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;SYNOPSIS&lt;/span&gt;
+ &lt;span class="n"&gt;scp&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;12346&lt;/span&gt;&lt;span class="n"&gt;BCpqrv&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="n"&gt;cipher&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;F&lt;/span&gt; &lt;span class="n"&gt;ssh_config&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="n"&gt;identity_file&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="n"&gt;limit&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="n"&gt;ssh_option&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt; &lt;span class="n"&gt;program&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+     &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="n"&gt;host1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="n"&gt;file1&lt;/span&gt; &lt;span class="p"&gt;...&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="n"&gt;host2&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="n"&gt;file2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;scp 可以实现把 [[user@]host1:]file1 复制到 [[user@]host2:]file2 的功能。所以&lt;/p&gt;
+&lt;h3&gt;上传 dom 本地文件至服务器 lab&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;scp&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;dom&lt;/span&gt; &lt;span class="n"&gt;chien&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;lab&lt;/span&gt;&lt;span class="o"&gt;:~/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;下载 lab 服务器文件至本地 dom&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;scp&lt;/span&gt; &lt;span class="n"&gt;chien&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;lab&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;lab&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;若发送文件夹则添加参数 &lt;code&gt;-r&lt;/code&gt; 即可&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;scp&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;test&lt;/span&gt; &lt;span class="n"&gt;chien&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;lab&lt;/span&gt;&lt;span class="o"&gt;:~/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;至此，就实现了两台电脑的之间相互远程访问的功能 。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Reference&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html"&gt;数字签名是什么？&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html"&gt;What is a Digital Signature?&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html"&gt;SSH原理与运用（一）：远程登录&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.youdzone.com/signature.html"&gt;SSH原理与运用（二）：远程操作与端口转发&lt;/a&gt;&lt;/p&gt;</summary><category term="Linux"></category><category term="SSH"></category></entry><entry><title>编写可综合的 Verilog HDL 代码</title><link href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html" rel="alternate"></link><updated>2014-04-04T01:35:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-04:pages/2014/04/04/writing_synthesizable_code.html</id><summary type="html">&lt;p&gt;对电路建模方法有很多种，可以用绘制原理图，也可以用 &lt;em&gt;硬件描述语言（Hardware Description Language）&lt;/em&gt; 建模 。硬件描述语言中最常用的就是 Verlilog 和 VHDL 。&lt;/p&gt;
 &lt;p&gt;Verilog HDL和VHDL相比有很多优点，有C语言基础的话很容易上手。搜集了一些网上大神的经验总结和书上的例子，所以对于和我一样的初学者，这篇博客应该还是很有提高作用的，至于具体语法，任何一本书都讲的很详细。&lt;/p&gt;
 &lt;h2&gt;HDL&lt;/h2&gt;
 &lt;hr /&gt;
@@ -496,7 +702,7 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;h2&gt;references&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1767741/"&gt;c++ Primer&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx"&gt;C++之char , signed char , unsigned char，以及Integral Promotion&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://book.51cto.com/art/200912/166574.htm"&gt;Linux C编程一站式学习：整型&lt;/a&gt;&lt;/p&gt;</summary><category term="C/C++"></category></entry><entry><title>Ubuntu 下安装 ISE &amp; ModelSim</title><link href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html" rel="alternate"></link><updated>2014-03-27T20:52:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-03-27:pages/2014/03/27/install_ise_modelsim_on_ubuntu.html</id><summary type="html">&lt;p&gt;从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://book.51cto.com/art/200912/166574.htm"&gt;Linux C编程一站式学习：整型&lt;/a&gt;&lt;/p&gt;</summary><category term="C"></category><category term="C++"></category></entry><entry><title>Ubuntu 下安装 ISE &amp; ModelSim</title><link href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html" rel="alternate"></link><updated>2014-03-27T20:52:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-03-27:pages/2014/03/27/install_ise_modelsim_on_ubuntu.html</id><summary type="html">&lt;p&gt;从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;软件版本：&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Ubuntu 13.10 Desktop amd64 &lt;/p&gt;
 &lt;p&gt;ISE 14.7 for Linux&lt;/p&gt;

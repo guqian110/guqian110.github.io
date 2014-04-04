@@ -1,7 +1,7 @@
 Title: C/C++ 内置数据类型
 Date: 2014-03-31 13:37
-Category: C,C++
-Tags: C/C++
+Category: C/C++
+Tags: C,C++
 Slug: built_in_types
 Author: Chien Gu
 Summary: 重读经典 C++ Primer，总结 C++ 内置数据类型。

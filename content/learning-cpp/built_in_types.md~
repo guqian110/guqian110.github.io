@@ -1,6 +1,6 @@
 Title: C/C++ 内置数据类型
 Date: 2014-03-31 13:37
-Category: C/C++
+Category: C,C++
 Tags: C/C++
 Slug: built_in_types
 Author: Chien Gu
