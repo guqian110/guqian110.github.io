@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/fpga.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-04T01:35:00+08:00</updated><entry><title>编写可综合的 Verilog HDL 代码</title><link href="http://guqian110.github.io/pages/2014/04/04/writing-synthesizable-code.html" rel="alternate"></link><updated>2014-04-04T01:35:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-04:pages/2014/04/04/writing-synthesizable-code.html</id><summary type="html">&lt;p&gt;对电路建模方法有很多种，可以用绘制原理图，也可以用 &lt;em&gt;硬件描述语言（Hardware Description Language）&lt;/em&gt; 建模 。硬件描述语言中最常用的就是 Verlilog 和 VHDL 。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/fpga.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-04T01:35:00+08:00</updated><entry><title>编写可综合的 Verilog HDL 代码</title><link href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html" rel="alternate"></link><updated>2014-04-04T01:35:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-04:pages/2014/04/04/writing_synthesizable_code.html</id><summary type="html">&lt;p&gt;对电路建模方法有很多种，可以用绘制原理图，也可以用 &lt;em&gt;硬件描述语言（Hardware Description Language）&lt;/em&gt; 建模 。硬件描述语言中最常用的就是 Verlilog 和 VHDL 。&lt;/p&gt;
 &lt;p&gt;Verilog HDL和VHDL相比有很多优点，有C语言基础的话很容易上手。搜集了一些网上大神的经验总结和书上的例子，所以对于和我一样的初学者，这篇博客应该还是很有提高作用的，至于具体语法，任何一本书都讲的很详细。&lt;/p&gt;
 &lt;h2&gt;HDL&lt;/h2&gt;
 &lt;hr /&gt;
@@ -12,7 +12,7 @@
 &lt;p&gt;Verilog HDL 也形成于差不多的年代，是由 Gateway Design Automation 公司大约在 1983 年左右开发的。其架构同 VHDL 相似，但主要被用来进行硬件仿真。或许私人公司更注重实用，Verilog 要比 VHDL 简洁得多。&lt;/p&gt;
 &lt;p&gt;由此可见，这两种最流行的用于电路设计的语言，没有一种是为了设计硬件而开发的（更何况 80 年代还没有现在的那些功能强大的EDA软件呢）。因此，当初制订 HDL 语言标准的时候，并没有考虑这些代码如何用硬件来实现。换句话说，有些代码写起来简单，实现起来却可能非常复杂，或者几乎不可能实现。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;Synthesizable Code&lt;/h2&gt;
+&lt;h2&gt;可综合代码&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;任何符合 HDL 语法标准的代码都是对硬件行为的一种描述，但不一定是可直接对应成电路的设计信息。行为描述可以基于不同的层次，如系统级，算法级，寄存器传输级(RTL)、门级等等。以目前大部分EDA软件的综合能力来说，&lt;strong&gt;只有RTL或更低层次的行为描述才能保证是可综合的&lt;/strong&gt;。而众多初学者试图做的，却是想让软件去综合 &lt;em&gt;算法级或者更加抽象的硬件行为描述&lt;/em&gt;。&lt;/p&gt;
 &lt;h3&gt;所有综合工具都支持的语法：&lt;/h3&gt;
@@ -75,7 +75,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;Non-synthesizable Code&lt;/h2&gt;
+&lt;h2&gt;不可综合代码&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;h3&gt;不可综合语法：&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;defparam&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;finish&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fork&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;initial&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;UDP&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wait&lt;/span&gt;
@@ -132,7 +132,10 @@
 
 &lt;p&gt;这样的运算一定可以综合。而除法、开根、对数等等较复杂的运算，必须通过一定的算法实现，没有直观简单的实现方法，则可以判断那些计算式是不能综合的，必须按它们的算法写出更具体的代码才能实现 。此外，硬件无法支持的行为描述，当然也不能被综合（比如想在 FPGA 上实现 DDR 内存那样的双延触发逻辑，代码很容易写，但却不能实现）。&lt;/p&gt;
 &lt;p&gt;不过，这样的判断标准非常主观模糊，遇到具体情况还得按设计人员自己的经验来判断 。如果要一个相对客观的标准，一般来说：在 RTL 级的描述中，所有逻辑运算和加减法运算、以及他们的有限次组合，基本上是可综合的，否则就有无法综合的可能性 。当然，这样的标准仍然有缺陷，更况且 EDA 的技术也在不断发展，过去无法综合的代码或许将来行，某些软件不支持的代码换个软件或许行 。比如固定次数的循环，含一个常数参数的乘法运算等等，有些 EDA 软件支持对它们的综合，而有些软件不行。&lt;/p&gt;
-&lt;p&gt;所以，正确的判断仍然要靠实践来积累经验。当你可以较准确判断代码的可综合性的时候，你对 HDL 的掌握就算完全入门了。&lt;/p&gt;</summary><category term="FPGA"></category><category term="Verilog"></category></entry><entry><title>Learning FPGA 1 -- Getting Started</title><link href="http://guqian110.github.io/pages/2014/04/03/learning-fpga-1-getting-started.html" rel="alternate"></link><updated>2014-04-03T12:40:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-03:pages/2014/04/03/learning-fpga-1-getting-started.html</id><summary type="html">&lt;h2&gt;What is FPGA&lt;/h2&gt;
+&lt;p&gt;所以，正确的判断仍然要靠实践来积累经验。当你可以较准确判断代码的可综合性的时候，你对 HDL 的掌握就算完全入门了。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://www.dzkf.cn/html/EDAjishu/2006/0720/9.html"&gt;浅谈VHDL/Verilog的可综合性以及对初学者的一些建议&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="Verilog"></category></entry><entry><title>Learning FPGA Getting Started</title><link href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html" rel="alternate"></link><updated>2014-04-03T12:40:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-03:pages/2014/04/03/learning_fpga_getting_started.html</id><summary type="html">&lt;h2&gt;FPGA 是什么&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;FPGA 是 PLD 家族中的一员，要说清楚什么是 FPGA，就不得不说一说 PLD 。（&lt;strong&gt;以下内容来自wikipedia&lt;/strong&gt;）&lt;/p&gt;
 &lt;h3&gt;PLD &amp;amp; ASIC&lt;/h3&gt;
@@ -141,7 +144,7 @@
 &lt;p&gt;随着芯片尺寸的减小和设计工具的发展，这些年来 ASIC 芯片最大的集成度从 5,000 增长到了 超过100,000,000 门 。现代的 ASIC 通常都包含了微处理器、存储块（如 ROM 、RAM 、EEPROM 、Flash 等）。这种 ASIC 被称为 SoC （&lt;a href="http://en.wikipedia.org/wiki/System-on-chip"&gt;system on chip&lt;/a&gt;），ASIC 设计师采用硬件描述语言（Hardware Description Language，HDL），比如 Verilog、VHDL，描述 ASIC 的功能 。&lt;/p&gt;
 &lt;p&gt;但是 ASIC 的研制周期长，现代信息处理的快速发展要求集成电路的设计、测试和生产周期尽可能的段，这就促进了可编程逻辑器件的发展 。严格地说，有些可编程器件出现的时间比 ASIC 出现的早，这里说的可编程器件主要是指 CPLD/FPGA 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;可编程逻辑器件&lt;/strong&gt;（Programmable Logic Device,&lt;a href="http://en.wikipedia.org/wiki/Programmable_logic_devices"&gt;&lt;code&gt;PLD&lt;/code&gt;&lt;/a&gt;）是一种用来搭建可重配置数字电路的电子器件。和逻辑门（logic gate）不同，PLD 出厂时逻辑功能是没有被定义的，在使用之前，必须先重配置（reconfigure）。&lt;/p&gt;
-&lt;h3&gt;History&lt;/h3&gt;
+&lt;h3&gt;历史&lt;/h3&gt;
 &lt;h4&gt;ROM as PLD&lt;/h4&gt;
 &lt;p&gt;在 PLD 器件被发明之前，就已经有人 &lt;em&gt;将 &lt;a href="http://en.wikipedia.org/wiki/Read-only_memory"&gt;ROM&lt;/a&gt; 以 PLD 的概念来运用&lt;/em&gt;，用 ROM 芯片来充当一些输入性的组合逻辑（combinatorial logic）的函数发生器。ROM 有 m 个地址线，则有 &lt;code&gt;n = 2^m&lt;/code&gt; 个输出结果，这和布尔逻辑是一一对应的，所以如果把 ROM 的地址线当作相互之间没有关系的输入，则相应的输出就可以实现不同的函数。&lt;/p&gt;
 &lt;p&gt;早期的 Mask ROM 存储数据的方式是使用内部的硬件电路，所以只能在出厂时就写入数据，而且以后不能更改。这就导致了一系列缺点：&lt;/p&gt;
@@ -185,7 +188,7 @@
 &lt;/ol&gt;
 &lt;p&gt;而且，大部分 ROM 没有输出寄存器，所以它不能直接应用在时序电路中，所以在状态机的设计中，通常还需要一个外部的 TTL 寄存器 。对电路设计的业余爱好者来说，有时也仍然用“2716”之类的普遍型EPROM芯片来充当PLD，这种用法有时也称为“穷人的PAL”。（PAL也是PLD的一种，以下将再进一步说明）&lt;/p&gt;
 &lt;p&gt;于是，就出现了 PLD 器件。&lt;/p&gt;
-&lt;h4&gt;early programmable logic&lt;/h4&gt;
+&lt;h4&gt;早期可编程逻辑&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;1969 年，Motorola 生产出 XC157，它是一个有 12 个逻辑门和 30 个独立输入/输出管脚的可编程逻辑正列。&lt;/p&gt;
@@ -239,7 +242,7 @@
 &lt;p&gt;从 1985 开始到 90 年代中期，Xilinx 一直处于高速发展阶段，之后竞争对手出现了，截至 1993 年，Actel 占据了 18% 的市场 。&lt;/p&gt;
 &lt;p&gt;90 年代是 FPGA 爆炸式发展的年代，这一期间出现了大量高端技术和产品。在 90 年代初期，FPGA 主要应用于通信领域，在 90 年代后期，FPGA 已经广泛应用于消费品、汽车和工业应用 。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;Why FPGA&lt;/h2&gt;
+&lt;h2&gt;为什么选择 FPGA&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;h3&gt;FPGA vs ASIC&lt;/h3&gt;
 &lt;p&gt;ASIC 的优点：&lt;/p&gt;
@@ -263,7 +266,7 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;p&gt;两家一直是互为竞争对手，一般来说，大学里面都 Altera 的器件和 VHDL 上课，所以在学校里面用 Xilinx 的人比较少 。&lt;/p&gt;
 &lt;p&gt;因为原理是一样的，所以只要学会一种，另一种就很容易上手。学校实验室里面用的是 Xilinx 。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;Xilinx FPGA Architecture&lt;/h2&gt;
+&lt;h2&gt;Xilinx FPGA Architecture（架构）&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;FPGA 需要反复烧写，所以不能像 ASIC 一样通过固定的与非门来完成，只能采用一种易于反复配置的结构，查找表就可以很好的满足这一要求。目前主流 FPGA 都是采用了基于 SRAM 工艺的查找表结构（军品和宇航级 FPGA 采用 Flash或者熔丝/反熔丝工艺），通过烧写文件改变查找表内容的方法来实现对 FPGA 的重复配置。&lt;/p&gt;
 &lt;p&gt;查找表（look-up table，LUT）本质上就是一个 RAM 。当用户通过原理图或 HDL 语言描述了一个电路以后，FPGA 开发软件会计算逻辑电路的所有可能结果，并把真值表事先写入 RAM，这样，每输入一个信号进行逻辑运算就相当于输入一个地址进行查找，这样 LUT 就具有了和逻辑电路相同的功能 。实际上，LUT 具有更快的执行速度和更大的规模 。&lt;/p&gt;
@@ -284,7 +287,7 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Xilinx 主流 FPGA&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Xilinx 主流的 FPGA 主要有A系列、K系列、V系列、Spartan系列，如今还有最新的 Zynq 系列，官网上有详细介绍 。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;Development&lt;/h2&gt;
+&lt;h2&gt;开发流程&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;FPGA 的开发流程如下图所示：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="design flow" src="/images/learning-fpga-getting-started/design-flow.jpg" /&gt;&lt;/p&gt;
@@ -318,12 +321,16 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;p&gt;下载，在线调试&lt;/p&gt;
 &lt;p&gt;将设计下载到芯片中调试。&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</summary><category term="FPGA"></category></entry><entry><title>Install ISE &amp; ModelSim</title><link href="http://guqian110.github.io/pages/2014/03/27/install-ise-modelsim.html" rel="alternate"></link><updated>2014-03-27T20:52:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-03-27:pages/2014/03/27/install-ise-modelsim.html</id><summary type="html">&lt;p&gt;从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来。&lt;/p&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Programmable_logic_devices"&gt;PLD wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Field-programmable_gate_array"&gt;FPGA wikipedia&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category></entry><entry><title>Install ISE &amp; ModelSim</title><link href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim.html" rel="alternate"></link><updated>2014-03-27T20:52:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-03-27:pages/2014/03/27/install_ise_modelsim.html</id><summary type="html">&lt;p&gt;从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;软件版本：&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Ubuntu 13.10 Desktop amd64 &lt;/p&gt;
 &lt;p&gt;ISE 14.7 for Linux&lt;/p&gt;
 &lt;p&gt;ModelSim 6.5b for Linux&lt;/p&gt;
-&lt;h2&gt;Download&lt;/h2&gt;
+&lt;h2&gt;下载&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;h3&gt;ISE Design Suit for Linux&lt;/h3&gt;
 &lt;p&gt;Xilinx 官方网站上有&lt;a href="https://secure.xilinx.com/webreg/register.do?group=dlc&amp;amp;htmlfile=&amp;amp;emailFile=&amp;amp;cancellink=&amp;amp;eFrom=&amp;amp;eSubject=&amp;amp;version=14.7&amp;amp;akdm=1&amp;amp;filename=Xilinx_ISE_DS_Lin_14.7_1015_1.tar"&gt;下载链接&lt;/a&gt;，但是在校园网内下载速度实在是蛋疼，还好有校内 bt 资源。&lt;/p&gt;
@@ -332,7 +339,7 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;p&gt;网上的教程（2011 年前）都说是 &lt;a href="http://www.mentor.com/products/fpga/model"&gt;ModelSim 官方网站&lt;/a&gt; 上提供 ftp 下载链接，但是好像现在官网上不再提供下载链接了，我只找到 ModelSim PE Student Edition，而且还是 Windows 平台的...&lt;/p&gt;
 &lt;p&gt;花费了一下午的时间，不停地在各个论坛注册下载附件，终于把 ModelSim_6.5b for Linux 下载下来了,结果安装时提示找不到 &lt;code&gt;libxp.so.6&lt;/code&gt; 库，于是 &lt;code&gt;apt-get&lt;/code&gt; 到一些 &lt;code&gt;libxp&lt;/code&gt; 的库，安装后仍然提示找不到，无奈放弃了，准备老老实实用 &lt;code&gt;ism&lt;/code&gt; 了（以后有时间了再慢慢折腾 T_T）&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;h2&gt;安装&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;h3&gt;ISE DS 14.7&lt;/h3&gt;
 &lt;p&gt;首先解压&lt;/p&gt;
@@ -416,7 +423,7 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;h3&gt;ModelSim&lt;/h3&gt;
 &lt;p&gt;待续...&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;Configure ISE &amp;amp; ModelSim&lt;/h2&gt;
+&lt;h2&gt;配置 ISE &amp;amp; ModelSim&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;h3&gt;ISE&lt;/h3&gt;
 &lt;p&gt;其实也没有特殊配置的地方，主要是自定义代码编辑器，目前我的主要使用的是 &lt;code&gt;sublime text 2&lt;/code&gt;，正在向 &lt;code&gt;vim&lt;/code&gt; 过度ing&lt;/p&gt;
@@ -430,8 +437,7 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;p&gt;ModelSim 编译 Xilinx库，ISE 关联 ModelSim&lt;/p&gt;
 &lt;p&gt;待续...&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://rmdir.de/~michael/xilinx/"&gt;XILINX JTAG tools on Linux without proprietary kernel modules&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.george-smart.co.uk/wiki/Xilinx_JTAG_Linux"&gt;Xilinx JTAG Linux&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.csdn.net/yunz1994/article/details/12350071"&gt;【Linux软件安装】Ubuntu12.04: Xilinx ISE 14.6&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="Linux"></category></entry></feed>

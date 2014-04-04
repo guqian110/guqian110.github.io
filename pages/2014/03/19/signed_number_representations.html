@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>原码、反码、补码 - Coding Life</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link href="http://guqian110.github.io/theme/images/favicon.png" rel="icon">
+    
+                            <!-- Open Graph tags -->
+                <meta property="og:site_name" content="Coding Life" />
+                    <meta property="og:type" content="article"/>
+            <meta property="og:title" content="原码、反码、补码"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2014/03/19/signed_number_representations.html"/>
+            <meta property="og:description" content="最近找到一本好书——《编码: 隐匿在计算机软硬件背后的语言》 。作者是大名鼎鼎的 Charles Petzold 。看到用继电器搭建加法器、减法器，讨论二进制编码方式那章，想起一直不是很清楚的原码、反码、补码等，果断 Google、Wiki，于是总结出下文 。"/>
+            <meta property="article:published_time" content="2014-03-19" />
+                        <meta property="article:section" content="Others" />
+                                    <meta property="article:tag" content="Code" />
+                        
+    <!-- Bootstrap -->
+            <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+        <link href="http://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://guqian110.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
+            <link rel="stylesheet" href="http://guqian110.github.io/theme/css/style.css" type="text/css"/>
+    
+            <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Coding Life ATOM Feed"/>
+        
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://guqian110.github.io/" class="navbar-brand">
+                <img src="http://guqian110.github.io/theme/images/favicon.png" width=""/>                 Coding Life            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                                                                                                                                <li >
+                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                                            <li >
+                            <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
+                        </li>
+                                            <li >
+                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                                            <li class="active">
+                            <a href="http://guqian110.github.io/category/others.html">Others</a>
+                        </li>
+                                                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://guqian110.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+                <div class="col-sm-9">
+                                        <ol class="breadcrumb">
+                <li><a href="http://guqian110.github.io" title="Coding Life"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="http://guqian110.github.io/category/others.html" title="Others">Others</a></li>
+                <li class="active">原码、反码、补码</li>
+            </ol>
+            
+            <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://guqian110.github.io/pages/2014/03/19/signed_number_representations.html"
+                       rel="bookmark"
+                       title="Permalink to 原码、反码、补码">
+                        原码、反码、补码
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+                        <footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-03-19T14:31:00"> Wed 19 March 2014</time>
+    </span>
+                    
+            
+    
+    <span class="label label-default">Tags</span>
+	<a href="http://guqian110.github.io/tag/code.html">Code</a>
+            
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>最近找到一本好书——<a href="http://book.douban.com/subject/4822685/">《编码: 隐匿在计算机软硬件背后的语言》</a>。作者是大名鼎鼎的 <a href="http://en.wikipedia.org/wiki/Charles_Petzold">Charles Petzold</a> (<a href="http://charlespetzold.com/">个人网站</a>)。书的介绍也很有意思，据说完全不懂计算机的人也能看懂...于是买了本来拜读一下（这种文章当然是英文版最好了，只是学生党没银子，只好买翻译版了）</p>
+<p>看到用继电器搭建加法器、减法器，讨论二进制编码方式那章，想起一直不是很清楚的原码、反码、补码等，果断 <a href="https://www.google.com.hk/">Google</a>、<a href="http://en.wikipedia.org/wiki/Main_Page">Wiki</a>，于是总结出下文。</p>
+<p><br></p>
+<h2>基本概念</h2>
+<hr />
+<h3>机器数</h3>
+<p>顾名思义，一个数字在机器中的存储方式，“<em>数</em> ” 是指 有符号数（<code>signed number</code>），即包含了正负号的数，“<em>机器</em> ” 当然是指计算机（<code>Computer</code>）了。</p>
+<p>从小学毕业，刚进入初中，我们就知道数字是有符号的：<em>正数</em> &amp; <em>负数</em>。但是在计算机的哲学体系中，整个世界只有两个元素：0 &amp; 1 ，没有额外的专门表示正负号的符号。怎么办呢？解决方法就是添加一位来表示符号。于是，人们约定把符号位放在一个数字的 <em>最高有效位</em>（Most significant bit, <code>MSB</code>），在<a href="http://zh.wikipedia.org/wiki/%E5%AD%97%E8%8A%82%E5%BA%8F#.E5.A4.A7.E7.AB.AF.E5.BA.8F">大端序</a>中，<code>MSB</code> 指的是一个二进制数的最左边的一位。一般，<code>MSB</code> 等于 0  表示正数，1 表示负数。</p>
+<h3>真值</h3>
+<p>因为机器数中有一位表示符号，所以机器数的形式值不等于真正的数值，机器数对应的数值称为机器数的 <em>真值</em>。</p>
+<p><br>
+举个栗子：</p>
+<p>用 8 bit 表示一个数字，因为有符号位的存在，可以表示的范围为 (-127, -0, +0, +127) 。</p>
+<div class="highlight"><pre><span class="c"># +5 的 机器数 = 0000_0101 ；真值 = + 000_0101</span>
+
+<span class="c"># -5 的 机器数 = 1000_0101 ；真值 = - 000_0101</span>
+</pre></div>
+
+
+<p>这种机器数的编码方式称为 <a href="http://en.wikipedia.org/wiki/Signed_magnitude#Signed_magnitude_representation"><em>原码</em></a> (<code>signed-magnitude</code>) ，是机器数编码方式中的一种。</p>
+<p><br></p>
+<blockquote>
+<p><em>The four best-known methods of extending the binary numeral system to represent signed numbers are: sign-and-magnitude, ones' complement, two's complement, and excess-K.</em></p>
+<p><em>There is no definitive criterion by which any of the representations is universally superior. The representation used in most current computing devices is two's complement, although the Unisys ClearPath Dorado series mainframes use ones' complement.</em>
+（<a href="http://en.wikipedia.org/wiki/Signed_number_representations">Wikipeida</a>）</p>
+</blockquote>
+<p><br></p>
+<p>下面分别讨论：</p>
+<p><br></p>
+<h2>机器数表示法</h2>
+<hr />
+<h3>原码（sign and magnitude）</h3>
+<h4>编码规则</h4>
+<div class="highlight"><pre><span class="c"># 正数：  0_xxxxxxx</span>
+
+<span class="c"># 负数：  1_xxxxxxx</span>
+</pre></div>
+
+
+<p>8 bit 的原码可以表示的范围是 [ -127, -0, +0, +127 ]，共 255 个数</p>
+<h4>计算法则</h4>
+<div class="highlight"><pre><span class="c"># 两数符号相同：  低位相加，最高位的符号位不变（当低位相加产生进位时，溢出 Overflow）</span>
+
+<span class="c"># 两数符号不同：  比较绝对值的大小，差的绝对值 = 大数 - 小数 ，符号位和大数的符号位相同</span>
+</pre></div>
+
+
+<h4>缺点</h4>
+<ol>
+<li>
+<p>电路复杂</p>
+<ul>
+<li>从前面的计算方法中可以看到，原码中的符号位不能直接参与运算，必须要单独的线路来确定符号位</li>
+<li>原码的计算不能避免减法运算，加法运算是产生 <em>进位</em>，减法运算需要 <em>借位</em>，这是两种不同的运算过程，需要额外的电路把 <code>加法器</code> 改造为 <code>减法器</code>（<a href="http://www.charlespetzold.com/code/">《编码》</a>这本书里面有详细介绍 如何使用继电器搭建 加法器 和 减法器）</li>
+</ul>
+</li>
+<li>
+<p>0的表示不唯一</p>
+<ul>
+<li>0可以编码为两种方式： <code>0000_0000</code> 和 <code>1000_0000</code>，进一步增加了逻辑的复杂性</li>
+</ul>
+</li>
+</ol>
+<h4>总结</h4>
+<p>This approach is directly comparable to the common way of showing a sign (placing a "+" or "−" next to the number's magnitude). Some early binary computers (e.g., <a href="http://en.wikipedia.org/wiki/IBM_7090">IBM 7090</a>) used this representation, perhaps because of its natural relation to common usage. Signed magnitude is the most common way of representing the significand in floating point values.
+（<a href="http://en.wikipedia.org/wiki/Signed_magnitude#Signed_magnitude_representation">Wiki</a>）</p>
+<p><br></p>
+<blockquote>
+<p><em>虽然 <code>原码</code> 的编码方式最接近人类的习惯，但是，并不适合在计算机中使用，为了解决原码计算中的一些问题，于是 <code>反码</code> 就出现了</em></p>
+</blockquote>
+<p><br></p>
+<h3>反码（one's complement）</h3>
+<p>首先，来看看 <a href="http://www.charlespetzold.com/code/">Code</a> 中介绍了基于10进制的补码：</p>
+<p>实现一个减法</p>
+<p><code>253 - 176 =？</code></p>
+<p>按照我们从数学课上学习到知识，这个计算需要进行 <em>借位</em> 操作，为了避免这个在计算机中很难实现的操作，可以稍微变化一下计算过程</p>
+<p><code>253 + (999-176) + 1 - 1000 = ?</code></p>
+<p>在这个过程中，用两个减法代替了原来的一个减法，避免了烦琐的 <em>借位</em> 操作。在这个运算中，负数 <code>-176</code> 转化为另外一个数 <code>999 - 176</code> ，这个数称为它的 <code>9 的补数(nine's complement)</code> 。</p>
+<p>这个运算的关键在于：<em>把负数用 9 的补数表示，减法转化为加法</em> 。同理，我们推广到 2 进制，就得到了 <code>1 的补数(one's complement)</code> 。</p>
+<p>把减数从一串 1 当中减去，结果就称为这个数的 “1 的补数”，在求 1 的补数的时候，其实并不需要做减法，因为求 1 的补数，只需要将原来的 1 变为 0 ，0 变为 1 即可，也就是取反，在电路中只需要一个反向器就可以实现，所以 <code>1 的补数</code> 也称为 <code>反码</code> 。</p>
+<p>从上面的描述就可以很容易写出反码的编码规则</p>
+<h4>编码规则</h4>
+<div class="highlight"><pre><span class="c"># 正数    反码 = 原码</span>
+
+<span class="c"># 负数    反码 = 符号位不变，其他位取反</span>
+</pre></div>
+
+
+<p>8 bit 的反码可以表示的范围是 [ -127, -0, +0, +127 ]，共 255 个数</p>
+<h4>计算法则</h4>
+<p>反码的计算不用区分符号和绝对值，直接进行计算，计算结果若有溢出，需要将溢出加到最低位，这种操作称为 “循环进位”（end-around carry）</p>
+<h4>优缺点</h4>
+<ol>
+<li>
+<p>优点，电路简单</p>
+<ul>
+<li>因为不需要把符号和绝对值分开考虑，正数和负数的加法都一样算，所以反码计算不需要单独的判断符号的电路，也不需要判断两个数绝对值相对大小的电路</li>
+<li>节省了减法器，只需要一组额外的反向器就能把加法器改进为可以计算 加 / 减法</li>
+</ul>
+</li>
+<li>
+<p>缺点</p>
+<ul>
+<li>计算机中仍然需要进行 “循环进位” 的硬件电路，但是这种复杂度的电路是可以接受的</li>
+<li>0的表示不唯一，0的编码仍然有两种方式： <code>0000_0000</code> 和 <code>1111_1111</code></li>
+</ul>
+</li>
+</ol>
+<p><br></p>
+<h4>总结</h4>
+<p>The <a href="http://en.wikipedia.org/wiki/PDP-1">PDP-1</a>, <a href="http://en.wikipedia.org/wiki/CDC_160_series">CDC 160 series</a>, <a href="http://en.wikipedia.org/wiki/CDC_6000_series">CDC 6000 series</a>, <a href="http://en.wikipedia.org/wiki/UNIVAC_1100">UNIVAC 1100 series</a>, and the <a href="http://en.wikipedia.org/wiki/LINC">LINC</a> computer used ones' complement representation.（<a href="http://en.wikipedia.org/wiki/Signed_number_representations#Ones.27_complement">Wiki</a>）</p>
+<p><br></p>
+<blockquote>
+<p><em><code>反码</code> 中仍然没有避免 0 有两种编码方式的问题，虽然对于人来说，+0 和 -0 没有区别，但是对于计算机来说，判断一个数是否为0，要进行两次判断。为了解决 0 的表示问题和硬件上的 “循环进位”，于是人们又发明了 <code>补码</code></em></p>
+</blockquote>
+<p><br></p>
+<h3>补码（two's complement）</h3>
+<p>前面介绍的</p>
+<p><code>253 - 176 =？</code></p>
+<p>按照反码的方法可以转换为</p>
+<p><code>253 + (999-176) + 1 - 1000 = ?</code></p>
+<p>如果我们稍微再变形一下，就有</p>
+<p><code>253 + (1000 - 176) - 1000 = ?</code></p>
+<p>在这个运算中 <code>-176</code> 转化为 <code>1000 - 176</code>，这个数称为它的 <code>10 的补数(ten's complement)</code> 。</p>
+<p>这个运算的关键在于：<em>把负数用 10 的补数表示，减法转化为加法</em> 。同理，我们推广到 2 进制，就得到了 <code>2 的补数(two's complement)</code> 。</p>
+<p>因为对一位二进制数 b 取补码就是 <code>1 - b + 1 = 10 - b</code>，相当于从 2 里面减去 b ,所以，这种方法称为 <code>2 的补数</code>，这种编码方式简称 <code>补码</code> 。</p>
+<p>举例说明，要表示 -4 ，需要对 <code>0000_0100</code>取补码，<code>1111_1111 - 0000_0100 + 1 = 1_0000_0000 - 0000_0100</code>，相当于从2^8里面减去 4 。</p>
+<p>从上面的计算过程可以很容易写出补码的编码规则</p>
+<h4>编码规则</h4>
+<div class="highlight"><pre><span class="c"># 正数    补码 = 原码</span>
+
+<span class="c"># 负数    补码 = 反码 + 1</span>
+</pre></div>
+
+
+<p>8 bit补码可以表示的范围是 [ -128, 0 , +127 ]，共 256 个数 。</p>
+<p>目前大多数计算机内部使用的都是补码，所以对于编程中的 32 位 <code>int</code> 型变量，它可以表示的范围就是 [ -2^32, +2^32 - 1] 。</p>
+<p>P.S. -128 没有对应的 原码 和反码，它的补码为 <code>1000_0000</code> 。</p>
+<h4>计算法则</h4>
+<p>采用补码的系统，减法转换成加法（减法等同于加上一个负数，所以不再有减法），忽略计算结果最高位的进位，不必加回到最低位上去。</p>
+<h4>优点</h4>
+<ul>
+<li>电路简单，从计算法则中可以看到，不用考虑 “循环进位” 的问题，所以，补码系统的电路是最简单的，这也是补码系统应用最广泛的原因</li>
+<li>0 的表示是唯一的，<code>0000_0000</code>，不再有 -0 的困扰</li>
+</ul>
+<h4>补码中的数学原理</h4>
+<p>补码能将减法转化为加法，其数学原理就是 <em>模</em> 。</p>
+<p>举个栗子：</p>
+<div class="highlight"><pre><span class="c"># 如果有个手表的时间为6点，实际时间为4点，那么如何校准呢？</span>
+
+<span class="c"># 答案有两种方法：</span>
+
+<span class="c">#   1. 逆时针转动  2，也就是做 减法 6 - 2 = 4</span>
+<span class="c">#   2. 顺时针转动 10, 也就是做 加法 (6 + 10) mod 12 = 4</span>
+</pre></div>
+
+
+<p>从这个例子中就可以很明白的看到 <em>减法</em> 是如何转化为 <em>加法</em> 的，也就是如何将一个 <em>负数</em> 转化为 <em>正数</em>的 。</p>
+<p>即有公式：</p>
+<p><code>A - B = A + (-B + M)</code></p>
+<p>这个式子中的 <code>-B + M</code> 即为 <code>B</code> 的 <em>补数</em> （类似于几何中的<em>补角</em>） 。</p>
+<h4>溢出问题（摘自 <a href="http://baike.baidu.com/view/60437.htm">百度百科</a>）</h4>
+<p>无论采用何种机器数，只要运算的结果大于数值设备所能表示数的范围，就会产生溢出。 溢出现象应当作一种故障来处理，因为它使结果数发生错误。异号两数相加时，实际是两数的绝对值相减，不可能产生溢出，但有可能出现正常进位；同号两数相加时，实际上是两数的绝对值相加，既可能产生溢出，也可能出现正常进位。</p>
+<p>由于补码运算存在符号位进位自然丢失而运算结果正确的问题，因此，应区分补码的溢出与正常进位。</p>
+<p>详细论证过程不再复制粘贴了...直接给出结论</p>
+<p>结论：在相加过程中最高位产生的进位和次高位产生的进位如果相同则没有溢出，如果不同则表示有溢出。逻辑电路的实现可以把这两个进位连接到一个异或门，把异或门的输出连接到溢出标志位。</p>
+<h4>总结</h4>
+<p>由 <em>“减去一个数 = 加上一个负数”</em>，计算机系统内部就不再有减法操作</p>
+<p>由 <em>“负数的表示由取模运算转变为补码表示”</em>，计算机系统就可以用一个正数来表示负数</p>
+<p>所以，计算机内部只需要加法器就可以完成 加减法 和 正负数 的表示 。</p>
+<blockquote>
+<p><em>Two's complement is the easiest to implement in hardware, which may be the ultimate reason for its widespread popularity. Processors on the early mainframes often consisted of thousands of transistors – eliminating a significant number of transistors was a significant cost savings. Mainframes such as the IBM System/360, the GE-600 series, and the PDP-6 and PDP-10 used two's complement, as did minicomputers such as the PDP-5 and PDP-8 and the PDP-11 and VAX. The architects of the early integrated circuit-based CPUs (Intel 8080, etc.) chose to use two's complement math. As IC technology advanced, virtually all adopted two's complement technology. x86, m68k, Power Architecture, MIPS, SPARC, ARM, Itanium, PA-RISC, and DEC Alpha processors are all two's complement.</em>(<a href="http://en.wikipedia.org/wiki/Signed_number_representations#Two.27s_complement">Wiki</a>)</p>
+</blockquote>
+<p><br/></p>
+<h2>有符号数和无符号数（摘自 <a href="http://learn.akae.cn/media/ch14s03.html">整数的加减运算</a>）</h2>
+<hr />
+<p>如果把所有的位数都用来表示数值的大小，那么8 bit 二进制数可以表示的范围是 [0, 255] ，这种称为无符号数 。其实计算机做加法时并不区分操作数是有符号数还是无符号数，计算过程都一样 。</p>
+<p>举个栗子：</p>
+<div class="highlight"><pre>    <span class="c">#   1000_0010              130                  -126</span>
+    <span class="c"># + 1111_1000     =&gt;   +   256          =&gt;  +   -  8</span>
+    <span class="c"># --------------      ---------------      -----------</span>
+    <span class="c"># 1_0111_1010              122 + 256             122</span>
+
+    <span class="c">#                        无符号数（ok）        有符号数（error）</span>
+</pre></div>
+
+
+<p>计算机的加法器在做完计算之后，根据最高位产生的进位设置 <em>进位标志</em> ，同时根据最高位和次高位产生的进位的异或设置 <em>溢出标志</em> 。</p>
+<p>如果看作无符号数130和248相加，计算结果是122进1，也就是122+256，这个结果是对的; 如果把这两个操作数看作有符号数-126和-8相加，计算结果是错的，因为产生了溢出 。</p>
+<p>至于这个加法到底是有符号数加法还是无符号数加法则取决于程序怎么理解了，如果程序把它理解成有符号数加法，下一步就要检查溢出标志，如果程序把它理解成无符号数加法，下一步就要检查进位标志。</p>
+<p>通常计算机在做算术运算之后还可能设置另外两个标志，如果计算结果的所有bit都是零则设置零标志，如果计算结果的最高位是1则设置负数标志，如果程序把计算结果理解成有符号数，也可以检查负数标志判断结果是正是负。</p>
+<p><br></p>
+<hr />
+<p>从 <code>原码</code> 到 <code>反码</code>，再到 <code>补码</code>，可以清楚看到为了解决问题而改进的技术路线，虽然这些是非常基础知识，可能对我们对写程序没有很大的帮助，但是搞清楚这些不仅让你对计算机底层更加了解，更加关键的是 <em>这个学习过程</em> 和 <em>解决编码问题的思路</em> 。</p>
+<p><br></p>
+<h2>参考文献</h2>
+<p><a href="http://en.wikipedia.org/wiki/Signed_number_representations">Signed number representations——Wiki</a>
+<a href="http://en.wikipedia.org/wiki/Ones'_complement">Ones' complement</a>
+<a href="http://en.wikipedia.org/wiki/Two's_complement">Two's complement</a>
+<a href="http://learn.akae.cn/media/ch14s03.html">整数的加减运算</a>
+<a href="http://baike.baidu.com/view/60437.htm">机器数——百度百科</a></p>
+            </div>
+            <!-- /.entry-content -->
+                                        <hr />
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+                        var disqus_identifier = 'signed_number_representations';
+                        var disqus_url = 'http://guqian110.github.io/pages/2014/03/19/signed_number_representations.html';
+            var disqus_config = function () {
+                this.language = "zh";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+	        <div class="col-sm-3" id="aboutme">
+            <p>
+    <strong>About Chien Gu</strong><br/>
+    BYR + Programmer + Rocker
+</p>        </div>
+		        <div class="col-sm-3 well well-sm" id="sidebar">
+            
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                                        <li class="list-group-item"><a href="https://github.com/guqian110"><i
+                            class="fa fa-github-square fa-lg"></i> GitHub
+                    </a></li>
+                                        <li class="list-group-item"><a href="https://plus.google.com/u/0/+QianGu/about"><i
+                            class="fa fa--pluschien-square fa-lg"></i> +Chien
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://weibo.com/u/2108188007"><i
+                            class="fa fa-@chien-square fa-lg"></i> @Chien
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://www.douban.com/people/51504735/"><i
+                            class="fa fa-豆瓣-square fa-lg"></i> 豆瓣
+                    </a></li>
+                                        <li class="list-group-item"><a href="http://www.zhihu.com/people/chiengu"><i
+                            class="fa fa-知乎-square fa-lg"></i> 知乎
+                    </a></li>
+                                      </ul>
+                </li>
+            
+            
+            
+                                                                                <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group " id="tags">
+                                            <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/cc.html">
+                                C/C++
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/book.html">
+                                Book
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/others.html">
+                                Others
+                            </a>
+                        </li>
+                                        </ul>
+                </li>    
+                        
+    <li class="list-group-item"><h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+        <div id="gh_repos">
+            <p class="list-group-item">Status updating...</p>
+        </div>
+            </li>
+                            <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+                <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+                <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+                <li class="list-group-item">
+            <a href="http://jinja.pocoo.org/" target="_blank">
+                Jinja2
+            </a>
+        </li>
+              </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
+	    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+                                       <div class="col-xs-10">&copy; 2014 Chien Gu
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                            <p><small>            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+        Content
+    licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+                     </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://guqian110.github.io/theme/js/respond.min.js"></script>
+
+                                    <script type="text/javascript">
+        $(document).ready(function () {
+            if (!window.jXHR) {
+                var jxhr = document.createElement('script');
+                jxhr.type = 'text/javascript';
+                jxhr.src = 'http://guqian110.github.io/theme/js/jXHR.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(jxhr, s);
+            }
+
+            github.showRepos({
+                user: 'guqian110',
+                count: 5,
+                skip_forks: false,
+                target: '#gh_repos'
+            });
+        });
+    </script>
+    <script src="http://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '48826831']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</body>
+</html>
