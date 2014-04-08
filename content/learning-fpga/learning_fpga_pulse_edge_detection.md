@@ -14,7 +14,7 @@ Summary: 总结 FPGA 中的脉冲边沿检测方法
 * * *
 
 
-![pulse](/images/learning_fpga_pulse_edge_detection/pulse.jpg)
+![pulse](/images/learning-fpga-pulse-edge-detection/pulse.jpg)
 
 如图，任何一个脉冲既有上升沿也有下降沿，系统的时钟周期一定要比脉冲宽度小，而且越小越好，即频率越高越好 。
 
@@ -165,13 +165,13 @@ Summary: 总结 FPGA 中的脉冲边沿检测方法
 
 理想的键盘输入特性：
 
-![keyboard1](images/learning-fpga-pulse-edge-detection/keyboard1.png)
+![keyboard1](/images/learning-fpga-pulse-edge-detection/keyboard1.png)
 
 然而实际的键盘受制造工艺等影响，其输入特性不可能如上图完美 。当按键按下时，在触点即将接触到完全接触这段时间里，键盘的通断状态很可能已经改变了多次 。即在这段时间里，键盘输入了多次逻辑 0 和 1，也就是输入处于失控状态 。如果这些输入被系统响应，则系统暂时也将处于失控状态，这是我们要尽量避免的 。在触点即将分离到完全分离这段时间也是一样的 。
 
 实际的键盘输入特性：
 
-![keyboard2](images/learning-fpga-pulse-edge-detection/keyboard2.jpg)
+![keyboard2](/images/learning-fpga-pulse-edge-detection/keyboard2.jpg)
 
 **软件消抖** 要占用系统资源，在系统资源充足的情况下使用软件消抖更加简单 。软件消抖的实质在于降低键盘输入端口的采样频率，将高频抖动略去 。实际应用中通常采用延时跳过高频抖动区间，然后再检测输入做出相应处理。一般程序代码如下：
 

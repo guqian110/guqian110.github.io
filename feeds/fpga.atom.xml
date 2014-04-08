@@ -3,7 +3,7 @@
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;脉冲边沿检测原理&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;p&gt;&lt;img alt="pulse" src="/images/learning_fpga_pulse_edge_detection/pulse.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pulse" src="/images/learning-fpga-pulse-edge-detection/pulse.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;如图，任何一个脉冲既有上升沿也有下降沿，系统的时钟周期一定要比脉冲宽度小，而且越小越好，即频率越高越好 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;脉冲边沿的特点就是：边沿两侧的电平发生了变化 。&lt;/strong&gt; 利用这一点，我们就可以设计出检测边沿的方法 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;操作方法：&lt;/strong&gt; 建立 2 个寄存器，形成二级寄存器，在时钟触发中，首先把数据送入第一个寄存器中，然后在下一个时钟上沿到来时，将第一个寄存器中的数据存入第二个寄存器，也就是说第二个寄存器中的数据始终比第一个寄存器晚一个周期，即晚一个数据 。根据系统时钟检测，如果前后进来的信号发生了变化，可以用异或运算，异或结果为1，说明电平发生了变化，有边沿产生。&lt;/p&gt;
@@ -126,10 +126,10 @@
 &lt;h2&gt;脉冲边沿检测应用&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;理想的键盘输入特性：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="keyboard1" src="images/learning-fpga-pulse-edge-detection/keyboard1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="keyboard1" src="/images/learning-fpga-pulse-edge-detection/keyboard1.png" /&gt;&lt;/p&gt;
 &lt;p&gt;然而实际的键盘受制造工艺等影响，其输入特性不可能如上图完美 。当按键按下时，在触点即将接触到完全接触这段时间里，键盘的通断状态很可能已经改变了多次 。即在这段时间里，键盘输入了多次逻辑 0 和 1，也就是输入处于失控状态 。如果这些输入被系统响应，则系统暂时也将处于失控状态，这是我们要尽量避免的 。在触点即将分离到完全分离这段时间也是一样的 。&lt;/p&gt;
 &lt;p&gt;实际的键盘输入特性：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="keyboard2" src="images/learning-fpga-pulse-edge-detection/keyboard2.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="keyboard2" src="/images/learning-fpga-pulse-edge-detection/keyboard2.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;软件消抖&lt;/strong&gt; 要占用系统资源，在系统资源充足的情况下使用软件消抖更加简单 。软件消抖的实质在于降低键盘输入端口的采样频率，将高频抖动略去 。实际应用中通常采用延时跳过高频抖动区间，然后再检测输入做出相应处理。一般程序代码如下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;         &lt;span class="c1"&gt;//一旦检测到键值&lt;/span&gt;
     &lt;span class="p"&gt;{&lt;/span&gt;
