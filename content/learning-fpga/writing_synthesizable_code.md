@@ -39,14 +39,18 @@ Verilog HDL 也形成于差不多的年代，是由 Gateway Design Automation �
 
 ### 所有综合工具都支持的语法：
 
+```Verilog
     always, assign, begin, end, 
     wire, tri, inout, aupply0, supply1, input, reg, integer, default, 
     and, nand, or, nor, xor, xnor, buf, not, bufif0,bufif1, notif0, notif1, 
     if, case, for, function, instantitation, module, negedge, posedge, operators, output, parameter  
+```
 
 ### 有些工具支持，有些工具不支持的语法：
 
+```Verilog
     asex, casez, wand, triand, wor, trior, real, disable, forever, arrays, memories, repreat, task,while
+```
 
 ### 建立可综合模块的原则
 
@@ -86,7 +90,9 @@ Verilog HDL 也形成于差不多的年代，是由 Gateway Design Automation �
 
 ### 不可综合语法：
 
+```Verilog
     time, defparam, $finish, fork, join, initial, delays, UDP, wait
+```
 
 + `initial` 只能在 Testbench 中使用，不能综合
 
@@ -121,8 +127,10 @@ Verilog HDL 也形成于差不多的年代，是由 Gateway Design Automation �
 
 用一句简单的话概括：电脑永远没有你聪明 。具体来说，通常 EDA 软件对 HDL 代码的综合能力总是比人差 。对于一段代码，如果你不能想象出一个较直观的硬件实现方法，那 EDA 软件肯定也不行。比如说，加法器、多路选择器是大家都很熟悉的电路，所以类似
 
+```Verilog
         A+B-C
         (A>B)?C:D
+```
 
 这样的运算一定可以综合。而除法、开根、对数等等较复杂的运算，必须通过一定的算法实现，没有直观简单的实现方法，则可以判断那些计算式是不能综合的，必须按它们的算法写出更具体的代码才能实现 。此外，硬件无法支持的行为描述，当然也不能被综合（比如想在 FPGA 上实现 DDR 内存那样的双延触发逻辑，代码很容易写，但却不能实现）。
 

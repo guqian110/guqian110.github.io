@@ -31,7 +31,7 @@ Summary: 总结 FPGA 中的脉冲边沿检测方法
 
 **程序：**
 
-```verilog
+```Verilog
     module DETECT_EDGE (  
         clk,rst_n,trig_in,trig_edge  
         ); 
@@ -77,7 +77,7 @@ Summary: 总结 FPGA 中的脉冲边沿检测方法
 
 **程序：**
 
-```verilog
+```Verilog
     module DETECT_EDGE (  
         clk,rst_n,trig_in,trig_pos_edge,trig_neg_edge  
         );  
@@ -123,7 +123,8 @@ Summary: 总结 FPGA 中的脉冲边沿检测方法
 <br>
 
 **另外一种写法：**
-```verilog
+
+```Verilog
     module DETECT_EDGE (  
         clk,rst_n,trig_in,tirg_pos_edge,trig_neg_edge  
         );  
@@ -175,7 +176,7 @@ Summary: 总结 FPGA 中的脉冲边沿检测方法
 
 **软件消抖** 要占用系统资源，在系统资源充足的情况下使用软件消抖更加简单 。软件消抖的实质在于降低键盘输入端口的采样频率，将高频抖动略去 。实际应用中通常采用延时跳过高频抖动区间，然后再检测输入做出相应处理。一般程序代码如下：
 
-```c
+```C
     if (value == 0)         //一旦检测到键值
     {
         Delay();            //延时20ms，有效滤除按键的抖动
@@ -190,7 +191,7 @@ Summary: 总结 FPGA 中的脉冲边沿检测方法
 
 对于硬件资源丰富的 FPGA 系统，可以使用硬件来减轻软件工作量，通常称之为 **"硬件加速"** 。在按键信号输入到软件系统前用逻辑对其进行一下简单的处理即可实现所谓的"硬件消抖"，代码如下：
 
-```verilog
+```Verilog
     //对输入信号inpio硬件滤波，每20ms采样一次当前值
     reg[18:0] cnt; //20ms计数器
     

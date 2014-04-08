@@ -16,10 +16,10 @@ Summary: 重读经典 C++ Primer，总结 C++ 内置数据类型。
 
 <br>
 
-## Primitive Built-in Types
+## 基本内置类型 
 * * *
 
-### Arithmetic Types
+### 算术类型 
 
 C++ 语言自身定义了一组基本类型来表示不同的数据，如整数、浮点数、字母、bool 类型等，这些类型统称为 *算术类型（Arithmetic type）* 。
 
@@ -29,7 +29,9 @@ C++ 语言自身定义了一组基本类型来表示不同的数据，如整数�
 
 使用 `sizeof()` 操作符可以查询对象或类型的大小（以字节为单位），包含头文件
 
+```C++
     #include <limits>
+```
 
 就可以使用 STL 库中的 `numeric_limits<T>::max` 和 `numeric_limits<T>::min` 查询各个内置内类类型的最大值和最小值。
 
@@ -45,10 +47,13 @@ C++ 语言自身定义了一组基本类型来表示不同的数据，如整数�
 
 整数的基本表示类型是 `int` 。int 类型前面可以加两类修饰说明，表示数据位数长短的 `short` 和 `long` ；表示有无符号的 `signed` 和 `unsigned` 。组合出来的结果就有 4 种：
 
+```C++
     signed short int
     unsigned short int
     signed long int
     unsigned long int
+```
+
 每一种的数据长短和可以表示的范围都不相同。
 
 字符类型有两种：`char` 和 `wchar_t` 。char 用来表示 *基本字符集* 中的字符，wchar_t 用于 *扩展字符集* ，比如汉字和日语 。修饰 int 类型有无符号的 signed 和 unsigned 也可以修饰 char 类型 。
@@ -73,8 +78,10 @@ signed/unsigned 可以描述的类型有 int 和 char 两种，在 C 的标准�
 
 源代码：
 
+```C++
     char ch1 = -1;
     printf("ch1 = %d\n",ch1);
+```
 
 运行结果：
 
@@ -109,7 +116,7 @@ void 类型没有对应的值，仅用在有限的一些情况下，通常用作
 
 <br>
 
-## Initialize
+## 初始化 Initialize
 * * *
 
 ### 初始化 & 赋值
@@ -126,8 +133,10 @@ void 类型没有对应的值，仅用在有限的一些情况下，通常用作
 
 C++ 提供两种初始化变量的方法：复制初始化（`copy-initialization`）和直接初始化（`direct-initialization`）。复制初始化使用 `=`，直接初始化使用 `()` 。
 
+```C++
     int ival = 1024;    // copy-initialization
     int ival (1024);    // direct-initialization
+```
 
 使用 `=` 很容易让人把初始化和赋值混淆在一起，但是在 C++ 中这是两种不同的操作，当涉及到类对象时，两种不同的初始化方式的区别是很微妙的。目前先不考虑这点，只需要知道直接初始化语法更灵活而且效率高。
 
@@ -141,10 +150,10 @@ C++ 提供两种初始化变量的方法：复制初始化（`copy-initializatio
 
 <br>
 
-## Arithmetic Conversions
+## 算术类型转换
 * * *
 
-### Implicit Type Conversion
+### 隐式类型转换
 
 当两个操作数类型不同时，C++ 并不是直接把两个数加在一起，而是提供了一组转换规则，以便在执行算术操作之前，将两个数转换为同一数据类型。这些转换规则由编译器自动执行，不需要程序眼介入，有时甚至不需要程序员了解。因此，它们被称为 隐式类型转换 (`implicit type conversion`) 。
 
@@ -152,25 +161,31 @@ C++ 提供两种初始化变量的方法：复制初始化（`copy-initializatio
 
 + 混合类型表达式，操作数被转换为相同类型
 
+```C++
         int ival;
         double dval;
         ival >= dval;   // ival converted to double
+```
 
 + 用作条件表达式被转化为 bool 型
 
+```C++
         int ival;
         if (ival)       // ival converted to bool
         while ( cin)    // cin converted to bool
+```
 
 + 用表达式初始化（赋值）某一变量，表达式被转化为该变量类型
 
+```C++
         int ival = 3.14;    // 3.14 converted to int
         int *ip;
         ip = 0;             // the int 0 converted to a null pointer of type int *
+```
 
 另外，函数调用时也可能发生隐式类型转化。
 
-### Arithmetic Conversion
+### 算术类型转换
 
 C++ 语言为内置类型提供了一组转化规则，其中最常用的就是算术转化（arithmetic conversion）。算术转化规则定义了一个 *类型转换层次*，该层次规定了操作数应该按照什么次序转换为表达式中最宽的数据类型。
 
@@ -194,14 +209,21 @@ unsigned 操作数的转换依赖于机器中整型的相对大小，所以，�
 
 2. 下面程序
 
+```C++
         unsigned a = 4;
         signed b = -20;
         int c = (a+b > 4) ? 1 : 0;
         cout << "unsigned int b' = " << unsigned(b) << endl;
         cout << "c = " << c << endl;
+```
+
 运行结果为
+
+```C++
         unsigned int b' = 4294967276
         c = 1
+```
+
 因为 `b = -2` 被转化为一个很大的正数 `b' = 4294967276`
 
 <br>

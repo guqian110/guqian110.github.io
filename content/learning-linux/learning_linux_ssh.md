@@ -46,7 +46,10 @@ Summary: 学习 SSH、SCP 命令，建立两台电脑相互访问 。
 
 最简单明了的教程就是 man page 了
 
+```Shell
     man ssh
+```
+
 内容为
 
     NAME
@@ -74,31 +77,44 @@ SSH 只是一种协议，在 Ubuntu 下，具体实现使用的是 [OpenSSH][Ope
 
 检测本机是否已经安装了 SSH server
 
+```Shell
     ssh localhost
+```
 
 如果结果是
 
+```Shell
     ssh: connect to host localhost port 22: Connection refused
+```
+
 说明 SSH server 还没有安装 。
 
 安装方法：
 
+```Shell
     sudo apt-get install openssh-server
+```
 
 ### 启动 SSH 服务
 
 启动 SSH server
 
+```Shell
     sudo /etc/init.d/ssh start 
+```
 
 查询服务是否正确启动
 
+```Shell
     ps -e | grep ssh
+```
 
 返回结果应该类似于
 
+```Shell
      4156 ?        00:00:00 ssh-agent
      4606 ?        00:00:00 sshd
+```
 
 则说明服务已经正确启动 。
 
@@ -108,13 +124,17 @@ SSH 只是一种协议，在 Ubuntu 下，具体实现使用的是 [OpenSSH][Ope
 
 首先，查询本机 IP 地址
 
+```Shell
     ifconfig
+```
 
 比如 lab 的 IP 地址是 `10.105.55.155`, dom 的 IP 地址是 `10.210.111.116` 。（因为是校园网，所以分配到的都是内网地址）
 
 然后，在宿舍用 dom 访问 lab 这台机器
 
+```Shell
     ssh chien@10.105.55.155
+```
 
 实际结果如下图
 
@@ -124,7 +144,9 @@ SSH 只是一种协议，在 Ubuntu 下，具体实现使用的是 [OpenSSH][Ope
 
 同理，在实验室用 lab 访问 dom 这台机器
 
+```Shell
     ssh chien@10.210.111.116
+```
 
 实际结果如下图
 
@@ -136,23 +158,31 @@ SSH 只是一种协议，在 Ubuntu 下，具体实现使用的是 [OpenSSH][Ope
 
 每次登录都需要记忆、手动输入 IP 地址，其实只需要改 `/etc/hosts` 文件，就能省去手动输入 IP 地址的烦恼。
 
+```Shell
     vim /etc/hosts
+```
 
 在 dom 的 hosts 文件后面添加
 
+```Shell
     lab    10.105.55.155
+```
 
 在 lab 的 hosts 文件后面添加
 
+```Shell
     dom     10.210.111.116
+```
 
 以后，登录时只需要输入
 
+```Shell
     // from dom to lab
     ssh lab
     
     // from lab to domm
     ssh dom
+```
 
 就可以登录了。
 
@@ -170,7 +200,9 @@ SSH 只是一种协议，在 Ubuntu 下，具体实现使用的是 [OpenSSH][Ope
 
 Ubuntu 默认安装了 `ssh-keygen`，可以生成公钥和私钥
 
+```Shell
     ssh-keygen
+```
 
 命令执行过程中会询问保存密钥文件的路径，还可以为密钥文件设置口令（passphrase）。运行结束以后，在 `$HOME/.ssh/` 目录下，会新生成两个文件：`id_rsa.pub` 和 `id_rsa` 。前者是你的公钥，后者是你的私钥。
 
@@ -180,21 +212,27 @@ Ubuntu 默认安装了 `ssh-keygen`，可以生成公钥和私钥
 
 将 dom 的公钥发送到 lab 中
 
+```Shell
     ssh-copy-di chien@lab
-    
+```
+
 将 lab 的公钥发送到 dom 中
 
+```Shell
     ssh-copy-di chien@dom
+```
 
 **最后，使用公钥登录**
 
 此时，远程登录时就不再需要输入密码了
 
+```Shell
     // from dom to lab
     ssh lab
     
     // from lab to dom
     ssh dom
+```
 
 [OpenSSH]: http://www.openssh.com/
 [book1]: http://docstore.mik.ua/orelly/networking_2ndEd/ssh/index.htm
@@ -210,7 +248,9 @@ SSH 提供了一些命令和 shell 用来登录远程服务器 。在默认情�
 
 man page
 
+```Shell
     man scp
+```
 
 内容为
 
@@ -226,15 +266,21 @@ scp 可以实现把 [[user@]host1:]file1 复制到 [[user@]host2:]file2 的功�
 
 ### 上传 dom 本地文件至服务器 lab
 
+```Shell
     scp ~/dom chien@lab:~/
+```
 
 ### 下载 lab 服务器文件至本地 dom
 
+```Shell
     scp chien@lab:lab ~/
+```
 
 若发送文件夹则添加参数 `-r` 即可
 
+```Shell
     scp -r ~/test chien@lab:~/
+```
 
 <br>
 

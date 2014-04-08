@@ -118,33 +118,33 @@
 <hr />
 <h3>检测是否有边沿</h3>
 <p><strong>程序：</strong></p>
-<div class="highlight"><pre>    <span class="k">module</span> <span class="no">DETECT_EDGE</span> <span class="p">(</span>  
+<div class="highlight"><pre>    <span class="n">module</span> <span class="nf">DETECT_EDGE</span> <span class="p">(</span>  
         <span class="n">clk</span><span class="p">,</span><span class="n">rst_n</span><span class="p">,</span><span class="n">trig_in</span><span class="p">,</span><span class="n">trig_edge</span>  
         <span class="p">);</span> 
 
-        <span class="k">input</span> <span class="n">clk</span><span class="p">;</span>  
-        <span class="k">input</span> <span class="n">rst_n</span><span class="p">;</span>  
-        <span class="k">input</span> <span class="n">trig_in</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">clk</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">rst_n</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">trig_in</span><span class="p">;</span>  
 
-        <span class="k">output</span> <span class="n">trigedge</span><span class="p">;</span>  
+        <span class="n">output</span> <span class="n">trigedge</span><span class="p">;</span>  
 
-        <span class="kt">reg</span> <span class="n">trig_r1</span><span class="p">;</span>  
-        <span class="kt">reg</span> <span class="n">trig_r2</span><span class="p">;</span>  
+        <span class="n">reg</span> <span class="n">trig_r1</span><span class="p">;</span>  
+        <span class="n">reg</span> <span class="n">trig_r2</span><span class="p">;</span>  
 
-        <span class="k">always</span> <span class="p">@</span> <span class="p">(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>  
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>  
-                <span class="n">trig_r1</span> <span class="o">&lt;=</span> <span class="mh">1&#39;b0</span><span class="p">;</span>  
-                <span class="n">trig_r2</span> <span class="o">&lt;=</span> <span class="mh">1&#39;b0</span><span class="p">;</span>  
-            <span class="k">end</span>  
-            <span class="k">else</span> <span class="k">begin</span>  
+        <span class="n">always</span> <span class="err">@</span> <span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>  
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>  
+                <span class="n">trig_r1</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
+                <span class="n">trig_r2</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
+            <span class="n">end</span>  
+            <span class="k">else</span> <span class="n">begin</span>  
                 <span class="n">trig_r1</span> <span class="o">&lt;=</span> <span class="n">trig_in</span><span class="p">;</span>  
                 <span class="n">trig_r2</span> <span class="o">&lt;=</span> <span class="n">trig_r1</span><span class="p">;</span>  
-            <span class="k">end</span>  
-        <span class="k">end</span>  
+            <span class="n">end</span>  
+        <span class="n">end</span>  
 
-        <span class="k">assign</span> <span class="n">trigEdge</span> <span class="o">=</span> <span class="n">trig_r1</span> <span class="o">^</span> <span class="n">trig_r2</span><span class="p">;</span>  
+        <span class="n">assign</span> <span class="n">trigEdge</span> <span class="o">=</span> <span class="n">trig_r1</span> <span class="o">^</span> <span class="n">trig_r2</span><span class="p">;</span>  
 
-    <span class="k">endmodule</span>
+    <span class="n">endmodule</span>
 </pre></div>
 
 
@@ -156,38 +156,38 @@
 <p><strong>下降沿检测原理：</strong> 将第一个寄存器中的数据取反与第二个寄存器的数据相与，产生的数存入一个新的寄存器里，这样产生的结果是当第一个寄存器中的数据由 1 变为 0 时，就会在新的寄存器里产生一个高电平，并维持一个周期 。</p>
 <p><strong>上升沿检测原理：</strong> 将第二个寄存器中的数据取反与第一个寄存器的数据相与，产生的数存入一个新的寄存器里，这样产生的结果是当第一个寄存器中的数据由 0 变为 1 时（上升沿，此时 r1 变为 1，但 r2 仍保持前一周期的 0），就会在新的寄存器里产生一个高电平，并维持一个周期 。</p>
 <p><strong>程序：</strong></p>
-<div class="highlight"><pre>    <span class="k">module</span> <span class="no">DETECT_EDGE</span> <span class="p">(</span>  
+<div class="highlight"><pre>    <span class="n">module</span> <span class="nf">DETECT_EDGE</span> <span class="p">(</span>  
         <span class="n">clk</span><span class="p">,</span><span class="n">rst_n</span><span class="p">,</span><span class="n">trig_in</span><span class="p">,</span><span class="n">trig_pos_edge</span><span class="p">,</span><span class="n">trig_neg_edge</span>  
         <span class="p">);</span>  
 
-        <span class="k">input</span> <span class="n">clk</span><span class="p">;</span>  
-        <span class="k">input</span> <span class="n">rst_n</span><span class="p">;</span>  
-        <span class="k">input</span> <span class="n">trig_in</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">clk</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">rst_n</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">trig_in</span><span class="p">;</span>  
 
-        <span class="k">output</span> <span class="n">trig_pos_edge</span><span class="p">;</span>  
-        <span class="k">output</span> <span class="n">trig_neg_edge</span><span class="p">;</span>  
+        <span class="n">output</span> <span class="n">trig_pos_edge</span><span class="p">;</span>  
+        <span class="n">output</span> <span class="n">trig_neg_edge</span><span class="p">;</span>  
 
-        <span class="kt">reg</span> <span class="n">trig_r0</span><span class="p">;</span>  
-        <span class="kt">reg</span> <span class="n">trig_r1</span><span class="p">;</span>  
-        <span class="kt">reg</span> <span class="n">trig_r2</span><span class="p">;</span>  
+        <span class="n">reg</span> <span class="n">trig_r0</span><span class="p">;</span>  
+        <span class="n">reg</span> <span class="n">trig_r1</span><span class="p">;</span>  
+        <span class="n">reg</span> <span class="n">trig_r2</span><span class="p">;</span>  
 
-        <span class="k">always</span> <span class="p">@</span> <span class="p">(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>  
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>  
-                <span class="n">trig_r0</span> <span class="o">&lt;=</span> <span class="mh">1&#39;b0</span><span class="p">;</span>  
-                <span class="n">trig_r1</span> <span class="o">&lt;=</span> <span class="mh">1&#39;b0</span><span class="p">;</span>  
-                <span class="n">trig_r2</span> <span class="o">&lt;=</span> <span class="mh">1&#39;b0</span><span class="p">;</span>  
-            <span class="k">end</span>  
-            <span class="k">else</span> <span class="k">begin</span>  
+        <span class="n">always</span> <span class="err">@</span> <span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>  
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>  
+                <span class="n">trig_r0</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
+                <span class="n">trig_r1</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
+                <span class="n">trig_r2</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
+            <span class="n">end</span>  
+            <span class="k">else</span> <span class="n">begin</span>  
                 <span class="n">trig_r0</span> <span class="o">&lt;=</span> <span class="n">trig_in</span><span class="p">;</span>  
                 <span class="n">trig_r1</span> <span class="o">&lt;=</span> <span class="n">trig_r0</span><span class="p">;</span>  
                 <span class="n">trig_r2</span> <span class="o">&lt;=</span> <span class="n">trig_r1</span><span class="p">;</span>  
-            <span class="k">end</span>  
-        <span class="k">end</span>  
+            <span class="n">end</span>  
+        <span class="n">end</span>  
 
-        <span class="k">assign</span> <span class="n">trig_pos_edge</span> <span class="o">=</span> <span class="n">trig_r1</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">!</span><span class="n">trig_r2</span><span class="p">);</span>    <span class="c1">// Detect posedge  </span>
-        <span class="k">assign</span> <span class="n">trig_neg_edge</span> <span class="o">=</span> <span class="p">(</span><span class="o">!</span><span class="n">trig_r1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">trig_r2</span><span class="p">;</span>    <span class="c1">// Detect negedge  </span>
+        <span class="n">assign</span> <span class="n">trig_pos_edge</span> <span class="o">=</span> <span class="n">trig_r1</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">!</span><span class="n">trig_r2</span><span class="p">);</span>    <span class="c1">// Detect posedge  </span>
+        <span class="n">assign</span> <span class="n">trig_neg_edge</span> <span class="o">=</span> <span class="p">(</span><span class="o">!</span><span class="n">trig_r1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">trig_r2</span><span class="p">;</span>    <span class="c1">// Detect negedge  </span>
 
-    <span class="k">endmodule</span>  
+    <span class="n">endmodule</span>  
 </pre></div>
 
 
@@ -197,30 +197,30 @@
 <p><img alt="sim2" src="/images/learning-fpga-pulse-edge-detection/sim2.png" /></p>
 <p><br></p>
 <p><strong>另外一种写法：</strong></p>
-<div class="highlight"><pre>    <span class="k">module</span> <span class="no">DETECT_EDGE</span> <span class="p">(</span>  
+<div class="highlight"><pre>    <span class="n">module</span> <span class="nf">DETECT_EDGE</span> <span class="p">(</span>  
         <span class="n">clk</span><span class="p">,</span><span class="n">rst_n</span><span class="p">,</span><span class="n">trig_in</span><span class="p">,</span><span class="n">tirg_pos_edge</span><span class="p">,</span><span class="n">trig_neg_edge</span>  
         <span class="p">);</span>  
 
-        <span class="k">input</span> <span class="n">clk</span><span class="p">;</span>  
-        <span class="k">input</span> <span class="n">rst_n</span><span class="p">;</span>  
-        <span class="k">input</span> <span class="n">trig_in</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">clk</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">rst_n</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">trig_in</span><span class="p">;</span>  
 
-        <span class="k">output</span> <span class="n">trig_pos_edge</span><span class="p">;</span>  
-        <span class="k">output</span> <span class="n">trig_neg_edge</span><span class="p">;</span>  
+        <span class="n">output</span> <span class="n">trig_pos_edge</span><span class="p">;</span>  
+        <span class="n">output</span> <span class="n">trig_neg_edge</span><span class="p">;</span>  
 
-        <span class="kt">reg</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">trig_r</span><span class="p">;</span>  
+        <span class="n">reg</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">trig_r</span><span class="p">;</span>  
 
-        <span class="k">always</span> <span class="p">@</span> <span class="p">(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>  
+        <span class="n">always</span> <span class="err">@</span> <span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>  
             <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span>  
-                <span class="n">trig_r</span> <span class="o">&lt;=</span> <span class="mh">3&#39;b0</span><span class="p">;</span>  
+                <span class="n">trig_r</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
             <span class="k">else</span>  
-                <span class="n">trig_r</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">trig_r</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="n">trig_in</span><span class="p">};</span>  
-        <span class="k">end</span>  
+                <span class="n">trig_r</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">trig_r</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">],</span><span class="n">trig_in</span><span class="p">};</span>  
+        <span class="n">end</span>  
 
-        <span class="k">assign</span> <span class="n">trig_pos_edge</span> <span class="o">=</span> <span class="p">(</span><span class="n">trig_r</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">2&#39;b01</span><span class="p">);</span>  
-        <span class="k">assign</span> <span class="n">trig_neg_edge</span> <span class="o">=</span> <span class="p">(</span><span class="n">trig_r</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">2&#39;b10</span><span class="p">);</span>  
+        <span class="n">assign</span> <span class="n">trig_pos_edge</span> <span class="o">=</span> <span class="p">(</span><span class="n">trig_r</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="err">&#39;</span><span class="n">b01</span><span class="p">);</span>  
+        <span class="n">assign</span> <span class="n">trig_neg_edge</span> <span class="o">=</span> <span class="p">(</span><span class="n">trig_r</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="err">&#39;</span><span class="n">b10</span><span class="p">);</span>  
 
-    <span class="k">endmodule</span>
+    <span class="n">endmodule</span>
 </pre></div>
 
 
@@ -251,27 +251,27 @@
 <p>这段软消抖程序从机理上看不会有什么问题，通常在软件程序不太 "繁忙" 的情况下也能够很好的消抖并做相应处理 。但是如果在延时期间产生了中断，则此中断可能无法得到响应 。</p>
 <p>对于硬件资源丰富的 FPGA 系统，可以使用硬件来减轻软件工作量，通常称之为 <strong>"硬件加速"</strong> 。在按键信号输入到软件系统前用逻辑对其进行一下简单的处理即可实现所谓的"硬件消抖"，代码如下：</p>
 <div class="highlight"><pre>    <span class="c1">//对输入信号inpio硬件滤波，每20ms采样一次当前值</span>
-    <span class="kt">reg</span><span class="p">[</span><span class="mh">18</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">cnt</span><span class="p">;</span> <span class="c1">//20ms计数器</span>
+    <span class="n">reg</span><span class="p">[</span><span class="mi">18</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">cnt</span><span class="p">;</span> <span class="c1">//20ms计数器</span>
 
-    <span class="k">always</span> <span class="p">@</span> <span class="p">(</span><span class="k">posedge</span> <span class="n">clk_25m</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span>
+    <span class="n">always</span> <span class="err">@</span> <span class="p">(</span><span class="n">posedge</span> <span class="n">clk_25m</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span>
-            <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mh">19</span><span class="mi">&#39;d0</span><span class="p">;</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">&lt;</span> <span class="mh">19</span><span class="mi">&#39;d500000</span><span class="p">)</span>
-            <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="n">cnt</span><span class="o">+</span><span class="mh">1&#39;b1</span><span class="p">;</span>
+            <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mi">19</span><span class="err">&#39;</span><span class="n">d0</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">&lt;</span> <span class="mi">19</span><span class="err">&#39;</span><span class="n">d500000</span><span class="p">)</span>
+            <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="n">cnt</span><span class="o">+</span><span class="mi">1</span><span class="err">&#39;</span><span class="n">b1</span><span class="p">;</span>
         <span class="k">else</span> 
-            <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mh">19</span><span class="mi">&#39;d0</span><span class="p">;</span>
+            <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mi">19</span><span class="err">&#39;</span><span class="n">d0</span><span class="p">;</span>
 
-    <span class="kt">reg</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">inpior</span><span class="p">;</span> <span class="c1">//当前inpio信号锁存，每20ms锁存一拍</span>
+    <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">inpior</span><span class="p">;</span> <span class="c1">//当前inpio信号锁存，每20ms锁存一拍</span>
 
-    <span class="k">always</span> <span class="p">@</span> <span class="p">(</span><span class="k">posedge</span> <span class="n">clk_25m</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span>
+    <span class="n">always</span> <span class="err">@</span> <span class="p">(</span><span class="n">posedge</span> <span class="n">clk_25m</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span>
-            <span class="n">inpior</span> <span class="o">&lt;=</span> <span class="mh">2&#39;b11</span><span class="p">;</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">==</span> <span class="mh">19&#39;h7ffff</span><span class="p">)</span>
-            <span class="n">inpior</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">inpior</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span><span class="n">inpior</span><span class="p">};</span>
+            <span class="n">inpior</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="err">&#39;</span><span class="n">b11</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">==</span> <span class="mi">19</span><span class="err">&#39;</span><span class="n">h7ffff</span><span class="p">)</span>
+            <span class="n">inpior</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">inpior</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">inpior</span><span class="p">};</span>
         <span class="k">else</span>
             <span class="n">inpior</span> <span class="o">&lt;=</span> <span class="n">inpior</span><span class="p">;</span>
 
-    <span class="kt">wire</span> <span class="n">inpio_swin</span> <span class="o">=</span> <span class="n">inpior</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">|</span> <span class="n">inpior</span><span class="p">[</span><span class="mh">1</span><span class="p">];</span> <span class="c1">//前后20ms两次锁存值都为0时才为0</span>
+    <span class="n">wire</span> <span class="n">inpio_swin</span> <span class="o">=</span> <span class="n">inpior</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|</span> <span class="n">inpior</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">//前后20ms两次锁存值都为0时才为0</span>
 </pre></div>
 
 
@@ -351,13 +351,13 @@
                                                                                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                                             <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
                             </a>
                         </li>
                                             <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/fpga.html">
-                                FPGA
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
                             </a>
                         </li>
                                             <li class="list-group-item tag-2">
@@ -366,13 +366,18 @@
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
@@ -381,23 +386,18 @@
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/book.html">
-                                Book
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/build-blog.html">
                                 Build Blog
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
+                            <a href="http://guqian110.github.io/tag/book.html">
+                                Book
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
                             </a>
                         </li>
                                         </ul>

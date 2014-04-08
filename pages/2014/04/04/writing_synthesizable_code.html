@@ -125,15 +125,15 @@
 <hr />
 <p>任何符合 HDL 语法标准的代码都是对硬件行为的一种描述，但不一定是可直接对应成电路的设计信息。行为描述可以基于不同的层次，如系统级，算法级，寄存器传输级(RTL)、门级等等。以目前大部分EDA软件的综合能力来说，<strong>只有RTL或更低层次的行为描述才能保证是可综合的</strong>。而众多初学者试图做的，却是想让软件去综合 <em>算法级或者更加抽象的硬件行为描述</em>。</p>
 <h3>所有综合工具都支持的语法：</h3>
-<div class="highlight"><pre><span class="nx">always</span><span class="p">,</span> <span class="nx">assign</span><span class="p">,</span> <span class="nx">begin</span><span class="p">,</span> <span class="nx">end</span><span class="p">,</span> 
-<span class="nx">wire</span><span class="p">,</span> <span class="nx">tri</span><span class="p">,</span> <span class="nx">inout</span><span class="p">,</span> <span class="nx">aupply0</span><span class="p">,</span> <span class="nx">supply1</span><span class="p">,</span> <span class="nx">input</span><span class="p">,</span> <span class="nx">reg</span><span class="p">,</span> <span class="nx">integer</span><span class="p">,</span> <span class="k">default</span><span class="p">,</span> 
-<span class="nx">and</span><span class="p">,</span> <span class="nx">nand</span><span class="p">,</span> <span class="nx">or</span><span class="p">,</span> <span class="nx">nor</span><span class="p">,</span> <span class="nx">xor</span><span class="p">,</span> <span class="nx">xnor</span><span class="p">,</span> <span class="nx">buf</span><span class="p">,</span> <span class="nx">not</span><span class="p">,</span> <span class="nx">bufif0</span><span class="p">,</span><span class="nx">bufif1</span><span class="p">,</span> <span class="nx">notif0</span><span class="p">,</span> <span class="nx">notif1</span><span class="p">,</span> 
-<span class="k">if</span><span class="p">,</span> <span class="k">case</span><span class="p">,</span> <span class="k">for</span><span class="p">,</span> <span class="kd">function</span><span class="p">,</span> <span class="nx">instantitation</span><span class="p">,</span> <span class="nx">module</span><span class="p">,</span> <span class="nx">negedge</span><span class="p">,</span> <span class="nx">posedge</span><span class="p">,</span> <span class="nx">operators</span><span class="p">,</span> <span class="nx">output</span><span class="p">,</span> <span class="nx">parameter</span>
+<div class="highlight"><pre>    <span class="nx">always</span><span class="p">,</span> <span class="nx">assign</span><span class="p">,</span> <span class="nx">begin</span><span class="p">,</span> <span class="nx">end</span><span class="p">,</span> 
+    <span class="nx">wire</span><span class="p">,</span> <span class="nx">tri</span><span class="p">,</span> <span class="nx">inout</span><span class="p">,</span> <span class="nx">aupply0</span><span class="p">,</span> <span class="nx">supply1</span><span class="p">,</span> <span class="nx">input</span><span class="p">,</span> <span class="nx">reg</span><span class="p">,</span> <span class="nx">integer</span><span class="p">,</span> <span class="k">default</span><span class="p">,</span> 
+    <span class="nx">and</span><span class="p">,</span> <span class="nx">nand</span><span class="p">,</span> <span class="nx">or</span><span class="p">,</span> <span class="nx">nor</span><span class="p">,</span> <span class="nx">xor</span><span class="p">,</span> <span class="nx">xnor</span><span class="p">,</span> <span class="nx">buf</span><span class="p">,</span> <span class="nx">not</span><span class="p">,</span> <span class="nx">bufif0</span><span class="p">,</span><span class="nx">bufif1</span><span class="p">,</span> <span class="nx">notif0</span><span class="p">,</span> <span class="nx">notif1</span><span class="p">,</span> 
+    <span class="k">if</span><span class="p">,</span> <span class="k">case</span><span class="p">,</span> <span class="k">for</span><span class="p">,</span> <span class="kd">function</span><span class="p">,</span> <span class="nx">instantitation</span><span class="p">,</span> <span class="nx">module</span><span class="p">,</span> <span class="nx">negedge</span><span class="p">,</span> <span class="nx">posedge</span><span class="p">,</span> <span class="nx">operators</span><span class="p">,</span> <span class="nx">output</span><span class="p">,</span> <span class="nx">parameter</span>  
 </pre></div>
 
 
 <h3>有些工具支持，有些工具不支持的语法：</h3>
-<div class="highlight"><pre><span class="n">asex</span><span class="p">,</span> <span class="n">casez</span><span class="p">,</span> <span class="n">wand</span><span class="p">,</span> <span class="n">triand</span><span class="p">,</span> <span class="n">wor</span><span class="p">,</span> <span class="n">trior</span><span class="p">,</span> <span class="n">real</span><span class="p">,</span> <span class="n">disable</span><span class="p">,</span> <span class="n">forever</span><span class="p">,</span> <span class="n">arrays</span><span class="p">,</span> <span class="n">memories</span><span class="p">,</span> <span class="n">repreat</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span><span class="k">while</span>
+<div class="highlight"><pre>    <span class="n">asex</span><span class="p">,</span> <span class="n">casez</span><span class="p">,</span> <span class="n">wand</span><span class="p">,</span> <span class="n">triand</span><span class="p">,</span> <span class="n">wor</span><span class="p">,</span> <span class="n">trior</span><span class="p">,</span> <span class="n">real</span><span class="p">,</span> <span class="n">disable</span><span class="p">,</span> <span class="n">forever</span><span class="p">,</span> <span class="n">arrays</span><span class="p">,</span> <span class="n">memories</span><span class="p">,</span> <span class="n">repreat</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span><span class="k">while</span>
 </pre></div>
 
 
@@ -187,7 +187,7 @@
 <h2>不可综合代码</h2>
 <hr />
 <h3>不可综合语法：</h3>
-<div class="highlight"><pre><span class="n">time</span><span class="p">,</span> <span class="n">defparam</span><span class="p">,</span> <span class="err">$</span><span class="n">finish</span><span class="p">,</span> <span class="n">fork</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">delays</span><span class="p">,</span> <span class="n">UDP</span><span class="p">,</span> <span class="n">wait</span>
+<div class="highlight"><pre>    <span class="n">time</span><span class="p">,</span> <span class="n">defparam</span><span class="p">,</span> <span class="err">$</span><span class="n">finish</span><span class="p">,</span> <span class="n">fork</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">delays</span><span class="p">,</span> <span class="n">UDP</span><span class="p">,</span> <span class="n">wait</span>
 </pre></div>
 
 
@@ -234,8 +234,8 @@
 <hr />
 <p>继续引用 <strong>董培良</strong> 的文章：</p>
 <p>用一句简单的话概括：电脑永远没有你聪明 。具体来说，通常 EDA 软件对 HDL 代码的综合能力总是比人差 。对于一段代码，如果你不能想象出一个较直观的硬件实现方法，那 EDA 软件肯定也不行。比如说，加法器、多路选择器是大家都很熟悉的电路，所以类似</p>
-<div class="highlight"><pre>    <span class="n">A</span><span class="o">+</span><span class="n">B</span><span class="o">-</span><span class="n">C</span>
-    <span class="p">(</span><span class="n">A</span><span class="o">&gt;</span><span class="n">B</span><span class="p">)</span><span class="o">?</span><span class="n">C</span><span class="o">:</span><span class="n">D</span>
+<div class="highlight"><pre>        <span class="n">A</span><span class="o">+</span><span class="n">B</span><span class="o">-</span><span class="n">C</span>
+        <span class="p">(</span><span class="n">A</span><span class="o">&gt;</span><span class="n">B</span><span class="p">)</span><span class="o">?</span><span class="n">C</span><span class="o">:</span><span class="n">D</span>
 </pre></div>
 
 
@@ -313,13 +313,13 @@
                                                                                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                                             <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
                             </a>
                         </li>
                                             <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/fpga.html">
-                                FPGA
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
                             </a>
                         </li>
                                             <li class="list-group-item tag-2">
@@ -328,13 +328,18 @@
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
@@ -343,23 +348,18 @@
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/book.html">
-                                Book
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/build-blog.html">
                                 Build Blog
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
+                            <a href="http://guqian110.github.io/tag/book.html">
+                                Book
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
                             </a>
                         </li>
                                         </ul>

@@ -12,33 +12,33 @@
 &lt;hr /&gt;
 &lt;h3&gt;检测是否有边沿&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;程序：&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="no"&gt;DETECT_EDGE&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;  
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="nf"&gt;DETECT_EDGE&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;  
         &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;trig_edge&lt;/span&gt;  
         &lt;span class="p"&gt;);&lt;/span&gt; 
 
-        &lt;span class="k"&gt;input&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-        &lt;span class="k"&gt;input&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-        &lt;span class="k"&gt;input&lt;/span&gt; &lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
 
-        &lt;span class="k"&gt;output&lt;/span&gt; &lt;span class="n"&gt;trigedge&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="n"&gt;trigedge&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
 
-        &lt;span class="kt"&gt;reg&lt;/span&gt; &lt;span class="n"&gt;trig_r1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-        &lt;span class="kt"&gt;reg&lt;/span&gt; &lt;span class="n"&gt;trig_r2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;reg&lt;/span&gt; &lt;span class="n"&gt;trig_r1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;reg&lt;/span&gt; &lt;span class="n"&gt;trig_r2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
 
-        &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="k"&gt;negedge&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;  
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;  
-                &lt;span class="n"&gt;trig_r1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-                &lt;span class="n"&gt;trig_r2&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-            &lt;span class="k"&gt;end&lt;/span&gt;  
-            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;  
+        &lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;negedge&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;  
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;  
+                &lt;span class="n"&gt;trig_r1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+                &lt;span class="n"&gt;trig_r2&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+            &lt;span class="n"&gt;end&lt;/span&gt;  
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;  
                 &lt;span class="n"&gt;trig_r1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
                 &lt;span class="n"&gt;trig_r2&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;trig_r1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-            &lt;span class="k"&gt;end&lt;/span&gt;  
-        &lt;span class="k"&gt;end&lt;/span&gt;  
+            &lt;span class="n"&gt;end&lt;/span&gt;  
+        &lt;span class="n"&gt;end&lt;/span&gt;  
 
-        &lt;span class="k"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;trigEdge&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trig_r1&lt;/span&gt; &lt;span class="o"&gt;^&lt;/span&gt; &lt;span class="n"&gt;trig_r2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;trigEdge&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trig_r1&lt;/span&gt; &lt;span class="o"&gt;^&lt;/span&gt; &lt;span class="n"&gt;trig_r2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
 
-    &lt;span class="k"&gt;endmodule&lt;/span&gt;
+    &lt;span class="n"&gt;endmodule&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -50,38 +50,38 @@
 &lt;p&gt;&lt;strong&gt;下降沿检测原理：&lt;/strong&gt; 将第一个寄存器中的数据取反与第二个寄存器的数据相与，产生的数存入一个新的寄存器里，这样产生的结果是当第一个寄存器中的数据由 1 变为 0 时，就会在新的寄存器里产生一个高电平，并维持一个周期 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;上升沿检测原理：&lt;/strong&gt; 将第二个寄存器中的数据取反与第一个寄存器的数据相与，产生的数存入一个新的寄存器里，这样产生的结果是当第一个寄存器中的数据由 0 变为 1 时（上升沿，此时 r1 变为 1，但 r2 仍保持前一周期的 0），就会在新的寄存器里产生一个高电平，并维持一个周期 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;程序：&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="no"&gt;DETECT_EDGE&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;  
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="nf"&gt;DETECT_EDGE&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;  
         &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;trig_pos_edge&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;trig_neg_edge&lt;/span&gt;  
         &lt;span class="p"&gt;);&lt;/span&gt;  
 
-        &lt;span class="k"&gt;input&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-        &lt;span class="k"&gt;input&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-        &lt;span class="k"&gt;input&lt;/span&gt; &lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
 
-        &lt;span class="k"&gt;output&lt;/span&gt; &lt;span class="n"&gt;trig_pos_edge&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-        &lt;span class="k"&gt;output&lt;/span&gt; &lt;span class="n"&gt;trig_neg_edge&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="n"&gt;trig_pos_edge&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="n"&gt;trig_neg_edge&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
 
-        &lt;span class="kt"&gt;reg&lt;/span&gt; &lt;span class="n"&gt;trig_r0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-        &lt;span class="kt"&gt;reg&lt;/span&gt; &lt;span class="n"&gt;trig_r1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-        &lt;span class="kt"&gt;reg&lt;/span&gt; &lt;span class="n"&gt;trig_r2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;reg&lt;/span&gt; &lt;span class="n"&gt;trig_r0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;reg&lt;/span&gt; &lt;span class="n"&gt;trig_r1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;reg&lt;/span&gt; &lt;span class="n"&gt;trig_r2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
 
-        &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="k"&gt;negedge&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;  
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;  
-                &lt;span class="n"&gt;trig_r0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-                &lt;span class="n"&gt;trig_r1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-                &lt;span class="n"&gt;trig_r2&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-            &lt;span class="k"&gt;end&lt;/span&gt;  
-            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;  
+        &lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;negedge&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;  
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;  
+                &lt;span class="n"&gt;trig_r0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+                &lt;span class="n"&gt;trig_r1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+                &lt;span class="n"&gt;trig_r2&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+            &lt;span class="n"&gt;end&lt;/span&gt;  
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;  
                 &lt;span class="n"&gt;trig_r0&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
                 &lt;span class="n"&gt;trig_r1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;trig_r0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
                 &lt;span class="n"&gt;trig_r2&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;trig_r1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-            &lt;span class="k"&gt;end&lt;/span&gt;  
-        &lt;span class="k"&gt;end&lt;/span&gt;  
+            &lt;span class="n"&gt;end&lt;/span&gt;  
+        &lt;span class="n"&gt;end&lt;/span&gt;  
 
-        &lt;span class="k"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;trig_pos_edge&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trig_r1&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;trig_r2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;    &lt;span class="c1"&gt;// Detect posedge  &lt;/span&gt;
-        &lt;span class="k"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;trig_neg_edge&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;trig_r1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;trig_r2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;    &lt;span class="c1"&gt;// Detect negedge  &lt;/span&gt;
+        &lt;span class="n"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;trig_pos_edge&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trig_r1&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;trig_r2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;    &lt;span class="c1"&gt;// Detect posedge  &lt;/span&gt;
+        &lt;span class="n"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;trig_neg_edge&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;trig_r1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;trig_r2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;    &lt;span class="c1"&gt;// Detect negedge  &lt;/span&gt;
 
-    &lt;span class="k"&gt;endmodule&lt;/span&gt;  
+    &lt;span class="n"&gt;endmodule&lt;/span&gt;  
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -91,30 +91,30 @@
 &lt;p&gt;&lt;img alt="sim2" src="/images/learning-fpga-pulse-edge-detection/sim2.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;另外一种写法：&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="no"&gt;DETECT_EDGE&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;  
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="nf"&gt;DETECT_EDGE&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;  
         &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;tirg_pos_edge&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;trig_neg_edge&lt;/span&gt;  
         &lt;span class="p"&gt;);&lt;/span&gt;  
 
-        &lt;span class="k"&gt;input&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-        &lt;span class="k"&gt;input&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-        &lt;span class="k"&gt;input&lt;/span&gt; &lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
 
-        &lt;span class="k"&gt;output&lt;/span&gt; &lt;span class="n"&gt;trig_pos_edge&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-        &lt;span class="k"&gt;output&lt;/span&gt; &lt;span class="n"&gt;trig_neg_edge&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="n"&gt;trig_pos_edge&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="n"&gt;trig_neg_edge&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
 
-        &lt;span class="kt"&gt;reg&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;trig_r&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+        &lt;span class="n"&gt;reg&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;trig_r&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
 
-        &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="k"&gt;negedge&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;  
+        &lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;negedge&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;  
             &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  
-                &lt;span class="n"&gt;trig_r&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;3&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+                &lt;span class="n"&gt;trig_r&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
             &lt;span class="k"&gt;else&lt;/span&gt;  
-                &lt;span class="n"&gt;trig_r&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;trig_r&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;  
-        &lt;span class="k"&gt;end&lt;/span&gt;  
+                &lt;span class="n"&gt;trig_r&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;trig_r&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;trig_in&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;  
+        &lt;span class="n"&gt;end&lt;/span&gt;  
 
-        &lt;span class="k"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;trig_pos_edge&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trig_r&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mh"&gt;2&amp;#39;b01&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;  
-        &lt;span class="k"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;trig_neg_edge&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trig_r&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mh"&gt;2&amp;#39;b10&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;  
+        &lt;span class="n"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;trig_pos_edge&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trig_r&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b01&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;  
+        &lt;span class="n"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;trig_neg_edge&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;trig_r&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b10&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;  
 
-    &lt;span class="k"&gt;endmodule&lt;/span&gt;
+    &lt;span class="n"&gt;endmodule&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -145,27 +145,27 @@
 &lt;p&gt;这段软消抖程序从机理上看不会有什么问题，通常在软件程序不太 "繁忙" 的情况下也能够很好的消抖并做相应处理 。但是如果在延时期间产生了中断，则此中断可能无法得到响应 。&lt;/p&gt;
 &lt;p&gt;对于硬件资源丰富的 FPGA 系统，可以使用硬件来减轻软件工作量，通常称之为 &lt;strong&gt;"硬件加速"&lt;/strong&gt; 。在按键信号输入到软件系统前用逻辑对其进行一下简单的处理即可实现所谓的"硬件消抖"，代码如下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="c1"&gt;//对输入信号inpio硬件滤波，每20ms采样一次当前值&lt;/span&gt;
-    &lt;span class="kt"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;18&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//20ms计数器&lt;/span&gt;
+    &lt;span class="n"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;18&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//20ms计数器&lt;/span&gt;
 
-    &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_25m&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="k"&gt;negedge&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_25m&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;negedge&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-            &lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;19&lt;/span&gt;&lt;span class="mi"&gt;&amp;#39;d0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mh"&gt;19&lt;/span&gt;&lt;span class="mi"&gt;&amp;#39;d500000&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-            &lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mh"&gt;1&amp;#39;b1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d500000&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;cnt&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="k"&gt;else&lt;/span&gt; 
-            &lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;19&lt;/span&gt;&lt;span class="mi"&gt;&amp;#39;d0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-    &lt;span class="kt"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;inpior&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//当前inpio信号锁存，每20ms锁存一拍&lt;/span&gt;
+    &lt;span class="n"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;inpior&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//当前inpio信号锁存，每20ms锁存一拍&lt;/span&gt;
 
-    &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_25m&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="k"&gt;negedge&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_25m&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;negedge&lt;/span&gt; &lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;rst_n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-            &lt;span class="n"&gt;inpior&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;2&amp;#39;b11&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mh"&gt;19&amp;#39;h7ffff&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-            &lt;span class="n"&gt;inpior&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;inpior&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;inpior&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+            &lt;span class="n"&gt;inpior&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b11&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cnt&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;h7ffff&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;inpior&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;inpior&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;inpior&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
         &lt;span class="k"&gt;else&lt;/span&gt;
             &lt;span class="n"&gt;inpior&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;inpior&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-    &lt;span class="kt"&gt;wire&lt;/span&gt; &lt;span class="n"&gt;inpio_swin&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;inpior&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;inpior&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;//前后20ms两次锁存值都为0时才为0&lt;/span&gt;
+    &lt;span class="n"&gt;wire&lt;/span&gt; &lt;span class="n"&gt;inpio_swin&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;inpior&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;inpior&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;//前后20ms两次锁存值都为0时才为0&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -215,15 +215,15 @@
 &lt;hr /&gt;
 &lt;p&gt;任何符合 HDL 语法标准的代码都是对硬件行为的一种描述，但不一定是可直接对应成电路的设计信息。行为描述可以基于不同的层次，如系统级，算法级，寄存器传输级(RTL)、门级等等。以目前大部分EDA软件的综合能力来说，&lt;strong&gt;只有RTL或更低层次的行为描述才能保证是可综合的&lt;/strong&gt;。而众多初学者试图做的，却是想让软件去综合 &lt;em&gt;算法级或者更加抽象的硬件行为描述&lt;/em&gt;。&lt;/p&gt;
 &lt;h3&gt;所有综合工具都支持的语法：&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;always&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;begin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;end&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
-&lt;span class="nx"&gt;wire&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;tri&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;inout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;aupply0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;supply1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;integer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
-&lt;span class="nx"&gt;and&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;nand&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;or&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;nor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;xor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;xnor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;buf&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;not&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;bufif0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;bufif1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;notif0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;notif1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
-&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;instantitation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;module&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;negedge&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;posedge&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;operators&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;output&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;parameter&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="nx"&gt;always&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;begin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;end&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="nx"&gt;wire&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;tri&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;inout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;aupply0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;supply1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;input&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;reg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;integer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="nx"&gt;and&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;nand&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;or&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;nor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;xor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;xnor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;buf&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;not&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;bufif0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;bufif1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;notif0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;notif1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;instantitation&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;module&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;negedge&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;posedge&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;operators&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;output&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;parameter&lt;/span&gt;  
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;有些工具支持，有些工具不支持的语法：&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;asex&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;casez&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wand&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;triand&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;trior&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;forever&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arrays&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memories&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;repreat&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;while&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;asex&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;casez&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wand&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;triand&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wor&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;trior&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;real&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;forever&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arrays&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;memories&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;repreat&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;task&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;while&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -277,7 +277,7 @@
 &lt;h2&gt;不可综合代码&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;h3&gt;不可综合语法：&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;defparam&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;finish&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fork&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;initial&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;UDP&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wait&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;defparam&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;finish&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fork&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;initial&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;UDP&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;wait&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -324,8 +324,8 @@
 &lt;hr /&gt;
 &lt;p&gt;继续引用 &lt;strong&gt;董培良&lt;/strong&gt; 的文章：&lt;/p&gt;
 &lt;p&gt;用一句简单的话概括：电脑永远没有你聪明 。具体来说，通常 EDA 软件对 HDL 代码的综合能力总是比人差 。对于一段代码，如果你不能想象出一个较直观的硬件实现方法，那 EDA 软件肯定也不行。比如说，加法器、多路选择器是大家都很熟悉的电路，所以类似&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;
-    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;D&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;        &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;
+        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;D&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -543,30 +543,30 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;hr /&gt;
 &lt;h3&gt;ISE DS 14.7&lt;/h3&gt;
 &lt;p&gt;首先解压&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xvf&lt;/span&gt; &lt;span class="n"&gt;Xilinx_ISE_DS_Lin_14&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="n"&gt;_1015_1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xvf&lt;/span&gt; &lt;span class="n"&gt;Xilinx_ISE_DS_Lin_14&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="n"&gt;_1015_1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;接着进入解压出来的目录并给安装文件赋予执行的权限&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;Xilinx_ISE_DS_Lin_14&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="n"&gt;_1015_1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;xsetup&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;Xilinx_ISE_DS_Lin_14&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="n"&gt;_1015_1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+    &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;xsetup&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后执行 xsetup&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xsetup&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xsetup&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后熟悉的图形界面就出来，和 Windows 下一样，同意安装许可协议，不停地下一步就可以安装成功。&lt;/p&gt;
 &lt;p&gt;安装完成以后，运行&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Xilinx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;14.7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISE_DS&lt;/span&gt;
-&lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="n"&gt;settings64&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Xilinx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;14.7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISE_DS&lt;/span&gt;
+    &lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="n"&gt;settings64&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;此时，已经可以从终端运行 ISE 了&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;nohup&lt;/span&gt; &lt;span class="n"&gt;ise&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;nohup&lt;/span&gt; &lt;span class="n"&gt;ise&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -591,30 +591,30 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;p&gt;&lt;a href="http://rmdir.de/~michael/xilinx/"&gt;XILINX JTAG tools on Linux without proprietary kernel modules&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;所以按照说明&lt;/p&gt;
 &lt;p&gt;首先安装 usb 驱动开发包，在 64 位系统下&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;libusb&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;libc6&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i386&lt;/span&gt; &lt;span class="n"&gt;fxload&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;libusb&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;libc6&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i386&lt;/span&gt; &lt;span class="n"&gt;fxload&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;接着下载驱动程序的源代码&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Xilinx&lt;/span&gt;
-&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//git.zerfleddert.de/usb-driver&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Xilinx&lt;/span&gt;
+    &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//git.zerfleddert.de/usb-driver&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后编译驱动程序&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;usb&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;usb&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+    &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;下载下来的源代码中有个脚本可以设置好一切，我们只需要运行脚本就 ok&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;setup_pcusb&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Xilinx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;14.7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISE_DS&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISE&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;setup_pcusb&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Xilinx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;14.7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISE_DS&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ISE&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;把 Xilinx 路径添加到系统 PATH 中&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bashrc&lt;/span&gt;
-&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;export PATH&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bashrc&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bashrc&lt;/span&gt;
+    &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;export PATH&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bashrc&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -629,7 +629,7 @@ CPLD和FPGA都包括了一些相对大数量的可以编辑逻辑单元。CPLD�
 &lt;p&gt;其实也没有特殊配置的地方，主要是自定义代码编辑器，目前我的主要使用的是 &lt;code&gt;sublime text 2&lt;/code&gt;，正在向 &lt;code&gt;vim&lt;/code&gt; 过度ing&lt;/p&gt;
 &lt;p&gt;具体步骤 Edit -&amp;gt; Preferences -&amp;gt; Editors，选择 &lt;code&gt;custom&lt;/code&gt;，在右侧的 “Command line syntax” 中写自定义编辑器的执行路径&lt;/p&gt;
 &lt;p&gt;配置自定义编辑器为 vim&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;gnome&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;maximize&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;vim&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;gnome&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;maximize&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;vim&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
