@@ -63,11 +63,11 @@ Summary: 总结 FPGA 中的脉冲边沿检测方法
 
 **综合结果：**
 
-![rtl1](/images/leaning-fpga-pulse-edge-detection/rtl1.png)
+![rtl1](/images/learning-fpga-pulse-edge-detection/rtl1.png)
 
 **仿真结果：**
 
-![sim1](/images/leaning-fpga-pulse-edge-detection/sim1.png)
+![sim1](/images/learning-fpga-pulse-edge-detection/sim1.png)
 
 ### 检测 上/下 边沿
 
@@ -114,11 +114,11 @@ Summary: 总结 FPGA 中的脉冲边沿检测方法
 
 **综合结果：**
 
-![rtl2](/images/leaning-fpga-pulse-edge-detection/rtl2.png)
+![rtl2](/images/learning-fpga-pulse-edge-detection/rtl2.png)
 
 **仿真结果：**
 
-![sim2](/images/leaning-fpga-pulse-edge-detection/sim2.png)
+![sim2](/images/learning-fpga-pulse-edge-detection/sim2.png)
 
 <br>
 
@@ -152,11 +152,11 @@ Summary: 总结 FPGA 中的脉冲边沿检测方法
 
 **综合结果：**
 
-![rtl3](/images/leaning-fpga-pulse-edge-detection/rtl3.png)
+![rtl3](/images/learning-fpga-pulse-edge-detection/rtl3.png)
 
 **仿真结果：**
 
-![sim3](/images/leaning-fpga-pulse-edge-detection/sim3.png)
+![sim3](/images/learning-fpga-pulse-edge-detection/sim3.png)
 
 <br>
 
