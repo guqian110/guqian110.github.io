@@ -1,8 +1,8 @@
-Title: 学习 FPGA 脉冲边沿检测
+Title: 脉冲边沿检测
 Date: 2014-04-08 18:33
 Category: FPGA
 Tags: FPGA
-Slug: learning_fpga_pulse_edge_detection
+Slug: pulse_edge_detection
 Author: Chien Gu
 Summary: 总结 FPGA 中的脉冲边沿检测方法
 
