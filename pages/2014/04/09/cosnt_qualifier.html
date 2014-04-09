@@ -178,52 +178,44 @@
 <li>
 <p>定义在头文件中 inlcude</p>
 <p>如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 ”重定义“  的问题 。</p>
-</li>
-</ul>
-<div class="highlight"><pre>        <span class="c1">// file1.h</span>
-        <span class="k">const</span> <span class="kt">int</span> <span class="n">bufsize</span> <span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
-
-        <span class="c1">// file2.cpp</span>
-        <span class="n">include</span> <span class="s">&quot;file1.h&quot;</span>
-        <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">bufsize</span>
+<p>```C++
+    // file1.h
+    const int bufsize = 512;</p>
+<div class="highlight"><pre><span class="c1">// file2.cpp</span>
+<span class="k">include</span> <span class="s">&quot;file1.h&quot;</span>
+<span class="k">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">bufsize</span>
 </pre></div>
 
 
-<ul>
+<p>```</p>
+</li>
 <li>
 <p>定义时声明为 extern</p>
 <p>如果 const 变量不是用常量表达式初始化的，那么就不能把它当在头文件中 。只能在源文件中定义并初始化 。因为 const 变量是文件局部变量，所以要在其他文件中使用该变量，必须在定义时加上 <code>extern</code> 声明 。</p>
 <p>比如</p>
+<p><code>C++
+    // file1.cpp
+    extern const int bufsize = 512;</code>
++ 在头文件中声明为 extern 类型，以使其他文件共享。</p>
+<p>```C+
+        // file1.h
+        extern const int bufsize;</p>
+<div class="highlight"><pre>    <span class="c1">// fil2.cpp</span>
+    <span class="err">#</span><span class="n">include</span> <span class="s">&quot;file1.h&quot;</span>
+    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">bufsize</span><span class="p">;</span>
+</pre></div>
+
+
+<p>```</p>
+<ul>
+<li>不需要在头文件中声明，在其他文件中使用前声明</li>
+</ul>
+<p><code>C++
+        // file2.cpp
+        extern const int bufsize;
+        int size = bufsize;</code></p>
 </li>
 </ul>
-<div class="highlight"><pre>        <span class="c1">// file1.cpp</span>
-        <span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">bufsize</span> <span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span class="o">+</span> <span class="err">在头文件中声明为</span> <span class="k">extern</span> <span class="err">类型，以使其他文件共享。</span>
-</pre></div>
-
-
-<div class="highlight"><pre>            <span class="c1">// file1.h</span>
-            <span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">bufsize</span><span class="p">;</span>
-
-            <span class="c1">// fil2.cpp</span>
-            <span class="err">#</span><span class="n">include</span> <span class="s">&quot;file1.h&quot;</span>
-            <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">bufsize</span><span class="p">;</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span class="o">+</span> <span class="err">不需要在头文件中声明，在其他文件中使用前声明</span>
-</pre></div>
-
-
-<div class="highlight"><pre>            <span class="c1">// file2.cpp</span>
-            <span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">bufsize</span><span class="p">;</span>
-            <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">bufsize</span><span class="p">;</span>
-</pre></div>
-
-
 <p><strong>P.S.</strong> 在 C 中 const 是默认为外部连接的，在 C++ 中是默认为内部连接的 。</p>
 <p>至于为什么要这么规定，<a href="http://book.douban.com/subject/1459728/">Thinking in C++</a> 中有说明</p>
 <blockquote>
@@ -368,13 +360,13 @@ because it doesn’t know the value.</p>
                                                                                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                                             <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
                             </a>
                         </li>
                                             <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/fpga.html">
-                                FPGA
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
                             </a>
                         </li>
                                             <li class="list-group-item tag-2">
