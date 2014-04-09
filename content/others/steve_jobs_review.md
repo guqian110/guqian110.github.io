@@ -1,8 +1,8 @@
-Title: Code 书评
-Date: 2014-03-21 16:33
+Title: 乔布斯传 书评
+Date: 2014-04-09 17:14
 Category: Others
-Tags: Book,Code
-Slug: code_review
+Tags: Book,Steve Jobs
+Slug: steve_jobs_review
 Author: Chien Gu
 Summary: 博客搬家，搬运一些以前写过的文字。 
 
