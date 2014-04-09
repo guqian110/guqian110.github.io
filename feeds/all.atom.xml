@@ -69,47 +69,52 @@
 &lt;li&gt;
 &lt;p&gt;定义在头文件中 inlcude&lt;/p&gt;
 &lt;p&gt;如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 ”重定义“  的问题 。&lt;/p&gt;
-&lt;p&gt;```C++
-    // file1.h
-    const int bufsize = 512;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// file2.cpp&lt;/span&gt;
-&lt;span class="k"&gt;include&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;file1.h&amp;quot;&lt;/span&gt;
-&lt;span class="k"&gt;int&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;```&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;定义时声明为 extern&lt;/p&gt;
-&lt;p&gt;如果 const 变量不是用常量表达式初始化的，那么就不能把它当在头文件中 。只能在源文件中定义并初始化 。因为 const 变量是文件局部变量，所以要在其他文件中使用该变量，必须在定义时加上 &lt;code&gt;extern&lt;/code&gt; 声明 。&lt;/p&gt;
-&lt;p&gt;比如
-&lt;code&gt;C++
-    // file1.cpp
-    extern const int bufsize = 512;&lt;/code&gt;
-+ 在头文件中声明为 extern 类型，以使其他文件共享。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;```&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;
-    &lt;span class="c1"&gt;// file1.h&lt;/span&gt;
-    &lt;span class="k"&gt;extern&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;        &lt;span class="c1"&gt;// file1.h&lt;/span&gt;
+        &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;512&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-    &lt;span class="c1"&gt;// fil2.cpp&lt;/span&gt;
-    &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;file1.h&amp;quot;&lt;/span&gt;
-    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="err"&gt;```&lt;/span&gt;
+        &lt;span class="c1"&gt;// file2.cpp&lt;/span&gt;
+        &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;file1.h&amp;quot;&lt;/span&gt;
+        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;不需要在头文件中声明，在其他文件中使用前声明&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;C++
-    // file2.cpp
-    extern const int bufsize;
-    int size = bufsize;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;定义时声明为 extern&lt;/p&gt;
+&lt;p&gt;如果 const 变量不是用常量表达式初始化的，那么就不能把它当在头文件中 。只能在源文件中定义并初始化 。因为 const 变量是文件局部变量，所以要在其他文件中使用该变量，必须在定义时加上 &lt;code&gt;extern&lt;/code&gt; 声明 。&lt;/p&gt;
+&lt;p&gt;比如&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;        &lt;span class="c1"&gt;// file1.cpp&lt;/span&gt;
+        &lt;span class="k"&gt;extern&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;512&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;在头文件中声明为&lt;/span&gt; &lt;span class="k"&gt;extern&lt;/span&gt; &lt;span class="err"&gt;类型，以使其他文件共享。&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;            &lt;span class="c1"&gt;// file1.h&lt;/span&gt;
+            &lt;span class="k"&gt;extern&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+            &lt;span class="c1"&gt;// fil2.cpp&lt;/span&gt;
+            &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;file1.h&amp;quot;&lt;/span&gt;
+            &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;不需要在头文件中声明，在其他文件中使用前声明&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;            &lt;span class="c1"&gt;// file2.cpp&lt;/span&gt;
+            &lt;span class="k"&gt;extern&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt; 在 C 中 const 是默认为外部连接的，在 C++ 中是默认为内部连接的 。&lt;/p&gt;
 &lt;p&gt;至于为什么要这么规定，&lt;a href="http://book.douban.com/subject/1459728/"&gt;Thinking in C++&lt;/a&gt; 中有说明&lt;/p&gt;
 &lt;blockquote&gt;
