@@ -98,14 +98,12 @@ const 限定符修同时也改变了变量的作用范围 。普通非 const 变
 
     如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 ”重定义“  的问题 。
     
-    ```C++
         // file1.h
         const int bufsize = 512;
         
         // file2.cpp
         include "file1.h"
         int size = bufsize
-    ```
 
 + 定义时声明为 extern
 
@@ -113,28 +111,23 @@ const 限定符修同时也改变了变量的作用范围 。普通非 const 变
     
     比如
 
-    ```C++
         // file1.cpp
         extern const int bufsize = 512;
-    ```
+
     + 在头文件中声明为 extern 类型，以使其他文件共享。
     
-    ```C+
             // file1.h
             extern const int bufsize;
             
             // fil2.cpp
             #include "file1.h"
             int size = bufsize;
-    ```
 
     + 不需要在头文件中声明，在其他文件中使用前声明
 
-    ```C++
             // file2.cpp
             extern const int bufsize;
             int size = bufsize;
-    ```
 
 **P.S.** 在 C 中 const 是默认为外部连接的，在 C++ 中是默认为内部连接的 。
 
