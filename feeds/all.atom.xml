@@ -1,5 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-09T17:14:00+08:00</updated><entry><title>乔布斯传 书评</title><link href="http://guqian110.github.io/pages/2014/04/09/steve_jobs_review.html" rel="alternate"></link><updated>2014-04-09T17:14:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-09:pages/2014/04/09/steve_jobs_review.html</id><summary type="html">&lt;p&gt;一直想买本 &lt;a href="http://book.douban.com/subject/6798611/"&gt;《乔布斯传》&lt;/a&gt;，但是被 ￥68.00 的定价击败了，舍不得花钱买 :D 但是电子书的体验真的太差，看了一半就没有坚持下来。突然发现有个同学有本崭新的《乔布斯传》，于是借来用闲暇时间看了一个多月才看完...&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-10T10:58:00+08:00</updated><entry><title>在 Ubuntu 下运行 WarCraft</title><link href="http://guqian110.github.io/pages/2014/04/10/run_warcraft_on_ubuntu.html" rel="alternate"></link><updated>2014-04-10T10:58:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-10:pages/2014/04/10/run_warcraft_on_ubuntu.html</id><summary type="html">&lt;p&gt;闲来无聊，在 Ubuntu 下 wine 了一个 WarCraft 3 玩&lt;/p&gt;
+&lt;p&gt;在实验室的 ”老爷车“ 电脑上运行。稍微有一点卡，在5年前买的笔记本（core 2 T6600, 4G RAM）上运行就感觉不到卡了 。&lt;/p&gt;
+&lt;p&gt;实验室电脑配置：&lt;/p&gt;
+&lt;p&gt;Processor: Pentium(R) Dual-Core CPU E5200 @ 2.50GHz × 2 &lt;/p&gt;
+&lt;p&gt;Graphics: Gallium 0.4 on NV86&lt;/p&gt;
+&lt;p&gt;Memory: 2.0 GiB&lt;/p&gt;
+&lt;p&gt;OS type: 32-bit&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;安装 Wine&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Wine_(software)"&gt;Wine&lt;/a&gt; 是 wine is not an emulator 的缩写，它可以在 x86、x86-64 上容许类 Unix 操作系统在 X Window System 下运行 Microsoft Windows 程序的软件 .它的官方网址：http://www.winehq.org/&lt;/p&gt;
+&lt;p&gt;方法一：&lt;/p&gt;
+&lt;p&gt;Ubuntu 软件仓里搜索 Wine，就可以找到 &lt;code&gt;Wine Windows Program Loader&lt;/code&gt;，直接安装即可&lt;/p&gt;
+&lt;p&gt;方法二：&lt;/p&gt;
+&lt;p&gt;使用 &lt;code&gt;apt-get&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt; &lt;span class="n"&gt;search&lt;/span&gt; &lt;span class="n"&gt;wine&lt;/span&gt;
+&lt;span class="n"&gt;suod&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;wine&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;P.S. 若是其他系统，找不到对应的二进制包，可以直接从官网上下载源码，自己编译（官网上有详细的 &lt;a href="http://wiki.winehq.org/FAQ_zhcn"&gt;FAQ&lt;/a&gt;）&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;拷贝 WarCraft&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;如果是双系统，则不必拷贝 WarCraft 文件夹，因为我电脑上只有 Ubuntu，所以从同学那里拷贝了一个，放在了 &lt;code&gt;～/&lt;/code&gt; 目录下 。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;配置 Wine &amp;amp; WarCraft&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;CD key 注册表问题&lt;/h3&gt;
+&lt;p&gt;直接以 wine 运行 &lt;code&gt;war3.exe&lt;/code&gt; 时提示没有 CD key，在 WarCraft 目录下找到了两个注册表文件，&lt;code&gt;War3.reg&lt;/code&gt; 和 &lt;code&gt;一键导入.reg&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;在终端下导入注册表&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;wine&lt;/span&gt; &lt;span class="n"&gt;regedit&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后导入这两个文件，再次尝试，还是不行...&lt;/p&gt;
+&lt;p&gt;不急，游戏目录下还有一个程序叫 &lt;code&gt;War3RegFixer.exe&lt;/code&gt;，看名字就知道是我们需要的&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;wine&lt;/span&gt; &lt;span class="n"&gt;War3RegFixer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;因为我的 Ubuntu 是英文版的，打开后是乱码...&lt;/p&gt;
+&lt;p&gt;&lt;img alt="war3regfixer" src="/images/run-warcraft-on-ubuntu/war3regfixer.png" /&gt;&lt;/p&gt;
+&lt;p&gt;找了一台 Windows 电脑，运行了一下，按照向导就可以修复 CD key 的问题 。&lt;/p&gt;
+&lt;h3&gt;分辨率问题&lt;/h3&gt;
+&lt;p&gt;第一次运行的结果一般不会全屏，处女座的强迫症犯了，还好比较简单 ：D&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;wine&lt;/span&gt; &lt;span class="n"&gt;regedit&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;找到 &lt;code&gt;HKEY_CURRENT_USER/Software/Blizzard Entertainment/Warcraft III/Video&lt;/code&gt;，里面有两个注册表值 &lt;code&gt;resheight&lt;/code&gt; 和 &lt;code&gt;reswidth&lt;/code&gt;，将他们设为和当前分辨率相同的十进制数值就可以了。&lt;/p&gt;
+&lt;h3&gt;画面卡&lt;/h3&gt;
+&lt;p&gt;因为 Wine 对 DirectX 的支持还不够好，如果电脑配置比较低，运行的时候添加参数 &lt;code&gt;-opengl&lt;/code&gt; 就可以了，为了避免每次运行都要输入参数，可以在注册表 &lt;code&gt;HKEY_CURRENT_USER/Software/Blizzard Entertainment/Warcraft III/&lt;/code&gt; 下新建整数（DWORD），名为 &lt;code&gt;Gfx OpenGL&lt;/code&gt;，值为 1 。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;运行&lt;/h2&gt;
+&lt;h3&gt;终端下&lt;/h3&gt;
+&lt;p&gt;现在就可以在终端下运行 war3.exe 了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;wine&lt;/span&gt; &lt;span class="n"&gt;war3&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;熟悉的画面就出来了～&lt;/p&gt;
+&lt;p&gt;这样子运行如果切出游戏，有时会导致 war3 崩溃或者切换不出去。一个解决方法是以窗口模式运行，只需要添加参数 &lt;code&gt;-window&lt;/code&gt; 即可&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;wine&lt;/span&gt; &lt;span class="n"&gt;war3&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;效果如下&lt;/p&gt;
+&lt;p&gt;&lt;img alt="war3window" src="/images/run-warcraft-on-ubuntu/war3window.png" /&gt;&lt;/p&gt;
+&lt;p&gt;不过个人不是很喜欢，因为鼠标总是超出窗口，及其不方便，影响游戏操作和感受 ：D&lt;/p&gt;
+&lt;h3&gt;桌面启动器&lt;/h3&gt;
+&lt;p&gt;我们可以为 war3 添加一个桌面启动器，这样就不用进入终端启动了&lt;/p&gt;
+&lt;p&gt;新建文件 &lt;code&gt;frozen-throne.desktop&lt;/code&gt; 文件，添加以下内容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Desktop Entry]&lt;/span&gt;
+&lt;span class="na"&gt;Version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1.0&lt;/span&gt;
+&lt;span class="na"&gt;Name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;Frozen Throne&lt;/span&gt;
+&lt;span class="na"&gt;Exec&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/home/chien/WarCraft/war3.exe&lt;/span&gt;
+&lt;span class="na"&gt;Terminal&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;false&lt;/span&gt;
+&lt;span class="na"&gt;Icon&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/home/chien/WarCraft/war3.jpg&lt;/span&gt;
+&lt;span class="na"&gt;Type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;Application&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后把这个文件移动到 &lt;code&gt;/usr/share/applicants/&lt;/code&gt; ，这时在 unity 中搜索 &lt;code&gt;froz&lt;/code&gt;，就能看到我们刚才新建的启动器了～&lt;/p&gt;
+&lt;p&gt;&lt;img alt="war3desktop" src="/images/run-warcraft-on-ubuntu/war3desktop.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;至此，就可以在 Ubuntu 下享受 War3 了&lt;/p&gt;
+&lt;p&gt;gl hf！&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://linux-wiki.cn/wiki/zh-hans/%E7%94%A8Wine%E8%BF%90%E8%A1%8C%E9%AD%94%E5%85%BD%E4%BA%89%E9%9C%B8III"&gt;用Wine运行魔兽争霸III&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.ubuntusoft.com/wine-warcraft-3.html#.U0Xt11SSx38"&gt;Wine 魔兽争霸3的一些设置&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://hi.baidu.com/chenwzox/item/4e6346f1575a7ab231c199b4"&gt;Wine魔兽争霸3，流畅运行+键盘操作+窗口化&lt;/a&gt;&lt;/p&gt;</summary><category term="Wine"></category><category term="WarCraft"></category></entry><entry><title>乔布斯传 书评</title><link href="http://guqian110.github.io/pages/2014/04/09/steve_jobs_review.html" rel="alternate"></link><updated>2014-04-09T17:14:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-09:pages/2014/04/09/steve_jobs_review.html</id><summary type="html">&lt;p&gt;一直想买本 &lt;a href="http://book.douban.com/subject/6798611/"&gt;《乔布斯传》&lt;/a&gt;，但是被 ￥68.00 的定价击败了，舍不得花钱买 :D 但是电子书的体验真的太差，看了一半就没有坚持下来。突然发现有个同学有本崭新的《乔布斯传》，于是借来用闲暇时间看了一个多月才看完...&lt;/p&gt;
 &lt;p&gt;作为一名资深“挨踢”菜鸟，乔布斯的名字可以说是如雷贯耳，他在普通人眼中，尤其是果粉眼中，基本上就是神一般的存在。以前我也一直这么认为，直到看完这本书，我才发现事实中的“乔帮主”完全是另外一个人，一个有爱有恨，爱哭，执着的同时执着到固执的地步，毫不做作的一个人。&lt;/p&gt;
 &lt;p&gt;写几点感触吧，以证明没有白看这本书，看书的价值就在与思考～&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
