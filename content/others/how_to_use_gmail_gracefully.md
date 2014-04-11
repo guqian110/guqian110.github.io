@@ -4,9 +4,9 @@ Category: Others
 Tags: Gmail 
 Slug: how_to_use_gmail_gracefully
 Author: Chien Gu
-Summary: 细数已经使用 Gmail 快 5 年了，但是最近才发现自己的使用方法根本不对，摸索了 2 天，总结一下使用心得～
+Summary: 使用 Gmail 已经快 5 年了，但是最近才发现自己的使用方法根本不对，摸索了 2 天，总结一下使用心得～
 
-[Gmail][Gmail] 是 Google 提供的邮，细数已经使用 Gmail 快 5年了，但是最近才发现自己的使用方法根本不对，摸索了 2 天，总结一下使用心得～
+Gmail 是 Google 提供的邮箱，细数使用 Gmail 已经快 5 年了，但是最近才发现自己的使用方法根本不对，摸索了 2 天，总结一下使用心得～
 
 <br>
 
@@ -29,7 +29,7 @@ Summary: 细数已经使用 Gmail 快 5 年了，但是最近才发现自己的�
 
 3. 安全，邮件不会受到某些机器&人工的监视，免受 GFW 的干扰
     
-    这恰恰是一些人不使用 Gmaqil 的原因，因为 Gmail 不稳定，但是关于这个问题，引用 [和菜头][hecaitou] 在知乎上的一句话 [“因为Gmail总有访问正常的一天，只要Google不死。对未来没有信心做人和一条咸鱼又有什么区别？”][answer1]，况且，在 Geek 面前这都不是问题 。）
+    这恰恰是一些人不使用 Gmail 的原因，因为 Gmail 不稳定，但是关于这个问题，引用 [和菜头][hecaitou] 在知乎上的一句话 [“因为Gmail总有访问正常的一天，只要Google不死。对未来没有信心做人和一条咸鱼又有什么区别？”][answer1]，况且，在 Geek 面前这都不是问题 。）
 
     关于 Google 和百度、天朝的恩怨，一个有独立判断能力的人都明白为什么 Google 退出中国 。
 
@@ -58,7 +58,7 @@ Summary: 细数已经使用 Gmail 快 5 年了，但是最近才发现自己的�
 
 官方帮助文档，导入[邮箱账户][import]
 
-![import](/images/how_to_using_gmail_gracefully/import.png)
+![import](/images/how_to_use_gmail_gracefully/import.png)
 
 Gmail 最多可以导入 5 个邮箱账户的邮件，对于普通人来说，远远足够了 。
 
