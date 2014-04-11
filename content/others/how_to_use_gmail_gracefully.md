@@ -58,7 +58,7 @@ Gmail 是 Google 提供的邮箱，细数使用 Gmail 已经快 5 年了，但�
 
 官方帮助文档，导入[邮箱账户][import]
 
-![import](/images/how_to_use_gmail_gracefully/import.png)
+![import](/images/how-to-use-gmail-gracefully/import.png)
 
 Gmail 最多可以导入 5 个邮箱账户的邮件，对于普通人来说，远远足够了 。
 
