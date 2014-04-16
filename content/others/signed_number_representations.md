@@ -291,9 +291,13 @@ P.S. -128 没有对应的 原码 和反码，它的补码为 `1000_0000` 。
 ## 参考文献
 
 [Signed number representations——Wiki][snr]
+
 [Ones' complement][oc]
+
 [Two's complement][tc]
+
 [整数的加减运算][ref1]
+
 [机器数——百度百科][baike]
 
 [snr]: http://en.wikipedia.org/wiki/Signed_number_representations
