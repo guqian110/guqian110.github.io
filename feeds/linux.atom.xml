@@ -1,5 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-16T12:44:00+08:00</updated><entry><title>学习 Vim 初步配置 Vim</title><link href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html" rel="alternate"></link><updated>2014-04-16T12:44:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-16:pages/2014/04/16/learning_vim_vimrc_preliminary.html</id><summary type="html">&lt;p&gt;总结初步配置 Vim，让 Vim 更顺手 。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-16T17:06:00+08:00</updated><entry><title>学习 Vim 使用 Vundle 管理插件</title><link href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html" rel="alternate"></link><updated>2014-04-16T17:06:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-16:pages/2014/04/16/learning_vim_vundle.html</id><summary type="html">&lt;p&gt;学习 Vim，使用 Vundle 管理插件 。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Vim 插件&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;Vim 的强大之处在于它的可扩展性，你可以把它当作一个简单的文本编辑器，也可以安装各种功能强大的插件，把它武装成一个 IDE 。&lt;/p&gt;
+&lt;p&gt;我们可以从以下几个地方找到 Vim 插件，一般比较常用的插件从官网上都可以找到，还有一些插件是大神们自己写的，托管在 GitHub 上 。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script_search_results.php"&gt;Vim 官网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/"&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;什么是 Vundle&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;Vim 的插件虽然强大，但是因为 Vim 根本就没有插件管理这个概念，所有插件的文件都散布在~/.vim下的几个文件夹中，配置 vim 的过程, 就是在网上不停的搜插件，拷贝到 &lt;code&gt;~/.vim&lt;/code&gt; 下，发现更新，要重新下载重新拷贝，想要删除某个不需要插件，更是要小心翼翼的不要删错。配置出顺手的 Vim, 需要极大的耐心和运气，而且如果换一台电脑，就要重复一次这样的痛苦经历 。&lt;/p&gt;
+&lt;p&gt;自然地，因为管理插件的需求，最早出现了一些管理插件的脚本，但是写脚本需要一定的 shell 知识，直接 copy 别人的自己并不一定适用 。后来，出现了一些插件，比如 pathogen，muzuiget，vim-flavor，Vundle 等 。&lt;/p&gt;
+&lt;p&gt;目前比较流行的方式是采用 Vundle 来管理插件（别的我也没有试过...）&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/gmarik/Vundle.vim"&gt;Vundle on GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=3458"&gt;Vundle on vim.org&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Vundle 的介绍：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Vundle is short for Vim bundle and is a Vim plugin manager.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Vundle 可以在交互的方式下做到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在 &lt;code&gt;.vimrc&lt;/code&gt; 中管理和配置插件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装插件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;更新插件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;按名字搜索插件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;删除插件&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;如何使用 Vundle 管理插件&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;安装 Vundle&lt;/h3&gt;
+&lt;p&gt;Vundle 的安装需要 &lt;a href="http://git-scm.com/"&gt;Git&lt;/a&gt; 。&lt;/p&gt;
+&lt;p&gt;从 GitHub 上 clone 下来就可以了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/gmarik/vundle.git ~/.vim/bundle/vundle&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;配置 Vundle&lt;/h3&gt;
+&lt;p&gt;将下列内容加入到 &lt;code&gt;.vimrc&lt;/code&gt; 文件中&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;nocompatible&lt;/span&gt;              &lt;span class="s"&gt;&amp;quot; be iMproved, required&lt;/span&gt;
+&lt;span class="n"&gt;filetype&lt;/span&gt; &lt;span class="n"&gt;off&lt;/span&gt;                  &lt;span class="s"&gt;&amp;quot; required&lt;/span&gt;
+
+&lt;span class="s"&gt;&amp;quot; set the runtime path to include Vundle and initialize&lt;/span&gt;
+&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;rtp&lt;/span&gt;&lt;span class="o"&gt;+=~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bundle&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;vundle&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;vundle&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; alternatively, pass a path where Vundle should install plugins&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;let path = &amp;#39;~/some/path/here&amp;#39;&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;call vundle#rc(path)&lt;/span&gt;
+
+&lt;span class="s"&gt;&amp;quot; let Vundle manage Vundle, required&lt;/span&gt;
+&lt;span class="n"&gt;Plugin&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;gmarik&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;vundle&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; The following are examples of different formats supported.&lt;/span&gt;
+
+&lt;span class="s"&gt;&amp;quot; Keep Plugin commands between here and filetype plugin indent on.&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; scripts on GitHub repos&lt;/span&gt;
+&lt;span class="n"&gt;Plugin&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;tpope&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fugitive&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Plugin&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Lokaltog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;easymotion&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Plugin&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;tpope&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rails&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; The sparkup vim script is in a subdirectory of this repo called vim.&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; Pass the path to set the runtimepath properly.&lt;/span&gt;
+&lt;span class="n"&gt;Plugin&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;rstacruz&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sparkup&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;rtp&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; scripts from http://vim-scripts.org/vim/scripts.html&lt;/span&gt;
+&lt;span class="n"&gt;Plugin&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;L9&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Plugin&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;FuzzyFinder&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; scripts not on GitHub&lt;/span&gt;
+&lt;span class="n"&gt;Plugin&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//git.wincent.com/command-t.git&amp;#39;&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; git repos on your local machine (i.e. when working on your own plugin)&lt;/span&gt;
+&lt;span class="n"&gt;Plugin&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;///home/gmarik/path/to/plugin&amp;#39;&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; ...&lt;/span&gt;
+
+&lt;span class="n"&gt;filetype&lt;/span&gt; &lt;span class="n"&gt;plugin&lt;/span&gt; &lt;span class="n"&gt;indent&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot; required&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; To ignore plugin indent changes, instead use:&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;filetype plugin on&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; Brief help&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; :PluginList          - list configured plugins&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; :PluginInstall(!)    - install (update) plugins&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; :PluginSearch(!) foo - search (or refresh cache first) for foo&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; see :h vundle for more details or wiki for FAQ&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; NOTE: comments after Plugin commands are not allowed.&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; Put your stuff after this line&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;从上面的配置文件中可以看到，Vundle 把插件分为了 3 类：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;scripts on GitHub repos&lt;/p&gt;
+&lt;p&gt;GitHub 上的脚本，需要按照 &lt;code&gt;usrname/repos&lt;/code&gt; 的格式写出插件的名称&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;scripts from http://vim-scripts.org/vim/scripts.html &lt;/p&gt;
+&lt;p&gt;Vim scripts 上的脚本，不用作者名，直接写插件名&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;scripts not on GitHub&lt;/p&gt;
+&lt;p&gt;不是 GitHub 上的脚本，需要写出插件的详细路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;运行 Vundle&lt;/h3&gt;
+&lt;p&gt;修改好 &lt;code&gt;.vimrc&lt;/code&gt; 文件后，打开 Vim，使用以下命令管理插件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;列表&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Bundles&lt;/span&gt;    &lt;span class="c1"&gt;// 列出所有插件（包括未安装的）&lt;/span&gt;
+&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleLIst&lt;/span&gt; &lt;span class="c1"&gt;// 列出已安装的插件&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;安装&lt;/p&gt;
+&lt;p&gt;:BundleInstall&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;搜索&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleSearch&lt;/span&gt;   &lt;span class="c1"&gt;// 后面不接插件名时，同 Bundles，列出了 4000 个插件&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;更新&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleInstall&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;删除&lt;/p&gt;
+&lt;p&gt;在 &lt;code&gt;.vimrc&lt;/code&gt; 文件中删除/注释掉相应的插件名，然后输入命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleClean&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt; P.S. 我安装的插件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;列出一些我安装的插件，这些插件都是大家比较常用的，可以从相关的网站或者帮助文档中找到使用说明或者 &lt;code&gt;README&lt;/code&gt;，计划在后续中写一写使用心得～&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;taglist&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;The&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;NERD&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;tree&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;SuperTab&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;snipMate&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;L9&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;FuzzyFinder&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;bufexplorer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zip&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;winmanager&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Markdown&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Conque&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Shell&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;vimwiki&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;genutils&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;lookupfile&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolkit&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;Bundle &amp;#39;ManPageView&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;calendar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;AutoClose&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;scripts on GitHub repos&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;suan&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;instant&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;markdown&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;godlygeek&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tabular&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://zuyunfei.com/2013/04/12/killer-plugin-of-vim-vundle/"&gt;vim中的杀手级插件: vundle&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.zfanw.com/blog/vundle-vim-plugin-management.html"&gt;Vundle 管理 Vim 插件&lt;/a&gt;&lt;/p&gt;</summary><category term="Linux"></category><category term="Vim"></category></entry><entry><title>学习 Vim 初步配置 Vim</title><link href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html" rel="alternate"></link><updated>2014-04-16T12:44:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-16:pages/2014/04/16/learning_vim_vimrc_preliminary.html</id><summary type="html">&lt;p&gt;总结初步配置 Vim，让 Vim 更顺手 。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;在哪里配置 Vim&lt;/h2&gt;
 &lt;hr /&gt;
