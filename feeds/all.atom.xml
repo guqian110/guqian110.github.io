@@ -1,5 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-11T23:33:00+08:00</updated><entry><title>如何优雅地使用 Gmail</title><link href="http://guqian110.github.io/pages/2014/04/11/how_to_use_gmail_gracefully.html" rel="alternate"></link><updated>2014-04-11T23:33:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-11:pages/2014/04/11/how_to_use_gmail_gracefully.html</id><summary type="html">&lt;p&gt;Gmail 是 Google 提供的邮箱，细数使用 Gmail 已经快 5 年了，但是最近才发现自己的使用方法根本不对，摸索了 2 天，总结一下使用心得～&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-16T12:44:00+08:00</updated><entry><title>学习 Vim 初步配置 Vim</title><link href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html" rel="alternate"></link><updated>2014-04-16T12:44:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-16:pages/2014/04/16/learning_vim_vimrc_preliminary.html</id><summary type="html">&lt;p&gt;总结初步配置 Vim，让 Vim 更顺手 。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;在哪里配置 Vim&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;a href="http://book.douban.com/subject/6126937/"&gt;学习 Vi 和 Vim 编辑器&lt;/a&gt;：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Vim 依照特定顺序寻找初始化的信号，它执行找到的第一组指令（可以是 环境变量 or 配置文件），然后开始编辑工作 。所以，Vim 在下列清单中遇到的第一个项目，就是清单中被执行的唯一项目 。书寻如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;VIMINIT&lt;/code&gt; 。它是环境变量，如果不为空，Vim 把它的内容当作 ex 命令执行&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;用户 &lt;code&gt;vimrc&lt;/code&gt; 文件 。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;exrc&lt;/code&gt; 选项 。如果设置了 Vim 的 exrc 选项，它会寻找三个额外的配置文件 。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;vimrc&lt;/code&gt;（vim runtime configure）文件一般有 3 个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;/etc/vim/vimrc&lt;/p&gt;
+&lt;p&gt;本配置文件影响所有的用户，一般不应该更改这个配置文件，因为谁也不能保证别人的喜好和自己一样 。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;/usr/share/vim/vimrc&lt;/p&gt;
+&lt;p&gt;输入命令
+    ll /usr/share/vim/vimrc&lt;/p&gt;
+&lt;p&gt;就可以看到，本文件是 &lt;code&gt;/etc/vim/vimrc&lt;/code&gt; 的软链接 。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;~/.vimrc&lt;/p&gt;
+&lt;p&gt;一般来说，配置 vim 就是在这个文件中配置，如果不存在的话 &lt;code&gt;touch&lt;/code&gt; 一个新文件并命名 &lt;code&gt;。vimrc&lt;/code&gt; 。我们在下面说的配置都是在本文件中配置 。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;映射 &lt;code&gt;esc&lt;/code&gt; 键&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;因为历史原因，Joy 设计 vi 时采用的键盘和我们现在用的标准键盘布局并不一样，当时他的键盘的 &lt;code&gt;esc&lt;/code&gt; 键在现在我们的 &lt;code&gt;Caps Lock&lt;/code&gt; 键的位置，所以才设计使用 &lt;code&gt;esc&lt;/code&gt; 作为模式转换键 。为了更加方便顺手地使用 vim，当然要把这两个键相互调换一下 。&lt;/p&gt;
+&lt;p&gt;在 vim 的官网上就有介绍如何实现两个按键的调换&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://vim.wikia.com/wiki/Map_caps_lock_to_escape_in_XWindows"&gt;Map caps lock to escape in XWindows&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;具体方法，在 &lt;code&gt;～/&lt;/code&gt; 目录下新建一个文件，加入一下内容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="n"&gt;Swap&lt;/span&gt; &lt;span class="n"&gt;caps&lt;/span&gt; &lt;span class="n"&gt;lock&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;escape&lt;/span&gt;
+&lt;span class="n"&gt;remove&lt;/span&gt; &lt;span class="n"&gt;Lock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Caps_Lock&lt;/span&gt;
+&lt;span class="n"&gt;keysym&lt;/span&gt; &lt;span class="n"&gt;Escape&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Caps_Lock&lt;/span&gt;
+&lt;span class="n"&gt;keysym&lt;/span&gt; &lt;span class="n"&gt;Caps_Lock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Escape&lt;/span&gt;
+&lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;Lock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Caps_Lock&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;保存为 .speedswrapper&lt;/p&gt;
+&lt;p&gt;然后输入命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;xmodmap&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;speedswrapper&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这时，对于整个系统范围，这两个键已经调换了位置 。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;设置颜色主题 colorscheme&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;Vim 自带一些颜色主题，一般存放在 &lt;code&gt;/usr/share/vim/vim7x&lt;/code&gt; 目录下（我的 Vim 版本为 7.3，所以路径为 &lt;code&gt;/usr/share/vim/vim73&lt;/code&gt;）.&lt;/p&gt;
+&lt;p&gt;如果对系统自带的主题不满意，网上有很多不错的主题，个人最喜欢 &lt;a href="https://github.com/tomasr/molokai"&gt;molikai&lt;/a&gt; 主题，把下载下来的配色文件拷贝到 &lt;code&gt;usr/share/vim/vim73&lt;/code&gt; 路径下，打开 vim 后 输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;colorscheme&lt;/span&gt; &lt;span class="n"&gt;molikai&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;就 ok 了～ 不过这个方法在关闭 vim 后就恢复了，要想省去每次都输命令的烦恼，只需要在下一步 .vimrc 文件中加入以下内容就可以了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;colorscheme&lt;/span&gt; &lt;span class="n"&gt;molikai&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;编写 .Vimrc&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;vimrc 文件是配置 Vim 编辑特性比较好的地方，差不多任何 Vim 选项都能在次文件中被设置为打开或者关闭，而且它特别适合设置全局变量与定义函数、缩写、按键映射 。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;注释以双引号 &lt;code&gt;“&lt;/code&gt; 开始，可位于一行的任何2位置，所有位于双引号后面的文本，包括双引号都会被视为注释而忽略&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;可以用冒号 &lt;code&gt;:&lt;/code&gt; 表示 ex 命令&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;配置 Vim 特性&lt;/h3&gt;
+&lt;p&gt;vimrc 配置很简单，网上有很多人都分享了自己的配置方案 。我找到一份注释良好的&lt;a href="https://github.com/amix/vimrc"&gt;配置范例&lt;/a&gt;，这篇博客的作者总结了自己 8 年的使用经验，给出了两份配置文件，基本版 &lt;a href="https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim"&gt;Basic&lt;/a&gt; 和 终极版&lt;a href="https://github.com/amix/vimrc"&gt;Ultimate&lt;/a&gt; 。&lt;/p&gt;
+&lt;p&gt;作为码农，当然要选择终极版了～不过个人喜欢用 Vundle 管理我的 Vim 插件（计划下篇博客记录我的配置过程），不是很喜欢作者选择的所有插件，想自己定制插件组合，那么目前只需要看 基础版就足够了 。&lt;/p&gt;
+&lt;p&gt;copy 了一份基础版到自己的 github 中，有备无患 :-D&lt;/p&gt;
+&lt;p&gt;&lt;a href=""&gt;Copy of basic vimrc configure file&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我自己的配置文件：&lt;/p&gt;
+&lt;p&gt;&lt;a href=""&gt;My .vimrc file&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://book.douban.com/subject/6126937/"&gt;学习vi 和 Vim 编辑器&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/amix/vimrc"&gt;The Ultimate vimrc&lt;/a&gt;&lt;/p&gt;</summary><category term="Linux"></category><category term="Vim"></category></entry><entry><title>如何优雅地使用 Gmail</title><link href="http://guqian110.github.io/pages/2014/04/11/how_to_use_gmail_gracefully.html" rel="alternate"></link><updated>2014-04-11T23:33:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-11:pages/2014/04/11/how_to_use_gmail_gracefully.html</id><summary type="html">&lt;p&gt;Gmail 是 Google 提供的邮箱，细数使用 Gmail 已经快 5 年了，但是最近才发现自己的使用方法根本不对，摸索了 2 天，总结一下使用心得～&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;为何使用 Gmail&lt;/h2&gt;
 &lt;hr /&gt;
