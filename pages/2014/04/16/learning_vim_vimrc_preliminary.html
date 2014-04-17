@@ -135,8 +135,11 @@
 </li>
 <li>
 <p>/usr/share/vim/vimrc</p>
-<p>输入命令
-    ll /usr/share/vim/vimrc</p>
+<p>输入命令</p>
+<div class="highlight"><pre> <span class="n">ll</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">vim</span><span class="o">/</span><span class="n">vimrc</span>
+</pre></div>
+
+
 <p>就可以看到，本文件是 <code>/etc/vim/vimrc</code> 的软链接 。</p>
 </li>
 <li>
@@ -199,6 +202,163 @@
 <p><a href="">Copy of basic vimrc configure file</a></p>
 <p>我自己的配置文件：</p>
 <p><a href="">My .vimrc file</a></p>
+<div class="highlight"><pre><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s2">&quot;</span> <span class="nx">General</span>
+<span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s2">set nocompatible</span>
+<span class="s2">&quot;</span> <span class="nb">Set</span> <span class="nx">how</span> <span class="nx">many</span> <span class="nx">lines</span> <span class="nx">of</span> <span class="nx">history</span> <span class="nx">VIM</span> <span class="nx">has</span> <span class="k">to</span> <span class="nx">rememer</span>
+<span class="nb">set</span> <span class="n">history</span><span class="o">=</span><span class="mi">800</span>
+
+<span class="s2">&quot; Enable filetype plugins</span>
+<span class="s2">filetype plugin on</span>
+<span class="s2">filetype indent on</span>
+
+<span class="s2">&quot;</span> <span class="nb">Set</span> <span class="k">to</span> <span class="nx">auto</span> <span class="nb">read</span> <span class="nx">when</span> <span class="nx">a</span> <span class="nb">file</span> <span class="nx">is</span> <span class="nx">changed</span> <span class="nb">from</span> <span class="nx">the</span> <span class="nx">outside</span>
+<span class="nb">set</span> <span class="nx">autoread</span>
+
+<span class="s2">&quot; Set leader key</span>
+<span class="s2">let mapleader = &quot;</span><span class="p">,</span><span class="s2">&quot;</span>
+<span class="s2">let g:mapleader = &quot;</span><span class="p">,</span><span class="s2">&quot;</span>
+
+<span class="s2">&quot;</span> <span class="nx">fast</span> <span class="nx">saving</span>
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">leader</span><span class="o">&gt;</span><span class="nx">w</span> <span class="p">:</span><span class="nx">w</span><span class="o">!&lt;</span><span class="nx">cr</span><span class="o">&gt;</span>
+
+<span class="s2">&quot; fast saving</span>
+<span class="s2">nmap &lt;leader&gt;q :q!&lt;cr&gt;</span>
+
+<span class="s2">&quot;</span> <span class="nx">fast</span> <span class="nx">editing</span>
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">leader</span><span class="o">&gt;</span><span class="nx">aq</span> <span class="p">:</span><span class="nx">qa</span><span class="o">&lt;</span><span class="nx">cr</span><span class="o">&gt;</span>
+
+<span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s2">&quot; Vim user interface</span>
+<span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s2">&quot;</span> <span class="nb">Set</span> <span class="mi">20</span> <span class="nx">lines</span> <span class="k">to</span> <span class="nx">the</span> <span class="nx">cursor</span>
+<span class="nb">set</span> <span class="n">so</span><span class="o">=</span><span class="mi">20</span>
+
+<span class="s2">&quot; Turn on the wild menu</span>
+<span class="s2">set wildmenu</span>
+
+<span class="s2">&quot;</span> <span class="nx">Ignore</span> <span class="nx">complited</span> <span class="nx">files</span>
+<span class="nb">set</span> <span class="n">wildignore</span><span class="o">=*</span><span class="bp">.</span><span class="nx">o</span><span class="p">,</span><span class="o">*</span><span class="err">~</span><span class="p">,</span><span class="o">*</span><span class="bp">.</span><span class="nx">pyc</span>
+
+<span class="s2">&quot; Always show current postion</span>
+<span class="s2">set ruler</span>
+
+<span class="s2">&quot;</span> <span class="nx">Highlight</span> <span class="nx">current</span> <span class="nb">line</span>
+<span class="nb">set</span> <span class="nx">cursorline</span>
+
+<span class="s2">&quot; Height of command bar</span>
+<span class="s2">set cmdheight=2</span>
+
+<span class="s2">&quot;</span> <span class="nx">A</span> <span class="nx">buffer</span> <span class="nx">becomes</span> <span class="nx">hidden</span> <span class="nx">when</span> <span class="nx">it</span> <span class="nx">is</span> <span class="nx">abandoned</span>
+<span class="nb">set</span> <span class="nx">hid</span>
+
+<span class="s2">&quot; Configure backsapce so it acts as it should act</span>
+<span class="s2">set backspace=eol,start,indent</span>
+<span class="s2">set whichwrap+=&lt;,&gt;,h,l</span>
+
+<span class="s2">&quot;</span> <span class="nx">Ignore</span> <span class="k">case</span> <span class="nx">when</span> <span class="nx">searching</span>
+<span class="nb">set</span> <span class="nb">ignorecase</span>
+
+<span class="s2">&quot; When searching try to be smart about cases</span>
+<span class="s2">set smartcase</span>
+
+<span class="s2">&quot;</span> <span class="nx">Highlight</span> <span class="nb">search</span> <span class="nb">results</span>
+<span class="nb">set</span> <span class="nx">hlsearch</span>
+
+<span class="s2">&quot; Make search act like in morden browsers</span>
+<span class="s2">set incsearch</span>
+
+<span class="s2">&quot;</span> <span class="nx">Don</span><span class="s1">&#39;t redraw while executing marcros</span>
+<span class="s1">set lazyredraw</span>
+
+<span class="s1">&quot; For regular expressions turn magic on</span>
+<span class="s1">set magic</span>
+
+<span class="s1">&quot; Show matching brackets when text indicator is over them</span>
+<span class="s1">set showmatch</span>
+<span class="s1">&quot; How many tenths of a second to blink when matching brackets</span>
+<span class="s1">set mat=2</span>
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Colors and Fonts</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Enable syntax highlight</span>
+<span class="s1">syntax enable</span>
+<span class="s1">colorscheme molokai</span>
+<span class="s1">set background=dark</span>
+<span class="s1">:set t_Co=256</span>
+
+<span class="s1">&quot; Set utf8 as standard encoding and en_US as the standard language</span>
+<span class="s1">set encoding=utf8</span>
+
+<span class="s1">&quot; Use Unix as the standard file type</span>
+<span class="s1">set ffs=unix,dos,mac</span>
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Files, backups and undo</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Turn backup off, since most stuff is in SVN. git et.c anyway</span>
+<span class="s1">set nobackup</span>
+<span class="s1">set nowb</span>
+<span class="s1">set noswapfile</span>
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Text, tab and indent related</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Use sapce instead of tabs</span>
+<span class="s1">set expandtab</span>
+
+<span class="s1">&quot; Be smart when using tabs</span>
+<span class="s1">set smarttab</span>
+
+<span class="s1">&quot; 1 tab = 4 spaces</span>
+<span class="s1">set shiftwidth=4</span>
+<span class="s1">set tabstop=4</span>
+
+<span class="s1">&quot; Linebreak on 500 characters</span>
+<span class="s1">set lbr</span>
+<span class="s1">set tw=500</span>
+
+<span class="s1">set ai &quot;Auto indent</span>
+<span class="s1">set si &quot;Smart indent</span>
+<span class="s1">set wrap &quot;Wrap lines</span>
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Moving around, tabs, windows and buffers</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Treat long lines as break lines</span>
+<span class="s1">map j gj</span>
+<span class="s1">map k gk</span>
+
+<span class="s1">&quot; Smart way to move between windows</span>
+<span class="s1">map &lt;C-j&gt; &lt;C-w&gt;j</span>
+<span class="s1">map &lt;C-k&gt; &lt;C-w&gt;k</span>
+<span class="s1">map &lt;C-h&gt; &lt;C-w&gt;h</span>
+<span class="s1">map &lt;C-l&gt; &lt;C-w&gt;l</span>
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Status line</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Show line number</span>
+<span class="s1">set number</span>
+
+<span class="s1">&quot; Always show the status line</span>
+<span class="s1">set statusline=%F%m%r%h%w\ [FORMAT=%{&amp;ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(</span><span class="se">\&quot;</span><span class="s1">%d/%m/%y\ -\ %H:%M</span><span class="se">\&quot;</span><span class="s1">)}</span>
+<span class="s1">&quot;&quot;set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l</span>
+
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Spell checking</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Pressing ,ss will toggle and untoggle spell checking</span>
+<span class="s1">map &lt;leader&gt;ss :setlocal spell!&lt;cr&gt;</span>
+<span class="s1">map &lt;leader&gt;sn ]s</span>
+<span class="s1">map &lt;leader&gt;sp [s</span>
+<span class="s1">map &lt;leader&gt;sa zg</span>
+</pre></div>
+
+
 <p><br></p>
 <h2>参考</h2>
 <p><a href="http://book.douban.com/subject/6126937/">学习vi 和 Vim 编辑器</a></p>
@@ -271,8 +431,8 @@
                                                                                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                                             <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
                             </a>
                         </li>
                                             <li class="list-group-item tag-1">
@@ -281,8 +441,13 @@
                             </a>
                         </li>
                                             <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                                            <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C++
                             </a>
                         </li>
                                             <li class="list-group-item tag-2">
@@ -291,18 +456,13 @@
                             </a>
                         </li>
                                             <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/book.html">
-                                Book
-                            </a>
-                        </li>
-                                            <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/c.html">
                                 C
                             </a>
                         </li>
                                             <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C++
+                            <a href="http://guqian110.github.io/tag/book.html">
+                                Book
                             </a>
                         </li>
                                             <li class="list-group-item tag-4">

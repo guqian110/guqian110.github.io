@@ -31,7 +31,8 @@ Summary: 总结初步配置 Vim，让 Vim 更顺手 。
 2. /usr/share/vim/vimrc
 
     输入命令
-        ll /usr/share/vim/vimrc
+
+         ll /usr/share/vim/vimrc
 
     就可以看到，本文件是 `/etc/vim/vimrc` 的软链接 。
 
@@ -112,6 +113,161 @@ copy 了一份基础版到自己的 github 中，有备无患 :-D
 
 [My .vimrc file]()
 
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " General
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    set nocompatible
+    " Set how many lines of history VIM has to rememer
+    set history=800
+    
+    " Enable filetype plugins
+    filetype plugin on
+    filetype indent on
+    
+    " Set to auto read when a file is changed from the outside
+    set autoread
+    
+    " Set leader key
+    let mapleader = ","
+    let g:mapleader = ","
+    
+    " fast saving
+    nmap <leader>w :w!<cr>
+    
+    " fast saving
+    nmap <leader>q :q!<cr>
+    
+    " fast editing
+    nmap <leader>aq :qa<cr>
+    
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Vim user interface
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Set 20 lines to the cursor
+    set so=20
+    
+    " Turn on the wild menu
+    set wildmenu
+    
+    " Ignore complited files
+    set wildignore=*.o,*~,*.pyc
+    
+    " Always show current postion
+    set ruler
+    
+    " Highlight current line
+    set cursorline
+    
+    " Height of command bar
+    set cmdheight=2
+    
+    " A buffer becomes hidden when it is abandoned
+    set hid
+    
+    " Configure backsapce so it acts as it should act
+    set backspace=eol,start,indent
+    set whichwrap+=<,>,h,l
+    
+    " Ignore case when searching
+    set ignorecase
+    
+    " When searching try to be smart about cases
+    set smartcase
+    
+    " Highlight search results
+    set hlsearch
+    
+    " Make search act like in morden browsers
+    set incsearch
+    
+    " Don't redraw while executing marcros
+    set lazyredraw
+    
+    " For regular expressions turn magic on
+    set magic
+    
+    " Show matching brackets when text indicator is over them
+    set showmatch
+    " How many tenths of a second to blink when matching brackets
+    set mat=2
+    
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Colors and Fonts
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Enable syntax highlight
+    syntax enable
+    colorscheme molokai
+    set background=dark
+    :set t_Co=256
+    
+    " Set utf8 as standard encoding and en_US as the standard language
+    set encoding=utf8
+    
+    " Use Unix as the standard file type
+    set ffs=unix,dos,mac
+    
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Files, backups and undo
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Turn backup off, since most stuff is in SVN. git et.c anyway
+    set nobackup
+    set nowb
+    set noswapfile
+    
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Text, tab and indent related
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Use sapce instead of tabs
+    set expandtab
+    
+    " Be smart when using tabs
+    set smarttab
+    
+    " 1 tab = 4 spaces
+    set shiftwidth=4
+    set tabstop=4
+    
+    " Linebreak on 500 characters
+    set lbr
+    set tw=500
+    
+    set ai "Auto indent
+    set si "Smart indent
+    set wrap "Wrap lines
+    
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Moving around, tabs, windows and buffers
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Treat long lines as break lines
+    map j gj
+    map k gk
+    
+    " Smart way to move between windows
+    map <C-j> <C-w>j
+    map <C-k> <C-w>k
+    map <C-h> <C-w>h
+    map <C-l> <C-w>l
+    
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Status line
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Show line number
+    set number
+    
+    " Always show the status line
+    set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+    ""set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+    
+    
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Spell checking
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Pressing ,ss will toggle and untoggle spell checking
+    map <leader>ss :setlocal spell!<cr>
+    map <leader>sn ]s
+    map <leader>sp [s
+    map <leader>sa zg
+   
 [config-file]: https://github.com/amix/vimrc
 [Basic]: https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
 [Ultimate]: https://github.com/amix/vimrc

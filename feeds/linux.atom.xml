@@ -209,8 +209,11 @@
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;/usr/share/vim/vimrc&lt;/p&gt;
-&lt;p&gt;输入命令
-    ll /usr/share/vim/vimrc&lt;/p&gt;
+&lt;p&gt;输入命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="n"&gt;ll&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;share&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;vimrc&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;就可以看到，本文件是 &lt;code&gt;/etc/vim/vimrc&lt;/code&gt; 的软链接 。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -273,6 +276,163 @@
 &lt;p&gt;&lt;a href=""&gt;Copy of basic vimrc configure file&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;我自己的配置文件：&lt;/p&gt;
 &lt;p&gt;&lt;a href=""&gt;My .vimrc file&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;General&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;set nocompatible&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nb"&gt;Set&lt;/span&gt; &lt;span class="nx"&gt;how&lt;/span&gt; &lt;span class="nx"&gt;many&lt;/span&gt; &lt;span class="nx"&gt;lines&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;history&lt;/span&gt; &lt;span class="nx"&gt;VIM&lt;/span&gt; &lt;span class="nx"&gt;has&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;rememer&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="n"&gt;history&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;800&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot; Enable filetype plugins&lt;/span&gt;
+&lt;span class="s2"&gt;filetype plugin on&lt;/span&gt;
+&lt;span class="s2"&gt;filetype indent on&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nb"&gt;Set&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;auto&lt;/span&gt; &lt;span class="nb"&gt;read&lt;/span&gt; &lt;span class="nx"&gt;when&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nb"&gt;file&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="nx"&gt;changed&lt;/span&gt; &lt;span class="nb"&gt;from&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;outside&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nx"&gt;autoread&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot; Set leader key&lt;/span&gt;
+&lt;span class="s2"&gt;let mapleader = &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;let g:mapleader = &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;fast&lt;/span&gt; &lt;span class="nx"&gt;saving&lt;/span&gt;
+&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;leader&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;w&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;w&lt;/span&gt;&lt;span class="o"&gt;!&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cr&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot; fast saving&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;leader&amp;gt;q :q!&amp;lt;cr&amp;gt;&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;fast&lt;/span&gt; &lt;span class="nx"&gt;editing&lt;/span&gt;
+&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;leader&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;aq&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;qa&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cr&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot; Vim user interface&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nb"&gt;Set&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt; &lt;span class="nx"&gt;lines&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;cursor&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="n"&gt;so&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot; Turn on the wild menu&lt;/span&gt;
+&lt;span class="s2"&gt;set wildmenu&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;Ignore&lt;/span&gt; &lt;span class="nx"&gt;complited&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="n"&gt;wildignore&lt;/span&gt;&lt;span class="o"&gt;=*&lt;/span&gt;&lt;span class="bp"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;o&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="err"&gt;~&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="bp"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;pyc&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot; Always show current postion&lt;/span&gt;
+&lt;span class="s2"&gt;set ruler&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;Highlight&lt;/span&gt; &lt;span class="nx"&gt;current&lt;/span&gt; &lt;span class="nb"&gt;line&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nx"&gt;cursorline&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot; Height of command bar&lt;/span&gt;
+&lt;span class="s2"&gt;set cmdheight=2&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;A&lt;/span&gt; &lt;span class="nx"&gt;buffer&lt;/span&gt; &lt;span class="nx"&gt;becomes&lt;/span&gt; &lt;span class="nx"&gt;hidden&lt;/span&gt; &lt;span class="nx"&gt;when&lt;/span&gt; &lt;span class="nx"&gt;it&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="nx"&gt;abandoned&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nx"&gt;hid&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot; Configure backsapce so it acts as it should act&lt;/span&gt;
+&lt;span class="s2"&gt;set backspace=eol,start,indent&lt;/span&gt;
+&lt;span class="s2"&gt;set whichwrap+=&amp;lt;,&amp;gt;,h,l&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;Ignore&lt;/span&gt; &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nx"&gt;when&lt;/span&gt; &lt;span class="nx"&gt;searching&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;ignorecase&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot; When searching try to be smart about cases&lt;/span&gt;
+&lt;span class="s2"&gt;set smartcase&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;Highlight&lt;/span&gt; &lt;span class="nb"&gt;search&lt;/span&gt; &lt;span class="nb"&gt;results&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nx"&gt;hlsearch&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot; Make search act like in morden browsers&lt;/span&gt;
+&lt;span class="s2"&gt;set incsearch&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;Don&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;t redraw while executing marcros&lt;/span&gt;
+&lt;span class="s1"&gt;set lazyredraw&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot; For regular expressions turn magic on&lt;/span&gt;
+&lt;span class="s1"&gt;set magic&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot; Show matching brackets when text indicator is over them&lt;/span&gt;
+&lt;span class="s1"&gt;set showmatch&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; How many tenths of a second to blink when matching brackets&lt;/span&gt;
+&lt;span class="s1"&gt;set mat=2&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Colors and Fonts&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Enable syntax highlight&lt;/span&gt;
+&lt;span class="s1"&gt;syntax enable&lt;/span&gt;
+&lt;span class="s1"&gt;colorscheme molokai&lt;/span&gt;
+&lt;span class="s1"&gt;set background=dark&lt;/span&gt;
+&lt;span class="s1"&gt;:set t_Co=256&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot; Set utf8 as standard encoding and en_US as the standard language&lt;/span&gt;
+&lt;span class="s1"&gt;set encoding=utf8&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot; Use Unix as the standard file type&lt;/span&gt;
+&lt;span class="s1"&gt;set ffs=unix,dos,mac&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Files, backups and undo&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Turn backup off, since most stuff is in SVN. git et.c anyway&lt;/span&gt;
+&lt;span class="s1"&gt;set nobackup&lt;/span&gt;
+&lt;span class="s1"&gt;set nowb&lt;/span&gt;
+&lt;span class="s1"&gt;set noswapfile&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Text, tab and indent related&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Use sapce instead of tabs&lt;/span&gt;
+&lt;span class="s1"&gt;set expandtab&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot; Be smart when using tabs&lt;/span&gt;
+&lt;span class="s1"&gt;set smarttab&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot; 1 tab = 4 spaces&lt;/span&gt;
+&lt;span class="s1"&gt;set shiftwidth=4&lt;/span&gt;
+&lt;span class="s1"&gt;set tabstop=4&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot; Linebreak on 500 characters&lt;/span&gt;
+&lt;span class="s1"&gt;set lbr&lt;/span&gt;
+&lt;span class="s1"&gt;set tw=500&lt;/span&gt;
+
+&lt;span class="s1"&gt;set ai &amp;quot;Auto indent&lt;/span&gt;
+&lt;span class="s1"&gt;set si &amp;quot;Smart indent&lt;/span&gt;
+&lt;span class="s1"&gt;set wrap &amp;quot;Wrap lines&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Moving around, tabs, windows and buffers&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Treat long lines as break lines&lt;/span&gt;
+&lt;span class="s1"&gt;map j gj&lt;/span&gt;
+&lt;span class="s1"&gt;map k gk&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot; Smart way to move between windows&lt;/span&gt;
+&lt;span class="s1"&gt;map &amp;lt;C-j&amp;gt; &amp;lt;C-w&amp;gt;j&lt;/span&gt;
+&lt;span class="s1"&gt;map &amp;lt;C-k&amp;gt; &amp;lt;C-w&amp;gt;k&lt;/span&gt;
+&lt;span class="s1"&gt;map &amp;lt;C-h&amp;gt; &amp;lt;C-w&amp;gt;h&lt;/span&gt;
+&lt;span class="s1"&gt;map &amp;lt;C-l&amp;gt; &amp;lt;C-w&amp;gt;l&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Status line&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Show line number&lt;/span&gt;
+&lt;span class="s1"&gt;set number&lt;/span&gt;
+
+&lt;span class="s1"&gt;&amp;quot; Always show the status line&lt;/span&gt;
+&lt;span class="s1"&gt;set statusline=%F%m%r%h%w\ [FORMAT=%{&amp;amp;ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s1"&gt;%d/%m/%y\ -\ %H:%M&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s1"&gt;)}&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l&lt;/span&gt;
+
+
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Spell checking&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;quot; Pressing ,ss will toggle and untoggle spell checking&lt;/span&gt;
+&lt;span class="s1"&gt;map &amp;lt;leader&amp;gt;ss :setlocal spell!&amp;lt;cr&amp;gt;&lt;/span&gt;
+&lt;span class="s1"&gt;map &amp;lt;leader&amp;gt;sn ]s&lt;/span&gt;
+&lt;span class="s1"&gt;map &amp;lt;leader&amp;gt;sp [s&lt;/span&gt;
+&lt;span class="s1"&gt;map &amp;lt;leader&amp;gt;sa zg&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;参考&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/6126937/"&gt;学习vi 和 Vim 编辑器&lt;/a&gt;&lt;/p&gt;
