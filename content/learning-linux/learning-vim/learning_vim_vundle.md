@@ -141,7 +141,7 @@ Vundle 的安装需要 [Git][Git] 。
 + 列表
 
         :Bundles    // 列出所有插件（包括未安装的）
-        :BundleLIst // 列出已安装的插件
+        :BundleList // 列出已安装的插件
 + 安装
 
         :BundleInstall
