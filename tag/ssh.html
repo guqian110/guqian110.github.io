@@ -1,280 +1,250 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-        <meta charset="utf-8" />
-        <title>Coding Life - SSH</title>
-        <link rel="stylesheet" href="http://guqian110.github.io/theme/css/main.css" />
-        <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coding Life Atom Feed" />
+    <title>SSH - Coding Life</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="http://guqian110.github.io/images/favicon.jpg" rel="icon">
 
-        <!--[if IE]>
-            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Coding Life" />
+            <meta property="og:type" content="website"/>
+            <meta property="og:title" content="Coding Life"/>
+            <meta property="og:url" content="http://guqian110.github.io"/>
+            <meta property="og:description" content="Coding Life"/>
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://guqian110.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+        <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Coding Life ATOM Feed"/>
+
 </head>
+<body>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="http://guqian110.github.io/">Coding Life </a></h1>
-                <nav><ul>
-                    <li><a href="http://guqian110.github.io/category/cc.html">C/C++</a></li>
-                    <li><a href="http://guqian110.github.io/category/fpga.html">FPGA</a></li>
-                    <li><a href="http://guqian110.github.io/category/linux.html">Linux</a></li>
-                    <li><a href="http://guqian110.github.io/category/others.html">Others</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://guqian110.github.io/" class="navbar-brand">
+<img src="http://guqian110.github.io/images/favicon.jpg" width=""/> Coding Life            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/others.html">Others</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://guqian110.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="http://guqian110.github.io/learning_linux_ssh.html">学习 LInux SSH</a></h1>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <ol class="breadcrumb">
+        <li><a href="http://guqian110.github.io" title="Coding Life"><i class="fa fa-home fa-lg"></i></a></li>
+        <li><a href="http://guqian110.github.io/" title="Tags">Tags</a></li>
+        <li class="active">SSH</li>
+    </ol>
+
+            <article>
+                <h2><a href="http://guqian110.github.io/learning_linux_ssh.html">学习 LInux SSH</a></h2>
+                    <div class="well well-sm">
 <footer class="post-info">
-        <abbr class="published" title="2014-04-04T17:00:00">
-                Fri 04 April 2014
-        </abbr>
-
-        <address class="vcard author">
-                By <a class="url fn" href="http://guqian110.github.io/author/chien-gu.html">Chien Gu</a>
-        </address>
-<p>In <a href="http://guqian110.github.io/category/linux.html">Linux</a>. </p>
-<p>tags: <a href="http://guqian110.github.io/tag/linux.html">Linux</a><a href="http://guqian110.github.io/tag/ssh.html">SSH</a></p>
-</footer><!-- /.post-info --><p>实验室的师兄师姐毕业了，继承了他们的旧电脑 。宿舍的笔记本和实验室的电脑出现了相互之间传送同步文件的需求 。想到了两种方法：</p>
-<ol>
-<li>云同步</li>
-<li>SSH / SCP</li>
-</ol>
-<p>解决方案 1 是最省事的，也是目前最流行的，目前各大互联网公司都提供各种云服务，比如国外的 Google Drive、Dropbox，国内的百度云、360 网盘什么的。这种方案最大的有点是跨平台，不过这个方案是借助了第三方的服务器，需要连接到互联网才行，而且对网速是有一定要求的。</p>
-<p>解决方案 2 相比于方案 1 的优势是：不是必须要连接到互联网，在局域网内也可以同步文件 。一般局域网内传输文件的速度要比连外界的服务器快很多 。</p>
-<p>考虑到校园网的环境，明显方案 2 更加好 。</p>
-<p><br></p>
-<h2>什么是 SSH</h2>
-<hr />
-<p>最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑 。<a href="http://en.wikipedia.org/wiki/Secure_Shell">SSH</a> 协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为 Linux 系统的标准配置 。</p>
-<p>最初的 SSH 协议是由芬兰的一家公司的研究员 Tatu Ylönen 于 1995 年设计开发的，但是因为受版权和加密算法等等的限制，现在很多人都转而使用 OpenSSH 。OpenSSH 是 SSH 的替代软件包，而且是开放源代码和免费的 。—— Wikipedia</p>
-<p>关于 SSH 的原理，找到了一系列 <a href="http://www.ruanyifeng.com/blog/">阮一峰</a>的文章，很简洁明了:</p>
-<h3>SSH</h3>
-<p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">SSH原理与运用（一）：远程登录</a></p>
-<p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html">SSH原理与运用（二）：远程操作与端口转发</a></p>
-<p><br></p>
-<h2>SSH 的用法</h2>
-<hr />
-<p>最简单明了的教程就是 man page 了</p>
-<div class="highlight"><pre>    <span class="n">man</span> <span class="n">ssh</span>
-</pre></div>
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-04-04T17:00:00"> Fri 04 April 2014</time>
+    </span>
 
 
-<p>内容为</p>
-<div class="highlight"><pre><span class="n">NAME</span>
-    <span class="n">ssh</span> <span class="err">—</span> <span class="n">OpenSSH</span> <span class="n">SSH</span> <span class="n">client</span> <span class="p">(</span><span class="n">remote</span> <span class="n">login</span> <span class="n">program</span><span class="p">)</span>
 
-<span class="n">SYNOPSIS</span>
- <span class="n">ssh</span> <span class="p">[</span><span class="o">-</span><span class="mi">1246</span><span class="n">AaCfgKkMNnqsTtVvXxYy</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span> <span class="n">bind_address</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">cipher_spec</span><span class="p">]</span>
-     <span class="p">[</span><span class="o">-</span><span class="n">D</span> <span class="p">[</span><span class="n">bind_address</span><span class="o">:</span><span class="p">]</span><span class="n">port</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">e</span> <span class="n">escape_char</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">F</span> <span class="n">configfile</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">I</span> <span class="n">pkcs11</span><span class="p">]</span>
-     <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">identity_file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">L</span> <span class="p">[</span><span class="n">bind_address</span><span class="o">:</span><span class="p">]</span><span class="n">port</span><span class="o">:</span><span class="n">host</span><span class="o">:</span><span class="n">hostport</span><span class="p">]</span>
-     <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">login_name</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">m</span> <span class="n">mac_spec</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">O</span> <span class="n">ctl_cmd</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">option</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">p</span> <span class="n">port</span><span class="p">]</span>
-     <span class="p">[</span><span class="o">-</span><span class="n">R</span> <span class="p">[</span><span class="n">bind_address</span><span class="o">:</span><span class="p">]</span><span class="n">port</span><span class="o">:</span><span class="n">host</span><span class="o">:</span><span class="n">hostport</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">S</span> <span class="n">ctl_path</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">W</span> <span class="n">host</span><span class="o">:</span><span class="n">port</span><span class="p">]</span>
-     <span class="p">[</span><span class="o">-</span><span class="n">w</span> <span class="n">local_tun</span><span class="p">[</span><span class="o">:</span><span class="n">remote_tun</span><span class="p">]]</span> <span class="p">[</span><span class="n">user</span><span class="err">@</span><span class="p">]</span><span class="n">hostname</span> <span class="p">[</span><span class="n">command</span><span class="p">]</span>
-</pre></div>
+<span class="label label-default">Tags</span>
+	<a href="http://guqian110.github.io/tag/linux.html">Linux</a>
+        /
+	<a href="http://guqian110.github.io/tag/ssh.html">SSH</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                <div class="summary"><p>学习 SSH、SCP 命令，建立两台电脑相互访问 。</p>
+                    <a class="btn btn-default btn-xs" href="http://guqian110.github.io/learning_linux_ssh.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
+        </div>
+        <div class="col-sm-3" id="aboutme">
+<p>
+    <strong>About Chien Gu</strong><br/>
+    BYR + Programmer + Rocker
+</p>        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
 
-<p>进阶的书籍有：<a href="http://docstore.mik.ua/orelly/networking_2ndEd/ssh/index.htm">SSH, The Secure Shell: The Definitive Guide</a>, O'reilly</p>
-<p>目前已经有两台安装了 Ubuntu 的电脑，实验室的一台 name 是 <em>lab</em> ，宿舍的一台 name 是 <em>dom</em> ，两台电脑上都有一个用户名为 <em>chien</em> 。</p>
-<p><strong>我们的目的是使两台电脑可以相互之间通过 SSH 访问。</strong> 下面就是整个过程：</p>
-<h3>安装 SSH server</h3>
-<p>SSH 只是一种协议，在 Ubuntu 下，具体实现使用的是 <a href="http://www.openssh.com/">OpenSSH</a> 。Ubuntu 默认是安装了 SSH 客户端 <code>openssh-client</code>，而没有安装 SSH 服务程序 <code>openssh-server</code>。</p>
-<p>检测本机是否已经安装了 SSH server</p>
-<div class="highlight"><pre>    <span class="n">ssh</span> <span class="n">localhost</span>
-</pre></div>
-
-
-<p>如果结果是</p>
-<div class="highlight"><pre>    <span class="nl">ssh:</span> <span class="n">connect</span> <span class="n">to</span> <span class="n">host</span> <span class="n">localhost</span> <span class="n">port</span> <span class="mi">22</span><span class="o">:</span> <span class="n">Connection</span> <span class="n">refused</span>
-</pre></div>
-
-
-<p>说明 SSH server 还没有安装 。</p>
-<p>安装方法：</p>
-<div class="highlight"><pre>    <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">openssh</span><span class="o">-</span><span class="n">server</span>
-</pre></div>
-
-
-<h3>启动 SSH 服务</h3>
-<p>启动 SSH server</p>
-<div class="highlight"><pre>    <span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">ssh</span> <span class="n">start</span> 
-</pre></div>
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                    <li class="list-group-item"><a href="#"><i
+                            class="fa fa-you can add links in your config file-square fa-lg"></i> You can add links in your config file
+                    </a></li>
+                    <li class="list-group-item"><a href="#"><i
+                            class="fa fa-another social link-square fa-lg"></i> Another social link
+                    </a></li>
+                  </ul>
+                </li>
 
 
-<p>查询服务是否正确启动</p>
-<div class="highlight"><pre>    <span class="n">ps</span> <span class="o">-</span><span class="n">e</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">ssh</span>
-</pre></div>
 
+                <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group " id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/book.html">
+                                Book
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://jinja.pocoo.org/" target="_blank">
+                Jinja2
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="#" target="_blank">
+                You can modify those links in your config file
+            </a>
+        </li>
+      </ul>
+    </li>
 
-<p>返回结果应该类似于</p>
-<div class="highlight"><pre>     <span class="mi">4156</span> <span class="o">?</span>        <span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span> <span class="n">ssh</span><span class="o">-</span><span class="n">agent</span>
-     <span class="mi">4606</span> <span class="o">?</span>        <span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span> <span class="n">sshd</span>
-</pre></div>
+        </ul>
+    </section>
 
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Chien Gu
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://code.jquery.com/jquery.js"></script>
 
-<p>则说明服务已经正确启动 。</p>
-<p><em>因为两台电脑要相互访问，所以它们的角色即使 server，又是 client，所以需要在两台电脑上都执行上面两步 。</em></p>
-<h3>远程访问</h3>
-<p>首先，查询本机 IP 地址</p>
-<div class="highlight"><pre>    <span class="n">ifconfig</span>
-</pre></div>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://guqian110.github.io/theme/js/bootstrap.min.js"></script>
 
-
-<p>比如 lab 的 IP 地址是 <code>10.105.55.155</code>, dom 的 IP 地址是 <code>10.210.111.116</code> 。（因为是校园网，所以分配到的都是内网地址）</p>
-<p>然后，在宿舍用 dom 访问 lab 这台机器</p>
-<div class="highlight"><pre>    <span class="n">ssh</span> <span class="n">chien</span><span class="err">@</span><span class="mf">10.105.55.155</span>
-</pre></div>
-
-
-<p>实际结果如下图</p>
-<p><img alt="login1" src="/images/learning-linux-ssh/login1.png" /></p>
-<p>在执行命令前，提示符显示目前的用户是在 dom 这台机器上的用户 chien，本机 home 目录下有 <code>dom</code> 文件，但是没有 <code>lab</code> 文件 。执行了登录命令以后，就会切换到以 chien 身份登录到 lab 机器，远程机器 home 目录下有 <code>lab</code> 文件，但是没有 <code>dom</code> 文件 。</p>
-<p>同理，在实验室用 lab 访问 dom 这台机器</p>
-<div class="highlight"><pre>    <span class="n">ssh</span> <span class="n">chien</span><span class="err">@</span><span class="mf">10.210.111.116</span>
-</pre></div>
-
-
-<p>实际结果如下图</p>
-<p><img alt="login2" src="/images/learning-linux-ssh/login2.png" /></p>
-<p>在执行命令前，提示符显示目前的用户是在 lab 这台机器上的用户 chien，本机 home 目录下有 <code>lab</code> 文件，但是没有 <code>dom</code> 文件 。执行了登录命令以后，就会切换到以 chien 身份登录到 dom 机器，远程机器 home 目录下有有 <code>dom</code> 文件，但是没有 <code>lab</code> 文件 。</p>
-<h3>省去 IP 地址</h3>
-<p>每次登录都需要记忆、手动输入 IP 地址，其实只需要改 <code>/etc/hosts</code> 文件，就能省去手动输入 IP 地址的烦恼。</p>
-<div class="highlight"><pre>    <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span>
-</pre></div>
-
-
-<p>在 dom 的 hosts 文件后面添加</p>
-<div class="highlight"><pre>    <span class="n">lab</span>    <span class="mf">10.105.55.155</span>
-</pre></div>
-
-
-<p>在 lab 的 hosts 文件后面添加</p>
-<div class="highlight"><pre>    <span class="n">dom</span>     <span class="mf">10.210.111.116</span>
-</pre></div>
-
-
-<p>以后，登录时只需要输入</p>
-<div class="highlight"><pre>    <span class="c1">// from dom to lab</span>
-    <span class="n">ssh</span> <span class="n">lab</span>
-
-    <span class="c1">// from lab to domm</span>
-    <span class="n">ssh</span> <span class="n">dom</span>
-</pre></div>
-
-
-<p>就可以登录了。</p>
-<h3>公钥登录</h3>
-<p>上一步解决了 IP 地址的问题，但是还是需要手动输入密码 。我们可以用公钥登录的方法，免去输密码的烦恼。</p>
-<p><strong>首先，什么是数字签名 Digital Signature</strong></p>
-<p><a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html">数字签名是什么？</a></p>
-<p><a href="http://www.youdzone.com/signature.html">What is a Digital Signature?</a></p>
-<p><strong>其次，生成数字签名</strong></p>
-<p>Ubuntu 默认安装了 <code>ssh-keygen</code>，可以生成公钥和私钥</p>
-<div class="highlight"><pre>    <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span>
-</pre></div>
-
-
-<p>命令执行过程中会询问保存密钥文件的路径，还可以为密钥文件设置口令（passphrase）。运行结束以后，在 <code>$HOME/.ssh/</code> 目录下，会新生成两个文件：<code>id_rsa.pub</code> 和 <code>id_rsa</code> 。前者是你的公钥，后者是你的私钥。</p>
-<p><strong>然后，发布数字签名</strong></p>
-<p>使用 <code>ssh-copy-id</code> 命令可以把公钥复制到远程机器中 。</p>
-<p>将 dom 的公钥发送到 lab 中</p>
-<div class="highlight"><pre>    <span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="n">di</span> <span class="n">chien</span><span class="err">@</span><span class="n">lab</span>
-</pre></div>
-
-
-<p>将 lab 的公钥发送到 dom 中</p>
-<div class="highlight"><pre>    <span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="n">di</span> <span class="n">chien</span><span class="err">@</span><span class="n">dom</span>
-</pre></div>
-
-
-<p><strong>最后，使用公钥登录</strong></p>
-<p>此时，远程登录时就不再需要输入密码了</p>
-<div class="highlight"><pre>    <span class="c1">// from dom to lab</span>
-    <span class="n">ssh</span> <span class="n">lab</span>
-
-    <span class="c1">// from lab to dom</span>
-    <span class="n">ssh</span> <span class="n">dom</span>
-</pre></div>
-
-
-<p><br></p>
-<h2>使用 SCP 传输文件</h2>
-<hr />
-<p>SSH 提供了一些命令和 shell 用来登录远程服务器 。在默认情况下它不允许你拷贝文件,但是还是提供了一个 "scp" 命令 。scp 命令是 SSH 中最方便有用的命令了，试想，在两台服务器之间直接传送文件。仅仅用 scp 一个命令就完全解决了 。</p>
-<p>man page</p>
-<div class="highlight"><pre>    <span class="n">man</span> <span class="n">scp</span>
-</pre></div>
-
-
-<p>内容为</p>
-<div class="highlight"><pre><span class="n">NAME</span>
- <span class="n">scp</span> <span class="err">—</span> <span class="n">secure</span> <span class="n">copy</span> <span class="p">(</span><span class="n">remote</span> <span class="n">file</span> <span class="n">copy</span> <span class="n">program</span><span class="p">)</span>
-
-<span class="n">SYNOPSIS</span>
- <span class="n">scp</span> <span class="p">[</span><span class="o">-</span><span class="mi">12346</span><span class="n">BCpqrv</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span> <span class="n">cipher</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">F</span> <span class="n">ssh_config</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">identity_file</span><span class="p">]</span>
-     <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">limit</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">ssh_option</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">P</span> <span class="n">port</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">S</span> <span class="n">program</span><span class="p">]</span>
-     <span class="p">[[</span><span class="n">user</span><span class="err">@</span><span class="p">]</span><span class="n">host1</span><span class="o">:</span><span class="p">]</span><span class="n">file1</span> <span class="p">...</span> <span class="p">[[</span><span class="n">user</span><span class="err">@</span><span class="p">]</span><span class="n">host2</span><span class="o">:</span><span class="p">]</span><span class="n">file2</span>
-</pre></div>
-
-
-<p>scp 可以实现把 [[user@]host1:]file1 复制到 [[user@]host2:]file2 的功能。所以</p>
-<h3>上传 dom 本地文件至服务器 lab</h3>
-<div class="highlight"><pre>    <span class="n">scp</span> <span class="o">~/</span><span class="n">dom</span> <span class="n">chien</span><span class="err">@</span><span class="n">lab</span><span class="o">:~/</span>
-</pre></div>
-
-
-<h3>下载 lab 服务器文件至本地 dom</h3>
-<div class="highlight"><pre>    <span class="n">scp</span> <span class="n">chien</span><span class="err">@</span><span class="n">lab</span><span class="o">:</span><span class="n">lab</span> <span class="o">~/</span>
-</pre></div>
-
-
-<p>若发送文件夹则添加参数 <code>-r</code> 即可</p>
-<div class="highlight"><pre>    <span class="n">scp</span> <span class="o">-</span><span class="n">r</span> <span class="o">~/</span><span class="n">test</span> <span class="n">chien</span><span class="err">@</span><span class="n">lab</span><span class="o">:~/</span>
-</pre></div>
-
-
-<p><br></p>
-<p>至此，就实现了两台电脑的之间相互远程访问的功能 。</p>
-<p><br></p>
-<h2>Reference</h2>
-<p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">数字签名是什么？</a></p>
-<p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html">What is a Digital Signature?</a></p>
-<p><a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html">SSH原理与运用（一）：远程登录</a></p>
-<p><a href="http://www.youdzone.com/signature.html">SSH原理与运用（二）：远程操作与端口转发</a></p>                </article>
-<p class="paginator">
-    Page 1 / 1
-</p>
-            </aside><!-- /#featured -->
-            </ol><!-- /#posts-list -->
-            </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
-
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://guqian110.github.io/theme/js/respond.min.js"></script>
 
 </body>
 </html>
