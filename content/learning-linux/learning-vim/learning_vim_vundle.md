@@ -153,7 +153,7 @@ Vundle 的安装需要 [Git][Git] 。
 
 + 更新
 
-        :BundleInstall 
+        :BundleInstall! 
 
 + 删除
 
