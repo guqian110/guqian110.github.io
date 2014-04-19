@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+        <meta charset="utf-8" />
+        <title>学习 Vim 初步配置 Vim</title>
+        <link rel="stylesheet" href="http://guqian110.github.io/theme/css/main.css" />
+        <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coding Life Atom Feed" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="http://guqian110.github.io/">Coding Life </a></h1>
+                <nav><ul>
+                    <li><a href="http://guqian110.github.io/category/cc.html">C/C++</a></li>
+                    <li><a href="http://guqian110.github.io/category/fpga.html">FPGA</a></li>
+                    <li class="active"><a href="http://guqian110.github.io/category/linux.html">Linux</a></li>
+                    <li><a href="http://guqian110.github.io/category/others.html">Others</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="http://guqian110.github.io/learning_vim_vimrc_preliminary.html" rel="bookmark"
+           title="Permalink to 学习 Vim 初步配置 Vim">学习 Vim 初步配置 Vim</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-04-16T12:44:00">
+                Wed 16 April 2014
+        </abbr>
+
+        <address class="vcard author">
+                By <a class="url fn" href="http://guqian110.github.io/author/chien-gu.html">Chien Gu</a>
+        </address>
+<p>In <a href="http://guqian110.github.io/category/linux.html">Linux</a>. </p>
+<p>tags: <a href="http://guqian110.github.io/tag/linux.html">Linux</a><a href="http://guqian110.github.io/tag/vim.html">Vim</a></p>
+</footer><!-- /.post-info -->      <p>总结初步配置 Vim，让 Vim 更顺手 。</p>
+<p><br></p>
+<h2>在哪里配置 Vim</h2>
+<hr />
+<p><a href="http://book.douban.com/subject/6126937/">学习 Vi 和 Vim 编辑器</a>：</p>
+<blockquote>
+<p>Vim 依照特定顺序寻找初始化的信号，它执行找到的第一组指令（可以是 环境变量 or 配置文件），然后开始编辑工作 。所以，Vim 在下列清单中遇到的第一个项目，就是清单中被执行的唯一项目 。书寻如下：</p>
+<ol>
+<li>
+<p><code>VIMINIT</code> 。它是环境变量，如果不为空，Vim 把它的内容当作 ex 命令执行</p>
+</li>
+<li>
+<p>用户 <code>vimrc</code> 文件 。</p>
+</li>
+<li>
+<p><code>exrc</code> 选项 。如果设置了 Vim 的 exrc 选项，它会寻找三个额外的配置文件 。</p>
+</li>
+</ol>
+</blockquote>
+<p><code>vimrc</code>（vim runtime configure）文件一般有 3 个：</p>
+<ol>
+<li>
+<p>/etc/vim/vimrc</p>
+<p>本配置文件影响所有的用户，一般不应该更改这个配置文件，因为谁也不能保证别人的喜好和自己一样 。</p>
+</li>
+<li>
+<p>/usr/share/vim/vimrc</p>
+<p>输入命令</p>
+<div class="highlight"><pre> <span class="n">ll</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">vim</span><span class="o">/</span><span class="n">vimrc</span>
+</pre></div>
+
+
+<p>就可以看到，本文件是 <code>/etc/vim/vimrc</code> 的软链接 。</p>
+</li>
+<li>
+<p>~/.vimrc</p>
+<p>一般来说，配置 vim 就是在这个文件中配置，如果不存在的话 <code>touch</code> 一个新文件并命名 <code>。vimrc</code> 。我们在下面说的配置都是在本文件中配置 。</p>
+</li>
+</ol>
+<p><br></p>
+<h2>映射 <code>esc</code> 键</h2>
+<hr />
+<p>因为历史原因，Joy 设计 vi 时采用的键盘和我们现在用的标准键盘布局并不一样，当时他的键盘的 <code>esc</code> 键在现在我们的 <code>Caps Lock</code> 键的位置，所以才设计使用 <code>esc</code> 作为模式转换键 。为了更加方便顺手地使用 vim，当然要把这两个键相互调换一下 。</p>
+<p>在 vim 的官网上就有介绍如何实现两个按键的调换</p>
+<p><a href="http://vim.wikia.com/wiki/Map_caps_lock_to_escape_in_XWindows">Map caps lock to escape in XWindows</a></p>
+<p>具体方法，在 <code>～/</code> 目录下新建一个文件，加入一下内容</p>
+<div class="highlight"><pre><span class="o">!</span> <span class="n">Swap</span> <span class="n">caps</span> <span class="n">lock</span> <span class="n">and</span> <span class="n">escape</span>
+<span class="n">remove</span> <span class="n">Lock</span> <span class="o">=</span> <span class="n">Caps_Lock</span>
+<span class="n">keysym</span> <span class="n">Escape</span> <span class="o">=</span> <span class="n">Caps_Lock</span>
+<span class="n">keysym</span> <span class="n">Caps_Lock</span> <span class="o">=</span> <span class="n">Escape</span>
+<span class="n">add</span> <span class="n">Lock</span> <span class="o">=</span> <span class="n">Caps_Lock</span>
+</pre></div>
+
+
+<p>保存为 .speedswrapper</p>
+<p>然后输入命令</p>
+<div class="highlight"><pre><span class="n">xmodmap</span> <span class="o">~/</span><span class="p">.</span><span class="n">speedswrapper</span>
+</pre></div>
+
+
+<p>这时，对于整个系统范围，这两个键已经调换了位置 。</p>
+<p><br></p>
+<h2>设置颜色主题 colorscheme</h2>
+<hr />
+<p>Vim 自带一些颜色主题，一般存放在 <code>/usr/share/vim/vim7x</code> 目录下（我的 Vim 版本为 7.3，所以路径为 <code>/usr/share/vim/vim73</code>）.</p>
+<p>如果对系统自带的主题不满意，网上有很多不错的主题，个人最喜欢 <a href="https://github.com/tomasr/molokai">molikai</a> 主题，把下载下来的配色文件拷贝到 <code>usr/share/vim/vim73</code> 路径下，打开 vim 后 输入</p>
+<div class="highlight"><pre><span class="o">:</span><span class="n">colorscheme</span> <span class="n">molikai</span>
+</pre></div>
+
+
+<p>就 ok 了～ 不过这个方法在关闭 vim 后就恢复了，要想省去每次都输命令的烦恼，只需要在下一步 .vimrc 文件中加入以下内容就可以了</p>
+<div class="highlight"><pre><span class="n">colorscheme</span> <span class="n">molikai</span>
+</pre></div>
+
+
+<p><br></p>
+<h2>编写 .Vimrc</h2>
+<hr />
+<p>vimrc 文件是配置 Vim 编辑特性比较好的地方，差不多任何 Vim 选项都能在次文件中被设置为打开或者关闭，而且它特别适合设置全局变量与定义函数、缩写、按键映射 。</p>
+<ul>
+<li>
+<p>注释以双引号 <code>“</code> 开始，可位于一行的任何2位置，所有位于双引号后面的文本，包括双引号都会被视为注释而忽略</p>
+</li>
+<li>
+<p>可以用冒号 <code>:</code> 表示 ex 命令</p>
+</li>
+</ul>
+<h3>配置 Vim 特性</h3>
+<p>vimrc 配置很简单，网上有很多人都分享了自己的配置方案 。我找到一份注释良好的<a href="https://github.com/amix/vimrc">配置范例</a>，这篇博客的作者总结了自己 8 年的使用经验，给出了两份配置文件，基本版 <a href="https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim">Basic</a> 和 终极版<a href="https://github.com/amix/vimrc">Ultimate</a> 。</p>
+<p>作为码农，当然要选择终极版了～不过个人喜欢用 Vundle 管理我的 Vim 插件（计划下篇博客记录我的配置过程），不是很喜欢作者选择的所有插件，想自己定制插件组合，那么目前只需要看 基础版就足够了 。</p>
+<p>copy 了一份基础版到自己的 github 中，有备无患 :-D</p>
+<p><a href="">Copy of basic vimrc configure file</a></p>
+<p>我自己的配置文件：</p>
+<p><a href="">My .vimrc file</a></p>
+<div class="highlight"><pre><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s2">&quot;</span> <span class="nx">General</span>
+<span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s2">set nocompatible</span>
+<span class="s2">&quot;</span> <span class="nb">Set</span> <span class="nx">how</span> <span class="nx">many</span> <span class="nx">lines</span> <span class="nx">of</span> <span class="nx">history</span> <span class="nx">VIM</span> <span class="nx">has</span> <span class="k">to</span> <span class="nx">rememer</span>
+<span class="nb">set</span> <span class="n">history</span><span class="o">=</span><span class="mi">800</span>
+
+<span class="s2">&quot; Enable filetype plugins</span>
+<span class="s2">filetype plugin on</span>
+<span class="s2">filetype indent on</span>
+
+<span class="s2">&quot;</span> <span class="nb">Set</span> <span class="k">to</span> <span class="nx">auto</span> <span class="nb">read</span> <span class="nx">when</span> <span class="nx">a</span> <span class="nb">file</span> <span class="nx">is</span> <span class="nx">changed</span> <span class="nb">from</span> <span class="nx">the</span> <span class="nx">outside</span>
+<span class="nb">set</span> <span class="nx">autoread</span>
+
+<span class="s2">&quot; Set leader key</span>
+<span class="s2">let mapleader = &quot;</span><span class="p">,</span><span class="s2">&quot;</span>
+<span class="s2">let g:mapleader = &quot;</span><span class="p">,</span><span class="s2">&quot;</span>
+
+<span class="s2">&quot;</span> <span class="nx">fast</span> <span class="nx">saving</span>
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">leader</span><span class="o">&gt;</span><span class="nx">w</span> <span class="p">:</span><span class="nx">w</span><span class="o">!&lt;</span><span class="nx">cr</span><span class="o">&gt;</span>
+
+<span class="s2">&quot; fast saving</span>
+<span class="s2">nmap &lt;leader&gt;q :q!&lt;cr&gt;</span>
+
+<span class="s2">&quot;</span> <span class="nx">fast</span> <span class="nx">editing</span>
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">leader</span><span class="o">&gt;</span><span class="nx">aq</span> <span class="p">:</span><span class="nx">qa</span><span class="o">&lt;</span><span class="nx">cr</span><span class="o">&gt;</span>
+
+<span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s2">&quot; Vim user interface</span>
+<span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s2">&quot;</span> <span class="nb">Set</span> <span class="mi">20</span> <span class="nx">lines</span> <span class="k">to</span> <span class="nx">the</span> <span class="nx">cursor</span>
+<span class="nb">set</span> <span class="n">so</span><span class="o">=</span><span class="mi">20</span>
+
+<span class="s2">&quot; Turn on the wild menu</span>
+<span class="s2">set wildmenu</span>
+
+<span class="s2">&quot;</span> <span class="nx">Ignore</span> <span class="nx">complited</span> <span class="nx">files</span>
+<span class="nb">set</span> <span class="n">wildignore</span><span class="o">=*</span><span class="bp">.</span><span class="nx">o</span><span class="p">,</span><span class="o">*</span><span class="err">~</span><span class="p">,</span><span class="o">*</span><span class="bp">.</span><span class="nx">pyc</span>
+
+<span class="s2">&quot; Always show current postion</span>
+<span class="s2">set ruler</span>
+
+<span class="s2">&quot;</span> <span class="nx">Highlight</span> <span class="nx">current</span> <span class="nb">line</span>
+<span class="nb">set</span> <span class="nx">cursorline</span>
+
+<span class="s2">&quot; Height of command bar</span>
+<span class="s2">set cmdheight=2</span>
+
+<span class="s2">&quot;</span> <span class="nx">A</span> <span class="nx">buffer</span> <span class="nx">becomes</span> <span class="nx">hidden</span> <span class="nx">when</span> <span class="nx">it</span> <span class="nx">is</span> <span class="nx">abandoned</span>
+<span class="nb">set</span> <span class="nx">hid</span>
+
+<span class="s2">&quot; Configure backsapce so it acts as it should act</span>
+<span class="s2">set backspace=eol,start,indent</span>
+<span class="s2">set whichwrap+=&lt;,&gt;,h,l</span>
+
+<span class="s2">&quot;</span> <span class="nx">Ignore</span> <span class="k">case</span> <span class="nx">when</span> <span class="nx">searching</span>
+<span class="nb">set</span> <span class="nb">ignorecase</span>
+
+<span class="s2">&quot; When searching try to be smart about cases</span>
+<span class="s2">set smartcase</span>
+
+<span class="s2">&quot;</span> <span class="nx">Highlight</span> <span class="nb">search</span> <span class="nb">results</span>
+<span class="nb">set</span> <span class="nx">hlsearch</span>
+
+<span class="s2">&quot; Make search act like in morden browsers</span>
+<span class="s2">set incsearch</span>
+
+<span class="s2">&quot;</span> <span class="nx">Don</span><span class="s1">&#39;t redraw while executing marcros</span>
+<span class="s1">set lazyredraw</span>
+
+<span class="s1">&quot; For regular expressions turn magic on</span>
+<span class="s1">set magic</span>
+
+<span class="s1">&quot; Show matching brackets when text indicator is over them</span>
+<span class="s1">set showmatch</span>
+<span class="s1">&quot; How many tenths of a second to blink when matching brackets</span>
+<span class="s1">set mat=2</span>
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Colors and Fonts</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Enable syntax highlight</span>
+<span class="s1">syntax enable</span>
+<span class="s1">colorscheme molokai</span>
+<span class="s1">set background=dark</span>
+<span class="s1">:set t_Co=256</span>
+
+<span class="s1">&quot; Set utf8 as standard encoding and en_US as the standard language</span>
+<span class="s1">set encoding=utf8</span>
+
+<span class="s1">&quot; Use Unix as the standard file type</span>
+<span class="s1">set ffs=unix,dos,mac</span>
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Files, backups and undo</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Turn backup off, since most stuff is in SVN. git et.c anyway</span>
+<span class="s1">set nobackup</span>
+<span class="s1">set nowb</span>
+<span class="s1">set noswapfile</span>
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Text, tab and indent related</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Use sapce instead of tabs</span>
+<span class="s1">set expandtab</span>
+
+<span class="s1">&quot; Be smart when using tabs</span>
+<span class="s1">set smarttab</span>
+
+<span class="s1">&quot; 1 tab = 4 spaces</span>
+<span class="s1">set shiftwidth=4</span>
+<span class="s1">set tabstop=4</span>
+
+<span class="s1">&quot; Linebreak on 500 characters</span>
+<span class="s1">set lbr</span>
+<span class="s1">set tw=500</span>
+
+<span class="s1">set ai &quot;Auto indent</span>
+<span class="s1">set si &quot;Smart indent</span>
+<span class="s1">set wrap &quot;Wrap lines</span>
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Moving around, tabs, windows and buffers</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Treat long lines as break lines</span>
+<span class="s1">map j gj</span>
+<span class="s1">map k gk</span>
+
+<span class="s1">&quot; Smart way to move between windows</span>
+<span class="s1">map &lt;C-j&gt; &lt;C-w&gt;j</span>
+<span class="s1">map &lt;C-k&gt; &lt;C-w&gt;k</span>
+<span class="s1">map &lt;C-h&gt; &lt;C-w&gt;h</span>
+<span class="s1">map &lt;C-l&gt; &lt;C-w&gt;l</span>
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Status line</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Show line number</span>
+<span class="s1">set number</span>
+
+<span class="s1">&quot; Always show the status line</span>
+<span class="s1">set statusline=%F%m%r%h%w\ [FORMAT=%{&amp;ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(</span><span class="se">\&quot;</span><span class="s1">%d/%m/%y\ -\ %H:%M</span><span class="se">\&quot;</span><span class="s1">)}</span>
+<span class="s1">&quot;&quot;set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l</span>
+
+
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Spell checking</span>
+<span class="s1">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="s1">&quot; Pressing ,ss will toggle and untoggle spell checking</span>
+<span class="s1">map &lt;leader&gt;ss :setlocal spell!&lt;cr&gt;</span>
+<span class="s1">map &lt;leader&gt;sn ]s</span>
+<span class="s1">map &lt;leader&gt;sp [s</span>
+<span class="s1">map &lt;leader&gt;sa zg</span>
+</pre></div>
+
+
+<p><br></p>
+<h2>参考</h2>
+<p><a href="http://book.douban.com/subject/6126937/">学习vi 和 Vim 编辑器</a></p>
+<p><a href="https://github.com/amix/vimrc">The Ultimate vimrc</a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
