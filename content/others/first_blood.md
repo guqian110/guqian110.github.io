@@ -100,7 +100,9 @@ Summary: 利用 Markdown + Pelican + Github 搭建属于自己的博客
 
 2. 必须先安装 `Pelican`，后安装 `Markdown`，否则在生成网页时会报错，不能识别 `.md` 文件
 
-3. 由于薄弱的 `Html` 知识， `Pelican theme` 的修改花费了很多时间 (Orz...)
+3. 运行 `pelican-quickstart` 时，有些选项是可以在 `pelicanconf.py` 中修改的，有些不行 。比如是否启用文章分页，是不能通过后期修改的，如果第一次没有启用，在 pelicanconf.py 中直接修改会报错，只能保存好文章、下载的主题和配置文件，重新用向导生成博客框架 。
+
+4. 由于薄弱的 `Html` 知识， `Pelican theme` 的修改花费了很多时间 (Orz...)
 
 <br>
 
