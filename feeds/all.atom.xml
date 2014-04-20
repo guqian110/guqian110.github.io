@@ -1,5 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-16T17:06:00+08:00</updated><entry><title>学习 Vim 使用 Vundle 管理插件</title><link href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html" rel="alternate"></link><updated>2014-04-16T17:06:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-16:pages/2014/04/16/learning_vim_vundle.html</id><summary type="html">&lt;p&gt;学习 Vim，使用 Vundle 管理插件 。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-20T14:32:00+08:00</updated><entry><title>学习 Vim 保存项目设置</title><link href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html" rel="alternate"></link><updated>2014-04-20T14:32:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-20:pages/2014/04/20/learning_vim_save_project_configuration.html</id><summary type="html">&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;关于 Vim 和 IDE 的争论，这是程序猿的圣战，不再浪费时间 :-D&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在参考了很多人分享的博客和教程之后，终于把 Vim 搭建成为一个自己定制的 IDE（这种说法严格意义上说，是不对的，应该是 “组合一组工具成为一个 IDE ”），总结一下～&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;本系列的内容很多都是参考别人的博客写的，也包含部分自己摸索的结果 。虽然部分内容和参考文章相同，但是总结一下自己的学习过程还是一件有必要的事 :-P&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;很多编辑器都有一个功能是以前打开过的文档会有记忆，再次打开时会直接跳转到上次编辑的地方，比如  &lt;a href="http://www.sublimetext.com/2"&gt;&lt;code&gt;Sublime Text 2&lt;/code&gt;&lt;/a&gt;，强大的 Vim 当然也有这个功能，&lt;strong&gt;我们的目标就是让 VIm 和其他 IDE 一样，可以记住上次的编辑状态 。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Vim 要实现这个功能，涉及到三个地方的配置：&lt;code&gt;session&lt;/code&gt; &amp;amp; &lt;code&gt;viminfo&lt;/code&gt; &amp;amp; &lt;code&gt;path&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Session&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;查看 session 介绍&lt;/h3&gt;
+&lt;p&gt;在 Vim 中输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;session&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;就可以看到关于 &lt;code&gt;session&lt;/code&gt; 的介绍：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A Session keeps the Views for all windows, plus the global settings.  You can save a Session and when you restore it later the window layout looks the same. You can use a Session to quickly switch between different projects, automatically loading the files you were last working on in that project.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在我使用的 Vim 7.3 中， &lt;code&gt;help&lt;/code&gt; 中的 &lt;code&gt;usr_21.txt&lt;/code&gt; 的主题是 &lt;code&gt;Go away and come back&lt;/code&gt;，其中 &lt;code&gt;21.4&lt;/code&gt;  节保存的就是关于 session 的说明，在 Vim 中输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="mf"&gt;21.4&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;就可以看到关于 session 的详细介绍 。&lt;/p&gt;
+&lt;h3&gt;配置 session&lt;/h3&gt;
+&lt;p&gt;Session 保存的信息由 &lt;code&gt;sessionoptions&lt;/code&gt; 确定，详细用法可以查看 help&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;sessionoption&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;'sessionoptions' 'ssop' string  (default: &lt;strong&gt;"blank,buffers,curdir,folds,help,options,tabpages,winsize"&lt;/strong&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;It is a comma separated list of words.  Each word enables saving and restoring something&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;也就是说 session 保存的会话的属性默认的有 8 个 ：&lt;strong&gt;当前编辑的空窗口、缓冲区、当前目录、折叠信息、帮助信息、选项、标签页、窗口大小信息 。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在上面的设置中，不要同时包含 &lt;code&gt;curdir&lt;/code&gt; 和 &lt;code&gt;sesdir&lt;/code&gt; 两个选项，若两个选项都不包含，则保存 session 时，会保存绝路径 。添加 &lt;code&gt;sesdir&lt;/code&gt; 可以将当前目录设置为 &lt;code&gt;session-file&lt;/code&gt;  所在的目录，这个设置有个很有用的地方就是，当我们通过网络访问我们的工程或者有很多个工程版本，这时候只需要每个工程下保存一个 session-file 即可 。&lt;/p&gt;
+&lt;p&gt;删除/加入 某个选项的方法&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;sessionoptions&lt;/span&gt;&lt;span class="o"&gt;-=&lt;/span&gt;&lt;span class="n"&gt;curdir&lt;/span&gt;
+&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;sessionoptions&lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="n"&gt;sesdir&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;保存 session 文件&lt;/h3&gt;
+&lt;p&gt;详细的语法可以在 help 中查看&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;mksession&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用 &lt;code&gt;mksession&lt;/code&gt; 命令保存会话&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;sessionoptopms&lt;/span&gt;&lt;span class="o"&gt;-=&lt;/span&gt;&lt;span class="n"&gt;curdir&lt;/span&gt;
+&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;sessionoptions&lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="n"&gt;sesdir&lt;/span&gt;
+&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;mksession&lt;/span&gt; &lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果 session-file 已经存在，则使用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;mksession&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;载入 session 文件&lt;/h3&gt;
+&lt;p&gt;然后退出 Vim，在别的目录下打开，干点别的事，这时候我们想起刚才的工程里面有个小 bug，想恢复过去，这时候就是只需要使用 &lt;code&gt;source&lt;/code&gt; 命令即可 。&lt;/p&gt;
+&lt;p&gt;使用 &lt;code&gt;source&lt;/code&gt; 命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="n"&gt;PATHto&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这时候可以看到，已经恢复了之前的状态 。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;只使用 session 就可以恢复一些上次编辑的信息，但是这还不够，我们还可以配合使用 &lt;code&gt;viminfo&lt;/code&gt; 来恢复更多的信息 。在 Vim 的 &lt;code&gt;:help 21.4&lt;/code&gt; 中有介绍两者的关系&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Sessions store many things, but not the position of marks, contents of registers and the command line history.&lt;/strong&gt;  You need to use the viminfo feature for these things.&lt;/li&gt;
+&lt;li&gt;In most situations you will want to use sessions separately from viminfo. This can be used to switch to another session, but keep the command line history.  And yank text into registers in one session, and paste it back in another session.&lt;/li&gt;
+&lt;li&gt;You might prefer to keep the info with the session.  You will have to do this yourself then.&lt;/li&gt;
+&lt;li&gt;You could also use a Session file.  &lt;strong&gt;The difference is that the viminfo file does not depend on what you are working on.&lt;/strong&gt;  There normally is only one viminfo file.  Session files are used to save the state of a specific editing Session.  You could have several Session files, one for each project you are working on.  Viminfo and Session files together can be used to effectively
+enter Vim and directly start working in your desired setup.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Viminfo&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;查看 viminfo 介绍&lt;/h3&gt;
+&lt;p&gt;在 Vim 中输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;viminfo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;就可以看到关于 &lt;code&gt;viminfo&lt;/code&gt; 的介绍：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If you exit Vim and later start it again, you would normally lose a lot of information.  The viminfo file can be used to remember that information, which enables you to continue where you left off.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在 Vim 7.3 中， &lt;code&gt;help&lt;/code&gt; 中的 &lt;code&gt;usr_21.txt&lt;/code&gt; 的主题是 &lt;code&gt;Go away and come back&lt;/code&gt;，其中 &lt;code&gt;21.3&lt;/code&gt;  节保存的就是关于 viminfo 的说明，在 Vim 中输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="mf"&gt;21.3&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;就可以看到关于 viminfo 的详细介绍 。&lt;/p&gt;
+&lt;p&gt;viminfo 文件可以保存的内容有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The command line history 命令行历史&lt;/li&gt;
+&lt;li&gt;The search string history 字符串搜寻历史&lt;/li&gt;
+&lt;li&gt;The input-line history 输入行历史&lt;/li&gt;
+&lt;li&gt;Contents of non-empty register 非空寄存器内容&lt;/li&gt;
+&lt;li&gt;Marks for serval files 文件位置标记&lt;/li&gt;
+&lt;li&gt;Last search/substitute pattern 最近模式匹配搜索历史&lt;/li&gt;
+&lt;li&gt;The buffer list 缓冲区列表&lt;/li&gt;
+&lt;li&gt;Global variables 全局变量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;保存 viminfo 文件&lt;/h3&gt;
+&lt;p&gt;其实 Vim 每次退出时都会在 &lt;code&gt;～/&lt;/code&gt; 目录下保存一个 &lt;code&gt;.viminfo&lt;/code&gt; 的文件，但是每次打开关闭一个文件都会覆盖上次的记录，所以我们需要为工程手动保存一个 viminfo 文件，并且保存在工程目录下，防止被覆盖 。&lt;/p&gt;
+&lt;p&gt;保存命令 &lt;code&gt;:wviminfo&lt;/code&gt; 的帮助&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;wviminfo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用 &lt;code&gt;wviminfo&lt;/code&gt; 保存&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;wviminfo&lt;/span&gt; &lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;viminfo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;载入 viminfo 文件&lt;/h3&gt;
+&lt;p&gt;载入命令 &lt;code&gt;rviminfo&lt;/code&gt; 帮助&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;rviminfo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;载入 viminfo 文件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;rviminfo&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;viminfo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;总结&lt;/h2&gt;
+&lt;p&gt;为了节省每次都要手动输入一些设置命令，我们可以把部分相同的设置放在 &lt;code&gt;.vimrc&lt;/code&gt; 文件中&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;sessionoptions&lt;/span&gt;&lt;span class="o"&gt;-=&lt;/span&gt;&lt;span class="n"&gt;curdir&lt;/span&gt;
+&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;sessionoptions&lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="n"&gt;sesdir&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;每次退出 Vim 是保存&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;mksession&lt;/span&gt; &lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;
+&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;wviminfo&lt;/span&gt; &lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;viminfo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;进入 Vim 想恢复项目设置时&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="n"&gt;projetc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;
+&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;rviminfo&lt;/span&gt; &lt;span class="n"&gt;projetc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;viminfo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://easwy.com/blog/archives/advanced-vim-skills-session-file-and-viminfo/"&gt;vi/vim使用进阶: 使用会话和viminfo&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://easwy.com/blog/archives/advanced-vim-skills-save-project-configuration/"&gt;vi/vim使用进阶: 保存项目相关配置&lt;/a&gt;&lt;/p&gt;</summary><category term="Linux"></category><category term="Vim"></category></entry><entry><title>学习 Vim 使用 Vundle 管理插件</title><link href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html" rel="alternate"></link><updated>2014-04-16T17:06:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-16:pages/2014/04/16/learning_vim_vundle.html</id><summary type="html">&lt;p&gt;学习 Vim，使用 Vundle 管理插件 。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Vim 插件&lt;/h2&gt;
 &lt;hr /&gt;
