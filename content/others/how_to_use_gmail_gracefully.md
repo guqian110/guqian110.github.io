@@ -25,7 +25,7 @@ Gmail 是 Google 提供的邮箱，细数使用 Gmail 已经快 5 年了，但�
 
 1. Gmail 账户是 Google 所有服务的入口，除了可以使用 Gmail 外和其他所有 Google 产品都有无缝的整合 。
 
-2. 强大的功能，比如我最喜欢的 *邮件对话功能* 和 *lable 功能*，还有 *过滤器*，Chrome + Gmail，给你最简洁强大的体验 。
+2. 强大的功能，比如我最喜欢的 *邮件对话功能* 和 *label 功能*，还有 *过滤器*，Chrome + Gmail，给你最简洁强大的体验 。
 
 3. 安全，邮件不会受到某些机器&人工的监视，免受 GFW 的干扰
     
@@ -98,9 +98,9 @@ Gmail 使用了标签代替文件夹，真是一个革命性的创举 。
 
 + 您可以利用标签对会话进行搜索，而您不可能总是在文件夹内进行搜索 。
 
-所以，我们需要做的就是阅读邮件，然后按照邮件的属性，给它打上标签（lable），比如私人邮件、工作邮件、学习邮件、注册验证邮件、社交邮件等等 。每种表情可以自定义颜色，按照邮件在我们心目中的重要程度，给每种标签赋予不同的颜色，一眼看上去，简洁明了，而且很好看 。
+所以，我们需要做的就是阅读邮件，然后按照邮件的属性，给它打上标签（label），比如私人邮件、工作邮件、学习邮件、注册验证邮件、社交邮件等等 。每种表情可以自定义颜色，按照邮件在我们心目中的重要程度，给每种标签赋予不同的颜色，一眼看上去，简洁明了，而且很好看 。
 
-[了解如何创建、修改、删除和搜索标签][how-to-use-lable]
+[了解如何创建、修改、删除和搜索标签][how-to-use-label]
 
 ### 星标邮件 & 重要邮件
 
@@ -134,8 +134,8 @@ Gmail 实验室有一些很好玩的功能，比如在邮件中看 Google Map，
 [question4]: http://www.zhihu.com/question/20042480
 [question5]: http://www.zhihu.com/question/20042480
 [answer2]: http://www.zhihu.com/people/unogzx
-[lable]: https://support.google.com/mail/answer/10708?hl=zh-Hans&ref_topic=3403522
-[how-to-use-lable]: https://support.google.com/mail/answer/118708?rd=1
+[label]: https://support.google.com/mail/answer/10708?hl=zh-Hans&ref_topic=3403522
+[how-to-use-label]: https://support.google.com/mail/answer/118708?rd=1
 
 <br>
 

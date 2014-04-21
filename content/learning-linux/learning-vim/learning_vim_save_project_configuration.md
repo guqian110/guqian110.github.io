@@ -16,7 +16,7 @@ Summary: 总结将 Vim 配置为 IDE 的过程之一，保存项目设置 。
 
 很多编辑器都有一个功能是以前打开过的文档会有记忆，再次打开时会直接跳转到上次编辑的地方，比如  [`Sublime Text 2`][sb2]，强大的 Vim 当然也有这个功能，**我们的目标就是让 VIm 和其他 IDE 一样，可以记住上次的编辑状态 。**
 
-Vim 要实现这个功能，涉及到三个地方的配置：`session` & `viminfo` & `path`。
+Vim 要实现这个功能，涉及到两个地方的配置：`session` & `viminfo` 。
 
 [sb2]: http://www.sublimetext.com/2
 
