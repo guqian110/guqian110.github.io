@@ -12,15 +12,16 @@
 &lt;p&gt;GNU/Linux：通常这个系统大多数软件是自由软件，换句话说，他们通常依赖的库也是自由的，所以软件开发者认为你可以自由的获取这些依赖库，自然就不需要自己再提供了。由系统“发行版”负责维护属于这个系统的所有依赖库，并且安装软件时确定依赖。
 &lt;br&gt;
 这个体系的特点是：
+&lt;br&gt;
 + 系统依赖通常是统一的，如果有多个程序依赖同一个库，在这个系统中通常是同一份。
 + 具有庞大的资源。例如 Debian 系现成的可依赖软件多达 30G，所以通常不可能预先把所有依赖都安装全，但庞大的依赖库给编程人员提供了很多方便。
 + 你安装的软件越多，共同依赖所体现出的价值越高，解决依赖问题就越简单（因为当你安装足够多软件时，主流的依赖已经全部在你系统了）。
 + 由于巨大的共同依赖库存在，软件本身可以很小.
 &lt;br&gt;
-&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;Windows：通常而言，这个系统的软件是商业软件，因此，他们依赖的库也很有可能是商业软件，所以，不可能要求用户自行获取这些依赖，这些依赖通常在发布软件的时候提供。如果你安装的软件少，这个体系很方便。
+Windows：通常而言，这个系统的软件是商业软件，因此，他们依赖的库也很有可能是商业软件，所以，不可能要求用户自行获取这些依赖，这些依赖通常在发布软件的时候提供。如果你安装的软件少，这个体系很方便。
 &lt;br&gt;
 不过这造成了一些缺点：
+&lt;br&gt;
 + 没有一个庞大的公共库，很多功能以及基础库都是每个公司自己实现一套，浪费很多劳动力，编程人员到每个公司得学习一套不同的库，给编程人员带来不便。
 + 所有应用程序都自己带依赖，因此很可能有许多程序同时附带了相同的依赖，并且这些相同依赖还有可能是不同的版本，这会造成许多混乱。
 + 由于所有应用程序都自己提供所有依赖，每个软件体积都很庞大。
@@ -40,7 +41,7 @@ Package management systems are designed to save organizations time and money thr
 &lt;h3&gt;Dpkg&lt;/h3&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Dpkg"&gt;Dpkg on wiki&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Dpkg 是基于 Debian 系统的包管理软件 。&lt;code&gt;dpg&lt;/code&gt; 可以用来安装、删除、提供&lt;code&gt;.deb&lt;/code&gt; 格式软件包相关信息的文件 。&lt;/p&gt;
-&lt;p&gt;dpkg 由 Matt Welsh、Carl Streeter、 Ian Murdock 用 Perl 语言编写，后来在 1994 年。 Ian Jackson 改用 C 重写了大部分内容，&lt;/p&gt;
+&lt;p&gt;dpkg 由 Matt Welsh、Carl Streeter、 Ian Murdock 用 Perl 语言编写，后来在 1994 年。 Ian Jackson 改用 C 重写了大部分内容 。&lt;/p&gt;
 &lt;p&gt;dpkg 是 “Debian package” 的缩写，它最初是为 Debian 系统编写的，也可以在使用 &lt;code&gt;.deb&lt;/code&gt; 格式的 Ubuntu 系统上使用 。&lt;/p&gt;
 &lt;h4&gt;常用语法&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;dpkg&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="n"&gt;peackage&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;deb&lt;/span&gt;        &lt;span class="c1"&gt;// install&lt;/span&gt;
@@ -86,17 +87,24 @@ Package management systems are designed to save organizations time and money thr
 &lt;p&gt;在 terminal 中输入 &lt;code&gt;apt-get -h&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;help 内容结束的最后一样会有一句：&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;This APT has Super Cow Powers.
-+ 在 terminal 中输入 &lt;code&gt;apt-get moo&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This APT has Super Cow Powers.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;会显示一头牛 :-P
-           (__) 
-           (oo) 
-     /------\/ 
-    / |    || &lt;br /&gt;
-   *  /---/\ 
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 terminal 中输入 &lt;code&gt;apt-get moo&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;会显示一头牛 :-P&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;oo&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+ &lt;span class="o"&gt;/------&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; 
+&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;    &lt;span class="o"&gt;||&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;/---/\ 
       ~~   ~~ &lt;br /&gt;
-    ...."Have you mooed today?"...&lt;/p&gt;
+    ...."Have you mooed today?"...&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;Aptitude&lt;/h3&gt;
