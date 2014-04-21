@@ -158,7 +158,7 @@ viminfo 文件可以保存的内容有：
     set sessionoptions-=curdir
     set sessionoptions+=sesdir
 
-每次退出 Vim 是保存
+每次退出 Vim 时保存
 
     :mksession project.vim
     :wviminfo project.viminfo
