@@ -1,5 +1,300 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-20T14:32:00+08:00</updated><entry><title>学习 Vim 保存项目设置</title><link href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html" rel="alternate"></link><updated>2014-04-20T14:32:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-20:pages/2014/04/20/learning_vim_save_project_configuration.html</id><summary type="html">&lt;blockquote&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-21T13:43:00+08:00</updated><entry><title>学习 Linux 软件包依赖管理</title><link href="http://guqian110.github.io/pages/2014/04/21/learning_linux_package_management.html" rel="alternate"></link><updated>2014-04-21T13:43:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-21:pages/2014/04/21/learning_linux_package_management.html</id><summary type="html">&lt;h2&gt;Linux 软件包依赖问题&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;早期的 Linux 系统上的软件是通过源码方式发布的，大家下载下来，在自己的机器上编译，得到可执行程序 。&lt;/p&gt;
+&lt;p&gt;但是，任何程序员写程序都有可能会依赖一些别人已经写成的库，所以几乎一定规模的程序必然有依赖 。尤其是对于 Linux 系统，因为它是 &lt;strong&gt;free（自由，not 免费）&lt;/strong&gt;，开源软件的开发者不是在一个体系下，软件包的依赖关系就比较伤脑筋了， 尤其是当我们的系统里有成百上千的软件时，软件包管理的必要性就更明显了 。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;比如我们需要安装 package_a，而 package_a  依赖于 package_b 才能运行，但是我们的系统没有安装 package_b，如果强制安装 package_a，软件很可能不能正常运行 。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt;  其实在 Windows 下也存在相似的问题，只是因为有微软统一的体系，很多 &lt;code&gt;dll&lt;/code&gt; 被集成在系统中，所以这个问题不明显 。&lt;/p&gt;
+&lt;p&gt;不同的系统对于这个问题有不同的处理方法，这也体现出它们不同的处理问题的哲学：&lt;/p&gt;
+&lt;p&gt;知乎上的问题：&lt;a href="http://www.zhihu.com/question/20443067"&gt;Unix 的包依赖是如何形成的？&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;有个回答：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;GNU/Linux：通常这个系统大多数软件是自由软件，换句话说，他们通常依赖的库也是自由的，所以软件开发者认为你可以自由的获取这些依赖库，自然就不需要自己再提供了。由系统“发行版”负责维护属于这个系统的所有依赖库，并且安装软件时确定依赖。
+&lt;br&gt;
+这个体系的特点是：
++ 系统依赖通常是统一的，如果有多个程序依赖同一个库，在这个系统中通常是同一份。
++ 具有庞大的资源。例如 Debian 系现成的可依赖软件多达 30G，所以通常不可能预先把所有依赖都安装全，但庞大的依赖库给编程人员提供了很多方便。
++ 你安装的软件越多，共同依赖所体现出的价值越高，解决依赖问题就越简单（因为当你安装足够多软件时，主流的依赖已经全部在你系统了）。
++ 由于巨大的共同依赖库存在，软件本身可以很小.
+&lt;br&gt;
+&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Windows：通常而言，这个系统的软件是商业软件，因此，他们依赖的库也很有可能是商业软件，所以，不可能要求用户自行获取这些依赖，这些依赖通常在发布软件的时候提供。如果你安装的软件少，这个体系很方便。
+&lt;br&gt;
+不过这造成了一些缺点：
++ 没有一个庞大的公共库，很多功能以及基础库都是每个公司自己实现一套，浪费很多劳动力，编程人员到每个公司得学习一套不同的库，给编程人员带来不便。
++ 所有应用程序都自己带依赖，因此很可能有许多程序同时附带了相同的依赖，并且这些相同依赖还有可能是不同的版本，这会造成许多混乱。
++ 由于所有应用程序都自己提供所有依赖，每个软件体积都很庞大。
++ 系统中安装的软件越多，越容易出问题。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Linux 包管理系统&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Package_management_system"&gt;Package management system on wikipedia&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A &lt;strong&gt;package management system&lt;/strong&gt;, also called &lt;strong&gt;package manager&lt;/strong&gt;, is a collection of software tools to automate the process of installing, upgrading, configuring, and removing software packages for a computer's operating system in a consistent manner. It typically maintains a database of software dependencies and version information to prevent software mismatches and missing prerequisites.
+&lt;br&gt;
+&lt;br&gt;
+Package management systems are designed to save organizations time and money through remote administration and software distribution technology that eliminate the need for manual installs and updates. This can be particularly useful for large enterprises whose operating systems are based on Linux and other Unix-like systems, typically consisting of hundreds or even thousands of distinct software packages; in the former case, a package management system is a convenience, in the latter case it becomes essential.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在 Linux 发行版中，几乎每一个发行版都有自己的软件包管理系统 。&lt;/p&gt;
+&lt;h3&gt;Dpkg&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Dpkg"&gt;Dpkg on wiki&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Dpkg 是基于 Debian 系统的包管理软件 。&lt;code&gt;dpg&lt;/code&gt; 可以用来安装、删除、提供&lt;code&gt;.deb&lt;/code&gt; 格式软件包相关信息的文件 。&lt;/p&gt;
+&lt;p&gt;dpkg 由 Matt Welsh、Carl Streeter、 Ian Murdock 用 Perl 语言编写，后来在 1994 年。 Ian Jackson 改用 C 重写了大部分内容，&lt;/p&gt;
+&lt;p&gt;dpkg 是 “Debian package” 的缩写，它最初是为 Debian 系统编写的，也可以在使用 &lt;code&gt;.deb&lt;/code&gt; 格式的 Ubuntu 系统上使用 。&lt;/p&gt;
+&lt;h4&gt;常用语法&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;dpkg&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="n"&gt;peackage&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;deb&lt;/span&gt;        &lt;span class="c1"&gt;// install&lt;/span&gt;
+&lt;span class="n"&gt;dpkg&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="n"&gt;package&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;deb&lt;/span&gt;         &lt;span class="c1"&gt;// remove&lt;/span&gt;
+&lt;span class="n"&gt;dpkg&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;optional&lt;/span&gt; &lt;span class="n"&gt;pattern&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;  &lt;span class="c1"&gt;// list installed package&lt;/span&gt;
+&lt;span class="n"&gt;dpkg&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;configure&lt;/span&gt; &lt;span class="n"&gt;package&lt;/span&gt;    &lt;span class="c1"&gt;// configure package&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;详细用法&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;dpkg&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt;
+&lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="n"&gt;dpkg&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Apt&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Advanced_Packaging_Tool"&gt;Advanced Packaging Tool on wiki&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The Advanced Packaging Tool, or APT, is a free software user interface that works with core libraries to handle the installation and removal of software on the Debian GNU/Linux distribution and its variants. APT simplifies the process of managing software on Unix-like computer systems by automating the retrieval, configuration and installation of software packages, either from precompiled files or by compiling source code.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;apt 最初是设计为 dpkg 的前端，用来处理 &lt;code&gt;.deb&lt;/code&gt; 格式的文件，后来它被 &lt;code&gt;APT-RPM&lt;/code&gt; 组织改造可以支持 RPM 包管理系统 。&lt;/p&gt;
+&lt;p&gt;apt 由 &lt;code&gt;apt-get&lt;/code&gt;、&lt;code&gt;apt-cache&lt;/code&gt; 和 &lt;code&gt;apt-config&lt;/code&gt; 等小工具组成&lt;/p&gt;
+&lt;h4&gt;常用语法&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;package&lt;/span&gt;             &lt;span class="c1"&gt;// install&lt;/span&gt;
+&lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;remove&lt;/span&gt; &lt;span class="n"&gt;package&lt;/span&gt;              &lt;span class="c1"&gt;// remove&lt;/span&gt;
+&lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt; &lt;span class="n"&gt;search&lt;/span&gt; &lt;span class="n"&gt;package&lt;/span&gt;            &lt;span class="c1"&gt;// search&lt;/span&gt;
+&lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;update&lt;/span&gt;                      &lt;span class="c1"&gt;// update source list&lt;/span&gt;
+&lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;upgrade&lt;/span&gt;                     &lt;span class="c1"&gt;// upgrade installed software&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;详细用法&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;
+&lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;
+&lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;
+&lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;upgrade&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;彩蛋&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在 terminal 中输入 &lt;code&gt;apt-get -h&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;help 内容结束的最后一样会有一句：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This APT has Super Cow Powers.
++ 在 terminal 中输入 &lt;code&gt;apt-get moo&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;会显示一头牛 :-P
+           (__) 
+           (oo) 
+     /------\/ 
+    / |    || &lt;br /&gt;
+   *  /---/\ 
+      ~~   ~~ &lt;br /&gt;
+    ...."Have you mooed today?"...&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Aptitude&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Aptitude_(software)"&gt;aptitude on wiki&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;aptitude is a front-end to the Advanced Packaging Tool (APT). It displays a list of software packages and allows the user to interactively pick packages to install or remove. It has an especially powerful search system utilizing flexible search patterns. It was initially created for Debian, but has appeared in RPM Package Manager (RPM) based distributions as well (such as Conectiva).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;aptitude 是 APT 的文本界面客户端，它的交互性比 apt 好，似乎在处理依赖问题上也更好一些（我遇到的问题，用 aptitude 可以很方便地解决而 apt 不行 ）&lt;/p&gt;
+&lt;h4&gt;常用语法&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;aptitude&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;package&lt;/span&gt;
+&lt;span class="n"&gt;aptitude&lt;/span&gt; &lt;span class="n"&gt;remove&lt;/span&gt; &lt;span class="n"&gt;package&lt;/span&gt;
+&lt;span class="n"&gt;aptitude&lt;/span&gt; &lt;span class="n"&gt;clean&lt;/span&gt;
+&lt;span class="n"&gt;aptitude&lt;/span&gt; &lt;span class="n"&gt;search&lt;/span&gt; &lt;span class="n"&gt;package&lt;/span&gt;
+&lt;span class="n"&gt;aptitude&lt;/span&gt; &lt;span class="n"&gt;show&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;
+&lt;span class="n"&gt;aptitude&lt;/span&gt; &lt;span class="n"&gt;update&lt;/span&gt;
+&lt;span class="n"&gt;aptitude&lt;/span&gt; &lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;详细用法&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="n"&gt;aptitude&lt;/span&gt;
+&lt;span class="n"&gt;aptitude&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;彩蛋&lt;/h4&gt;
+&lt;p&gt;&lt;img alt="aptitude" src="/images/learning-linux/package_management.png" /&gt;&lt;/p&gt;
+&lt;h3&gt;YUM&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://zh.wikipedia.org/wiki/Yum"&gt;Yellowdog Updater, Modified on wiki&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The Yellowdog Updater, Modified (yum) is an open-source command-line package-management utility for Linux operating systems using the RPM Package Manager. Though yum has a command-line interface, several other tools provide graphical user interfaces to yum functionality.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;YUM 是一个基于 RPM 包管理的字符前端软件包管理器。能够从指定的服务器自动下载 RPM 包并且安装，可以处理依赖性关系，并且一次安装所有依赖的软件包，无须繁琐地一次次下载、安装 。被 Yellow Dog Linux 本身，以及 Fedora、Red Hat Enterprise Linux 采用 。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;举个栗子&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;有些软件要求的库的版本高于(&amp;gt;=)xx.xxx，有些软件要求库的版本必须是(=)xx.xxx，如果我们的库不能满足要求则无法安装软件 。一般 &lt;code&gt;apt-get&lt;/code&gt; 会处理比较简单的依赖关系，但是有些依赖关系 &lt;code&gt;apt-get&lt;/code&gt; 并不能解决 。这时候可以试试 &lt;code&gt;aptitude&lt;/code&gt; 。&lt;/p&gt;
+&lt;h3&gt;问题&lt;/h3&gt;
+&lt;p&gt;为新安装的 Ubuntu 安装开发环境时，遇到了库版本过高的问题，执行下面的命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;essential&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;结果 apt-get 提示有不满足依赖关系的包&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Reading package lists... Done
+&lt;br&gt;
+Building dependency tree
+&lt;br&gt;
+Reading state information... Done
+&lt;br&gt;
+Some packages could not be installed. This may mean that you have
+&lt;br&gt;
+requested an impossible situation or if you are using the unstable
+&lt;br&gt;
+distribution that some required packages have not yet been created
+&lt;br&gt;
+or been moved out of Incoming.
+&lt;br&gt;
+The following information may help to resolve the situation:
+&lt;br&gt;
+&lt;br&gt;
+The following packages have unmet dependencies:
+&lt;br&gt;
+&lt;strong&gt;build-essential : Depends: dpkg-dev (&amp;gt;= 1.13.5) but it is not going to be installed&lt;/strong&gt;
+&lt;br&gt;
+E: Unable to correct problems, you have held broken packages.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;于是我们手动安装特定的库&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;dpkg&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;结果提示我们库版本过高&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Reading package lists... Done
+&lt;br&gt;
+Building dependency tree
+&lt;br&gt;
+Reading state information... Done
+&lt;br&gt;
+Some packages could not be installed. This may mean that you have
+&lt;br&gt;
+requested an impossible situation or if you are using the unstable
+&lt;br&gt;
+distribution that some required packages have not yet been created
+&lt;br&gt;
+or been moved out of Incoming.
+&lt;br&gt;
+The following information may help to resolve the situation:
+&lt;br&gt;
+&lt;br&gt;
+The following packages have unmet dependencies:
+&lt;br&gt;
+ &lt;strong&gt;dpkg-dev : Depends: libdpkg-perl (= 1.16.10ubuntu1) but 1.16.12ubuntu1 is to be installed&lt;/strong&gt;
+&lt;br&gt;
+Recommends: build-essential but it is not going to be installed
+&lt;br&gt;
+           Recommends: fakeroot but it is not going to be installed
+&lt;br&gt;
+           Recommends: libalgorithm-merge-perl but it is not going to be installed
+&lt;br&gt;
+E: Unable to correct problems, you have held broken packages.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;解决问题 —— 使用 &lt;code&gt;aptitude&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;解决方法就是降级&lt;/strong&gt; 。&lt;/p&gt;
+&lt;p&gt;方法有两个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;apt-get 直接指定安装特定的版本&lt;/p&gt;
+&lt;p&gt;首先查询是否提供低版本的包&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt; &lt;span class="n"&gt;showpkg&lt;/span&gt; &lt;span class="n"&gt;package_name&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;若有则指定安装某个版本&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;package_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 aptitude 自动处理&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我采用的第二种方法：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;aptitude&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;essential&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;结果如下&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The following NEW packages will be installed:
+&lt;br&gt;
+ build-essential dpkg-dev{ab} 
+&lt;br&gt;
+The following packages are RECOMMENDED but will NOT be installed:
+&lt;br&gt;
+fakeroot libalgorithm-merge-perl 
+&lt;br&gt;
+0 packages upgraded, 2 newly installed, 0 to remove and 18 not upgraded.
+&lt;br&gt;
+Need to get 718 kB of archives. After unpacking 1,636 kB will be used.
+&lt;br&gt;
+The following packages have unmet dependencies:
+&lt;br&gt;
+ dpkg-dev : Depends: libdpkg-perl (= 1.16.10ubuntu1) but 1.16.12ubuntu1 is installed.
+&lt;br&gt;
+The following actions will resolve these dependencies:
+&lt;br&gt;
+&lt;br&gt;
+Keep the following packages at their current version:
+&lt;br&gt;
+1)     build-essential [Not Installed]
+&lt;br&gt;
+2)     dpkg-dev [Not Installed]
+&lt;br&gt;
+&lt;br&gt;
+Accept this solution? [Y/n/q/?]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;当然不是中止安装，选择 &lt;code&gt;n&lt;/code&gt;， aptitude 给出另外一个解决方案：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The following actions will resolve these dependencies:
+&lt;br&gt;
+ Downgrade the following packages:
+&lt;br&gt;
+&lt;br&gt;
+1)     libdpkg-perl [1.16.12ubuntu1 (now) -&amp;gt; 1.16.10ubuntu1 (raring)]
+&lt;br&gt;
+&lt;br&gt;
+Accept this solution? [Y/n/q/?]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这正是我们需要解决的版本过高的问题，将库软件版本降级&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The following packages will be DOWNGRADED:
+&lt;br&gt;
+libdpkg-perl 
+&lt;br&gt;
+The following NEW packages will be installed:
+&lt;br&gt;
+ build-essential dpkg-dev{a} 
+&lt;br&gt;
+The following packages are RECOMMENDED but will NOT be installed:
+&lt;br&gt;
+fakeroot libalgorithm-merge-perl 
+&lt;br&gt;
+0 packages upgraded, 2 newly installed, 1 downgraded, 0 to remove and 18 not upgraded.
+&lt;br&gt;
+Need to get 904 kB of archives. After unpacking 1,632 kB will be used.
+&lt;br&gt;
+Do you want to continue? [Y/n/?] &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;选择 &lt;code&gt;y&lt;/code&gt;。然后 aptitude 会完成剩余的工作 。&lt;/p&gt;
+&lt;p&gt;问题解决啦！&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://www.zhihu.com/question/20443067"&gt;Unix 的包依赖是如何形成的？&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://daway320.blog.163.com/blog/static/3878369920107331733393/"&gt;apt-get install安装软件问题(安装包的依赖库版本过高问题)&lt;/a&gt;&lt;/p&gt;</summary><category term="Linux"></category><category term="Package Management"></category></entry><entry><title>学习 Vim 保存项目设置</title><link href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html" rel="alternate"></link><updated>2014-04-20T14:32:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-20:pages/2014/04/20/learning_vim_save_project_configuration.html</id><summary type="html">&lt;blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;关于 Vim 和 IDE 的争论，这是程序猿的圣战，不再浪费时间 :-D&lt;/p&gt;
@@ -1236,7 +1531,7 @@ because it doesn’t know the value.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;这一点应该说是重中之重 。学习 FPGA，一定要有硬件设计思想 。在软件编程的时候，比如 1 秒钟能实现 5 次乘法运算，那系统要求 1 秒钟实现 50 次乘法运算怎么办，我们会尽可能的优化代码，让代码更简洁更高效，或者提高系统主频，让系统跑的更快 。但是在 FPGA 里面我们不是这种思维方式。在 FPGA 里实现一个乘法器不够用，那我就实现两个实现三个去满足系统要求；我可以进行流水线设计；串行运行方式不够快了，我可以先串并转换，再并行的做处理 — —只要 FPGA 的资源够用，我可以充分利用资源去满足系统要求 。因为在我手里的就是一堆硬件资源，我要做的是把他们组合成一个好用的电路 。评价硬件描述语言写的好坏的标准和其他软件编程语言的标准是完全不同的 。因此一定要摒弃软件编程的一些固有思路，学会用硬件的方式去解决问题 。时刻提醒自己正在设计的是一个电路，而不是一行行空洞的代码 。这是很多做软件编程的人很难跨过的坎 。FPGA 学了很久还在纠结到底是用 &lt;code&gt;if-else&lt;/code&gt; 语句好呢还是用 &lt;code&gt;case&lt;/code&gt; 语句好？而不能透过这些语句表面看到他们所具体代表的电路 。只有建立了硬件设计思想，才有更深入学习FPGA的可能 。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;FPGA 入门简单精通难 。要想入门，买一块开发板跟着例程走一遍，很多人都能在很短的时间内熟悉开发软件的操作方法并且点亮开发板上的 LED 或者再实现个跑马灯什么的，但是再往后进步往往就进展很慢 。上面提到的这四条是玩转 FPGA 的基础，只有打好了坚实的基础后面才能一马平川 。希望每个学习 FPGA 的人最后都能成为大牛，设计出自己的完美电路 。&lt;/p&gt;</summary><category term="FPGA"></category></entry><entry><title>学习 LInux SSH</title><link href="http://guqian110.github.io/pages/2014/04/04/learning_linux_ssh.html" rel="alternate"></link><updated>2014-04-04T17:00:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-04:pages/2014/04/04/learning_linux_ssh.html</id><summary type="html">&lt;p&gt;实验室的师兄师姐毕业了，继承了他们的旧电脑 。宿舍的笔记本和实验室的电脑出现了相互之间传送同步文件的需求 。想到了两种方法：&lt;/p&gt;
+&lt;p&gt;FPGA 入门简单精通难 。要想入门，买一块开发板跟着例程走一遍，很多人都能在很短的时间内熟悉开发软件的操作方法并且点亮开发板上的 LED 或者再实现个跑马灯什么的，但是再往后进步往往就进展很慢 。上面提到的这四条是玩转 FPGA 的基础，只有打好了坚实的基础后面才能一马平川 。希望每个学习 FPGA 的人最后都能成为大牛，设计出自己的完美电路 。&lt;/p&gt;</summary><category term="FPGA"></category></entry><entry><title>学习 Linux SSH</title><link href="http://guqian110.github.io/pages/2014/04/04/learning_linux_ssh.html" rel="alternate"></link><updated>2014-04-04T17:00:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-04-04:pages/2014/04/04/learning_linux_ssh.html</id><summary type="html">&lt;p&gt;实验室的师兄师姐毕业了，继承了他们的旧电脑 。宿舍的笔记本和实验室的电脑出现了相互之间传送同步文件的需求 。想到了两种方法：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;云同步&lt;/li&gt;
 &lt;li&gt;SSH / SCP&lt;/li&gt;

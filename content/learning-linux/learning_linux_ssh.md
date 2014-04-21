@@ -1,4 +1,4 @@
-Title: 学习 LInux SSH
+Title: 学习 Linux SSH
 Date: 2014-04-04 17:00
 Category: Linux
 Tags: Linux,SSH
