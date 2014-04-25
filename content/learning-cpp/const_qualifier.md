@@ -65,11 +65,11 @@ C++ Primer 中有这么一句话
 
 > The variable bufSize is still an lvalue
 
-这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 是变量具有了常量的属性“
+这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性“
 
 ### 文件的局部变量
 
-const 限定符修同时也改变了变量的作用范围 。普通非 const 变量的默认是具有 *外部连接（external linkaage）*的，在全局作用域内定义非 const 变量时，它在整个程序中都可以被访问 。比如
+const 限定符修同时也改变了变量的作用范围 。普通非 const 变量的默认是具有 *外部连接（external linkage）*的，在全局作用域内定义非 const 变量时，它在整个程序中都可以被访问 。比如
 
 ```C++
     // file1.cpp
