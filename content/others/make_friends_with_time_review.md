@@ -1,7 +1,7 @@
 Title: 把时间当作朋友 书评
 Date: 2014-04-25 15:50
 Category: Others
-Tags: Book,Code,时间管理
+Tags: Book,时间管理
 Slug: make_friends_with_time_review
 Author: Chien Gu
 Summary: 最近花了两个星期的时间，终于把 《把时间当作朋友》 看完了，写写心得体会。
