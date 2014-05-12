@@ -31,9 +31,9 @@ Summary: yocto 从零单排第一期，了解什么是 yocto
 
 它由许多硬件制造商、开源操作系统提供商和电子器件公司一起合作于 2010 年建立，目的是为了使混乱的嵌入式 Linux 开发更简单有序。
 
-*P.S.* Yocto 项目有时也被称为 "Umbrella" 项目
+**P.S.** Yocto 项目有时也被称为 "Umbrella" 项目
 
-*P.P.S.* yocto 的名字是委员会决定的，这个词本来是国际单位中的最小的单位，表示 10^-24，也就是千万亿分之一，在此寓意 “基本的粒子” —— 贯穿嵌入式 Linux 开发过程的工具。
+**P.P.S.** yocto 的名字是委员会决定的，这个词本来是国际单位中的最小的单位，表示 10^-24，也就是千万亿分之一，在此寓意 “基本的粒子” —— 贯穿嵌入式 Linux 开发过程的工具。
 
 ### Why using Yocto
 
@@ -69,7 +69,6 @@ Yocto 项目的 [technical leadership][technical-leadership] 和 Linux Kernel �
 Yocto 项目架构师：Richard Purdie
 
 子系统/ BSP 层维护者：...
-
 
 ### The Yocto Project Community
 
@@ -178,8 +177,6 @@ Toaster 是一个 API，它基于 web 界面来使用 BitBake，你可以通过�
 <br>
 
 ## 参考
-
-<br>
 
 [Yocto Project 官网][Yocto Project]
 
