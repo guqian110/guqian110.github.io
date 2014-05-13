@@ -82,7 +82,7 @@ OFDM 每个子载波的调制方式可以相互不同，比如 BPSK、QPSK、QAM
 
 发送端框图：
 
-![transmitter](/image/learning-ofdm/transmitter.png)
+![transmitter](/images/learning-ofdm-basic/transmitter.png)
 
 #### 接收端 Receiver
 
@@ -94,7 +94,7 @@ OFDM 每个子载波的调制方式可以相互不同，比如 BPSK、QPSK、QAM
 
 接收端框图：
 
-![receiver](/image/learning-ofdm/receiver.png)
+![receiver](/images/learning-ofdm-basic/receiver.png)
 
 ### 循环前缀 cyclic prefix
 
@@ -116,7 +116,7 @@ OFDM 每个子载波的调制方式可以相互不同，比如 BPSK、QPSK、QAM
 
 OFDM 系统框图如下：
 
-![ofdm-system](/image/learning-ofdm/ofdm_system.jpg)
+![ofdm-system](/images/learning-ofdm-basic/ofdm_system.jpg)
 
 其中，**交织** 是为了克服深衰落发生突发差错的影响，如果交织器的长度足够大，解交织后可将突发差错改造为独立差错，再通过纠错译码来纠正 。
 

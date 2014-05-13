@@ -41,13 +41,13 @@
 &lt;p&gt;基带系统发送端要实现的功能是将待发送序列 {A1,A2,A3...} 变换，得到复包络的采样值 {a1,a2,a3...} 。&lt;/p&gt;
 &lt;p&gt;为了实现 OFDM 调制的基带数字实现，首先要将 OFDM 信号的复包络进行采样，成为离散时间信号 。根据公式(《通信原理》)，采样结果正好是对发送序列进行离散傅里叶反变换(IDFT)的结果，所以，我们可以 &lt;em&gt;借助 IDFT 即可得到 OFDM 复包络的时间采样 。&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;发送端框图：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="transmitter" src="/image/learning-ofdm/transmitter.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="transmitter" src="/images/learning-ofdm-basic/transmitter.png" /&gt;&lt;/p&gt;
 &lt;h4&gt;接收端 Receiver&lt;/h4&gt;
 &lt;p&gt;基带系统接收端要实现的功能是对采样序列 {a1,a2,a3...} 进行变换，得到发送端发送过来的信息序列 {A1,A2,A3...} 。&lt;/p&gt;
 &lt;p&gt;接收端通过 I/Q 正交解调可以恢复 OFDM 信号的复包络，将其采样得到的时间序列 。因为发送端采用的 IDFT 是可逆变换，所以对采样结果进行 DFT 就可以得到发送序列 。&lt;/p&gt;
 &lt;p&gt;当序列的点数为 2 的整幂次时，DFT 和 IDFT 存在快速算法： FFT 和 IFFT 。&lt;/p&gt;
 &lt;p&gt;接收端框图：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="receiver" src="/image/learning-ofdm/receiver.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="receiver" src="/images/learning-ofdm-basic/receiver.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;循环前缀 cyclic prefix&lt;/h3&gt;
 &lt;p&gt;为了有效对抗多径信道的时延扩展，OFDM 系统由多个子载波构成，只要子载波的取值可以满足符号周期远大于信道的时延扩展，就可以达到目标。在此基础上，还需要采取措施消除前后两个 OFDM 符号之间的 &lt;strong&gt;码间干扰 ISI&lt;/strong&gt; 。&lt;/p&gt;
 &lt;p&gt;一种方法是在每个 OFDM 符号之间插入 &lt;strong&gt;保护间隔 Guard Interval&lt;/strong&gt; 。为了对抗信号因信道延迟的影响，Gurad interval(Tg) 长度要大于最大的 Delay spread，即 Tg &amp;gt; delay spread time。&lt;/p&gt;
@@ -58,7 +58,7 @@
 &lt;p&gt;增大滚降因子虽然能够使带外衰减更快，但降低了 OFDM 系统对多经实验的容忍能力，所以 &lt;em&gt;在实际系统设计中，应当选择较小的滚降因子 。&lt;/em&gt;&lt;/p&gt;
 &lt;h3&gt;OFDM 系统设计&lt;/h3&gt;
 &lt;p&gt;OFDM 系统框图如下：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="ofdm-system" src="/image/learning-ofdm/ofdm_system.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="ofdm-system" src="/images/learning-ofdm-basic/ofdm_system.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;其中，&lt;strong&gt;交织&lt;/strong&gt; 是为了克服深衰落发生突发差错的影响，如果交织器的长度足够大，解交织后可将突发差错改造为独立差错，再通过纠错译码来纠正 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;在发送端：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;二进制数据&lt;/em&gt; 通过纠错编码、交织后映射到 QAM 星座得到 &lt;em&gt;一个 QAM 复数符号序列&lt;/em&gt;，再经过并串转换，得到 &lt;em&gt;N个并行 QAM 符号&lt;/em&gt;，每个符号进行 IFFT，将 OFDM 复包络的频域样值变换为 &lt;em&gt;时域样值&lt;/em&gt;，进行并串转换，将时域样值变换为按时间顺序排列的 &lt;em&gt;时域样值&lt;/em&gt;，然后在每个 OFDM 符号前插入前缀，通过 D/A，将离散的复包络变成 &lt;em&gt;连续时间的复包络&lt;/em&gt; 。再将复包络的 I(t) 和 Qt) 正交调制得到 &lt;em&gt;FD M信号&lt;/em&gt;，将基带信号上变频到射频，经过功放，发送出去 。&lt;/p&gt;
