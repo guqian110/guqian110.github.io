@@ -66,7 +66,7 @@ Orthogonal frequency-division multiplexing (OFDM) 的基本原理是将高速的
 
 通过将高速数据分解为多个并行低速速率，克服了信道时延扩展对数据速率的限制，其中各个子载波之间是相互正交的关系，如图：
 
-![carrier wave](/image/learning-ofdm/carriers.png)
+![carrier wave](/images/learning-ofdm-basic/carriers.png)
 
 OFDM 每个子载波的调制方式可以相互不同，比如 BPSK、QPSK、QAM 等方式 。
 
