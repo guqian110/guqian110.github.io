@@ -137,7 +137,89 @@
 &lt;h2&gt;参考&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1446684/"&gt;《通信原理》&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/4130536/"&gt;《移动通信原理》&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Orthogonal_frequency-division_multiplexing"&gt;OFDM wikipedia&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="OFDM"></category></entry><entry><title>Yocto 从零单排 1 —— 入门</title><link href="http://guqian110.github.io/pages/2014/05/12/learning_yocto_from_zero_1_getting_started.html" rel="alternate"></link><updated>2014-05-12T12:46:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-05-12:pages/2014/05/12/learning_yocto_from_zero_1_getting_started.html</id><summary type="html">&lt;p&gt;最近做嵌入式，开始学习 Yocto 项目相关的知识。网上关于 Yocto 的介绍、博客不少，但是大多数都是英文的。中文博客也有，不过都是一些大牛写的笔记，对于新手来说，并不是很容易懂,于是，就有了我的 “Yocto 从零单排” ^_^&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Orthogonal_frequency-division_multiplexing"&gt;OFDM wikipedia&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="OFDM"></category></entry><entry><title>编数字处理基础</title><link href="http://guqian110.github.io/pages/2014/05/13/digital_processing_basic.html" rel="alternate"></link><updated>2014-05-13T11:25:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-05-13:pages/2014/05/13/digital_processing_basic.html</id><summary type="html">&lt;h2&gt;数字处理基础&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;数字处理基础&lt;/strong&gt;主要包括两个方面：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数的表示&lt;/li&gt;
+&lt;li&gt;常用算术运算的实现&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面分别讨论&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;数的表示&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;这部分讨论对于计算机(PC)、数字信号处理器件(DSP)、数字芯片(包括 FPGA) 都是成立的。&lt;/p&gt;
+&lt;h3&gt;人类如何计数&lt;/h3&gt;
+&lt;p&gt;最早我们的祖先采用的是结绳计数，经过几千年的发展，现在我们使用的 10 进制位置计数法 。那么我们为什么偏偏选择 19 这个数字呢？&lt;/p&gt;
+&lt;p&gt;大名鼎鼎的 &lt;a href="http://en.wikipedia.org/wiki/Charles_Petzold"&gt;Charles Petzold&lt;/a&gt; 在他的著作 &lt;a href="http://book.douban.com/subject/4822685/"&gt;code&lt;/a&gt; 中分析了我们的计数进制现象 。原因其实很简单，10 这个数字对于我们如此特别只是因为我们有 10 个手指(脚趾)，于是我们采用了 10 进制，并且逐渐习惯了它 。他在书中模拟了一下进制系统的演化过程，让我们逐渐从人类的 10 进制思维逐渐转化到计算机的 2 进制系统中：&lt;/p&gt;
+&lt;p&gt;假设我们是卡通动画中的人物，比如米老鼠 Mickey，仔细观察它就会发现，他的每个手只有 4 个手指，理所当然，他采用 8 进制来计数。如果更进一步，假设我们是龙虾，那么我们的每一只钳子上有两个 “手指”，一共有 4 个手指，所以，我们会采取 4 进制计数系统。最后，假设我们是海豚，那么我们只有两个鳍来计数了，这时候的计数系统就是 2 进制数字系统了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;r 进制 to 10 进制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;只需要按权值展开就可以了，比如： &lt;/p&gt;
+&lt;p&gt;2 进制数 &lt;code&gt;110101&lt;/code&gt; 对应的 10 进制数为 &lt;code&gt;32 + 16 + 4 + 1 = 53&lt;/code&gt; &lt;/p&gt;
+&lt;p&gt;8 进制数 &lt;code&gt;B65F&lt;/code&gt; 对应的 10 进制数为 &lt;code&gt;11 × 16^3 + 6 × 16^2 + 5 × 16 + 15 × 1 = 46687&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;10 进制 to r 进制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;整数部分：基数连除，逆序取余&lt;/p&gt;
+&lt;p&gt;小数部分：基数连乘，顺序取余&lt;/p&gt;
+&lt;h3&gt;计算机如何计数&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;正数 &amp;amp; 负数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;人类和计算机的计数原理是完全不同的，所以采用的方法也是完全不同的。对于人来说，区分正负数只需要在数字绝对值前添加一个符号 &lt;code&gt;+&lt;/code&gt; 或者 &lt;code&gt;-&lt;/code&gt; 即可，但是计算机只有 &lt;code&gt;0&lt;/code&gt; 和 &lt;code&gt;1&lt;/code&gt; 这两个符号可以使用；对于人来说，减法借位很容易，但是对于计算机硬件电路来说这是一件很麻烦的事。&lt;/p&gt;
+&lt;p&gt;常用的表示方法有 3 种：&lt;strong&gt;原码&lt;/strong&gt;、&lt;strong&gt;反码&lt;/strong&gt;、&lt;strong&gt;补码&lt;/strong&gt; 。对于计算机而言，硬件上最容易实现的是补码，这也是大多数计算机采用补码系统的原因 。&lt;/p&gt;
+&lt;p&gt;以前总结过一篇博客，&lt;a href="http://guqian110.github.io/pages/2014/03/19/signed_number_representations.html"&gt;原码、反码、补码&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;整数 &amp;amp; 小数&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;整数&lt;/p&gt;
+&lt;p&gt;对于整数而言，不存在小数点的问题，所以自然地将我们人类所熟悉的 10 进制数转化为计算机熟悉的 2 进制数，分配足够的空间存储起来就 ok 。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;小数&lt;/p&gt;
+&lt;p&gt;对于小数，可以有两种方法来表示：&lt;strong&gt;定点数&lt;/strong&gt; &amp;amp; &lt;strong&gt;浮点数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;定点数的意思是小数点在数中的位置是固定不变的。整数可以看作是一种特殊的定点数，小数点在数的末尾。&lt;/p&gt;
+&lt;p&gt;浮点数的意思是小数点在数中的位置是变化的。&lt;/p&gt;
+&lt;p&gt;浮点数可以克服定点数动态范围小的缺点，但是在运算时，实现浮点数的硬件实时成本高，处理速度慢，所以在非实时运算中有广泛的应用。对于通信系统中的信号，一般都是实时处理的，所以在 FPGA 开发中，一般只使用定点数 。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;常用算术运算的 FPGA 实现&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;加法&lt;/h3&gt;
+&lt;p&gt;在 Verilog HDL 中，直接使用运算符 &lt;code&gt;+&lt;/code&gt;，其本质上是一种并行加法器，应该保证两边的数位宽是一致的。举个栗子&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="nf"&gt;add_4&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="n"&gt;input&lt;/span&gt;   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;input&lt;/span&gt;   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;output&lt;/span&gt;  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;output&lt;/span&gt;          &lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;assign&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="n"&gt;endmodule&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;乘法&lt;/h3&gt;
+&lt;p&gt;第一种方法，最简单，直接使用运算符 &lt;code&gt;*&lt;/code&gt;，如下所示 。但是这种方法写出来的代码效率很低，甚至有时候是不可综合的，实际应用中基本不会采用这种方法。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;第二种方法是自己写代码实现乘法运算，或者是使用 IP COre。一般 FPGA 中都集成了硬核的乘法器，所以可以有两种方案来实现乘法器，DSP48 硬核 或者是 Slice 搭建 。&lt;/p&gt;
+&lt;h3&gt;除法&lt;/h3&gt;
+&lt;p&gt;除法是四则基本运算中最复杂的，也是最难实现的。除法可以看作是乘法的逆运算，但除法要复杂的多，最大的区别是乘法中的一些操作可以并行支持，通过流水线提高计算速度，但是除法必须顺序执行，运算最耗时间。&lt;/p&gt;
+&lt;p&gt;Verilog 提供了除法运算符 &lt;code&gt;/&lt;/code&gt;，如下所示。但是只有在除数为 2 或者 2 的整幂次时才是可综合的，其余情况都不可综合 。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;常用的方法是采用 IP Core，可以完成定点数和浮点数两类算法。&lt;/p&gt;
+&lt;h3&gt;Cordic 算法&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/CORDIC"&gt;Cordic 算法&lt;/a&gt; 算法即坐标旋转数字计算方法，是J.D.Volder1于1959年首次提出，主要用于三角函数、双曲线、指数、对数的计算。该算法通过基本的加和移位运算代替乘法运算，使得矢量的旋转和定向的计算不再需要三角函数、乘法、开方、反三角、指数等函数。&lt;/p&gt;
+&lt;p&gt;它通常应用在没有硬件乘法器的应用中，比如微控制器、FPGA 中，进行的所有操作只有加法、移位和查表 。&lt;/p&gt;
+&lt;p&gt;Coridc 算法可以自己编写代码实现，也可以使用 IP Core 。(事实上，所有的 IP 软核理论上都可以自己写，因为这些软核实际上就是别人写好的代码和文档，类似于C语言中的库函数)&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://book.douban.com/subject/3795386/"&gt;《无线通信的 Matlab 和 FPGA 实现》&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://book.douban.com/subject/4822685/"&gt;code&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="digital processing"></category></entry><entry><title>Yocto 从零单排 1 —— 入门</title><link href="http://guqian110.github.io/pages/2014/05/12/learning_yocto_from_zero_1_getting_started.html" rel="alternate"></link><updated>2014-05-12T12:46:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-05-12:pages/2014/05/12/learning_yocto_from_zero_1_getting_started.html</id><summary type="html">&lt;p&gt;最近做嵌入式，开始学习 Yocto 项目相关的知识。网上关于 Yocto 的介绍、博客不少，但是大多数都是英文的。中文博客也有，不过都是一些大牛写的笔记，对于新手来说，并不是很容易懂,于是，就有了我的 “Yocto 从零单排” ^_^&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Yocto 从零单排第 1 期 —— 入门，了解什么是 Yocto&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;学习一个新事物，当然是官网的东西最权威最简洁明了，不易出错（避免二次理解），以下内容来自 &lt;a href="(https://www.yoctoproject.org/)"&gt;Yocto 官网&lt;/a&gt; 和对其的翻译，本文只是我的学习笔记，详细内容见官网：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href="(https://www.yoctoproject.org/)"&gt;Yocto Project 官网&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
