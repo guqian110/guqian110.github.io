@@ -48,9 +48,9 @@ Summary: 最近找到一本好书——《编码: 隐匿在计算机软硬件背
 [sm]: http://en.wikipedia.org/wiki/Signed_magnitude#Signed_magnitude_representation
 
 <br>
-> *The four best-known methods of extending the binary numeral system to represent signed numbers are: sign-and-magnitude, ones' complement, two's complement, and excess-K.*
+> *The four best-known methods of extending the binary numeral system to represent signed numbers are: sign-and-magnitude, Ones' complement, two's complement, and excess-K.*
 
-> *There is no definitive criterion by which any of the representations is universally superior. The representation used in most current computing devices is two's complement, although the Unisys ClearPath Dorado series mainframes use ones' complement.*
+> *There is no definitive criterion by which any of the representations is universally superior. The representation used in most current computing devices is two's complement, although the Unisys ClearPath Dorado series mainframes use Ones' complement.*
 （[Wikipeida][Wiki]）
 
 <br>
@@ -104,7 +104,7 @@ This approach is directly comparable to the common way of showing a sign (placin
 
 <br>
 
-###反码（one's complement）
+###反码（Ones' complement）
 
 首先，来看看 [Code][code] 中介绍了基于10进制的补码：
 
@@ -118,7 +118,7 @@ This approach is directly comparable to the common way of showing a sign (placin
 
 在这个过程中，用两个减法代替了原来的一个减法，避免了烦琐的 *借位* 操作。在这个运算中，负数 `-176` 转化为另外一个数 `999 - 176` ，这个数称为它的 `9 的补数(nine's complement)` 。
 
-这个运算的关键在于：*把负数用 9 的补数表示，减法转化为加法* 。同理，我们推广到 2 进制，就得到了 `1 的补数(one's complement)` 。
+这个运算的关键在于：*把负数用 9 的补数表示，减法转化为加法* 。同理，我们推广到 2 进制，就得到了 `1 的补数(Ones' complement)` 。
 
 把减数从一串 1 当中减去，结果就称为这个数的 “1 的补数”，在求 1 的补数的时候，其实并不需要做减法，因为求 1 的补数，只需要将原来的 1 变为 0 ，0 变为 1 即可，也就是取反，在电路中只需要一个反向器就可以实现，所以 `1 的补数` 也称为 `反码` 。
 
@@ -152,7 +152,7 @@ This approach is directly comparable to the common way of showing a sign (placin
 
 ####总结
 
-The [PDP-1][PDP-1], [CDC 160 series][CDC 160 series], [CDC 6000 series][CDC 6000 series], [UNIVAC 1100 series][UNIVAC 1100 series], and the [LINC][LINC] computer used ones' complement representation.（[Wiki][onecom]）
+The [PDP-1][PDP-1], [CDC 160 series][CDC 160 series], [CDC 6000 series][CDC 6000 series], [UNIVAC 1100 series][UNIVAC 1100 series], and the [LINC][LINC] computer used Ones' complement representation.（[Wiki][onecom]）
 
 [PDP-1]: http://en.wikipedia.org/wiki/PDP-1
 [CDC 160 series]: http://en.wikipedia.org/wiki/CDC_160_series
@@ -167,7 +167,7 @@ The [PDP-1][PDP-1], [CDC 160 series][CDC 160 series], [CDC 6000 series][CDC 6000
 
 <br>
 
-###补码（two's complement）
+###补码（Two's complement）
 
 前面介绍的
 
@@ -197,7 +197,7 @@ The [PDP-1][PDP-1], [CDC 160 series][CDC 160 series], [CDC 6000 series][CDC 6000
 	
 	# 负数    补码 = 反码 + 1
 
-8 bit补码可以表示的范围是 [ -128, 0 , +127 ]，共 256 个数 。
+8 bit补码可以表示的范围是 [ -128, -1, +0, +127 ]，共 256 个数 。
 
 目前大多数计算机内部使用的都是补码，所以对于编程中的 32 位 `int` 型变量，它可以表示的范围就是 [ -2^32, +2^32 - 1] 。
 

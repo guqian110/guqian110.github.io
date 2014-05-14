@@ -127,8 +127,8 @@
 <p>这种机器数的编码方式称为 <a href="http://en.wikipedia.org/wiki/Signed_magnitude#Signed_magnitude_representation"><em>原码</em></a> (<code>signed-magnitude</code>) ，是机器数编码方式中的一种。</p>
 <p><br></p>
 <blockquote>
-<p><em>The four best-known methods of extending the binary numeral system to represent signed numbers are: sign-and-magnitude, ones' complement, two's complement, and excess-K.</em></p>
-<p><em>There is no definitive criterion by which any of the representations is universally superior. The representation used in most current computing devices is two's complement, although the Unisys ClearPath Dorado series mainframes use ones' complement.</em>
+<p><em>The four best-known methods of extending the binary numeral system to represent signed numbers are: sign-and-magnitude, Ones' complement, two's complement, and excess-K.</em></p>
+<p><em>There is no definitive criterion by which any of the representations is universally superior. The representation used in most current computing devices is two's complement, although the Unisys ClearPath Dorado series mainframes use Ones' complement.</em>
 （<a href="http://en.wikipedia.org/wiki/Signed_number_representations">Wikipeida</a>）</p>
 </blockquote>
 <p><br></p>
@@ -176,14 +176,14 @@
 <p><em>虽然 <code>原码</code> 的编码方式最接近人类的习惯，但是，并不适合在计算机中使用，为了解决原码计算中的一些问题，于是 <code>反码</code> 就出现了</em></p>
 </blockquote>
 <p><br></p>
-<h3>反码（one's complement）</h3>
+<h3>反码（Ones' complement）</h3>
 <p>首先，来看看 <a href="http://www.charlespetzold.com/code/">Code</a> 中介绍了基于10进制的补码：</p>
 <p>实现一个减法</p>
 <p><code>253 - 176 =？</code></p>
 <p>按照我们从数学课上学习到知识，这个计算需要进行 <em>借位</em> 操作，为了避免这个在计算机中很难实现的操作，可以稍微变化一下计算过程</p>
 <p><code>253 + (999-176) + 1 - 1000 = ?</code></p>
 <p>在这个过程中，用两个减法代替了原来的一个减法，避免了烦琐的 <em>借位</em> 操作。在这个运算中，负数 <code>-176</code> 转化为另外一个数 <code>999 - 176</code> ，这个数称为它的 <code>9 的补数(nine's complement)</code> 。</p>
-<p>这个运算的关键在于：<em>把负数用 9 的补数表示，减法转化为加法</em> 。同理，我们推广到 2 进制，就得到了 <code>1 的补数(one's complement)</code> 。</p>
+<p>这个运算的关键在于：<em>把负数用 9 的补数表示，减法转化为加法</em> 。同理，我们推广到 2 进制，就得到了 <code>1 的补数(Ones' complement)</code> 。</p>
 <p>把减数从一串 1 当中减去，结果就称为这个数的 “1 的补数”，在求 1 的补数的时候，其实并不需要做减法，因为求 1 的补数，只需要将原来的 1 变为 0 ，0 变为 1 即可，也就是取反，在电路中只需要一个反向器就可以实现，所以 <code>1 的补数</code> 也称为 <code>反码</code> 。</p>
 <p>从上面的描述就可以很容易写出反码的编码规则</p>
 <h4>编码规则</h4>
@@ -215,13 +215,13 @@
 </ol>
 <p><br></p>
 <h4>总结</h4>
-<p>The <a href="http://en.wikipedia.org/wiki/PDP-1">PDP-1</a>, <a href="http://en.wikipedia.org/wiki/CDC_160_series">CDC 160 series</a>, <a href="http://en.wikipedia.org/wiki/CDC_6000_series">CDC 6000 series</a>, <a href="http://en.wikipedia.org/wiki/UNIVAC_1100">UNIVAC 1100 series</a>, and the <a href="http://en.wikipedia.org/wiki/LINC">LINC</a> computer used ones' complement representation.（<a href="http://en.wikipedia.org/wiki/Signed_number_representations#Ones.27_complement">Wiki</a>）</p>
+<p>The <a href="http://en.wikipedia.org/wiki/PDP-1">PDP-1</a>, <a href="http://en.wikipedia.org/wiki/CDC_160_series">CDC 160 series</a>, <a href="http://en.wikipedia.org/wiki/CDC_6000_series">CDC 6000 series</a>, <a href="http://en.wikipedia.org/wiki/UNIVAC_1100">UNIVAC 1100 series</a>, and the <a href="http://en.wikipedia.org/wiki/LINC">LINC</a> computer used Ones' complement representation.（<a href="http://en.wikipedia.org/wiki/Signed_number_representations#Ones.27_complement">Wiki</a>）</p>
 <p><br></p>
 <blockquote>
 <p><em><code>反码</code> 中仍然没有避免 0 有两种编码方式的问题，虽然对于人来说，+0 和 -0 没有区别，但是对于计算机来说，判断一个数是否为0，要进行两次判断。为了解决 0 的表示问题和硬件上的 “循环进位”，于是人们又发明了 <code>补码</code></em></p>
 </blockquote>
 <p><br></p>
-<h3>补码（two's complement）</h3>
+<h3>补码（Two's complement）</h3>
 <p>前面介绍的</p>
 <p><code>253 - 176 =？</code></p>
 <p>按照反码的方法可以转换为</p>
@@ -240,7 +240,7 @@
 </pre></div>
 
 
-<p>8 bit补码可以表示的范围是 [ -128, 0 , +127 ]，共 256 个数 。</p>
+<p>8 bit补码可以表示的范围是 [ -128, -1, +0, +127 ]，共 256 个数 。</p>
 <p>目前大多数计算机内部使用的都是补码，所以对于编程中的 32 位 <code>int</code> 型变量，它可以表示的范围就是 [ -2^32, +2^32 - 1] 。</p>
 <p>P.S. -128 没有对应的 原码 和反码，它的补码为 <code>1000_0000</code> 。</p>
 <h4>计算法则</h4>
@@ -380,13 +380,18 @@
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
-                        <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/fpga.html">
-                                FPGA
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -399,69 +404,9 @@
                                 C
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
-                            </a>
-                        </li>
                         <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/code.html">
                                 Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
-                                the catcher in the rye
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -470,8 +415,63 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                the catcher in the rye
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
                                 时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
                             </a>
                         </li>
                     </ul>

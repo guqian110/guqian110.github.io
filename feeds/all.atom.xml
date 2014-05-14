@@ -3102,8 +3102,8 @@ It's like one of those pinatas—things that have candy inside but has layer aft
 &lt;p&gt;这种机器数的编码方式称为 &lt;a href="http://en.wikipedia.org/wiki/Signed_magnitude#Signed_magnitude_representation"&gt;&lt;em&gt;原码&lt;/em&gt;&lt;/a&gt; (&lt;code&gt;signed-magnitude&lt;/code&gt;) ，是机器数编码方式中的一种。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;The four best-known methods of extending the binary numeral system to represent signed numbers are: sign-and-magnitude, ones' complement, two's complement, and excess-K.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;There is no definitive criterion by which any of the representations is universally superior. The representation used in most current computing devices is two's complement, although the Unisys ClearPath Dorado series mainframes use ones' complement.&lt;/em&gt;
+&lt;p&gt;&lt;em&gt;The four best-known methods of extending the binary numeral system to represent signed numbers are: sign-and-magnitude, Ones' complement, two's complement, and excess-K.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;There is no definitive criterion by which any of the representations is universally superior. The representation used in most current computing devices is two's complement, although the Unisys ClearPath Dorado series mainframes use Ones' complement.&lt;/em&gt;
 （&lt;a href="http://en.wikipedia.org/wiki/Signed_number_representations"&gt;Wikipeida&lt;/a&gt;）&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -3151,14 +3151,14 @@ It's like one of those pinatas—things that have candy inside but has layer aft
 &lt;p&gt;&lt;em&gt;虽然 &lt;code&gt;原码&lt;/code&gt; 的编码方式最接近人类的习惯，但是，并不适合在计算机中使用，为了解决原码计算中的一些问题，于是 &lt;code&gt;反码&lt;/code&gt; 就出现了&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h3&gt;反码（one's complement）&lt;/h3&gt;
+&lt;h3&gt;反码（Ones' complement）&lt;/h3&gt;
 &lt;p&gt;首先，来看看 &lt;a href="http://www.charlespetzold.com/code/"&gt;Code&lt;/a&gt; 中介绍了基于10进制的补码：&lt;/p&gt;
 &lt;p&gt;实现一个减法&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;253 - 176 =？&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;按照我们从数学课上学习到知识，这个计算需要进行 &lt;em&gt;借位&lt;/em&gt; 操作，为了避免这个在计算机中很难实现的操作，可以稍微变化一下计算过程&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;253 + (999-176) + 1 - 1000 = ?&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;在这个过程中，用两个减法代替了原来的一个减法，避免了烦琐的 &lt;em&gt;借位&lt;/em&gt; 操作。在这个运算中，负数 &lt;code&gt;-176&lt;/code&gt; 转化为另外一个数 &lt;code&gt;999 - 176&lt;/code&gt; ，这个数称为它的 &lt;code&gt;9 的补数(nine's complement)&lt;/code&gt; 。&lt;/p&gt;
-&lt;p&gt;这个运算的关键在于：&lt;em&gt;把负数用 9 的补数表示，减法转化为加法&lt;/em&gt; 。同理，我们推广到 2 进制，就得到了 &lt;code&gt;1 的补数(one's complement)&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;这个运算的关键在于：&lt;em&gt;把负数用 9 的补数表示，减法转化为加法&lt;/em&gt; 。同理，我们推广到 2 进制，就得到了 &lt;code&gt;1 的补数(Ones' complement)&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;把减数从一串 1 当中减去，结果就称为这个数的 “1 的补数”，在求 1 的补数的时候，其实并不需要做减法，因为求 1 的补数，只需要将原来的 1 变为 0 ，0 变为 1 即可，也就是取反，在电路中只需要一个反向器就可以实现，所以 &lt;code&gt;1 的补数&lt;/code&gt; 也称为 &lt;code&gt;反码&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;从上面的描述就可以很容易写出反码的编码规则&lt;/p&gt;
 &lt;h4&gt;编码规则&lt;/h4&gt;
@@ -3190,13 +3190,13 @@ It's like one of those pinatas—things that have candy inside but has layer aft
 &lt;/ol&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h4&gt;总结&lt;/h4&gt;
-&lt;p&gt;The &lt;a href="http://en.wikipedia.org/wiki/PDP-1"&gt;PDP-1&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/CDC_160_series"&gt;CDC 160 series&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/CDC_6000_series"&gt;CDC 6000 series&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/UNIVAC_1100"&gt;UNIVAC 1100 series&lt;/a&gt;, and the &lt;a href="http://en.wikipedia.org/wiki/LINC"&gt;LINC&lt;/a&gt; computer used ones' complement representation.（&lt;a href="http://en.wikipedia.org/wiki/Signed_number_representations#Ones.27_complement"&gt;Wiki&lt;/a&gt;）&lt;/p&gt;
+&lt;p&gt;The &lt;a href="http://en.wikipedia.org/wiki/PDP-1"&gt;PDP-1&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/CDC_160_series"&gt;CDC 160 series&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/CDC_6000_series"&gt;CDC 6000 series&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/UNIVAC_1100"&gt;UNIVAC 1100 series&lt;/a&gt;, and the &lt;a href="http://en.wikipedia.org/wiki/LINC"&gt;LINC&lt;/a&gt; computer used Ones' complement representation.（&lt;a href="http://en.wikipedia.org/wiki/Signed_number_representations#Ones.27_complement"&gt;Wiki&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;em&gt;&lt;code&gt;反码&lt;/code&gt; 中仍然没有避免 0 有两种编码方式的问题，虽然对于人来说，+0 和 -0 没有区别，但是对于计算机来说，判断一个数是否为0，要进行两次判断。为了解决 0 的表示问题和硬件上的 “循环进位”，于是人们又发明了 &lt;code&gt;补码&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h3&gt;补码（two's complement）&lt;/h3&gt;
+&lt;h3&gt;补码（Two's complement）&lt;/h3&gt;
 &lt;p&gt;前面介绍的&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;253 - 176 =？&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;按照反码的方法可以转换为&lt;/p&gt;
@@ -3215,7 +3215,7 @@ It's like one of those pinatas—things that have candy inside but has layer aft
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;8 bit补码可以表示的范围是 [ -128, 0 , +127 ]，共 256 个数 。&lt;/p&gt;
+&lt;p&gt;8 bit补码可以表示的范围是 [ -128, -1, +0, +127 ]，共 256 个数 。&lt;/p&gt;
 &lt;p&gt;目前大多数计算机内部使用的都是补码，所以对于编程中的 32 位 &lt;code&gt;int&lt;/code&gt; 型变量，它可以表示的范围就是 [ -2^32, +2^32 - 1] 。&lt;/p&gt;
 &lt;p&gt;P.S. -128 没有对应的 原码 和反码，它的补码为 &lt;code&gt;1000_0000&lt;/code&gt; 。&lt;/p&gt;
 &lt;h4&gt;计算法则&lt;/h4&gt;
