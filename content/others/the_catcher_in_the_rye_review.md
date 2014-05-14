@@ -1,7 +1,7 @@
 Title: 麦田里的守望者 书评
 Date: 2014-05-14 00:41
 Category: Others
-Tags: the catcher in the rye, review
+Tags: The Catcher in The Rye, review
 Slug: the_catcher_in_the_rye_review
 Author: Chien Gu
 Summary: 每个人心中都有一个霍尔顿·考尔菲德 (Holden Caulfield) 
