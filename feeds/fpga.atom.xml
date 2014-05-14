@@ -61,7 +61,7 @@
 &lt;p&gt;&lt;img alt="ofdm-system" src="/images/learning-ofdm-basic/ofdm_system.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;其中，&lt;strong&gt;交织&lt;/strong&gt; 是为了克服深衰落发生突发差错的影响，如果交织器的长度足够大，解交织后可将突发差错改造为独立差错，再通过纠错译码来纠正 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;在发送端：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;二进制数据&lt;/em&gt; 通过纠错编码、交织后映射到 QAM 星座得到 &lt;em&gt;一个 QAM 复数符号序列&lt;/em&gt;，再经过并串转换，得到 &lt;em&gt;N个并行 QAM 符号&lt;/em&gt;，每个符号进行 IFFT，将 OFDM 复包络的频域样值变换为 &lt;em&gt;时域样值&lt;/em&gt;，进行并串转换，将时域样值变换为按时间顺序排列的 &lt;em&gt;时域样值&lt;/em&gt;，然后在每个 OFDM 符号前插入前缀，通过 D/A，将离散的复包络变成 &lt;em&gt;连续时间的复包络&lt;/em&gt; 。再将复包络的 I(t) 和 Qt) 正交调制得到 &lt;em&gt;FD M信号&lt;/em&gt;，将基带信号上变频到射频，经过功放，发送出去 。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;二进制数据&lt;/em&gt; 通过纠错编码、交织后映射到 QAM 星座得到 &lt;em&gt;一个 QAM 复数符号序列&lt;/em&gt;，再经过并串转换，得到 &lt;em&gt;N个并行 QAM 符号&lt;/em&gt;，每个符号进行 IFFT，将 OFDM 复包络的频域样值变换为 &lt;em&gt;时域样值&lt;/em&gt;，进行并串转换，将时域样值变换为按时间顺序排列的 &lt;em&gt;时域样值&lt;/em&gt;，然后在每个 OFDM 符号前插入前缀，通过 D/A，将离散的复包络变成 &lt;em&gt;连续时间的复包络&lt;/em&gt; 。再将复包络的 I(t) 和 Q(t) 正交调制得到 &lt;em&gt;OFDM信号&lt;/em&gt;，将基带信号上变频到射频，经过功放，发送出去 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;在接收端：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;接收端于发送端进行相反的变换，恢复出原数据 .&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
