@@ -1,5 +1,5 @@
-Title: 编数字处理基础
-Date: 2014-05-13 11:25
+Title: 数字处理基础
+Date: 2014-05-14 23:25
 Category: FPGA
 Tags: FPGA, digital processing
 Slug: digital_processing_basic
