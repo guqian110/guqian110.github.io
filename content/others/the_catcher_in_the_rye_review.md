@@ -6,7 +6,7 @@ Slug: the_catcher_in_the_rye_review
 Author: Chien Gu
 Summary: 每个人心中都有一个霍尔顿·考尔菲德 (Holden Caulfield) 
 
-![the catcher in the rye](/images/the-catcher-in-the-rye/the_catcher_in_the_rye.jpg)
+![the catcher in the rye](/images/the-catcher-in-the-rye-review/the_catcher_in_the_rye.jpg)
 
 ## 如何认识这本书
 * * *
