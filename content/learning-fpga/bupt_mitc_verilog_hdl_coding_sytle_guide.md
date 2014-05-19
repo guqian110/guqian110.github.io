@@ -312,7 +312,7 @@ Xilinx ISE 自动生成的标准文件头部，添加 `Email`、`File Name` 两�
 
 |name|short||name|short||name|short|
 |----|-----||----|-----||----|-----|
-|acknowledge|ack||error|err||ready|rdy|
+|acknowledge  |ack||error|err||ready|rdy|
 |adress|addr||enable|en||receive|rx|
 |arbiter|arb||frame|frm||request|req|
 |check|chk||generate|gen||resest|rst|
@@ -324,8 +324,8 @@ Xilinx ISE 自动生成的标准文件头部，添加 `Email`、`File Name` 两�
 |data out|dout||packet|pkt||tmporary|tmp|
 |decode|de||priority|pri||transmit|tx|
 |decrease|dec||pointer|ptr||valid|vld|
-|delay|dly||read|rd||write enable|wr_en|
-|disable|dis||read enbale|rd_en||write|wr|
+|delay|dly||read|rd||write enable  |wr_en|
+|disable|dis||read enbale  |rd_en||write|wr|
 
 
 ### incedent
