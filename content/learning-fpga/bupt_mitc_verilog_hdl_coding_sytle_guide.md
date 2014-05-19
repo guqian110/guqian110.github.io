@@ -10,8 +10,11 @@ Summary: 和实验室的同学一起做项目，总结一份编码风格 。
 * * *
 
 **Version** : 1.0
+
 **Date** : 2014-5-20
+
 **Author** : Chien Gu (guqian110@gmail.com)
+    
 **Summary** : This is a brief Verilog HDL coding style guide for BUPT MITC lab to design circuits on FPGA .
 
 <br>
