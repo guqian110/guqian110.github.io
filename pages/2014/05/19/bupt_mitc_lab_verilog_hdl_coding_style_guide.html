@@ -111,10 +111,10 @@
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p><strong>Version</strong> : 1.0</p>
-<p><strong>Date</strong> : 2014-5-19</p>
+                <p><strong>Version</strong> : 1.1</p>
+<p><strong>Date</strong> : 2014-5-24</p>
 <p><strong>Author</strong> : Chien Gu (guqian110@gmail.com)</p>
-<p><strong>Summary</strong> : This is a brief Verilog HDL coding style guide for BUPT MITC lab to design circuits on FPGA .</p>
+<p><strong>Summary</strong> : This is a brief Verilog HDL coding style guide for BUPT MITC lab to design circuits on FPGA. This guide is only concerned about code format and dose not involve principles for writing synthesisable codes.</p>
 <p><br></p>
 <h2>总则</h2>
 <hr />
@@ -307,7 +307,8 @@
 
 <h3>always</h3>
 <ul>
-<li><code>always</code> 中同时含有 <em>组合逻辑</em> 和 <em>时序逻辑</em>，使用 <em>阻塞赋值(=)</em></li>
+<li>一个 <code>always</code> 中不要同时含有 <em>组合逻辑</em> 和 <em>时序逻辑</em>，分开写在不同的 <code>always</code> 块中。</li>
+<li>组合逻辑使用 <em>阻塞赋值(=)</em>，时序逻辑使用 <em>非阻塞赋值(&lt;=)</em></li>
 <li>不要在多个 <code>always</code> 中对同一信号赋值，也不要在一个 <code>always</code> 中对一个信号进行多次赋值</li>
 </ul>
 <p>标准 <code>always</code> 格式</p>
@@ -321,6 +322,18 @@
 
     <span class="n">end</span>
 <span class="n">end</span>
+</pre></div>
+
+
+<h3>parameter</h3>
+<p>parameter 全部大写，用 parameter 定义有实际意义的常数，比如 LED 亮灯状态、状态机状态等，避免 "magic number"。举例：</p>
+<div class="highlight"><pre><span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">// Parameter Declarations                                                        //</span>
+<span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+    <span class="k">parameter</span>   <span class="no">DIN</span>     <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+                <span class="no">DOUTA</span>   <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+                <span class="no">DOUTE</span>   <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+                <span class="no">DOUTCTR</span> <span class="o">=</span> <span class="mh">16</span><span class="p">;</span>
 </pre></div>
 
 
@@ -623,10 +636,10 @@
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic.html">FPGA 数字处理基础</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
     </ul>
 </section>
     <hr />
@@ -705,13 +718,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -740,21 +753,6 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/coding-style.html">
                                 coding style
                             </a>
@@ -765,8 +763,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
-                                The Catcher in The Rye
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -775,13 +773,23 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ofdm.html">
                                 OFDM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -790,13 +798,18 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-processing.html">
-                                digital processing
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-processing.html">
+                                digital processing
                             </a>
                         </li>
                     </ul>

@@ -6,13 +6,13 @@ Slug: bupt_mitc_lab_verilog_hdl_coding_style_guide
 Author: Chien Gu
 Summary: 和实验室的同学一起做项目，总结一份编码风格 。 
 
-**Version** : 1.0
+**Version** : 1.1
 
-**Date** : 2014-5-19
+**Date** : 2014-5-24
 
 **Author** : Chien Gu (guqian110@gmail.com)
     
-**Summary** : This is a brief Verilog HDL coding style guide for BUPT MITC lab to design circuits on FPGA .
+**Summary** : This is a brief Verilog HDL coding style guide for BUPT MITC lab to design circuits on FPGA. This guide is only concerned about code format and dose not involve principles for writing synthesisable codes.
 
 <br>
 
@@ -210,7 +210,8 @@ Xilinx ISE 自动生成的标准文件头部，添加 `Email`、`File Name` 两�
 
 ### always
 
-+ `always` 中同时含有 *组合逻辑* 和 *时序逻辑*，使用 *阻塞赋值(=)*
++ 一个 `always` 中不要同时含有 *组合逻辑* 和 *时序逻辑*，分开写在不同的 `always` 块中。
++ 组合逻辑使用 *阻塞赋值(=)*，时序逻辑使用 *非阻塞赋值(<=)*
 + 不要在多个 `always` 中对同一信号赋值，也不要在一个 `always` 中对一个信号进行多次赋值
 
 标准 `always` 格式
@@ -225,6 +226,18 @@ Xilinx ISE 自动生成的标准文件头部，添加 `Email`、`File Name` 两�
             
         end
     end
+
+### parameter
+
+parameter 全部大写，用 parameter 定义有实际意义的常数，比如 LED 亮灯状态、状态机状态等，避免 "magic number"。举例：
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    // Parameter Declarations                                                        //
+    ///////////////////////////////////////////////////////////////////////////////////
+        parameter   DIN     = 16,
+                    DOUTA   = 16,
+                    DOUTE   = 16,
+                    DOUTCTR = 16;
 
 ### if-else
 

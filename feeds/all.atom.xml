@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-05-19T10:12:00+08:00</updated><entry><title>BUPT MITC lab Verilog HDL coding style guide</title><link href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html" rel="alternate"></link><updated>2014-05-19T10:12:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-05-19:pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;Version&lt;/strong&gt; : 1.0&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Date&lt;/strong&gt; : 2014-5-19&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-05-19T10:12:00+08:00</updated><entry><title>BUPT MITC lab Verilog HDL coding style guide</title><link href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html" rel="alternate"></link><updated>2014-05-19T10:12:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-05-19:pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;Version&lt;/strong&gt; : 1.1&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Date&lt;/strong&gt; : 2014-5-24&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Author&lt;/strong&gt; : Chien Gu (guqian110@gmail.com)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Summary&lt;/strong&gt; : This is a brief Verilog HDL coding style guide for BUPT MITC lab to design circuits on FPGA .&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Summary&lt;/strong&gt; : This is a brief Verilog HDL coding style guide for BUPT MITC lab to design circuits on FPGA. This guide is only concerned about code format and dose not involve principles for writing synthesisable codes.&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;总则&lt;/h2&gt;
 &lt;hr /&gt;
@@ -195,7 +195,8 @@
 
 &lt;h3&gt;always&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;always&lt;/code&gt; 中同时含有 &lt;em&gt;组合逻辑&lt;/em&gt; 和 &lt;em&gt;时序逻辑&lt;/em&gt;，使用 &lt;em&gt;阻塞赋值(=)&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;一个 &lt;code&gt;always&lt;/code&gt; 中不要同时含有 &lt;em&gt;组合逻辑&lt;/em&gt; 和 &lt;em&gt;时序逻辑&lt;/em&gt;，分开写在不同的 &lt;code&gt;always&lt;/code&gt; 块中。&lt;/li&gt;
+&lt;li&gt;组合逻辑使用 &lt;em&gt;阻塞赋值(=)&lt;/em&gt;，时序逻辑使用 &lt;em&gt;非阻塞赋值(&amp;lt;=)&lt;/em&gt;&lt;/li&gt;
 &lt;li&gt;不要在多个 &lt;code&gt;always&lt;/code&gt; 中对同一信号赋值，也不要在一个 &lt;code&gt;always&lt;/code&gt; 中对一个信号进行多次赋值&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;标准 &lt;code&gt;always&lt;/code&gt; 格式&lt;/p&gt;
@@ -209,6 +210,18 @@
 
     &lt;span class="n"&gt;end&lt;/span&gt;
 &lt;span class="n"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;parameter&lt;/h3&gt;
+&lt;p&gt;parameter 全部大写，用 parameter 定义有实际意义的常数，比如 LED 亮灯状态、状态机状态等，避免 "magic number"。举例：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;///////////////////////////////////////////////////////////////////////////////////&lt;/span&gt;
+&lt;span class="c1"&gt;// Parameter Declarations                                                        //&lt;/span&gt;
+&lt;span class="c1"&gt;///////////////////////////////////////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="k"&gt;parameter&lt;/span&gt;   &lt;span class="no"&gt;DIN&lt;/span&gt;     &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="no"&gt;DOUTA&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="no"&gt;DOUTE&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="no"&gt;DOUTCTR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;16&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
