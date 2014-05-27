@@ -9,7 +9,7 @@ Summary: 学习 Arduino，#1 Getting Started
 ## What is Arduino
 * * *
 
-![logo](/images/arduino_getting_started/logo.png)
+![logo](/images/arduino-getting-started/logo.png)
 版权所有：Arduino.cc
 
 [Arduino 官网][official] 首页的介绍：
@@ -23,6 +23,7 @@ Summary: 学习 Arduino，#1 Getting Started
 > Arduino can be used to develop interactive objects, taking inputs from a variety of switches or sensors, and controlling a variety of lights, motors, and other physical outputs. Arduino projects can be stand-alone, or they can communicate with software running on your computer (e.g. Flash, Processing, MaxMSP.) The boards can be assembled by hand or purchased preassembled; the open-source IDE can be downloaded for free.
 
 **Development Language：** [Arduino programming language][language]
+
 **IDE：** [Arduino IDE][ide]
 
 **补充：** [Wikipedia 上的介绍][arduino on wiki]
