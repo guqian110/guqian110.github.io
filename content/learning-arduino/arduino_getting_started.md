@@ -10,6 +10,7 @@ Summary: 学习 Arduino，#1 Getting Started
 * * *
 
 ![logo](/images/arduino-getting-started/logo.png)
+
 版权所有：Arduino.cc
 
 [Arduino 官网][official] 首页的介绍：
