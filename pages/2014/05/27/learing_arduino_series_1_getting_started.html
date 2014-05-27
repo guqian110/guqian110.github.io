@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>编写可综合的 Verilog HDL 代码 - Coding Life</title>
+    <title>学习 Arduino #1 Arduino 入门 - Coding Life</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -14,13 +14,13 @@
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Coding Life" />
             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="编写可综合的 Verilog HDL 代码"/>
-            <meta property="og:url" content="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html"/>
-            <meta property="og:description" content="总结可综合 Verilog HDL 代码，如何编写可综合的代码"/>
-            <meta property="article:published_time" content="2014-04-04" />
-            <meta property="article:section" content="FPGA" />
-            <meta property="article:tag" content="FPGA" />
-            <meta property="article:tag" content="Verilog" />
+            <meta property="og:title" content="学习 Arduino #1 Arduino 入门"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2014/05/27/learing_arduino_series_1_getting_started.html"/>
+            <meta property="og:description" content="学习 Arduino，#1 Arduino 入门"/>
+            <meta property="article:published_time" content="2014-05-27" />
+            <meta property="article:section" content="Arduino" />
+            <meta property="article:tag" content="Arduino" />
+            <meta property="article:tag" content="Open-source Hardware" />
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -49,13 +49,13 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                        <li >
+                        <li class="active">
                             <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
                         </li>
                         <li >
                             <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
                         </li>
                         <li >
@@ -78,18 +78,18 @@
         <div class="col-sm-9">
             <ol class="breadcrumb">
                 <li><a href="http://guqian110.github.io" title="Coding Life"><i class="fa fa-home fa-lg"></i></a></li>
-                <li><a href="http://guqian110.github.io/category/fpga.html" title="FPGA">FPGA</a></li>
-                <li class="active">编写可综合的 Verilog HDL 代码</li>
+                <li><a href="http://guqian110.github.io/category/arduino.html" title="Arduino">Arduino</a></li>
+                <li class="active">学习 Arduino #1 Arduino 入门</li>
             </ol>
 
     <section id="content">
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html"
+                    <a href="http://guqian110.github.io/pages/2014/05/27/learing_arduino_series_1_getting_started.html"
                        rel="bookmark"
-                       title="Permalink to 编写可综合的 Verilog HDL 代码">
-                        编写可综合的 Verilog HDL 代码
+                       title="Permalink to 学习 Arduino #1 Arduino 入门">
+                        学习 Arduino #1 Arduino 入门
                     </a>
                 </h1>
             </header>
@@ -99,167 +99,174 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-04-04T01:35:00"> Fri 04 April 2014</time>
+        <i class="fa fa-calendar"></i><time datetime="2014-05-27T12:34:00"> Tue 27 May 2014</time>
     </span>
 
 
 
 <span class="label label-default">Tags</span>
-	<a href="http://guqian110.github.io/tag/fpga.html">FPGA</a>
+	<a href="http://guqian110.github.io/tag/arduino.html">Arduino</a>
         /
-	<a href="http://guqian110.github.io/tag/verilog.html">Verilog</a>
+	<a href="http://guqian110.github.io/tag/open-source-hardware.html">Open-source Hardware</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>对电路建模方法有很多种，可以用绘制原理图，也可以用 <em>硬件描述语言（Hardware Description Language）</em> 建模 。硬件描述语言中最常用的就是 Verlilog 和 VHDL 。</p>
-<p>Verilog HDL和VHDL相比有很多优点，有C语言基础的话很容易上手。搜集了一些网上大神的经验总结和书上的例子，所以对于和我一样的初学者，这篇博客应该还是很有提高作用的，至于具体语法，任何一本书都讲的很详细。</p>
-<h2>HDL</h2>
+                <h2>What is Arduino</h2>
 <hr />
-<p>从网上找到一篇文章，把 HDL 的历史说的非常清楚。</p>
-<p>作者 董培良 </p>
-<p>题目： <a href="http://www.dzkf.cn/html/EDAjishu/2006/0720/9.html">浅谈VHDL/Verilog的可综合性以及对初学者的一些建议</a></p>
-<p>首先要明确的是 VHDL 和 Verilog 并非是针对硬件设计而开发的语言，只不过目前被我们用来设计硬件。HDL 是 Hardware <strong>Description</strong> Language 的缩写，正式中文名称是 “硬件描述语言”。也就是说，HDL 并不是 “硬件设计语言（Hardware <strong>Design</strong> Language）”。别看只差这一个单词，正是这一个单词才决定了绝大部分电路设计必须遵循RTL的模式来编写代码，而不能随心所欲得写仅仅符合语法的 HDL 代码。</p>
-<p>VHDL 于 1980 年开始在美国国防部的指导下开发，完成于 1983 年，并于 1987 年成为 IEEE 的标准。当初开发这种语言，是出于美国国防部采购电子设备的需要。美军的装备采购自私人企业，时常要面对这样一种风险：如果某种武器大量装备部队，而其中某个零件的供应商却在几年后倒闭了，那这种武器的再生产、维修和保养都会出现大问题。而电子设备、尤其是集成电路的内部结构较为复杂，若出现前面所说的情况要找其他公司生产代用品非常困难。于是美国防部希望供应商能以某种形式留下其产品的信息，以保证一旦其破产后能由其他厂商迅速生产出代用品。</p>
-<p>显然，当初的设计文档显然是不能交出来的，这在美国会涉及商业机密和知识产权问题。于是美国防部就想出了一种折衷的方法——描述硬件的语言，也就是 VHDL 。通过 VHDL，供应商要把自己生产的集成电路芯片的行为描述出来：比如说，加了什么样的信号后过多少时间它能输出什么等等。这样，如果有必要让其他厂商生产代用品，他们只需照着 VHDL 文档，设计出行为与其相同的芯片即可。这样的代用品相当于是新厂商在不了解原产品结构的情况下独立设计的，所以不太会涉及知识侵权。</p>
-<p>Verilog HDL 也形成于差不多的年代，是由 Gateway Design Automation 公司大约在 1983 年左右开发的。其架构同 VHDL 相似，但主要被用来进行硬件仿真。或许私人公司更注重实用，Verilog 要比 VHDL 简洁得多。</p>
-<p>由此可见，这两种最流行的用于电路设计的语言，没有一种是为了设计硬件而开发的（更何况 80 年代还没有现在的那些功能强大的EDA软件呢）。因此，当初制订 HDL 语言标准的时候，并没有考虑这些代码如何用硬件来实现。换句话说，有些代码写起来简单，实现起来却可能非常复杂，或者几乎不可能实现。</p>
+<p><img alt="logo" src="/images/learning-arduino-series-1-getting-started/logo.png" /></p>
+<p>版权所有：Arduino.cc</p>
+<p><a href="http://arduino.cc/">Arduino 官网</a> 首页的介绍：</p>
+<blockquote>
+<p>ARDUINO IS AN OPEN-SOURCE ELECTRONICS PROTOTYPING PLATFORM BASED ON FLEXIBLE, EASY-TO-USE HARDWARE AND SOFTWARE. IT'S INTENDED FOR ARTISTS, DESIGNERS, HOBBYISTS AND ANYONE INTERESTED IN CREATING INTERACTIVE OBJECTS OR ENVIRONMENTS.</p>
+</blockquote>
+<p><a href="http://arduino.cc/en/Guide/Introduction">官方网站最权威的答案：</a></p>
+<blockquote>
+<p>Arduino is a tool for making computers that can sense and control more of the physical world than your desktop computer. <strong>It's an open-source physical computing platform based on a simple microcontroller board, and a development environment for writing software for the board.</strong></p>
+<p>Arduino can be used to develop interactive objects, taking inputs from a variety of switches or sensors, and controlling a variety of lights, motors, and other physical outputs. Arduino projects can be stand-alone, or they can communicate with software running on your computer (e.g. Flash, Processing, MaxMSP.) The boards can be assembled by hand or purchased preassembled; the open-source IDE can be downloaded for free.</p>
+</blockquote>
+<p><strong>Development Language：</strong> <a href="http://arduino.cc/en/Reference/HomePage">Arduino programming language</a></p>
+<p><strong>IDE：</strong> <a href="http://arduino.cc/en/Main/Software">Arduino IDE</a></p>
+<p><strong>补充：</strong> <a href="http://en.wikipedia.org/wiki/Arduino">Wikipedia 上的介绍</a></p>
+<p><strong>简单的说：</strong></p>
+<p>Arduino 是一个开放源代码的单片机，它使用了 Atmel AVR 单片机，采用了基于开放源代码的软硬件平台，构建于开放源代码 simple I/O 接口板。开发语言为 Arduino programming language（基于 Wiring 语言），开发环境基于 Processing 。</p>
 <p><br></p>
-<h2>可综合代码</h2>
+<h2>Story of Arduino</h2>
 <hr />
-<p>任何符合 HDL 语法标准的代码都是对硬件行为的一种描述，但不一定是可直接对应成电路的设计信息。行为描述可以基于不同的层次，如系统级，算法级，寄存器传输级(RTL)、门级等等。以目前大部分EDA软件的综合能力来说，<strong>只有RTL或更低层次的行为描述才能保证是可综合的</strong>。而众多初学者试图做的，却是想让软件去综合 <em>算法级或者更加抽象的硬件行为描述</em>。</p>
-<h3>所有综合工具都支持的语法：</h3>
-<div class="highlight"><pre>    <span class="nx">always</span><span class="p">,</span> <span class="nx">assign</span><span class="p">,</span> <span class="nx">begin</span><span class="p">,</span> <span class="nx">end</span><span class="p">,</span> 
-    <span class="nx">wire</span><span class="p">,</span> <span class="nx">tri</span><span class="p">,</span> <span class="nx">inout</span><span class="p">,</span> <span class="nx">aupply0</span><span class="p">,</span> <span class="nx">supply1</span><span class="p">,</span> <span class="nx">input</span><span class="p">,</span> <span class="nx">reg</span><span class="p">,</span> <span class="nx">integer</span><span class="p">,</span> <span class="k">default</span><span class="p">,</span> 
-    <span class="nx">and</span><span class="p">,</span> <span class="nx">nand</span><span class="p">,</span> <span class="nx">or</span><span class="p">,</span> <span class="nx">nor</span><span class="p">,</span> <span class="nx">xor</span><span class="p">,</span> <span class="nx">xnor</span><span class="p">,</span> <span class="nx">buf</span><span class="p">,</span> <span class="nx">not</span><span class="p">,</span> <span class="nx">bufif0</span><span class="p">,</span><span class="nx">bufif1</span><span class="p">,</span> <span class="nx">notif0</span><span class="p">,</span> <span class="nx">notif1</span><span class="p">,</span> 
-    <span class="k">if</span><span class="p">,</span> <span class="k">case</span><span class="p">,</span> <span class="k">for</span><span class="p">,</span> <span class="kd">function</span><span class="p">,</span> <span class="nx">instantitation</span><span class="p">,</span> <span class="nx">module</span><span class="p">,</span> <span class="nx">negedge</span><span class="p">,</span> <span class="nx">posedge</span><span class="p">,</span> <span class="nx">operators</span><span class="p">,</span> <span class="nx">output</span><span class="p">,</span> <span class="nx">parameter</span>  
-</pre></div>
-
-
-<h3>有些工具支持，有些工具不支持的语法：</h3>
-<div class="highlight"><pre>    <span class="n">asex</span><span class="p">,</span> <span class="n">casez</span><span class="p">,</span> <span class="n">wand</span><span class="p">,</span> <span class="n">triand</span><span class="p">,</span> <span class="n">wor</span><span class="p">,</span> <span class="n">trior</span><span class="p">,</span> <span class="n">real</span><span class="p">,</span> <span class="n">disable</span><span class="p">,</span> <span class="n">forever</span><span class="p">,</span> <span class="n">arrays</span><span class="p">,</span> <span class="n">memories</span><span class="p">,</span> <span class="n">repreat</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span><span class="k">while</span>
-</pre></div>
-
-
-<h3>建立可综合模块的原则</h3>
+<p>wikipedia 上的<a href="http://zh.wikipedia.org/wiki/Arduino">小故事</a>：</p>
+<blockquote>
+<p>Arduino的核心开发团队成员包括：Massimo Banzi，David Cuartielles，Tom Igoe，Gianluca Martino，David Mellis 和 Nicholas Zambetti。</p>
+<p>据说 Massimo Banzi 之前是意大利 Ivrea 一家高科技设计学校的老师。他的学生们经常抱怨找不到便宜好用的微控制器。2005年冬天， Massimo Banzi 跟 David Cuartielles 讨论了这个问题。David Cuartielles 是一个西班牙籍芯片工程师，当时在这所学校做访问学者。两人决定设计自己的电路板，并引入了 Banzi 的学生 David Mellis 为电路板设计编程语言。两天以后，David Mellis 就写出了程式码。又过了三天，电路板就完工了。这块电路板被命名为 Arduino。几乎任何人，即使不懂电脑编程，也能用 Arduino 做出很酷的东西，比如对传感器作出回应，闪烁灯光，还能控制马达。随后 Banzi，Cuartielles，和 Mellis 把设计图放到了网上。保持设计的开放源码理念，因为版权法可以监管开源软件，却很难用在硬件上，他们决定采用共享创意许可。共享创意是为保护开放版权行为而出现的类似 GPL 的一种许可（license）。在共享创意许可下，任何人都被允许生产电路板的复制品，还能重新设计，甚至销售原设计的复制品。你不需要付版税，甚至不用取得 Arduino 团队的许可。然而，如果你重新发布了引用设计，你必须说明原始 Arduino 团队的贡献。如果你调整或改动了电路板，你的最新设计必须使用相同或类似的共享创意许可，以保证新版本的 Arduino 电路板也会一样的自由和开放。唯一被保留的只有 Arduino 这个名字。它被注册成了商标。如果有人想用这个名字卖电路板，那他们可能必须付一点商标费用给 Arduino 的核心开发团队成员。</p>
+</blockquote>
+<p><br></p>
+<h2>Why is Arduino</h2>
+<hr />
+<p><a href="http://arduino.cc/en/Guide/Introduction">官网介绍</a>：</p>
+<blockquote>
+<p>There are many other microcontrollers and microcontroller platforms available for physical computing. Parallax Basic Stamp, Netmedia's BX-24, Phidgets, MIT's Handyboard, and many others offer similar functionality. All of these tools take the messy details of microcontroller programming and wrap it up in an easy-to-use package. <strong>Arduino also simplifies the process of working with microcontrollers, but it offers some advantage for teachers, students, and interested amateurs over other systems:</strong></p>
 <ul>
-<li>
-<p>不要用 initial （FPGA 上电时初始状态不定，一般需要上电复位信号，在复位信号有效的时候进行初始化，上电复位信号可以由外部手动输入，也可以系统自己产生 —— 写一个实现上电产生自动复位信号的模块）。P.S. 现在的综合软件功能已经足够强大，即使写了 initial 语句，在 ISE 13.3 中仍然是可综合的，而且没有 warning 和 info 的提示）</p>
-</li>
-<li>
-<p>不使用 <code>#10</code>（在仿真中有用，实际在硬件上不会实现）</p>
-</li>
-<li>
-<p>不使用循环次数不定的循环语句，如 <code>forever</code>、<code>while</code> 等</p>
-</li>
-<li>
-<p>不使用用户自定义原语（UDP 原件）</p>
-</li>
-<li>
-<p>除非是关键路径设计，一般不采用调用门级原件描述的设计的方法，建议采用行为语句完成设计</p>
-</li>
-<li>
-<p>尽量使用同步方式设计电路</p>
-</li>
-<li>
-<p>用 <code>always</code> 语句描述组合逻辑时，在敏感信号列表中要列出所有输入信号</p>
-</li>
-<li>
-<p>所有的内部寄存器都应该可以被复位，在 FPGA 设计时应尽量使用器件的全局复位端信号作为系统的总复位</p>
-</li>
-<li>
-<p>时序逻辑使用非阻塞赋值，组合逻辑使用阻塞赋值，同一过程块中不要同时使用阻塞和非阻塞两种方式</p>
-</li>
-<li>
-<p>不要在不同的 <code>always</code> 过程块中对同一变量赋值（否则综合时会提示有多驱动源错误，<em>multiple source
-</em>），对同一赋值对象，不能既使用阻塞赋值，又使用非阻塞赋值</p>
-</li>
-<li>
-<p>如果不打算把变量综合成锁存器，在 <code>if</code> 语句或 <code>case</code> 语句的所有分支中都要对变量明确赋值（不能省去 <code>else</code> 或 <code>default</code>，原理：在省去的情况下，变量的值会保持原来的值不变，所以系统会综合出一个锁存器 Latch）</p>
-</li>
-<li>
-<p>避免混合使用上升沿和下降沿触发器</p>
-</li>
-<li>
-<p>同一变量的赋值不能受多个时钟控制，也不能受两种不同时钟条件（或不同时钟沿）控制</p>
-</li>
-<li>
-<p>避免在 <code>case</code> 语句中使用 <code>x</code> 或 <code>z</code> 值</p>
-</li>
+<li>Inexpensive</li>
+<li>Cross-platform (Windows, Linux, Macintosh OSX)</li>
+<li>Simple, clear programming environment</li>
+<li>Open source and extensible software</li>
+<li>Open source and extensible hardware</li>
 </ul>
+</blockquote>
 <p><br></p>
-<h2>不可综合代码</h2>
+<h2>How-to Develope</h2>
 <hr />
-<h3>不可综合语法：</h3>
-<div class="highlight"><pre>    <span class="n">time</span><span class="p">,</span> <span class="n">defparam</span><span class="p">,</span> <span class="err">$</span><span class="n">finish</span><span class="p">,</span> <span class="n">fork</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">delays</span><span class="p">,</span> <span class="n">UDP</span><span class="p">,</span> <span class="n">wait</span>
-</pre></div>
-
-
+<h3>IDE installation</h3>
+<p>官网上有 Windows, Linux, Mac 的详细安装步骤：</p>
 <ul>
-<li>
-<p><code>initial</code> 只能在 Testbench 中使用，不能综合</p>
-</li>
-<li>
-<p><code>events</code> 在 Testbench 中更有用，不能综合</p>
-</li>
-<li>
-<p>不支持 <code>real</code> 类型的综合</p>
-</li>
-<li>
-<p>不支持 <code>time</code> 类型的综合</p>
-</li>
-<li>
-<p><code>force</code> 和 <code>release</code></p>
-</li>
-<li>
-<p><code>assign</code> 和 <code>deassign</code> 不支持 <code>reg</code> 类型的综合，支持 <code>wire</code> 类型的综合</p>
-</li>
-<li>
-<p><code>fork...join</code> 不可综合，可以用非块语句达到同样的效果</p>
-</li>
-<li>
-<p><code>primitives</code> 支持门级原语综合，不支持非门级原语综合</p>
-</li>
-<li>
-<p>不支持 <code>table</code> 和 <code>UDP</code> 的综合</p>
-</li>
-<li>
-<p>同一个 <code>reg</code> 被多个 <code>always</code> 块驱动</p>
-</li>
-<li>
-<p>延时，不可综合为硬件电路延时，综合工具会忽略延时，但是不会报错</p>
-</li>
-<li>
-<p>与 <code>x</code>、<code>z</code> 比较，综合工具会忽略，所以要保证信号只有两个状态，<code>0</code> 或 <code>1</code></p>
-</li>
+<li><a href="http://arduino.cc/en/Guide/Windows">for Windows</a></li>
+<li><a href="http://playground.arduino.cc/Learning/Linux">for Linux</a></li>
 </ul>
-<p><br></p>
-<h2>判断是否可综合</h2>
-<hr />
-<p>继续引用 <strong>董培良</strong> 的文章：</p>
-<p>用一句简单的话概括：电脑永远没有你聪明 。具体来说，通常 EDA 软件对 HDL 代码的综合能力总是比人差 。对于一段代码，如果你不能想象出一个较直观的硬件实现方法，那 EDA 软件肯定也不行。比如说，加法器、多路选择器是大家都很熟悉的电路，所以类似</p>
-<div class="highlight"><pre>        <span class="n">A</span><span class="o">+</span><span class="n">B</span><span class="o">-</span><span class="n">C</span>
-        <span class="p">(</span><span class="n">A</span><span class="o">&gt;</span><span class="n">B</span><span class="p">)</span><span class="o">?</span><span class="n">C</span><span class="o">:</span><span class="n">D</span>
+<p><strong>Linux 安装过程</strong></p>
+<p>方法一：</p>
+<ol>
+<li>
+<p>解决包依赖关系：安装 openjdk-7-jre (openjdk-6-jre, sun's java 6 runtime, the sun-java6-jre package, the oracle JRE 7 应该也可以)</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">openjdk</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="n">jre</span>
 </pre></div>
 
 
-<p>这样的运算一定可以综合。而除法、开根、对数等等较复杂的运算，必须通过一定的算法实现，没有直观简单的实现方法，则可以判断那些计算式是不能综合的，必须按它们的算法写出更具体的代码才能实现 。此外，硬件无法支持的行为描述，当然也不能被综合（比如想在 FPGA 上实现 DDR 内存那样的双延触发逻辑，代码很容易写，但却不能实现）。</p>
-<p>不过，这样的判断标准非常主观模糊，遇到具体情况还得按设计人员自己的经验来判断 。如果要一个相对客观的标准，一般来说：在 RTL 级的描述中，所有逻辑运算和加减法运算、以及他们的有限次组合，基本上是可综合的，否则就有无法综合的可能性 。当然，这样的标准仍然有缺陷，更况且 EDA 的技术也在不断发展，过去无法综合的代码或许将来行，某些软件不支持的代码换个软件或许行 。比如固定次数的循环，含一个常数参数的乘法运算等等，有些 EDA 软件支持对它们的综合，而有些软件不行。</p>
-<p>所以，正确的判断仍然要靠实践来积累经验。当你可以较准确判断代码的可综合性的时候，你对 HDL 的掌握就算完全入门了。</p>
+</li>
+<li>
+<p>下载合适的 <a href="http://arduino.cc/en/Main/Software">Arduino IDE</a></p>
+</li>
+<li>解压、切换到解压路径，运行目录下的 <code>arduino</code> 脚本<div class="highlight"><pre><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">arduino</span><span class="o">-</span><span class="mf">1.0.5</span><span class="o">-</span><span class="n">linux32</span><span class="p">.</span><span class="n">tgz</span>
+<span class="n">cd</span> <span class="n">arduino</span><span class="o">-</span><span class="mf">1.0.5</span>
+<span class="p">.</span><span class="o">/</span><span class="n">arduino</span>
+</pre></div>
+
+
+</li>
+</ol>
+<p>方法二 (for Ubuntu)：</p>
+<ol>
+<li>
+<p>下载 &amp; 安装</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">arduino</span> <span class="n">arduino</span><span class="o">-</span><span class="n">core</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>运行</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">arduino</span>
+</pre></div>
+
+
+</li>
+</ol>
+<h3>Dev</h3>
+<p><strong>IDE</strong></p>
+<p>Arduino IDE 是用 Java 写的跨平台的程序，它源自 <a href="http://en.wikipedia.org/wiki/Processing_(programming_language)">Processing programming language</a> 和 <a href="http://en.wikipedia.org/wiki/Wiring_(development_platform)">Wiring</a> 项目的 IDE 。它是为艺术家和其他不熟悉软件开发的新手而设计的。它包含一个有语法高亮、括号匹配、自动缩进功能的代码编辑器，还可以通过一个按键完成编译程序(compile)和烧录至电路板(upload)的功能。</p>
+<p><strong>Programming</strong></p>
+<p>一个 Arduino 程序/代码 称为 "<em>Sketch</em>"。Arduino 程序是用 C/C++ 写成的，Arduino IDE 含有一个名叫 "Wiring" 的代码库(源自于 Wiring 项目)，这样子可以大幅度简化常用 I/O 操作，用户只需要定义两个函数就可以写出一个可以运行的程序：</p>
+<ul>
+<li><em>setup()</em> : 系统上电或者复位时启动，只运行一次，初始化配置</li>
+<li><em>loop()</em> : 一直循环被调用，直到断电</li>
+</ul>
+<p>Arduino 的示例程序 "Blink"：(等同于 C 的 hello world，对于硬件最简单就是控制一个 LED 的亮灭)</p>
+<div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm">Blink</span>
+<span class="cm">Turns on an LED on for one second, then off for one second, repeatedly.</span>
+
+<span class="cm">This example code is in the public domain.</span>
+<span class="cm">*/</span>
+
+<span class="c1">// Pin 13 has an LED connected on most Arduino boards.</span>
+<span class="c1">// give it a name:</span>
+<span class="k">int</span> <span class="n">led</span> <span class="o">=</span> <span class="mh">13</span><span class="p">;</span>
+
+<span class="c1">// the setup routine runs once when you press reset:</span>
+<span class="k">void</span> <span class="n">setup</span><span class="p">()</span> <span class="p">{</span>                
+  <span class="c1">// initialize the digital pin as an output.</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="no">OUTPUT</span><span class="p">);</span>     
+<span class="p">}</span>
+
+<span class="c1">// the loop routine runs over and over again forever:</span>
+<span class="k">void</span> <span class="n">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="no">HIGH</span><span class="p">);</span>   <span class="c1">// turn the LED on (HIGH is the voltage level)</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mh">1000</span><span class="p">);</span>               <span class="c1">// wait for a second</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="no">LOW</span><span class="p">);</span>    <span class="c1">// turn the LED off by making the voltage LOW</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mh">1000</span><span class="p">);</span>               <span class="c1">// wait for a second</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>上面的这段代码对于一个标准 C++ 编译器来说是无效的，事实上当我们按下 IDE 界面上的 "Upload to I/O board" 按钮时，IDE 会拷贝一份代码，在开头加上 <code>include</code> 指示，在结尾加上一个很简单的 <code>main()</code> 函数，这样它就是一个有效的 C++ 程序了。</p>
+<p>Arduino 使用 <a href="http://en.wikipedia.org/wiki/GNU_toolchain">GNU toolchain</a> 和 AVR Libc 来编译程序的，使用 AVRdude 把程序下载到板子上。因为 Arduino 平台采用的是 Atmel 的微控制器，所以 Atmel 的开发环境 AVR Studio 或者更新的 Atmel Studio 应该也可以作为 Arduino 的开发环境。</p>
+<p><strong>学习资源</strong></p>
+<ol>
+<li>
+<p>Arduino 的联合创始人 Massimo Banzi 的 Tutorial Series Vedio</p>
+<p><a href="http://www.youku.com/playlist_show/id_19440139.html">优酷视频地址</a>，一共 11 课，涵盖最基本的面包板搭电路、I/O 接口控制、传感器控制、网络应用等方面，如果有编程基础，很快就可以上手制作自己的设备了～</p>
+</li>
+<li>
+<p><a href="http://www.arduino.cn/">Arduino 中文社区</a></p>
+<p><a href="http://www.arduino.cn/thread-1066-1-1.html">论坛教程汇总帖</a>，因为 Arduino 诞生的一个很大的目的就是为设计师、艺术家、业余爱好者提供更加方便的开发环境，所以，Arduino 的教程对于有编程基础的同学来说是很容易的 ：-P</p>
+</li>
+<li>
+<p><a href="http://arduino.cc/en/Reference/HomePage">Arduino Language Reference en</a></p>
+<p>官网上关于 Arduino 编程语言的介绍</p>
+</li>
+<li>
+<p><a href="http://www.arduino.cn/reference/">Arduino Language Reference zh</a></p>
+<p>Arduino 中文社区翻译的 编程语言介绍</p>
+</li>
+<li>
+<p><a href="http://arduino.cc/en/Tutorial/HomePage">Arduino Core Functions, Libraries</a></p>
+<p>官网上关于 IDE 中 <code>File/Examples/</code> 下示例程序的说明</p>
+</li>
+</ol>
 <p><br></p>
 <h2>参考</h2>
-<p><a href="http://www.dzkf.cn/html/EDAjishu/2006/0720/9.html">浅谈VHDL/Verilog的可综合性以及对初学者的一些建议</a></p>
+<p><a href="http://arduino.cc/">Arduino official website</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Arduino">Arduino on wiki</a></p>
+<p><a href="http://www.arduino.cn/">Arduino 中文社区</a></p>
             </div>
             <!-- /.entry-content -->
-<section class="well" id="related-posts">
-    <h4>Related Posts:</h4>
-    <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
-    </ul>
-</section>
     <hr />
     <section class="comments" id="comments">
         <h2>Comments</h2>
@@ -267,8 +274,8 @@
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
-            var disqus_identifier = 'writing_synthesizable_code';
-            var disqus_url = 'http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html';
+            var disqus_identifier = 'learing_arduino_series_1_getting_started';
+            var disqus_url = 'http://guqian110.github.io/pages/2014/05/27/learing_arduino_series_1_getting_started.html';
             var disqus_config = function () {
                 this.language = "zh";
             };
