@@ -58,7 +58,7 @@ Arduino 官网上的介绍只是非常简单的介绍，Intel 自己的官网上
 
 [Intel Galileo Development Board Documents][galileo documents]
 
-### Other Intruduction
+### Other Introductions 
 
 **首先** 送上一篇非常好的介绍文章（来自 Ifanr.com），介绍了在 Maker 眼中，这个板子到底可以 hack 到什么程度～
 
