@@ -135,13 +135,13 @@
 <ul>
 <li>
 <p><a href="http://en.wikipedia.org/wiki/Moore_machine">Moore</a></p>
-<p><a href="/images/fsm-design/moore.jpg">moore</a></p>
+<p><img alt="moore" src="/images/fsm-design/moore.jpg" /></p>
 <p>(<a href="http://homepages.ius.edu/JFDOYLE/c421/html/Chapter8.htm">图片来源</a>，homepages.ius.edu)</p>
 <p>一种状态机，它的输出只取决于当前状态，而与输入无关。Moore 状态机最重要的特点就是将输入与输出信号隔离开来，而且输出与时钟信号同步的。</p>
 </li>
 <li>
 <p><a href="http://en.wikipedia.org/wiki/Mealy_machine">Mealy</a></p>
-<p><a href="/images/fsm-design/mealy.jpg">mealy</a></p>
+<p><img alt="mealy" src="/images/fsm-design/mealy.jpg" /></p>
 <p>(<a href="http://homepages.ius.edu/JFDOYLE/c421/html/Chapter8.htm">图片来源</a>，homepages.ius.edu)</p>
 <p>另外一种状态机，它的输出不仅和当前状态有关，而且和输入也有关。Mealy 有限状态机对输入的响应发生在当前时钟周期，比 Moore 有限状态机对输入信号的响应要早一个周期。因此，输入信号的噪声可能影响在输出的信号。</p>
 </li>
@@ -160,8 +160,8 @@
 <h2>How to implement a FSM</h2>
 <hr />
 <p>当设计好之后，就要使用 HDL 语言来实现这个 FSM 了。</p>
-<p><strong>语言：</strong> Verilog HDL
-<strong>综合工具：</strong> XST (Xilinx Synthesis Tools)</p>
+<p><strong>语言：</strong> Verilog HDL</p>
+<p><strong>综合工具：</strong> XST (Xilinx Synthesis Tools)</p>
 <p>下面讨论了一些 FSM 实现时需要注意的问题</p>
 <h3>Coding Style</h3>
 <p>状态机一般有三种写法，他们在速度、面积、代码可维护性等各个方面互有优劣。</p>
@@ -347,8 +347,8 @@
 <p><strong>FSM 设计</strong></p>
 <p>一共有 4 个状态(IDLE、S1、S2、S3)，只有一个输入(<code>jump</code> 信号)，两个输出(<code>dout_p</code>、<code>dout_q</code>)。</p>
 <p><strong>跳转规律</strong></p>
-<p>状态机开始处于 IDLE 状态，当 jump 变高时，从 IDLE 跳转到 S1 状态，同时内部的一个 4 bit 计数器开始计数，当计数到 <code>4'b1111</code> 时，跳转到 S2，当再次计数到 <code>4'b1111</code> 时跳转到 S3，当再次计数到 <code>4'b1111</code>时，跳转到 IDLE，等待 jump 再次变高。状态转移图：</p>
-<p><a href="/images/fsm-design/diagram.png">diagram</a></p>
+<p>状态机开始处于 IDLE 状态，当 jump 变高时，从 IDLE 跳转到 S1 状态，同时内部的一个 4 bit 计数器开始计数，当计数到 <code>4'b1111</code> 时，跳转到 S2，当再次计数到 <code>4'b1111</code> 时跳转到 S3，当再次计数到 <code>4'b1111</code> 时，跳转到 IDLE，等待 jump 再次变高。状态转移图：</p>
+<p><img alt="diagram" src="/images/fsm-design/diagram.png" /></p>
 <p><strong>程序</strong></p>
 <p>状态机源文件</p>
 <p>http://guqian110.github.io/files/fsm.v</p>
@@ -356,9 +356,9 @@
 <p>http://guqian110.github.io/files/tb_fsm.v</p>
 <p><strong>仿真结果</strong></p>
 <p>使用 <code>NS</code> 判断，结果如下图，可以看到，当 <code>CS</code> 发生变化时，输出同时改变。</p>
-<p><a href="/images/fsm-design/case_ns.png">case ns</a></p>
+<p><img alt="case ns" src="/images/fsm-design/case_ns.png" /></p>
 <p>使用 <code>CS</code> 判断，结果如下图，可以看到，当 <code>CS</code> 发生变化时，输出变化相对于状态变化延时一个时钟周期。</p>
-<p><a href="/images/fsm-design/case_cs.png">case ns</a></p>
+<p><img alt="case ns" src="/images/fsm-design/case_cs.png" /></p>
 <p><br></p>
 <h2>参考</h2>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG1998SJ_FSM.pdf">Clifford E. Cumming     State Machine Coding Styles for Synthesis</a></p>
@@ -377,7 +377,7 @@ Design using NC-Verilog and BuildGates</a></p>
         <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic.html">FPGA 数字处理基础</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
     </ul>
 </section>
     <hr />
@@ -446,18 +446,18 @@ Design using NC-Verilog and BuildGates</a></p>
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/fpga.html">
-                                FPGA
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
+                            </a>
+                        </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -466,8 +466,8 @@ Design using NC-Verilog and BuildGates</a></p>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -486,38 +486,8 @@ Design using NC-Verilog and BuildGates</a></p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -526,33 +496,13 @@ Design using NC-Verilog and BuildGates</a></p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fsm.html">
-                                FSM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
-                                The Catcher in The Rye
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-processing.html">
-                                digital processing
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -561,13 +511,63 @@ Design using NC-Verilog and BuildGates</a></p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-processing.html">
+                                digital processing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/gmail.html">
                                 Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
                             </a>
                         </li>
                     </ul>

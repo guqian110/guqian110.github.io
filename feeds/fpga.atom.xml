@@ -20,13 +20,13 @@
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Moore_machine"&gt;Moore&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/fsm-design/moore.jpg"&gt;moore&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="moore" src="/images/fsm-design/moore.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;(&lt;a href="http://homepages.ius.edu/JFDOYLE/c421/html/Chapter8.htm"&gt;图片来源&lt;/a&gt;，homepages.ius.edu)&lt;/p&gt;
 &lt;p&gt;一种状态机，它的输出只取决于当前状态，而与输入无关。Moore 状态机最重要的特点就是将输入与输出信号隔离开来，而且输出与时钟信号同步的。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Mealy_machine"&gt;Mealy&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/fsm-design/mealy.jpg"&gt;mealy&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="mealy" src="/images/fsm-design/mealy.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;(&lt;a href="http://homepages.ius.edu/JFDOYLE/c421/html/Chapter8.htm"&gt;图片来源&lt;/a&gt;，homepages.ius.edu)&lt;/p&gt;
 &lt;p&gt;另外一种状态机，它的输出不仅和当前状态有关，而且和输入也有关。Mealy 有限状态机对输入的响应发生在当前时钟周期，比 Moore 有限状态机对输入信号的响应要早一个周期。因此，输入信号的噪声可能影响在输出的信号。&lt;/p&gt;
 &lt;/li&gt;
@@ -45,8 +45,8 @@
 &lt;h2&gt;How to implement a FSM&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;当设计好之后，就要使用 HDL 语言来实现这个 FSM 了。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;语言：&lt;/strong&gt; Verilog HDL
-&lt;strong&gt;综合工具：&lt;/strong&gt; XST (Xilinx Synthesis Tools)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;语言：&lt;/strong&gt; Verilog HDL&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;综合工具：&lt;/strong&gt; XST (Xilinx Synthesis Tools)&lt;/p&gt;
 &lt;p&gt;下面讨论了一些 FSM 实现时需要注意的问题&lt;/p&gt;
 &lt;h3&gt;Coding Style&lt;/h3&gt;
 &lt;p&gt;状态机一般有三种写法，他们在速度、面积、代码可维护性等各个方面互有优劣。&lt;/p&gt;
@@ -232,8 +232,8 @@
 &lt;p&gt;&lt;strong&gt;FSM 设计&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;一共有 4 个状态(IDLE、S1、S2、S3)，只有一个输入(&lt;code&gt;jump&lt;/code&gt; 信号)，两个输出(&lt;code&gt;dout_p&lt;/code&gt;、&lt;code&gt;dout_q&lt;/code&gt;)。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;跳转规律&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;状态机开始处于 IDLE 状态，当 jump 变高时，从 IDLE 跳转到 S1 状态，同时内部的一个 4 bit 计数器开始计数，当计数到 &lt;code&gt;4'b1111&lt;/code&gt; 时，跳转到 S2，当再次计数到 &lt;code&gt;4'b1111&lt;/code&gt; 时跳转到 S3，当再次计数到 &lt;code&gt;4'b1111&lt;/code&gt;时，跳转到 IDLE，等待 jump 再次变高。状态转移图：&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/fsm-design/diagram.png"&gt;diagram&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;状态机开始处于 IDLE 状态，当 jump 变高时，从 IDLE 跳转到 S1 状态，同时内部的一个 4 bit 计数器开始计数，当计数到 &lt;code&gt;4'b1111&lt;/code&gt; 时，跳转到 S2，当再次计数到 &lt;code&gt;4'b1111&lt;/code&gt; 时跳转到 S3，当再次计数到 &lt;code&gt;4'b1111&lt;/code&gt; 时，跳转到 IDLE，等待 jump 再次变高。状态转移图：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="diagram" src="/images/fsm-design/diagram.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;程序&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;状态机源文件&lt;/p&gt;
 &lt;p&gt;http://guqian110.github.io/files/fsm.v&lt;/p&gt;
@@ -241,9 +241,9 @@
 &lt;p&gt;http://guqian110.github.io/files/tb_fsm.v&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;仿真结果&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;使用 &lt;code&gt;NS&lt;/code&gt; 判断，结果如下图，可以看到，当 &lt;code&gt;CS&lt;/code&gt; 发生变化时，输出同时改变。&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/fsm-design/case_ns.png"&gt;case ns&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="case ns" src="/images/fsm-design/case_ns.png" /&gt;&lt;/p&gt;
 &lt;p&gt;使用 &lt;code&gt;CS&lt;/code&gt; 判断，结果如下图，可以看到，当 &lt;code&gt;CS&lt;/code&gt; 发生变化时，输出变化相对于状态变化延时一个时钟周期。&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/fsm-design/case_cs.png"&gt;case ns&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="case ns" src="/images/fsm-design/case_cs.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;参考&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG1998SJ_FSM.pdf"&gt;Clifford E. Cumming     State Machine Coding Styles for Synthesis&lt;/a&gt;&lt;/p&gt;

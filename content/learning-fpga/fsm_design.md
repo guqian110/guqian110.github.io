@@ -37,7 +37,7 @@ summary: 博客搬家，温故而知新。
 
 + [Moore][moore]
 
-    [moore](/images/fsm-design/moore.jpg)
+    ![moore](/images/fsm-design/moore.jpg)
     
     ([图片来源][ius]，homepages.ius.edu)
     
@@ -45,7 +45,7 @@ summary: 博客搬家，温故而知新。
     
 + [Mealy][mealy]
 
-    [mealy](/images/fsm-design/mealy.jpg)
+    ![mealy](/images/fsm-design/mealy.jpg)
 
     ([图片来源][ius]，homepages.ius.edu)
     
@@ -75,6 +75,7 @@ summary: 博客搬家，温故而知新。
 当设计好之后，就要使用 HDL 语言来实现这个 FSM 了。
 
 **语言：** Verilog HDL
+
 **综合工具：** XST (Xilinx Synthesis Tools)
 
 下面讨论了一些 FSM 实现时需要注意的问题
@@ -302,9 +303,9 @@ Binary、Gray 编码使用最少的触发器，较多的组合逻辑。而 One-H
 
 **跳转规律**
 
-状态机开始处于 IDLE 状态，当 jump 变高时，从 IDLE 跳转到 S1 状态，同时内部的一个 4 bit 计数器开始计数，当计数到 `4'b1111` 时，跳转到 S2，当再次计数到 `4'b1111` 时跳转到 S3，当再次计数到 `4'b1111`时，跳转到 IDLE，等待 jump 再次变高。状态转移图：
+状态机开始处于 IDLE 状态，当 jump 变高时，从 IDLE 跳转到 S1 状态，同时内部的一个 4 bit 计数器开始计数，当计数到 `4'b1111` 时，跳转到 S2，当再次计数到 `4'b1111` 时跳转到 S3，当再次计数到 `4'b1111` 时，跳转到 IDLE，等待 jump 再次变高。状态转移图：
 
-[diagram](/images/fsm-design/diagram.png)
+![diagram](/images/fsm-design/diagram.png)
 
 **程序**
 
@@ -320,11 +321,11 @@ http://guqian110.github.io/files/tb_fsm.v
 
 使用 `NS` 判断，结果如下图，可以看到，当 `CS` 发生变化时，输出同时改变。
 
-[case ns](/images/fsm-design/case_ns.png)
+![case ns](/images/fsm-design/case_ns.png)
 
 使用 `CS` 判断，结果如下图，可以看到，当 `CS` 发生变化时，输出变化相对于状态变化延时一个时钟周期。
 
-[case ns](/images/fsm-design/case_cs.png)
+![case ns](/images/fsm-design/case_cs.png)
 
 <br>
 
