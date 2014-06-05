@@ -311,11 +311,11 @@ Binary、Gray 编码使用最少的触发器，较多的组合逻辑。而 One-H
 
 状态机源文件
 
-https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm.v
+[fsm.v](https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm.v)
 
 测试平台 testbench
 
-https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_fsm.v
+[tb_fsm.v](https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_fsm.v)
 
 **仿真结果**
 
