@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>有限状态机设计 - Coding Life</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="http://guqian110.github.io/images/favicon.jpg" rel="icon">
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Coding Life" />
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="有限状态机设计"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2014/06/05/fsm_design.html"/>
+            <meta property="og:description" content="博客搬家，温故而知新。"/>
+            <meta property="article:published_time" content="2014-06-05" />
+            <meta property="article:section" content="FPGA" />
+            <meta property="article:tag" content="FPGA" />
+            <meta property="article:tag" content="FSM" />
+            <meta property="article:tag" content="Verilog" />
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://guqian110.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+        <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Coding Life ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://guqian110.github.io/" class="navbar-brand">
+<img src="http://guqian110.github.io/images/logo.jpg" width=""/> Coding Life            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li class="active">
+                            <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/others.html">Others</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://guqian110.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="http://guqian110.github.io" title="Coding Life"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="http://guqian110.github.io/category/fpga.html" title="FPGA">FPGA</a></li>
+                <li class="active">有限状态机设计</li>
+            </ol>
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html"
+                       rel="bookmark"
+                       title="Permalink to 有限状态机设计">
+                        有限状态机设计
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-06-05T17:55:00"> Thu 05 June 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://guqian110.github.io/tag/fpga.html">FPGA</a>
+        /
+	<a href="http://guqian110.github.io/tag/fsm.html">FSM</a>
+        /
+	<a href="http://guqian110.github.io/tag/verilog.html">Verilog</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>有限状态机是数字电路中经常出现、非常重要的电路，设计一个安全、高效的状态机有一套程序化的方法，我们在数字电路课中就学习过了。搬运以前写的博客，总结一下相关知识，温故而知新～</p>
+<p><strong>写在前面的废话：</strong></p>
+<p>这篇博客是在我以前在 CSDN 上写的两篇博客的基础上，参考了其他各位大神、博主的文章，写的总结。欢迎批评、讨论，毕竟写博客的意义就在于给自己一个总结知识的机会、并且在和别人讨论的过程中进步 :-D</p>
+<p><br></p>
+<h2>What is FSM</h2>
+<hr />
+<p><a href="http://en.wikipedia.org/wiki/Finite-state_machine">FSM on wiki</a></p>
+<p><strong>有限状态机 (Finite State Machine, FSM)</strong> 有时候也简称为<strong>状态机 (state machine)</strong>，它是一种数学模型，通常用来设计电脑程序或者时序电路。它被构思设计为一个抽象的机器，并且某个时刻只能处于一个有限数字代表的状态之下。</p>
+<p>有限状态自动机在很多不同领域中是重要的，包括电子工程、语言学、计算机科学、哲学、生物学、数学和逻辑学。有限状态机是在自动机理论和计算理论中研究的一类自动机。在计算机科学中，有限状态机被广泛用于建模应用行为、硬件电路系统设计、软件工程，编译器、网络协议、和计算与语言的研究。(这里讨论的只限于电子工程里的状态机)</p>
+<p><strong>组成元素：</strong>输入、状态、状态转移条件、输出</p>
+<p><strong>描述方式：</strong></p>
+<ul>
+<li>状态转移图</li>
+<li>状态转移表</li>
+<li>HDL 描述</li>
+</ul>
+<p><strong>分类：</strong></p>
+<p>按照输出的产生方式，可以将状态机分为两类：</p>
+<ul>
+<li>
+<p><a href="http://en.wikipedia.org/wiki/Moore_machine">Moore</a></p>
+<p><a href="/images/fsm-design/moore.jpg">moore</a></p>
+<p>(<a href="http://homepages.ius.edu/JFDOYLE/c421/html/Chapter8.htm">图片来源</a>，homepages.ius.edu)</p>
+<p>一种状态机，它的输出只取决于当前状态，而与输入无关。Moore 状态机最重要的特点就是将输入与输出信号隔离开来，而且输出与时钟信号同步的。</p>
+</li>
+<li>
+<p><a href="http://en.wikipedia.org/wiki/Mealy_machine">Mealy</a></p>
+<p><a href="/images/fsm-design/mealy.jpg">mealy</a></p>
+<p>(<a href="http://homepages.ius.edu/JFDOYLE/c421/html/Chapter8.htm">图片来源</a>，homepages.ius.edu)</p>
+<p>另外一种状态机，它的输出不仅和当前状态有关，而且和输入也有关。Mealy 有限状态机对输入的响应发生在当前时钟周期，比 Moore 有限状态机对输入信号的响应要早一个周期。因此，输入信号的噪声可能影响在输出的信号。</p>
+</li>
+</ul>
+<p><br></p>
+<h2>How to Design a FSM</h2>
+<hr />
+<p>关于如何设计一个状态机，这在数字电路和逻辑设计的书里有详细介绍。简单地总结一下步骤：</p>
+<ol>
+<li>逻辑抽象，建立原始状态转移图：确定输入、输出、状态变量、画状态转移图</li>
+<li>状态简化，得到最简的状态转移图(卡诺图)</li>
+<li>状态分配，选择编码方案(Binary、Gray、One-Hot)</li>
+<li>画逻辑图，检查能否自启动，得到了最终的状态机模型</li>
+</ol>
+<p><br></p>
+<h2>How to implement a FSM</h2>
+<hr />
+<p>当设计好之后，就要使用 HDL 语言来实现这个 FSM 了。</p>
+<p><strong>语言：</strong> Verilog HDL
+<strong>综合工具：</strong> XST (Xilinx Synthesis Tools)</p>
+<p>下面讨论了一些 FSM 实现时需要注意的问题</p>
+<h3>Coding Style</h3>
+<p>状态机一般有三种写法，他们在速度、面积、代码可维护性等各个方面互有优劣。</p>
+<p><strong>一段式：</strong>只有一个always block，把所有的逻辑（输入、输出、状态）都在一个always block中实现；这种写法 <em>看起来很简洁</em>，但是 <em>不利于维护</em>。如果状态复杂一些就很容易出错。不推荐这种方法，但是在简单的状态机可以使用。</p>
+<p><strong>二段式：</strong>有两个always block，把时序逻辑和组合逻辑分隔开来。时序逻辑里进行当前状态和下一状态的切换，组合逻辑实现各个输入、输出以及状态判断。这种写法 <em>不仅便于阅读、理解、维护，而且利于综合器优化代码，利于用户添加合适的时序约束条件，利于布局布线器实现设计。</em></p>
+<p>在两段式描述中，当前状态的输出用组合逻辑实现，可能存在竞争和冒险，产生毛刺。则要求对状态机的输出用寄存器打一拍，但很多情况不允许插入寄存器节拍，此时使用三段式描述。其优势在于能够根据状态转移规律，在上一状态根据输入条件判断出当前状态的输出，从而不需要额外插入时钟节拍。</p>
+<p><strong>三段式：</strong>有三个always block，一个时序逻辑采用同步时序的方式描述状态转移，一个采用组合逻辑的方式判断状态转移条件、描述状态转移规律，第三个模块使用同步时序的方式描述每个状态的输出。<em>代码容易维护，时序逻辑的输出解决了两段式组合逻辑的毛刺问题</em>，但是从资源消耗的角度上看，<em>三段式的资源消耗多一些，且输出比另外两种会延时一个时钟周期。</em></p>
+<p>三段式代码模板</p>
+<div class="highlight"><pre><span class="n">reg</span>     <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">CS</span><span class="p">;</span>
+<span class="n">reg</span>     <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">NS</span><span class="p">;</span>
+
+<span class="n">parameter</span>   <span class="n">IDLE</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">b0000_0001</span><span class="p">,</span>
+            <span class="n">WAIT</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">b0000_0010</span><span class="p">,</span>
+            <span class="n">STRT</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">b0000_0100</span><span class="p">,</span>
+            <span class="p">...</span>
+
+<span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="n">CS</span> <span class="o">&lt;=</span> <span class="n">IDLE</span><span class="p">;</span>
+    <span class="n">end</span>
+    <span class="k">else</span> <span class="n">begin</span>
+        <span class="n">CS</span> <span class="o">&lt;=</span> <span class="n">NS</span><span class="p">;</span>
+    <span class="n">end</span>
+<span class="n">end</span>
+
+<span class="n">always</span> <span class="err">@</span><span class="o">*</span>  <span class="n">begin</span>
+    <span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">bx</span><span class="p">;</span>               <span class="c1">//初始化寄存器，避免生成latch</span>
+    <span class="k">case</span> <span class="p">(</span><span class="n">CS</span><span class="p">)</span>
+        <span class="nl">IDLE:</span> <span class="n">begin</span>
+            <span class="c1">// ...</span>
+        <span class="n">end</span>
+        <span class="nl">S1:</span> <span class="n">begin</span>
+            <span class="c1">// ...</span>
+        <span class="n">end</span>
+       <span class="nl">default:</span> <span class="n">begin</span>
+            <span class="n">NS</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>      <span class="c1">// 注意</span>
+       <span class="n">end</span>
+    <span class="n">endcase</span>
+<span class="n">end</span>
+
+<span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="c1">// reset</span>
+        <span class="c1">// ...</span>
+    <span class="n">end</span>
+    <span class="k">else</span> <span class="n">begin</span>
+        <span class="c1">// ...          //初始化一组值，避免latch</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">NS</span><span class="p">)</span>           <span class="c1">//注意为NS</span>
+            <span class="nl">IDLE:</span> <span class="n">begin</span>
+                <span class="c1">// ...</span>
+            <span class="n">end</span>
+            <span class="nl">S1:</span> <span class="n">begin</span>
+                <span class="c1">// ...</span>
+            <span class="n">end</span>
+            <span class="nl">default:</span> <span class="n">begin</span>
+                <span class="c1">// ...</span>
+            <span class="n">end</span>
+        <span class="n">endcase</span>
+    <span class="n">end</span>
+<span class="n">end</span>
+</pre></div>
+
+
+<p><strong>一段 or 三段？</strong></p>
+<p>一般来说，三段式的效果更好，唯一的缺点是占用的资源稍微多一点(对于拥有丰富的触发器资源的 FPGA 来说，这个缺点可以忽略吧)。所以除非是非常简单的状态机用一段式实现，其他情况下三段式更简单。</p>
+<p>对于上面的三段式模板，按代码顺序解释一下相关的注意事项</p>
+<h3>参数使用 parameter</h3>
+<p>尽量使用 <code>parameter</code> 而不是 <code>define</code>。</p>
+<p>这个原则不仅仅限于 FSM，其他模块也应该遵守。因为使用 <code>define</code> 定义的参数是全局变量，而 <code>parameter</code> 定义的是局部变量。如果设计中包含多个 FSM，包含多个同名的变量，显然使用 <code>parameter</code> 是更好的选择。</p>
+<h3>FSM 复位</h3>
+<p>FPGA 上电时，GSR(Global Set/Reset) 拉高，对所有 寄存器/RAM 进行复位，此时配置于 FPGA 的逻辑并未生效，所以不能保证 FSM 进入正确的初始化状态。</p>
+<p><strong>解决方法：</strong></p>
+<ol>
+<li>
+<p>一般，FSM 使用其他的复位(同步 or 异步)。</p>
+<div class="highlight"><pre><span class="c1">// Asynchronous Reset</span>
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+    <span class="k">end</span>
+    <span class="k">else</span> <span class="k">begin</span>
+        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">NS</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>还有一种方法，是将初始状态编码为全 0 (带 0 的 One-Hot 编码方式)，这样当 GSR 复位后，状态机自动进入初始状态。</p>
+</li>
+</ol>
+<h3>编码方式</h3>
+<p>状态机的状态的编码，通常有 <code>Binary</code>、<code>One-Hot</code>、<code>Gray</code> 码等几种。</p>
+<p><strong>Binary 码</strong></p>
+<p>采用最简单的递增的编码方式对状态进行编码，对于 n 个状态的状态机，共需要 log2(n) 个触发器表示所有的状态。</p>
+<p>优点：在状态很多的情况下，可以大大减少触发器的数量，对设计的面积有积极的作用。</p>
+<p>缺点：但是在状态跳转过程中，很可能出现多位同时变化的情况，容易在 next state 的生成逻辑上产生毛刺。同时，输出也是所有状态位的译码，译码逻辑多数很复杂，往往成为整个设计的关键路径。</p>
+<p><strong>Gray 码</strong></p>
+<p>类似 Binary，但是采用了格雷码的编码方式，每两个相邻的状态只有一位信号变化。</p>
+<p>有点：避免了 next state 上毛刺的产生。同时两个相邻状态的输出译码变得简单了，避免了复杂组合逻辑的产生。</p>
+<p>缺点；格雷码的这些优点都是建立在状态跳转是顺序执行的基础上的。如果状态机有很多随机跳转和分支，格雷码的实际效果和二进制码相差无几，优势荡然无存。</p>
+<p><strong>One-Hot 码</strong></p>
+<p>当前设计中最常用的状态机编码方式。One-Hot 编码在一组 0 中只有一个 1，对一个 n 个状态的 FSM 设计，需要 n 个触发器。</p>
+<p>优点：在任意两个状态之间跳转都只有两位状态位变化，不会产生非常复杂的组合逻辑。各个状态之间的译码也相对简单。</p>
+<p>缺点：对状态编码需要的寄存器比其他方式多，不过这个缺点基本可以忽略吧 :-P</p>
+<p><strong>结论：</strong></p>
+<p>Binary、Gray 编码使用最少的触发器，较多的组合逻辑。而 One-Hot  编码反之。由于 CPLD 更多的提供组合逻辑资源，而 FPGA 更多的提供触发器资源，所以 CPLD 多使用 Gray，而 FPGA  多使用 One-Hot 编码。另一方面，对于小型设计使用 Gray 和 Binary 编码更有效，而大型状态机使用 One-Hot 更高效。</p>
+<p>(XST 的选项 <code>FSM encoding algorithm</code> 值默认为 <code>auto</code>，编写程序测试发现，它会根据代码中状态的多少，FSM 的复杂度，自动选择合适的编码方式对状态进行编码。)</p>
+<h3>安全的 FSM</h3>
+<p>所谓 “安全” 的状态机，就是说即使因为某些意外原因，状态机跑飞了，仍然可以自动回复到正常状态。</p>
+<p>如果我们对状态向量的所有取值情况都显式地进行了说明，那么这个状态机就是安全的，否则就是不安全的。</p>
+<p><strong>可能出现的不安全情况</strong></p>
+<p>比如，我们在 One-Hot 方式中，对于 8 个状态，总共使用了 8 bit 的寄存器，那么这个状态寄存器向量可以取到的值一共有 <code>2^8 = 256</code> 种。如果我们只对需要的 8 种状态进行了说明，而忽略了剩余的 248 种，此时综合工具(Synplify、XST)会对设计进行 “优化”，将没有用到的状态去掉。但是，有时候这种 “优化” 反而不好，如果状态机进入未定义的全 0 状态，那么它就会卡在这个未定义的状态，无法自动回复正常工作状态。</p>
+<p><strong>解决方法</strong></p>
+<p>有两种方法：</p>
+<ol>
+<li>
+<p>书写完备的 <code>case</code> 语句。在代码中对每一种可能的取值对进行描述，对于不使用的状态编码，一定要有 <code>default</code> 分支进行说明。</p>
+<p>在第二段 <code>always</code> 中，</p>
+<div class="highlight"><pre><span class="k">default</span><span class="o">:</span> <span class="n">begian</span>
+    <span class="n">NS</span> <span class="o">=</span> <span class="n">IDLE</span><span class="o">;</span>
+<span class="n">end</span>
+</pre></div>
+
+
+<p>这里应该赋值 <code>8'bx</code> 更合理，因为状态机上电时处于未知状态，所以应该赋值 <code>x</code> 更符合实际，但是这样赋值必须有个条件，就是必须所有的状态编码都全部被使用了，不然就会出现锁死现象，FSM 无法返回工作状态。我们前面使用的是 One-Hot 编码方式，有大量无效状态，所以这里不能赋值为 <code>x</code>。</p>
+</li>
+<li>
+<p>XST支持状态机编码的完备属性 —— <code>case implementation style</code>，虽然可以打开这个设置，但是一般我们应该在代码中满足条件，而不是依靠综合工具。</p>
+</li>
+</ol>
+<p>即使使用第一种方法，似乎我们的状态机已经是 perfect 了，但是真的是这样么？考虑这种情况：一个状态机有 8 个状态，采用 One-Hot 编码方式，代码含有 <code>default</code> 分支处理未定义的状态向量可能取到的值。现在把这个状态机放在卫星中，接受宇宙射线的辐射，导致状态向量的值发生了变化，进入了无效状态，然后状态机自动恢复到正常状态(Good Job)，但是！状态机的外围电路并没有随着状态机恢复，它还在等 FSM 输出某个信号呢。所以，仅仅是回到正常状态并不够，最好的设计应该有个错误状态专门来与外围电路通信，当 FSM 自动恢复时，它会通知外围电路 reset 。</p>
+<p>(XST 的选项 <code>safe implementation</code> 值默认为 <code>None</code>，如果应用环境要求 FSM 必须能恢复任何错误，比如航天、医疗、汽车等，这时我们可以打开这个设置，这时综合工具会添加额外的逻辑，保证 FSM 可以从无效状态恢复过来。)</p>
+<h3>检查状态完备性</h3>
+<p>在第二个 <code>always block</code> 中，第一句是</p>
+<div class="highlight"><pre><span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">bx</span><span class="p">;</span>
+</pre></div>
+
+
+<p>这是个很有用的小技巧，它可以帮助我们在综合前发现状态是否完备：如果状态完备，则在下面的 <code>case</code> 中会给 <code>NS</code> 合适的值；如果状态不完备，则状态机会进入错误状态，输出不定，仿真时可以很快的发现。而且，综合工具对于 <code>x</code> 采取的态度是 <code>don't care</code>，综合时会自动将其忽略，生成的电路最简洁。</p>
+<h3>避免 Latch</h3>
+<ol>
+<li>
+<p>在第三个 <code>always</code> 中，在 <code>case</code> 前，所有的输出都有默认的值，这样做的好处是可以消除 <code>Latch</code> 的出现，而且，可以减少在后面每种状态下重复相同的赋值，而且强调显示了 case 内哪个输出发生了变化。</p>
+</li>
+<li>
+<p>书写完备的 <code>if-else</code> 和 <code>case</code> 语句。</p>
+</li>
+</ol>
+<h3>消除输出毛刺</h3>
+<p>对于三段式，因为输出是寄存器输出，所以解决了输出毛次。</p>
+<p>讨论一下采用寄存器输出的方式对设计的影响</p>
+<ol>
+<li>
+<p>输出采用寄存器驱动可以优化 FSM 的时序性能</p>
+<p>影响一个时序电路运行速度的主要因素是两个寄存器之间的组合逻辑路径的长度，越长的组合逻辑路径，其时序性能越差。一个电路中的最长组合逻辑路径决定了这个电路最高运行速率，该路径就是这个电路的关键路径（<code>critical path</code>）。所以，切断最长的组合逻辑路径可以提高局部电路的运行速度，切断多个较长的组合逻辑路径可以提高整体电路的运行速度。切断组合逻辑路径的工具就是寄存器。所以，添加寄存器可以提高电路的性能，但是会增加资源的消耗，这也是速度（speed）和面积（area）互为矛盾的原因。</p>
+<p>在考虑FSM的时序问题时，不能独立的考虑FSM本身，需要综合考虑FSM模块和下游模块构成的电路。在FSM不采用输出寄存时，在FSM模块和下游模块的接口处，是两部分组合逻辑直接相连。关键路径由两部分组合逻辑构成；在FSM采用输出寄存时，两个模块的组合逻辑被分隔成两部分，可能的关键路径被切断了。同步寄存器输出和组合逻辑输出就是采用资源优化还是速度优化的问题。组合逻辑表面上会提高电路的速度，看似节省了资源而且提高了速度，其实不然（对FPGA结构来说，节省寄存器不等于节省LE；对同步设计来说，异步输出速度上的优势是可以忽略的）。</p>
+</li>
+<li>
+<p>输出采用寄存器驱动会降低输出队输入信号变化的响应速度？</p>
+<p>到底应不应该采用FSM输出寄存器？是否必须在时序性能和响应速度之间做出取舍？在同步设计中，答案是必须牺牲一定的响应速度以换取更佳的时序性能，只考虑响应速度会带来潜在的时序性能损失。</p>
+<p>在考虑FSM的响应速度时，不能独立的考虑FSM本身，需要综合考虑FSM模块和上、下游模块构成的电路。采用输出寄存器的电路可以运行在更高的时钟频率下，所引入的响应时延与更高的运行频率相比是可以牺牲的。</p>
+</li>
+</ol>
+<h3>case (NS) vs case (CS)</h3>
+<p>采用二段式实现状态机，它的输出是组合逻辑，可能存在竞争和冒险，产生毛刺，要消除毛刺就要对输出用寄存器打一拍，但是很多时候，是不允许插入寄存器节拍的。</p>
+<p>这时候可以采用三段式实现，三段式的输出是寄存器输出，所以消除了毛次；同时，如果三段式的第三段判断输出采用</p>
+<div class="highlight"><pre><span class="k">case</span> <span class="p">(</span><span class="n">NS</span><span class="p">)</span>
+    <span class="nl">IDLE:</span> <span class="n">begin</span>
+        <span class="c1">// ....</span>
+    <span class="n">end</span>
+    <span class="c1">// ...</span>
+    <span class="nl">default:</span> <span class="n">begian</span>
+        <span class="c1">// ...</span>
+    <span class="n">end</span>
+<span class="n">endcase</span>
+</pre></div>
+
+
+<p>就可以提前判断下一状态的输出，节省了一个节拍，使输出和状态变化同步。</p>
+<p>设计一个简单的 FSM，测试使用 <code>case(CS)</code> 和 <code>case(NS)</code> 的结果：</p>
+<p><strong>FSM 设计</strong></p>
+<p>一共有 4 个状态(IDLE、S1、S2、S3)，只有一个输入(<code>jump</code> 信号)，两个输出(<code>dout_p</code>、<code>dout_q</code>)。</p>
+<p><strong>跳转规律</strong></p>
+<p>状态机开始处于 IDLE 状态，当 jump 变高时，从 IDLE 跳转到 S1 状态，同时内部的一个 4 bit 计数器开始计数，当计数到 <code>4'b1111</code> 时，跳转到 S2，当再次计数到 <code>4'b1111</code> 时跳转到 S3，当再次计数到 <code>4'b1111</code>时，跳转到 IDLE，等待 jump 再次变高。状态转移图：</p>
+<p><a href="/images/fsm-design/diagram.png">diagram</a></p>
+<p><strong>程序</strong></p>
+<p>状态机源文件</p>
+<p>http://guqian110.github.io/files/fsm.v</p>
+<p>测试平台 testbench</p>
+<p>http://guqian110.github.io/files/tb_fsm.v</p>
+<p><strong>仿真结果</strong></p>
+<p>使用 <code>NS</code> 判断，结果如下图，可以看到，当 <code>CS</code> 发生变化时，输出同时改变。</p>
+<p><a href="/images/fsm-design/case_ns.png">case ns</a></p>
+<p>使用 <code>CS</code> 判断，结果如下图，可以看到，当 <code>CS</code> 发生变化时，输出变化相对于状态变化延时一个时钟周期。</p>
+<p><a href="/images/fsm-design/case_cs.png">case ns</a></p>
+<p><br></p>
+<h2>参考</h2>
+<p><a href="http://www.sunburst-design.com/papers/CummingsSNUG1998SJ_FSM.pdf">Clifford E. Cumming     State Machine Coding Styles for Synthesis</a></p>
+<p><a href="http://www.sunburst-design.com/papers/CummingsICU2002_FSMFundamentals.pdf">Clifford E. Cumming     The Fundamentals of Efficient Synthesizable Finite State Machine
+Design using NC-Verilog and BuildGates</a></p>
+<p><a href="http://www.trilobyte.com/pdf/golson_snug94.pdf">Steve Golson                State machine design techniques for Verilog and VHDL</a></p>
+<p><a href="http://www.cnblogs.com/freeny/archive/2012/04/14/2447612.html">Verilog HDL学习心得</a></p>
+<p>foreveryoung 《状态机设计》</p>
+<p>云创工作室     《Verilog HDL程序设计与实践》</p>
+            </div>
+            <!-- /.entry-content -->
+<section class="well" id="related-posts">
+    <h4>Related Posts:</h4>
+    <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic.html">FPGA 数字处理基础</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+    </ul>
+</section>
+    <hr />
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+            var disqus_identifier = 'fsm_design';
+            var disqus_url = 'http://guqian110.github.io/pages/2014/06/05/fsm_design.html';
+            var disqus_config = function () {
+                this.language = "zh";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="aboutme">
+<p>
+    <strong>About Chien Gu</strong><br/>
+    BYR + Programmer + Rocker
+</p>        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                    <li class="list-group-item"><a href="http://github.com/guqian110"><i
+                            class="fa fa-github-square fa-lg"></i> GitHub
+                    </a></li>
+                    <li class="list-group-item"><a href="https://plus.google.com/u/0/+QianGu/posts/p/pub"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google-plus
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.quora.com/Chien-Gu"><i
+                            class="fa fa-quora-square fa-lg"></i> Quora
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.zhihu.com/people/chiengu"><i
+                            class="fa fa-zhihu-square fa-lg"></i> Zhihu
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.douban.com/people/51504735/"><i
+                            class="fa fa-douban-square fa-lg"></i> Douban
+                    </a></li>
+                  </ul>
+                </li>
+
+
+
+                <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group " id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-processing.html">
+                                digital processing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+
+    <li class="list-group-item"><h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+        <div id="gh_repos">
+            <p class="list-group-item">Status updating...</p>
+        </div>
+    </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://jinja.pocoo.org/" target="_blank">
+                Jinja2
+            </a>
+        </li>
+      </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Chien Gu
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://guqian110.github.io/theme/js/respond.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (!window.jXHR) {
+                var jxhr = document.createElement('script');
+                jxhr.type = 'text/javascript';
+                jxhr.src = 'http://guqian110.github.io/theme/js/jXHR.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(jxhr, s);
+            }
+
+            github.showRepos({
+                user: 'guqian110',
+                count: 5,
+                skip_forks: false,
+                target: '#gh_repos'
+            });
+        });
+    </script>
+    <script src="http://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-48826831-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</body>
+</html>
