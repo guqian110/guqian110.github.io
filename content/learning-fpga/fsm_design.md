@@ -37,7 +37,7 @@ summary: 博客搬家，温故而知新。
 
 + [Moore][moore]
 
-    ![moore](/images/fsm-design/moore.jpg)
+    ![moore diagram](/images/fsm-design/moore.jpg)
     
     ([图片来源][ius]，homepages.ius.edu)
     
@@ -45,7 +45,7 @@ summary: 博客搬家，温故而知新。
     
 + [Mealy][mealy]
 
-    ![mealy](/images/fsm-design/mealy.jpg)
+    ![mealy diagram](/images/fsm-design/mealy.jpg)
 
     ([图片来源][ius]，homepages.ius.edu)
     
