@@ -185,7 +185,7 @@ Xilinx ISE 自动生成的标准文件头部，添加 `Email`、`File Name` 两�
                 // ...
             end
             default: begin
-                NS = 8'bx;
+                NS = IDLE;
             end
         endcase
     end
@@ -197,12 +197,14 @@ Xilinx ISE 自动生成的标准文件头部，添加 `Email`、`File Name` 两�
             
         end
         else begin
+            // default output
+            // ...
             case (NS)
                 IDLE: begin
                     // ...
                 end
                 defaut: begin
-                    NS = 8'bx;
+                    // ...
                 end
             endcase
         end
