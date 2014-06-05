@@ -1,15 +1,15 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: BUPT MITC
+// Engineer:  Chien Gu
 // 
 // Create Date:    09:53:47 06/05/2014 
 // Design Name: 
-// Module Name:    fsm_cs 
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
+// Module Name:    fsm 
+// Project Name:   fsm_test
+// Target Devices: Virtex 5 xc5vlx110t-2ff1136
+// Tool versions:  ISE 13.3
+// Description:    test FSM output depends on CS or NS
 //
 // Dependencies: 
 //
@@ -22,7 +22,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 // Module Declaration                                                            //
 ///////////////////////////////////////////////////////////////////////////////////
-module fsm_cs(
+module fsm (
     clk, rst_n, jump, dout_p, dout_q
     );
 

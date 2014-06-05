@@ -1,18 +1,18 @@
 `timescale 1ns / 1ps
 
 ////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
+// Company: BUPT MITC 
+// Engineer: Chien Gu
 //
 // Create Date:   10:11:40 06/05/2014
-// Design Name:   fsm_cs
-// Module Name:   E:/fpga-projects/fsm_test/tb_fsm_cs.v
+// Design Name:   fsm
+// Module Name:   E:/fpga-projects/fsm_test/tb_fsm.v
 // Project Name:  fsm_test
 // Target Device:  
 // Tool versions:  
 // Description: 
 //
-// Verilog Test Fixture created by ISE for module: fsm_cs
+// Verilog Test Fixture created by ISE for module: fsm
 //
 // Dependencies:
 // 
@@ -22,7 +22,7 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module tb_fsm_cs;
+module tb_fsm;
 
 	// Inputs
 	reg clk;
@@ -34,7 +34,7 @@ module tb_fsm_cs;
 	wire dout_q;
 
 	// Instantiate the Unit Under Test (UUT)
-	fsm_cs uut (
+	fsm uut (
 		.clk(clk), 
 		.rst_n(rst_n), 
 		.jump(jump), 
