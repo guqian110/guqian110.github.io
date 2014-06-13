@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/arduino.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-06-13T20:31:00+08:00</updated><entry><title>学习 Arduino #3 Intel Galileo Linux</title><link href="http://guqian110.github.io/pages/2014/06/13/learing_arduino_series_3_intel_galileo_linux.html" rel="alternate"></link><updated>2014-06-13T20:31:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-06-13:pages/2014/06/13/learing_arduino_series_3_intel_galileo_linux.html</id><summary type="html">&lt;h2&gt;Linux on Galileo Board&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/arduino.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-06-13T20:31:00+08:00</updated><entry><title>学习 Arduino #3 Intel Galileo Linux</title><link href="http://guqian110.github.io/pages/2014/06/13/learning_arduino_series_3_intel_galileo_linux.html" rel="alternate"></link><updated>2014-06-13T20:31:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-06-13:pages/2014/06/13/learning_arduino_series_3_intel_galileo_linux.html</id><summary type="html">&lt;h2&gt;Linux on Galileo Board&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;Galileo 不是简单的 Arduino 板子，实际上它运行着一个 Linux 操作系统。把它看作是 “兼容 Arduibo 接口的板子” 或许更合适一些。&lt;/p&gt;
 &lt;p&gt;Galileo 板子上容量为 8 MB 的 SPI Flash 中已经烧写了一个精简版的 Linux 系统，因为容量的限制，这个系统去掉了一些不常用的模块，比如 wi-fi 驱动，python 支持等。&lt;/p&gt;
@@ -23,7 +23,7 @@
 &lt;li&gt;Galileo 电源&lt;/li&gt;
 &lt;li&gt;micro USB 线&lt;/li&gt;
 &lt;li&gt;5 类网线&lt;/li&gt;
-&lt;li&gt;运行着 LInux (Ubuntu) 的 PC&lt;/li&gt;
+&lt;li&gt;运行着 Linux (Ubuntu) 的 PC&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;因为没有串口线，所以我们采用第 2 种方案，即直接连接 PC 和 Galileo，通过 Ethernet 登录。&lt;/p&gt;
 &lt;h3&gt;Summary&lt;/h3&gt;
@@ -104,7 +104,7 @@
 
 
 &lt;p&gt;查询结果&lt;/p&gt;
-&lt;p&gt;&lt;img alt="pc_ethernet_quary" src="/images/learning-arduinp-series-3-intel-galileo-linux/pc_ethernet_quary.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pc_ethernet_quary" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_quary.png" /&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;打开 PC 的终端 Terminal，使用 telnet 登录&lt;/p&gt;
@@ -113,7 +113,7 @@
 
 
 &lt;p&gt;登录结果，如图&lt;/p&gt;
-&lt;p&gt;&lt;img alt="pc_ethernet_login" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_login.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pc_ethernet_login" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_telnet_login.png" /&gt;&lt;/p&gt;
 &lt;p&gt;可以看到，这个精简版的 Linux 系统是不支持 Python 的。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -163,7 +163,7 @@
 &lt;li&gt;
 &lt;p&gt;这时候我们应该就可以从串口看到板子上电后 &lt;code&gt;grub&lt;/code&gt; 程序和系统启动的相关信息了。&lt;/p&gt;
 &lt;p&gt;上电后，&lt;code&gt;grub&lt;/code&gt; 引导启动哪个系统&lt;/p&gt;
-&lt;p&gt;&lt;img alt="gtkterm boot information" src="/images/learing-arduino-series-3-intel-galileo-linux/gtkterm_boot_information.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gtkterm boot information" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_boot_information.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img alt="gtkterm grub" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_grub.png" /&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -199,7 +199,7 @@
 &lt;li&gt;
 &lt;p&gt;这时候我们应该就可以从串口看到板子上电后 &lt;code&gt;grub&lt;/code&gt; 程序和系统启动的相关信息了。&lt;/p&gt;
 &lt;p&gt;上电后，&lt;code&gt;grub&lt;/code&gt; 引导启动哪个系统&lt;/p&gt;
-&lt;p&gt;&lt;img alt="gtkterm boot information" src="/images/learing-arduino-series-3-intel-galileo-linux/putty_boot_information.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gtkterm boot information" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_boot_information.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img alt="gtkterm grub" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_grub.png" /&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;

@@ -2,7 +2,7 @@ Title: 学习 Arduino #3 Intel Galileo Linux
 Date: 2014-06-13 20:31
 Category: Arduino
 Tags: Arduino, Linux
-Slug: learing_arduino_series_3_intel_galileo_linux
+Slug: learning_arduino_series_3_intel_galileo_linux
 Author: Chien Gu
 Summary: 学习 Arduino，#3 通过 Ethernet 登录到 Galileo 上的 Linux 系统
 
@@ -39,7 +39,7 @@ Intel 论坛的一个帖子列举了几种登录到 Galileo Linux 的方法
 + Galileo 电源
 + micro USB 线
 + 5 类网线
-+ 运行着 LInux (Ubuntu) 的 PC
++ 运行着 Linux (Ubuntu) 的 PC
 
 因为没有串口线，所以我们采用第 2 种方案，即直接连接 PC 和 Galileo，通过 Ethernet 登录。
 
@@ -108,15 +108,15 @@ Galileo 默认是不开启 `Lan` 的，也不开启 `Telnet` 服务，所以我�
     
     查询结果
     
-    ![pc_ethernet_quary](/images/learning-arduinp-series-3-intel-galileo-linux/pc_ethernet_quary.png)
+    ![pc_ethernet_quary](/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_quary.png)
 
-2. 打开 PC 的终端 Terminal，使用 telnet 登录
+3. 打开 PC 的终端 Terminal，使用 telnet 登录
 
         telnet 169.254.1.1
         
     登录结果，如图
         
-    ![pc_ethernet_login](/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_login.png)
+    ![pc_ethernet_login](/images/learning-arduino-series-3-intel-galileo-linux/pc_telnet_login.png)
     
     可以看到，这个精简版的 Linux 系统是不支持 Python 的。
         
@@ -172,7 +172,7 @@ Galileo 默认是不开启 `Lan` 的，也不开启 `Telnet` 服务，所以我�
 
     上电后，`grub` 引导启动哪个系统
 
-    ![gtkterm boot information](/images/learing-arduino-series-3-intel-galileo-linux/gtkterm_boot_information.png)
+    ![gtkterm boot information](/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_boot_information.png)
 
     ![gtkterm grub](/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_grub.png)
     
@@ -212,7 +212,7 @@ Galileo 默认是不开启 `Lan` 的，也不开启 `Telnet` 服务，所以我�
 
     上电后，`grub` 引导启动哪个系统
 
-    ![gtkterm boot information](/images/learing-arduino-series-3-intel-galileo-linux/putty_boot_information.png)
+    ![gtkterm boot information](/images/learning-arduino-series-3-intel-galileo-linux/putty_boot_information.png)
 
     ![gtkterm grub](/images/learning-arduino-series-3-intel-galileo-linux/putty_grub.png)
     
