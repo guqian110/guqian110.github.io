@@ -4,7 +4,7 @@ Category: Arduino
 Tags: Arduino, Linux
 Slug: learning_arduino_series_3_intel_galileo_linux
 Author: Chien Gu
-Summary: 学习 Arduino，#3 通过 Ethernet 登录到 Galileo 上的 Linux 系统
+Summary: 学习 Arduino，#3 通过 Ethernet & Serial Port 登录到 Galileo 上的 Linux 系统
 
 ## Linux on Galileo Board
 * * *
