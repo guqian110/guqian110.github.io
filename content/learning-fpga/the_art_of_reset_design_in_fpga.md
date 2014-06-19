@@ -99,7 +99,7 @@ Summary: 总结 FPGA 中的复位设计
 
     有很多教材和博客都直接说 “同步复位会产生额外的逻辑资源”，可能他们是基于 Altera 的 FPGA 这么做的，如下图所示：
     
-    ![extra logic](/images/the-art-of-reset-design-in-fpga/extra_reset.png)
+    ![extra logic](/images/the-art-of-reset-design-in-fpga/extra_logic.png)
     
     但是根据我实际的测试结果，对于 Virtex 5 系列的芯片，它的原语里面已经含有各种带同步、异步复位端口的 FF，ISE 自带的 XST 也已经很智能了，它会根据代码分析，自动选择合适的 FF。所以上面同步复位综合出来的 RTL Schematic 中没有所谓的 “多余的逻辑资源”。
     
@@ -167,7 +167,7 @@ Summary: 总结 FPGA 中的复位设计
 
 它的原理如下图所示
 
-![reset synchronizer](/imags/the-art-of-reset-degign-in-fpga/reset_synchronizer.png)
+![reset synchronizer](/images/the-art-of-reset-degign-in-fpga/reset_synchronizer.png)
 
 针对 Xilinx 器件，用代码具体实现
 
@@ -252,13 +252,13 @@ Summary: 总结 FPGA 中的复位设计
 
 下图所示的方案是使用 时钟树 的一个叶子分支来驱动 `Reset Synchronizer`。但是，大多数情况下，时钟频率都比较高，叶子分支的时钟无法在一个时钟周期内，既要穿过时钟树，还要驱动 `Reset synchroinzer`，然后再将得到的复位信号穿过 复位树，输入到负载端口。
 
-![reset tree driven delayed clock](/iamges/the-art-of-reset-design-in-fpga/reset_tree_delayed_clock.png)
+![reset tree driven delayed clock](/images/the-art-of-reset-design-in-fpga/reset_tree_delayed_clock.png)
 
 **方案二：**
 
 为了加速 reset 信号到达触发器，触发器使用的时钟与 reset 信号是并行的。如图所示。但是，这时候 reset 和 clock 是异步的，所以必须在 `PAR` 之后进行 `STA`，保证异步复位信号释放(release)和使能(enable)时满足 `建立时间(setuo time)` 和 `保持时间(hold time)`。
 
-![reset tree driven delayed clock](/iamges/the-art-of-reset-design-in-fpga/reset_tree_parallel_clock.png)
+![reset tree driven delayed clock](/images/the-art-of-reset-design-in-fpga/reset_tree_parallel_clock.png)
 
 <br>
 
@@ -267,7 +267,7 @@ Summary: 总结 FPGA 中的复位设计
 
 使用异步复位信号时，考虑到异步复位信号对毛次比较敏感，所以在一些系统中需要处理毛次，下图显示了一种简单但是比较丑陋的方法(时延不是固定的，会随温度、电压变化)
 
-![reset glitch filtering](/iamges/the-art-of-reset-design-in-fpga/reset_glitch_filtering.png)
+![reset glitch filtering](/images/the-art-of-reset-design-in-fpga/reset_glitch_filtering.png)
 
 需要注意的是
 
@@ -290,13 +290,13 @@ Summary: 总结 FPGA 中的复位设计
 
 对于多时钟域的设计，很多时候不同时钟域之间复位信号的先后顺序没有要求，尤其是在有 `request-acknowledge` 这样握手信号的系统中，不会引起硬件上的错误操作，这时候下图所示的方法就足够了。
 
-![non coordinated reset](/iamges/the-art-of-reset-design-in-fpga/non_coordination.png)
+![non coordinated reset](/images/the-art-of-reset-design-in-fpga/non_coordination.png)
 
 **Sequenced coordination of reset removal**
 
 对于一些设计，要求复位信号的释放顺序有一定顺序，这时候应该使用下图所示的方法
 
-![sequenced rcoordination](/iamges/the-art-of-reset-design-in-fpga/sequenced_coordination.png)
+![sequenced rcoordination](/images/the-art-of-reset-design-in-fpga/sequenced_coordination.png)
 
 <br>
 
