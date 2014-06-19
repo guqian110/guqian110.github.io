@@ -167,7 +167,7 @@ Summary: 总结 FPGA 中的复位设计
 
 它的原理如下图所示
 
-![reset synchronizer](/images/the-art-of-reset-degign-in-fpga/reset_synchronizer.png)
+![reset synchronizer](/images/the-art-of-reset-design-in-fpga/reset_synchronizer.png)
 
 针对 Xilinx 器件，用代码具体实现
 
