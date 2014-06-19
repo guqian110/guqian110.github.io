@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>FPGA 中的复位设计 - Coding Life</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="http://guqian110.github.io/images/favicon.jpg" rel="icon">
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Coding Life" />
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="FPGA 中的复位设计"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html"/>
+            <meta property="og:description" content="总结 FPGA 中的复位设计"/>
+            <meta property="article:published_time" content="2014-06-20" />
+            <meta property="article:section" content="FPGA" />
+            <meta property="article:tag" content="FPGA" />
+            <meta property="article:tag" content="reset" />
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://guqian110.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+        <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Coding Life ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://guqian110.github.io/" class="navbar-brand">
+<img src="http://guqian110.github.io/images/logo.jpg" width=""/> Coding Life            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li class="active">
+                            <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/others.html">Others</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://guqian110.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="http://guqian110.github.io" title="Coding Life"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="http://guqian110.github.io/category/fpga.html" title="FPGA">FPGA</a></li>
+                <li class="active">FPGA 中的复位设计</li>
+            </ol>
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html"
+                       rel="bookmark"
+                       title="Permalink to FPGA 中的复位设计">
+                        FPGA 中的复位设计
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-06-20T00:22:00"> Fri 20 June 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://guqian110.github.io/tag/fpga.html">FPGA</a>
+        /
+	<a href="http://guqian110.github.io/tag/reset.html">reset</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>复位信号在系统中的地位和时钟信号几乎同等重要，我们想尽量把系统设计为可控，那么最基本的控制信号就是复位信号了。</p>
+<p>复位信号的设计需要考虑的因素，各种书刊、论文、白皮书、网上论坛都有相关讨论，但是至今对于给定 FPGA 设计中使用哪种复位方案仍然没有明确答案。本文总结了一些大神的经典论文和网上的许多博客，尽可能用简单的图说明选择某种设计方案及其理由，涉及的更深入的原理请自行 Google :-P</p>
+<p><br></p>
+<h2>Active low  V.S.  Active high</h2>
+<hr />
+<p>大多数书籍和博客都推荐使用 “异步复位，低电平有效” 的复位方案，却没有明确说明为什么使用 “低电平有效”。</p>
+<p>目前大多数书籍中都使用 低电平复位，网上给出的理由是</p>
+<ol>
+<li>
+<p>ASIC 设计大多数是低电平复位</p>
+</li>
+<li>
+<p>大多数厂商使用低电平复位多一些 (Xilinx 基本全是高电平复位，这也叫大多数？)</p>
+</li>
+<li>
+<p>低电平复位方式，在上电时系统就处于复位状态</p>
+</li>
+</ol>
+<p>但是从我找到的资料来看， Xilinx 的器件全部是高电平复位端口，他们的 white paper 中的例子也都是高电平复位方式。而且，从综合结果来看，如果非要使用低电平复位，那么就会额外添加一个反相器，然后将反向得到的高电平连接到 FF 的复位端口。</p>
+<p>所以，个人观点：</p>
+<ol>
+<li>
+<p>应该参考器件决定使用那种方式</p>
+</li>
+<li>
+<p>对于 Xilinx 器件，应该使用高电平复位方式</p>
+</li>
+</ol>
+<p><br></p>
+<h2>Synchronous V.S. Asynchronous</h2>
+<hr />
+<h3>Synchronous Reset</h3>
+<p>模块的 <code>sensitivity list</code> 中不包含 <code>rst</code> 信号。</p>
+<p><strong>code:</strong></p>
+<div class="highlight"><pre><span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="n">q</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+    <span class="n">end</span>
+    <span class="k">else</span> <span class="n">begin</span>
+        <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
+    <span class="n">end</span>
+<span class="n">end</span>
+</pre></div>
+
+
+<p><strong>RTL Schematic:</strong></p>
+<p><img alt="sync reset" src="/images/the-art-of-reset-design-in-fpga/sync_reset.png" /></p>
+<p>其中 <code>fdr</code> 是 Xilinx 的原语，表示 <code>Singal Data Rate D Flip-Flop with Synchronous Reset and Clock Enable (posedge clk)</code></p>
+<div class="highlight"><pre><span class="c1">// FDRE: Single Data Rate D Flip-Flop with Synchronous Reset and</span>
+<span class="c1">//       Clock Enable (posedge clk).</span>
+<span class="c1">//       All families.</span>
+<span class="c1">// Xilinx HDL Language Template, version 13.3</span>
+
+<span class="no">FDRE</span> <span class="p">#(</span>
+   <span class="p">.</span><span class="no">INIT</span><span class="p">(</span><span class="mh">1&#39;b0</span><span class="p">)</span> <span class="c1">// Initial value of register (1&#39;b0 or 1&#39;b1)</span>
+<span class="p">)</span> <span class="n">FDRE_inst</span> <span class="p">(</span>
+   <span class="p">.</span><span class="no">Q</span><span class="p">(</span><span class="no">Q</span><span class="p">),</span>      <span class="c1">// 1-bit Data output</span>
+   <span class="p">.</span><span class="no">C</span><span class="p">(</span><span class="no">C</span><span class="p">),</span>      <span class="c1">// 1-bit Clock input</span>
+   <span class="p">.</span><span class="no">CE</span><span class="p">(</span><span class="no">CE</span><span class="p">),</span>    <span class="c1">// 1-bit Clock enable input</span>
+   <span class="p">.</span><span class="no">R</span><span class="p">(</span><span class="no">R</span><span class="p">),</span>      <span class="c1">// 1-bit Synchronous reset input</span>
+   <span class="p">.</span><span class="no">D</span><span class="p">(</span><span class="no">D</span><span class="p">)</span>       <span class="c1">// 1-bit Data input</span>
+<span class="p">);</span>
+
+<span class="c1">// End of FDRE_inst instantiation</span>
+</pre></div>
+
+
+<p>有时候，有些器件不带同步复位专用端口，这时候一般会将复位信号综合为输入信号的使能信号，这时候就需要额外的逻辑资源了。</p>
+<h4>Advantage</h4>
+<ol>
+<li>
+<p>保证设计是 100% 同步，有利于时序分析，也利于仿真</p>
+</li>
+<li>
+<p>降低亚稳态出现的几率，时钟起到过滤毛刺的作用(如果毛刺发生在时钟沿附近，那么仍然会出现亚稳态的问题)</p>
+</li>
+<li>
+<p>在某些设计中，复位信号是由内部逻辑产生的，推荐使用同步复位，因为这样可以避免逻辑产生的毛刺</p>
+</li>
+</ol>
+<h4>Disadvantage</h4>
+<ol>
+<li>
+<p>同步复位需要保证复位信号具有一定的脉冲宽度(脉冲延展器)，使其能被时钟沿采样到</p>
+</li>
+<li>
+<p>在仿真过程中，同步复位信号可能被X态掩盖(?不懂...)</p>
+</li>
+<li>
+<p>如果设计中含有三态总线，为了防止三态总线的竞争，同步复位的芯片必须有一个上电异步复位</p>
+</li>
+<li>
+<p>如果逻辑器件的目标库内的 FF 只有异步复位端口，那么使用同步复位的话，综合器会将复位信号综合为输入信号的使能信号，这时候就需要额外的逻辑资源了。</p>
+<p>有很多教材和博客都直接说 “同步复位会产生额外的逻辑资源”，可能他们是基于 Altera 的 FPGA 这么做的，如下图所示：</p>
+<p><img alt="extra logic" src="/images/the-art-of-reset-design-in-fpga/extra_reset.png" /></p>
+<p>但是根据我实际的测试结果，对于 Virtex 5 系列的芯片，它的原语里面已经含有各种带同步、异步复位端口的 FF，ISE 自带的 XST 也已经很智能了，它会根据代码分析，自动选择合适的 FF。所以上面同步复位综合出来的 RTL Schematic 中没有所谓的 “多余的逻辑资源”。</p>
+<p>所以，是否占用多余的资源，还得针对具体的板子分析。</p>
+</li>
+</ol>
+<h3>Asynchronous</h3>
+<p><strong>code:</strong></p>
+<div class="highlight"><pre><span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="n">q</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+    <span class="n">end</span>
+    <span class="k">else</span> <span class="n">begin</span>
+        <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
+    <span class="n">end</span>
+<span class="n">end</span>
+</pre></div>
+
+
+<p><strong>RTL Schematic:</strong></p>
+<p><img alt="aync reset" src="/images/the-art-of-reset-design-in-fpga/async_reset.png" /></p>
+<p>其中 <code>fdc</code> 是 Xilinx 的原语，表示 <code>Single Data Rate D Flip-Flop with Asynchronous Clear and Clock Enable (posedge clk)</code></p>
+<div class="highlight"><pre><span class="c1">// FDCE: Single Data Rate D Flip-Flop with Asynchronous Clear and</span>
+<span class="c1">//       Clock Enable (posedge clk).</span>
+<span class="c1">//       All families.</span>
+<span class="c1">// Xilinx HDL Language Template, version 13.3</span>
+
+<span class="no">FDCE</span> <span class="p">#(</span>
+   <span class="p">.</span><span class="no">INIT</span><span class="p">(</span><span class="mh">1&#39;b0</span><span class="p">)</span> <span class="c1">// Initial value of register (1&#39;b0 or 1&#39;b1)</span>
+<span class="p">)</span> <span class="n">FDCE_inst</span> <span class="p">(</span>
+   <span class="p">.</span><span class="no">Q</span><span class="p">(</span><span class="no">Q</span><span class="p">),</span>      <span class="c1">// 1-bit Data output</span>
+   <span class="p">.</span><span class="no">C</span><span class="p">(</span><span class="no">C</span><span class="p">),</span>      <span class="c1">// 1-bit Clock input</span>
+   <span class="p">.</span><span class="no">CE</span><span class="p">(</span><span class="no">CE</span><span class="p">),</span>    <span class="c1">// 1-bit Clock enable input</span>
+   <span class="p">.</span><span class="no">CLR</span><span class="p">(</span><span class="no">CLR</span><span class="p">),</span>  <span class="c1">// 1-bit Asynchronous clear input</span>
+   <span class="p">.</span><span class="no">D</span><span class="p">(</span><span class="no">D</span><span class="p">)</span>       <span class="c1">// 1-bit Data input</span>
+<span class="p">);</span>
+
+<span class="c1">// End of FDCE_inst instantiation</span>
+</pre></div>
+
+
+<p>异步复位的优缺点和同步复位是相对应的：</p>
+<h4>Advantage</h4>
+<ol>
+<li>
+<p>脉冲宽度没有限制，可以快速复位</p>
+</li>
+<li>
+<p>EDA 工具 route 起来更容易，对于大型设计，能显著减少编译时间</p>
+</li>
+<li>
+<p>没有时钟的时候也可以将电路复位 (比如省电模式下，同步复位无法工作，而异步复位是可以的)</p>
+</li>
+<li>
+<p>无需额外的组合逻辑 (同上，具体分析)</p>
+</li>
+</ol>
+<h4>Disadvantage</h4>
+<ol>
+<li>
+<p>不是同步电路，不利于时序分析，设计者要正确约束异步复位信号比同步复位复杂</p>
+</li>
+<li>
+<p>复位信号容易收到毛刺的干扰</p>
+</li>
+<li>
+<p>容易在复位信号撤销的时候(release)不满足 <code>removal time</code> 时序要求，从而产生亚稳态 (关于亚稳态，网上有很多论文、博客都有详细说明)</p>
+</li>
+</ol>
+<h3>Reset Synchronizer</h3>
+<p>两种复位方式各有优缺点，设计者应该根据实际情况选择合适的复位方法。目前，很多文献书籍中都推荐一种 “异步复位，同步释放” 的方法。这种方法可以将两者结合起来，取长补短。</p>
+<p>它的原理如下图所示</p>
+<p><img alt="reset synchronizer" src="/imags/the-art-of-reset-degign-in-fpga/reset_synchronizer.png" /></p>
+<p>针对 Xilinx 器件，用代码具体实现</p>
+<p><strong>code:</strong></p>
+<div class="highlight"><pre><span class="n">module</span> <span class="nf">SYSRST</span><span class="p">(</span>
+    <span class="n">clk</span><span class="p">,</span> <span class="n">rst_pb</span><span class="p">,</span> <span class="n">sys_rst</span>
+    <span class="p">);</span>
+
+    <span class="n">input</span>       <span class="n">clk</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">rst_pb</span><span class="p">;</span>
+
+    <span class="n">output</span>      <span class="n">sys_rst</span><span class="p">;</span>
+    <span class="n">reg</span>         <span class="n">sys_rst</span><span class="p">;</span>
+
+    <span class="n">reg</span>         <span class="n">rst_r</span><span class="p">;</span>
+
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst_pb</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst_pb</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="c1">// reset</span>
+            <span class="n">rst_r</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b1</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="n">rst_r</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
+
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst_pb</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst_pb</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="c1">// reset</span>
+            <span class="n">sys_rst</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b1</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="n">sys_rst</span> <span class="o">&lt;=</span> <span class="n">rst_r</span><span class="p">;</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
+
+<span class="n">endmodule</span>
+</pre></div>
+
+
+<p><strong>RTL Schematic:</strong></p>
+<p><img alt="reset synchronizer" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer_rtl.png" /></p>
+<p>其中，<code>rst_pb</code> 是系统的复位按钮，<code>sys_rst</code> 是同步化的结果。前面的原理图是按照低有效复位说明的，而 Xilnx 的 FPGA 都是高有效复位，所以综合出的 RTL 图则正好相反，复位按钮接到了 FF 的置位端，第一级 FF 的输入也由 <code>Vcc</code> 变为 <code>GND</code>。</p>
+<p><strong>Simulation:</strong></p>
+<p><img alt="simulation" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer_simulation.png" /></p>
+<p>所谓 “异步复位”，如上图(由于连接到了置位端，叫 “异步置位” 更合适)，一旦复位信号 <code>rst_pb</code> 有效，那么输出端口 <code>sys_rst</code> 立即被置为 <code>1</code>，否则输出为 <code>0</code>。</p>
+<p>所谓 “同步释放”。如上图，当复位信号 <code>rst_pb</code> 释放时(从有效变为无效)，输出端口 <code>sys_rst</code> 不是立即变化，而是被 FF 延迟了一个时钟输出，从而使其和时钟同步化。这个和时钟同步化的复位信号可以有效的驱动后面的逻辑，避免亚稳态。</p>
+<p>可以看到，所谓的这种 “异步复位，同步释放” 的方法，其本质就是要 <strong>利用异步复位来产生一个同步复位的功能。</strong></p>
+<p>为什么不直接使用异步复位呢？因为异步复位容易产生亚稳态的问题。</p>
+<p>为什么不直接使用同步复位呢？因为很多器件只有异步复位端口，不支持同步复位端口，如果要使用同步复位，就会产生额外的逻辑，消耗资源。</p>
+<p>所以，这种方法的根本思想就是 <strong>异步信号同步化</strong>。</p>
+<h4>Conclusion</h4>
+<p>知道了这点，选择复位信号的策略就很明显了：</p>
+<ol>
+<li>
+<p>尽可能使用同步复位，保持设计 “同步化”</p>
+</li>
+<li>
+<p>如果器件本身是带有同步复位端口的，那么在写代码时就直接使用同步复位就可以了(Xilinx 所有的芯片都带有同步/异步复位端口)</p>
+</li>
+<li>
+<p>如果不带有同步复位端口，那么就需要使用这种异步复位同步化</p>
+</li>
+</ol>
+<p><br></p>
+<h2>Reset Distribution Tree</h2>
+<hr />
+<p>复位信号的 <code>reset distribution tree</code> 和 时钟信号的 <code>clock distribution tree</code> 差不多同等重要，因为在设计中，几乎每个器件都有时钟端口和复位端口(同步/异步)。</p>
+<p><code>reset distribution tree</code> 和 <code>clock distribution tree</code> 最大的区别就是它们对 <code>skew</code> 的要求不同。不像时钟信号的要求那么严格，复位信号之间的 skew 不需要那么严格，只要复位信号的延迟足够小，满足能在一个时钟周期内到达所有的复位负载端，并且满足各个寄存器和触发器的 <code>recovery time</code> 即可。</p>
+<p><strong>方案一：</strong></p>
+<p>下图所示的方案是使用 时钟树 的一个叶子分支来驱动 <code>Reset Synchronizer</code>。但是，大多数情况下，时钟频率都比较高，叶子分支的时钟无法在一个时钟周期内，既要穿过时钟树，还要驱动 <code>Reset synchroinzer</code>，然后再将得到的复位信号穿过 复位树，输入到负载端口。</p>
+<p><img alt="reset tree driven delayed clock" src="/iamges/the-art-of-reset-design-in-fpga/reset_tree_delayed_clock.png" /></p>
+<p><strong>方案二：</strong></p>
+<p>为了加速 reset 信号到达触发器，触发器使用的时钟与 reset 信号是并行的。如图所示。但是，这时候 reset 和 clock 是异步的，所以必须在 <code>PAR</code> 之后进行 <code>STA</code>，保证异步复位信号释放(release)和使能(enable)时满足 <code>建立时间(setuo time)</code> 和 <code>保持时间(hold time)</code>。</p>
+<p><img alt="reset tree driven delayed clock" src="/iamges/the-art-of-reset-design-in-fpga/reset_tree_parallel_clock.png" /></p>
+<p><br></p>
+<h2>Reset Glitch Filtering</h2>
+<hr />
+<p>使用异步复位信号时，考虑到异步复位信号对毛次比较敏感，所以在一些系统中需要处理毛次，下图显示了一种简单但是比较丑陋的方法(时延不是固定的，会随温度、电压变化)</p>
+<p><img alt="reset glitch filtering" src="/iamges/the-art-of-reset-design-in-fpga/reset_glitch_filtering.png" /></p>
+<p>需要注意的是</p>
+<ol>
+<li>
+<p><code>毛刺 Glitch</code> 是一个很重要的问题，不论是对于时钟、复位信号还是其他信号，详细讨论待续</p>
+</li>
+<li>
+<p>不是所有的系统都需要过滤毛次，设计者要先研究需求，再觉得是否使用延时来过滤毛次</p>
+</li>
+</ol>
+<p><br></p>
+<h2>Multi-clock Reset</h2>
+<hr />
+<p>在一个系统中，往往有多个时钟，这时候有必要为每个时钟域分配一个复位信号。</p>
+<p>因为只有一个全局复位的话，它与系统的时钟都没有关系，是异步复位信号，要求这个信号满足所有时钟域的 recovery 和 removal 时序不是一件容易的事情，因为为每个时钟域分配复位是有必要的。</p>
+<p>根据实际情况的不同，有两种方案可以采用：</p>
+<p><strong>Non-coordinated reset removal</strong></p>
+<p>对于多时钟域的设计，很多时候不同时钟域之间复位信号的先后顺序没有要求，尤其是在有 <code>request-acknowledge</code> 这样握手信号的系统中，不会引起硬件上的错误操作，这时候下图所示的方法就足够了。</p>
+<p><img alt="non coordinated reset" src="/iamges/the-art-of-reset-design-in-fpga/non_coordination.png" /></p>
+<p><strong>Sequenced coordination of reset removal</strong></p>
+<p>对于一些设计，要求复位信号的释放顺序有一定顺序，这时候应该使用下图所示的方法</p>
+<p><img alt="sequenced rcoordination" src="/iamges/the-art-of-reset-design-in-fpga/sequenced_coordination.png" /></p>
+<p><br></p>
+<h2>Shift Register Reset</h2>
+<hr />
+<p>并不是每一个设计，器件中的每一个寄存器都需要复位的。最好的做法是只将复位连接到那些需要复位的寄存器。</p>
+<p>如果一个模块内部含有一组触发器(移位寄存器)，这些寄存器可以分为两类：</p>
+<ol>
+<li>
+<p>resetable flip-flops</p>
+<p>第一个 ff，它是需要复位信号的</p>
+</li>
+<li>
+<p>follower flip-flops</p>
+<p>后续的 ff，仅作为简单的数据移位寄存器，不含复位端</p>
+</li>
+</ol>
+<p>那么在设计时应该只复位第一个触发器，后续的触发器仅作为数据寄存器使用，不能对它们进行复位。
+这里体现出来的一个原则就是：能节省 reset 时，尽量节省。</p>
+<p>原因就是 reset 作为一个实际存在的物理信号，需要占用 FPGA 内部的 route 资源，往往 reset 的fanout 又多得吓人。这就很容易造成 route 难度上升，性能下降，编译时间增加。因此，在 FPGA 设计中能省略的复位应尽量省略。</p>
+<h3>Principle</h3>
+<p>每个 <code>always</code> 模块只对一种 FF 建模。也就是说，不要把这两种 FF 写在同一个 always 块中。</p>
+<h3>Code</h3>
+<p><strong>Bad Style:</strong></p>
+<div class="highlight"><pre><span class="n">module</span> <span class="nf">BADSTYLE</span> <span class="p">(</span>
+    <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">q</span><span class="p">);</span>
+
+    <span class="n">input</span>       <span class="n">clk</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">rst</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">d</span><span class="p">;</span>
+
+    <span class="n">output</span>      <span class="n">q</span><span class="p">;</span>
+    <span class="n">reg</span>         <span class="n">q</span><span class="p">;</span>
+
+    <span class="n">reg</span>         <span class="n">tmp</span><span class="p">;</span>
+
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
+            <span class="n">q</span>   <span class="o">&lt;=</span> <span class="n">tmp</span><span class="p">;</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
+
+<span class="n">endmodule</span>
+</pre></div>
+
+
+<p><strong>RTL Schematic:</strong></p>
+<p>如图，复位信号 <code>rst</code> 对于第二个 ff 来说，是一个片选信号 <code>ce</code>，这样的设计产生额外的逻辑，是不好的。</p>
+<p><img alt="bad style" src="/images/the-art-of-reset-design-in-fpga/bad_style.png" /></p>
+<p><strong>Good Style:</strong></p>
+<div class="highlight"><pre><span class="n">module</span> <span class="nf">GOODSTYLE</span> <span class="p">(</span>
+    <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">q</span>
+    <span class="p">);</span>
+
+    <span class="n">input</span>       <span class="n">clk</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">rst</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">d</span><span class="p">;</span>
+
+    <span class="n">output</span>      <span class="n">q</span><span class="p">;</span>
+    <span class="n">reg</span>         <span class="n">q</span><span class="p">;</span>
+
+    <span class="n">reg</span>         <span class="n">tmp</span><span class="p">;</span>
+
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
+
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">tmp</span><span class="p">;</span>
+    <span class="n">end</span>
+
+<span class="n">endmodule</span>
+</pre></div>
+
+
+<p><strong>RTL Schematic:</strong></p>
+<p>如图，复位信号 <code>rst</code> 对于两个 ff 来说，都是复位信号，不需要额外的逻辑，这样的设计是比较好的。</p>
+<p><img alt="good style" src="/images/the-art-of-reset-design-in-fpga/good_style.png" /></p>
+<p><br></p>
+<h2>Think Local, Not Global</h2>
+<hr />
+<p>我们应该遵守一个原则：能不用全局复位时，尽量不要使用。</p>
+<p>这个原则和我们平时的理解和习惯是相反的，Xilinx 官方有个 white paper  <a href="http://www.xilinx.com/support/documentation/white_papers/wp272.pdf">Get Smart About Reset: Think Local, Not Global</a>，专门讲了尽量避免使用 GSR，原因主要有三个：首先，随着时钟速率的提高，GSR 逐渐变为时序关键路径；其次，如果电路中没有反馈环路，那么上电初始化已经足够了，很多设计中的 reset 信号都可以省去；最后，代码中简单的添加一个 reset 端口，在底层实现时要消耗很多我们想不到的资源。</p>
+<p><br></p>
+<h2>Reference</h2>
+<p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2002SJ_Resets.pdf">Synchronous Resets? Asynchronous Resets? I am so confused! How will I ever know which to use?</a></p>
+<p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2003Boston_Resets.pdf">Asynchronous &amp; Synchronous Reset Design Techniques - Part Deux</a></p>
+<p><a href="http://www.xilinx.com/support/documentation/white_papers/wp272.pdf">Get Smart About Reset: Think Local, Not Global</a></p>
+<p><a href="http://www.eefocus.com/coyoo/blog/13-12/301045_9c39f.html">FPGA复位电路的实现及其时序分析</a></p>
+<p><a href="http://book.douban.com/subject/4893454/">深入浅出玩转 FPGA</a></p>
+<p><a href="http://item.jd.com/11337565.html">100 Power Tips for FPGA Designers</a></p>
+<p><a href="http://www.amazon.com/Advanced-FPGA-Design-Architecture-Implementation/dp/0470054379">Advanced FPGA Design by Steve Kilts</a></p>
+            </div>
+            <!-- /.entry-content -->
+<section class="well" id="related-posts">
+    <h4>Related Posts:</h4>
+    <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
+    </ul>
+</section>
+    <hr />
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+            var disqus_identifier = 'the_art_of_reset_design_in_fpga';
+            var disqus_url = 'http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html';
+            var disqus_config = function () {
+                this.language = "zh";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="aboutme">
+<p>
+    <strong>About Chien Gu</strong><br/>
+    BYR + Programmer + Rocker
+</p>        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                    <li class="list-group-item"><a href="http://github.com/guqian110"><i
+                            class="fa fa-github-square fa-lg"></i> GitHub
+                    </a></li>
+                    <li class="list-group-item"><a href="https://plus.google.com/u/0/+QianGu/posts/p/pub"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google-plus
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.quora.com/Chien-Gu"><i
+                            class="fa fa-quora-square fa-lg"></i> Quora
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.zhihu.com/people/chiengu"><i
+                            class="fa fa-zhihu-square fa-lg"></i> Zhihu
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.douban.com/people/51504735/"><i
+                            class="fa fa-douban-square fa-lg"></i> Douban
+                    </a></li>
+                  </ul>
+                </li>
+
+
+
+                <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group " id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-processing.html">
+                                digital processing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+
+    <li class="list-group-item"><h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+        <div id="gh_repos">
+            <p class="list-group-item">Status updating...</p>
+        </div>
+    </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://jinja.pocoo.org/" target="_blank">
+                Jinja2
+            </a>
+        </li>
+      </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Chien Gu
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://guqian110.github.io/theme/js/respond.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (!window.jXHR) {
+                var jxhr = document.createElement('script');
+                jxhr.type = 'text/javascript';
+                jxhr.src = 'http://guqian110.github.io/theme/js/jXHR.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(jxhr, s);
+            }
+
+            github.showRepos({
+                user: 'guqian110',
+                count: 5,
+                skip_forks: false,
+                target: '#gh_repos'
+            });
+        });
+    </script>
+    <script src="http://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-48826831-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</body>
+</html>
