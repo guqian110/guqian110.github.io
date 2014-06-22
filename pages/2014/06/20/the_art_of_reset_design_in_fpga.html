@@ -114,6 +114,174 @@
                 <p>复位信号在系统中的地位和时钟信号几乎同等重要，我们想尽量把系统设计为可控，那么最基本的控制信号就是复位信号了。</p>
 <p>复位信号的设计需要考虑的因素，各种书刊、论文、白皮书、网上论坛都有相关讨论，但是至今对于给定 FPGA 设计中使用哪种复位方案仍然没有明确答案。本文总结了一些大神的经典论文和网上的许多博客，尽可能用简单的图说明选择某种设计方案及其理由，涉及的更深入的原理请自行 Google :-P</p>
 <p><br></p>
+<h2>Think Local, Not Global</h2>
+<hr />
+<p>我们应该遵守一个原则：能不用全局复位时，尽量不要使用。</p>
+<p>这个原则和我们平时的理解和习惯是相反的，Xilinx 官方有个 white paper  <a href="http://www.xilinx.com/support/documentation/white_papers/wp272.pdf">Get Smart About Reset: Think Local, Not Global</a>，专门讲了尽量避免使用 GSR，原因主要有三个：</p>
+<ol>
+<li>
+<p>随着时钟速率的提高，GSR 逐渐变为时序关键路径</p>
+</li>
+<li>
+<p>如果电路中没有反馈环路，那么上电初始化已经足够了，很多设计中的 reset 信号都可以省去</p>
+<p>如果没有反馈环路，比如移位寄存器，即使开始状态是错误的，当数据流进入到一段时间，错误数据将被冲刷出去，所以没有必要保留 reset 信号。如果系统中有反馈环路，比如状态机，当初始状态不对或者状态跑飞时，无法回到正常状态，那么 reset 信号是有必要保留的。</p>
+</li>
+<li>
+<p>代码中简单的添加一个 reset 端口，在底层实现时要消耗很多我们想不到的资源。</p>
+<p>全局复位会和设计中的其他单元竞争布线资源，全局复位一般来说肯定有非常高的扇出，因为它需要连接到设计中的每一个 FF。这样，它会消耗大量的布线资源，使芯片利用率下降，同时也会影响时序性能。</p>
+</li>
+</ol>
+<p>所以，有必要使用其他的不依靠全局复位的方法。</p>
+<p>如图所示，Xilinx FPGA 在配置/重配置的时候，每个 FF 和 BRAM 都会被初始化一个预先设定的值(大部分器件的默认值是 0, 也有例外)，所以，上电配置和全局复位有着类似的功能，将每个存储单元配置为一个已知的状态。</p>
+<p>设定初值的语法很简单，只需要在定义变量时给它初始值就可以了：</p>
+<div class="highlight"><pre><span class="n">reg</span> <span class="n">tmp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+
+
+<p>和 reg 类似，BRAM 也可以在配置的时候初始化，随着嵌入式系统的 BRAM 逐渐增大，BRAM 初始化非常有用：因为预先定义 RAM 的值可以使仿真更容易，而且无需使用引导顺序为嵌入式设计清空内存。</p>
+<p>系统在上电配置时，内部有个信号叫 GSR (Global Set/Rest)，它是一种特殊的预布线的复位信号，能够在 FPGA 配置的过程中让设计保持初始状态。在配置完成后，GSR 会被释放，所有的触发器及其它资源都加载的是 INIT 值。除了在配置进程中运行 GSR，用户设计还可以通过实例化 STARTUP 模块并连接到 GSR 端口的方法来访问 GSR 网。使用该端口，设计可以重新断言 GSR 网，相应地 FPGA 中的所有存储元件将返回到它们的 INIT 属性所规定的状态。</p>
+<p>使用 GSR 的好处是 可以解决复位信号高扇出的问题，因为 GSR 是预布线的资源，它不占用每个 FF 和 Latch 的 set/reset 端口，如下图所示。很多资料都推荐将设计中的 reset 按钮连接到 GSR，以利用它比较低的 skew。</p>
+<p><img alt="gsr rset" src="/images/the-art-of-reset-design-in-fpga/gsr_reset.gif" /></p>
+<p>既然 GSR 这么好，那么是不是只使用 GSR 就可以了，不必再用 FF 和 Latch 的 set/reset 端口了呢？</p>
+<p>答案当然是否定的。由于 GSR 的释放是异步方式，所以，如果我们只使用 GSR 作为系统的唯一复位机制，那么可能导致系统不可靠。所以还是需要显示的使用同步复位信号来复位状态机、计数器等能自动改变状态的逻辑。</p>
+<h3>Conclusion</h3>
+<p>所以，解决方案就是 <strong>GSR + explict reset</strong></p>
+<p>给系统中的 reg 赋初值，对于没有环路的电路节省 reset，利用 GSR 实现复位的功能；对于有环路的电路，使用显示的复位信号。</p>
+<p><br></p>
+<h2>Shift Register Reset</h2>
+<hr />
+<p>并不是每一个设计，器件中的每一个寄存器都需要复位的。最好的做法是只将复位连接到那些需要复位的寄存器。</p>
+<p>如果一个模块内部含有一组触发器(移位寄存器)，这些寄存器可以分为两类：</p>
+<ol>
+<li>
+<p>resetable flip-flops</p>
+<p>第一个 ff，它是需要复位信号的</p>
+</li>
+<li>
+<p>follower flip-flops</p>
+<p>后续的 ff，仅作为简单的数据移位寄存器，不含复位端</p>
+</li>
+</ol>
+<p>那么在设计时应该只复位第一个触发器，后续的触发器仅作为数据寄存器使用，不能对它们进行复位。
+这里体现出来的一个原则就是：能节省 reset 时，尽量节省。</p>
+<p>原因就是 reset 作为一个实际存在的物理信号，需要占用 FPGA 内部的 route 资源，往往 reset 的fanout 又多得吓人。这就很容易造成 route 难度上升，性能下降，编译时间增加。因此，在 FPGA 设计中能省略的复位应尽量省略。</p>
+<h3>Principle</h3>
+<p>每个 <code>always</code> 模块只对一种 FF 建模。也就是说，不要把这两种 FF 写在同一个 always 块中。</p>
+<h3>Code</h3>
+<p><strong>Bad Style:</strong></p>
+<div class="highlight"><pre><span class="n">module</span> <span class="nf">BADSTYLE</span> <span class="p">(</span>
+    <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">q</span><span class="p">);</span>
+
+    <span class="n">input</span>       <span class="n">clk</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">rst</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">d</span><span class="p">;</span>
+
+    <span class="n">output</span>      <span class="n">q</span><span class="p">;</span>
+    <span class="n">reg</span>         <span class="n">q</span><span class="p">;</span>
+
+    <span class="n">reg</span>         <span class="n">tmp</span><span class="p">;</span>
+
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
+            <span class="n">q</span>   <span class="o">&lt;=</span> <span class="n">tmp</span><span class="p">;</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
+
+<span class="n">endmodule</span>
+</pre></div>
+
+
+<p><strong>RTL Schematic:</strong></p>
+<p>如图，复位信号 <code>rst</code> 对于第二个 ff 来说，是一个片选信号 <code>ce</code>，这样的设计产生额外的逻辑，是不好的。</p>
+<p><img alt="bad style" src="/images/the-art-of-reset-design-in-fpga/bad_style.png" /></p>
+<p><strong>Good Style:</strong></p>
+<div class="highlight"><pre><span class="n">module</span> <span class="nf">GOODSTYLE</span> <span class="p">(</span>
+    <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">q</span>
+    <span class="p">);</span>
+
+    <span class="n">input</span>       <span class="n">clk</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">rst</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">d</span><span class="p">;</span>
+
+    <span class="n">output</span>      <span class="n">q</span><span class="p">;</span>
+    <span class="n">reg</span>         <span class="n">q</span><span class="p">;</span>
+
+    <span class="n">reg</span>         <span class="n">tmp</span><span class="p">;</span>
+
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
+
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">tmp</span><span class="p">;</span>
+    <span class="n">end</span>
+
+<span class="n">endmodule</span>
+</pre></div>
+
+
+<p><strong>RTL Schematic:</strong></p>
+<p>如图，复位信号 <code>rst</code> 对于两个 ff 来说，都是复位信号，不需要额外的逻辑，这样的设计是比较好的。</p>
+<p><img alt="good style" src="/images/the-art-of-reset-design-in-fpga/good_style.png" /></p>
+<p><br></p>
+<h2>Reset Distribution Tree</h2>
+<hr />
+<p>复位信号的 <code>reset distribution tree</code> 和 时钟信号的 <code>clock distribution tree</code> 差不多同等重要，因为在设计中，几乎每个器件都有时钟端口和复位端口(同步/异步)。</p>
+<p><code>reset distribution tree</code> 和 <code>clock distribution tree</code> 最大的区别就是它们对 <code>skew</code> 的要求不同。不像时钟信号的要求那么严格，复位信号之间的 skew 不需要那么严格，只要复位信号的延迟足够小，满足能在一个时钟周期内到达所有的复位负载端，并且满足各个寄存器和触发器的 <code>recovery time</code> 即可。</p>
+<p><strong>方案一：</strong></p>
+<p>下图所示的方案是使用 时钟树 的一个叶子分支来驱动 <code>Reset Synchronizer</code>。但是，大多数情况下，时钟频率都比较高，叶子分支的时钟无法在一个时钟周期内，既要穿过时钟树，还要驱动 <code>Reset synchroinzer</code>，然后再将得到的复位信号穿过 复位树，输入到负载端口。</p>
+<p><img alt="reset tree driven delayed clock" src="/images/the-art-of-reset-design-in-fpga/reset_tree_delayed_clock.png" /></p>
+<p><strong>方案二：</strong></p>
+<p>为了加速 reset 信号到达触发器，触发器使用的时钟与 reset 信号是并行的。如图所示。但是，这时候 reset 和 clock 是异步的，所以必须在 <code>PAR</code> 之后进行 <code>STA</code>，保证异步复位信号释放(release)和使能(enable)时满足 <code>建立时间(setuo time)</code> 和 <code>保持时间(hold time)</code>。</p>
+<p><img alt="reset tree driven delayed clock" src="/images/the-art-of-reset-design-in-fpga/reset_tree_parallel_clock.png" /></p>
+<p><br></p>
+<h2>Reset Glitch Filtering</h2>
+<hr />
+<p>使用异步复位信号时，考虑到异步复位信号对毛次比较敏感，所以在一些系统中需要处理毛次，下图显示了一种简单但是比较丑陋的方法(时延不是固定的，会随温度、电压变化)</p>
+<p><img alt="reset glitch filtering" src="/images/the-art-of-reset-design-in-fpga/reset_glitch_filtering.png" /></p>
+<p>需要注意的是</p>
+<ol>
+<li>
+<p><code>毛刺 Glitch</code> 是一个很重要的问题，不论是对于时钟、复位信号还是其他信号，详细讨论待续</p>
+</li>
+<li>
+<p>不是所有的系统都需要过滤毛次，设计者要先研究需求，再觉得是否使用延时来过滤毛次</p>
+</li>
+</ol>
+<p><br></p>
+<h2>Multi-clock Reset</h2>
+<hr />
+<p>在一个系统中，往往有多个时钟，这时候有必要为每个时钟域分配一个复位信号。</p>
+<p>因为只有一个全局复位的话，它与系统的时钟都没有关系，是异步复位信号，要求这个信号满足所有时钟域的 recovery 和 removal 时序不是一件容易的事情，因为为每个时钟域分配复位是有必要的。</p>
+<p>根据实际情况的不同，有两种方案可以采用：</p>
+<p><strong>Non-coordinated reset removal</strong></p>
+<p>对于多时钟域的设计，很多时候不同时钟域之间复位信号的先后顺序没有要求，尤其是在有 <code>request-acknowledge</code> 这样握手信号的系统中，不会引起硬件上的错误操作，这时候下图所示的方法就足够了。</p>
+<p><img alt="non coordinated reset" src="/images/the-art-of-reset-design-in-fpga/non_coordination.png" /></p>
+<p><strong>Sequenced coordination of reset removal</strong></p>
+<p>对于一些设计，要求复位信号的释放顺序有一定顺序，这时候应该使用下图所示的方法</p>
+<p><img alt="sequenced rcoordination" src="/images/the-art-of-reset-design-in-fpga/sequenced_coordination.png" /></p>
+<p>Xilinx 的杂志上的一篇文章，<a href="http://www.eetimes.com/document.asp?doc_id=1278998">How do I reset my FPGA</a>，作者 Srikanth Erusla-gandi 是 Xilinx 的员工和培训人员。他在文中提供了一张图来说明典型的系统复位方案，图中 <code>MMCM</code> 的 <code>lock</code> 和外部输入的复位信号相与，目的是为了保证提供给后面的同步器的时钟信号是稳定的；每个时钟域都有一个同步器来同步复位信号。</p>
+<p><img alt="typical reset implementation in FPGA" src="/images/the-art-of-rset-design-in-fpga/typicla_reset.jpg" /></p>
+<p><br></p>
+<h2>Understanding the flip-flop reset behavior</h2>
+<hr />
+<p>在开始详细讨论之前，首先得理解 FPGA 的基本单元 Slice 中的 FF 的复位方式。Xilinx 的 Virtex 5 系列的芯片中的 FF 的类型都是 DFF (D-type flip flop)，这些 DFF 的控制端口包括一个时钟 CLK，一个高有效的使能 CE，一个高有效的置位/复位 SR。这个 SR 端口可以配置为同步的置位/复位，也可以配置为异步方式的置位/复位。如下图所示</p>
+<p><img alt="dff" src="/images/the-art-of-reset-design-in-fpga/dff.jpg" /></p>
+<p>我们写的 RTL 代码也会影响最终综合出来的 FF 类型。</p>
+<p>如果代码的敏感列表中包含了复位信号，那么就会综合出一个异步复位的 DFF，SR 端口将被配置为置位或者复位端口(FDPE &amp; FDCE primitive)。当 SR 变高时，FF 的输出值立即变为代码中的复位时设定的值 SRVAL。</p>
+<p>同理，如果代码的敏感列表中不包含复位信号，那么就会综合出一个同步复位的 DFF，SR 端口将被配置为置位/复位端口(FDSE &amp; FDRE primitive)。当 SR 变高时，FF 的输出值在下一个时钟的上升沿变为 SRVAL。</p>
+<p>如果我们在定义 reg 变量时给它一个初始值，那么 FPGA 在上电配置(GSR 变高)时，载入这个值。这个特性是很有用的，在后面的 <code>Think Local, Not Global</code> 中有讨论。</p>
+<p>虽然 FPGA 的 FF 可以配额为 preset/clear/set/reset，但是一个单独的 FF 只能配置为其中的一种，如果在代码中多于一个 preset/clear/set/reset，那么就会产生其他的逻辑，消耗 FPGA 资源。</p>
+<p><br></p>
 <h2>Active low  V.S.  Active high</h2>
 <hr />
 <p>大多数书籍和博客都推荐使用 “异步复位，低电平有效” 的复位方案，却没有明确说明为什么使用 “低电平有效”。</p>
@@ -129,8 +297,9 @@
 <p>低电平复位方式，在上电时系统就处于复位状态</p>
 </li>
 </ol>
-<p>但是从我找到的资料来看， Xilinx 的器件全部是高电平复位端口，他们的 white paper 中的例子也都是高电平复位方式。而且，从综合结果来看，如果非要使用低电平复位，那么就会额外添加一个反相器，然后将反向得到的高电平连接到 FF 的复位端口。</p>
-<p>所以，个人观点：</p>
+<p>但是从我找到的资料来看， Xilinx 的器件全部是高电平复位端口，他们的 white paper 中的例子也都是高电平复位方式。而且，从综合结果来看，如果非要使用低电平复位，那么就会额外添加一个反相器，然后将反向得到的高电平连接到 FF 的复位端口，从而导致复位信号的传输时延增加，芯片的利用率下降，同时会影响到时序和功耗。</p>
+<p><a href="http://www.eetimes.com/document.asp?doc_id=1278998">How do I reset my FPGA</a> 中也证实了这一点，文中提到对于 Xilinx 器件，尽可能使用高有效复位，如果实在没有办法控制系统的复位极性，那么最好在系统的顶层模块中将输入的低有效复位翻转极性，这样做的好处是反向器将被吸收到 IO logic 中，不会消耗 FPGA 内的逻辑和布线资源。</p>
+<p>所以：</p>
 <ol>
 <li>
 <p>应该参考器件决定使用那种方式</p>
@@ -318,6 +487,8 @@
 <p><strong>RTL Schematic:</strong></p>
 <p><img alt="reset synchronizer" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer_rtl.png" /></p>
 <p>其中，<code>rst_pb</code> 是系统的复位按钮，<code>sys_rst</code> 是同步化的结果。前面的原理图是按照低有效复位说明的，而 Xilnx 的 FPGA 都是高有效复位，所以综合出的 RTL 图则正好相反，复位按钮接到了 FF 的置位端，第一级 FF 的输入也由 <code>Vcc</code> 变为 <code>GND</code>。</p>
+<p><a href="http://www.eetimes.com/document.asp?doc_id=1278998">How do I reset my FPGA</a> 也证实了前面的 RTL Schematic 没有错：</p>
+<p><img alt="reset_synchronizer_xilinx" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer_xilinx.jpg" /></p>
 <p><strong>Simulation:</strong></p>
 <p><img alt="simulation" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer_simulation.png" /></p>
 <p>所谓 “异步复位”，如上图(由于连接到了置位端，叫 “异步置位” 更合适)，一旦复位信号 <code>rst_pb</code> 有效，那么输出端口 <code>sys_rst</code> 立即被置为 <code>1</code>，否则输出为 <code>0</code>。</p>
@@ -333,139 +504,12 @@
 <p>尽可能使用同步复位，保持设计 “同步化”</p>
 </li>
 <li>
-<p>如果器件本身是带有同步复位端口的，那么在写代码时就直接使用同步复位就可以了(Xilinx 所有的芯片都带有同步/异步复位端口)</p>
+<p>如果器件本身是带有同步复位端口的，那么在写代码时就直接使用同步复位就可以了(CummingsSNUG2002SJ 也说了如果如果生产商提供同步复位端口，那么使用异步复位是毫无有点的。Xilinx 就是个例子，它所有的芯片都带有同步/异步复位端口)</p>
 </li>
 <li>
 <p>如果不带有同步复位端口，那么就需要使用这种异步复位同步化</p>
 </li>
 </ol>
-<p><br></p>
-<h2>Reset Distribution Tree</h2>
-<hr />
-<p>复位信号的 <code>reset distribution tree</code> 和 时钟信号的 <code>clock distribution tree</code> 差不多同等重要，因为在设计中，几乎每个器件都有时钟端口和复位端口(同步/异步)。</p>
-<p><code>reset distribution tree</code> 和 <code>clock distribution tree</code> 最大的区别就是它们对 <code>skew</code> 的要求不同。不像时钟信号的要求那么严格，复位信号之间的 skew 不需要那么严格，只要复位信号的延迟足够小，满足能在一个时钟周期内到达所有的复位负载端，并且满足各个寄存器和触发器的 <code>recovery time</code> 即可。</p>
-<p><strong>方案一：</strong></p>
-<p>下图所示的方案是使用 时钟树 的一个叶子分支来驱动 <code>Reset Synchronizer</code>。但是，大多数情况下，时钟频率都比较高，叶子分支的时钟无法在一个时钟周期内，既要穿过时钟树，还要驱动 <code>Reset synchroinzer</code>，然后再将得到的复位信号穿过 复位树，输入到负载端口。</p>
-<p><img alt="reset tree driven delayed clock" src="/images/the-art-of-reset-design-in-fpga/reset_tree_delayed_clock.png" /></p>
-<p><strong>方案二：</strong></p>
-<p>为了加速 reset 信号到达触发器，触发器使用的时钟与 reset 信号是并行的。如图所示。但是，这时候 reset 和 clock 是异步的，所以必须在 <code>PAR</code> 之后进行 <code>STA</code>，保证异步复位信号释放(release)和使能(enable)时满足 <code>建立时间(setuo time)</code> 和 <code>保持时间(hold time)</code>。</p>
-<p><img alt="reset tree driven delayed clock" src="/images/the-art-of-reset-design-in-fpga/reset_tree_parallel_clock.png" /></p>
-<p><br></p>
-<h2>Reset Glitch Filtering</h2>
-<hr />
-<p>使用异步复位信号时，考虑到异步复位信号对毛次比较敏感，所以在一些系统中需要处理毛次，下图显示了一种简单但是比较丑陋的方法(时延不是固定的，会随温度、电压变化)</p>
-<p><img alt="reset glitch filtering" src="/images/the-art-of-reset-design-in-fpga/reset_glitch_filtering.png" /></p>
-<p>需要注意的是</p>
-<ol>
-<li>
-<p><code>毛刺 Glitch</code> 是一个很重要的问题，不论是对于时钟、复位信号还是其他信号，详细讨论待续</p>
-</li>
-<li>
-<p>不是所有的系统都需要过滤毛次，设计者要先研究需求，再觉得是否使用延时来过滤毛次</p>
-</li>
-</ol>
-<p><br></p>
-<h2>Multi-clock Reset</h2>
-<hr />
-<p>在一个系统中，往往有多个时钟，这时候有必要为每个时钟域分配一个复位信号。</p>
-<p>因为只有一个全局复位的话，它与系统的时钟都没有关系，是异步复位信号，要求这个信号满足所有时钟域的 recovery 和 removal 时序不是一件容易的事情，因为为每个时钟域分配复位是有必要的。</p>
-<p>根据实际情况的不同，有两种方案可以采用：</p>
-<p><strong>Non-coordinated reset removal</strong></p>
-<p>对于多时钟域的设计，很多时候不同时钟域之间复位信号的先后顺序没有要求，尤其是在有 <code>request-acknowledge</code> 这样握手信号的系统中，不会引起硬件上的错误操作，这时候下图所示的方法就足够了。</p>
-<p><img alt="non coordinated reset" src="/images/the-art-of-reset-design-in-fpga/non_coordination.png" /></p>
-<p><strong>Sequenced coordination of reset removal</strong></p>
-<p>对于一些设计，要求复位信号的释放顺序有一定顺序，这时候应该使用下图所示的方法</p>
-<p><img alt="sequenced rcoordination" src="/images/the-art-of-reset-design-in-fpga/sequenced_coordination.png" /></p>
-<p><br></p>
-<h2>Shift Register Reset</h2>
-<hr />
-<p>并不是每一个设计，器件中的每一个寄存器都需要复位的。最好的做法是只将复位连接到那些需要复位的寄存器。</p>
-<p>如果一个模块内部含有一组触发器(移位寄存器)，这些寄存器可以分为两类：</p>
-<ol>
-<li>
-<p>resetable flip-flops</p>
-<p>第一个 ff，它是需要复位信号的</p>
-</li>
-<li>
-<p>follower flip-flops</p>
-<p>后续的 ff，仅作为简单的数据移位寄存器，不含复位端</p>
-</li>
-</ol>
-<p>那么在设计时应该只复位第一个触发器，后续的触发器仅作为数据寄存器使用，不能对它们进行复位。
-这里体现出来的一个原则就是：能节省 reset 时，尽量节省。</p>
-<p>原因就是 reset 作为一个实际存在的物理信号，需要占用 FPGA 内部的 route 资源，往往 reset 的fanout 又多得吓人。这就很容易造成 route 难度上升，性能下降，编译时间增加。因此，在 FPGA 设计中能省略的复位应尽量省略。</p>
-<h3>Principle</h3>
-<p>每个 <code>always</code> 模块只对一种 FF 建模。也就是说，不要把这两种 FF 写在同一个 always 块中。</p>
-<h3>Code</h3>
-<p><strong>Bad Style:</strong></p>
-<div class="highlight"><pre><span class="n">module</span> <span class="nf">BADSTYLE</span> <span class="p">(</span>
-    <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">q</span><span class="p">);</span>
-
-    <span class="n">input</span>       <span class="n">clk</span><span class="p">;</span>
-    <span class="n">input</span>       <span class="n">rst</span><span class="p">;</span>
-    <span class="n">input</span>       <span class="n">d</span><span class="p">;</span>
-
-    <span class="n">output</span>      <span class="n">q</span><span class="p">;</span>
-    <span class="n">reg</span>         <span class="n">q</span><span class="p">;</span>
-
-    <span class="n">reg</span>         <span class="n">tmp</span><span class="p">;</span>
-
-    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
-            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
-        <span class="n">end</span>
-        <span class="k">else</span> <span class="n">begin</span>
-            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
-            <span class="n">q</span>   <span class="o">&lt;=</span> <span class="n">tmp</span><span class="p">;</span>
-        <span class="n">end</span>
-    <span class="n">end</span>
-
-<span class="n">endmodule</span>
-</pre></div>
-
-
-<p><strong>RTL Schematic:</strong></p>
-<p>如图，复位信号 <code>rst</code> 对于第二个 ff 来说，是一个片选信号 <code>ce</code>，这样的设计产生额外的逻辑，是不好的。</p>
-<p><img alt="bad style" src="/images/the-art-of-reset-design-in-fpga/bad_style.png" /></p>
-<p><strong>Good Style:</strong></p>
-<div class="highlight"><pre><span class="n">module</span> <span class="nf">GOODSTYLE</span> <span class="p">(</span>
-    <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">q</span>
-    <span class="p">);</span>
-
-    <span class="n">input</span>       <span class="n">clk</span><span class="p">;</span>
-    <span class="n">input</span>       <span class="n">rst</span><span class="p">;</span>
-    <span class="n">input</span>       <span class="n">d</span><span class="p">;</span>
-
-    <span class="n">output</span>      <span class="n">q</span><span class="p">;</span>
-    <span class="n">reg</span>         <span class="n">q</span><span class="p">;</span>
-
-    <span class="n">reg</span>         <span class="n">tmp</span><span class="p">;</span>
-
-    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
-            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
-        <span class="n">end</span>
-        <span class="k">else</span> <span class="n">begin</span>
-            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
-        <span class="n">end</span>
-    <span class="n">end</span>
-
-    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
-        <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">tmp</span><span class="p">;</span>
-    <span class="n">end</span>
-
-<span class="n">endmodule</span>
-</pre></div>
-
-
-<p><strong>RTL Schematic:</strong></p>
-<p>如图，复位信号 <code>rst</code> 对于两个 ff 来说，都是复位信号，不需要额外的逻辑，这样的设计是比较好的。</p>
-<p><img alt="good style" src="/images/the-art-of-reset-design-in-fpga/good_style.png" /></p>
-<p><br></p>
-<h2>Think Local, Not Global</h2>
-<hr />
-<p>我们应该遵守一个原则：能不用全局复位时，尽量不要使用。</p>
-<p>这个原则和我们平时的理解和习惯是相反的，Xilinx 官方有个 white paper  <a href="http://www.xilinx.com/support/documentation/white_papers/wp272.pdf">Get Smart About Reset: Think Local, Not Global</a>，专门讲了尽量避免使用 GSR，原因主要有三个：首先，随着时钟速率的提高，GSR 逐渐变为时序关键路径；其次，如果电路中没有反馈环路，那么上电初始化已经足够了，很多设计中的 reset 信号都可以省去；最后，代码中简单的添加一个 reset 端口，在底层实现时要消耗很多我们想不到的资源。</p>
 <p><br></p>
 <h2>Reference</h2>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2002SJ_Resets.pdf">Synchronous Resets? Asynchronous Resets? I am so confused! How will I ever know which to use?</a></p>
@@ -480,11 +524,11 @@
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic.html">FPGA 数字处理基础</a></li>
     </ul>
 </section>
     <hr />
@@ -563,6 +607,11 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/review.html">
                                 review
                             </a>
@@ -573,18 +622,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/c.html">
                                 C
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -593,8 +637,48 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/open-source-hardware.html">
                                 Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-processing.html">
+                                digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -608,63 +692,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
-                                The Catcher in The Rye
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
                                 时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fsm.html">
-                                FSM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-processing.html">
-                                digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -673,8 +702,23 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
