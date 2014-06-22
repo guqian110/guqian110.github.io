@@ -102,8 +102,8 @@ summary: 博客搬家，温故而知新。
                 STRT = 8'b0000_0100,
                 ...
                 
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
+    always @(posedge clk) begin
+        if (rst) begin
             CS <= IDLE;
         end
         else begin
@@ -126,8 +126,8 @@ summary: 博客搬家，温故而知新。
         endcase
     end
     
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
+    always @(posedge clk) begin
+        if (rst) begin
             // reset
             // ...
         end
@@ -169,9 +169,9 @@ FPGA 上电时，GSR(Global Set/Reset) 拉高，对所有 寄存器/RAM 进行�
 
 1. 一般，FSM 使用其他的复位(同步 or 异步)。
 
-        // Asynchronous Reset
-        always @(posedge clk or negedge rst_n) begin
-            if (!rst_n) begin
+        // Synchronous Reset
+        always @(posedge clk) begin
+            if (rst) begin
                 CS <= IDLE;
             end
             else begin

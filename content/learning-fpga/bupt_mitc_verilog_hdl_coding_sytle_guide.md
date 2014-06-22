@@ -142,8 +142,8 @@ Xilinx ISE 自动生成的标准文件头部，添加 `Email`、`File Name` 两�
             ...
             );
     
-        always @(posdge clk or negdege rst_n) begin
-            if (!rst_n) begin
+        always @(posdge clk) begin
+            if (rst) begin
                 // reset
                 ...
             end
@@ -163,8 +163,8 @@ Xilinx ISE 自动生成的标准文件头部，添加 `Email`、`File Name` 两�
 有限状态机(Finite State Machine) 使用三段式格式。举例
 
     // FSM-1
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
+    always @(posedge clk) begin
+        if (rst) begin
             // reset
             CS <= IDLE;
         end
@@ -191,8 +191,8 @@ Xilinx ISE 自动生成的标准文件头部，添加 `Email`、`File Name` 两�
     end
     
     // FSM-3
-    always @(posdge clk or negedge rst_n) begin
-        if (!rst_n) begin
+    always @(posdge clk) begin
+        if (rst) begin
             // reset
             
         end
@@ -218,8 +218,8 @@ Xilinx ISE 自动生成的标准文件头部，添加 `Email`、`File Name` 两�
 
 标准 `always` 格式
 
-    always @(posdge clk or negedge rst_n) begin
-        if (!rst_n) begin
+    always @(posedge clk) begin
+        if (rst) begin
             // reset
             
         end
