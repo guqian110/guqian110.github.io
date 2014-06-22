@@ -40,7 +40,7 @@ Summary: 总结 FPGA 中的复位设计
 
 和 reg 类似，BRAM 也可以在配置的时候初始化，随着嵌入式系统的 BRAM 逐渐增大，BRAM 初始化非常有用：因为预先定义 RAM 的值可以使仿真更容易，而且无需使用引导顺序为嵌入式设计清空内存。
 
-系统在上电配置时，内部有个信号叫 GSR (Global Set/Rest)，它是一种特殊的预布线的复位信号，能够在 FPGA 配置的过程中让设计保持初始状态。在配置完成后，GSR 会被释放，所有的触发器及其它资源都加载的是 INIT 值。除了在配置进程中运行 GSR，用户设计还可以通过实例化 STARTUP 模块并连接到 GSR 端口的方法来访问 GSR 网。使用该端口，设计可以重新断言 GSR 网，相应地 FPGA 中的所有存储元件将返回到它们的 INIT 属性所规定的状态。
+系统在上电配置时，内部有个信号叫 `GSR` (Global Set/Rest)，它是一种特殊的预布线的复位信号，能够在 FPGA 配置的过程中让设计保持初始状态。在配置完成后，GSR 会被释放，所有的触发器及其它资源都加载的是 INIT 值。除了在配置进程中运行 GSR，用户设计还可以通过实例化 STARTUP 模块并连接到 GSR 端口的方法来访问 GSR 网。使用该端口，设计可以重新断言 GSR 网，相应地 FPGA 中的所有存储元件将返回到它们的 INIT 属性所规定的状态。
 
 使用 GSR 的好处是 可以解决复位信号高扇出的问题，因为 GSR 是预布线的资源，它不占用每个 FF 和 Latch 的 set/reset 端口，如下图所示。很多资料都推荐将设计中的 reset 按钮连接到 GSR，以利用它比较低的 skew。
 
@@ -215,7 +215,7 @@ Summary: 总结 FPGA 中的复位设计
 
 Xilinx 的杂志上的一篇文章，[How do I reset my FPGA][article1]，作者 Srikanth Erusla-gandi 是 Xilinx 的员工和培训人员。他在文中提供了一张图来说明典型的系统复位方案，图中 `MMCM` 的 `lock` 和外部输入的复位信号相与，目的是为了保证提供给后面的同步器的时钟信号是稳定的；每个时钟域都有一个同步器来同步复位信号。
 
-![typical reset implementation in FPGA](/images/the-art-of-rset-design-in-fpga/typicla_reset.jpg)
+![typical reset implementation in FPGA](/images/the-art-of-rset-design-in-fpga/typical_reset.jpg)
 
 [article1]: http://www.eetimes.com/document.asp?doc_id=1278998
 <br>
@@ -233,9 +233,9 @@ Xilinx 的杂志上的一篇文章，[How do I reset my FPGA][article1]，作者
 
 同理，如果代码的敏感列表中不包含复位信号，那么就会综合出一个同步复位的 DFF，SR 端口将被配置为置位/复位端口(FDSE & FDRE primitive)。当 SR 变高时，FF 的输出值在下一个时钟的上升沿变为 SRVAL。
 
-如果我们在定义 reg 变量时给它一个初始值，那么 FPGA 在上电配置(GSR 变高)时，载入这个值。这个特性是很有用的，在后面的 `Think Local, Not Global` 中有讨论。
+如果我们在定义 reg 变量时给它一个初始值，那么 FPGA 在上电配置(GSR 变高)时，载入这个值。
 
-虽然 FPGA 的 FF 可以配额为 preset/clear/set/reset，但是一个单独的 FF 只能配置为其中的一种，如果在代码中多于一个 preset/clear/set/reset，那么就会产生其他的逻辑，消耗 FPGA 资源。
+虽然 FPGA 的 FF 可以配额为 preset/clear/set/reset，但是一个单独的 FF 每次只能配置为其中的一种，如果在代码中多于一个 preset/clear/set/reset，那么就会产生其他的逻辑，消耗 FPGA 资源。
 
 <br>
 
@@ -480,6 +480,8 @@ Xilinx 的杂志上的一篇文章，[How do I reset my FPGA][article1]，作者
 [Asynchronous & Synchronous Reset Design Techniques - Part Deux](http://www.sunburst-design.com/papers/CummingsSNUG2003Boston_Resets.pdf)
 
 [Get Smart About Reset: Think Local, Not Global][wp272]
+
+[How do I rest my FPGA][article1]
 
 [FPGA复位电路的实现及其时序分析](http://www.eefocus.com/coyoo/blog/13-12/301045_9c39f.html)
 
