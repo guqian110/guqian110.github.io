@@ -114,10 +114,10 @@
                 <p>复位信号在系统中的地位和时钟信号几乎同等重要，我们想尽量把系统设计为可控，那么最基本的控制信号就是复位信号了。</p>
 <p>复位信号的设计需要考虑的因素，各种书刊、论文、白皮书、网上论坛都有相关讨论，但是至今对于给定 FPGA 设计中使用哪种复位方案仍然没有明确答案。本文总结了一些大神的经典论文和网上的许多博客，尽可能用简单的图说明选择某种设计方案及其理由，涉及的更深入的原理请自行 Google :-P</p>
 <p><br></p>
-<h2>Think Local, Not Global</h2>
+<h2>Think Local or Think Global</h2>
 <hr />
-<p>我们应该遵守一个原则：能不用全局复位时，尽量不要使用。</p>
-<p>这个原则和我们平时的理解和习惯是相反的，Xilinx 官方有个 white paper  <a href="http://www.xilinx.com/support/documentation/white_papers/wp272.pdf">Get Smart About Reset: Think Local, Not Global</a>，专门讲了尽量避免使用 GSR，原因主要有三个：</p>
+<p>Xilinx 有个 White Paper，<a href="http://www.xilinx.com/support/documentation/white_papers/wp272.pdf">Get Smart About Reset: Think Local, Not Global</a>，提出一种新的复位思路： 能不用全局复位时，尽量不要使用。</p>
+<p>这个原则和我们平时的理解和习惯是相反的，不使用全局复位的原因主要有三个：</p>
 <ol>
 <li>
 <p>随着时钟速率的提高，GSR 逐渐变为时序关键路径</p>
@@ -133,20 +133,40 @@
 </ol>
 <p>所以，有必要使用其他的不依靠全局复位的方法。</p>
 <p>如图所示，Xilinx FPGA 在配置/重配置的时候，每个 FF 和 BRAM 都会被初始化一个预先设定的值(大部分器件的默认值是 0, 也有例外)，所以，上电配置和全局复位有着类似的功能，将每个存储单元配置为一个已知的状态。</p>
+<p><img alt="configuration" src="/images/the-art-of-reset-design-in-fpga/configuration.jpg" /></p>
+<p>系统在上电配置时，内部有个信号叫 <code>GSR</code> (Global Set/Reset)，它是一种特殊的预布线的复位信号，能够在 FPGA 配置的过程中让设计保持初始状态。在配置完成后，GSR 会被释放，所有的触发器及其它资源都加载的是 INIT 值。除了在配置进程中运行 GSR，用户设计还可以通过实例化 STARTUP 模块并连接到 GSR 端口的方法来访问 GSR 网。使用该端口，设计可以重新断言 GSR 网，相应地 FPGA 中的所有存储元件将返回到它们的 INIT 属性所规定的状态。</p>
 <p>设定初值的语法很简单，只需要在定义变量时给它初始值就可以了：</p>
 <div class="highlight"><pre><span class="n">reg</span> <span class="n">tmp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </pre></div>
 
 
 <p>和 reg 类似，BRAM 也可以在配置的时候初始化，随着嵌入式系统的 BRAM 逐渐增大，BRAM 初始化非常有用：因为预先定义 RAM 的值可以使仿真更容易，而且无需使用引导顺序为嵌入式设计清空内存。</p>
-<p>系统在上电配置时，内部有个信号叫 <code>GSR</code> (Global Set/Reset)，它是一种特殊的预布线的复位信号，能够在 FPGA 配置的过程中让设计保持初始状态。在配置完成后，GSR 会被释放，所有的触发器及其它资源都加载的是 INIT 值。除了在配置进程中运行 GSR，用户设计还可以通过实例化 STARTUP 模块并连接到 GSR 端口的方法来访问 GSR 网。使用该端口，设计可以重新断言 GSR 网，相应地 FPGA 中的所有存储元件将返回到它们的 INIT 属性所规定的状态。</p>
 <p>使用 GSR 的好处是 可以解决复位信号高扇出的问题，因为 GSR 是预布线的资源，它不占用每个 FF 和 Latch 的 set/reset 端口，如下图所示。很多资料都推荐将设计中的 reset 按钮连接到 GSR，以利用它比较低的 skew。</p>
 <p><img alt="gsr rset" src="/images/the-art-of-reset-design-in-fpga/gsr_reset.gif" /></p>
 <p>既然 GSR 这么好，那么是不是只使用 GSR 就可以了，不必再用 FF 和 Latch 的 set/reset 端口了呢？</p>
 <p>答案当然是否定的。由于 GSR 的释放是异步方式，所以，如果我们只使用 GSR 作为系统的唯一复位机制，那么可能导致系统不可靠。所以还是需要显示的使用同步复位信号来复位状态机、计数器等能自动改变状态的逻辑。</p>
-<h3>Conclusion</h3>
-<p>所以，解决方案就是 <strong>GSR + explict reset</strong></p>
+<p>所以，应该使用 <strong>GSR + explict reset</strong> 的解决方案</p>
 <p>给系统中的 reg 赋初值，对于没有环路的电路节省 reset，利用 GSR 实现复位的功能；对于有环路的电路，使用显示的复位信号。</p>
+<h3>Upate: 07/01/2014</h3>
+<ol>
+<li>
+<p>关于 initialize 代替 reset</p>
+<p>这几天看 resest 相关问题时，又在 <code>stackoverflow</code> 上发现一个关于<a href="http://stackoverflow.com/questions/6363130/is-there-a-reason-to-initialize-not-reset-signals-in-vhdl-and-verilog">是否应该使用 initialize 代替 reset 的问题</a>。</p>
+<p>支持用 initialize 代替 reset 的人提出的方案是尽量不要使用全局复位信号，使用初始化值代替复位，对于一些必须要求复位的模块，使用 <em>local</em> 的复位信号。</p>
+<p>反对者认为，用 initialize 代替 reset 的想法只是学院派的不切实际的想法。一般只有基于 SRAM 的 FPGA 才会使用到初始化。而这样做的目的只是为了节省布线资源，降低时序要求，但是现代 FPGA 有很多布线资源和没有使用的全局网络，所以，复位信号一般不是时序关键路径。即使遇到问题，可以通过手动例化一个时钟 BUF 来解决。使用这种无复位的设计虽然在某些情况是可行的，但是当你把你的设计和其他系统连接起来时，通常会感到非常痛苦，因为大多数系统都会要求有个复位信号。在由 FPGA 转 ASIC 时也比较方便，因为只有基于 SRAM 的 FPGA 才可以使用这种 initialize 代替 reset 的技术，而 ASIC 不行。</p>
+</li>
+<li>
+<p>关于 GSR</p>
+<p>网上有很多人都推荐将我们用户定义的复位信号连接到 GSR 信号上，以便利用 GSR 提供的低抖动性，包括下面提到的一篇文章 <a href="http://www.eetimes.com/document.asp?doc_id=1278998">How do I reset my FPGA</a> 也推荐使用 GSR 信号。但是在 Xilinx 的另一份文档 <a href="http://www.xilinx.com/support/documentation/sw_manuals/xilinx14_7/sim.pdf">UG626: Synthesis and Simulation Design Guide</a> 中说不推荐使用 GSR 来作为系统的复位</p>
+<blockquote>
+<p>Although you can access the GSR net after configuration, Xilinx does not recommend using the GSR circuitry in place of a manual reset. This is because the FPGA devices offer high-speed backbone routing for high fanout signals such as a system reset. This backbone route is faster than the dedicated GSR circuitry, and is easier to analyze than the dedicated global routing that transports the GSR signal.</p>
+</blockquote>
+<p>而这个矛盾早就有人在 Xilinx Forum 上提问了 <a href="http://forums.xilinx.com/t5/Virtex-Family-FPGAs/What-does-GSR-signal-really-mean-and-how-should-I-handle-the/td-p/35610">What does GSR signal really mean and how should I handle the reset signal properly</a>，还有 <a href="http://forums.xilinx.com/t5/Archived-ISE-issues/FPGA-Power-On-Reset/m-p/7027?query.id=134602#M2035">FPGA Power On Reset!</a>。</p>
+</li>
+</ol>
+<p><strong> Conclustion</strong></p>
+<p>总结一下，应该优先选择有全局复位的设计方案，并且这个全局复位信号是用户定义的，不要使用 GSR 。</p>
+<p>P.S. 事实上没有一个通用的、适合所有器件的复位方案，我们应该首先了解所使用的器件和工具，针对它们的特点进行复位方案的设计。</p>
 <p><br></p>
 <h2>Shift Register Reset</h2>
 <hr />
@@ -525,11 +545,11 @@
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic.html">FPGA 数字处理基础</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
     </ul>
 </section>
     <hr />
@@ -598,23 +618,18 @@
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/fpga.html">
-                                FPGA
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -623,13 +638,18 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/verilog.html">
                                 Verilog
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -638,28 +658,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
-                                The Catcher in The Rye
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -668,13 +668,38 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -688,33 +713,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/warcraft.html">
                                 WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fsm.html">
-                                FSM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -725,6 +730,21 @@
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
                             </a>
                         </li>
                     </ul>

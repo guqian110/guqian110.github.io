@@ -13,12 +13,12 @@ Summary: 总结 FPGA 中的复位设计
  
 <br>
 
-## Think Local, Not Global
+## Think Local or Think Global
 * * *
 
-我们应该遵守一个原则：能不用全局复位时，尽量不要使用。
+Xilinx 有个 White Paper，[Get Smart About Reset: Think Local, Not Global][wp272]，提出一种新的复位思路： 能不用全局复位时，尽量不要使用。
 
-这个原则和我们平时的理解和习惯是相反的，Xilinx 官方有个 white paper  [Get Smart About Reset: Think Local, Not Global][wp272]，专门讲了尽量避免使用 GSR，原因主要有三个：
+这个原则和我们平时的理解和习惯是相反的，不使用全局复位的原因主要有三个：
 
 1. 随着时钟速率的提高，GSR 逐渐变为时序关键路径
 
@@ -34,13 +34,15 @@ Summary: 总结 FPGA 中的复位设计
 
 如图所示，Xilinx FPGA 在配置/重配置的时候，每个 FF 和 BRAM 都会被初始化一个预先设定的值(大部分器件的默认值是 0, 也有例外)，所以，上电配置和全局复位有着类似的功能，将每个存储单元配置为一个已知的状态。
 
+![configuration](/images/the-art-of-reset-design-in-fpga/configuration.jpg)
+
+系统在上电配置时，内部有个信号叫 `GSR` (Global Set/Reset)，它是一种特殊的预布线的复位信号，能够在 FPGA 配置的过程中让设计保持初始状态。在配置完成后，GSR 会被释放，所有的触发器及其它资源都加载的是 INIT 值。除了在配置进程中运行 GSR，用户设计还可以通过实例化 STARTUP 模块并连接到 GSR 端口的方法来访问 GSR 网。使用该端口，设计可以重新断言 GSR 网，相应地 FPGA 中的所有存储元件将返回到它们的 INIT 属性所规定的状态。
+
 设定初值的语法很简单，只需要在定义变量时给它初始值就可以了：
 
     reg tmp = 0;
 
 和 reg 类似，BRAM 也可以在配置的时候初始化，随着嵌入式系统的 BRAM 逐渐增大，BRAM 初始化非常有用：因为预先定义 RAM 的值可以使仿真更容易，而且无需使用引导顺序为嵌入式设计清空内存。
-
-系统在上电配置时，内部有个信号叫 `GSR` (Global Set/Reset)，它是一种特殊的预布线的复位信号，能够在 FPGA 配置的过程中让设计保持初始状态。在配置完成后，GSR 会被释放，所有的触发器及其它资源都加载的是 INIT 值。除了在配置进程中运行 GSR，用户设计还可以通过实例化 STARTUP 模块并连接到 GSR 端口的方法来访问 GSR 网。使用该端口，设计可以重新断言 GSR 网，相应地 FPGA 中的所有存储元件将返回到它们的 INIT 属性所规定的状态。
 
 使用 GSR 的好处是 可以解决复位信号高扇出的问题，因为 GSR 是预布线的资源，它不占用每个 FF 和 Latch 的 set/reset 端口，如下图所示。很多资料都推荐将设计中的 reset 按钮连接到 GSR，以利用它比较低的 skew。
 
@@ -50,13 +52,40 @@ Summary: 总结 FPGA 中的复位设计
 
 答案当然是否定的。由于 GSR 的释放是异步方式，所以，如果我们只使用 GSR 作为系统的唯一复位机制，那么可能导致系统不可靠。所以还是需要显示的使用同步复位信号来复位状态机、计数器等能自动改变状态的逻辑。
 
-### Conclusion
-
-所以，解决方案就是 **GSR + explict reset**
+所以，应该使用 **GSR + explict reset** 的解决方案
 
 给系统中的 reg 赋初值，对于没有环路的电路节省 reset，利用 GSR 实现复位的功能；对于有环路的电路，使用显示的复位信号。
 
+### Upate: 07/01/2014
+
+1. 关于 initialize 代替 reset
+
+    这几天看 resest 相关问题时，又在 `stackoverflow` 上发现一个关于[是否应该使用 initialize 代替 reset 的问题][stackoverflow]。
+
+    支持用 initialize 代替 reset 的人提出的方案是尽量不要使用全局复位信号，使用初始化值代替复位，对于一些必须要求复位的模块，使用 *local* 的复位信号。
+
+    反对者认为，用 initialize 代替 reset 的想法只是学院派的不切实际的想法。一般只有基于 SRAM 的 FPGA 才会使用到初始化。而这样做的目的只是为了节省布线资源，降低时序要求，但是现代 FPGA 有很多布线资源和没有使用的全局网络，所以，复位信号一般不是时序关键路径。即使遇到问题，可以通过手动例化一个时钟 BUF 来解决。使用这种无复位的设计虽然在某些情况是可行的，但是当你把你的设计和其他系统连接起来时，通常会感到非常痛苦，因为大多数系统都会要求有个复位信号。在由 FPGA 转 ASIC 时也比较方便，因为只有基于 SRAM 的 FPGA 才可以使用这种 initialize 代替 reset 的技术，而 ASIC 不行。
+
+2. 关于 GSR
+
+    网上有很多人都推荐将我们用户定义的复位信号连接到 GSR 信号上，以便利用 GSR 提供的低抖动性，包括下面提到的一篇文章 [How do I reset my FPGA][article1] 也推荐使用 GSR 信号。但是在 Xilinx 的另一份文档 [UG626: Synthesis and Simulation Design Guide][ug626] 中说不推荐使用 GSR 来作为系统的复位
+
+    > Although you can access the GSR net after configuration, Xilinx does not recommend using the GSR circuitry in place of a manual reset. This is because the FPGA devices offer high-speed backbone routing for high fanout signals such as a system reset. This backbone route is faster than the dedicated GSR circuitry, and is easier to analyze than the dedicated global routing that transports the GSR signal.
+
+    而这个矛盾早就有人在 Xilinx Forum 上提问了 [What does GSR signal really mean and how should I handle the reset signal properly][question1]，还有 [FPGA Power On Reset!][question2]。
+
+
+** Conclustion**
+
+总结一下，应该优先选择有全局复位的设计方案，并且这个全局复位信号是用户定义的，不要使用 GSR 。
+
+P.S. 事实上没有一个通用的、适合所有器件的复位方案，我们应该首先了解所使用的器件和工具，针对它们的特点进行复位方案的设计。
+
 [wp272]: http://www.xilinx.com/support/documentation/white_papers/wp272.pdf
+[stackoverflow]: http://stackoverflow.com/questions/6363130/is-there-a-reason-to-initialize-not-reset-signals-in-vhdl-and-verilog
+[ug626]: http://www.xilinx.com/support/documentation/sw_manuals/xilinx14_7/sim.pdf
+[question1]: http://forums.xilinx.com/t5/Virtex-Family-FPGAs/What-does-GSR-signal-really-mean-and-how-should-I-handle-the/td-p/35610
+[question2]: http://forums.xilinx.com/t5/Archived-ISE-issues/FPGA-Power-On-Reset/m-p/7027?query.id=134602#M2035
 
 <br>
 
