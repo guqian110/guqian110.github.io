@@ -1,5 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-06-20T00:22:00+08:00</updated><entry><title>FPGA 中的复位设计</title><link href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html" rel="alternate"></link><updated>2014-06-20T00:22:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-06-20:pages/2014/06/20/the_art_of_reset_design_in_fpga.html</id><summary type="html">&lt;p&gt;复位信号在系统中的地位和时钟信号几乎同等重要，我们想尽量把系统设计为可控，那么最基本的控制信号就是复位信号了。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-07-04T23:31:00+08:00</updated><entry><title>Sublime Text 2 和 Verilog HDL</title><link href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html" rel="alternate"></link><updated>2014-07-04T23:31:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-07-04:pages/2014/07/04/sublime_text_2_and_verilog.html</id><summary type="html">&lt;h2&gt;Sublime Text&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;代码编辑器之于程序员，就如同剑之于战士。程序员关于代码编辑器的争论从来就没有停止过，每个程序员都有自己熟悉的编辑器，他们热爱自己的 “武器”，甚至可以形成 “宗教”，比如 Vim 和 Emac 的战争。&lt;/p&gt;
+&lt;p&gt;如今，这个无休止的争论中要加入一个新成员了，她就是 &lt;a href="http://www.sublimetext.com/"&gt;Sublime Text&lt;/a&gt; 。其实她也不是 “新” 成员了，早在 2011 年她就诞生了，不过经过不断的改进，终于人们不得不正视这个新人，不仅仅因为漂亮的外在美，还有强大的内在美 :-P&lt;/p&gt;
+&lt;p&gt;个人感觉，ST 的出现恰到好处，她兼具了 Vim 的强大功能和普通编辑器的易用性。虽然 Vim 轻巧、强大，但是 Vim 的门槛比较高，要想用好 Vim 是需要长期练习的，而 ST 可以说是老少皆宜，你是小白，不会用 Vim？没关系，她可以像普通的编辑器一样，即使你 0 基础也可以使用；你是老手，习惯 Vim？也没关系，她可以 &lt;strong&gt;开启 Vim 模式&lt;/strong&gt;，还是原来的配方，还是熟悉的味道～&lt;/p&gt;
+&lt;p&gt;虽然她不是开源项目，有收费，但是我们有免费无限制无限期的试用权，而且她绿色小巧，不用安装，解压即可使用，跨平台，支持各种编程语言的代码补全和语法高亮。如果对现有的插件不满意，我们甚至可以自己定制插件。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;简单说一下我在使用过程中的一些问题，更加详细的使用官方和非官方的网站上都有详细的说明，还有别人总结的技巧请自行 Google。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.sublimetext.com/docs/2/index.html"&gt;Official docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://sublime-text-unofficial-documentation.readthedocs.org/en/sublime-text-2/"&gt;Unofficial docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.iplaysoft.com/sublimetext.html"&gt;Others: Sublime Text 2 - 性感无比的代码编辑器！程序员必备神器！跨平台支持Win/Mac/Linux&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;P.S. 我使用的是 Sublime Text 2，虽然已经有 3 了，但是 3 还在 Beta 阶段，大家貌似对 3 不是很满意&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Vim Mode&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;ST 是自带 Vim 模式的（Vintage Mode），但是这个模式默认是没有开启的，毕竟对于大多数普通人来说， Vim 实在是不太友好...&lt;/p&gt;
+&lt;p&gt;打开 ST 的 &lt;code&gt;Preferences/Setting - Defalut&lt;/code&gt;，在最后一行有句&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="s"&gt;&amp;quot;ignored_packages&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Vintage&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;只需要将方括号中的 Vintage 去掉就可以了。推荐在 Setting - User 中修改。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.sublimetext.com/docs/2/vintage.html"&gt;官方说明&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Package Control&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;ST 的一个强大之处就在于可以安装各种插件，要安装插件有两种方法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;手动下载，解压到指定目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装 &lt;code&gt;Package Control&lt;/code&gt; 插件，自动管理安装插件&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;第一种方法虽然麻烦，但是在没有网络的环境下，我们可以从别人那拷贝过来即可；第二种方法最方便了，不过要求有网络。&lt;/p&gt;
+&lt;h3&gt;Installation&lt;/h3&gt;
+&lt;p&gt;ST 默认是没有安装 Package Control 的，需要我们手动安装：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Ctrl ~&lt;/code&gt; 调出控制台&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在控制台中粘贴以下命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;pf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Package&lt;/span&gt; &lt;span class="n"&gt;Control&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sublime&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;package&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;ipp&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;sublime&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;installed_packages_path&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;makedirs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ipp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;not&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exists&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ipp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="n"&gt;None&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;install_opener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;build_opener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ProxyHandler&lt;/span&gt;&lt;span class="p"&gt;()));&lt;/span&gt; &lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ipp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;pf&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;wb&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//sublime.wbond.net/&amp;#39;+pf.replace(&amp;#39; &amp;#39;,&amp;#39;%20&amp;#39;)).read()); print &amp;#39;Please restart Sublime Text to finish installation&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装完成之后，重启 ST 即可&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Using&lt;/h3&gt;
+&lt;p&gt;按下 &lt;code&gt;Ctrl + Shift + P&lt;/code&gt;，在弹出的命令面板，输入 &lt;code&gt;package&lt;/code&gt;，就会自动弹出相关的命令，可以选择 &lt;code&gt;Install&lt;/code&gt;、&lt;code&gt;Remove&lt;/code&gt;、&lt;code&gt;Disable&lt;/code&gt;、&lt;code&gt;Enable&lt;/code&gt;、&lt;code&gt;List&lt;/code&gt;、&lt;code&gt;Update&lt;/code&gt; 等命令。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://sublime.wbond.net/"&gt;sublime wbond&lt;/a&gt; 上列出了 Package Control 可以找到的所有的插件，有详细的安装和使用说明。&lt;/p&gt;
+&lt;p&gt;网上也有很多文章介绍了大量的常用插件，我们可以按照需求自己挑选需要的插件进行安装。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Verilog HDL&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;常用的插件，比如括号匹配、智能补全、自动对齐、Tags、注释生成、Terminal、Build、Git 等插件就不再赘述了，说一下网上介绍的比较少，但我自己使用比较多的关于 Verilog 的插件。&lt;/p&gt;
+&lt;p&gt;可以通过 Package 下载到两个插件，&lt;code&gt;Verilog&lt;/code&gt; 和&lt;code&gt;Verilog-Automatic&lt;/code&gt;。第一个插件主要功能是支持 Verilog 的代码高亮和补全，第二个插件可以帮助我们自动生成模块例化、端口添加连接等功能。&lt;/p&gt;
+&lt;p&gt;其中，第一个插件的 Snippet 并不太让人满意，在原 Snippet 的基础上，我添加了一些我常用到的 Snippets。&lt;/p&gt;
+&lt;h3&gt;always&lt;/h3&gt;
+&lt;p&gt;因为插件作者只添加了异步高有效复位方式的 &lt;code&gt;always&lt;/code&gt; 块，而我们同步和异步两种方式都可能会用到，所以，我添加同步复位的 Snippet&lt;/p&gt;
+&lt;p&gt;ST 2 的 Package 都存放在 &lt;code&gt;/home/.config/sublime-text-2/Packages&lt;/code&gt; 目录下面，我们需要修改的就是这个目录下的 &lt;code&gt;Verilog/Snippets&lt;/code&gt; 下的 &lt;code&gt;.tmSnippet&lt;/code&gt; 文件。修改后的结果如下：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;always_async.tmSnippet&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;&amp;lt;!DOCTYPE plist PUBLIC &amp;quot;-//Apple//DTD PLIST 1.0//EN&amp;quot; &amp;quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;plist&lt;/span&gt; &lt;span class="na"&gt;version=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;content&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;always @(posedge clk or ${1:posedge} ${2:rst}) begin
+    if ($2) begin
+        // reset
+        $3
+    end
+    else if ($4) begin
+        $0
+    end
+end&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;name&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;always_async&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;scope&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;source.verilog&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;tabTrigger&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;always_async&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;uuid&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/plist&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;always_sync.tmSnippet&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;&amp;lt;!DOCTYPE plist PUBLIC &amp;quot;-//Apple//DTD PLIST 1.0//EN&amp;quot; &amp;quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;plist&lt;/span&gt; &lt;span class="na"&gt;version=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;content&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;always @(posedge clk) begin
+    if (${1:rst}) begin
+        // reset
+        $2
+    end
+    else begin
+        $0
+    end
+end&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;name&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;always_sync&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;scope&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;source.verilog&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;tabTrigger&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;always_sync&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;uuid&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/plist&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改之后的结果如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="always" src="/images/sublime-text-2-and-verilog/always.gif" /&gt;&lt;/p&gt;
+&lt;h3&gt;if-else&lt;/h3&gt;
+&lt;p&gt;原来的 if snippet 没有 else 分支，所以，添加了一个有 else 分支的 if 语句。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;if.tmSnippet&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;&amp;lt;!DOCTYPE plist PUBLIC &amp;quot;-//Apple//DTD PLIST 1.0//EN&amp;quot; &amp;quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;plist&lt;/span&gt; &lt;span class="na"&gt;version=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;content&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;if ($1) begin
+    $0
+end&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;name&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;if&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;scope&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;source.verilog&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;tabTrigger&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;if&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;uuid&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/plist&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;if-else.tmSnippet&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;&amp;lt;!DOCTYPE plist PUBLIC &amp;quot;-//Apple//DTD PLIST 1.0//EN&amp;quot; &amp;quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;plist&lt;/span&gt; &lt;span class="na"&gt;version=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;content&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;if ($1) begin
+    $2
+end
+else begin
+    $0
+end&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;name&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;if_else&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;scope&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;source.verilog&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;tabTrigger&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;if_else&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;uuid&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/plist&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改后的结果如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="if-else" src="/images/sublime-text-2-and-verilog/if-else.gif" /&gt;&lt;/p&gt;
+&lt;h3&gt;parameter&lt;/h3&gt;
+&lt;p&gt;原来是没有 parameter 的snippets 的，拷贝一份其他的 snippet，修改其中的一些设置，即可&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;parameter.tmSnippet&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;&amp;lt;!DOCTYPE plist PUBLIC &amp;quot;-//Apple//DTD PLIST 1.0//EN&amp;quot; &amp;quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;plist&lt;/span&gt; &lt;span class="na"&gt;version=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;content&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;parameter   $1 = $2,
+            $3 = $0
+&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;name&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;parameter&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;scope&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;source.verilog&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;tabTrigger&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;parameter&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;uuid&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/plist&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改后的结果如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="parameter" src="/images/sublime-text-2-and-verilog/parameter.gif" /&gt;&lt;/p&gt;
+&lt;h3&gt;case&lt;/h3&gt;
+&lt;p&gt;原来是没有 case 的 snippet，方法同上，可以修改出我们想要的 case snippet&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;case.tmSnippet&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;&amp;lt;!DOCTYPE plist PUBLIC &amp;quot;-//Apple//DTD PLIST 1.0//EN&amp;quot; &amp;quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;plist&lt;/span&gt; &lt;span class="na"&gt;version=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;dict&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;content&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;case ($1)
+    $2: begin
+        $3
+    end
+    $4: begin
+        $5
+    end
+    $6: begin
+        $7
+    end
+    $8: begin
+        $9
+    end
+    default: begin
+        $10
+    end
+endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;name&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;case&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;scope&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;source.verilog&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;tabTrigger&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;case&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;key&amp;gt;&lt;/span&gt;uuid&lt;span class="nt"&gt;&amp;lt;/key&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;string&amp;gt;&lt;/span&gt;026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/dict&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/plist&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改后的效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="case" src="/images/sublime-text-2-and-verilog/case.gif" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;上面仅仅说了非常基本的几个设置，和我在写 Verilog 时自己添加的几个 snippet，其他的 ST 的使用技巧官方和非官方的 ref 有非常详细的介绍，另外其他人也有很多文章介绍～&lt;/p&gt;</summary><category term="FPGA"></category><category term="Sublime Text"></category></entry><entry><title>FPGA 中的复位设计</title><link href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html" rel="alternate"></link><updated>2014-06-20T00:22:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-06-20:pages/2014/06/20/the_art_of_reset_design_in_fpga.html</id><summary type="html">&lt;p&gt;复位信号在系统中的地位和时钟信号几乎同等重要，我们想尽量把系统设计为可控，那么最基本的控制信号就是复位信号了。&lt;/p&gt;
 &lt;p&gt;复位信号的设计需要考虑的因素，各种书刊、论文、白皮书、网上论坛都有相关讨论，但是至今对于给定 FPGA 设计中使用哪种复位方案仍然没有明确答案。本文总结了一些大神的经典论文和网上的许多博客，尽可能用简单的图说明选择某种设计方案及其理由，涉及的更深入的原理请自行 Google :-P&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Think Local or Think Global&lt;/h2&gt;

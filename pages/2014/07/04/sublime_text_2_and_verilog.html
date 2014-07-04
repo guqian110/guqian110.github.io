@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>Sublime Text 2 和 Verilog HDL - Coding Life</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="http://guqian110.github.io/images/favicon.jpg" rel="icon">
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Coding Life" />
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="Sublime Text 2 和 Verilog HDL"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html"/>
+            <meta property="og:description" content="介绍神器 Sublime Text 在 HDL 方面的简单应用"/>
+            <meta property="article:published_time" content="2014-07-04" />
+            <meta property="article:section" content="FPGA" />
+            <meta property="article:tag" content="FPGA" />
+            <meta property="article:tag" content="Sublime Text" />
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://guqian110.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+        <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Coding Life ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://guqian110.github.io/" class="navbar-brand">
+<img src="http://guqian110.github.io/images/logo.jpg" width=""/> Coding Life            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li class="active">
+                            <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/others.html">Others</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://guqian110.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="http://guqian110.github.io" title="Coding Life"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="http://guqian110.github.io/category/fpga.html" title="FPGA">FPGA</a></li>
+                <li class="active">Sublime Text 2 和 Verilog HDL</li>
+            </ol>
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html"
+                       rel="bookmark"
+                       title="Permalink to Sublime Text 2 和 Verilog HDL">
+                        Sublime Text 2 和 Verilog HDL
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-07-04T23:31:00"> Fri 04 July 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://guqian110.github.io/tag/fpga.html">FPGA</a>
+        /
+	<a href="http://guqian110.github.io/tag/sublime-text.html">Sublime Text</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <h2>Sublime Text</h2>
+<hr />
+<p>代码编辑器之于程序员，就如同剑之于战士。程序员关于代码编辑器的争论从来就没有停止过，每个程序员都有自己熟悉的编辑器，他们热爱自己的 “武器”，甚至可以形成 “宗教”，比如 Vim 和 Emac 的战争。</p>
+<p>如今，这个无休止的争论中要加入一个新成员了，她就是 <a href="http://www.sublimetext.com/">Sublime Text</a> 。其实她也不是 “新” 成员了，早在 2011 年她就诞生了，不过经过不断的改进，终于人们不得不正视这个新人，不仅仅因为漂亮的外在美，还有强大的内在美 :-P</p>
+<p>个人感觉，ST 的出现恰到好处，她兼具了 Vim 的强大功能和普通编辑器的易用性。虽然 Vim 轻巧、强大，但是 Vim 的门槛比较高，要想用好 Vim 是需要长期练习的，而 ST 可以说是老少皆宜，你是小白，不会用 Vim？没关系，她可以像普通的编辑器一样，即使你 0 基础也可以使用；你是老手，习惯 Vim？也没关系，她可以 <strong>开启 Vim 模式</strong>，还是原来的配方，还是熟悉的味道～</p>
+<p>虽然她不是开源项目，有收费，但是我们有免费无限制无限期的试用权，而且她绿色小巧，不用安装，解压即可使用，跨平台，支持各种编程语言的代码补全和语法高亮。如果对现有的插件不满意，我们甚至可以自己定制插件。</p>
+<p><br></p>
+<p>简单说一下我在使用过程中的一些问题，更加详细的使用官方和非官方的网站上都有详细的说明，还有别人总结的技巧请自行 Google。</p>
+<p><a href="https://www.sublimetext.com/docs/2/index.html">Official docs</a></p>
+<p><a href="http://sublime-text-unofficial-documentation.readthedocs.org/en/sublime-text-2/">Unofficial docs</a></p>
+<p><a href="http://www.iplaysoft.com/sublimetext.html">Others: Sublime Text 2 - 性感无比的代码编辑器！程序员必备神器！跨平台支持Win/Mac/Linux</a></p>
+<p>P.S. 我使用的是 Sublime Text 2，虽然已经有 3 了，但是 3 还在 Beta 阶段，大家貌似对 3 不是很满意</p>
+<p><br></p>
+<h2>Vim Mode</h2>
+<hr />
+<p>ST 是自带 Vim 模式的（Vintage Mode），但是这个模式默认是没有开启的，毕竟对于大多数普通人来说， Vim 实在是不太友好...</p>
+<p>打开 ST 的 <code>Preferences/Setting - Defalut</code>，在最后一行有句</p>
+<div class="highlight"><pre><span class="s">&quot;ignored_packages&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;Vintage&quot;</span><span class="p">]</span>
+</pre></div>
+
+
+<p>只需要将方括号中的 Vintage 去掉就可以了。推荐在 Setting - User 中修改。</p>
+<p><a href="https://www.sublimetext.com/docs/2/vintage.html">官方说明</a></p>
+<p><br></p>
+<h2>Package Control</h2>
+<hr />
+<p>ST 的一个强大之处就在于可以安装各种插件，要安装插件有两种方法：</p>
+<ol>
+<li>
+<p>手动下载，解压到指定目录</p>
+</li>
+<li>
+<p>安装 <code>Package Control</code> 插件，自动管理安装插件</p>
+</li>
+</ol>
+<p>第一种方法虽然麻烦，但是在没有网络的环境下，我们可以从别人那拷贝过来即可；第二种方法最方便了，不过要求有网络。</p>
+<h3>Installation</h3>
+<p>ST 默认是没有安装 Package Control 的，需要我们手动安装：</p>
+<ol>
+<li>
+<p><code>Ctrl ~</code> 调出控制台</p>
+</li>
+<li>
+<p>在控制台中粘贴以下命令</p>
+<div class="highlight"><pre><span class="n">import</span> <span class="n">urllib2</span><span class="p">,</span><span class="n">os</span><span class="p">;</span> <span class="n">pf</span><span class="o">=</span><span class="err">&#39;</span><span class="n">Package</span> <span class="n">Control</span><span class="p">.</span><span class="n">sublime</span><span class="o">-</span><span class="n">package</span><span class="err">&#39;</span><span class="p">;</span> <span class="n">ipp</span><span class="o">=</span><span class="n">sublime</span><span class="p">.</span><span class="n">installed_packages_path</span><span class="p">();</span> <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">if</span> <span class="n">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">else</span> <span class="n">None</span><span class="p">;</span> <span class="n">urllib2</span><span class="p">.</span><span class="n">install_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="p">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="p">.</span><span class="n">ProxyHandler</span><span class="p">()));</span> <span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">ipp</span><span class="p">,</span><span class="n">pf</span><span class="p">),</span><span class="err">&#39;</span><span class="n">wb</span><span class="err">&#39;</span><span class="p">).</span><span class="n">write</span><span class="p">(</span><span class="n">urllib2</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//sublime.wbond.net/&#39;+pf.replace(&#39; &#39;,&#39;%20&#39;)).read()); print &#39;Please restart Sublime Text to finish installation&#39;</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>安装完成之后，重启 ST 即可</p>
+</li>
+</ol>
+<h3>Using</h3>
+<p>按下 <code>Ctrl + Shift + P</code>，在弹出的命令面板，输入 <code>package</code>，就会自动弹出相关的命令，可以选择 <code>Install</code>、<code>Remove</code>、<code>Disable</code>、<code>Enable</code>、<code>List</code>、<code>Update</code> 等命令。</p>
+<p><a href="https://sublime.wbond.net/">sublime wbond</a> 上列出了 Package Control 可以找到的所有的插件，有详细的安装和使用说明。</p>
+<p>网上也有很多文章介绍了大量的常用插件，我们可以按照需求自己挑选需要的插件进行安装。</p>
+<p><br></p>
+<h2>Verilog HDL</h2>
+<hr />
+<p>常用的插件，比如括号匹配、智能补全、自动对齐、Tags、注释生成、Terminal、Build、Git 等插件就不再赘述了，说一下网上介绍的比较少，但我自己使用比较多的关于 Verilog 的插件。</p>
+<p>可以通过 Package 下载到两个插件，<code>Verilog</code> 和<code>Verilog-Automatic</code>。第一个插件主要功能是支持 Verilog 的代码高亮和补全，第二个插件可以帮助我们自动生成模块例化、端口添加连接等功能。</p>
+<p>其中，第一个插件的 Snippet 并不太让人满意，在原 Snippet 的基础上，我添加了一些我常用到的 Snippets。</p>
+<h3>always</h3>
+<p>因为插件作者只添加了异步高有效复位方式的 <code>always</code> 块，而我们同步和异步两种方式都可能会用到，所以，我添加同步复位的 Snippet</p>
+<p>ST 2 的 Package 都存放在 <code>/home/.config/sublime-text-2/Packages</code> 目录下面，我们需要修改的就是这个目录下的 <code>Verilog/Snippets</code> 下的 <code>.tmSnippet</code> 文件。修改后的结果如下：</p>
+<p><strong>always_async.tmSnippet</strong></p>
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always @(posedge clk or ${1:posedge} ${2:rst}) begin
+    if ($2) begin
+        // reset
+        $3
+    end
+    else if ($4) begin
+        $0
+    end
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_async<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_async<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
+<p><strong>always_sync.tmSnippet</strong></p>
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always @(posedge clk) begin
+    if (${1:rst}) begin
+        // reset
+        $2
+    end
+    else begin
+        $0
+    end
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_sync<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_sync<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
+<p>修改之后的结果如下图所示：</p>
+<p><img alt="always" src="/images/sublime-text-2-and-verilog/always.gif" /></p>
+<h3>if-else</h3>
+<p>原来的 if snippet 没有 else 分支，所以，添加了一个有 else 分支的 if 语句。</p>
+<p><strong>if.tmSnippet</strong></p>
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if ($1) begin
+    $0
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
+<p><strong>if-else.tmSnippet</strong></p>
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if ($1) begin
+    $2
+end
+else begin
+    $0
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if_else<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if_else<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
+<p>修改后的结果如下图：</p>
+<p><img alt="if-else" src="/images/sublime-text-2-and-verilog/if-else.gif" /></p>
+<h3>parameter</h3>
+<p>原来是没有 parameter 的snippets 的，拷贝一份其他的 snippet，修改其中的一些设置，即可</p>
+<p><strong>parameter.tmSnippet</strong></p>
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>parameter   $1 = $2,
+            $3 = $0
+<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>parameter<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>parameter<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
+<p>修改后的结果如下图所示：</p>
+<p><img alt="parameter" src="/images/sublime-text-2-and-verilog/parameter.gif" /></p>
+<h3>case</h3>
+<p>原来是没有 case 的 snippet，方法同上，可以修改出我们想要的 case snippet</p>
+<p><strong>case.tmSnippet</strong></p>
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case ($1)
+    $2: begin
+        $3
+    end
+    $4: begin
+        $5
+    end
+    $6: begin
+        $7
+    end
+    $8: begin
+        $9
+    end
+    default: begin
+        $10
+    end
+endcase<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
+<p>修改后的效果如下：</p>
+<p><img alt="case" src="/images/sublime-text-2-and-verilog/case.gif" /></p>
+<p><br></p>
+<p>上面仅仅说了非常基本的几个设置，和我在写 Verilog 时自己添加的几个 snippet，其他的 ST 的使用技巧官方和非官方的 ref 有非常详细的介绍，另外其他人也有很多文章介绍～</p>
+            </div>
+            <!-- /.entry-content -->
+<section class="well" id="related-posts">
+    <h4>Related Posts:</h4>
+    <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic.html">FPGA 数字处理基础</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
+    </ul>
+</section>
+    <hr />
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+            var disqus_identifier = 'sublime_text_2_and_verilog';
+            var disqus_url = 'http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html';
+            var disqus_config = function () {
+                this.language = "zh";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="aboutme">
+<p>
+    <strong>About Chien Gu</strong><br/>
+    BYR + Programmer + Rocker
+</p>        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                    <li class="list-group-item"><a href="http://github.com/guqian110"><i
+                            class="fa fa-github-square fa-lg"></i> GitHub
+                    </a></li>
+                    <li class="list-group-item"><a href="https://plus.google.com/u/0/+QianGu/posts/p/pub"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google-plus
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.quora.com/Chien-Gu"><i
+                            class="fa fa-quora-square fa-lg"></i> Quora
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.zhihu.com/people/chiengu"><i
+                            class="fa fa-zhihu-square fa-lg"></i> Zhihu
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.douban.com/people/51504735/"><i
+                            class="fa fa-douban-square fa-lg"></i> Douban
+                    </a></li>
+                  </ul>
+                </li>
+
+
+
+                <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group " id="tags">
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-processing.html">
+                                digital processing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/sublime-text.html">
+                                Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+
+    <li class="list-group-item"><h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+        <div id="gh_repos">
+            <p class="list-group-item">Status updating...</p>
+        </div>
+    </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://jinja.pocoo.org/" target="_blank">
+                Jinja2
+            </a>
+        </li>
+      </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Chien Gu
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://guqian110.github.io/theme/js/respond.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (!window.jXHR) {
+                var jxhr = document.createElement('script');
+                jxhr.type = 'text/javascript';
+                jxhr.src = 'http://guqian110.github.io/theme/js/jXHR.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(jxhr, s);
+            }
+
+            github.showRepos({
+                user: 'guqian110',
+                count: 5,
+                skip_forks: false,
+                target: '#gh_repos'
+            });
+        });
+    </script>
+    <script src="http://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-48826831-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</body>
+</html>
