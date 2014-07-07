@@ -61,7 +61,7 @@
 &lt;/ol&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;================================================以下为详细的分类讨论==========================================&lt;/p&gt;
+&lt;p&gt;=========================================以下为详细的分类讨论==================================&lt;/p&gt;
 &lt;p&gt;编写一个简单的测试程序，查看综合结果和仿真波形，就可以知道综合时的策略。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;module: &lt;a href="http://guqian110.github.io/files/test_signed.v"&gt;test_signed.v&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;testbench: &lt;a href="http://guqian110.github.io/files/tb_test_signed.v"&gt;tb_test_signed.v&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
@@ -132,7 +132,7 @@
 
 &lt;p&gt;综合出来的比较器为 unsigned 类型。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt; 变量 integer 也是也可综合的。在上例中，如果将 flag 的类型改为 integer 也是可综合的，但是，因为只用到了低 8 位，所以在综合时会提示高 24 位是未连接 unconnected，但是因为 integer 是一个整体，所以即使未连接也不能优化掉，这就是在 Verilog-1995 中 integer 不够灵活的体现，好在 Verilog-2001 中已经添加了支持 reg/wire 为 signed 的类型，而且综合工具(XST)也是支持的。&lt;/p&gt;
-&lt;p&gt;=====================================================分割线结束=====================================================&lt;/p&gt;
+&lt;p&gt;=======================================分割线结束==========================================&lt;/p&gt;
 &lt;p&gt;以前只知道硬件上最基本的一些运算单元，比如加法器(adder)、减法器(subtractor)、比较器(comparator) 等，完成的功能是固定的，电路是不会检查输入数据的类型的。涉及到 signed 和 unsigned 类型，就出现一个问题：对于基本运算单元(比如加法器)，运算单元并不知道输入的数据是哪种数据，对于 unsigned 和 signed 类型，必然出现适合一种时不适合另外一种的问题。&lt;/p&gt;
 &lt;p&gt;所以可以推断出 &lt;strong&gt;对于不同的数据类型，同样是个加法器，底层的硬件电路是不一样的&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;如果我在程序中定义了 signed 和 unsigned 类型的数据，那么综合工具是否足够智能，能够根据数据的类型综合出正确适合的电路？&lt;/p&gt;
