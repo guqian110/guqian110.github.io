@@ -1,5 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-07-07T23:28:00+08:00</updated><entry><title>FPGA 数字处理基础 (2)</title><link href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html" rel="alternate"></link><updated>2014-07-07T23:28:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-07-07:pages/2014/07/07/fpga_digital_processing_basic_2.html</id><summary type="html">&lt;p&gt;讨论 FPGA 中无符号数 unsigned 和有符号数 signed 的问题。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coding Life</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-07-09T23:03:00+08:00</updated><entry><title>Verilog 中的参数化建模</title><link href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html" rel="alternate"></link><updated>2014-07-09T23:03:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-07-09:pages/2014/07/09/parameterization_modeling_in_veriog.html</id><summary type="html">&lt;p&gt;和写软件程序一样，我们也希望 Verilog 的模块也可以重利用。要使模块可以重复利用，关键就在于避免硬编码(hard literal)，使模块参数化。&lt;/p&gt;
+&lt;p&gt;参数化建模的好处是可以使代码清晰，便于后续维护和修改。&lt;/p&gt;
+&lt;p&gt;Verilog 的参数化建模是有一定限制的，它的参数值是编译时计算的，不会引入任何实际的硬件电路。参数必须在编译时确定值。也就是说只能达到动态编译，固态运行，而非软件的动态编译，动态运行。&lt;/p&gt;
+&lt;p&gt;这主要是因为它是描述(Description)硬件的语言，而非软件设计(Design)语言。&lt;/p&gt;
+&lt;p&gt;比如一个计数器，我们可以设置一个参数来指定它的计数周期(动态编译)，但是这个计数周期在综合之后就是固定值了(固态运行)，不能在运行的时候动态地改为另外一个值(除非电路综合时同时产生了多个计数器，这种情况不算真正意义上的动态运行，而且也达不到真正意义上的动态运行，因为不可能把所有可能的计数器都实现了备用，耗费资源而且没有实际意义)。&lt;/p&gt;
+&lt;p&gt;参数化建模的主要目的是：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;提高模块的通用性，只需要修改参数，不用修改其他代码就可以适用于不同的环境中。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;总结一下我找到的资料，具体的参数化建模方法一共就 3 种：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;`define&lt;/code&gt; 宏定义&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;parameter&lt;/code&gt; 模块参数化&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;`ifdef&lt;/code&gt; 等 条件编译&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;下面详细说明&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Define Macro Substitution&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;code&gt;`define&lt;/code&gt; 是编译器指令，功能是全局宏定义的文本代替。它类似于 C 语言中的 &lt;code&gt;#define&lt;/code&gt;，用法如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// define&lt;/span&gt;
+&lt;span class="cp"&gt;`define     WORD_REG    reg     [31:0]&lt;/span&gt;
+
+&lt;span class="c1"&gt;// using&lt;/span&gt;
+&lt;span class="no"&gt;`WORD_REG&lt;/span&gt;   &lt;span class="n"&gt;reg32&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Problem&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;`define 定义的宏的作用域是全局的，这种机制会导致两个问题&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;可能会有在不同文件中发生重定义的问题&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;编译顺序有要求 file-order dependent，必须确保使用前，宏定义有效，所以每个使用到宏定义的源文件必须包含这个头文件，这会导致多重包含的问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Solution&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;对于第一个问题，尽可能把所有的宏定义放在同一个头文件中，比如 "global_define.vh"&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对于第二个问题，和 C++ 类似，头文件应该使用头文件保护符。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// global_define.vh head file&lt;/span&gt;
+&lt;span class="no"&gt;`ifndef&lt;/span&gt; &lt;span class="no"&gt;GLOBAL_DEFINE_VH&lt;/span&gt;
+&lt;span class="cp"&gt;    `define     MAX = 8&lt;/span&gt;
+&lt;span class="cp"&gt;    `define     SIZE = 4&lt;/span&gt;
+    &lt;span class="c1"&gt;// ...&lt;/span&gt;
+&lt;span class="no"&gt;`enif&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Guideline&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;只有那些要求有全局作用域、并且在其他地方不会被修改的常量才用 define 来定义&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对于那些只限于模块内的常量，不要使用 define&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;尽可能将所有的 define 都放在同一个文件中，然后在编译时先读取这个文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不要使用 &lt;code&gt;`undef&lt;/code&gt; &lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Parameter&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;Parameter&lt;/h3&gt;
+&lt;p&gt;应该避免硬编码设计 &lt;code&gt;hard literal&lt;/code&gt;，使用参数 &lt;code&gt;parameter&lt;/code&gt; 来代替。举个例子&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// use parameter&lt;/span&gt;
+&lt;span class="k"&gt;parameter&lt;/span&gt;   &lt;span class="no"&gt;SIZE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="no"&gt;MAX&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;reg&lt;/span&gt;     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;SIZE&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mh"&gt;1&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;      &lt;span class="n"&gt;din_r&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;// DO NOT use hard literal&lt;/span&gt;
+&lt;span class="k"&gt;reg&lt;/span&gt;     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;7&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;     &lt;span class="n"&gt;din_r&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Localparam&lt;/h3&gt;
+&lt;p&gt;Verilog-2001 中添加了一个新的关键字 &lt;code&gt;localparam&lt;/code&gt;，用来定义模块内部的、不能被其他模块修改的局部常量，概念类似于 C++ 中 class 的 protect 成员。&lt;/p&gt;
+&lt;p&gt;虽然 localparam 不能被外部模块修改，但是它可以用 parameter 来初始化。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;parameter&lt;/span&gt;  &lt;span class="n"&gt;N&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;localparam&lt;/span&gt; &lt;span class="n"&gt;N1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Parameter Redefinition&lt;/h3&gt;
+&lt;p&gt;在 Verilog-2001 出现之前，Verilog-1995 中只有两种方法实现参数重定义：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使用 # 符号，顺序列表重定义&lt;/li&gt;
+&lt;li&gt;使用 defparam&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;逐个讨论&lt;/p&gt;
+&lt;h4&gt;1. Uisng &lt;code&gt;#&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Syntax&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;举个栗子，模块 myreg&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="nf"&gt;myreg&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;parameter&lt;/span&gt;   &lt;span class="n"&gt;Trst&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="n"&gt;Tclk&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="n"&gt;SIZE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="c1"&gt;// ...&lt;/span&gt;
+&lt;span class="n"&gt;endmodule&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在上一层的模块中传递参数例化这个模块&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;module&lt;/span&gt;  &lt;span class="nf"&gt;bad_warpper&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="c1"&gt;// legal parameter passing&lt;/span&gt;
+    &lt;span class="n"&gt;myreg&lt;/span&gt;   &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;r1&lt;/span&gt;&lt;span class="p"&gt;(.&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="c1"&gt;// illegal parameter passing&lt;/span&gt;
+    &lt;span class="c1"&gt;// myreg #(,,8) r1(.q(q), .d(d), .clk(clk), .rst(rst) );&lt;/span&gt;
+&lt;span class="n"&gt;endmodule&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Pro&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;虽然每次例化都要说明所有的参数值，但是比第二种方法好&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Con&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;每次例化都要说明所有的参数值。&lt;/p&gt;
+&lt;h4&gt;2. Using &lt;code&gt;defparam&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Syntax&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;defparam&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;比如在上面的例子中&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;defparam&lt;/span&gt;    &lt;span class="n"&gt;r1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SIZE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Pro&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;可以放在任何文件的任何地方，不用再重复没有修改的参数值&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Con&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;因为 defparam 有这么 "强" 的功能，反而会导致一系列的问题&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Hierarchical deparam. &lt;/p&gt;
+&lt;p&gt;比如顶层模块使用 defparam 修改子模块的参数，子模块中又使用 defparam 修改顶层模块要传递进来的参数，形成一个环，这样子可能导致综合时不提示错误，但是结果与预期不符。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Multiple defparams&lt;/p&gt;
+&lt;p&gt;在 单个文件 / 多个文件 中重复定义 defparam，会有微妙的问题，Verilog-1995 中没有定义这种现象，实际结果依赖于使用的综合工具。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;因为 defparam 有这么多缺点，所以在 2001 年之前，Synopsys 是不支持 defparam 的，网上很多转载的博客都说 defparam 是不可综合的，实际上在后来，Synopsys 在压力之下添加了对其的支持。而我用 XST 也证明是支持 defparam 可综合。&lt;/p&gt;
+&lt;p&gt;综上原因，Verilog Standards Group (VSG) 倡议大家抵制使用 defparam，大神 Clifford E. Cummings 在论文中建议综合工具如果用户坚持使用 defparam 语句，必须添加以一个参数 &lt;code&gt;+Iamstupid&lt;/code&gt;...&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;"The Verilog compiler found a defparam statement in the source code at
+(file_name/line#).
+To use defparam statements in the Verilog source code, you must include the switch
++Iamstupid on the command line which will degrade compiler performance and introduce
+potential problems but is bug-compatible with Verilog-1995 implementations.
+Defparam statements can be replaced with named parameter redefinition as define by
+the IEEE Verilog-2001 standard."&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;总结一下，可以发现 Verilog-1995 中的两种方法都不怎么好，显然 VSG 也发现了这个问题，所以在 Verilog-2001 中，出现了第三种方法，并且墙裂推荐使用这种新方法。&lt;/em&gt;&lt;/p&gt;
+&lt;h4&gt;3. Using named parameter redefinition&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Syntax&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;类似于模块例化时端口连接的方式，比如上例中只想改变 SIZE 的值&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;myreg&lt;/span&gt;   &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="p"&gt;(.&lt;/span&gt;&lt;span class="n"&gt;SIZE&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="n"&gt;r1&lt;/span&gt;&lt;span class="p"&gt;(.&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Pro&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;结合了前两种方法的有点，既显示说明了哪个参数值改变了，也将参数传递放在了实例化的语句中。这种方法是最干净的 (cleanest) 方法，不依赖于任何综合工具。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Con&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;貌似没有～&lt;/p&gt;
+&lt;h3&gt;Guideline&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;不要使用 defparam，应该使用 named parameter redefinition。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Example&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;clock cycle definition&lt;/p&gt;
+&lt;p&gt;因为时钟是一个设计中最基本的常量，它不会在随着模块变化，所以应该用 &lt;code&gt;`define&lt;/code&gt; 来定义，并且将它放在顶层的头文件中。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;FSM&lt;/p&gt;
+&lt;p&gt;在一个设计中可能有不止一个 FSM，而通常 FSM 有一些共同的状态名字，比如 IDLE、READY、READ、WRITE、ERROR、DONE 等，所以应该用 &lt;code&gt;localparam&lt;/code&gt; 来定义这些常量。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Conditional Compilation&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;Verilog 的条件编译和 C 也十分类似。前面介绍 define 时，已经用到了条件编译中的 &lt;code&gt;`ifdef&lt;/code&gt;。条件编译一共有 5 个关键字，分别是：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;ifdef&lt;/span&gt;  &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;   &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;elsif&lt;/span&gt;  &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;endif&lt;/span&gt;  &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;ifndef&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;条件编译一般在以下情况中使用&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;选择一个模块的不同部分&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;选择不同的时序和结构&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;选择不同的仿真激励&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Syntax&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// example1&lt;/span&gt;
+&lt;span class="no"&gt;`ifdef&lt;/span&gt; &lt;span class="n"&gt;text_macro&lt;/span&gt;
+    &lt;span class="c1"&gt;// do something&lt;/span&gt;
+&lt;span class="no"&gt;`endif&lt;/span&gt;
+
+&lt;span class="c1"&gt;// example2&lt;/span&gt;
+&lt;span class="no"&gt;`ifdef&lt;/span&gt; &lt;span class="n"&gt;text_macro&lt;/span&gt;
+    &lt;span class="c1"&gt;// do something&lt;/span&gt;
+&lt;span class="no"&gt;`else&lt;/span&gt;
+    &lt;span class="c1"&gt;// do something&lt;/span&gt;
+&lt;span class="no"&gt;`endif&lt;/span&gt;
+
+&lt;span class="c1"&gt;// example3&lt;/span&gt;
+&lt;span class="no"&gt;`ifdef&lt;/span&gt; &lt;span class="n"&gt;text_macro&lt;/span&gt;
+    &lt;span class="c1"&gt;// do something&lt;/span&gt;
+&lt;span class="no"&gt;`elsif&lt;/span&gt;
+    &lt;span class="c1"&gt;// do something&lt;/span&gt;
+&lt;span class="no"&gt;`else&lt;/span&gt;
+    &lt;span class="c1"&gt;// do something&lt;/span&gt;
+&lt;span class="no"&gt;`endif&lt;/span&gt;
+
+&lt;span class="c1"&gt;// example4&lt;/span&gt;
+&lt;span class="no"&gt;`ifndef&lt;/span&gt; &lt;span class="n"&gt;text_macro&lt;/span&gt;
+    &lt;span class="c1"&gt;// do something&lt;/span&gt;
+&lt;span class="no"&gt;`else&lt;/span&gt;
+    &lt;span class="c1"&gt;// do something&lt;/span&gt;
+&lt;span class="no"&gt;`endif&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;条件编译是一个非常好的技术，它可以帮助我们更好的管理代码。&lt;/p&gt;
+&lt;p&gt;举个栗子，比如我们写了一个程序，在 debug 阶段，在程序中添加了很多显示中间变量的语句，到最后 release 时，当然要去掉这些语句。最差的方法当然是删掉这些代码，但是如果以后我们还想 debug 时，又得手动写，而且时间长了，我们自己都记不清该加哪些语句了。稍微好点的方法是把它们注释起来，但是同样，时间长了，哪些该注释，那些不该注释又混淆了。最好的方法就是用条件编译。我们可以定义一个宏 DEBUG&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;define&lt;/span&gt; &lt;span class="n"&gt;DEBUG&lt;/span&gt;
+
+&lt;span class="c1"&gt;// conditional compilation&lt;/span&gt;
+&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;ifdef&lt;/span&gt; &lt;span class="n"&gt;DEBUG&lt;/span&gt;
+    &lt;span class="c1"&gt;// debug&lt;/span&gt;
+&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="c1"&gt;// release&lt;/span&gt;
+&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;endif&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样，我们只需要选择是否注释第一行的宏定义就可快速在 debug 和 release 之间切换。&lt;/p&gt;
+&lt;p&gt;再比如在 Verilog 的模块中，针对不同的应用环境，我们要实现不同的模块，这时候也可以使用条件编译选择具体综合哪段代码。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;总结一下，就是一下几点&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Guideline&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;只有那些要求有全局作用域、并且在其他地方不会被修改的常量才用 define 来定义&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对于那些只限于模块内的常量，不要使用 define&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;尽可能将所有的 define 都放在同一个文件中，然后在编译时先读取这个文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不要使用 &lt;code&gt;`undef&lt;/code&gt; &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不要使用 defparam，应该使用 named parameter redefinition。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;需要时使用条件编译&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Reference&lt;/h2&gt;
+&lt;p&gt;IEEE Std 1364-1995&lt;/p&gt;
+&lt;p&gt;IEEE Std 1364-2001&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.sunburst-design.com/papers/CummingsHDLCON2002_Parameters_rev1_2.pdf"&gt;New Verilog-2001 Techniques for Creating Parameterized Models&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.cnblogs.com/oomusou/archive/2008/07/09/verilog_parameter.html"&gt;(原创) 如何使用参数式模组? (SOC) (Verilog) (C/C++) (template)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.chinaaet.com/detail/14875"&gt;艾米电子 - 参数与常量，Verilog&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.eefocus.com/ilove314/blog/2012-03/231583_52a1d.html"&gt;Verilog代码可移植性设计&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="parameterization"></category></entry><entry><title>FPGA 数字处理基础 (2)</title><link href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html" rel="alternate"></link><updated>2014-07-07T23:28:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-07-07:pages/2014/07/07/fpga_digital_processing_basic_2.html</id><summary type="html">&lt;p&gt;讨论 FPGA 中无符号数 unsigned 和有符号数 signed 的问题。&lt;/p&gt;
 &lt;h2&gt;Basic Knowledge&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;strong&gt;整数的分类：&lt;/strong&gt; 无符号数 &lt;code&gt;unsigned&lt;/code&gt; 和 有符号数 &lt;code&gt;signed&lt;/code&gt;。&lt;/p&gt;
