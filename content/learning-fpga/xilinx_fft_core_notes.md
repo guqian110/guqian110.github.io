@@ -62,7 +62,7 @@ datasheet 中没有专门描述 `start` 信号和其他信号的时序关系，�
 
 在 datasheet 中给出的时序图如下所示（Burst I/O Solutions with Natural Order Output）
 
-![Burst I/O Solution](/images/xilinx_fft_core_notes/burst_io_splution.png)
+![Burst I/O Solution](/images/xilinx_fft_core_notes/burst_io_solution.png)
 
 实际仿真图：
 
