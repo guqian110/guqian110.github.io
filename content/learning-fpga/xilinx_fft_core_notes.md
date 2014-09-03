@@ -95,6 +95,54 @@ datasheet 中没有专门描述 `start` 信号和其他信号的时序关系，�
 
 **仔细看了两遍程序和 datasheet，没有发现问题...待解决！**
 
+**Update 09/03/2014**
+
+又仔细看了两遍 datasheet，终于发现了原因所在。在关于 CP length 部分，最有一小段话一直被我匆匆忽略了：
+
+> The initial value and reset value of CP_LEN is 0 (no cyclic prefix). The core uses the log2(point size) MSBs of CP_LEN for the cyclic prefix length. So, when the point size decreases, the leftover LSBs are ignored. This effectively scales the cyclic prefix length with the point size, keeping them in approximately constant proportion. However, all bits of CP_LEN are latched into the core on CP_LEN_WE and are used in later transforms if the point size increases.
+
+仔细读了一遍才明白，CP_LEN 起作用的是高位的数据 —— 从 MSB 起共 log2(point size) 位。比如我测试程序设置的最大点数为 4096，这是 CP_LEN 的位宽为 12 比特，但是在程序运行过程中，我重配置为 64 点，所以这时候应该从 CP_LEN 的最高位数起，共 log2(64) = 6 比特数据起作用。如果我想设置 CP 的长度为 8 点，则应该如下
+
+        cp_len <= 12'b001000_000000;
+
+这时候，如下图所示，结果与预期相符。
+
+![cp](/images/xilinx_fft_core_notes/cp.png)
+
+### FFT/ IFFT
+
+在 FFT 的测试程序中，一切都正常工作，但是切换为 IFFT 模式，却出现了问题。
+
+datasheet 中介绍，控制正反变换的信号一共有两个：`fwd_inv` 和 `fwd_inv_we`。前者取 1 时为 FFT，取 0 为 IFFT；后者是前者的写使能信号。
+
+因为 FFT 的程序可以正常工作，说明程序逻辑是没有问题的。但是只配置这两个端口，就是有问题。自己研究无果，只能 Google，还真的找到以前有人也遇到同样的问题，并且给出了解决方法（不得不说，还是 Google 好，某度搜出来的结果都是广告和没有用的链接）
+
+[IFFT of FFT module does not work](http://forums.xilinx.com/t5/Digital-Signal-Processing-IP-and/IFFT-of-FFT-module-does-not-work/td-p/71555)
+
+[IFFT in System Generator (blogspot 需翻墙)](http://myfpgablog.blogspot.com/2009/11/ifft-in-system-generator.html)
+
+转原博客部分内容：
+
+> By default, the FFT block is configured to calculate DFT. The setup and timing of control/data signals for IDFT are the same as DFT except for two things:
+>
+> 1. The FFT block needs to be set up for IDFT by setting fwd_inv_we signal to 1 and fwd_inv signal to 0 before the start of the transform.
+>
+> 2. The FFT output needs to be manually scaled to account for the factor 1/N in Equation 2 above. The scaling can be done either by using the scaling schedule input or shifting the FFT output if the FFT block is set to "unscaled".
+
+问题关键就在于第二条，需要手动设置数据缩放，给结果乘以 1/N。
+
+原因就是这个 IP core 在计算 FFT 和 IFFT 时，利用两者表达式上的相似点，使用相同的结构，但是却缺少给 IFFT 的结果乘以 1/N 的步骤，需要用户自己添加。
+
+在 datasheet 中介绍说
+
+![theory](/images/xilinx_fft_core_notes/theory.png)
+
+> The inverse FFT (IFFT) is computed by conjugating the phase factors of the corresponding forward FFT.
+
+但是却没有提到这个额外的 1/N 需要用户自己手动设置，应该算是 Xilinx 的坑。修正这个倍数关系以后，结果就与预期相符了～
+
+（其实如果仔细分析对比 FPGA 和 Matlab 的结果，就能发现两者的差别就是这个 1/N 的倍数关系，只是自己对数字不敏感，又懒得仔细观察 =.=）
+
 <br>
 
 ## P.S. Test program
