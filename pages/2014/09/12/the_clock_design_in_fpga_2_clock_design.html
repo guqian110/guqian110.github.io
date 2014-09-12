@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>FPGA 数字处理基础 (2) - Coding Life</title>
+    <title>FPGA 时钟设计 2 —— 时钟设计 - Coding Life</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -14,13 +14,13 @@
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Coding Life" />
             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="FPGA 数字处理基础 (2)"/>
-            <meta property="og:url" content="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html"/>
-            <meta property="og:description" content="总结 FPGA 处理数字信号的基础知识 (2)"/>
-            <meta property="article:published_time" content="2014-07-07" />
+            <meta property="og:title" content="FPGA 时钟设计 2 —— 时钟设计"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html"/>
+            <meta property="og:description" content="总结 FPGA 中的时钟设计方案"/>
+            <meta property="article:published_time" content="2014-09-12" />
             <meta property="article:section" content="FPGA" />
             <meta property="article:tag" content="FPGA" />
-            <meta property="article:tag" content="digital processing" />
+            <meta property="article:tag" content="clock design" />
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -79,17 +79,17 @@
             <ol class="breadcrumb">
                 <li><a href="http://guqian110.github.io" title="Coding Life"><i class="fa fa-home fa-lg"></i></a></li>
                 <li><a href="http://guqian110.github.io/category/fpga.html" title="FPGA">FPGA</a></li>
-                <li class="active">FPGA 数字处理基础 (2)</li>
+                <li class="active">FPGA 时钟设计 2 —— 时钟设计</li>
             </ol>
 
     <section id="content">
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html"
+                    <a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html"
                        rel="bookmark"
-                       title="Permalink to FPGA 数字处理基础 (2)">
-                        FPGA 数字处理基础 (2)
+                       title="Permalink to FPGA 时钟设计 2 —— 时钟设计">
+                        FPGA 时钟设计 2 —— 时钟设计
                     </a>
                 </h1>
             </header>
@@ -99,7 +99,7 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-07-07T23:28:00"> Mon 07 July 2014</time>
+        <i class="fa fa-calendar"></i><time datetime="2014-09-12T12:45:00"> Fri 12 September 2014</time>
     </span>
 
 
@@ -107,202 +107,149 @@
 <span class="label label-default">Tags</span>
 	<a href="http://guqian110.github.io/tag/fpga.html">FPGA</a>
         /
-	<a href="http://guqian110.github.io/tag/digital-processing.html">digital processing</a>
+	<a href="http://guqian110.github.io/tag/clock-design.html">clock design</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>讨论 FPGA 中无符号数 unsigned 和有符号数 signed 的问题。</p>
-<h2>Basic Knowledge</h2>
-<hr />
-<p><strong>整数的分类：</strong> 无符号数 <code>unsigned</code> 和 有符号数 <code>signed</code>。</p>
-<p><strong>数制：</strong> 10、2、8、16 进制</p>
-<p><strong>机器数：</strong> 机器数的意思是数字在机器中的表示方式。主要有 3 种</p>
-<p><code>原码 sign-magnitude</code>、<code>反码 one's complement</code>、<code>补码 two's complement</code></p>
-<p>以前写过的一篇总结： <a href="http://guqian110.github.io/pages/2014/03/19/signed_number_representations.html">原码、反码、补码</a></p>
-<p><strong>计算机系统：</strong> 采用二进制、补码系统。</p>
-<p><br></p>
-<p><em>FPGA 中是如何表示数字的呢？</em></p>
-<p>以前写过一篇总结，<a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic_1.html">FPGA 数字处理基础 (1)</a></p>
-<p>本文算是上面文章的续吧。</p>
-<p><br></p>
-<h2>(un)signed in Verilog</h2>
-<hr />
-<h3>Integer</h3>
-<p>在 Verilog 中表示一个整数可以有两种方法：</p>
-<ol>
-<li>
-<p>简单的数字</p>
-<p>即只有简单的数字，默认为有符号数。比如 8, -10</p>
-</li>
-<li>
-<p>基数表示法 <code>&lt;size&gt;'&lt;s&gt;&lt;base&gt;&lt;value&gt;</code></p>
-<p>其中，size 指定需要多少位表示这个数字，有 s 表示这个数为有符号数，没有则表示这个数是无符号数，base 指定后面的 value 是使用哪种基数来描述，value 制定这个数字的大小。默认为无符号数，除非声明 s 字段。</p>
-</li>
-</ol>
-<p><strong>在 FPGA 也采用补码系统</strong>，即在综合时，综合工具会将有符号数翻译为补码，在硬件中存储起来。</p>
-<div class="highlight"><pre><span class="mi">4</span><span class="err">&#39;</span><span class="n">d5</span>   <span class="c1">// 这个数为无符号数，理解为 5, 占用 8 bit，存储的值为 0101</span>
-<span class="mi">4</span><span class="err">&#39;</span><span class="n">sd5</span>  <span class="c1">// 这个数为有符号数，理解为 5, 占用 8 bit，存储的值为 0101</span>
-<span class="o">-</span><span class="mi">4</span><span class="err">&#39;</span><span class="n">d5</span>  <span class="c1">// 这个数为无符号数，理解为 -5, 占用 8 bit，存储的值为 1011</span>
-<span class="o">-</span><span class="mi">4</span><span class="err">‘</span><span class="n">sd5</span> <span class="c1">// 这个数为有符号数，理解为 -5, 占用 8 bit，存储的值为 1011</span>
-</pre></div>
-
-
-<h3>Register</h3>
-<p>Verilog 中数据的基本类型： <code>wire</code>、<code>reg</code>、<code>integer</code></p>
-<p>在 Verilog-1995 中，规定所有的 wire、reg 都是 unsigned 类型，只有 integer 是 signed 类型。但是 integer 的宽度是固定的(与宿主机的字是一样的，最小为 32 位)，这样子，造成了很大的不方便和浪费。</p>
-<p>在 Verilog-2001 中，添加了 wire、reg 也可以是 signed 类型了。</p>
-<div class="highlight"><pre><span class="n">reg</span>             <span class="p">[</span><span class="mi">8</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">a</span><span class="p">;</span>  <span class="c1">// unsigned</span>
-<span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="mi">8</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">b</span><span class="p">;</span>  <span class="c1">// signed</span>
-</pre></div>
-
-
-<p><br></p>
-<p><strong>Problem</strong></p>
-<blockquote>
-<p>数据可以是 signed 和 unsigned，寄存器也可以是 signed 和 unsigned，那么综合时，是以哪个为准呢？</p>
+                <blockquote>
+<p>无论是离散逻辑、可编程逻辑，还是用全定制硅器件实现的任何数字设计，为了成功地操作，可靠的时钟是非常关键的。</p>
+<p>设计不良的时钟在极限的温度、电压或者制造工艺的偏差情况下将导致错误的行为，并且调试困难、花销很大。</p>
 </blockquote>
-<p>这个问题一开始自己没有搞清楚，迷惑了一下午，后来写了几个小测试程序，最后发现这个结论：</p>
-<p><strong>Conclusion</strong> </p>
-<blockquote>
-<ol>
-<li>
-<p><em>以变量类型为准</em></p>
-<p>即 reg/wire 为哪种，那么综合时就以这个为标准进行综合。比如当 reg 为 unsigned 类型，当我们给它赋值为 signed 类型的数据 <code>-5</code>(<code>-4’d5</code>) 时，综合出来的结果为 reg 存储的是 <code>-5</code> 的补码 <code>1011</code>,但是解释为 unsigned 类型的 <code>+11</code>。这时候就结果和我们的预期是不一样的，出现了误差，一定要注意！另一种情况类似。</p>
-</li>
-<li>
-<p>如果参与运算的变量混合有 signed 和 unsigned 类型，那么会将 signed 转换为 unsigned 类型。(应该避免这种情况)</p>
-</li>
-</ol>
-</blockquote>
+<p>总结一下 FPGA 中的时钟设计原则。</p>
 <p><br></p>
-<p>=========================================以下为详细的分类讨论==================================</p>
-<p>编写一个简单的测试程序，查看综合结果和仿真波形，就可以知道综合时的策略。</p>
-<p><strong>module: <a href="http://guqian110.github.io/files/test_signed.v">test_signed.v</a></strong></p>
-<p><strong>testbench: <a href="http://guqian110.github.io/files/tb_test_signed.v">tb_test_signed.v</a></strong></p>
-<h4>1. unsigned reg &amp; unsigned value</h4>
-<p>定义 reg 为 unsigned 类型</p>
-<div class="highlight"><pre><span class="n">reg</span>     <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
-<span class="n">reg</span>     <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// unsigned</span>
-</pre></div>
-
-
-<p>赋值为 unsigned 类型</p>
-<div class="highlight"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">d10</span><span class="p">;</span>  <span class="c1">// unsigned</span>
-</pre></div>
-
-
-<p>那么可以从 RTL Schematic 中看到，综合出来的比较器是 unsigned 类型。</p>
-<h4>2. unsigned reg &amp; signed value</h4>
-<p>定义 reg 为 unsigned 类型</p>
-<div class="highlight"><pre><span class="n">reg</span>     <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
-<span class="n">reg</span>     <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// unsigned</span>
-</pre></div>
-
-
-<p>赋值为 signed 类型</p>
-<div class="highlight"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span><span class="n">sd10</span><span class="p">;</span>    <span class="c1">// signed</span>
-</pre></div>
-
-
-<p>那么综合出来的比较器是 unsigned 类型。</p>
-<h4>3. signed reg &amp; signed value</h4>
-<p>定义 reg 为 signed 类型</p>
-<div class="highlight"><pre><span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
-<span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// signed</span>
-</pre></div>
-
-
-<p>赋值为 signed 类型</p>
-<div class="highlight"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span><span class="n">sd10</span><span class="p">;</span>    <span class="c1">// signed</span>
-</pre></div>
-
-
-<p>那么综合出来的比较器是 signed 类型。</p>
-<h4>4. signed reg &amp; unsigned value</h4>
-<p>定义 reg 为 signed 类型</p>
-<div class="highlight"><pre><span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
-<span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// unsigned</span>
-</pre></div>
-
-
-<p>赋值为 unsigned 类型</p>
-<div class="highlight"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">d10</span><span class="p">;</span>  <span class="c1">// unsigned</span>
-</pre></div>
-
-
-<p>那么综合出来的比较器是 signed 类型。</p>
-<h4>5. signed reg &amp; unsigned reg</h4>
-<p>如果参与运算的两个变量一个是 signed，另一个是 unsigned。（注意这种现象应该避免，一般我们是不会将两种不同类型的数据混在一起进行计算的）</p>
-<p>定义 i 为 unsigned 类型，flag 为 signed 类型</p>
-<div class="highlight"><pre><span class="n">reg</span>             <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
-<span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// signed</span>
-</pre></div>
-
-
-<p>给 flag 赋值为 signed 的 -5</p>
-<div class="highlight"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">4</span><span class="err">&#39;</span><span class="n">d5</span><span class="p">;</span>      <span class="c1">// sigend</span>
-</pre></div>
-
-
-<p>综合出来的比较器为 unsigned 类型。</p>
-<p><strong>P.S.</strong> 变量 integer 也是也可综合的。在上例中，如果将 flag 的类型改为 integer 也是可综合的，但是，因为只用到了低 8 位，所以在综合时会提示高 24 位是未连接 unconnected，但是因为 integer 是一个整体，所以即使未连接也不能优化掉，这就是在 Verilog-1995 中 integer 不够灵活的体现，好在 Verilog-2001 中已经添加了支持 reg/wire 为 signed 的类型，而且综合工具(XST)也是支持的。</p>
-<p>=======================================分割线结束==========================================</p>
-<p>以前只知道硬件上最基本的一些运算单元，比如加法器(adder)、减法器(subtractor)、比较器(comparator) 等，完成的功能是固定的，电路是不会检查输入数据的类型的。涉及到 signed 和 unsigned 类型，就出现一个问题：对于基本运算单元(比如加法器)，运算单元并不知道输入的数据是哪种数据，对于 unsigned 和 signed 类型，必然出现适合一种时不适合另外一种的问题。</p>
-<p>所以可以推断出 <strong>对于不同的数据类型，同样是个加法器，底层的硬件电路是不一样的</strong>。</p>
-<p>如果我在程序中定义了 signed 和 unsigned 类型的数据，那么综合工具是否足够智能，能够根据数据的类型综合出正确适合的电路？</p>
-<p>答案是肯定的，即<strong>综合器足够智能</strong>。</p>
-<p>上面的程序证明了这一点，从 RTL 图中可以看到综合出的比较器是 signed 还是 unsigned 类型，仿真波形也可以看到，最终下载到板子上测试也符合预期。这些都证明 综合器足够智能。后来看到 <a href="http://www.xilinx.com/support/documentation/sw_manuals/xilinx14_7/xst.pdf">UG627(v14.5): XST User Guide</a>，才发现里面已经非常清楚地写着</p>
-<p>Chapter 3: Signed and Unsigned Support in XST</p>
-<blockquote>
-<p>When using Verilog or VHDL in XST, some macros, such as adders or counters, can be
-implemented for signed and unsigned values.
-To enable support for signed and unsigned values in Verilog, enable Verilog-2001
-as follows:
-+ ISE® Design Suite
-  Select Verilog 2001 as instructed in the Synthesis Options topic of ISE Design Suite
-Help
-+ XST Command Line
-  Set -verilog2001 to yes.</p>
-</blockquote>
-<p>花费了大量时间上网找资料，在论坛里问别人无果，最后自己动手写程序测试，最后才发现原来官方资料里面早就写的清清楚楚 =.=</p>
-<p><br></p>
-<h2>Conclusion</h2>
+<h2>Clock Design</h2>
 <hr />
-<p>说了这么多，总结下来就是下面这几句话：</p>
-<p><strong>经验：</strong></p>
+<blockquote>
+<p>在 FPGA/CPLD 中通常采用几种时钟类型：</p>
+<ul>
+<li>
+<p>全局时钟</p>
+</li>
+<li>
+<p>门控时钟</p>
+</li>
+<li>
+<p>多级逻辑时钟</p>
+</li>
+<li>
+<p>波动式时钟</p>
+</li>
+</ul>
+<p>多时钟系统能够包括上述 4 种时钟类型的任意组合。</p>
+</blockquote>
+<p>上面是 <a href="http://book.douban.com/subject/10593491/">《Xiliinx FPGA 高级设计及应用》</a> 中的分类方法，个人觉得并不是很清晰，我总结了一下，大概可以分为下面的这 4 种：</p>
 <ol>
 <li>
-<p>遇到问题，先不要急着上网求助，上网求助这个方法虽然简单，但是是最不好的，一方面别人的话不一定可靠，另一方面，放弃思考直接上网求助对学习无益。</p>
+<p>全局时钟 Global Clock</p>
 </li>
 <li>
-<p>找资料的技巧很重要。虽然我大概能够猜测到 Xilinx 官方的文档中肯定有说明，但是就是懒得去下载文档，再去找。认为网上肯定有人也有相同的困惑，所以直接 Google。结果找到一堆没有帮助的网页，浪费了时间，最后还是要看文档。</p>
+<p>门控时钟 Gated Clock</p>
 </li>
 <li>
-<p>实践是检验真理的唯一标准，到底行不行，写测试程序，在板子上跑跑，验证一下是最有力的证明。</p>
+<p>逻辑时钟 Logic Clock</p>
+</li>
+<li>
+<p>分频/倍频时钟 Divied/Multiplied Clock</p>
 </li>
 </ol>
-<p><strong>知识：</strong></p>
+<h3>Gloabl Clock</h3>
+<p>关于全局时钟，前面一篇 blog  <a href="">FPGA 时钟设计 1 —— 时钟资源总结</a> 中有总结。</p>
+<p>对于一个项目来说，全局时钟是 <strong>最简单</strong>、<strong>最可预测</strong> 的时钟。</p>
+<p>在 PLD/FPGA 项目中 <strong>最好的时钟方案</strong> 是：由专用的全局时钟输入引脚驱动的单个主时钟去钟控设计项目中的每一个触发器。只要可能就应该尽量在设计中采用全局时钟</p>
+<p>PLD/FPGA 都具有专门的全局时钟引脚，它直接连接到器件中的每一个寄存器，这种全局时钟提供最短的时钟到输出的延时。</p>
+<h3>Gated Clock</h3>
+<p>门控时钟的意思是通过组合逻辑，控制、禁止或允许时钟输入到寄存器和其他同步原件上的一种方法。因为它能够有效地降低功耗，所以被广泛地应用于 ASIC 设计中。但是，它不符合 <code>同步设计</code> 的思想，可能会影响系统设计的实现和验证，所以，<strong>在 FPGA 设计中应该避免使用门控时钟。</strong></p>
+<p>因为 ASIC 和 FPGA 结构设计上的区别，两者对待门控时钟的态度是完全不同的：</p>
+<p><a href="http://electronics.stackexchange.com/questions/73398/gated-clocks-and-clock-enables-in-fpga-and-asics">Gated clocks and clock enables in FPGA and ASICS</a></p>
+<p>往往可以将门控时钟转化为全局时钟以改善项目设计的可靠性。</p>
+<p><strong>方法一</strong> </p>
+<p>就是使用寄存器 <code>时钟使能 (clock enable, CE)</code> 端口。</p>
+<p>单纯从功能来看，使用使能时钟代替门控时钟是一个不错的选项，但是使能时钟在使能信号关闭时，时钟信号仍然工作，它无法像门控时钟那样降低系统的功耗。</p>
+<p>推译带使能端的触发器的代码：</p>
+<div class="highlight"><pre>    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="n">dout</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ce</span><span class="p">)</span> <span class="n">begin</span>
+                <span class="n">dout</span> <span class="o">&lt;=</span> <span class="n">din</span><span class="p">;</span>
+            <span class="n">end</span>
+            <span class="k">else</span> <span class="n">begin</span>
+                <span class="n">dout</span> <span class="o">&lt;=</span> <span class="n">dout</span><span class="p">;</span>
+            <span class="n">end</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
+</pre></div>
+
+
+<p>得到的结果就是原语 <code>FDCE</code></p>
+<blockquote>
+<p>// FDCE: Single Data Rate D Flip-Flop with Asynchronous Clear and
+//       Clock Enable (posedge clk).</p>
+</blockquote>
+<p><strong>方法二</strong></p>
+<p>使用 <code>多路选择器（mux）</code> 将组合逻辑从时钟通路搬移到数据通路。如下图所示</p>
+<p><img alt="mux" src="/images/the-clock-design-in-fpga-2-clock-design/mux.png" /></p>
+<p>如果在设计中无法避免门控时钟，那么只要保证满足下面两个条件就可以使门控时钟和全局时钟一样可靠地工作：</p>
 <ol>
 <li>
-<p>Verilog-2001 已经支持 signed 类型的 wire 和 reg，所以我们代码中如果涉及到有符号数，那么像 C 语言一样直接定义、赋值、使用即可，综合工具会综合出正确的有符号数的运算电路。不必再像以前一样手动进行补码转换，自己来处理有符号数的补码计算的细节。</p>
+<p>驱动时钟的逻辑必须只包含一个与门（或门），而且这个与门（或门）必须只有两个输入端。如果采用任何附加逻辑，则会出现竞争产生的毛刺。</p>
 </li>
 <li>
-<p>综合时的原则是按照寄存器的类型进行综合(即上面的分类讨论的结论)。</p>
-</li>
-<li>
-<p>仔细对比 signed 和 unsigned 类型的综合结果，可以发现 Technology Schematic 是一样的，之所以和 “理论上硬件电路是应该不一样” 矛盾，我认为原因在于 FPGA 的实现是基于查找表的。以上面的例子来说明，这个比较器的功能最终是在一个 LUT6 的查找表上实现的，所以，ASIC 上硬件电路的不同映射到 FPGA 中就是 LUT 的内容不同。</p>
+<p>逻辑门的一个输入端为实际时钟。</p>
 </li>
 </ol>
+<p>这些条件的目的就是为了避免组合逻辑中的竞争带来的毛刺。</p>
+<p>根据数字电路的知识，我们知道可以通过添加“冗余逻辑”的方法来消除组合逻辑的冒险，但是，FPGA 的编译器在 综合时会去掉这些冗余逻辑，所以不能采用这种方法。</p>
+<h3>Logic Clock</h3>
+<p>有时候会用到组合逻辑的输出作为时钟信号或者复位信号，但是这种时钟信号有两个非常重要的缺陷：</p>
+<ol>
+<li>
+<p>组合逻辑产生的信号不可避免地会出现毛刺，会导致系统运行失败。</p>
+</li>
+<li>
+<p>组合逻辑产生的时钟信号使用的是通用布线资源，和专用时钟布线相比，延迟长、时钟偏移大，满足时序要求会更加困难。如果大量的逻辑使用了这种时钟，这个问题会更加突出。</p>
+</li>
+</ol>
+<p>（看到书上提出一个解决方案是：使用系统专用的时钟信号，将组合逻辑的输出打一拍，避免组合逻辑的直接输出，达到同步的效果。但是我个人认为这个方案不是非常好。）</p>
+<p>综上，对于 FPGA 来说，还是应该<strong>尽量避免使用组合逻辑的输出作为时钟</strong>。</p>
+<h3>Divide/Multiplied Clock</h3>
+<p>在我们的设计中，一般都不止一个时钟频率。如果不加注意，随意使用分频时钟，这叫做时钟满天飞，是非常不好的设计风格。</p>
+<p>对于 FPGA 来说，一般都内嵌了多个时钟管理单元，利用它们可以非常方便地达到多时钟的目的，这样的时钟信号是最稳定的。</p>
+<p>对于某些无法使用时钟管理单元的器件，则应该使用 <code>使能时钟 (clock enable, ce)</code> 。具体方法就是：时钟还是使用原始的未分频的时钟，分频信号用来当作使能端来用。</p>
+<p><br></p>
+<h2>Other Tips</h2>
+<hr />
+<ul>
+<li>
+<p><strong>只使用时钟的单个边沿</strong></p>
+<p>除了一些特殊的电路（如DDR）外，设计应该只使用单个边沿（上/下边沿）。使用两个边沿的问题是时钟占空比不一定是 50%，这会对电路的正常工作产生影响。</p>
+</li>
+<li>
+<p><strong>使用差分时钟</strong></p>
+<p>通常认为频率高于 100 MHz 就属于 <code>高频</code>。建议在高频下使用差分时钟，因为差分时钟的抗噪声性能更好。</p>
+</li>
+<li>
+<p><strong>检测时钟缺失</strong></p>
+<p>使用 DCM/MMCM 的 <code>locked</code> 输出，在使用时钟前先检查时钟是否锁定。</p>
+</li>
+</ul>
+<p><br></p>
+<h2>Reference</h2>
+<p><a href="http://book.douban.com/subject/10593491/">Xilinx FPGA 高级设计及应用</a></p>
+<p><a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG">FPGA 高手设计实战真经 100 则</a></p>
+<p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发实用教程</a></p>
+<p><a href="http://book.douban.com/subject/4893454/">深入浅出玩转 FPGA</a></p>
             </div>
             <!-- /.entry-content -->
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic_1.html">FPGA 数字处理基础 (1)</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
     </ul>
 </section>
     <hr />
@@ -312,8 +259,8 @@ Help
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
-            var disqus_identifier = 'fpga_digital_processing_basic_2';
-            var disqus_url = 'http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html';
+            var disqus_identifier = 'the_clock_design_in_fpga_2_clock_design';
+            var disqus_url = 'http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html';
             var disqus_config = function () {
                 this.language = "zh";
             };
