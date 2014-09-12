@@ -283,7 +283,7 @@
 &lt;h3&gt;Conclusion&lt;/h3&gt;
 &lt;p&gt;FFT IP core 仿真结果：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="fft core sim" src="/images/xilinx_fft_core_notes/fft_core_sim.png" /&gt;&lt;/p&gt;
-&lt;p&gt;对比 Matlab 中的结果，可以看到 IP core 的计算结果是正确的（除了 CP 的问题）。&lt;/p&gt;</summary><category term="FPGA"></category><category term="fft"></category></entry><entry><title>FPGA 时钟设计 1 —— 时钟资源总结</title><link href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_fpga_1_summary_of_clock_resource.html" rel="alternate"></link><updated>2014-08-28T22:45:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-08-28:pages/2014/08/28/the_clock_design_fpga_1_summary_of_clock_resource.html</id><summary type="html">&lt;p&gt;关于一款芯片，最权威、最新的资料当然是厂家的官方文件。很多大牛都推荐直接阅读原厂的 datasheet 和 user guide。根据我的体验，这确实是最好的途径。原因有两个：&lt;/p&gt;
+&lt;p&gt;对比 Matlab 中的结果，可以看到 IP core 的计算结果是正确的（除了 CP 的问题）。&lt;/p&gt;</summary><category term="FPGA"></category><category term="fft"></category></entry><entry><title>FPGA 时钟设计 1 —— 时钟资源总结</title><link href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html" rel="alternate"></link><updated>2014-08-28T22:45:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-08-28:pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html</id><summary type="html">&lt;p&gt;关于一款芯片，最权威、最新的资料当然是厂家的官方文件。很多大牛都推荐直接阅读原厂的 datasheet 和 user guide。根据我的体验，这确实是最好的途径。原因有两个：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;首先，市面上的书一般都落后业界的步伐，我们看到的很多书上的资料都是过时的。&lt;/p&gt;
@@ -704,6 +704,65 @@
 &lt;p&gt;DCM 可以连接到芯片上的其他时钟资源，包括专用时钟 I/O，时钟缓冲器和PLL&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;==================Update (09/12/2014) 看到一篇介绍 DCM 的&lt;a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;amp;tid=88967&amp;amp;page=1"&gt;文章&lt;/a&gt;，很有意思。=================================&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;About DCM&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;DCM 的内部是 DLL (Delay Lock Loop) 结构，对时钟偏移量的调节是通过长达延时线形成的。&lt;/p&gt;
+&lt;p&gt;DCM 会把输入时钟 &lt;code&gt;clkin&lt;/code&gt; 和 反馈时钟 &lt;code&gt;clkfb&lt;/code&gt; 相比较，调节 &lt;code&gt;clkin&lt;/code&gt; 和 &lt;code&gt;clk_1x&lt;/code&gt; 之间的延时线的数目，直到 &lt;code&gt;clkin&lt;/code&gt; 和 &lt;code&gt;clkfb&lt;/code&gt; 之间的相位差等于所设置的参数 &lt;code&gt;PHASESHIFT&lt;/code&gt;。如果 &lt;code&gt;clk_1x&lt;/code&gt; 和 &lt;code&gt;clkfb&lt;/code&gt; 不相关的话，那么就永远不能锁定了。&lt;/p&gt;
+&lt;p&gt;这个从一开始的不等于到等于所花费的时间就是输出时钟锁定的时间，锁定之后，&lt;code&gt;locked&lt;/code&gt; 信号才会变高。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;DCM 的常用方法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="/images/the-clock-design-in-fpga-1-summary-of-clock-resource/dcm_usage.jpg"&gt;dcm_usage&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;将其输出&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;clk_1x&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;连接到&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;BUFG&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;的输入，通过&lt;/span&gt; &lt;span class="n"&gt;BUFG&lt;/span&gt; &lt;span class="err"&gt;之后的输出一条支路是反馈到&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;的反馈时钟引脚&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;clkfb&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;上，另外一条支路则输出驱动其他单元。&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;DCM 消除 skew&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;问题：&lt;/p&gt;
+&lt;p&gt;DCM 的输出开始走线到达寄存器，这段路程导致的 skew 是永远存在的，DCM 为什么可以消除呢？&lt;/p&gt;
+&lt;p&gt;答案：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;为说明方便起见,我们将BUFG的输出引脚叫做 &lt;code&gt;clk_o&lt;/code&gt;,从 clk_o 走全局时钟布线到寄存器时叫做 &lt;code&gt;clk_o_reg&lt;/code&gt;,从 clk_o 走线到 DCM 的反馈引脚 CLKFB 上时叫 &lt;code&gt;clkfb&lt;/code&gt;,如上图所示。实际上 clk_o, clk_o_reg, clkfb 全部是用导线连在一起的。&lt;/p&gt;
+&lt;p&gt;所谓时钟 skew,指的就是 clk_o 到 clk_o_reg 之间的延时。如果打开 FPGA_Editor 看底层的结构,就可以发现虽然 DCM 和 BUFG 离得很近,但是从 clk_o 到 clkfb 却绕了很长一段才走回来,从而导致从 clk_o 到 clk_o_reg 和 clkfb 的延时大致相等。&lt;/p&gt;
+&lt;p&gt;总之就是 clk_o_reg 和 clkfb 的相位应该相等。所以当 DCM 调节 clkin 和 clkfb 的相位相等时,实际上就调节了 clkin 和 clk_o_reg 相等。而至于 clk_1x 和 clk_o 的相位必然是超前于 clkin, clkfb, clk_o_reg 的,而 clk_1x 和 clk_o 之间的延时就很明显,就是经过那个 BUFG 的延迟时间。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;对时钟 skew 的进一步讨论&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;最后,说一说时钟 skew 的概念。&lt;/p&gt;
+&lt;p&gt;时钟 skew 实际上指的是时钟驱动不同的寄存器时,由于寄存器之间可能会隔得比较远,所以时钟到达不同的寄存器的时间可能会不一样,这个时间差称为 &lt;code&gt;时钟 skew&lt;/code&gt; 。这种时钟 skew 可以通过 &lt;code&gt;时钟树&lt;/code&gt; 来解决,也就是使时钟布线形成一种树状结构,使得时钟到每一个寄存器的距离是一样的。很多 FPGA 芯片里就布了这样的时钟树结构。也就是说,在这种芯片里,时钟 skew 基本上是不存在的。&lt;/p&gt;
+&lt;p&gt;说到这里,似乎有了一个矛盾,既然时钟 skew 的问题用时钟树就解决了,&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;那么为什么还需要&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;BUFG&lt;/span&gt; &lt;span class="err"&gt;来解决这个问题？&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;另外&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;既然时钟&lt;/span&gt;&lt;span class="n"&gt;skew&lt;/span&gt;&lt;span class="err"&gt;指的时时钟驱动不同寄存器之间的延时&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;那么上面所说的&lt;/span&gt; &lt;span class="n"&gt;clk_o&lt;/span&gt; &lt;span class="err"&gt;到&lt;/span&gt; &lt;span class="n"&gt;clk_o_reg&lt;/span&gt; &lt;span class="err"&gt;岂非不能称为时钟&lt;/span&gt; &lt;span class="n"&gt;skew&lt;/span&gt;&lt;span class="err"&gt;？&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; 
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;先说后一个问题。在一块&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;内部&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;时钟&lt;/span&gt; &lt;span class="n"&gt;skew&lt;/span&gt; &lt;span class="err"&gt;问题确实已经被&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;的时钟方案树解决&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;在这个前提下&lt;/span&gt; &lt;span class="n"&gt;clk_o&lt;/span&gt; &lt;span class="err"&gt;到&lt;/span&gt; &lt;span class="n"&gt;clk_o_reg&lt;/span&gt; &lt;span class="err"&gt;充其量只能叫做&lt;/span&gt; &lt;span class="err"&gt;`时钟延时&lt;/span&gt; &lt;span class="n"&gt;delay&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;而不能称之为时钟&lt;/span&gt;&lt;span class="n"&gt;skew&lt;/span&gt;&lt;span class="err"&gt;。&lt;/span&gt;
+
+&lt;span class="err"&gt;至于第一个问题，个人不认同原博主的答案：&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;可惜的是&lt;/span&gt;&lt;span class="n"&gt;FPGA&lt;/span&gt;&lt;span class="err"&gt;的设计不可能永远只在内部做事情&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;它必然和外部交换数据。例如从外部传过来一个&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="err"&gt;位的数据以及随路时钟&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;数据和随路时钟之间满足建立保持时间关系&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Setup&lt;/span&gt; &lt;span class="n"&gt;Hold&lt;/span&gt;
+        &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="err"&gt;你如何将这&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="err"&gt;位的数据接收进来？如果你不使用&lt;/span&gt;&lt;span class="n"&gt;DCM&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;直接将&lt;/span&gt;&lt;span class="n"&gt;clkin&lt;/span&gt;&lt;span class="err"&gt;接在&lt;/span&gt;&lt;span class="n"&gt;BUFG&lt;/span&gt;&lt;span class="err"&gt;的输入引脚上&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;那么从你的&lt;/span&gt;&lt;span class="n"&gt;clk_o_reg&lt;/span&gt;&lt;span class="err"&gt;就必然和&lt;/span&gt;&lt;span class="n"&gt;clkin&lt;/span&gt;&lt;span class="err"&gt;之间有个延时&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;那么你的&lt;/span&gt;&lt;span class="n"&gt;clk_o_reg&lt;/span&gt;&lt;span class="err"&gt;还能保持和进来的数据之间的建立保持关系吗？显然不能。相反&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;如果你采用了&lt;/span&gt;&lt;span class="n"&gt;DCM&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;接上反馈时钟&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;那么&lt;/span&gt;&lt;span class="n"&gt;clk_o_reg&lt;/span&gt;&lt;span class="err"&gt;和&lt;/span&gt;&lt;span class="n"&gt;clkin&lt;/span&gt;&lt;span class="err"&gt;同相&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;就可以利用它去锁存进来的数据。可见&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;DCM&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;BUFG&lt;/span&gt;&lt;span class="err"&gt;的方案就是为了解决这个问题。而这个时候&lt;/span&gt;&lt;span class="n"&gt;clk_o&lt;/span&gt;&lt;span class="err"&gt;到&lt;/span&gt;&lt;span class="n"&gt;clk_o_reg&lt;/span&gt;&lt;span class="err"&gt;的延时&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;我们可以看到做内部寄存器和其他芯片传过来的数据之间的时钟&lt;/span&gt;&lt;span class="n"&gt;skew&lt;/span&gt;&lt;span class="err"&gt;。&lt;/span&gt;
+
+&lt;span class="err"&gt;我认为这个答案有两个问题：&lt;/span&gt;
+
+&lt;span class="mf"&gt;1.&lt;/span&gt; &lt;span class="err"&gt;外部数据和芯片不同源，算是异步问题，应该用同步化来解决。&lt;/span&gt;
+
+&lt;span class="mf"&gt;2.&lt;/span&gt; &lt;span class="err"&gt;随路失踪一般不驱动芯片的整个时钟网络。&lt;/span&gt;
+
+&lt;span class="err"&gt;所以，我认为答案应该是：&lt;/span&gt;
+
+&lt;span class="err"&gt;要使用全局时钟网络，必须通过&lt;/span&gt; &lt;span class="n"&gt;BUFG&lt;/span&gt; &lt;span class="err"&gt;才行，所以才会用到&lt;/span&gt; &lt;span class="n"&gt;BUFG&lt;/span&gt;&lt;span class="err"&gt;；而之所以用到&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;是因为它可以实现时钟的闭环控制，而且可以把时钟映射到&lt;/span&gt; &lt;span class="n"&gt;PCB&lt;/span&gt; &lt;span class="err"&gt;上，用于同步外部芯片，减少了对外部芯片的要求，将时钟控制一体化，利于系统设计。&lt;/span&gt;
+
+&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="err"&gt;注意&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;
+
+&lt;span class="err"&gt;如果在一片&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;中使用两个&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt;&lt;span class="err"&gt;，需要注意两点：&lt;/span&gt;
+
+&lt;span class="mf"&gt;1.&lt;/span&gt; &lt;span class="err"&gt;设置&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;使用的时钟输入&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;clk_in&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;是源自&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;内部的，此时不能直接连接引脚的信号，需要加入缓冲器。&lt;/span&gt;
+
+&lt;span class="mf"&gt;2.&lt;/span&gt; &lt;span class="err"&gt;应该手动例化一个&lt;/span&gt; &lt;span class="n"&gt;IBUFG&lt;/span&gt;&lt;span class="err"&gt;，然后把&lt;/span&gt; &lt;span class="n"&gt;IBUFG&lt;/span&gt; &lt;span class="err"&gt;的输出连接到两个&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;的输入端。&lt;/span&gt;
+
+&lt;span class="err"&gt;如果没有这么做，而是完全按照单个&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;的流程使用，那么因为时钟引脚和两个&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;的路径长短不同，无法做到输入时钟、两个&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;的输出信号的相位对齐，输入时钟只能和其中一个对其，如果对相位有要求，则必须手动调整&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;在芯片中的位置。&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h3&gt;PLL&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -751,7 +810,8 @@
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/11523088/"&gt;Xilinx FPGA 开发使用教程&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/10593491/"&gt;Xilinx FPGA 高级设计及应用&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG"&gt;FPGA 高手设计实战真经 100 则&lt;/a&gt; &lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.ednchina.com/ART_8800512846_18_20010_TA_25f01c24.HTM"&gt;如何正确使用FPGA的时钟资源&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="clock resource"></category></entry><entry><title>Verilog 中的参数化建模</title><link href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html" rel="alternate"></link><updated>2014-07-09T23:03:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-07-09:pages/2014/07/09/parameterization_modeling_in_veriog.html</id><summary type="html">&lt;p&gt;和写软件程序一样，我们也希望 Verilog 的模块也可以重利用。要使模块可以重复利用，关键就在于避免硬编码(hard literal)，使模块参数化。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.ednchina.com/ART_8800512846_18_20010_TA_25f01c24.HTM"&gt;如何正确使用FPGA的时钟资源&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;amp;tid=88967&amp;amp;page=1"&gt;FPGA DCM时钟管理单元的理解&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="clock resource"></category></entry><entry><title>Verilog 中的参数化建模</title><link href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html" rel="alternate"></link><updated>2014-07-09T23:03:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-07-09:pages/2014/07/09/parameterization_modeling_in_veriog.html</id><summary type="html">&lt;p&gt;和写软件程序一样，我们也希望 Verilog 的模块也可以重利用。要使模块可以重复利用，关键就在于避免硬编码(hard literal)，使模块参数化。&lt;/p&gt;
 &lt;p&gt;参数化建模的好处是可以使代码清晰，便于后续维护和修改。&lt;/p&gt;
 &lt;p&gt;Verilog 的参数化建模是有一定限制的，它的参数值是编译时计算的，不会引入任何实际的硬件电路。参数必须在编译时确定值。也就是说只能达到动态编译，固态运行，而非软件的动态编译，动态运行。&lt;/p&gt;
 &lt;p&gt;这主要是因为它是描述(Description)硬件的语言，而非软件设计(Design)语言。&lt;/p&gt;

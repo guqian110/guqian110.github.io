@@ -2,7 +2,7 @@ Title: FPGA 时钟设计 1 —— 时钟资源总结
 Date: 2014-08-28 22:45
 Category: FPGA
 Tags: FPGA,clock resource
-Slug: the_clock_design_fpga_1_summary_of_clock_resource
+Slug: the_clock_design_in_fpga_1_summary_of_clock_resource
 Author: Chien Gu
 Summary: 总结 Xilinx FPGA 中的时钟资源
 
@@ -310,6 +310,75 @@ Xilinx 芯片全局时钟资源的使用方法主要有 5 种：
 
 + DCM 可以连接到芯片上的其他时钟资源，包括专用时钟 I/O，时钟缓冲器和PLL
 
+==================Update (09/12/2014) 看到一篇介绍 DCM 的[文章](http://bbs.eeworld.com.cn/forum.php?mod=viewthread&tid=88967&page=1)，很有意思。=================================
+
+**About DCM**
+
+DCM 的内部是 DLL (Delay Lock Loop) 结构，对时钟偏移量的调节是通过长达延时线形成的。
+
+DCM 会把输入时钟 `clkin` 和 反馈时钟 `clkfb` 相比较，调节 `clkin` 和 `clk_1x` 之间的延时线的数目，直到 `clkin` 和 `clkfb` 之间的相位差等于所设置的参数 `PHASESHIFT`。如果 `clk_1x` 和 `clkfb` 不相关的话，那么就永远不能锁定了。
+
+这个从一开始的不等于到等于所花费的时间就是输出时钟锁定的时间，锁定之后，`locked` 信号才会变高。
+
+**DCM 的常用方法**
+
+[dcm_usage](/images/the-clock-design-in-fpga-1-summary-of-clock-resource/dcm_usage.jpg)
+
+    将其输出 `clk_1x` 连接到 `BUFG` 的输入，通过 BUFG 之后的输出一条支路是反馈到 DCM 的反馈时钟引脚 `clkfb` 上，另外一条支路则输出驱动其他单元。
+
+**DCM 消除 skew**
+
+问题：
+
+DCM 的输出开始走线到达寄存器，这段路程导致的 skew 是永远存在的，DCM 为什么可以消除呢？
+
+答案：
+
+>  为说明方便起见,我们将BUFG的输出引脚叫做 `clk_o`,从 clk_o 走全局时钟布线到寄存器时叫做 `clk_o_reg`,从 clk_o 走线到 DCM 的反馈引脚 CLKFB 上时叫 `clkfb`,如上图所示。实际上 clk_o, clk_o_reg, clkfb 全部是用导线连在一起的。
+> 
+> 所谓时钟 skew,指的就是 clk_o 到 clk_o_reg 之间的延时。如果打开 FPGA_Editor 看底层的结构,就可以发现虽然 DCM 和 BUFG 离得很近,但是从 clk_o 到 clkfb 却绕了很长一段才走回来,从而导致从 clk_o 到 clk_o_reg 和 clkfb 的延时大致相等。
+> 
+> 总之就是 clk_o_reg 和 clkfb 的相位应该相等。所以当 DCM 调节 clkin 和 clkfb 的相位相等时,实际上就调节了 clkin 和 clk_o_reg 相等。而至于 clk_1x 和 clk_o 的相位必然是超前于 clkin, clkfb, clk_o_reg 的,而 clk_1x 和 clk_o 之间的延时就很明显,就是经过那个 BUFG 的延迟时间。
+
+**对时钟 skew 的进一步讨论**
+
+>  最后,说一说时钟 skew 的概念。
+> 
+> 时钟 skew 实际上指的是时钟驱动不同的寄存器时,由于寄存器之间可能会隔得比较远,所以时钟到达不同的寄存器的时间可能会不一样,这个时间差称为 `时钟 skew` 。这种时钟 skew 可以通过 `时钟树` 来解决,也就是使时钟布线形成一种树状结构,使得时钟到每一个寄存器的距离是一样的。很多 FPGA 芯片里就布了这样的时钟树结构。也就是说,在这种芯片里,时钟 skew 基本上是不存在的。
+>
+> 说到这里,似乎有了一个矛盾,既然时钟 skew 的问题用时钟树就解决了,
+
+    > + 那么为什么还需要 DCM + BUFG 来解决这个问题？
+    >
+    > + 另外,既然时钟skew指的时时钟驱动不同寄存器之间的延时,那么上面所说的 clk_o 到 clk_o_reg 岂非不能称为时钟 skew？
+    > 
+    > 先说后一个问题。在一块 FPGA 内部,时钟 skew 问题确实已经被 FPGA 的时钟方案树解决,在这个前提下 clk_o 到 clk_o_reg 充其量只能叫做 `时钟延时 delay`,而不能称之为时钟skew。
+
+    至于第一个问题，个人不认同原博主的答案：
+
+    > 可惜的是FPGA的设计不可能永远只在内部做事情,它必然和外部交换数据。例如从外部传过来一个32位的数据以及随路时钟,数据和随路时钟之间满足建立保持时间关系(Setup Hold
+            > time),你如何将这32位的数据接收进来？如果你不使用DCM,直接将clkin接在BUFG的输入引脚上,那么从你的clk_o_reg就必然和clkin之间有个延时,那么你的clk_o_reg还能保持和进来的数据之间的建立保持关系吗？显然不能。相反,如果你采用了DCM,接上反馈时钟,那么clk_o_reg和clkin同相,就可以利用它去锁存进来的数据。可见,DCM+BUFG的方案就是为了解决这个问题。而这个时候clk_o到clk_o_reg的延时,我们可以看到做内部寄存器和其他芯片传过来的数据之间的时钟skew。
+
+    我认为这个答案有两个问题：
+
+    1. 外部数据和芯片不同源，算是异步问题，应该用同步化来解决。
+
+    2. 随路失踪一般不驱动芯片的整个时钟网络。
+
+    所以，我认为答案应该是：
+
+    要使用全局时钟网络，必须通过 BUFG 才行，所以才会用到 BUFG；而之所以用到 DCM 是因为它可以实现时钟的闭环控制，而且可以把时钟映射到 PCB 上，用于同步外部芯片，减少了对外部芯片的要求，将时钟控制一体化，利于系统设计。
+
+    **注意**
+
+    如果在一片 FPGA 中使用两个 DCM，需要注意两点：
+
+    1. 设置 DCM 使用的时钟输入 `clk_in` 是源自 FPGA 内部的，此时不能直接连接引脚的信号，需要加入缓冲器。
+
+    2. 应该手动例化一个 IBUFG，然后把 IBUFG 的输出连接到两个 DCM 的输入端。
+
+    如果没有这么做，而是完全按照单个 DCM 的流程使用，那么因为时钟引脚和两个 DCM 的路径长短不同，无法做到输入时钟、两个 DCM 的输出信号的相位对齐，输入时钟只能和其中一个对其，如果对相位有要求，则必须手动调整 DCM 在芯片中的位置。
+
 ### PLL
 
 + Virtex-5 芯片最多包含了 6 个 CMT 模块，每个 CMT 模块包含一个 PLL，PLL 主要用来广谱频率的合成，并且与 DCM 配合最为外部/内部时钟的抖动滤波器。
@@ -365,3 +434,5 @@ Xilinx 的所有器件上的时钟资源可以分为前面说的 3 类：全局�
 [FPGA 高手设计实战真经 100 则](http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG) 
 
 [如何正确使用FPGA的时钟资源][article]
+
+[FPGA DCM时钟管理单元的理解](http://bbs.eeworld.com.cn/forum.php?mod=viewthread&tid=88967&page=1)
