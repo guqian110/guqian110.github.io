@@ -84,6 +84,7 @@ PLD/FPGA 都具有专门的全局时钟引脚，它直接连接到器件中的�
 得到的结果就是原语 `FDCE`
 
 > // FDCE: Single Data Rate D Flip-Flop with Asynchronous Clear and
+>
 > //       Clock Enable (posedge clk).
 
 **方法二**
