@@ -532,17 +532,14 @@
 <p>DCM 可以连接到芯片上的其他时钟资源，包括专用时钟 I/O，时钟缓冲器和PLL</p>
 </li>
 </ul>
-<p>==================Update (09/12/2014) 看到一篇介绍 DCM 的<a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=88967&amp;page=1">文章</a>，很有意思。=================================</p>
+<p>==================Update (09/12/2014) 看到一篇介绍 DCM 的<a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=88967&amp;page=1">文章</a>，很有意思=================================</p>
 <p><strong>About DCM</strong></p>
 <p>DCM 的内部是 DLL (Delay Lock Loop) 结构，对时钟偏移量的调节是通过长达延时线形成的。</p>
 <p>DCM 会把输入时钟 <code>clkin</code> 和 反馈时钟 <code>clkfb</code> 相比较，调节 <code>clkin</code> 和 <code>clk_1x</code> 之间的延时线的数目，直到 <code>clkin</code> 和 <code>clkfb</code> 之间的相位差等于所设置的参数 <code>PHASESHIFT</code>。如果 <code>clk_1x</code> 和 <code>clkfb</code> 不相关的话，那么就永远不能锁定了。</p>
 <p>这个从一开始的不等于到等于所花费的时间就是输出时钟锁定的时间，锁定之后，<code>locked</code> 信号才会变高。</p>
 <p><strong>DCM 的常用方法</strong></p>
-<p><a href="/images/the-clock-design-in-fpga-1-summary-of-clock-resource/dcm_usage.jpg">dcm_usage</a></p>
-<div class="highlight"><pre><span class="err">将其输出</span> <span class="err">`</span><span class="n">clk_1x</span><span class="err">`</span> <span class="err">连接到</span> <span class="err">`</span><span class="n">BUFG</span><span class="err">`</span> <span class="err">的输入，通过</span> <span class="n">BUFG</span> <span class="err">之后的输出一条支路是反馈到</span> <span class="n">DCM</span> <span class="err">的反馈时钟引脚</span> <span class="err">`</span><span class="n">clkfb</span><span class="err">`</span> <span class="err">上，另外一条支路则输出驱动其他单元。</span>
-</pre></div>
-
-
+<p><img alt="dcm_usage" src="/images/the-clock-design-in-fpga-1-summary-of-clock-resource/dcm_usage.jpg" /></p>
+<p>将其输出 <code>clk_1x</code> 连接到 <code>BUFG</code> 的输入，通过 BUFG 之后的输出一条支路是反馈到 DCM 的反馈时钟引脚 <code>clkfb</code> 上，另外一条支路则输出驱动其他单元。</p>
 <p><strong>DCM 消除 skew</strong></p>
 <p>问题：</p>
 <p>DCM 的输出开始走线到达寄存器，这段路程导致的 skew 是永远存在的，DCM 为什么可以消除呢？</p>
@@ -557,40 +554,43 @@
 <p>最后,说一说时钟 skew 的概念。</p>
 <p>时钟 skew 实际上指的是时钟驱动不同的寄存器时,由于寄存器之间可能会隔得比较远,所以时钟到达不同的寄存器的时间可能会不一样,这个时间差称为 <code>时钟 skew</code> 。这种时钟 skew 可以通过 <code>时钟树</code> 来解决,也就是使时钟布线形成一种树状结构,使得时钟到每一个寄存器的距离是一样的。很多 FPGA 芯片里就布了这样的时钟树结构。也就是说,在这种芯片里,时钟 skew 基本上是不存在的。</p>
 <p>说到这里,似乎有了一个矛盾,既然时钟 skew 的问题用时钟树就解决了,</p>
+<ul>
+<li>
+<p>那么为什么还需要 DCM + BUFG 来解决这个问题？</p>
+</li>
+<li>
+<p>另外,既然时钟skew指的时时钟驱动不同寄存器之间的延时,那么上面所说的 clk_o 到 clk_o_reg 岂非不能称为时钟 skew？</p>
+</li>
+</ul>
+<p>先说后一个问题。在一块 FPGA 内部,时钟 skew 问题确实已经被 FPGA 的时钟方案树解决,在这个前提下 clk_o 到 clk_o_reg 充其量只能叫做 <code>时钟延时 delay</code>,而不能称之为时钟skew。</p>
 </blockquote>
-<div class="highlight"><pre><span class="o">&gt;</span> <span class="o">+</span> <span class="err">那么为什么还需要</span> <span class="n">DCM</span> <span class="o">+</span> <span class="n">BUFG</span> <span class="err">来解决这个问题？</span>
-<span class="o">&gt;</span>
-<span class="o">&gt;</span> <span class="o">+</span> <span class="err">另外</span><span class="p">,</span><span class="err">既然时钟</span><span class="n">skew</span><span class="err">指的时时钟驱动不同寄存器之间的延时</span><span class="p">,</span><span class="err">那么上面所说的</span> <span class="n">clk_o</span> <span class="err">到</span> <span class="n">clk_o_reg</span> <span class="err">岂非不能称为时钟</span> <span class="n">skew</span><span class="err">？</span>
-<span class="o">&gt;</span> 
-<span class="o">&gt;</span> <span class="err">先说后一个问题。在一块</span> <span class="n">FPGA</span> <span class="err">内部</span><span class="p">,</span><span class="err">时钟</span> <span class="n">skew</span> <span class="err">问题确实已经被</span> <span class="n">FPGA</span> <span class="err">的时钟方案树解决</span><span class="p">,</span><span class="err">在这个前提下</span> <span class="n">clk_o</span> <span class="err">到</span> <span class="n">clk_o_reg</span> <span class="err">充其量只能叫做</span> <span class="err">`时钟延时</span> <span class="n">delay</span><span class="err">`</span><span class="p">,</span><span class="err">而不能称之为时钟</span><span class="n">skew</span><span class="err">。</span>
-
-<span class="err">至于第一个问题，个人不认同原博主的答案：</span>
-
-<span class="o">&gt;</span> <span class="err">可惜的是</span><span class="n">FPGA</span><span class="err">的设计不可能永远只在内部做事情</span><span class="p">,</span><span class="err">它必然和外部交换数据。例如从外部传过来一个</span><span class="mi">32</span><span class="err">位的数据以及随路时钟</span><span class="p">,</span><span class="err">数据和随路时钟之间满足建立保持时间关系</span><span class="p">(</span><span class="n">Setup</span> <span class="n">Hold</span>
-        <span class="o">&gt;</span> <span class="n">time</span><span class="p">),</span><span class="err">你如何将这</span><span class="mi">32</span><span class="err">位的数据接收进来？如果你不使用</span><span class="n">DCM</span><span class="p">,</span><span class="err">直接将</span><span class="n">clkin</span><span class="err">接在</span><span class="n">BUFG</span><span class="err">的输入引脚上</span><span class="p">,</span><span class="err">那么从你的</span><span class="n">clk_o_reg</span><span class="err">就必然和</span><span class="n">clkin</span><span class="err">之间有个延时</span><span class="p">,</span><span class="err">那么你的</span><span class="n">clk_o_reg</span><span class="err">还能保持和进来的数据之间的建立保持关系吗？显然不能。相反</span><span class="p">,</span><span class="err">如果你采用了</span><span class="n">DCM</span><span class="p">,</span><span class="err">接上反馈时钟</span><span class="p">,</span><span class="err">那么</span><span class="n">clk_o_reg</span><span class="err">和</span><span class="n">clkin</span><span class="err">同相</span><span class="p">,</span><span class="err">就可以利用它去锁存进来的数据。可见</span><span class="p">,</span><span class="n">DCM</span><span class="o">+</span><span class="n">BUFG</span><span class="err">的方案就是为了解决这个问题。而这个时候</span><span class="n">clk_o</span><span class="err">到</span><span class="n">clk_o_reg</span><span class="err">的延时</span><span class="p">,</span><span class="err">我们可以看到做内部寄存器和其他芯片传过来的数据之间的时钟</span><span class="n">skew</span><span class="err">。</span>
-
-<span class="err">我认为这个答案有两个问题：</span>
-
-<span class="mf">1.</span> <span class="err">外部数据和芯片不同源，算是异步问题，应该用同步化来解决。</span>
-
-<span class="mf">2.</span> <span class="err">随路失踪一般不驱动芯片的整个时钟网络。</span>
-
-<span class="err">所以，我认为答案应该是：</span>
-
-<span class="err">要使用全局时钟网络，必须通过</span> <span class="n">BUFG</span> <span class="err">才行，所以才会用到</span> <span class="n">BUFG</span><span class="err">；而之所以用到</span> <span class="n">DCM</span> <span class="err">是因为它可以实现时钟的闭环控制，而且可以把时钟映射到</span> <span class="n">PCB</span> <span class="err">上，用于同步外部芯片，减少了对外部芯片的要求，将时钟控制一体化，利于系统设计。</span>
-
-<span class="o">**</span><span class="err">注意</span><span class="o">**</span>
-
-<span class="err">如果在一片</span> <span class="n">FPGA</span> <span class="err">中使用两个</span> <span class="n">DCM</span><span class="err">，需要注意两点：</span>
-
-<span class="mf">1.</span> <span class="err">设置</span> <span class="n">DCM</span> <span class="err">使用的时钟输入</span> <span class="err">`</span><span class="n">clk_in</span><span class="err">`</span> <span class="err">是源自</span> <span class="n">FPGA</span> <span class="err">内部的，此时不能直接连接引脚的信号，需要加入缓冲器。</span>
-
-<span class="mf">2.</span> <span class="err">应该手动例化一个</span> <span class="n">IBUFG</span><span class="err">，然后把</span> <span class="n">IBUFG</span> <span class="err">的输出连接到两个</span> <span class="n">DCM</span> <span class="err">的输入端。</span>
-
-<span class="err">如果没有这么做，而是完全按照单个</span> <span class="n">DCM</span> <span class="err">的流程使用，那么因为时钟引脚和两个</span> <span class="n">DCM</span> <span class="err">的路径长短不同，无法做到输入时钟、两个</span> <span class="n">DCM</span> <span class="err">的输出信号的相位对齐，输入时钟只能和其中一个对其，如果对相位有要求，则必须手动调整</span> <span class="n">DCM</span> <span class="err">在芯片中的位置。</span>
-</pre></div>
-
-
+<p>至于第一个问题，个人不认同原博主的答案：</p>
+<blockquote>
+<p>可惜的是FPGA的设计不可能永远只在内部做事情,它必然和外部交换数据。例如从外部传过来一个32位的数据以及随路时钟,数据和随路时钟之间满足建立保持时间关系(Setup Hold time),你如何将这32位的数据接收进来？如果你不使用DCM,直接将clkin接在BUFG的输入引脚上,那么从你的clk_o_reg就必然和clkin之间有个延时,那么你的clk_o_reg还能保持和进来的数据之间的建立保持关系吗？显然不能。相反,如果你采用了DCM,接上反馈时钟,那么clk_o_reg和clkin同相,就可以利用它去锁存进来的数据。可见,DCM
++ BUFG的方案就是为了解决这个问题。而这个时候clk_o到clk_o_reg的延时,我们可以看到做内部寄存器和其他芯片传过来的数据之间的时钟skew。</p>
+</blockquote>
+<p>我认为这个答案有两个问题：</p>
+<ol>
+<li>
+<p>外部数据和芯片不同源，算是异步问题，应该用同步化来解决。</p>
+</li>
+<li>
+<p>随路失踪一般不驱动芯片的整个时钟网络。</p>
+</li>
+</ol>
+<p>所以，我认为答案应该是：</p>
+<p>要使用全局时钟网络，必须通过 BUFG 才行，所以才会用到 BUFG；而之所以用到 DCM 是因为它可以实现时钟的闭环控制，而且可以把时钟映射到 PCB 上，用于同步外部芯片，减少了对外部芯片的要求，将时钟控制一体化，利于系统设计。</p>
+<p><strong>注意</strong></p>
+<p>如果在一片 FPGA 中使用两个 DCM，需要注意两点：</p>
+<ol>
+<li>
+<p>设置 DCM 使用的时钟输入 <code>clk_in</code> 是源自 FPGA 内部的，此时不能直接连接引脚的信号，需要加入缓冲器。</p>
+</li>
+<li>
+<p>应该手动例化一个 IBUFG，然后把 IBUFG 的输出连接到两个 DCM 的输入端。</p>
+</li>
+</ol>
+<p>如果没有这么做，而是完全按照单个 DCM 的流程使用，那么因为时钟引脚和两个 DCM 的路径长短不同，无法做到输入时钟、两个 DCM 的输出信号的相位对齐，输入时钟只能和其中一个对其，如果对相位有要求，则必须手动调整 DCM 在芯片中的位置。</p>
 <h3>PLL</h3>
 <ul>
 <li>
@@ -645,11 +645,11 @@
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
     </ul>
 </section>
     <hr />
@@ -718,18 +718,18 @@
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/fpga.html">
-                                FPGA
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
+                            </a>
+                        </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -743,8 +743,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -753,88 +753,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
-                                digital procesing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/clock-resource.html">
-                                clock resource
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -843,18 +768,28 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/sublime-text.html">
-                                Sublime Text
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -863,8 +798,58 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fsm.html">
-                                FSM
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/clock-resource.html">
+                                clock resource
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -873,8 +858,23 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/sublime-text.html">
+                                Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/yocto.html">
                                 Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
                             </a>
                         </li>
                     </ul>

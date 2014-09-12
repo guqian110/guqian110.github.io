@@ -704,17 +704,14 @@
 &lt;p&gt;DCM 可以连接到芯片上的其他时钟资源，包括专用时钟 I/O，时钟缓冲器和PLL&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;==================Update (09/12/2014) 看到一篇介绍 DCM 的&lt;a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;amp;tid=88967&amp;amp;page=1"&gt;文章&lt;/a&gt;，很有意思。=================================&lt;/p&gt;
+&lt;p&gt;==================Update (09/12/2014) 看到一篇介绍 DCM 的&lt;a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;amp;tid=88967&amp;amp;page=1"&gt;文章&lt;/a&gt;，很有意思=================================&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;About DCM&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;DCM 的内部是 DLL (Delay Lock Loop) 结构，对时钟偏移量的调节是通过长达延时线形成的。&lt;/p&gt;
 &lt;p&gt;DCM 会把输入时钟 &lt;code&gt;clkin&lt;/code&gt; 和 反馈时钟 &lt;code&gt;clkfb&lt;/code&gt; 相比较，调节 &lt;code&gt;clkin&lt;/code&gt; 和 &lt;code&gt;clk_1x&lt;/code&gt; 之间的延时线的数目，直到 &lt;code&gt;clkin&lt;/code&gt; 和 &lt;code&gt;clkfb&lt;/code&gt; 之间的相位差等于所设置的参数 &lt;code&gt;PHASESHIFT&lt;/code&gt;。如果 &lt;code&gt;clk_1x&lt;/code&gt; 和 &lt;code&gt;clkfb&lt;/code&gt; 不相关的话，那么就永远不能锁定了。&lt;/p&gt;
 &lt;p&gt;这个从一开始的不等于到等于所花费的时间就是输出时钟锁定的时间，锁定之后，&lt;code&gt;locked&lt;/code&gt; 信号才会变高。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;DCM 的常用方法&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/the-clock-design-in-fpga-1-summary-of-clock-resource/dcm_usage.jpg"&gt;dcm_usage&lt;/a&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;将其输出&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;clk_1x&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;连接到&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;BUFG&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;的输入，通过&lt;/span&gt; &lt;span class="n"&gt;BUFG&lt;/span&gt; &lt;span class="err"&gt;之后的输出一条支路是反馈到&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;的反馈时钟引脚&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;clkfb&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;上，另外一条支路则输出驱动其他单元。&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;&lt;img alt="dcm_usage" src="/images/the-clock-design-in-fpga-1-summary-of-clock-resource/dcm_usage.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;将其输出 &lt;code&gt;clk_1x&lt;/code&gt; 连接到 &lt;code&gt;BUFG&lt;/code&gt; 的输入，通过 BUFG 之后的输出一条支路是反馈到 DCM 的反馈时钟引脚 &lt;code&gt;clkfb&lt;/code&gt; 上，另外一条支路则输出驱动其他单元。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;DCM 消除 skew&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;问题：&lt;/p&gt;
 &lt;p&gt;DCM 的输出开始走线到达寄存器，这段路程导致的 skew 是永远存在的，DCM 为什么可以消除呢？&lt;/p&gt;
@@ -729,40 +726,43 @@
 &lt;p&gt;最后,说一说时钟 skew 的概念。&lt;/p&gt;
 &lt;p&gt;时钟 skew 实际上指的是时钟驱动不同的寄存器时,由于寄存器之间可能会隔得比较远,所以时钟到达不同的寄存器的时间可能会不一样,这个时间差称为 &lt;code&gt;时钟 skew&lt;/code&gt; 。这种时钟 skew 可以通过 &lt;code&gt;时钟树&lt;/code&gt; 来解决,也就是使时钟布线形成一种树状结构,使得时钟到每一个寄存器的距离是一样的。很多 FPGA 芯片里就布了这样的时钟树结构。也就是说,在这种芯片里,时钟 skew 基本上是不存在的。&lt;/p&gt;
 &lt;p&gt;说到这里,似乎有了一个矛盾,既然时钟 skew 的问题用时钟树就解决了,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;那么为什么还需要 DCM + BUFG 来解决这个问题？&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;另外,既然时钟skew指的时时钟驱动不同寄存器之间的延时,那么上面所说的 clk_o 到 clk_o_reg 岂非不能称为时钟 skew？&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;先说后一个问题。在一块 FPGA 内部,时钟 skew 问题确实已经被 FPGA 的时钟方案树解决,在这个前提下 clk_o 到 clk_o_reg 充其量只能叫做 &lt;code&gt;时钟延时 delay&lt;/code&gt;,而不能称之为时钟skew。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;那么为什么还需要&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;BUFG&lt;/span&gt; &lt;span class="err"&gt;来解决这个问题？&lt;/span&gt;
-&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
-&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;另外&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;既然时钟&lt;/span&gt;&lt;span class="n"&gt;skew&lt;/span&gt;&lt;span class="err"&gt;指的时时钟驱动不同寄存器之间的延时&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;那么上面所说的&lt;/span&gt; &lt;span class="n"&gt;clk_o&lt;/span&gt; &lt;span class="err"&gt;到&lt;/span&gt; &lt;span class="n"&gt;clk_o_reg&lt;/span&gt; &lt;span class="err"&gt;岂非不能称为时钟&lt;/span&gt; &lt;span class="n"&gt;skew&lt;/span&gt;&lt;span class="err"&gt;？&lt;/span&gt;
-&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; 
-&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;先说后一个问题。在一块&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;内部&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;时钟&lt;/span&gt; &lt;span class="n"&gt;skew&lt;/span&gt; &lt;span class="err"&gt;问题确实已经被&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;的时钟方案树解决&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;在这个前提下&lt;/span&gt; &lt;span class="n"&gt;clk_o&lt;/span&gt; &lt;span class="err"&gt;到&lt;/span&gt; &lt;span class="n"&gt;clk_o_reg&lt;/span&gt; &lt;span class="err"&gt;充其量只能叫做&lt;/span&gt; &lt;span class="err"&gt;`时钟延时&lt;/span&gt; &lt;span class="n"&gt;delay&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;而不能称之为时钟&lt;/span&gt;&lt;span class="n"&gt;skew&lt;/span&gt;&lt;span class="err"&gt;。&lt;/span&gt;
-
-&lt;span class="err"&gt;至于第一个问题，个人不认同原博主的答案：&lt;/span&gt;
-
-&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;可惜的是&lt;/span&gt;&lt;span class="n"&gt;FPGA&lt;/span&gt;&lt;span class="err"&gt;的设计不可能永远只在内部做事情&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;它必然和外部交换数据。例如从外部传过来一个&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="err"&gt;位的数据以及随路时钟&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;数据和随路时钟之间满足建立保持时间关系&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Setup&lt;/span&gt; &lt;span class="n"&gt;Hold&lt;/span&gt;
-        &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="err"&gt;你如何将这&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="err"&gt;位的数据接收进来？如果你不使用&lt;/span&gt;&lt;span class="n"&gt;DCM&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;直接将&lt;/span&gt;&lt;span class="n"&gt;clkin&lt;/span&gt;&lt;span class="err"&gt;接在&lt;/span&gt;&lt;span class="n"&gt;BUFG&lt;/span&gt;&lt;span class="err"&gt;的输入引脚上&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;那么从你的&lt;/span&gt;&lt;span class="n"&gt;clk_o_reg&lt;/span&gt;&lt;span class="err"&gt;就必然和&lt;/span&gt;&lt;span class="n"&gt;clkin&lt;/span&gt;&lt;span class="err"&gt;之间有个延时&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;那么你的&lt;/span&gt;&lt;span class="n"&gt;clk_o_reg&lt;/span&gt;&lt;span class="err"&gt;还能保持和进来的数据之间的建立保持关系吗？显然不能。相反&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;如果你采用了&lt;/span&gt;&lt;span class="n"&gt;DCM&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;接上反馈时钟&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;那么&lt;/span&gt;&lt;span class="n"&gt;clk_o_reg&lt;/span&gt;&lt;span class="err"&gt;和&lt;/span&gt;&lt;span class="n"&gt;clkin&lt;/span&gt;&lt;span class="err"&gt;同相&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;就可以利用它去锁存进来的数据。可见&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;DCM&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;BUFG&lt;/span&gt;&lt;span class="err"&gt;的方案就是为了解决这个问题。而这个时候&lt;/span&gt;&lt;span class="n"&gt;clk_o&lt;/span&gt;&lt;span class="err"&gt;到&lt;/span&gt;&lt;span class="n"&gt;clk_o_reg&lt;/span&gt;&lt;span class="err"&gt;的延时&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;我们可以看到做内部寄存器和其他芯片传过来的数据之间的时钟&lt;/span&gt;&lt;span class="n"&gt;skew&lt;/span&gt;&lt;span class="err"&gt;。&lt;/span&gt;
-
-&lt;span class="err"&gt;我认为这个答案有两个问题：&lt;/span&gt;
-
-&lt;span class="mf"&gt;1.&lt;/span&gt; &lt;span class="err"&gt;外部数据和芯片不同源，算是异步问题，应该用同步化来解决。&lt;/span&gt;
-
-&lt;span class="mf"&gt;2.&lt;/span&gt; &lt;span class="err"&gt;随路失踪一般不驱动芯片的整个时钟网络。&lt;/span&gt;
-
-&lt;span class="err"&gt;所以，我认为答案应该是：&lt;/span&gt;
-
-&lt;span class="err"&gt;要使用全局时钟网络，必须通过&lt;/span&gt; &lt;span class="n"&gt;BUFG&lt;/span&gt; &lt;span class="err"&gt;才行，所以才会用到&lt;/span&gt; &lt;span class="n"&gt;BUFG&lt;/span&gt;&lt;span class="err"&gt;；而之所以用到&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;是因为它可以实现时钟的闭环控制，而且可以把时钟映射到&lt;/span&gt; &lt;span class="n"&gt;PCB&lt;/span&gt; &lt;span class="err"&gt;上，用于同步外部芯片，减少了对外部芯片的要求，将时钟控制一体化，利于系统设计。&lt;/span&gt;
-
-&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="err"&gt;注意&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;
-
-&lt;span class="err"&gt;如果在一片&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;中使用两个&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt;&lt;span class="err"&gt;，需要注意两点：&lt;/span&gt;
-
-&lt;span class="mf"&gt;1.&lt;/span&gt; &lt;span class="err"&gt;设置&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;使用的时钟输入&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;clk_in&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;是源自&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;内部的，此时不能直接连接引脚的信号，需要加入缓冲器。&lt;/span&gt;
-
-&lt;span class="mf"&gt;2.&lt;/span&gt; &lt;span class="err"&gt;应该手动例化一个&lt;/span&gt; &lt;span class="n"&gt;IBUFG&lt;/span&gt;&lt;span class="err"&gt;，然后把&lt;/span&gt; &lt;span class="n"&gt;IBUFG&lt;/span&gt; &lt;span class="err"&gt;的输出连接到两个&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;的输入端。&lt;/span&gt;
-
-&lt;span class="err"&gt;如果没有这么做，而是完全按照单个&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;的流程使用，那么因为时钟引脚和两个&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;的路径长短不同，无法做到输入时钟、两个&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;的输出信号的相位对齐，输入时钟只能和其中一个对其，如果对相位有要求，则必须手动调整&lt;/span&gt; &lt;span class="n"&gt;DCM&lt;/span&gt; &lt;span class="err"&gt;在芯片中的位置。&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;p&gt;至于第一个问题，个人不认同原博主的答案：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;可惜的是FPGA的设计不可能永远只在内部做事情,它必然和外部交换数据。例如从外部传过来一个32位的数据以及随路时钟,数据和随路时钟之间满足建立保持时间关系(Setup Hold time),你如何将这32位的数据接收进来？如果你不使用DCM,直接将clkin接在BUFG的输入引脚上,那么从你的clk_o_reg就必然和clkin之间有个延时,那么你的clk_o_reg还能保持和进来的数据之间的建立保持关系吗？显然不能。相反,如果你采用了DCM,接上反馈时钟,那么clk_o_reg和clkin同相,就可以利用它去锁存进来的数据。可见,DCM
++ BUFG的方案就是为了解决这个问题。而这个时候clk_o到clk_o_reg的延时,我们可以看到做内部寄存器和其他芯片传过来的数据之间的时钟skew。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我认为这个答案有两个问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;外部数据和芯片不同源，算是异步问题，应该用同步化来解决。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;随路失踪一般不驱动芯片的整个时钟网络。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;所以，我认为答案应该是：&lt;/p&gt;
+&lt;p&gt;要使用全局时钟网络，必须通过 BUFG 才行，所以才会用到 BUFG；而之所以用到 DCM 是因为它可以实现时钟的闭环控制，而且可以把时钟映射到 PCB 上，用于同步外部芯片，减少了对外部芯片的要求，将时钟控制一体化，利于系统设计。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果在一片 FPGA 中使用两个 DCM，需要注意两点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;设置 DCM 使用的时钟输入 &lt;code&gt;clk_in&lt;/code&gt; 是源自 FPGA 内部的，此时不能直接连接引脚的信号，需要加入缓冲器。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;应该手动例化一个 IBUFG，然后把 IBUFG 的输出连接到两个 DCM 的输入端。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果没有这么做，而是完全按照单个 DCM 的流程使用，那么因为时钟引脚和两个 DCM 的路径长短不同，无法做到输入时钟、两个 DCM 的输出信号的相位对齐，输入时钟只能和其中一个对其，如果对相位有要求，则必须手动调整 DCM 在芯片中的位置。&lt;/p&gt;
 &lt;h3&gt;PLL&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
