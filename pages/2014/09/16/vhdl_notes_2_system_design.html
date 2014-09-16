@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic - Coding Life</title>
+    <title>VHDL 笔记 2 —— 系统设计 - Coding Life</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -14,13 +14,14 @@
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Coding Life" />
             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic"/>
-            <meta property="og:url" content="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html"/>
-            <meta property="og:description" content="基于 FPGA 实现 OFDM 系统。第一篇，OFDM 基础。"/>
-            <meta property="article:published_time" content="2014-05-13" />
+            <meta property="og:title" content="VHDL 笔记 2 —— 系统设计"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html"/>
+            <meta property="og:description" content="VHDL 笔记，系统设计"/>
+            <meta property="article:published_time" content="2014-09-16" />
             <meta property="article:section" content="FPGA" />
             <meta property="article:tag" content="FPGA" />
-            <meta property="article:tag" content="OFDM" />
+            <meta property="article:tag" content="VHDL" />
+            <meta property="article:tag" content="syntax" />
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -79,17 +80,17 @@
             <ol class="breadcrumb">
                 <li><a href="http://guqian110.github.io" title="Coding Life"><i class="fa fa-home fa-lg"></i></a></li>
                 <li><a href="http://guqian110.github.io/category/fpga.html" title="FPGA">FPGA</a></li>
-                <li class="active">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</li>
+                <li class="active">VHDL 笔记 2 —— 系统设计</li>
             </ol>
 
     <section id="content">
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html"
+                    <a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html"
                        rel="bookmark"
-                       title="Permalink to 学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic">
-                        学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic
+                       title="Permalink to VHDL 笔记 2 —— 系统设计">
+                        VHDL 笔记 2 —— 系统设计
                     </a>
                 </h1>
             </header>
@@ -99,7 +100,7 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-05-13T23:16:00"> Tue 13 May 2014</time>
+        <i class="fa fa-calendar"></i><time datetime="2014-09-16T20:18:00"> Tue 16 September 2014</time>
     </span>
 
 
@@ -107,90 +108,245 @@
 <span class="label label-default">Tags</span>
 	<a href="http://guqian110.github.io/tag/fpga.html">FPGA</a>
         /
-	<a href="http://guqian110.github.io/tag/ofdm.html">OFDM</a>
+	<a href="http://guqian110.github.io/tag/vhdl.html">VHDL</a>
+        /
+	<a href="http://guqian110.github.io/tag/syntax.html">syntax</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h2>Why OFDM</h2>
+                <p>总结 <code>packege</code>, <code>component</code>, <code>function</code>, <code>procedure</code> 的相关知识。</p>
+<p>这些组成部分添加到代码主体部分，目的是为了实现常用代码共享。通常这些代码被放在 <code>library</code> 中，我们可以将自己设计的一些常用代码添加到 <code>library</code> 中，这有利于使一个复杂设计具有更清晰的结构。</p>
+<p>总之，经常使用的代码可以以 <code>component</code>, <code>function</code>, <code>procedure</code> 的形式放到 <code>package</code> 中，然后被编译到目标 <code>library</code> 中。</p>
+<p><br></p>
+<h2>Packages and Components</h2>
 <hr />
-<h3>Background</h3>
-<p>移动通信的信道模型一般建立为 <strong>时变多径信道模型</strong>，描述信道多径时延特性的一个重要统计参量是 <strong>均方根时延扩展</strong> 。</p>
-<p>经过无线信道的时变多径传输，接收到的信号幅度会有起伏变化（瑞利分布 or 莱斯分布），这种现象称为 <strong>信号衰落</strong> 。按照已调信号的带宽可以将衰落分为两类：</p>
+<h3>Package</h3>
+<p>除了 <code>component</code>, <code>function</code>, <code>procedure</code> 之外，package 中还可以包含 <code>TYPE</code>, <code>CONSTANT</code> 的定义。</p>
+<p><strong>syntax</strong></p>
+<div class="highlight"><pre><span class="n">PACKAGE</span> <span class="n">package_name</span> <span class="n">IS</span>
+    <span class="p">(</span><span class="n">declarations</span><span class="p">)</span>
+<span class="n">END</span> <span class="n">package_name</span><span class="p">;</span>
+
+<span class="p">[</span><span class="n">PACKAGE</span> <span class="n">BODY</span> <span class="n">package_name</span> <span class="n">IS</span>
+    <span class="p">(</span><span class="n">FUNCTION</span> <span class="n">and</span> <span class="n">PROCEDURE</span> <span class="n">descriptions</span><span class="p">)</span>
+<span class="n">END</span> <span class="n">package_name</span><span class="p">;</span> <span class="p">]</span>
+</pre></div>
+
+
+<p>可以看到，语法包括两部分，<code>PACKAGE</code> 和 <code>PACKAGE BODY</code>。</p>
 <ul>
-<li>窄带信号受到 <strong>平坦性衰落</strong></li>
-<li>宽带信号受到 <strong>频率选择性衰落</strong> 。</li>
+<li>
+<p><code>PACKAGE</code> 是必需的，包括所有的声明语句</p>
+</li>
+<li>
+<p><code>PACKAGE BODY</code>：可选，当第一部分包含一个/多个  FUNCTION，PROCEDURE 声明时，这部分必须包含相应的描述代码。</p>
+</li>
 </ul>
-<p><strong>判断信号受到何种衰落：</strong></p>
-<p>定义信道的 <strong>相干带宽</strong> 。当数字信号的带宽越小于信道的相干带宽，则经过时变多经信道后，在信号带宽内的不同频率分量的幅度的相关性越大，不同的频率分量近似经历相同的衰落，即平坦性衰落，平坦性衰落对接收信号的波形无明显影响，码间干扰可以忽略，该系统称为 <strong>窄带系统</strong> 。当数字信号的带宽相对于信道的相干带宽越大时，信号带宽内的不同频率分量通过信道传输时会受到不同的衰落，即频率选择性衰落，频率选择性衰落使信号中的不同频率分量产生不同的幅度变化，造成接收信号的严重失真，引起吗见干扰，产生误码，该系统称为 <strong>宽带系统</strong> 。</p>
-<h3>Problem</h3>
-<h4>需求</h4>
-<p>无线信道的频率资源是有限的，要求数字通信系统有效利用信道频带。希望数据传输速率越高越好。</p>
-<h4>瓶颈</h4>
-<p>在系统设计选择数字调制方式时，必须兼顾 <strong>频带利用率</strong> 和 <strong>误码性能</strong> 。在 AWGN 信道下，在满足误码性能的前提下，应该尽可能采用频带利用率高的数字调制方式。</p>
-<p>然而，在以衰落为特征的移动通信系统中，影响误码性能的不仅仅是 <strong>加性噪声</strong>，还包括 <strong>衰落</strong> 和 <strong>码间干扰</strong> 。实现高速无线通信并非易事。</p>
-<p>为避免码间干扰，数字调制信号的最大符号速率受到很大的限制 。</p>
-<h3>Solution</h3>
-<p><strong>信道均衡</strong> 是一种经典的对抗码间干扰的技术，许多移动通信系统都采用信道均衡技术消除码间干扰。但是如果数据速率非常高，采用单载波传输数据，需要设计几十审计上百个抽头的均衡器，这简直是硬件设计的噩梦 。</p>
-<p>既要对抗码间干扰，又要满足低复杂度且高效的手段传输高速数据业务，我们可以采用另外一种技术 —— <strong>OFDM</strong> 。</p>
+<p><strong>example</strong></p>
+<div class="highlight"><pre><span class="o">---------</span> <span class="n">package</span> <span class="n">define</span><span class="o">-------------</span>
+<span class="n">LIRRARY</span> <span class="n">IEEE</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">IDEE</span><span class="p">.</span><span class="n">STD_LOGIC_1164</span><span class="p">.</span><span class="n">ALL</span><span class="p">;</span>
+
+<span class="n">PACKAGE</span> <span class="n">my_package</span> <span class="n">IS</span>
+    <span class="n">TYPE</span> <span class="n">state</span> <span class="nf">IS</span> <span class="p">(</span><span class="n">st1</span><span class="p">,</span> <span class="n">st2</span><span class="p">,</span> <span class="n">st3</span><span class="p">,</span> <span class="n">st4</span><span class="p">);</span>
+    <span class="n">CONSTANT</span> <span class="n">vec</span> <span class="o">:</span> <span class="n">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">7</span> <span class="n">DOWNTO</span> <span class="mi">0</span><span class="p">)</span> <span class="o">:=</span> <span class="s">&quot;11111111&quot;</span><span class="p">;</span>
+<span class="n">END</span> <span class="n">my_package</span><span class="p">;</span>
+
+<span class="o">---------</span> <span class="n">main</span> <span class="n">code</span> <span class="o">------------------</span>
+
+<span class="n">LIBRARY</span> <span class="n">IEEE</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">IEEE</span><span class="p">.</span><span class="n">STD_LOGIC_1164</span><span class="p">.</span><span class="n">ALL</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">work</span><span class="p">.</span><span class="n">my_package</span><span class="p">.</span><span class="n">all</span><span class="p">;</span>   <span class="o">--</span> <span class="n">declaration</span>
+
+<span class="n">ENTITY</span> <span class="p">...</span>
+<span class="p">...</span>
+
+<span class="n">ARCHITECTURE</span> <span class="p">...</span>
+<span class="p">...</span>
+
+<span class="o">--------------------------------------</span>
+</pre></div>
+
+
+<h3>Componet</h3>
+<p>VHDL 中的 <code>component</code> 和 Verilog HDL 中的 <code>module</code> 类似：</p>
+<p>一个 component 是一段完整的代码（包括 library, entity, architecture 这些组成部分），如果将这些代码声明为一个 component，那么就可以被其他电路调用，从而使代码具有了层次化的结构。</p>
+<p>使用 component 必须先声明这个元件，然后再例化这个元件（类似 C++，变量先声明，在定义）。声明和例化都必须在 architecture 中进行。</p>
+<p><strong>declaration syntax</strong></p>
+<div class="highlight"><pre><span class="n">COMPONENT</span> <span class="n">component_name</span> <span class="n">IS</span>
+    <span class="n">PORT</span> <span class="p">(</span>
+        <span class="nl">port_name:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
+        <span class="nl">port_name:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
+        <span class="p">...);</span>
+<span class="n">END</span> <span class="n">COMPONENT</span><span class="p">;</span>
+</pre></div>
+
+
+<p><strong>instantiation syntax</strong></p>
+<div class="highlight"><pre><span class="n">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">port_list</span><span class="o">);</span>
+</pre></div>
+
+
+<p>可以看到：</p>
+<ul>
+<li>
+<p>声明时，component 和 entity 相似，必须声明端口的模式和类型</p>
+</li>
+<li>
+<p>例化时，必须添加一个标号，就像 Verilog HDL 中例化 module 必须给个名字一样</p>
+</li>
+</ul>
+<p>声明元件时，可以有两种方法：</p>
+<ul>
+<li>
+<p>上面的方法，先声明再例化</p>
+</li>
+<li>
+<p>使用 package 进行声明，将 component 的声明放在 package 中，则可以避免每次元件例化都要重复声明</p>
+</li>
+</ul>
+<p>这两种方法的区别类似于使用 C++ 中的 namespace 时的不同方法</p>
+<ul>
+<li>
+<p>方法一：每次使用 STL 都添加作用域</p>
+<div class="highlight"><pre><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;hello world!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>方法二：声明一次作用域</p>
+<div class="highlight"><pre><span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
+</pre></div>
+
+
+</li>
+</ul>
+<h3>port map</h3>
+<p>同 Verilog HDL 一样，两种端口映射的方法：位置映射、名字映射。</p>
+<p>位置映射书写简单，但是容易出错；名字映射书写繁琐，但是不易出错，端口连接也更清晰，未连接的端口要使用关键词 <code>open</code>。</p>
+<p><strong>example</strong></p>
+<div class="highlight"><pre><span class="o">--</span> <span class="n">positional</span>
+<span class="nl">U1:</span> <span class="n">inverter</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+
+<span class="o">--</span> <span class="n">nominal</span>
+<span class="nl">U1:</span> <span class="n">inverter</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="p">(</span><span class="n">x</span><span class="o">=&gt;</span><span class="n">a</span><span class="p">,</span> <span class="n">y</span><span class="o">=&gt;</span><span class="n">b</span><span class="p">);</span>
+</pre></div>
+
+
+<h3>generic map</h3>
+<p>generic 功能类似于 Veriog HDL 中的 parameter，所以在例化时 component 时，可以重载参数，使设计更方便灵活。</p>
+<p><strong>syntax</strong></p>
+<div class="highlight"><pre><span class="n">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="n">GENERIC</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">param</span><span class="o">.</span><span class="na">list</span><span class="o">)</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">port</span> <span class="n">list</span><span class="o">);</span>
+</pre></div>
+
+
+<p>也就是说，在例化时，添加一段 <code>GENERIC MAP (param.list)</code> 就可以了。</p>
 <p><br></p>
-<h2>OFDM History</h2>
+<h2>Functions and Procedure</h2>
 <hr />
-<p>多载波调制技术早在 20 世纪 50年代末至 60 年代初就已经应用于军事高频无线通信中，由于实现复杂，没有被广泛应用 。OFDM 就是一种多载波调制，其子载波间隔是子载波符号间隔的倒数，各子载波的频谱是重叠的，这种重叠可以使频谱效率显著提高 。</p>
-<p>20 世纪 70 年代，Weinstein 和 Ebert 提出用 <strong>离傅里叶变换(DFT)</strong> 及其 <strong>逆变换(IDFT)</strong> 进行 OFDM 多载波调制方式的运算。</p>
-<p>DFT 和 IDFT 的快速计算方法：FFT 和 IFFT 使 OFDM 能够以低成本的数字方式实现 。</p>
-<p>在 20 世纪 80 年代，随着 OFDM 理论的不断完善、数字信号处理及微电子技术的不断快速发展，OFDM 技术也逐步走向实用化 。</p>
-<p>大约从 20 世纪 90 年代起，OFDM 技术开始应用于各种有线及无线通信中，包括：DSL、DAB、DVB、WLAN等。OFDM 已经成为下一代蜂窝移动通信空中接口的候选技术 。</p>
+<p>function 和 procedure 统称为 子程序，它们和 process 相似，内部包含的都是顺序描述的代码，通常使用相同的顺序描述语句。但是，function 和 procedure 的存在主要是为了建库，以达到代码重用和共享的目的，当然它们也可以直接建立在主代码中。</p>
+<h3>Function</h3>
+<p>一个 function 就是一段顺序描述的代码。</p>
+<p>在写代码的过程中，我们通常会遇到一些有共性的问题，我们希望实现这些功能的代码可以被共享和重用，从而使代码变得简洁，易于理解，function 的建立和使用就能达到这个目睹。
+function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> 等语句，但是不能有 <code>signal</code> 和 <code>component</code>。</p>
+<p>function 的使用方法：先创建函数体本身，再调用函数。</p>
+<p><strong>Function Body</strong></p>
+<div class="highlight"><pre><span class="nx">FUNCTION</span> <span class="nx">function_name</span> <span class="cp">[</span><span class="o">&lt;</span><span class="nx">parameter</span> <span class="nb">list</span><span class="o">&gt;</span><span class="cp">]</span> <span class="nx">RETURN</span> <span class="nx">data_type</span> <span class="nx">IS</span>
+    <span class="cp">[</span><span class="nx">declarations</span><span class="cp">]</span>
+<span class="nx">BEGIN</span>
+    <span class="p">(</span><span class="nx">sequential</span> <span class="nx">statements</span><span class="p">)</span>
+<span class="nx">END</span> <span class="nx">function_name</span><span class="p">;</span>
+</pre></div>
+
+
+<p>其中，<parameter list> 指函数的输入参数：</p>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="n">CONSTANT</span><span class="p">]</span> <span class="n">constant_name</span> <span class="o">:</span> <span class="n">constant_type</span><span class="p">;</span>
+<span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">SIGNAL</span> <span class="n">signal_name</span> <span class="o">:</span> <span class="n">signal_type</span><span class="p">;</span>
+</pre></div>
+
+
+<p>参数可以是 constant, signal，但是不能是 variable；参数的个数可以是任意个，类型也任意。</p>
+<p><strong>Function Call</strong></p>
+<p>函数可以单独构成表达式，也可以作为表达式的一部分。</p>
+<div class="highlight"><pre><span class="o">--</span><span class="n">example</span>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">conv_integer</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">maximum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="p">...</span>
+</pre></div>
+
+
+<p><strong>Function Location</strong></p>
+<p>函数可以存放在两个地方：</p>
+<ul>
+<li>
+<p>Package 中，这时候，函数声明在 package 中，函数定义在 package body 中</p>
+</li>
+<li>
+<p>Main Code 中，既可以在 entity 中，也可以在 architecture 中</p>
+</li>
+</ul>
+<h3>Procedure</h3>
+<p>procedure 和 function 类似，目的也相同，不同之处在于 procedure 可以有多个返回值。</p>
+<p>与 function 类似，procedure 也需要定义和调用两个过程。</p>
+<p><strong>Procedure Body</strong></p>
+<div class="highlight"><pre><span class="n">PROCEDURE</span> <span class="n">procedure_name</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span><span class="p">]</span> <span class="n">IS</span>
+    <span class="p">[</span><span class="n">declarations</span><span class="p">]</span>
+<span class="n">BEGIN</span>
+    <span class="p">(</span><span class="n">sequential</span> <span class="n">statements</span><span class="p">)</span>
+<span class="n">END</span> <span class="n">procedure_name</span><span class="p">;</span>
+</pre></div>
+
+
+<p>其中，<parameter list> 指出了 procedure 的输入输出参数：</p>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="n">CONSTANT</span><span class="p">]</span> <span class="n">constant_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="n">type</span><span class="p">;</span>
+<span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">SIGNAL</span> <span class="n">signal_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="n">type</span><span class="p">;</span>
+<span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">VARIABLE</span> <span class="n">variable_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="n">type</span><span class="p">;</span>
+</pre></div>
+
+
+<p>参数可以有任意多个，可以是 in, out, inout 模式的 signal, variable, constant。</p>
+<p>和 function 一样，procedure 内部的 wait 语句，signal 声明，component 调用都是不可综合的。</p>
+<p><strong>Procedure Call</strong></p>
+<p>procedure 的调用就是它自己。</p>
+<div class="highlight"><pre><span class="o">--</span><span class="n">example</span>
+<span class="n">compute_min_max</span> <span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">in3</span><span class="p">,</span> <span class="n">out1</span><span class="p">,</span> <span class="n">out2</span><span class="p">);</span>
+<span class="n">divide</span> <span class="p">(</span><span class="n">dividend</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="n">quotient</span><span class="p">,</span> <span class="n">remainder</span><span class="p">);</span>
+</pre></div>
+
+
+<p><strong>Procedure Location</strong></p>
+<p>procedure 的存放和 function 类似，通常放在 package 中，当然也可以放在主代码中。</p>
+<h3>FUNCTION versus PROCEDURE Summary</h3>
+<ul>
+<li>
+<p>function 有任意个输入参数和一个返回值，输入参数只能是 constant, signal</p>
+</li>
+<li>
+<p>procedure 有任意个输入/输出/双向参数，可以是 signal, variable, constant</p>
+</li>
+<li>
+<p>function 可以作为表达式的一部分，procedure 直接调用</p>
+</li>
+<li>
+<p>function 和 procedure 内部，wait 和 component 都不可综合</p>
+</li>
+<li>
+<p>function 和 procedure 的存放位置相同，经常位于 package 中，也可以在主代码中</p>
+</li>
+</ul>
 <p><br></p>
-<h2>OFDM Theory</h2>
-<hr />
-<p>Orthogonal frequency-division multiplexing (OFDM) 的基本原理是将高速的数据流分解为多路并行的低速数据流，在多个载波上同时进行传输。</p>
-<p>通过将高速数据分解为多个并行低速速率，克服了信道时延扩展对数据速率的限制，其中各个子载波之间是相互正交的关系，如图：</p>
-<p><img alt="carrier wave" src="/images/learning-ofdm-basic/carriers.png" /></p>
-<p>OFDM 每个子载波的调制方式可以相互不同，比如 BPSK、QPSK、QAM 等方式 。</p>
-<p>(OFDM 系统的内容可以写一本书了，简单写写 :-P )</p>
-<h3>OFDM 基带数字实现</h3>
-<h4>发送端 Transmitter</h4>
-<p>基带系统发送端要实现的功能是将待发送序列 {A1,A2,A3...} 变换，得到复包络的采样值 {a1,a2,a3...} 。</p>
-<p>为了实现 OFDM 调制的基带数字实现，首先要将 OFDM 信号的复包络进行采样，成为离散时间信号 。根据公式(《通信原理》)，采样结果正好是对发送序列进行离散傅里叶反变换(IDFT)的结果，所以，我们可以 <em>借助 IDFT 即可得到 OFDM 复包络的时间采样 。</em></p>
-<p>发送端框图：</p>
-<p><img alt="transmitter" src="/images/learning-ofdm-basic/transmitter.png" /></p>
-<h4>接收端 Receiver</h4>
-<p>基带系统接收端要实现的功能是对采样序列 {a1,a2,a3...} 进行变换，得到发送端发送过来的信息序列 {A1,A2,A3...} 。</p>
-<p>接收端通过 I/Q 正交解调可以恢复 OFDM 信号的复包络，将其采样得到的时间序列 。因为发送端采用的 IDFT 是可逆变换，所以对采样结果进行 DFT 就可以得到发送序列 。</p>
-<p>当序列的点数为 2 的整幂次时，DFT 和 IDFT 存在快速算法： FFT 和 IFFT 。</p>
-<p>接收端框图：</p>
-<p><img alt="receiver" src="/images/learning-ofdm-basic/receiver.png" /></p>
-<h3>循环前缀 cyclic prefix</h3>
-<p>为了有效对抗多径信道的时延扩展，OFDM 系统由多个子载波构成，只要子载波的取值可以满足符号周期远大于信道的时延扩展，就可以达到目标。在此基础上，还需要采取措施消除前后两个 OFDM 符号之间的 <strong>码间干扰 ISI</strong> 。</p>
-<p>一种方法是在每个 OFDM 符号之间插入 <strong>保护间隔 Guard Interval</strong> 。为了对抗信号因信道延迟的影响，Gurad interval(Tg) 长度要大于最大的 Delay spread，即 Tg &gt; delay spread time。</p>
-<p>在保护区间未放信号的 OFDM 系统称 ZP-OFDM(zero padding)。ZP-OFDM 有比较低的传输功率，但在接收端接收于 zero padding 区域信号时，会破坏载波的正交性造成 “<strong>载波间的干扰（ICI）</strong>”，所以复制 OFDM symbol 后半段信号并摆放于保护区间内，称之为 <strong>循环字首(cyclic prefix)</strong> 。</p>
-<h3>加窗技术</h3>
-<p>前面介绍了 OFDM 符号的生成、循环前缀消除码间干扰，但是此时符号边界有尖锐的相位跳变，由此可知，OFDM 的带外衰减是比较慢的 。虽然随着载波数目的增大，OFDM 信号的带外衰减会增加，但是仍然不够快 。</p>
-<p>为了使 OFDM 信号的带外衰减更快，可以采用对单个 OFDM 符号加窗的方法 。OFDM 的窗函数可以使信号的幅度在u符号边界更平滑地过渡到 0 。常用的窗函数是 <strong>升余弦滚降窗</strong> 。</p>
-<p>增大滚降因子虽然能够使带外衰减更快，但降低了 OFDM 系统对多经实验的容忍能力，所以 <em>在实际系统设计中，应当选择较小的滚降因子 。</em></p>
-<h3>OFDM 系统设计</h3>
-<p>OFDM 系统框图如下：</p>
-<p><img alt="ofdm-system" src="/images/learning-ofdm-basic/ofdm_system.jpg" /></p>
-<p>其中，<strong>交织</strong> 是为了克服深衰落发生突发差错的影响，如果交织器的长度足够大，解交织后可将突发差错改造为独立差错，再通过纠错译码来纠正 。</p>
-<p><strong>在发送端：</strong></p>
-<p><em>二进制数据</em> 通过纠错编码、交织后映射到 QAM 星座得到 <em>一个 QAM 复数符号序列</em>，再经过并串转换，得到 <em>N个并行 QAM 符号</em>，每个符号进行 IFFT，将 OFDM 复包络的频域样值变换为 <em>时域样值</em>，进行并串转换，将时域样值变换为按时间顺序排列的 <em>时域样值</em>，然后在每个 OFDM 符号前插入前缀，通过 D/A，将离散的复包络变成 <em>连续时间的复包络</em> 。再将复包络的 I(t) 和 Q(t) 正交调制得到 <em>OFDM信号</em>，将基带信号上变频到射频，经过功放，发送出去 。</p>
-<p><strong>在接收端：</strong></p>
-<p>接收端于发送端进行相反的变换，恢复出原数据 .</p>
-<p><br></p>
-<h2>参考</h2>
-<p><a href="http://book.douban.com/subject/1446684/">《通信原理》</a></p>
-<p><a href="http://book.douban.com/subject/4130536/">《移动通信原理》</a></p>
-<p><a href="http://en.wikipedia.org/wiki/Orthogonal_frequency-division_multiplexing">OFDM wikipedia</a></p>
+<h2>Reference</h2>
+<p><a href="http://www.amazon.com/Circuit-Design-VHDL-Volnei-Pedroni/dp/0262162245">Circuit Design with VHDL</a></p>
             </div>
             <!-- /.entry-content -->
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/02/xilinx_fft_core_notes.html">Xilinx FFT IP core 笔记</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic_1.html">FPGA 数字处理基础 (1)</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
     </ul>
 </section>
     <hr />
@@ -200,8 +356,8 @@
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
-            var disqus_identifier = 'learning_ofdm_on_fpga_1_ofdm_basic';
-            var disqus_url = 'http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html';
+            var disqus_identifier = 'vhdl_notes_2_system_design';
+            var disqus_url = 'http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html';
             var disqus_config = function () {
                 this.language = "zh";
             };
