@@ -101,7 +101,7 @@ Latch 是 `透明的(transparent)`，就是说输入的变换立即就能传递�
     
 D latch 的功能表：
 
-[d latch](/images/latch_versus_flip_flop/d_latch.png)
+![d latch](/images/latch_versus_flip_flop/d_latch.png)
 
 D latch 也称为  non-transparent、data latch、gated latch。它有一个数据输入端和一个使能端 enable(clock、control)。之所以叫透明，是因为当它使能时，输入端口的信号立刻就能传递到输出端口。
 
@@ -139,7 +139,7 @@ latch 的**问题**就在于：*它在时钟有效期间内一直在被触发，
     
 DFF 的特点就是在时钟信号的特定点触发（上升沿 or 下降沿），功能表：
 
-[dff](images/latch_versus_flip_flop/dff.png)
+![dff](/images/latch_versus_flip_flop/dff.png)
     
 #### JK flip-flop
 
@@ -324,7 +324,7 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 
     RTL Schematic:
     
-    ![if-else](/iamges/latch_versus_flip_flop/if_else.png)
+    ![if-else](/images/latch_versus_flip_flop/if_else.png)
     
 2. 使用完整的 case，添加 default 分支
 
@@ -340,7 +340,7 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 
     RTL Schemtatic:
     
-    ![case-default](/iamges/latch_versus_flip_flop/case_default.png)
+    ![case-default](/images/latch_versus_flip_flop/case_default.png)
     
 ### Application
 
