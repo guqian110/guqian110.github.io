@@ -416,7 +416,7 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 
 ## Reference
 
-[Flip-flop (electronics) --wikipedia](http://en.wikipedia.org/wiki/Flip-flop_(electronics)
+[Flip-flop (electronics) --wikipedia][wiki]
 
 [数字设计](http://book.douban.com/subject/2883561/)
 
