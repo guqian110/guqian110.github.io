@@ -45,14 +45,14 @@
 &lt;p&gt;使用或非门搭建：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="nor" src="http://upload.wikimedia.org/wikipedia/commons/c/c6/R-S_mk2.gif" /&gt;&lt;/p&gt;
 &lt;p&gt;功能表：&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/latch_versus_flip_flop/nor.png"&gt;nor&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="nor" src="/images/latch_versus_flip_flop/nor.png" /&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;S'R' NAND Latch&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;使用与非门搭建：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="nand" src="http://upload.wikimedia.org/wikipedia/commons/thumb/9/92/SR_Flip-flop_Diagram.svg/500px-SR_Flip-flop_Diagram.svg.png" /&gt;&lt;/p&gt;
 &lt;p&gt;功能表：&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/latch_versus_flip_flop/nand.png"&gt;nand&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="nand" src="/images/latch_versus_flip_flop/nand.png" /&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4&gt;D Latch&lt;/h4&gt;
@@ -100,12 +100,12 @@
 &lt;p&gt;在 DFF 的基础上，可以得到 JK FF。&lt;/p&gt;
 &lt;p&gt;JK FF 的特点和 SR latch 类似，可以将 J 看作是 S，K 看作是 R，它和 SR latch 的区别在于它是边沿触发，并且将 S = R = 1 状态设置为 &lt;code&gt;翻转 (toggle)&lt;/code&gt;，也就是在下一个时钟边沿，输出取反。当 J = K = 0 时，得到的并不是 DFF，而是保持输出不变。&lt;/p&gt;
 &lt;p&gt;功能表：&lt;/p&gt;
-&lt;p&gt;&lt;a href="latch_versus_flip_flop/jk.png"&gt;jk&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="jk" src="/images/latch_versus_flip_flop/jk.png" /&gt;&lt;/p&gt;
 &lt;h4&gt;T flip-flop&lt;/h4&gt;
 &lt;p&gt;将 JK FF 的输入端 J 和 K 连接到一起，就可以得到 &lt;code&gt;T FF&lt;/code&gt; (toggle flip-flop)。&lt;/p&gt;
 &lt;p&gt;当 T = 0 (J = K = 0) 时，输出保持不变，时钟边沿不影响状态；当 T = 1 (J = K = 1) 时，在时钟边沿输出反相，也就是翻转。&lt;/p&gt;
 &lt;p&gt;功能表：&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/latch_versus_flip_flop/tff.png"&gt;tff&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="tff" src="/images/latch_versus_flip_flop/tff.png" /&gt;&lt;/p&gt;
 &lt;p&gt;可以看到 TFF 有 1/2 分频的作用，这一特点在很多电路中得到了应用。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Timing considerations&lt;/h2&gt;
@@ -135,7 +135,7 @@
 &lt;p&gt;Removal time specifies the length of time the active phase of the asynchronous signal has to be held after the closing edge of the clock.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;也就是说 Recovery / Removal time 类似于 Setup / Hold Time，不过是用于异步信号，比如 set，reset 信号。&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/latch_versus_flip_flop/recovery-removal.jpg"&gt;recovery-removal&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="recovery-removal" src="/images/latch_versus_flip_flop/recovery-removal.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;如图所示，在时钟沿到来之前的 recovery time 之前，异步信号必须释放 (变无效)，在时钟沿到来之后的 removal time 之后，异步信号才能变有效，也就是说在从 recovery time 到 removal time 这段时间内，异步信号是不能有效的。&lt;/p&gt;
 &lt;p&gt;如果使 flip-flop 的输入满足 setup time 和 hold time，那么就可以避免亚稳态的出现，一般器件的手册上都会标明这些参数，从几 ns 到几百 ps 之间。根据 flip-flop 内的组织情况而定，有时候可以将 setup time 或者 hold time 两者中的一个（只能是其中之一）变为 0 甚至是负数。&lt;/p&gt;
 &lt;p&gt;但是，并不是总能满足这一标准，因为有可能 flip-flop 的输入端连到了外界的，设计者无法控制的一个不断变化的信号，这时候设计者所能做的事就是根据电路要求，将发生错误的概率降低到一个确定的水平。通常使用的方法就是将信号通过一条链在一起的 flip-flop 组，这样子可以将发生亚稳态的概率降低到一个可以忽略的程度，但是还是不等于 0。链中的 flip-flop 越多，这个概率就越趋近于 0，通常的情况是采用 1 个或者两个 flip-flop。&lt;/p&gt;
@@ -206,7 +206,7 @@
 
 
 &lt;p&gt;RTL Schematic:&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/latch_versus_flip_flop/if_latch.png"&gt;if_latch&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="if_latch" src="/images/latch_versus_flip_flop/if_latch.png" /&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;不完整的 case&lt;/p&gt;
@@ -221,7 +221,7 @@ end
 
 
 &lt;p&gt;RTL Schematic:&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/latch_versus_flip_flop/case_latch.png"&gt;case_latch&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="case_latch" src="/images/latch_versus_flip_flop/case_latch.png" /&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h4&gt;Solution&lt;/h4&gt;
@@ -242,7 +242,7 @@ end
 
 
 &lt;p&gt;RTL Schematic:&lt;/p&gt;
-&lt;p&gt;&lt;a href="/iamges/latch_versus_flip_flop/if_else.png"&gt;if-else&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="if-else" src="/iamges/latch_versus_flip_flop/if_else.png" /&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;使用完整的 case，添加 default 分支&lt;/p&gt;
@@ -258,7 +258,7 @@ end
 
 
 &lt;p&gt;RTL Schemtatic:&lt;/p&gt;
-&lt;p&gt;&lt;a href="/iamges/latch_versus_flip_flop/case_default.png"&gt;case-default&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="case-default" src="/iamges/latch_versus_flip_flop/case_default.png" /&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;Application&lt;/h3&gt;

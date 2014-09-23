@@ -70,7 +70,7 @@ SR latch 的实现可以有两种方案：
     
     功能表：
     
-    [nor](/images/latch_versus_flip_flop/nor.png)
+    ![nor](/images/latch_versus_flip_flop/nor.png)
     
 + **S'R' NAND Latch**
 
@@ -80,7 +80,7 @@ SR latch 的实现可以有两种方案：
     
     功能表：
     
-    [nand](/images/latch_versus_flip_flop/nand.png)
+    ![nand](/images/latch_versus_flip_flop/nand.png)
     
     
 #### D Latch
@@ -149,7 +149,7 @@ JK FF 的特点和 SR latch 类似，可以将 J 看作是 S，K 看作是 R，�
 
 功能表：
 
-[jk](latch_versus_flip_flop/jk.png)
+![jk](/images/latch_versus_flip_flop/jk.png)
 
 #### T flip-flop
 
@@ -159,7 +159,7 @@ JK FF 的特点和 SR latch 类似，可以将 J 看作是 S，K 看作是 R，�
 
 功能表：
 
-[tff](/images/latch_versus_flip_flop/tff.png)
+![tff](/images/latch_versus_flip_flop/tff.png)
 
 可以看到 TFF 有 1/2 分频的作用，这一特点在很多电路中得到了应用。
 
@@ -206,7 +206,7 @@ JK FF 的特点和 SR latch 类似，可以将 J 看作是 S，K 看作是 R，�
 
 也就是说 Recovery / Removal time 类似于 Setup / Hold Time，不过是用于异步信号，比如 set，reset 信号。
 
-[recovery-removal](/images/latch_versus_flip_flop/recovery-removal.jpg)
+![recovery-removal](/images/latch_versus_flip_flop/recovery-removal.jpg)
 
 如图所示，在时钟沿到来之前的 recovery time 之前，异步信号必须释放 (变无效)，在时钟沿到来之后的 removal time 之后，异步信号才能变有效，也就是说在从 recovery time 到 removal time 这段时间内，异步信号是不能有效的。
 
@@ -288,7 +288,7 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 
     RTL Schematic:
     
-    [if_latch](/images/latch_versus_flip_flop/if_latch.png)
+    ![if_latch](/images/latch_versus_flip_flop/if_latch.png)
 
 2. 不完整的 case
 
@@ -303,7 +303,7 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
         
     RTL Schematic:
     
-    [case_latch](/images/latch_versus_flip_flop/case_latch.png)
+    ![case_latch](/images/latch_versus_flip_flop/case_latch.png)
     
 #### Solution
 
@@ -324,7 +324,7 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 
     RTL Schematic:
     
-    [if-else](/iamges/latch_versus_flip_flop/if_else.png)
+    ![if-else](/iamges/latch_versus_flip_flop/if_else.png)
     
 2. 使用完整的 case，添加 default 分支
 
@@ -340,7 +340,7 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 
     RTL Schemtatic:
     
-    [case-default](/iamges/latch_versus_flip_flop/case_default.png)
+    ![case-default](/iamges/latch_versus_flip_flop/case_default.png)
     
 ### Application
 
