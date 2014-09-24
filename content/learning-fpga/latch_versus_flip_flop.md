@@ -296,8 +296,8 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
     
         always @(din_c or din_a or din_b) begin
             case (din_c)
-                2'b00: dout <= din_a;
-                2'b01: dout <- din_b;
+                2'b00: dout = din_a;
+                2'b01: dout = din_b;
             endcase
         end
         
@@ -363,8 +363,8 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 >           reg      [7:0] dout;  
 >     
 >       always @ (din) begin  
->            if (din>127)  
->                 dout <= din;  
+>            if (din > 127)  
+>                 dout = din;  
 >       end  
 >  
 >       endmodule  
@@ -386,12 +386,12 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 >           din,dout  
 >       );  
 >       input   [7:0] din;  
->       output [7:0] dout;  
+>       output  [7:0] dout;  
 >  
 >       reg      [7:0] dout;  
 >  
 >       always @ (din) begin  
->            if (din>127)  
+>            if (din > 127)  
 >                 dout = din;  
 >       end  
 >  
