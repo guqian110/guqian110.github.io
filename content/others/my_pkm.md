@@ -1,6 +1,6 @@
 Title: 我的 PKM 
 Date: 2014-05-06 15:57
-Category: Others
+Category: Misc
 Tags: PKM 
 Slug: my_pkm 
 Author: Chien Gu

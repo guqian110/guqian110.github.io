@@ -1,6 +1,6 @@
 Title: First Blood
 Date: 2014-03-17 14:29
-Category: Others
+Category: Misc
 Tags: Build Blog
 Slug: first_blood
 Author: Chien Gu

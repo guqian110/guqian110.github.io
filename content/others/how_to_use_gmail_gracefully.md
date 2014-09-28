@@ -1,6 +1,6 @@
 Title: 如何优雅地使用 Gmail 
 Date: 2014-04-11 23:33
-Category: Others
+Category: Misc
 Tags: Gmail 
 Slug: how_to_use_gmail_gracefully
 Author: Chien Gu

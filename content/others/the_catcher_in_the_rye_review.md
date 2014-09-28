@@ -1,6 +1,6 @@
 Title: 麦田里的守望者 书评
 Date: 2014-05-14 00:41
-Category: Others
+Category: Misc
 Tags: The Catcher in The Rye, review
 Slug: the_catcher_in_the_rye_review
 Author: Chien Gu

@@ -1,6 +1,6 @@
 Title: 把时间当作朋友 书评
 Date: 2014-04-25 15:50
-Category: Others
+Category: Misc
 Tags: 时间管理, review
 Slug: make_friends_with_time_review
 Author: Chien Gu
