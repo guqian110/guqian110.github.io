@@ -1,6 +1,6 @@
 Title: 学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic 
 Date: 2014-05-13 23:16
-Category: Communication
+Category: Com
 Tags: Com,OFDM
 Slug: learning_ofdm_on_fpga_1_ofdm_basic
 Author: Chien Gu
