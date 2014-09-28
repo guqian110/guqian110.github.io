@@ -1,7 +1,7 @@
 Title: 在 Ubuntu 下运行 WarCraft
 Date: 2014-04-10 10:58
-Category: Misc
-Tags: Wine,WarCraft 
+Category: Linux
+Tags: Linux, Wine,WarCraft 
 Slug: run_warcraft_on_ubuntu
 Author: Chien Gu
 Summary: 闲来无聊，在 Ubuntu 下 wine 了一个 WarCraft 3 玩
