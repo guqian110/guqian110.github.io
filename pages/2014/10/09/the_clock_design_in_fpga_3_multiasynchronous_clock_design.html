@@ -328,7 +328,7 @@
 <p>部分握手比全握手在健壮性方面稍弱，因为握手信号并不指示各自电路的状态，每一电路都必须保存状态信息（在全握手里这个信息被送出去），但是，由于无需等待对方的响应，完整的时间序列花费较少的时间。</p>
 <p>有两种类型的部分握手：</p>
 <p>第一种握手方法中，电路A以有效电平声明其请求信号，电路B以一个单时钟宽度脉冲作为响应。此时，电路B并不关心电路A何时中止它的请求。</p>
-<p><img alt="partial-1" src="/iamges/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_1.png" /></p>
+<p><img alt="partial-1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_1.png" /></p>
 <p>但是为了这种方法成立，电路A中止请求信号至少要 1 个时钟周期长度，否则，电路B就不能区别前一个和后一个新的请求。</p>
 <p>在这种握手方式下，电路B为请求信号使用一个 level synchronizer；电路A为响应信号使用一个 pusle synchronizer。只有当电路B检测到请求信号时才发出响应脉冲，这样电路A控制请求信号的时序，就能控制自己synchronizer接收到的脉冲间隔。</p>
 <p>同样，使用前面的方法可以估算出这种握手协议的时序：发送端电路A需要花费 3 个时钟周期，接收端B需要花费 5 个时钟周期。</p>
@@ -351,7 +351,7 @@
 <p><strong>Problem - Two simultaneously required control signals</strong>
  a register in the new clock domain requires both a load signal and an
 enable signal in order to load a data value into the register. If both the load and enable signals are being sent from one clock domain, there is a chance that a small skew between the control signals could cause the two signals to be synchronized into different clock cycles within the new clock domain. In this example, this would cause the data to the register to not be loaded.</p>
-<p><img alt="problem 1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/problem-1.png" /></p>
+<p><img alt="problem 1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/problem_1.png" /></p>
 <p><strong> Solution - Consolidating control signals before passing</strong></p>
 <p><img alt="solution 1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/solution_1.png" /></p>
 <p><strong>Problem - Two phase-shifted sequencing control signals</strong></p>
@@ -442,10 +442,10 @@ enable signal in order to load a data value into the register. If both the load 
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic_1.html">FPGA 数字处理基础 (1)</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/02/xilinx_fft_core_notes.html">Xilinx FFT IP core 笔记</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
     </ul>
 </section>
     <hr />
@@ -514,18 +514,13 @@ enable signal in order to load a data value into the register. If both the load 
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/fpga.html">
-                                FPGA
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/linux.html">
                                 Linux
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -534,8 +529,8 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -544,8 +539,8 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -553,9 +548,14 @@ enable signal in order to load a data value into the register. If both the load 
                                 review
                             </a>
                         </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
                         <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/digital-processing.html">
-                                digital processing
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -564,58 +564,18 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/syntax.html">
-                                syntax
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/clock-design.html">
                                 clock design
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
+                            <a href="http://guqian110.github.io/tag/syntax.html">
+                                syntax
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
-                                The Catcher in The Rye
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/flip-flop.html">
-                                flip-flop
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fsm.html">
-                                FSM
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/digital-processing.html">
+                                digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -624,18 +584,8 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
-                                digital procesing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -649,13 +599,28 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/sublime-text.html">
-                                Sublime Text
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
+                            <a href="http://guqian110.github.io/tag/flip-flop.html">
+                                flip-flop
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -664,13 +629,13 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -679,18 +644,53 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/sublime-text.html">
+                                Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/latch.html">
                                 latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
+                            <a href="http://guqian110.github.io/tag/clock-resource.html">
+                                clock resource
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -699,8 +699,8 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/clock-resource.html">
-                                clock resource
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
                             </a>
                         </li>
                     </ul>

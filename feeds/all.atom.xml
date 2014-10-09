@@ -213,7 +213,7 @@
 &lt;p&gt;部分握手比全握手在健壮性方面稍弱，因为握手信号并不指示各自电路的状态，每一电路都必须保存状态信息（在全握手里这个信息被送出去），但是，由于无需等待对方的响应，完整的时间序列花费较少的时间。&lt;/p&gt;
 &lt;p&gt;有两种类型的部分握手：&lt;/p&gt;
 &lt;p&gt;第一种握手方法中，电路A以有效电平声明其请求信号，电路B以一个单时钟宽度脉冲作为响应。此时，电路B并不关心电路A何时中止它的请求。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="partial-1" src="/iamges/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="partial-1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_1.png" /&gt;&lt;/p&gt;
 &lt;p&gt;但是为了这种方法成立，电路A中止请求信号至少要 1 个时钟周期长度，否则，电路B就不能区别前一个和后一个新的请求。&lt;/p&gt;
 &lt;p&gt;在这种握手方式下，电路B为请求信号使用一个 level synchronizer；电路A为响应信号使用一个 pusle synchronizer。只有当电路B检测到请求信号时才发出响应脉冲，这样电路A控制请求信号的时序，就能控制自己synchronizer接收到的脉冲间隔。&lt;/p&gt;
 &lt;p&gt;同样，使用前面的方法可以估算出这种握手协议的时序：发送端电路A需要花费 3 个时钟周期，接收端B需要花费 5 个时钟周期。&lt;/p&gt;
@@ -236,7 +236,7 @@
 &lt;p&gt;&lt;strong&gt;Problem - Two simultaneously required control signals&lt;/strong&gt;
  a register in the new clock domain requires both a load signal and an
 enable signal in order to load a data value into the register. If both the load and enable signals are being sent from one clock domain, there is a chance that a small skew between the control signals could cause the two signals to be synchronized into different clock cycles within the new clock domain. In this example, this would cause the data to the register to not be loaded.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="problem 1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/problem-1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="problem 1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/problem_1.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt; Solution - Consolidating control signals before passing&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img alt="solution 1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/solution_1.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Problem - Two phase-shifted sequencing control signals&lt;/strong&gt;&lt;/p&gt;

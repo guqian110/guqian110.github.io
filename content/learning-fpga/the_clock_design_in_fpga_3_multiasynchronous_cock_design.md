@@ -299,7 +299,7 @@ edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较�
 
 第一种握手方法中，电路A以有效电平声明其请求信号，电路B以一个单时钟宽度脉冲作为响应。此时，电路B并不关心电路A何时中止它的请求。
 
-![partial-1](/iamges/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_1.png)
+![partial-1](/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_1.png)
 
 但是为了这种方法成立，电路A中止请求信号至少要 1 个时钟周期长度，否则，电路B就不能区别前一个和后一个新的请求。
 
@@ -341,7 +341,7 @@ Clifford E. Cummings 在他的文章中举例说明了几种常见的错误：
 >  a register in the new clock domain requires both a load signal and an
 enable signal in order to load a data value into the register. If both the load and enable signals are being sent from one clock domain, there is a chance that a small skew between the control signals could cause the two signals to be synchronized into different clock cycles within the new clock domain. In this example, this would cause the data to the register to not be loaded.
 >
-> ![problem 1](/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/problem-1.png)
+> ![problem 1](/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/problem_1.png)
 >
 > ** Solution - Consolidating control signals before passing**
 >
