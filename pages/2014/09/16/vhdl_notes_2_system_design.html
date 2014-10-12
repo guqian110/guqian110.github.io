@@ -54,19 +54,10 @@
                             <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
                         </li>
                         <li >
-                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
-                        </li>
-                        <li >
                             <a href="http://guqian110.github.io/category/com.html">Com</a>
                         </li>
                         <li class="active">
                             <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
-                        </li>
-                        <li >
-                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
-                        </li>
-                        <li >
-                            <a href="http://guqian110.github.io/category/misc.html">Misc</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -126,14 +117,16 @@
 <h3 id="package">Package</h3>
 <p>除了 <code>component</code>, <code>function</code>, <code>procedure</code> 之外，package 中还可以包含 <code>TYPE</code>, <code>CONSTANT</code> 的定义。</p>
 <p><strong>syntax</strong></p>
-<pre><code>PACKAGE package_name IS
-    (declarations)
-END package_name;
+<div class="codehilite"><pre><span class="n">PACKAGE</span> <span class="n">package_name</span> <span class="n">IS</span>
+    <span class="p">(</span><span class="n">declarations</span><span class="p">)</span>
+<span class="n">END</span> <span class="n">package_name</span><span class="p">;</span>
 
-[PACKAGE BODY package_name IS
-    (FUNCTION and PROCEDURE descriptions)
-END package_name; ]
-</code></pre>
+<span class="p">[</span><span class="n">PACKAGE</span> <span class="n">BODY</span> <span class="n">package_name</span> <span class="n">IS</span>
+    <span class="p">(</span><span class="n">FUNCTION</span> <span class="n">and</span> <span class="n">PROCEDURE</span> <span class="n">descriptions</span><span class="p">)</span>
+<span class="n">END</span> <span class="n">package_name</span><span class="p">;</span> <span class="p">]</span>
+</pre></div>
+
+
 <p>可以看到，语法包括两部分，<code>PACKAGE</code> 和 <code>PACKAGE BODY</code>。</p>
 <ul>
 <li>
@@ -144,44 +137,50 @@ END package_name; ]
 </li>
 </ul>
 <p><strong>example</strong></p>
-<pre><code>--------- package define-------------
-LIRRARY IEEE;
-USE IDEE.STD_LOGIC_1164.ALL;
+<div class="codehilite"><pre><span class="o">---------</span> <span class="n">package</span> <span class="n">define</span><span class="o">-------------</span>
+<span class="n">LIRRARY</span> <span class="n">IEEE</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">IDEE</span><span class="p">.</span><span class="n">STD_LOGIC_1164</span><span class="p">.</span><span class="n">ALL</span><span class="p">;</span>
 
-PACKAGE my_package IS
-    TYPE state IS (st1, st2, st3, st4);
-    CONSTANT vec : STD_LOGIC_VECTOR (7 DOWNTO 0) := "11111111";
-END my_package;
+<span class="n">PACKAGE</span> <span class="n">my_package</span> <span class="n">IS</span>
+    <span class="n">TYPE</span> <span class="n">state</span> <span class="nf">IS</span> <span class="p">(</span><span class="n">st1</span><span class="p">,</span> <span class="n">st2</span><span class="p">,</span> <span class="n">st3</span><span class="p">,</span> <span class="n">st4</span><span class="p">);</span>
+    <span class="n">CONSTANT</span> <span class="n">vec</span> <span class="o">:</span> <span class="n">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">7</span> <span class="n">DOWNTO</span> <span class="mi">0</span><span class="p">)</span> <span class="o">:=</span> <span class="s">&quot;11111111&quot;</span><span class="p">;</span>
+<span class="n">END</span> <span class="n">my_package</span><span class="p">;</span>
 
---------- main code ------------------
+<span class="o">---------</span> <span class="n">main</span> <span class="n">code</span> <span class="o">------------------</span>
 
-LIBRARY IEEE;
-USE IEEE.STD_LOGIC_1164.ALL;
-USE work.my_package.all;   -- declaration
+<span class="n">LIBRARY</span> <span class="n">IEEE</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">IEEE</span><span class="p">.</span><span class="n">STD_LOGIC_1164</span><span class="p">.</span><span class="n">ALL</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">work</span><span class="p">.</span><span class="n">my_package</span><span class="p">.</span><span class="n">all</span><span class="p">;</span>   <span class="o">--</span> <span class="n">declaration</span>
 
-ENTITY ...
-...
+<span class="n">ENTITY</span> <span class="p">...</span>
+<span class="p">...</span>
 
-ARCHITECTURE ...
-...
+<span class="n">ARCHITECTURE</span> <span class="p">...</span>
+<span class="p">...</span>
 
---------------------------------------
-</code></pre>
+<span class="o">--------------------------------------</span>
+</pre></div>
+
+
 <h3 id="componet">Componet</h3>
 <p>VHDL 中的 <code>component</code> 和 Verilog HDL 中的 <code>module</code> 类似：</p>
 <p>一个 component 是一段完整的代码（包括 library, entity, architecture 这些组成部分），如果将这些代码声明为一个 component，那么就可以被其他电路调用，从而使代码具有了层次化的结构。</p>
 <p>使用 component 必须先声明这个元件，然后再例化这个元件（类似 C++，变量先声明，在定义）。声明和例化都必须在 architecture 中进行。</p>
 <p><strong>declaration syntax</strong></p>
-<pre><code>COMPONENT component_name IS
-    PORT (
-        port_name: signal_mode signal_type;
-        port_name: signal_mode signal_type;
-        ...);
-END COMPONENT;
-</code></pre>
+<div class="codehilite"><pre><span class="n">COMPONENT</span> <span class="n">component_name</span> <span class="n">IS</span>
+    <span class="n">PORT</span> <span class="p">(</span>
+        <span class="nl">port_name:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
+        <span class="nl">port_name:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
+        <span class="p">...);</span>
+<span class="n">END</span> <span class="n">COMPONENT</span><span class="p">;</span>
+</pre></div>
+
+
 <p><strong>instantiation syntax</strong></p>
-<pre><code>label: component_name PORT MAP (port_list);
-</code></pre>
+<div class="codehilite"><pre><span class="n">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">port_list</span><span class="o">);</span>
+</pre></div>
+
+
 <p>可以看到：</p>
 <ul>
 <li>
@@ -204,30 +203,38 @@ END COMPONENT;
 <ul>
 <li>
 <p>方法一：每次使用 STL 都添加作用域</p>
-<pre><code>std::cout &lt;&lt; "hello world!" &lt;&lt; std::endl;
-</code></pre>
+<div class="codehilite"><pre><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;hello world!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+
+
 </li>
 <li>
 <p>方法二：声明一次作用域</p>
-<pre><code>using namespace std;
-</code></pre>
+<div class="codehilite"><pre><span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
+</pre></div>
+
+
 </li>
 </ul>
 <h3 id="port-map">port map</h3>
 <p>同 Verilog HDL 一样，两种端口映射的方法：位置映射、名字映射。</p>
 <p>位置映射书写简单，但是容易出错；名字映射书写繁琐，但是不易出错，端口连接也更清晰，未连接的端口要使用关键词 <code>open</code>。</p>
 <p><strong>example</strong></p>
-<pre><code>-- positional
-U1: inverter PORT MAP (x, y);
+<div class="codehilite"><pre><span class="o">--</span> <span class="n">positional</span>
+<span class="nl">U1:</span> <span class="n">inverter</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 
--- nominal
-U1: inverter PORT MAP (x=&gt;a, y=&gt;b);
-</code></pre>
+<span class="o">--</span> <span class="n">nominal</span>
+<span class="nl">U1:</span> <span class="n">inverter</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="p">(</span><span class="n">x</span><span class="o">=&gt;</span><span class="n">a</span><span class="p">,</span> <span class="n">y</span><span class="o">=&gt;</span><span class="n">b</span><span class="p">);</span>
+</pre></div>
+
+
 <h3 id="generic-map">generic map</h3>
 <p>generic 功能类似于 Veriog HDL 中的 parameter，所以在例化时 component 时，可以重载参数，使设计更方便灵活。</p>
 <p><strong>syntax</strong></p>
-<pre><code>label: component_name GENERIC MAP (param.list) PORT MAP (port list);
-</code></pre>
+<div class="codehilite"><pre><span class="n">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="n">GENERIC</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">param</span><span class="o">.</span><span class="na">list</span><span class="o">)</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">port</span> <span class="n">list</span><span class="o">);</span>
+</pre></div>
+
+
 <p>也就是说，在例化时，添加一段 <code>GENERIC MAP (param.list)</code> 就可以了。</p>
 <p><br></p>
 <h2 id="functions-and-procedure">Functions and Procedure</h2>
@@ -239,23 +246,29 @@ U1: inverter PORT MAP (x=&gt;a, y=&gt;b);
 function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> 等语句，但是不能有 <code>signal</code> 和 <code>component</code>。</p>
 <p>function 的使用方法：先创建函数体本身，再调用函数。</p>
 <p><strong>Function Body</strong></p>
-<pre><code>FUNCTION function_name [&lt;parameter list&gt;] RETURN data_type IS
-    [declarations]
-BEGIN
-    (sequential statements)
-END function_name;
-</code></pre>
+<div class="codehilite"><pre><span class="nx">FUNCTION</span> <span class="nx">function_name</span> <span class="cp">[</span><span class="o">&lt;</span><span class="nx">parameter</span> <span class="nb">list</span><span class="o">&gt;</span><span class="cp">]</span> <span class="nx">RETURN</span> <span class="nx">data_type</span> <span class="nx">IS</span>
+    <span class="cp">[</span><span class="nx">declarations</span><span class="cp">]</span>
+<span class="nx">BEGIN</span>
+    <span class="p">(</span><span class="nx">sequential</span> <span class="nx">statements</span><span class="p">)</span>
+<span class="nx">END</span> <span class="nx">function_name</span><span class="p">;</span>
+</pre></div>
+
+
 <p>其中，<parameter list> 指函数的输入参数：</p>
-<pre><code>&lt;parameter list&gt; = [CONSTANT] constant_name : constant_type;
-&lt;parameter list&gt; = SIGNAL signal_name : signal_type;
-</code></pre>
+<div class="codehilite"><pre><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="n">CONSTANT</span><span class="p">]</span> <span class="n">constant_name</span> <span class="o">:</span> <span class="n">constant_type</span><span class="p">;</span>
+<span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">SIGNAL</span> <span class="n">signal_name</span> <span class="o">:</span> <span class="n">signal_type</span><span class="p">;</span>
+</pre></div>
+
+
 <p>参数可以是 constant, signal，但是不能是 variable；参数的个数可以是任意个，类型也任意。</p>
 <p><strong>Function Call</strong></p>
 <p>函数可以单独构成表达式，也可以作为表达式的一部分。</p>
-<pre><code>--example
-x &lt;= conv_integer(a);
-if x &gt; maximum(a, b) ...
-</code></pre>
+<div class="codehilite"><pre><span class="o">--</span><span class="n">example</span>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">conv_integer</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">maximum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="p">...</span>
+</pre></div>
+
+
 <p><strong>Function Location</strong></p>
 <p>函数可以存放在两个地方：</p>
 <ul>
@@ -270,25 +283,31 @@ if x &gt; maximum(a, b) ...
 <p>procedure 和 function 类似，目的也相同，不同之处在于 procedure 可以有多个返回值。</p>
 <p>与 function 类似，procedure 也需要定义和调用两个过程。</p>
 <p><strong>Procedure Body</strong></p>
-<pre><code>PROCEDURE procedure_name [&lt;parameter list&gt;] IS
-    [declarations]
-BEGIN
-    (sequential statements)
-END procedure_name;
-</code></pre>
+<div class="codehilite"><pre><span class="n">PROCEDURE</span> <span class="n">procedure_name</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span><span class="p">]</span> <span class="n">IS</span>
+    <span class="p">[</span><span class="n">declarations</span><span class="p">]</span>
+<span class="n">BEGIN</span>
+    <span class="p">(</span><span class="n">sequential</span> <span class="n">statements</span><span class="p">)</span>
+<span class="n">END</span> <span class="n">procedure_name</span><span class="p">;</span>
+</pre></div>
+
+
 <p>其中，<parameter list> 指出了 procedure 的输入输出参数：</p>
-<pre><code>&lt;parameter list&gt; = [CONSTANT] constant_name : mode type;
-&lt;parameter list&gt; = SIGNAL signal_name : mode type;
-&lt;parameter list&gt; = VARIABLE variable_name : mode type;
-</code></pre>
+<div class="codehilite"><pre><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="n">CONSTANT</span><span class="p">]</span> <span class="n">constant_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="n">type</span><span class="p">;</span>
+<span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">SIGNAL</span> <span class="n">signal_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="n">type</span><span class="p">;</span>
+<span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">VARIABLE</span> <span class="n">variable_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="n">type</span><span class="p">;</span>
+</pre></div>
+
+
 <p>参数可以有任意多个，可以是 in, out, inout 模式的 signal, variable, constant。</p>
 <p>和 function 一样，procedure 内部的 wait 语句，signal 声明，component 调用都是不可综合的。</p>
 <p><strong>Procedure Call</strong></p>
 <p>procedure 的调用就是它自己。</p>
-<pre><code>--example
-compute_min_max (in1, in2, in3, out1, out2);
-divide (dividend, divisor, quotient, remainder);
-</code></pre>
+<div class="codehilite"><pre><span class="o">--</span><span class="n">example</span>
+<span class="n">compute_min_max</span> <span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">in3</span><span class="p">,</span> <span class="n">out1</span><span class="p">,</span> <span class="n">out2</span><span class="p">);</span>
+<span class="n">divide</span> <span class="p">(</span><span class="n">dividend</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="n">quotient</span><span class="p">,</span> <span class="n">remainder</span><span class="p">);</span>
+</pre></div>
+
+
 <p><strong>Procedure Location</strong></p>
 <p>procedure 的存放和 function 类似，通常放在 package 中，当然也可以放在主代码中。</p>
 <h3 id="function-versus-procedure-summary">FUNCTION versus PROCEDURE Summary</h3>
@@ -318,10 +337,10 @@ divide (dividend, divisor, quotient, remainder);
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
     </ul>
 </section>
     <hr />
@@ -389,19 +408,9 @@ divide (dividend, divisor, quotient, remainder);
 
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group list-inline tagcloud" id="tags">
-                        <li class="list-group-item tag-2">
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/arduino.html">
                                 Arduino
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -410,16 +419,6 @@ divide (dividend, divisor, quotient, remainder);
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/clock-resource.html">
-                                clock resource
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/com.html">
                                 Com
                             </a>
@@ -429,7 +428,7 @@ divide (dividend, divisor, quotient, remainder);
                                 digital procesing
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
@@ -450,18 +449,13 @@ divide (dividend, divisor, quotient, remainder);
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/intel-galileo.html">
                                 Intel Galileo
                             </a>
                         </li>
-                        <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -470,38 +464,13 @@ divide (dividend, divisor, quotient, remainder);
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/parameterization.html">
                                 parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -514,29 +483,9 @@ divide (dividend, divisor, quotient, remainder);
                                 syntax
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
-                            </a>
-                        </li>
                         <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/vhdl.html">
                                 VHDL
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
                             </a>
                         </li>
                     </ul>

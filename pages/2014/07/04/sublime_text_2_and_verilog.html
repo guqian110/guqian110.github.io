@@ -53,19 +53,10 @@
                             <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
                         </li>
                         <li >
-                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
-                        </li>
-                        <li >
                             <a href="http://guqian110.github.io/category/com.html">Com</a>
                         </li>
                         <li class="active">
                             <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
-                        </li>
-                        <li >
-                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
-                        </li>
-                        <li >
-                            <a href="http://guqian110.github.io/category/misc.html">Misc</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -131,8 +122,10 @@
 <hr />
 <p>ST 是自带 Vim 模式的（Vintage Mode），但是这个模式默认是没有开启的，毕竟对于大多数普通人来说， Vim 实在是不太友好...</p>
 <p>打开 ST 的 <code>Preferences/Setting - Defalut</code>，在最后一行有句</p>
-<pre><code>"ignored_packages": ["Vintage"]
-</code></pre>
+<div class="codehilite"><pre><span class="s">&quot;ignored_packages&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;Vintage&quot;</span><span class="p">]</span>
+</pre></div>
+
+
 <p>只需要将方括号中的 Vintage 去掉就可以了。推荐在 Setting - User 中修改。</p>
 <p><a href="https://www.sublimetext.com/docs/2/vintage.html">官方说明</a></p>
 <p><br></p>
@@ -156,8 +149,10 @@
 </li>
 <li>
 <p>在控制台中粘贴以下命令</p>
-<pre><code>import urllib2,os; pf='Package Control.sublime-package'; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),'wb').write(urllib2.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read()); print 'Please restart Sublime Text to finish installation'
-</code></pre>
+<div class="codehilite"><pre><span class="n">import</span> <span class="n">urllib2</span><span class="p">,</span><span class="n">os</span><span class="p">;</span> <span class="n">pf</span><span class="o">=</span><span class="err">&#39;</span><span class="n">Package</span> <span class="n">Control</span><span class="p">.</span><span class="n">sublime</span><span class="o">-</span><span class="n">package</span><span class="err">&#39;</span><span class="p">;</span> <span class="n">ipp</span><span class="o">=</span><span class="n">sublime</span><span class="p">.</span><span class="n">installed_packages_path</span><span class="p">();</span> <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">if</span> <span class="n">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">else</span> <span class="n">None</span><span class="p">;</span> <span class="n">urllib2</span><span class="p">.</span><span class="n">install_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="p">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="p">.</span><span class="n">ProxyHandler</span><span class="p">()));</span> <span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">ipp</span><span class="p">,</span><span class="n">pf</span><span class="p">),</span><span class="err">&#39;</span><span class="n">wb</span><span class="err">&#39;</span><span class="p">).</span><span class="n">write</span><span class="p">(</span><span class="n">urllib2</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//sublime.wbond.net/&#39;+pf.replace(&#39; &#39;,&#39;%20&#39;)).read()); print &#39;Please restart Sublime Text to finish installation&#39;</span>
+</pre></div>
+
+
 </li>
 <li>
 <p>安装完成之后，重启 ST 即可</p>
@@ -177,12 +172,12 @@
 <p>因为插件作者只添加了异步高有效复位方式的 <code>always</code> 块，而我们同步和异步两种方式都可能会用到，所以，我添加同步复位的 Snippet</p>
 <p>ST 2 的 Package 都存放在 <code>/home/.config/sublime-text-2/Packages</code> 目录下面，我们需要修改的就是这个目录下的 <code>Verilog/Snippets</code> 下的 <code>.tmSnippet</code> 文件。修改后的结果如下：</p>
 <p><strong>always_async.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;always @(posedge clk or ${1:posedge} ${2:rst}) begin
+<div class="codehilite"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always @(posedge clk or ${1:posedge} ${2:rst}) begin
     if ($2) begin
         // reset
         $3
@@ -190,25 +185,27 @@
     else if ($4) begin
         $0
     end
-end&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;always_async&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;always_async&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_async<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_async<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p><strong>always_sync.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;always @(posedge clk) begin
+<div class="codehilite"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always @(posedge clk) begin
     if (${1:rst}) begin
         // reset
         $2
@@ -216,100 +213,108 @@ end&lt;/string&gt;
     else begin
         $0
     end
-end&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;always_sync&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;always_sync&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_sync<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_sync<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p>修改之后的结果如下图所示：</p>
 <p><img alt="always" src="/images/sublime-text-2-and-verilog/always.gif" /></p>
 <h3 id="if-else">if-else</h3>
 <p>原来的 if snippet 没有 else 分支，所以，添加了一个有 else 分支的 if 语句。</p>
 <p><strong>if.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;if ($1) begin
+<div class="codehilite"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if ($1) begin
     $0
-end&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;if&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;if&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p><strong>if-else.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;if ($1) begin
+<div class="codehilite"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if ($1) begin
     $2
 end
 else begin
     $0
-end&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;if_else&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;if_else&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if_else<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if_else<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p>修改后的结果如下图：</p>
 <p><img alt="if-else" src="/images/sublime-text-2-and-verilog/if-else.gif" /></p>
 <h3 id="parameter">parameter</h3>
 <p>原来是没有 parameter 的snippets 的，拷贝一份其他的 snippet，修改其中的一些设置，即可</p>
 <p><strong>parameter.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;parameter   $1 = $2,
+<div class="codehilite"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>parameter   $1 = $2,
             $3 = $0
-&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;parameter&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;parameter&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>parameter<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>parameter<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p>修改后的结果如下图所示：</p>
 <p><img alt="parameter" src="/images/sublime-text-2-and-verilog/parameter.gif" /></p>
 <h3 id="case">case</h3>
 <p>原来是没有 case 的 snippet，方法同上，可以修改出我们想要的 case snippet</p>
 <p><strong>case.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;case ($1)
+<div class="codehilite"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case ($1)
     $2: begin
         $3
     end
@@ -325,18 +330,20 @@ end&lt;/string&gt;
     default: begin
         $10
     end
-endcase&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;case&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;case&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+endcase<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p>修改后的效果如下：</p>
 <p><img alt="case" src="/images/sublime-text-2-and-verilog/case.gif" /></p>
 <p><br></p>
@@ -346,11 +353,11 @@ endcase&lt;/string&gt;
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
     </ul>
 </section>
     <hr />
@@ -418,19 +425,9 @@ endcase&lt;/string&gt;
 
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group list-inline tagcloud" id="tags">
-                        <li class="list-group-item tag-2">
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/arduino.html">
                                 Arduino
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -439,16 +436,6 @@ endcase&lt;/string&gt;
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/clock-resource.html">
-                                clock resource
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/com.html">
                                 Com
                             </a>
@@ -458,7 +445,7 @@ endcase&lt;/string&gt;
                                 digital procesing
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
@@ -479,18 +466,13 @@ endcase&lt;/string&gt;
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/intel-galileo.html">
                                 Intel Galileo
                             </a>
                         </li>
-                        <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -499,38 +481,13 @@ endcase&lt;/string&gt;
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/parameterization.html">
                                 parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -543,29 +500,9 @@ endcase&lt;/string&gt;
                                 syntax
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
-                            </a>
-                        </li>
                         <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/vhdl.html">
                                 VHDL
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
                             </a>
                         </li>
                     </ul>

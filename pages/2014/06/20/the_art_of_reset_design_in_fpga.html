@@ -53,19 +53,10 @@
                             <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
                         </li>
                         <li >
-                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
-                        </li>
-                        <li >
                             <a href="http://guqian110.github.io/category/com.html">Com</a>
                         </li>
                         <li class="active">
                             <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
-                        </li>
-                        <li >
-                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
-                        </li>
-                        <li >
-                            <a href="http://guqian110.github.io/category/misc.html">Misc</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -139,8 +130,10 @@
 <p><img alt="configuration" src="/images/the-art-of-reset-design-in-fpga/configuration.jpg" /></p>
 <p>系统在上电配置时，内部有个信号叫 <code>GSR</code> (Global Set/Reset)，它是一种特殊的预布线的复位信号，能够在 FPGA 配置的过程中让设计保持初始状态。在配置完成后，GSR 会被释放，所有的触发器及其它资源都加载的是 INIT 值。除了在配置进程中运行 GSR，用户设计还可以通过实例化 STARTUP 模块并连接到 GSR 端口的方法来访问 GSR 网。使用该端口，设计可以重新断言 GSR 网，相应地 FPGA 中的所有存储元件将返回到它们的 INIT 属性所规定的状态。</p>
 <p>设定初值的语法很简单，只需要在定义变量时给它初始值就可以了：</p>
-<pre><code>reg tmp = 0;
-</code></pre>
+<div class="codehilite"><pre><span class="n">reg</span> <span class="n">tmp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+
+
 <p>和 reg 类似，BRAM 也可以在配置的时候初始化，随着嵌入式系统的 BRAM 逐渐增大，BRAM 初始化非常有用：因为预先定义 RAM 的值可以使仿真更容易，而且无需使用引导顺序为嵌入式设计清空内存。</p>
 <p>使用 GSR 的好处是 可以解决复位信号高扇出的问题，因为 GSR 是预布线的资源，它不占用每个 FF 和 Latch 的 set/reset 端口，如下图所示。很多资料都推荐将设计中的 reset 按钮连接到 GSR，以利用它比较低的 skew。</p>
 <p><img alt="gsr rset" src="/images/the-art-of-reset-design-in-fpga/gsr_reset.gif" /></p>
@@ -190,62 +183,66 @@
 <p>每个 <code>always</code> 模块只对一种 FF 建模。也就是说，不要把这两种 FF 写在同一个 always 块中。</p>
 <h3 id="code">Code</h3>
 <p><strong>Bad Style:</strong></p>
-<pre><code>module BADSTYLE (
-    clk, rst, d, q);
+<div class="codehilite"><pre><span class="n">module</span> <span class="nf">BADSTYLE</span> <span class="p">(</span>
+    <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">q</span><span class="p">);</span>
 
-    input       clk;
-    input       rst;
-    input       d;
+    <span class="n">input</span>       <span class="n">clk</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">rst</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">d</span><span class="p">;</span>
 
-    output      q;
-    reg         q;
+    <span class="n">output</span>      <span class="n">q</span><span class="p">;</span>
+    <span class="n">reg</span>         <span class="n">q</span><span class="p">;</span>
 
-    reg         tmp;
+    <span class="n">reg</span>         <span class="n">tmp</span><span class="p">;</span>
 
-    always @(posedge clk) begin
-        if (rst) begin
-            tmp &lt;= 1'b0;
-        end
-        else begin
-            tmp &lt;= d;
-            q   &lt;= tmp;
-        end
-    end
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
+            <span class="n">q</span>   <span class="o">&lt;=</span> <span class="n">tmp</span><span class="p">;</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
 
-endmodule
-</code></pre>
+<span class="n">endmodule</span>
+</pre></div>
+
+
 <p><strong>RTL Schematic:</strong></p>
 <p>如图，复位信号 <code>rst</code> 对于第二个 ff 来说，是一个片选信号 <code>ce</code>，这样的设计产生额外的逻辑，是不好的。</p>
 <p><img alt="bad style" src="/images/the-art-of-reset-design-in-fpga/bad_style.png" /></p>
 <p><strong>Good Style:</strong></p>
-<pre><code>module GOODSTYLE (
-    clk, rst, d, q
-    );
+<div class="codehilite"><pre><span class="n">module</span> <span class="nf">GOODSTYLE</span> <span class="p">(</span>
+    <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">q</span>
+    <span class="p">);</span>
 
-    input       clk;
-    input       rst;
-    input       d;
+    <span class="n">input</span>       <span class="n">clk</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">rst</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">d</span><span class="p">;</span>
 
-    output      q;
-    reg         q;
+    <span class="n">output</span>      <span class="n">q</span><span class="p">;</span>
+    <span class="n">reg</span>         <span class="n">q</span><span class="p">;</span>
 
-    reg         tmp;
+    <span class="n">reg</span>         <span class="n">tmp</span><span class="p">;</span>
 
-    always @(posedge clk) begin
-        if (rst) begin
-            tmp &lt;= 1'b0;
-        end
-        else begin
-            tmp &lt;= d;
-        end
-    end
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="n">tmp</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
 
-    always @(posedge clk) begin
-        q &lt;= tmp;
-    end
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">tmp</span><span class="p">;</span>
+    <span class="n">end</span>
 
-endmodule
-</code></pre>
+<span class="n">endmodule</span>
+</pre></div>
+
+
 <p><strong>RTL Schematic:</strong></p>
 <p>如图，复位信号 <code>rst</code> 对于两个 ff 来说，都是复位信号，不需要额外的逻辑，这样的设计是比较好的。</p>
 <p><img alt="good style" src="/images/the-art-of-reset-design-in-fpga/good_style.png" /></p>
@@ -331,35 +328,39 @@ endmodule
 <h3 id="synchronous-reset">Synchronous Reset</h3>
 <p>模块的 <code>sensitivity list</code> 中不包含 <code>rst</code> 信号。</p>
 <p><strong>code:</strong></p>
-<pre><code>always @(posedge clk) begin
-    if (rst) begin
-        q &lt;= 1'b0;
-    end
-    else begin
-        q &lt;= d;
-    end
-end
-</code></pre>
+<div class="codehilite"><pre><span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="n">q</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+    <span class="n">end</span>
+    <span class="k">else</span> <span class="n">begin</span>
+        <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
+    <span class="n">end</span>
+<span class="n">end</span>
+</pre></div>
+
+
 <p><strong>RTL Schematic:</strong></p>
 <p><img alt="sync reset" src="/images/the-art-of-reset-design-in-fpga/sync_reset.png" /></p>
 <p>其中 <code>fdr</code> 是 Xilinx 的原语，表示 <code>Singal Data Rate D Flip-Flop with Synchronous Reset and Clock Enable (posedge clk)</code></p>
-<pre><code>// FDRE: Single Data Rate D Flip-Flop with Synchronous Reset and
-//       Clock Enable (posedge clk).
-//       All families.
-// Xilinx HDL Language Template, version 13.3
+<div class="codehilite"><pre><span class="c1">// FDRE: Single Data Rate D Flip-Flop with Synchronous Reset and</span>
+<span class="c1">//       Clock Enable (posedge clk).</span>
+<span class="c1">//       All families.</span>
+<span class="c1">// Xilinx HDL Language Template, version 13.3</span>
 
-FDRE #(
-   .INIT(1'b0) // Initial value of register (1'b0 or 1'b1)
-) FDRE_inst (
-   .Q(Q),      // 1-bit Data output
-   .C(C),      // 1-bit Clock input
-   .CE(CE),    // 1-bit Clock enable input
-   .R(R),      // 1-bit Synchronous reset input
-   .D(D)       // 1-bit Data input
-);
+<span class="no">FDRE</span> <span class="p">#(</span>
+   <span class="p">.</span><span class="no">INIT</span><span class="p">(</span><span class="mh">1&#39;b0</span><span class="p">)</span> <span class="c1">// Initial value of register (1&#39;b0 or 1&#39;b1)</span>
+<span class="p">)</span> <span class="n">FDRE_inst</span> <span class="p">(</span>
+   <span class="p">.</span><span class="no">Q</span><span class="p">(</span><span class="no">Q</span><span class="p">),</span>      <span class="c1">// 1-bit Data output</span>
+   <span class="p">.</span><span class="no">C</span><span class="p">(</span><span class="no">C</span><span class="p">),</span>      <span class="c1">// 1-bit Clock input</span>
+   <span class="p">.</span><span class="no">CE</span><span class="p">(</span><span class="no">CE</span><span class="p">),</span>    <span class="c1">// 1-bit Clock enable input</span>
+   <span class="p">.</span><span class="no">R</span><span class="p">(</span><span class="no">R</span><span class="p">),</span>      <span class="c1">// 1-bit Synchronous reset input</span>
+   <span class="p">.</span><span class="no">D</span><span class="p">(</span><span class="no">D</span><span class="p">)</span>       <span class="c1">// 1-bit Data input</span>
+<span class="p">);</span>
 
-// End of FDRE_inst instantiation
-</code></pre>
+<span class="c1">// End of FDRE_inst instantiation</span>
+</pre></div>
+
+
 <p>有时候，有些器件不带同步复位专用端口，这时候一般会将复位信号综合为输入信号的使能信号，这时候就需要额外的逻辑资源了。</p>
 <h4 id="advantage">Advantage</h4>
 <ol>
@@ -394,35 +395,39 @@ FDRE #(
 </ol>
 <h3 id="asynchronous">Asynchronous</h3>
 <p><strong>code:</strong></p>
-<pre><code>always @(posedge clk or posedge rst) begin
-    if (rst) begin
-        q &lt;= 1'b0;
-    end
-    else begin
-        q &lt;= d;
-    end
-end
-</code></pre>
+<div class="codehilite"><pre><span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="n">q</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+    <span class="n">end</span>
+    <span class="k">else</span> <span class="n">begin</span>
+        <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
+    <span class="n">end</span>
+<span class="n">end</span>
+</pre></div>
+
+
 <p><strong>RTL Schematic:</strong></p>
 <p><img alt="aync reset" src="/images/the-art-of-reset-design-in-fpga/async_reset.png" /></p>
 <p>其中 <code>fdc</code> 是 Xilinx 的原语，表示 <code>Single Data Rate D Flip-Flop with Asynchronous Clear and Clock Enable (posedge clk)</code></p>
-<pre><code>// FDCE: Single Data Rate D Flip-Flop with Asynchronous Clear and
-//       Clock Enable (posedge clk).
-//       All families.
-// Xilinx HDL Language Template, version 13.3
+<div class="codehilite"><pre><span class="c1">// FDCE: Single Data Rate D Flip-Flop with Asynchronous Clear and</span>
+<span class="c1">//       Clock Enable (posedge clk).</span>
+<span class="c1">//       All families.</span>
+<span class="c1">// Xilinx HDL Language Template, version 13.3</span>
 
-FDCE #(
-   .INIT(1'b0) // Initial value of register (1'b0 or 1'b1)
-) FDCE_inst (
-   .Q(Q),      // 1-bit Data output
-   .C(C),      // 1-bit Clock input
-   .CE(CE),    // 1-bit Clock enable input
-   .CLR(CLR),  // 1-bit Asynchronous clear input
-   .D(D)       // 1-bit Data input
-);
+<span class="no">FDCE</span> <span class="p">#(</span>
+   <span class="p">.</span><span class="no">INIT</span><span class="p">(</span><span class="mh">1&#39;b0</span><span class="p">)</span> <span class="c1">// Initial value of register (1&#39;b0 or 1&#39;b1)</span>
+<span class="p">)</span> <span class="n">FDCE_inst</span> <span class="p">(</span>
+   <span class="p">.</span><span class="no">Q</span><span class="p">(</span><span class="no">Q</span><span class="p">),</span>      <span class="c1">// 1-bit Data output</span>
+   <span class="p">.</span><span class="no">C</span><span class="p">(</span><span class="no">C</span><span class="p">),</span>      <span class="c1">// 1-bit Clock input</span>
+   <span class="p">.</span><span class="no">CE</span><span class="p">(</span><span class="no">CE</span><span class="p">),</span>    <span class="c1">// 1-bit Clock enable input</span>
+   <span class="p">.</span><span class="no">CLR</span><span class="p">(</span><span class="no">CLR</span><span class="p">),</span>  <span class="c1">// 1-bit Asynchronous clear input</span>
+   <span class="p">.</span><span class="no">D</span><span class="p">(</span><span class="no">D</span><span class="p">)</span>       <span class="c1">// 1-bit Data input</span>
+<span class="p">);</span>
 
-// End of FDCE_inst instantiation
-</code></pre>
+<span class="c1">// End of FDCE_inst instantiation</span>
+</pre></div>
+
+
 <p>异步复位的优缺点和同步复位是相对应的：</p>
 <h4 id="advantage_1">Advantage</h4>
 <ol>
@@ -457,40 +462,42 @@ FDCE #(
 <p><img alt="reset synchronizer" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer.png" /></p>
 <p>针对 Xilinx 器件，用代码具体实现</p>
 <p><strong>code:</strong></p>
-<pre><code>module SYSRST(
-    clk, rst_pb, sys_rst
-    );
+<div class="codehilite"><pre><span class="n">module</span> <span class="nf">SYSRST</span><span class="p">(</span>
+    <span class="n">clk</span><span class="p">,</span> <span class="n">rst_pb</span><span class="p">,</span> <span class="n">sys_rst</span>
+    <span class="p">);</span>
 
-    input       clk;
-    input       rst_pb;
+    <span class="n">input</span>       <span class="n">clk</span><span class="p">;</span>
+    <span class="n">input</span>       <span class="n">rst_pb</span><span class="p">;</span>
 
-    output      sys_rst;
-    reg         sys_rst;
+    <span class="n">output</span>      <span class="n">sys_rst</span><span class="p">;</span>
+    <span class="n">reg</span>         <span class="n">sys_rst</span><span class="p">;</span>
 
-    reg         rst_r;
+    <span class="n">reg</span>         <span class="n">rst_r</span><span class="p">;</span>
 
-    always @(posedge clk or posedge rst_pb) begin
-        if (rst_pb) begin
-            // reset
-            rst_r &lt;= 1'b1;
-        end
-        else begin
-            rst_r &lt;= 1'b0;
-        end
-    end
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst_pb</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst_pb</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="c1">// reset</span>
+            <span class="n">rst_r</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b1</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="n">rst_r</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
 
-    always @(posedge clk or posedge rst_pb) begin
-        if (rst_pb) begin
-            // reset
-            sys_rst &lt;= 1'b1;
-        end
-        else begin
-            sys_rst &lt;= rst_r;
-        end
-    end
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst_pb</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst_pb</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="c1">// reset</span>
+            <span class="n">sys_rst</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b1</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="n">sys_rst</span> <span class="o">&lt;=</span> <span class="n">rst_r</span><span class="p">;</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
 
-endmodule
-</code></pre>
+<span class="n">endmodule</span>
+</pre></div>
+
+
 <p><strong>RTL Schematic:</strong></p>
 <p><img alt="reset synchronizer" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer_rtl.png" /></p>
 <p>其中，<code>rst_pb</code> 是系统的复位按钮，<code>sys_rst</code> 是同步化的结果。前面的原理图是按照低有效复位说明的，而 Xilnx 的 FPGA 都是高有效复位，所以综合出的 RTL 图则正好相反，复位按钮接到了 FF 的置位端，第一级 FF 的输入也由 <code>Vcc</code> 变为 <code>GND</code>。</p>
@@ -532,11 +539,11 @@ endmodule
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
     </ul>
 </section>
     <hr />
@@ -604,19 +611,9 @@ endmodule
 
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group list-inline tagcloud" id="tags">
-                        <li class="list-group-item tag-2">
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/arduino.html">
                                 Arduino
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -625,16 +622,6 @@ endmodule
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/clock-resource.html">
-                                clock resource
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/com.html">
                                 Com
                             </a>
@@ -644,7 +631,7 @@ endmodule
                                 digital procesing
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
@@ -665,18 +652,13 @@ endmodule
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/intel-galileo.html">
                                 Intel Galileo
                             </a>
                         </li>
-                        <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -685,38 +667,13 @@ endmodule
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/parameterization.html">
                                 parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -729,29 +686,9 @@ endmodule
                                 syntax
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
-                            </a>
-                        </li>
                         <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/vhdl.html">
                                 VHDL
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
                             </a>
                         </li>
                     </ul>

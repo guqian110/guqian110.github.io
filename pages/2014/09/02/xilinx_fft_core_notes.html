@@ -53,19 +53,10 @@
                             <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
                         </li>
                         <li >
-                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
-                        </li>
-                        <li >
                             <a href="http://guqian110.github.io/category/com.html">Com</a>
                         </li>
                         <li class="active">
                             <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
-                        </li>
-                        <li >
-                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
-                        </li>
-                        <li >
-                            <a href="http://guqian110.github.io/category/misc.html">Misc</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -127,32 +118,36 @@
 </blockquote>
 <p>在我最开始的测试小程序中，是先判断 <code>rfd</code> 信号，根据 rfd 来给 start 赋值。</p>
 <p><em>思路是：首先必须等 IP core 准备好接收新数据时，才能开始</em></p>
-<pre><code>    if (rfd) begin
-        start &lt;= 1;
-    end
-    else if (busy) begin
-        start &lt;= 0;
-    end
-    else begin
-        start &lt;= start;
-    end
-</code></pre>
+<div class="codehilite"><pre>    <span class="k">if</span> <span class="p">(</span><span class="n">rfd</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="n">start</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">end</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">busy</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="n">start</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">end</span>
+    <span class="k">else</span> <span class="n">begin</span>
+        <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">start</span><span class="p">;</span>
+    <span class="n">end</span>
+</pre></div>
+
+
 <p>但是仿真出来的结果显示 IP core 根本就没有工作，后来改了这两个信号的先后关系，</p>
 <p><em>新思路：程序将输入 start 置有效，通知 IP core 需要调用，然后 IP core 根据自己的状态给出标识信号（rfd / busy），外部电路等到 rfd 有效时才输入需要变换的信号。</em></p>
-<pre><code>    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            start &lt;= 1;
-        end
-        else begin
-            if (busy) begin
-                start &lt;= 0;
-            end
-            else begin
-                start &lt;= 1;
-            end
-        end
-    end
-</code></pre>
+<div class="codehilite"><pre>    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+            <span class="n">start</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">end</span>
+        <span class="k">else</span> <span class="n">begin</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">busy</span><span class="p">)</span> <span class="n">begin</span>
+                <span class="n">start</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="n">end</span>
+            <span class="k">else</span> <span class="n">begin</span>
+                <span class="n">start</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">end</span>
+        <span class="n">end</span>
+    <span class="n">end</span>
+</pre></div>
+
+
 <p>这样子程序就可以正常运行了。</p>
 <h3 id="rfd-dv-port"><code>RFD / DV</code> port</h3>
 <p>在 datasheet 中给出的时序图如下所示（Burst I/O Solutions with Natural Order Output）</p>
@@ -179,8 +174,10 @@
 <p>The initial value and reset value of CP_LEN is 0 (no cyclic prefix). The core uses the log2(point size) MSBs of CP_LEN for the cyclic prefix length. So, when the point size decreases, the leftover LSBs are ignored. This effectively scales the cyclic prefix length with the point size, keeping them in approximately constant proportion. However, all bits of CP_LEN are latched into the core on CP_LEN_WE and are used in later transforms if the point size increases.</p>
 </blockquote>
 <p>仔细读了一遍才明白，CP_LEN 起作用的是高位的数据 —— 从 MSB 起共 log2(point size) 位。比如我测试程序设置的最大点数为 4096，这是 CP_LEN 的位宽为 12 比特，但是在程序运行过程中，我重配置为 64 点，所以这时候应该从 CP_LEN 的最高位数起，共 log2(64) = 6 比特数据起作用。如果我想设置 CP 的长度为 8 点，则应该如下</p>
-<pre><code>    cp_len &lt;= 12'b001000_000000;
-</code></pre>
+<div class="codehilite"><pre>    <span class="n">cp_len</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="err">&#39;</span><span class="n">b001000_000000</span><span class="p">;</span>
+</pre></div>
+
+
 <p>这时候，如下图所示，结果与预期相符。</p>
 <p><img alt="cp" src="/images/xilinx_fft_core_notes/cp.png" /></p>
 <h3 id="fft-ifft">FFT/ IFFT</h3>
@@ -266,13 +263,15 @@
 <p><strong>运行时重配置</strong></p>
 <p>变换长度为 64 点，cp 长度为 10</p>
 <h3 id="matlab">Matlab</h3>
-<pre><code>    x = [0:63];
-    y = fft(x);
-    re = real(y);
-    im = imag(y);
-    fprintf('%f', re);
-    fprintf('%f', im);
-</code></pre>
+<div class="codehilite"><pre>    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="mi">63</span><span class="p">];</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+    <span class="n">re</span> <span class="o">=</span> <span class="n">real</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">imag</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="err">&#39;</span><span class="o">%</span><span class="n">f</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">re</span><span class="p">);</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="err">&#39;</span><span class="o">%</span><span class="n">f</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">im</span><span class="p">);</span>
+</pre></div>
+
+
 <h3 id="conclusion">Conclusion</h3>
 <p>FFT IP core 仿真结果：</p>
 <p><img alt="fft core sim" src="/images/xilinx_fft_core_notes/fft_core_sim.png" /></p>
@@ -282,11 +281,11 @@
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
     </ul>
 </section>
     <hr />
@@ -354,19 +353,9 @@
 
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group list-inline tagcloud" id="tags">
-                        <li class="list-group-item tag-2">
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/arduino.html">
                                 Arduino
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -375,16 +364,6 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/clock-resource.html">
-                                clock resource
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/com.html">
                                 Com
                             </a>
@@ -394,7 +373,7 @@
                                 digital procesing
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
@@ -415,18 +394,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/intel-galileo.html">
                                 Intel Galileo
                             </a>
                         </li>
-                        <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -435,38 +409,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/parameterization.html">
                                 parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -479,29 +428,9 @@
                                 syntax
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
-                            </a>
-                        </li>
                         <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/vhdl.html">
                                 VHDL
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
                             </a>
                         </li>
                     </ul>
