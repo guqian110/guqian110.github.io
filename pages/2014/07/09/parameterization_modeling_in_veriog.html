@@ -126,10 +126,10 @@
 </ol>
 <p>下面详细说明</p>
 <p><br></p>
-<h2 id="define-macro-substitution">Define Macro Substitution</h2>
+<h2>Define Macro Substitution</h2>
 <hr />
 <p><code>`define</code> 是编译器指令，功能是全局宏定义的文本代替。它类似于 C 语言中的 <code>#define</code>，用法如下：</p>
-<div class="codehilite"><pre><span class="c1">// define</span>
+<div class="highlight"><pre><span class="c1">// define</span>
 <span class="cp">`define     WORD_REG    reg     [31:0]</span>
 
 <span class="c1">// using</span>
@@ -154,7 +154,7 @@
 </li>
 <li>
 <p>对于第二个问题，和 C++ 类似，头文件应该使用头文件保护符。</p>
-<div class="codehilite"><pre><span class="c1">// global_define.vh head file</span>
+<div class="highlight"><pre><span class="c1">// global_define.vh head file</span>
 <span class="no">`ifndef</span> <span class="no">GLOBAL_DEFINE_VH</span>
 <span class="cp">    `define     MAX = 8</span>
 <span class="cp">    `define     SIZE = 4</span>
@@ -165,7 +165,7 @@
 
 </li>
 </ol>
-<h3 id="guideline">Guideline</h3>
+<h3>Guideline</h3>
 <ol>
 <li>
 <p>只有那些要求有全局作用域、并且在其他地方不会被修改的常量才用 define 来定义</p>
@@ -180,11 +180,11 @@
 <p>不要使用 <code>`undef</code> </p>
 </li>
 </ol>
-<h2 id="parameter">Parameter</h2>
+<h2>Parameter</h2>
 <hr />
-<h3 id="parameter_1">Parameter</h3>
+<h3>Parameter</h3>
 <p>应该避免硬编码设计 <code>hard literal</code>，使用参数 <code>parameter</code> 来代替。举个例子</p>
-<div class="codehilite"><pre><span class="c1">// use parameter</span>
+<div class="highlight"><pre><span class="c1">// use parameter</span>
 <span class="k">parameter</span>   <span class="no">SIZE</span> <span class="o">=</span> <span class="mh">8</span><span class="p">,</span>
             <span class="no">MAX</span> <span class="o">=</span> <span class="mh">10</span><span class="p">;</span>
 
@@ -195,25 +195,25 @@
 </pre></div>
 
 
-<h3 id="localparam">Localparam</h3>
+<h3>Localparam</h3>
 <p>Verilog-2001 中添加了一个新的关键字 <code>localparam</code>，用来定义模块内部的、不能被其他模块修改的局部常量，概念类似于 C++ 中 class 的 protect 成员。</p>
 <p>虽然 localparam 不能被外部模块修改，但是它可以用 parameter 来初始化。</p>
-<div class="codehilite"><pre><span class="n">parameter</span>  <span class="n">N</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">parameter</span>  <span class="n">N</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
 <span class="n">localparam</span> <span class="n">N1</span> <span class="o">=</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
 </pre></div>
 
 
-<h3 id="parameter-redefinition">Parameter Redefinition</h3>
+<h3>Parameter Redefinition</h3>
 <p>在 Verilog-2001 出现之前，Verilog-1995 中只有两种方法实现参数重定义：</p>
 <ol>
 <li>使用 # 符号，顺序列表重定义</li>
 <li>使用 defparam</li>
 </ol>
 <p>逐个讨论</p>
-<h4 id="1-uisng">1. Uisng <code>#</code></h4>
+<h4>1. Uisng <code>#</code></h4>
 <p><strong>Syntax</strong></p>
 <p>举个栗子，模块 myreg</p>
-<div class="codehilite"><pre><span class="n">module</span> <span class="nf">myreg</span> <span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">);</span>
+<div class="highlight"><pre><span class="n">module</span> <span class="nf">myreg</span> <span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">);</span>
     <span class="n">parameter</span>   <span class="n">Trst</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
                 <span class="n">Tclk</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
                 <span class="n">SIZE</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
@@ -223,7 +223,7 @@
 
 
 <p>在上一层的模块中传递参数例化这个模块</p>
-<div class="codehilite"><pre><span class="n">module</span>  <span class="nf">bad_warpper</span> <span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">)</span>
+<div class="highlight"><pre><span class="n">module</span>  <span class="nf">bad_warpper</span> <span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">)</span>
     <span class="c1">// legal parameter passing</span>
     <span class="n">myreg</span>   <span class="err">#</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="n">r1</span><span class="p">(.</span><span class="n">q</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span> <span class="p">.</span><span class="n">rst</span><span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="p">);</span>
     <span class="c1">// illegal parameter passing</span>
@@ -236,14 +236,14 @@
 <p>虽然每次例化都要说明所有的参数值，但是比第二种方法好</p>
 <p><strong>Con</strong></p>
 <p>每次例化都要说明所有的参数值。</p>
-<h4 id="2-using-defparam">2. Using <code>defparam</code></h4>
+<h4>2. Using <code>defparam</code></h4>
 <p><strong>Syntax</strong></p>
-<div class="codehilite"><pre><span class="n">defparam</span> <span class="n">path</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">defparam</span> <span class="n">path</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
 </pre></div>
 
 
 <p>比如在上面的例子中</p>
-<div class="codehilite"><pre><span class="n">defparam</span>    <span class="n">r1</span><span class="p">.</span><span class="n">SIZE</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">defparam</span>    <span class="n">r1</span><span class="p">.</span><span class="n">SIZE</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
 </pre></div>
 
 
@@ -273,10 +273,10 @@ Defparam statements can be replaced with named parameter redefinition as define 
 the IEEE Verilog-2001 standard."</p>
 </blockquote>
 <p><em>总结一下，可以发现 Verilog-1995 中的两种方法都不怎么好，显然 VSG 也发现了这个问题，所以在 Verilog-2001 中，出现了第三种方法，并且墙裂推荐使用这种新方法。</em></p>
-<h4 id="3-using-named-parameter-redefinition">3. Using named parameter redefinition</h4>
+<h4>3. Using named parameter redefinition</h4>
 <p><strong>Syntax</strong></p>
 <p>类似于模块例化时端口连接的方式，比如上例中只想改变 SIZE 的值</p>
-<div class="codehilite"><pre><span class="n">myreg</span>   <span class="err">#</span><span class="p">(.</span><span class="n">SIZE</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span> <span class="n">r1</span><span class="p">(.</span><span class="n">q</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span> <span class="p">.</span><span class="n">rst</span><span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="p">);</span>
+<div class="highlight"><pre><span class="n">myreg</span>   <span class="err">#</span><span class="p">(.</span><span class="n">SIZE</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span> <span class="n">r1</span><span class="p">(.</span><span class="n">q</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span> <span class="p">.</span><span class="n">rst</span><span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="p">);</span>
 </pre></div>
 
 
@@ -284,11 +284,11 @@ the IEEE Verilog-2001 standard."</p>
 <p>结合了前两种方法的有点，既显示说明了哪个参数值改变了，也将参数传递放在了实例化的语句中。这种方法是最干净的 (cleanest) 方法，不依赖于任何综合工具。</p>
 <p><strong>Con</strong></p>
 <p>貌似没有～</p>
-<h3 id="guideline_1">Guideline</h3>
+<h3>Guideline</h3>
 <ol>
 <li>不要使用 defparam，应该使用 named parameter redefinition。</li>
 </ol>
-<h3 id="example">Example</h3>
+<h3>Example</h3>
 <ol>
 <li>
 <p>clock cycle definition</p>
@@ -300,10 +300,10 @@ the IEEE Verilog-2001 standard."</p>
 </li>
 </ol>
 <p><br></p>
-<h2 id="conditional-compilation">Conditional Compilation</h2>
+<h2>Conditional Compilation</h2>
 <hr />
 <p>Verilog 的条件编译和 C 也十分类似。前面介绍 define 时，已经用到了条件编译中的 <code>`ifdef</code>。条件编译一共有 5 个关键字，分别是：</p>
-<div class="codehilite"><pre><span class="err">`</span><span class="n">ifdef</span>  <span class="err">`</span><span class="k">else</span>   <span class="err">`</span><span class="n">elsif</span>  <span class="err">`</span><span class="n">endif</span>  <span class="err">`</span><span class="n">ifndef</span>
+<div class="highlight"><pre><span class="err">`</span><span class="n">ifdef</span>  <span class="err">`</span><span class="k">else</span>   <span class="err">`</span><span class="n">elsif</span>  <span class="err">`</span><span class="n">endif</span>  <span class="err">`</span><span class="n">ifndef</span>
 </pre></div>
 
 
@@ -320,7 +320,7 @@ the IEEE Verilog-2001 standard."</p>
 </li>
 </ol>
 <p><strong>Syntax</strong></p>
-<div class="codehilite"><pre><span class="c1">// example1</span>
+<div class="highlight"><pre><span class="c1">// example1</span>
 <span class="no">`ifdef</span> <span class="n">text_macro</span>
     <span class="c1">// do something</span>
 <span class="no">`endif</span>
@@ -352,7 +352,7 @@ the IEEE Verilog-2001 standard."</p>
 
 <p>条件编译是一个非常好的技术，它可以帮助我们更好的管理代码。</p>
 <p>举个栗子，比如我们写了一个程序，在 debug 阶段，在程序中添加了很多显示中间变量的语句，到最后 release 时，当然要去掉这些语句。最差的方法当然是删掉这些代码，但是如果以后我们还想 debug 时，又得手动写，而且时间长了，我们自己都记不清该加哪些语句了。稍微好点的方法是把它们注释起来，但是同样，时间长了，哪些该注释，那些不该注释又混淆了。最好的方法就是用条件编译。我们可以定义一个宏 DEBUG</p>
-<div class="codehilite"><pre><span class="err">`</span><span class="n">define</span> <span class="n">DEBUG</span>
+<div class="highlight"><pre><span class="err">`</span><span class="n">define</span> <span class="n">DEBUG</span>
 
 <span class="c1">// conditional compilation</span>
 <span class="err">`</span><span class="n">ifdef</span> <span class="n">DEBUG</span>
@@ -366,7 +366,7 @@ the IEEE Verilog-2001 standard."</p>
 <p>这样，我们只需要选择是否注释第一行的宏定义就可快速在 debug 和 release 之间切换。</p>
 <p>再比如在 Verilog 的模块中，针对不同的应用环境，我们要实现不同的模块，这时候也可以使用条件编译选择具体综合哪段代码。</p>
 <p><br></p>
-<h2 id="summary">Summary</h2>
+<h2>Summary</h2>
 <hr />
 <p>总结一下，就是一下几点</p>
 <p><strong>Guideline</strong></p>
@@ -391,7 +391,7 @@ the IEEE Verilog-2001 standard."</p>
 </li>
 </ol>
 <p><br></p>
-<h2 id="reference">Reference</h2>
+<h2>Reference</h2>
 <p>IEEE Std 1364-1995</p>
 <p>IEEE Std 1364-2001</p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsHDLCON2002_Parameters_rev1_2.pdf">New Verilog-2001 Techniques for Creating Parameterized Models</a></p>
@@ -404,10 +404,10 @@ the IEEE Verilog-2001 standard."</p>
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/02/xilinx_fft_core_notes.html">Xilinx FFT IP core 笔记</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
     </ul>
 </section>
     <hr />
@@ -486,58 +486,13 @@ the IEEE Verilog-2001 standard."</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/syntax.html">
                                 syntax
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/sublime-text.html">
-                                Sublime Text
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
-                                digital procesing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/flip-flop.html">
-                                flip-flop
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/com.html">
-                                Com
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-processing.html">
-                                digital processing
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -546,8 +501,53 @@ the IEEE Verilog-2001 standard."</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/intel-galileo.html">
                                 Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/sublime-text.html">
+                                Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-processing.html">
+                                digital processing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/com.html">
+                                Com
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/flip-flop.html">
+                                flip-flop
                             </a>
                         </li>
                         <li class="list-group-item tag-4">

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/arduino.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-05-29T23:27:00+08:00</updated><entry><title>学习 Arduino #2 初识 Intel Galileo 开发板</title><link href="http://guqian110.github.io/pages/2014/05/29/learing_arduino_series_2_intel_galileo_development_board.html" rel="alternate"></link><updated>2014-05-29T23:27:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-05-29:pages/2014/05/29/learing_arduino_series_2_intel_galileo_development_board.html</id><summary type="html">&lt;h2 id="preface"&gt;Preface&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/arduino.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-05-29T23:27:00+08:00</updated><entry><title>学习 Arduino #2 初识 Intel Galileo 开发板</title><link href="http://guqian110.github.io/pages/2014/05/29/learing_arduino_series_2_intel_galileo_development_board.html" rel="alternate"></link><updated>2014-05-29T23:27:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-05-29:pages/2014/05/29/learing_arduino_series_2_intel_galileo_development_board.html</id><summary type="html">&lt;h2&gt;Preface&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;Arduino 有很多开发板，分别针对不同的应用环境含有不同的模块。学习一款 Intel 推出的开发板 —— &lt;em&gt;Intel Galileo Development Board&lt;/em&gt; 。&lt;/p&gt;
 &lt;p&gt;Intel Gailileo Development Board 是 Intel 进入 Arduino 领域的试水产品，它含有一颗 Quark Soc X1000 CPU，这是一款 32 位、x86 构架、低功耗的 SoC 芯片，它的主频可以达到 400 MHz，内部有 512 KB 的 SRAM，同时 Galileo 有丰富的接口(USB, JTag, RS232, Ethernet, mPCIE...)，支持很多外围设备。&lt;/p&gt;
 &lt;p&gt;Galileo 试图达到的目标是融合 Arduino 对硬件操作的便利和 Linux 系统对硬件操作完整支持。所以，Galileo 也兼容 Arduino 接口，你可以很方便的把 Arduino 项目移植到 Galileo 上运行，使用常用的一些 Arduino 库(Ethernet, Wi-Fi, SD, EEPROM...)也可以获得内部 Linux 系统的完整功能(Python, SSH, Telnet， OpenCV...)。&lt;/p&gt;
 &lt;p&gt;总结一下我学习这块板子的知识，不仅仅为 Arduino 开发做准备，也为后面的一个竞赛(基于Yocto 项目)开发积累知识～&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="official-arduino-boards"&gt;Official Arduino Boards&lt;/h2&gt;
+&lt;h2&gt;Official Arduino Boards&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;Arduino 官网上列出所有了官方开发板，其中也包含了官方认证过的开发板(Intel Galileo)，和一些推荐的第三方产品&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://arduino.cc/en/Main/Products"&gt;Arduino Products&lt;/a&gt;&lt;/p&gt;
@@ -15,17 +15,17 @@
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;官方的开发板的核心都是 Atmel 的微控制器，基于市场战略的需求，看到数莓派、Arduino发展的热火朝天，Intel 也坐不住了(瞎猜的 =.=)，推出了新的基于 Intel 架构(x86)、可以和 Arduino 兼容的开发板。Galileo 是这个家族中的第一款，目前 Intel 又推出了一款新的开发板，取名叫 Edison。(Intel 这是要把所有科学家的名字都取个遍么)&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="intel-galileo-board"&gt;Intel Galileo Board&lt;/h2&gt;
+&lt;h2&gt;Intel Galileo Board&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;h3 id="arduincocc"&gt;Arduinco.cc&lt;/h3&gt;
+&lt;h3&gt;Arduinco.cc&lt;/h3&gt;
 &lt;p&gt;在 Arduino 官网上有一篇简单介绍 Galileo 的网页&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://arduino.cc/en/ArduinoCertified/IntelGalileo"&gt;Intel Galileo on arduino.cc&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="intel-official-introduction"&gt;Intel Official Introduction&lt;/h3&gt;
+&lt;h3&gt;Intel Official Introduction&lt;/h3&gt;
 &lt;p&gt;Arduino 官网上的介绍只是非常简单的介绍，Intel 自己的官网上有关于 Galileo 全部的详细资料&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.intel.cn/content/www/cn/zh/do-it-yourself/galileo-maker-quark-board.html"&gt;Galileo Maker Quark Board&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;关于 Galileo 的全部文档，包括 Datasheet、Schematic、Quick Start、User Guide 等：&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://communities.intel.com/community/makers/documentation/galileodocuments"&gt;Intel Galileo Development Board Documents&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id="other-introductions"&gt;Other Introductions&lt;/h3&gt;
+&lt;h3&gt;Other Introductions&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;首先&lt;/strong&gt; 送上一篇非常好的介绍文章（来自 Ifanr.com），介绍了在 Maker 眼中，这个板子到底可以 hack 到什么程度～&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.ifanr.com/388835"&gt;x86 版的 Arduino 来了，Intel Galileo 开发板的体验、分析和应用【超长文多图】&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;再&lt;/strong&gt; 附上一篇完爆我的总结的教程～&lt;/p&gt;
@@ -47,7 +47,7 @@
 &lt;p&gt;Linux 连接板子和 PC&lt;/p&gt;
 &lt;p&gt;在 Windows 下第一次连接系统自动安装驱动肯定会失败的，需要我们手动指定驱动文件的路径。&lt;/p&gt;
 &lt;p&gt;在 Linux 终端下，必须以 &lt;code&gt;sudo&lt;/code&gt; 权限运行 IDE，否则即使板子已经连接了 PC，在 IDE 下的 &lt;code&gt;Tools\Serial Port&lt;/code&gt; 是 disable 的，不能选择端口&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;arduino&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;arduino&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

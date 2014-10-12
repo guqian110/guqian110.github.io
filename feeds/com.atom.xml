@@ -6,7 +6,7 @@
 &lt;p&gt;《数字信号处理》算是前一门课的深入，现在利用计算机处理信号，首先就是要将模拟信号数字化，然后进行处理。这门课也就是讲相关的知识。&lt;/p&gt;
 &lt;p&gt;一般教材就讲两大部分：第一部分首先承接《信号与系统》，时域的连续信号要在计算机中处理就必须采样，变为时域离散信号，这部分就讲离散时间信号的处理，比如 z 变换 和离散傅立叶变换。第二部分讲数字滤波器的设计，包括 FIR 和 IIR 两种。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="signal-processing"&gt;Signal Processing&lt;/h2&gt;
+&lt;h2&gt;Signal Processing&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;em&gt;这部分是我串联的这两本书中很小的一部分知识，算是一个备忘的笔记吧，作为一名学渣，一个月不看也会忘记不少 =.=&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;从 《信号与系统》 中我们可以知道：&lt;/em&gt;&lt;/p&gt;
@@ -33,9 +33,9 @@
 &lt;p&gt;知乎上还有一篇专栏的文章，得到了非常多人的赞同，可以进一步参考。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://zhuanlan.zhihu.com/wille/19763358"&gt;傅里叶分析之掐死教程（完整版）更新于2014.06.06&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="matlab"&gt;Matlab&lt;/h2&gt;
+&lt;h2&gt;Matlab&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;h3 id="basic"&gt;basic&lt;/h3&gt;
+&lt;h3&gt;basic&lt;/h3&gt;
 &lt;p&gt;分析各种变化，可以得到以下的关系：&lt;/p&gt;
 &lt;p&gt;N 点的 DFT（FFT），其结果对应的&lt;/p&gt;
 &lt;p&gt;数字角频率 w 为 [0, 2pi)&lt;/p&gt;
@@ -43,7 +43,7 @@
 &lt;p&gt;模拟频率 f 为 [0, fs)&lt;/p&gt;
 &lt;p&gt;所以对于 N 点 FFT 的结果，对应的横坐标频率的范围为 [0, fs)。&lt;/p&gt;
 &lt;p&gt;matlab 提供了函数 fft 和 fftshift 直接完成变换。&lt;/p&gt;
-&lt;h3 id="adv"&gt;adv&lt;/h3&gt;
+&lt;h3&gt;adv&lt;/h3&gt;
 &lt;p&gt;假设我们的采样频率为 Fs （采样周期为 T = 1/Fs），一共采了 N 个点，那么相当于对信号进行了截断，截断长度为 &lt;code&gt;L = N * T&lt;/code&gt; 秒。&lt;/p&gt;
 &lt;p&gt;这 3 个参数就决定了我们的最终结果。&lt;/p&gt;
 &lt;p&gt;在非周期信号处理中存在下面的 3 个问题：&lt;/p&gt;
@@ -64,7 +64,7 @@
 &lt;p&gt;&lt;strong&gt;非周期信号&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;比如矩形脉冲信号，宽度为 [-tau/2, tau/2]，对应的频谱为 Sa 函数，零点为 1/tau，2/tau，3/tau ...&lt;/p&gt;
 &lt;p&gt;假设 tau = 1，采样频率 Fs = 10 Hz，那么如果要求频率分辨率为 f0 = Fs/N = 1/40 Hz 的话，可以推出 N = 390。所以时域采样结果应该是 195 个 0，之后是 10 个 1，最后是 195 个 0。&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;zeros&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;195&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ones&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;zeros&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;195&lt;/span&gt;&lt;span class="p"&gt;)];&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;zeros&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;195&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ones&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;zeros&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;195&lt;/span&gt;&lt;span class="p"&gt;)];&lt;/span&gt;
     &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fft&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
     &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
     &lt;span class="n"&gt;mag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;abs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -79,7 +79,7 @@
 &lt;p&gt;&lt;strong&gt;周期信号&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;比如 s(t) = 1 + 0.5cos(2&lt;em&gt;pi&lt;/em&gt;15&lt;em&gt;t) + 2sin(2&lt;/em&gt;pi&lt;em&gt;40&lt;/em&gt;t);&lt;/p&gt;
 &lt;p&gt;最大的频率分量为 fmax =  40 Hz，如果采用频率为 10 倍，即 Fs = 400 Hz，如果要求频率分辨率为 0.5 Hz，那么可以得到 N = 800，为了计算方便使用 N = 1024；&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="n"&gt;f1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;f1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;f2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;sample&lt;/span&gt; &lt;span class="n"&gt;frequency&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt; &lt;span class="n"&gt;Hz&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sample&lt;/span&gt; &lt;span class="n"&gt;number&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt;
     &lt;span class="n"&gt;Fs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -110,7 +110,7 @@
 &lt;p&gt;结果如下图所示，可以看到与预期相符，在 0、15、40 处有冲激函数。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="periodic" src="/images/digital_signal_processing_and_matlab/periodic.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="reference"&gt;Reference&lt;/h2&gt;
+&lt;h2&gt;Reference&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/3712794/"&gt;信号与系统引论&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/4025528/"&gt;数字信号处理&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/24868505/"&gt;数字信号处理教程——MATLAB释义与实现&lt;/a&gt;&lt;/p&gt;</summary><category term="Com"></category><category term="digital procesing"></category><category term="matlab"></category></entry></feed>
