@@ -53,11 +53,20 @@
                         <li >
                             <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
                         </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
                         <li class="active">
                             <a href="http://guqian110.github.io/category/com.html">Com</a>
                         </li>
                         <li >
                             <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/misc.html">Misc</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -173,49 +182,45 @@
 <p><strong>非周期信号</strong></p>
 <p>比如矩形脉冲信号，宽度为 [-tau/2, tau/2]，对应的频谱为 Sa 函数，零点为 1/tau，2/tau，3/tau ...</p>
 <p>假设 tau = 1，采样频率 Fs = 10 Hz，那么如果要求频率分辨率为 f0 = Fs/N = 1/40 Hz 的话，可以推出 N = 390。所以时域采样结果应该是 195 个 0，之后是 10 个 1，最后是 195 个 0。</p>
-<div class="codehilite"><pre>    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">195</span><span class="p">),</span> <span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">195</span><span class="p">)];</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
-    <span class="n">mag</span> <span class="o">=</span> <span class="n">abs</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
-    <span class="n">Fs</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">Fs</span><span class="o">/</span><span class="mi">2</span> <span class="o">:</span> <span class="mi">1</span><span class="o">/</span><span class="mi">40</span> <span class="o">:</span> <span class="n">Fs</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">40</span><span class="p">];</span>
-    <span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">mag</span><span class="p">,</span><span class="sc">&#39;*&#39;</span><span class="p">);</span>
-</pre></div>
-
-
+<pre><code>    x = [zeros(1,195), ones(1,10), zeros(1,195)];
+    y = fft(x);
+    y = fftshift(y);
+    mag = abs(y);
+    Fs = 10;
+    f = [-Fs/2 : 1/40 : Fs/2-1/40];
+    plot(f,mag,'*');
+</code></pre>
 <p>结果如下图所示，与预期是相符合的，1/tau 的整数倍处都是过零点。</p>
 <p><img alt="sa" src="/images/digital_signal_processing_and_matlab/sa.png" /></p>
 <p><strong>周期信号</strong></p>
 <p>比如 s(t) = 1 + 0.5cos(2<em>pi</em>15<em>t) + 2sin(2</em>pi<em>40</em>t);</p>
 <p>最大的频率分量为 fmax =  40 Hz，如果采用频率为 10 倍，即 Fs = 400 Hz，如果要求频率分辨率为 0.5 Hz，那么可以得到 N = 800，为了计算方便使用 N = 1024；</p>
-<div class="codehilite"><pre>    <span class="n">f1</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
-    <span class="n">f2</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span>
-    <span class="o">%</span> <span class="n">sample</span> <span class="n">frequency</span> <span class="n">is</span> <span class="mi">400</span> <span class="n">Hz</span><span class="p">,</span> <span class="n">sample</span> <span class="n">number</span> <span class="n">is</span> <span class="mi">1024</span>
-    <span class="n">Fs</span> <span class="o">=</span> <span class="mi">400</span><span class="p">;</span>
-    <span class="n">N</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">n</span><span class="o">/</span><span class="n">Fs</span><span class="p">;</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">f1</span><span class="o">*</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">f2</span><span class="o">*</span><span class="n">t</span><span class="p">);</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="o">%</span> <span class="n">fft</span> <span class="n">operation</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
-    <span class="n">mag</span> <span class="o">=</span> <span class="n">abs</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="o">%</span> <span class="n">magnitude</span>
-    <span class="n">f0</span> <span class="o">=</span> <span class="n">Fs</span><span class="o">/</span><span class="n">N</span><span class="p">;</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">Fs</span><span class="o">/</span><span class="mi">2</span> <span class="o">:</span> <span class="n">f0</span> <span class="o">:</span> <span class="n">Fs</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="n">f0</span><span class="p">];</span>
-    <span class="o">%</span> <span class="n">plot</span> <span class="n">time</span> <span class="n">domain</span> <span class="n">singal</span>
-    <span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-    <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-    <span class="n">xlabel</span><span class="p">(</span><span class="err">&#39;</span><span class="n">time</span><span class="o">/</span><span class="n">s</span><span class="err">&#39;</span><span class="p">);</span>
-    <span class="n">ylabel</span><span class="p">(</span><span class="err">&#39;</span><span class="n">magnitude</span><span class="err">&#39;</span><span class="p">);</span>
-    <span class="n">title</span><span class="p">(</span><span class="err">&#39;</span><span class="n">time</span> <span class="n">domain</span> <span class="n">signal</span><span class="err">&#39;</span><span class="p">);</span>
-    <span class="n">grid</span> <span class="n">on</span><span class="p">;</span>
-    <span class="o">%</span> <span class="n">plot</span> <span class="n">frequency</span> <span class="n">domain</span> <span class="n">signal</span>
-    <span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
-    <span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">mag</span><span class="p">);</span>
-    <span class="n">title</span><span class="p">(</span><span class="err">&#39;</span><span class="n">fft</span> <span class="n">result</span><span class="err">&#39;</span><span class="p">);</span>
-    <span class="n">grid</span> <span class="n">on</span><span class="p">;</span>
-</pre></div>
-
-
+<pre><code>    f1 = 15;
+    f2 = 40;
+    % sample frequency is 400 Hz, sample number is 1024
+    Fs = 400;
+    N = 1024;
+    n = [0:N-1];
+    t = n/Fs;
+    x = 1 + 0.5*cos(2*pi*f1*t) + 2*sin(2*pi*f2*t);
+    y = fft(x); % fft operation
+    y = fftshift(y);
+    mag = abs(y); % magnitude
+    f0 = Fs/N;
+    f = [-Fs/2 : f0 : Fs/2 - f0];
+    % plot time domain singal
+    subplot(2,1,1);
+    plot(x);
+    xlabel('time/s');
+    ylabel('magnitude');
+    title('time domain signal');
+    grid on;
+    % plot frequency domain signal
+    subplot(2,1,2);
+    plot(f,mag);
+    title('fft result');
+    grid on;
+</code></pre>
 <p>结果如下图所示，可以看到与预期相符，在 0、15、40 处有冲激函数。</p>
 <p><img alt="periodic" src="/images/digital_signal_processing_and_matlab/periodic.png" /></p>
 <p><br></p>
@@ -225,6 +230,13 @@
 <p><a href="http://book.douban.com/subject/24868505/">数字信号处理教程——MATLAB释义与实现</a></p>
             </div>
             <!-- /.entry-content -->
+<section class="well" id="related-posts">
+    <h4>Related Posts:</h4>
+    <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/19/signed_number_representations.html">原码、反码、补码</a></li>
+    </ul>
+</section>
     <hr />
     <section class="comments" id="comments">
         <h2>Comments</h2>
@@ -290,9 +302,19 @@
 
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group list-inline tagcloud" id="tags">
-                        <li class="list-group-item tag-4">
+                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/arduino.html">
                                 Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -301,6 +323,21 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/clock-resource.html">
+                                clock resource
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/com.html">
                                 Com
                             </a>
@@ -310,7 +347,7 @@
                                 digital procesing
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
@@ -331,6 +368,16 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/intel-galileo.html">
                                 Intel Galileo
                             </a>
@@ -340,9 +387,29 @@
                                 latch
                             </a>
                         </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/matlab.html">
                                 matlab
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -351,8 +418,33 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/reset.html">
                                 reset
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -365,9 +457,39 @@
                                 syntax
                             </a>
                         </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
+                            </a>
+                        </li>
                         <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/vhdl.html">
                                 VHDL
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
                             </a>
                         </li>
                     </ul>
