@@ -114,7 +114,7 @@
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h2>Linux 软件包依赖问题</h2>
+                <h2 id="linux">Linux 软件包依赖问题</h2>
 <hr />
 <p>早期的 Linux 系统上的软件是通过源码方式发布的，大家下载下来，在自己的机器上编译，得到可执行程序 。</p>
 <p>但是，任何程序员写程序都有可能会依赖一些别人已经写成的库，所以几乎一定规模的程序必然有依赖 。尤其是对于 Linux 系统，因为它是 <strong>free（自由，not 免费）</strong>，开源软件的开发者不是在一个体系下，软件包的依赖关系就比较伤脑筋了， 尤其是当我们的系统里有成百上千的软件时，软件包管理的必要性就更明显了 。</p>
@@ -150,7 +150,7 @@ Windows：通常而言，这个系统的软件是商业软件，因此，他们�
 4. 系统中安装的软件越多，越容易出问题。</p>
 </blockquote>
 <p><br></p>
-<h2>Linux 包管理系统</h2>
+<h2 id="linux_1">Linux 包管理系统</h2>
 <hr />
 <p><a href="http://en.wikipedia.org/wiki/Package_management_system">Package management system on wikipedia</a>:</p>
 <blockquote>
@@ -160,50 +160,42 @@ Windows：通常而言，这个系统的软件是商业软件，因此，他们�
 Package management systems are designed to save organizations time and money through remote administration and software distribution technology that eliminate the need for manual installs and updates. This can be particularly useful for large enterprises whose operating systems are based on Linux and other Unix-like systems, typically consisting of hundreds or even thousands of distinct software packages; in the former case, a package management system is a convenience, in the latter case it becomes essential.</p>
 </blockquote>
 <p>在 Linux 发行版中，几乎每一个发行版都有自己的软件包管理系统 。</p>
-<h3>Dpkg</h3>
+<h3 id="dpkg">Dpkg</h3>
 <p><a href="http://en.wikipedia.org/wiki/Dpkg">Dpkg on wiki</a></p>
 <p>Dpkg 是基于 Debian 系统的包管理软件 。<code>dpg</code> 可以用来安装、删除、提供<code>.deb</code> 格式软件包相关信息的文件 。</p>
 <p>dpkg 由 Matt Welsh、Carl Streeter、 Ian Murdock 用 Perl 语言编写，后来在 1994 年。 Ian Jackson 改用 C 重写了大部分内容 。</p>
 <p>dpkg 是 “Debian package” 的缩写，它最初是为 Debian 系统编写的，也可以在使用 <code>.deb</code> 格式的 Ubuntu 系统上使用 。</p>
-<h4>常用语法</h4>
-<div class="highlight"><pre><span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">peackage</span><span class="p">.</span><span class="n">deb</span>        <span class="c1">// install</span>
-<span class="n">dpkg</span> <span class="o">-</span><span class="n">r</span> <span class="n">package</span><span class="p">.</span><span class="n">deb</span>         <span class="c1">// remove</span>
-<span class="n">dpkg</span> <span class="o">-</span><span class="n">l</span> <span class="p">[</span><span class="n">optional</span> <span class="n">pattern</span><span class="p">]</span>  <span class="c1">// list installed package</span>
-<span class="n">dpkg</span> <span class="o">--</span><span class="n">configure</span> <span class="n">package</span>    <span class="c1">// configure package</span>
-</pre></div>
-
-
-<h4>详细用法</h4>
-<div class="highlight"><pre><span class="n">dpkg</span> <span class="o">--</span><span class="n">help</span>
-<span class="n">man</span> <span class="n">dpkg</span>
-</pre></div>
-
-
-<h3>Apt</h3>
+<h4 id="_1">常用语法</h4>
+<pre><code>dpkg -i peackage.deb        // install
+dpkg -r package.deb         // remove
+dpkg -l [optional pattern]  // list installed package
+dpkg --configure package    // configure package
+</code></pre>
+<h4 id="_2">详细用法</h4>
+<pre><code>dpkg --help
+man dpkg
+</code></pre>
+<h3 id="apt">Apt</h3>
 <p><a href="http://en.wikipedia.org/wiki/Advanced_Packaging_Tool">Advanced Packaging Tool on wiki</a></p>
 <blockquote>
 <p>The Advanced Packaging Tool, or APT, is a free software user interface that works with core libraries to handle the installation and removal of software on the Debian GNU/Linux distribution and its variants. APT simplifies the process of managing software on Unix-like computer systems by automating the retrieval, configuration and installation of software packages, either from precompiled files or by compiling source code.</p>
 </blockquote>
 <p>apt 最初是设计为 dpkg 的前端，用来处理 <code>.deb</code> 格式的文件，后来它被 <code>APT-RPM</code> 组织改造可以支持 RPM 包管理系统 。</p>
 <p>apt 由 <code>apt-get</code>、<code>apt-cache</code> 和 <code>apt-config</code> 等小工具组成</p>
-<h4>常用语法</h4>
-<div class="highlight"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">package</span>             <span class="c1">// install</span>
-<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">remove</span> <span class="n">package</span>              <span class="c1">// remove</span>
-<span class="n">apt</span><span class="o">-</span><span class="n">cache</span> <span class="n">search</span> <span class="n">package</span>            <span class="c1">// search</span>
-<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>                      <span class="c1">// update source list</span>
-<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">upgrade</span>                     <span class="c1">// upgrade installed software</span>
-</pre></div>
-
-
-<h4>详细用法</h4>
-<div class="highlight"><pre><span class="n">man</span> <span class="n">apt</span>
-<span class="n">man</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span>
-<span class="n">man</span> <span class="n">apt</span><span class="o">-</span><span class="n">update</span>
-<span class="n">man</span> <span class="n">apt</span><span class="o">-</span><span class="n">upgrade</span>
-</pre></div>
-
-
-<h4>彩蛋</h4>
+<h4 id="_3">常用语法</h4>
+<pre><code>apt-get install package             // install
+apt-get remove package              // remove
+apt-cache search package            // search
+apt-get update                      // update source list
+apt-get upgrade                     // upgrade installed software
+</code></pre>
+<h4 id="_4">详细用法</h4>
+<pre><code>man apt
+man apt-get
+man apt-update
+man apt-upgrade
+</code></pre>
+<h4 id="_5">彩蛋</h4>
 <ul>
 <li>
 <p>在 terminal 中输入 <code>apt-get -h</code></p>
@@ -218,58 +210,50 @@ Package management systems are designed to save organizations time and money thr
 </li>
 </ul>
 <blockquote>
-<div class="highlight"><pre>          <span class="p">(</span><span class="n">__</span><span class="p">)</span> 
-          <span class="p">(</span><span class="n">oo</span><span class="p">)</span> 
-    <span class="o">/------</span><span class="err">\</span><span class="o">/</span> 
-   <span class="o">/</span> <span class="o">|</span>    <span class="o">||</span>   
-  <span class="o">*</span>  <span class="o">/</span><span class="err">\</span><span class="o">---/</span><span class="err">\</span> 
-     <span class="o">~~</span>   <span class="o">~~</span>   
-   <span class="p">....</span><span class="s">&quot;Have you mooed today?&quot;</span><span class="p">...</span>
-</pre></div>
-
-
+<pre><code>          (__) 
+          (oo) 
+    /------\/ 
+   / |    ||   
+  *  /\---/\ 
+     ~~   ~~   
+   ...."Have you mooed today?"...
+</code></pre>
 </blockquote>
-<h3>Aptitude</h3>
+<h3 id="aptitude">Aptitude</h3>
 <p><a href="http://en.wikipedia.org/wiki/Aptitude_(software)">aptitude on wiki</a></p>
 <blockquote>
 <p>aptitude is a front-end to the Advanced Packaging Tool (APT). It displays a list of software packages and allows the user to interactively pick packages to install or remove. It has an especially powerful search system utilizing flexible search patterns. It was initially created for Debian, but has appeared in RPM Package Manager (RPM) based distributions as well (such as Conectiva).</p>
 </blockquote>
 <p>aptitude 是 APT 的文本界面客户端，它的交互性比 apt 好，似乎在处理依赖问题上也更好一些（我遇到的问题，用 aptitude 可以很方便地解决而 apt 不行 ）</p>
-<h4>常用语法</h4>
-<div class="highlight"><pre><span class="n">aptitude</span> <span class="n">install</span> <span class="n">package</span>
-<span class="n">aptitude</span> <span class="n">remove</span> <span class="n">package</span>
-<span class="n">aptitude</span> <span class="n">clean</span>
-<span class="n">aptitude</span> <span class="n">search</span> <span class="n">package</span>
-<span class="n">aptitude</span> <span class="n">show</span> <span class="n">string</span>
-<span class="n">aptitude</span> <span class="n">update</span>
-<span class="n">aptitude</span> <span class="n">dist</span><span class="o">-</span><span class="n">update</span>
-</pre></div>
-
-
-<h4>详细用法</h4>
-<div class="highlight"><pre><span class="n">man</span> <span class="n">aptitude</span>
-<span class="n">aptitude</span> <span class="o">-</span><span class="n">h</span>
-</pre></div>
-
-
-<h4>彩蛋</h4>
+<h4 id="_6">常用语法</h4>
+<pre><code>aptitude install package
+aptitude remove package
+aptitude clean
+aptitude search package
+aptitude show string
+aptitude update
+aptitude dist-update
+</code></pre>
+<h4 id="_7">详细用法</h4>
+<pre><code>man aptitude
+aptitude -h
+</code></pre>
+<h4 id="_8">彩蛋</h4>
 <p><img alt="aptitude" src="/images/learning-linux-package-management/aptitude.png" /></p>
-<h3>YUM</h3>
+<h3 id="yum">YUM</h3>
 <p><a href="http://zh.wikipedia.org/wiki/Yum">Yellowdog Updater, Modified on wiki</a></p>
 <blockquote>
 <p>The Yellowdog Updater, Modified (yum) is an open-source command-line package-management utility for Linux operating systems using the RPM Package Manager. Though yum has a command-line interface, several other tools provide graphical user interfaces to yum functionality.</p>
 </blockquote>
 <p>YUM 是一个基于 RPM 包管理的字符前端软件包管理器。能够从指定的服务器自动下载 RPM 包并且安装，可以处理依赖性关系，并且一次安装所有依赖的软件包，无须繁琐地一次次下载、安装 。被 Yellow Dog Linux 本身，以及 Fedora、Red Hat Enterprise Linux 采用 。</p>
 <p><br></p>
-<h2>举个栗子</h2>
+<h2 id="_9">举个栗子</h2>
 <hr />
 <p>有些软件要求的库的版本高于(&gt;=)xx.xxx，有些软件要求库的版本必须是(=)xx.xxx，如果我们的库不能满足要求则无法安装软件 。一般 <code>apt-get</code> 会处理比较简单的依赖关系，但是有些依赖关系 <code>apt-get</code> 并不能解决 。这时候可以试试 <code>aptitude</code> 。</p>
-<h3>问题</h3>
+<h3 id="_10">问题</h3>
 <p>为新安装的 Ubuntu 安装开发环境时，遇到了库版本过高的问题，执行下面的命令</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span>
-</pre></div>
-
-
+<pre><code>sudo apt-get install build-essential
+</code></pre>
 <p>结果 apt-get 提示有不满足依赖关系的包</p>
 <blockquote>
 <p>Reading package lists... Done
@@ -296,10 +280,8 @@ The following packages have unmet dependencies:
 E: Unable to correct problems, you have held broken packages.</p>
 </blockquote>
 <p>于是我们手动安装特定的库</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">dpkg</span><span class="o">-</span><span class="n">dev</span>
-</pre></div>
-
-
+<pre><code>sudo apt-get install dpkg-dev
+</code></pre>
 <p>结果提示我们库版本过高</p>
 <blockquote>
 <p>Reading package lists... Done
@@ -331,32 +313,26 @@ Recommends: build-essential but it is not going to be installed
 <br>
 E: Unable to correct problems, you have held broken packages.</p>
 </blockquote>
-<h3>解决问题 —— 使用 <code>aptitude</code></h3>
+<h3 id="aptitude_1">解决问题 —— 使用 <code>aptitude</code></h3>
 <p><strong>解决方法就是降级</strong> 。</p>
 <p>方法有两个：</p>
 <ol>
 <li>
 <p>apt-get 直接指定安装特定的版本</p>
 <p>首先查询是否提供低版本的包</p>
-<div class="highlight"><pre><span class="n">apt</span><span class="o">-</span><span class="n">cache</span> <span class="n">showpkg</span> <span class="n">package_name</span>
-</pre></div>
-
-
+<pre><code>apt-cache showpkg package_name
+</code></pre>
 <p>若有则指定安装某个版本</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">package_name</span><span class="o">=</span><span class="n">version</span>
-</pre></div>
-
-
+<pre><code>sudo apt-get install package_name=version
+</code></pre>
 </li>
 <li>
 <p>使用 aptitude 自动处理</p>
 </li>
 </ol>
 <p>我采用的第二种方法：</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">aptitude</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span>
-</pre></div>
-
-
+<pre><code>sudo aptitude install build-essential
+</code></pre>
 <p>结果如下</p>
 <blockquote>
 <p>The following NEW packages will be installed:
@@ -422,7 +398,7 @@ Do you want to continue? [Y/n/?] </p>
 <p>选择 <code>y</code>。然后 aptitude 会完成剩余的工作 。</p>
 <p>问题解决啦！</p>
 <p><br></p>
-<h2>参考</h2>
+<h2 id="_11">参考</h2>
 <p><a href="http://www.zhihu.com/question/20443067">Unix 的包依赖是如何形成的？</a></p>
 <p><a href="http://daway320.blog.163.com/blog/static/3878369920107331733393/">apt-get install安装软件问题(安装包的依赖库版本过高问题)</a></p>
             </div>
@@ -430,11 +406,11 @@ Do you want to continue? [Y/n/?] </p>
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/04/learning_linux_ssh.html">学习 Linux SSH</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/06/13/learning_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/05/12/learning_yocto_from_zero_1_getting_started.html">Yocto 从零单排 1 —— 入门</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/10/run_warcraft_on_ubuntu.html">在 Ubuntu 下运行 WarCraft</a></li>
     </ul>
 </section>
     <hr />
@@ -513,26 +489,6 @@ Do you want to continue? [Y/n/?] </p>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/com.html">
                                 Com
                             </a>
@@ -542,9 +498,24 @@ Do you want to continue? [Y/n/?] </p>
                                 review
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -563,38 +534,13 @@ Do you want to continue? [Y/n/?] </p>
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/flip-flop.html">
-                                flip-flop
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -603,18 +549,63 @@ Do you want to continue? [Y/n/?] </p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/flip-flop.html">
+                                flip-flop
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/matlab.html">
                                 matlab
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
-                                The Catcher in The Rye
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -628,33 +619,8 @@ Do you want to continue? [Y/n/?] </p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ssh.html">
                                 SSH
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fsm.html">
-                                FSM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -663,23 +629,8 @@ Do you want to continue? [Y/n/?] </p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -688,8 +639,33 @@ Do you want to continue? [Y/n/?] </p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/sublime-text.html">
                                 Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
                             </a>
                         </li>
                     </ul>

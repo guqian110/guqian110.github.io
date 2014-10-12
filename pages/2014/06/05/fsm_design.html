@@ -121,7 +121,7 @@
 <p><strong>写在前面的废话：</strong></p>
 <p>这篇博客是在我以前在 CSDN 上写的两篇博客的基础上，参考了其他各位大神、博主的文章，写的总结。欢迎批评、讨论，毕竟写博客的意义就在于给自己一个总结知识的机会、并且在和别人讨论的过程中进步 :-D</p>
 <p><br></p>
-<h2>What is FSM</h2>
+<h2 id="what-is-fsm">What is FSM</h2>
 <hr />
 <p><a href="http://en.wikipedia.org/wiki/Finite-state_machine">FSM on wiki</a></p>
 <p><strong>有限状态机 (Finite State Machine, FSM)</strong> 有时候也简称为<strong>状态机 (state machine)</strong>，它是一种数学模型，通常用来设计电脑程序或者时序电路。它被构思设计为一个抽象的机器，并且某个时刻只能处于一个有限数字代表的状态之下。</p>
@@ -150,7 +150,7 @@
 </li>
 </ul>
 <p><br></p>
-<h2>How to Design a FSM</h2>
+<h2 id="how-to-design-a-fsm">How to Design a FSM</h2>
 <hr />
 <p>关于如何设计一个状态机，这在数字电路和逻辑设计的书里有详细介绍。简单地总结一下步骤：</p>
 <ol>
@@ -160,104 +160,100 @@
 <li>画逻辑图，检查能否自启动，得到了最终的状态机模型</li>
 </ol>
 <p><br></p>
-<h2>How to implement a FSM</h2>
+<h2 id="how-to-implement-a-fsm">How to implement a FSM</h2>
 <hr />
 <p>当设计好之后，就要使用 HDL 语言来实现这个 FSM 了。</p>
 <p><strong>语言：</strong> Verilog HDL</p>
 <p><strong>综合工具：</strong> XST (Xilinx Synthesis Tools)</p>
 <p>下面讨论了一些 FSM 实现时需要注意的问题</p>
-<h3>Coding Style</h3>
+<h3 id="coding-style">Coding Style</h3>
 <p>状态机一般有三种写法，他们在速度、面积、代码可维护性等各个方面互有优劣。</p>
 <p><strong>一段式：</strong>只有一个always block，把所有的逻辑（输入、输出、状态）都在一个always block中实现；这种写法 <em>看起来很简洁</em>，但是 <em>不利于维护</em>。如果状态复杂一些就很容易出错。不推荐这种方法，但是在简单的状态机可以使用。</p>
 <p><strong>二段式：</strong>有两个always block，把时序逻辑和组合逻辑分隔开来。时序逻辑里进行当前状态和下一状态的切换，组合逻辑实现各个输入、输出以及状态判断。这种写法 <em>不仅便于阅读、理解、维护，而且利于综合器优化代码，利于用户添加合适的时序约束条件，利于布局布线器实现设计。</em></p>
 <p>在两段式描述中，当前状态的输出用组合逻辑实现，可能存在竞争和冒险，产生毛刺。则要求对状态机的输出用寄存器打一拍，但很多情况不允许插入寄存器节拍，此时使用三段式描述。其优势在于能够根据状态转移规律，在上一状态根据输入条件判断出当前状态的输出，从而不需要额外插入时钟节拍。</p>
 <p><strong>三段式：</strong>有三个always block，一个时序逻辑采用同步时序的方式描述状态转移，一个采用组合逻辑的方式判断状态转移条件、描述状态转移规律，第三个模块使用同步时序的方式描述每个状态的输出。<em>代码容易维护，时序逻辑的输出解决了两段式组合逻辑的毛刺问题</em>，但是从资源消耗的角度上看，<em>三段式的资源消耗多一些，且输出比另外两种会延时一个时钟周期。</em></p>
 <p>三段式代码模板</p>
-<div class="highlight"><pre><span class="n">reg</span>     <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">CS</span><span class="p">;</span>
-<span class="n">reg</span>     <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">NS</span><span class="p">;</span>
+<pre><code>reg     [7:0]   CS;
+reg     [7:0]   NS;
 
-<span class="n">parameter</span>   <span class="n">IDLE</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">b0000_0001</span><span class="p">,</span>
-            <span class="n">WAIT</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">b0000_0010</span><span class="p">,</span>
-            <span class="n">STRT</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">b0000_0100</span><span class="p">,</span>
-            <span class="p">...</span>
+parameter   IDLE = 8'b0000_0001,
+            WAIT = 8'b0000_0010,
+            STRT = 8'b0000_0100,
+            ...
 
-<span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
-        <span class="n">CS</span> <span class="o">&lt;=</span> <span class="n">IDLE</span><span class="p">;</span>
-    <span class="n">end</span>
-    <span class="k">else</span> <span class="n">begin</span>
-        <span class="n">CS</span> <span class="o">&lt;=</span> <span class="n">NS</span><span class="p">;</span>
-    <span class="n">end</span>
-<span class="n">end</span>
+always @(posedge clk) begin
+    if (rst) begin
+        CS &lt;= IDLE;
+    end
+    else begin
+        CS &lt;= NS;
+    end
+end
 
-<span class="n">always</span> <span class="err">@</span><span class="o">*</span>  <span class="n">begin</span>
-    <span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">bx</span><span class="p">;</span>               <span class="c1">//初始化寄存器，避免生成latch</span>
-    <span class="k">case</span> <span class="p">(</span><span class="n">CS</span><span class="p">)</span>
-        <span class="nl">IDLE:</span> <span class="n">begin</span>
-            <span class="c1">// ...</span>
-        <span class="n">end</span>
-        <span class="nl">S1:</span> <span class="n">begin</span>
-            <span class="c1">// ...</span>
-        <span class="n">end</span>
-       <span class="nl">default:</span> <span class="n">begin</span>
-            <span class="n">NS</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>      <span class="c1">// 注意</span>
-       <span class="n">end</span>
-    <span class="n">endcase</span>
-<span class="n">end</span>
+always @*  begin
+    NS = 8'bx;               //初始化寄存器，避免生成latch
+    case (CS)
+        IDLE: begin
+            // ...
+        end
+        S1: begin
+            // ...
+        end
+       default: begin
+            NS = IDLE;      // 注意
+       end
+    endcase
+end
 
-<span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
-        <span class="c1">// reset</span>
-        <span class="c1">// ...</span>
-    <span class="n">end</span>
-    <span class="k">else</span> <span class="n">begin</span>
-        <span class="c1">// ...          //初始化一组值，避免latch</span>
-        <span class="k">case</span> <span class="p">(</span><span class="n">NS</span><span class="p">)</span>           <span class="c1">//注意为NS</span>
-            <span class="nl">IDLE:</span> <span class="n">begin</span>
-                <span class="c1">// ...</span>
-            <span class="n">end</span>
-            <span class="nl">S1:</span> <span class="n">begin</span>
-                <span class="c1">// ...</span>
-            <span class="n">end</span>
-            <span class="nl">default:</span> <span class="n">begin</span>
-                <span class="c1">// ...</span>
-            <span class="n">end</span>
-        <span class="n">endcase</span>
-    <span class="n">end</span>
-<span class="n">end</span>
-</pre></div>
-
-
+always @(posedge clk) begin
+    if (rst) begin
+        // reset
+        // ...
+    end
+    else begin
+        // ...          //初始化一组值，避免latch
+        case (NS)           //注意为NS
+            IDLE: begin
+                // ...
+            end
+            S1: begin
+                // ...
+            end
+            default: begin
+                // ...
+            end
+        endcase
+    end
+end
+</code></pre>
 <p><strong>一段 or 三段？</strong></p>
 <p>一般来说，三段式的效果更好，唯一的缺点是占用的资源稍微多一点(对于拥有丰富的触发器资源的 FPGA 来说，这个缺点可以忽略吧)。所以除非是非常简单的状态机用一段式实现，其他情况下三段式更简单。</p>
 <p>对于上面的三段式模板，按代码顺序解释一下相关的注意事项</p>
-<h3>参数使用 parameter</h3>
+<h3 id="parameter">参数使用 parameter</h3>
 <p>尽量使用 <code>parameter</code> 而不是 <code>define</code>。</p>
 <p>这个原则不仅仅限于 FSM，其他模块也应该遵守。因为使用 <code>define</code> 定义的参数是全局变量，而 <code>parameter</code> 定义的是局部变量。如果设计中包含多个 FSM，包含多个同名的变量，显然使用 <code>parameter</code> 是更好的选择。</p>
-<h3>FSM 复位</h3>
+<h3 id="fsm">FSM 复位</h3>
 <p>FPGA 上电时，GSR(Global Set/Reset) 拉高，对所有 寄存器/RAM 进行复位，此时配置于 FPGA 的逻辑并未生效，所以不能保证 FSM 进入正确的初始化状态。</p>
 <p><strong>解决方法：</strong></p>
 <ol>
 <li>
 <p>一般，FSM 使用其他的复位(同步 or 异步)。</p>
-<div class="highlight"><pre><span class="c1">// Synchronous Reset</span>
-<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
-        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
-    <span class="k">end</span>
-    <span class="k">else</span> <span class="k">begin</span>
-        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">NS</span><span class="p">;</span>
-    <span class="k">end</span>
-<span class="k">end</span>
-</pre></div>
-
-
+<pre><code>// Synchronous Reset
+always @(posedge clk) begin
+    if (rst) begin
+        CS &lt;= IDLE;
+    end
+    else begin
+        CS &lt;= NS;
+    end
+end
+</code></pre>
 </li>
 <li>
 <p>还有一种方法，是将初始状态编码为全 0 (带 0 的 One-Hot 编码方式)，这样当 GSR 复位后，状态机自动进入初始状态。</p>
 </li>
 </ol>
-<h3>编码方式</h3>
+<h3 id="_1">编码方式</h3>
 <p>状态机的状态的编码，通常有 <code>Binary</code>、<code>One-Hot</code>、<code>Gray</code> 码等几种。</p>
 <p><strong>Binary 码</strong></p>
 <p>采用最简单的递增的编码方式对状态进行编码，对于 n 个状态的状态机，共需要 log2(n) 个触发器表示所有的状态。</p>
@@ -274,7 +270,7 @@
 <p><strong>结论：</strong></p>
 <p>Binary、Gray 编码使用最少的触发器，较多的组合逻辑。而 One-Hot  编码反之。由于 CPLD 更多的提供组合逻辑资源，而 FPGA 更多的提供触发器资源，所以 CPLD 多使用 Gray，而 FPGA  多使用 One-Hot 编码。另一方面，对于小型设计使用 Gray 和 Binary 编码更有效，而大型状态机使用 One-Hot 更高效。</p>
 <p>(XST 的选项 <code>FSM encoding algorithm</code> 值默认为 <code>auto</code>，编写程序测试发现，它会根据代码中状态的多少，FSM 的复杂度，自动选择合适的编码方式对状态进行编码。)</p>
-<h3>安全的 FSM</h3>
+<h3 id="fsm_1">安全的 FSM</h3>
 <p>所谓 “安全” 的状态机，就是说即使因为某些意外原因，状态机跑飞了，仍然可以自动回复到正常状态。</p>
 <p>如果我们对状态向量的所有取值情况都显式地进行了说明，那么这个状态机就是安全的，否则就是不安全的。</p>
 <p><strong>可能出现的不安全情况</strong></p>
@@ -285,12 +281,10 @@
 <li>
 <p>书写完备的 <code>case</code> 语句。在代码中对每一种可能的取值对进行描述，对于不使用的状态编码，一定要有 <code>default</code> 分支进行说明。</p>
 <p>在第二段 <code>always</code> 中，</p>
-<div class="highlight"><pre><span class="k">default</span><span class="o">:</span> <span class="n">begian</span>
-    <span class="n">NS</span> <span class="o">=</span> <span class="n">IDLE</span><span class="o">;</span>
-<span class="n">end</span>
-</pre></div>
-
-
+<pre><code>default: begian
+    NS = IDLE;
+end
+</code></pre>
 <p>这里应该赋值 <code>8'bx</code> 更合理，因为状态机上电时处于未知状态，所以应该赋值 <code>x</code> 更符合实际，但是这样赋值必须有个条件，就是必须所有的状态编码都全部被使用了，不然就会出现锁死现象，FSM 无法返回工作状态。我们前面使用的是 One-Hot 编码方式，有大量无效状态，所以这里不能赋值为 <code>x</code>。</p>
 </li>
 <li>
@@ -299,14 +293,12 @@
 </ol>
 <p>即使使用第一种方法，似乎我们的状态机已经是 perfect 了，但是真的是这样么？考虑这种情况：一个状态机有 8 个状态，采用 One-Hot 编码方式，代码含有 <code>default</code> 分支处理未定义的状态向量可能取到的值。现在把这个状态机放在卫星中，接受宇宙射线的辐射，导致状态向量的值发生了变化，进入了无效状态，然后状态机自动恢复到正常状态(Good Job)，但是！状态机的外围电路并没有随着状态机恢复，它还在等 FSM 输出某个信号呢。所以，仅仅是回到正常状态并不够，最好的设计应该有个错误状态专门来与外围电路通信，当 FSM 自动恢复时，它会通知外围电路 reset 。</p>
 <p>(XST 的选项 <code>safe implementation</code> 值默认为 <code>None</code>，如果应用环境要求 FSM 必须能恢复任何错误，比如航天、医疗、汽车等，这时我们可以打开这个设置，这时综合工具会添加额外的逻辑，保证 FSM 可以从无效状态恢复过来。)</p>
-<h3>检查状态完备性</h3>
+<h3 id="_2">检查状态完备性</h3>
 <p>在第二个 <code>always block</code> 中，第一句是</p>
-<div class="highlight"><pre><span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">bx</span><span class="p">;</span>
-</pre></div>
-
-
+<pre><code>NS = 8'bx;
+</code></pre>
 <p>这是个很有用的小技巧，它可以帮助我们在综合前发现状态是否完备：如果状态完备，则在下面的 <code>case</code> 中会给 <code>NS</code> 合适的值；如果状态不完备，则状态机会进入错误状态，输出不定，仿真时可以很快的发现。而且，综合工具对于 <code>x</code> 采取的态度是 <code>don't care</code>，综合时会自动将其忽略，生成的电路最简洁。</p>
-<h3>避免 Latch</h3>
+<h3 id="latch">避免 Latch</h3>
 <ol>
 <li>
 <p>在第三个 <code>always</code> 中，在 <code>case</code> 前，所有的输出都有默认的值，这样做的好处是可以消除 <code>Latch</code> 的出现，而且，可以减少在后面每种状态下重复相同的赋值，而且强调显示了 case 内哪个输出发生了变化。</p>
@@ -315,7 +307,7 @@
 <p>书写完备的 <code>if-else</code> 和 <code>case</code> 语句。</p>
 </li>
 </ol>
-<h3>消除输出毛刺</h3>
+<h3 id="_3">消除输出毛刺</h3>
 <p>对于三段式，因为输出是寄存器输出，所以解决了输出毛次。</p>
 <p>讨论一下采用寄存器输出的方式对设计的影响</p>
 <ol>
@@ -330,21 +322,19 @@
 <p>在考虑FSM的响应速度时，不能独立的考虑FSM本身，需要综合考虑FSM模块和上、下游模块构成的电路。采用输出寄存器的电路可以运行在更高的时钟频率下，所引入的响应时延与更高的运行频率相比是可以牺牲的。</p>
 </li>
 </ol>
-<h3>case (NS) vs case (CS)</h3>
+<h3 id="case-ns-vs-case-cs">case (NS) vs case (CS)</h3>
 <p>采用二段式实现状态机，它的输出是组合逻辑，可能存在竞争和冒险，产生毛刺，要消除毛刺就要对输出用寄存器打一拍，但是很多时候，是不允许插入寄存器节拍的。</p>
 <p>这时候可以采用三段式实现，三段式的输出是寄存器输出，所以消除了毛次；同时，如果三段式的第三段判断输出采用</p>
-<div class="highlight"><pre><span class="k">case</span> <span class="p">(</span><span class="n">NS</span><span class="p">)</span>
-    <span class="nl">IDLE:</span> <span class="n">begin</span>
-        <span class="c1">// ....</span>
-    <span class="n">end</span>
-    <span class="c1">// ...</span>
-    <span class="nl">default:</span> <span class="n">begian</span>
-        <span class="c1">// ...</span>
-    <span class="n">end</span>
-<span class="n">endcase</span>
-</pre></div>
-
-
+<pre><code>case (NS)
+    IDLE: begin
+        // ....
+    end
+    // ...
+    default: begian
+        // ...
+    end
+endcase
+</code></pre>
 <p>就可以提前判断下一状态的输出，节省了一个节拍，使输出和状态变化同步。</p>
 <p>设计一个简单的 FSM，测试使用 <code>case(CS)</code> 和 <code>case(NS)</code> 的结果：</p>
 <p><strong>FSM 设计</strong></p>
@@ -363,7 +353,7 @@
 <p>使用 <code>CS</code> 判断，结果如下图，可以看到，当 <code>CS</code> 发生变化时，输出变化相对于状态变化延时一个时钟周期。</p>
 <p><img alt="case ns" src="/images/fsm-design/case_cs.png" /></p>
 <p><br></p>
-<h2>参考</h2>
+<h2 id="_4">参考</h2>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG1998SJ_FSM.pdf">Clifford E. Cumming     State Machine Coding Styles for Synthesis</a></p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsICU2002_FSMFundamentals.pdf">Clifford E. Cumming     The Fundamentals of Efficient Synthesizable Finite State Machine
 Design using NC-Verilog and BuildGates</a></p>
@@ -376,11 +366,11 @@ Design using NC-Verilog and BuildGates</a></p>
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
     </ul>
 </section>
     <hr />
@@ -459,26 +449,6 @@ Design using NC-Verilog and BuildGates</a></p>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/com.html">
                                 Com
                             </a>
@@ -488,9 +458,24 @@ Design using NC-Verilog and BuildGates</a></p>
                                 review
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -509,38 +494,13 @@ Design using NC-Verilog and BuildGates</a></p>
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/flip-flop.html">
-                                flip-flop
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -549,18 +509,63 @@ Design using NC-Verilog and BuildGates</a></p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/flip-flop.html">
+                                flip-flop
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/matlab.html">
                                 matlab
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
-                                The Catcher in The Rye
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -574,33 +579,8 @@ Design using NC-Verilog and BuildGates</a></p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ssh.html">
                                 SSH
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fsm.html">
-                                FSM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -609,23 +589,8 @@ Design using NC-Verilog and BuildGates</a></p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -634,8 +599,33 @@ Design using NC-Verilog and BuildGates</a></p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/sublime-text.html">
                                 Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
                             </a>
                         </li>
                     </ul>

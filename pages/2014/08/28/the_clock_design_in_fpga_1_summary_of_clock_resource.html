@@ -125,9 +125,9 @@
 </ul>
 <p>实验室有的芯片是 Xilinx 的 Virtex-5 系列，Virtex-5 的 User Guide 是 <a href="http://www.xilinx.com/support/documentation/user_guides/ug190.pdf">UG190</a>，以下内容都是从中摘抄的笔记。</p>
 <p><br></p>
-<h2>Three Types of clock resource</h2>
+<h2 id="three-types-of-clock-resource">Three Types of clock resource</h2>
 <hr />
-<h3>Global Clocks</h3>
+<h3 id="global-clocks">Global Clocks</h3>
 <ul>
 <li>
 <p>为了时钟目的，每个 Virtex-5 系列的器件内部都被分成不同的区域（regions），随着器件的尺寸不同，最小的有 8 个区域，最大的有 24 个区域。</p>
@@ -154,7 +154,7 @@
 <p>全局时钟的个数比 CMTs 多，但是一个 CMT 可以驱动多个全局时钟。</p>
 </li>
 </ul>
-<h3>Regional Clocks</h3>
+<h3 id="regional-clocks">Regional Clocks</h3>
 <ul>
 <li>
 <p>每个区域（region）含有 2 个局部时钟缓冲器（regional clock buffer）和 4 个局部时钟树（regional clock tree）。</p>
@@ -167,12 +167,12 @@
 钟（I/O clocks）和两个区域时钟（regional clock）。</p>
 </li>
 </ul>
-<h3>I/O clocks</h3>
+<h3 id="io-clocks">I/O clocks</h3>
 <ul>
 <li>第三种时钟资源是 I/O clocks，可以达到非常高的速度，用于局部的 I/O 串行器/解串器。
 <br></li>
 </ul>
-<h2>Global Clocking Resources</h2>
+<h2 id="global-clocking-resources">Global Clocking Resources</h2>
 <hr />
 <ul>
 <li>
@@ -196,7 +196,7 @@
 </ul>
 </li>
 </ul>
-<h4>Global Clock Inputs</h4>
+<h4 id="global-clock-inputs">Global Clock Inputs</h4>
 <ul>
 <li>
 <p>Virtex-5 FPGA 包含专用的全局时钟输入位置，这些输入位置即使不用作时钟输入，也可用作常规用户 I/O。</p>
@@ -219,7 +219,7 @@
 </ul>
 </li>
 </ul>
-<h4>Global Clock Buffers</h4>
+<h4 id="global-clock-buffers">Global Clock Buffers</h4>
 <ul>
 <li>
 <p>每个 Virtex-5 器件有 32 个全局时钟缓冲器。</p>
@@ -292,7 +292,7 @@
 </ul>
 </li>
 </ul>
-<h4>Clock Tree and Nets - GCLK</h4>
+<h4 id="clock-tree-and-nets-gclk">Clock Tree and Nets - GCLK</h4>
 <ul>
 <li>
 <p>Virtex-5 时钟树是为低歪斜和低功耗操作设计的。</p>
@@ -310,7 +310,7 @@
 <p>在 Virtex-5 架构中，全局时钟线的引脚接入不仅限于逻辑资源的时钟引脚。全局时钟线不用局部互连即可接入 CLB 中的其他引脚。</p>
 </li>
 </ul>
-<h4>Clock Regions</h4>
+<h4 id="clock-regions">Clock Regions</h4>
 <ul>
 <li>
 <p>Virtex-5 器件通过使用时钟区域改善时钟控制分配。</p>
@@ -322,7 +322,7 @@
 <p>这十个全局时钟可以由 32 个全局时钟缓冲器的任意组合驱动。</p>
 </li>
 </ul>
-<h3>How to use global clock</h3>
+<h3 id="how-to-use-global-clock">How to use global clock</h3>
 <p>Xilinx 芯片全局时钟资源的使用方法主要有 5 种：</p>
 <ol>
 <li>
@@ -355,17 +355,15 @@
 <li>
 <p>在综合阶段/实现阶段通过约束文件的方式实现</p>
 <p>随着综合工具/布局布线工具的不同而变化，大多数综合工具会自动分析时钟信号的扇出数目，在全局时钟资源富裕的情况下，使扇出数目最大的信号自动指定使用全局时钟资源。这时候我们必须保证满足下面的原则，否则会报错。如果不能满足，则必须在约束文件中明确声明该信号不使用全局时钟资源。</p>
-<div class="highlight"><pre><span class="n">NET</span> <span class="s">&quot;CLK&quot;</span> <span class="n">CLOCK_DEDICATED_ROUTE</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">;</span>
-</pre></div>
-
-
+<pre><code>NET "CLK" CLOCK_DEDICATED_ROUTE = FALSE;
+</code></pre>
 </li>
 </ol>
-<h3>Principle in Using global clock</h3>
+<h3 id="principle-in-using-global-clock">Principle in Using global clock</h3>
 <p><strong>原则：</strong> 使用 IBUFG / IBUFGDS 的必要条件是信号从全局时钟引脚输入。</p>
 <p>也就是说，如果某个信号从全局时钟引脚输入，不管它是否为时钟信号，必须使用 IBUFG/IBUFGDS；如果对某个信号使用了 IBUFG/IBUFGDS，则这个信号必须从全局时钟引脚输入。</p>
 <p><strong>原因：</strong> 由 Xilinx FPGA 内部结构决定的，IBUFG/IBUFGDS 的输入端仅和芯片的全局时钟引脚有物理连接，与普通的 I/O 和其他内部 CLB 等没有物理连接。</p>
-<h3>P.S. 第二全局时钟资源</h3>
+<h3 id="ps">P.S. 第二全局时钟资源</h3>
 <p>在看其他资料时，看到一种新的时钟资源 —— 第二全局时钟资源。官方的文档我还没有找到，所以就直接摘抄书上的笔记了 =.=</p>
 <ul>
 <li>
@@ -380,16 +378,14 @@
 <li>
 <p><strong>使用方法</strong></p>
 <p>可以在约束编辑器中的专用约束Misc选项中，指定所选信号使用低抖动延迟资源“Low Skew”来指定，也可以在ucf文件中添加“USELOWSKEWLINES"约束命令。</p>
-<div class="highlight"><pre><span class="n">NET</span> <span class="err">“</span><span class="n">s1</span><span class="s">&quot; USELOWSKEWLINES;</span>
-<span class="n">NET</span> <span class="err">“</span><span class="n">s2</span><span class="s">&quot; USELOWSKEWLINES;</span>
-<span class="n">NET</span> <span class="err">“</span><span class="n">s3</span><span class="s">&quot; USELOWSKEWLINES;</span>
-</pre></div>
-
-
+<pre><code>NET “s1" USELOWSKEWLINES;
+NET “s2" USELOWSKEWLINES;
+NET “s3" USELOWSKEWLINES;
+</code></pre>
 </li>
 </ul>
 <p><br></p>
-<h2>Regional Clocking Resources</h2>
+<h2 id="regional-clocking-resources">Regional Clocking Resources</h2>
 <hr />
 <ul>
 <li>
@@ -416,7 +412,7 @@
 </ul>
 </li>
 </ul>
-<h3>Clock Capable I/O</h3>
+<h3 id="clock-capable-io">Clock Capable I/O</h3>
 <ul>
 <li>
 <p>典型时钟区域中有四个 clock-capable I/O 引脚对 （中心列有例外）。</p>
@@ -434,7 +430,7 @@
 <p>这些引脚不能直接连接到全局时钟缓冲器。</p>
 </li>
 </ul>
-<h3>I/O Clock Buffer - BUFIO</h3>
+<h3 id="io-clock-buffer-bufio">I/O Clock Buffer - BUFIO</h3>
 <ul>
 <li>
 <p>I/O 时钟缓冲器 (BUFIO) 是可以在 Virtex-5 器件中使用的一种时钟缓冲器。</p>
@@ -458,7 +454,7 @@
 </ul>
 </li>
 </ul>
-<h3>Regional Clock Buffer - BUFR</h3>
+<h3 id="regional-clock-buffer-bufr">Regional Clock Buffer - BUFR</h3>
 <ul>
 <li>
 <p>区域时钟缓冲器 (BUFR) 是可以在 Virtex-5 器件中使用的另一种时钟缓冲器。</p>
@@ -482,7 +478,7 @@
 </ul>
 </li>
 </ul>
-<h3>Regional Clock Nets</h3>
+<h3 id="regional-clock-nets">Regional Clock Nets</h3>
 <ul>
 <li>
 <p>除了全局时钟树和网（global clock trees and nets），Virtex-5 器件还包含区域时钟网（Regional Clock Nets）。</p>
@@ -510,7 +506,7 @@
 </li>
 </ul>
 <p><br></p>
-<h2>Clock Management Technology</h2>
+<h2 id="clock-management-technology">Clock Management Technology</h2>
 <hr />
 <ul>
 <li>
@@ -520,7 +516,7 @@
 <p>每个 CMT 由 2 个 DCM 和 1 个 PLL 组成。</p>
 </li>
 </ul>
-<h3>DCM</h3>
+<h3 id="dcm">DCM</h3>
 <ul>
 <li>
 <p>DCM 原语有两个：DCM_BASE、DCM_ADV</p>
@@ -594,7 +590,7 @@
 </li>
 </ol>
 <p>如果没有这么做，而是完全按照单个 DCM 的流程使用，那么因为时钟引脚和两个 DCM 的路径长短不同，无法做到输入时钟、两个 DCM 的输出信号的相位对齐，输入时钟只能和其中一个对其，如果对相位有要求，则必须手动调整 DCM 在芯片中的位置。</p>
-<h3>PLL</h3>
+<h3 id="pll">PLL</h3>
 <ul>
 <li>
 <p>Virtex-5 芯片最多包含了 6 个 CMT 模块，每个 CMT 模块包含一个 PLL，PLL 主要用来广谱频率的合成，并且与 DCM 配合最为外部/内部时钟的抖动滤波器。</p>
@@ -606,12 +602,12 @@
 <p>PLL_BASE 提供基本的功能，比如时钟去歪斜、频率合成、精确相移、占空比调整；PLL_ADV 提供更高级的功能，比如时钟切换、动态重配置等。</p>
 </li>
 </ul>
-<h3>MMCM</h3>
+<h3 id="mmcm">MMCM</h3>
 <p>不同系列的芯片内部的时钟管理模块是不同的，比如在 Virtex-5 系列后的芯片就含有了 混合模式时钟管理器 MMCM 。</p>
 <p>具体实现时该如何选择 DCM、DLL、PLL、MMCM ？找到一篇介绍 Xilinx 时钟资源的文章：</p>
 <p><a href="http://www.ednchina.com/ART_8800512846_18_20010_TA_25f01c24.HTM">如何正确使用FPGA的时钟资源</a></p>
 <p><br></p>
-<h2>Other Tips</h2>
+<h2 id="other-tips">Other Tips</h2>
 <hr />
 <ol>
 <li>
@@ -631,12 +627,12 @@
 </li>
 </ol>
 <p><br></p>
-<h2>Summary</h2>
+<h2 id="summary">Summary</h2>
 <hr />
 <p>虽然各个芯片都不尽相同，但是了解相关的基本知识有利于我们快速掌握芯片的时钟资源、快速上手。</p>
 <p>Xilinx 的所有器件上的时钟资源可以分为前面说的 3 类：全局时钟（global clock）、局部时钟（regional clock）、I/O 时钟（I/O clock），但是不同的器件内部含有的时钟管理模块是不同的，具体到每一款芯片，应该以对应的 User Guide 为准。</p>
 <p><br></p>
-<h2>Reference</h2>
+<h2 id="reference">Reference</h2>
 <p><a href="http://www.xilinx.com/support/documentation/user_guides/ug190.pdf">Virtex 5 User Guide</a></p>
 <p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发使用教程</a></p>
 <p><a href="http://book.douban.com/subject/10593491/">Xilinx FPGA 高级设计及应用</a></p>
@@ -648,11 +644,11 @@
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
     </ul>
 </section>
     <hr />
@@ -731,26 +727,6 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/com.html">
                                 Com
                             </a>
@@ -760,9 +736,24 @@
                                 review
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -781,38 +772,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/flip-flop.html">
-                                flip-flop
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -821,18 +787,63 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/flip-flop.html">
+                                flip-flop
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/matlab.html">
                                 matlab
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
-                                The Catcher in The Rye
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -846,33 +857,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ssh.html">
                                 SSH
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fsm.html">
-                                FSM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -881,23 +867,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -906,8 +877,33 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/sublime-text.html">
                                 Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
                             </a>
                         </li>
                     </ul>
