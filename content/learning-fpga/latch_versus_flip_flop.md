@@ -6,6 +6,7 @@ Slug: latch_versus_flip_flop
 Author: Chien Gu
 Summary: 总结 Latch 和 Flip-Flop
 
+
 根据 [Wiki: Flip-flop (electronics)][wiki] 上的介绍
 
 > In electronics, a `flip-flop` or `latch` is a circuit that has two stable states and can be used to store state information. A flip-flop is a `bistable multivibrator`. The circuit can be made to change state by signals applied to one or more control inputs and will have one or two outputs. It is the basic storage element in sequential logic. Flip-flops and latches are a fundamental building block of digital electronics systems used in computers, communications, and many other types of systems.
@@ -21,6 +22,8 @@ Summary: 总结 Latch 和 Flip-Flop
 [wiki]: http://en.wikipedia.org/wiki/Flip-flop_(electronics
 
 <br>
+
+[TOC]
 
 ## History
 * * *
