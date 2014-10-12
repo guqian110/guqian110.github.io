@@ -117,7 +117,7 @@
                 <p>复位信号在系统中的地位和时钟信号几乎同等重要，我们想尽量把系统设计为可控，那么最基本的控制信号就是复位信号了。</p>
 <p>复位信号的设计需要考虑的因素，各种书刊、论文、白皮书、网上论坛都有相关讨论，但是至今对于给定 FPGA 设计中使用哪种复位方案仍然没有明确答案。本文总结了一些大神的经典论文和网上的许多博客，尽可能用简单的图说明选择某种设计方案及其理由，涉及的更深入的原理请自行 Google :-P</p>
 <p><br></p>
-<h2 id="think-local-or-think-global">Think Local or Think Global</h2>
+<h2>Think Local or Think Global</h2>
 <hr />
 <p>Xilinx 有个 White Paper，<a href="http://www.xilinx.com/support/documentation/white_papers/wp272.pdf">Get Smart About Reset: Think Local, Not Global</a>，提出一种新的复位思路： 能不用全局复位时，尽量不要使用。</p>
 <p>这个原则和我们平时的理解和习惯是相反的，不使用全局复位的原因主要有三个：</p>
@@ -139,7 +139,7 @@
 <p><img alt="configuration" src="/images/the-art-of-reset-design-in-fpga/configuration.jpg" /></p>
 <p>系统在上电配置时，内部有个信号叫 <code>GSR</code> (Global Set/Reset)，它是一种特殊的预布线的复位信号，能够在 FPGA 配置的过程中让设计保持初始状态。在配置完成后，GSR 会被释放，所有的触发器及其它资源都加载的是 INIT 值。除了在配置进程中运行 GSR，用户设计还可以通过实例化 STARTUP 模块并连接到 GSR 端口的方法来访问 GSR 网。使用该端口，设计可以重新断言 GSR 网，相应地 FPGA 中的所有存储元件将返回到它们的 INIT 属性所规定的状态。</p>
 <p>设定初值的语法很简单，只需要在定义变量时给它初始值就可以了：</p>
-<div class="codehilite"><pre><span class="n">reg</span> <span class="n">tmp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">reg</span> <span class="n">tmp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </pre></div>
 
 
@@ -150,7 +150,7 @@
 <p>答案当然是否定的。由于 GSR 的释放是异步方式，所以，如果我们只使用 GSR 作为系统的唯一复位机制，那么可能导致系统不可靠。所以还是需要显示的使用同步复位信号来复位状态机、计数器等能自动改变状态的逻辑。</p>
 <p>所以，应该使用 <strong>GSR + explict reset</strong> 的解决方案</p>
 <p>给系统中的 reg 赋初值，对于没有环路的电路节省 reset，利用 GSR 实现复位的功能；对于有环路的电路，使用显示的复位信号。</p>
-<h3 id="upate-07012014">Upate: 07/01/2014</h3>
+<h3>Upate: 07/01/2014</h3>
 <ol>
 <li>
 <p>关于 initialize 代替 reset</p>
@@ -171,7 +171,7 @@
 <p>总结一下，应该优先选择有全局复位的设计方案，并且这个全局复位信号是用户定义的，不要使用 GSR 。</p>
 <p>P.S. 事实上没有一个通用的、适合所有器件的复位方案，我们应该首先了解所使用的器件和工具，针对它们的特点进行复位方案的设计。</p>
 <p><br></p>
-<h2 id="shift-register-reset">Shift Register Reset</h2>
+<h2>Shift Register Reset</h2>
 <hr />
 <p>并不是每一个设计，器件中的每一个寄存器都需要复位的。最好的做法是只将复位连接到那些需要复位的寄存器。</p>
 <p>如果一个模块内部含有一组触发器(移位寄存器)，这些寄存器可以分为两类：</p>
@@ -188,11 +188,11 @@
 <p>那么在设计时应该只复位第一个触发器，后续的触发器仅作为数据寄存器使用，不能对它们进行复位。
 这里体现出来的一个原则就是：能节省 reset 时，尽量节省。</p>
 <p>原因就是 reset 作为一个实际存在的物理信号，需要占用 FPGA 内部的 route 资源，往往 reset 的fanout 又多得吓人。这就很容易造成 route 难度上升，性能下降，编译时间增加。因此，在 FPGA 设计中能省略的复位应尽量省略。</p>
-<h3 id="principle">Principle</h3>
+<h3>Principle</h3>
 <p>每个 <code>always</code> 模块只对一种 FF 建模。也就是说，不要把这两种 FF 写在同一个 always 块中。</p>
-<h3 id="code">Code</h3>
+<h3>Code</h3>
 <p><strong>Bad Style:</strong></p>
-<div class="codehilite"><pre><span class="n">module</span> <span class="nf">BADSTYLE</span> <span class="p">(</span>
+<div class="highlight"><pre><span class="n">module</span> <span class="nf">BADSTYLE</span> <span class="p">(</span>
     <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">q</span><span class="p">);</span>
 
     <span class="n">input</span>       <span class="n">clk</span><span class="p">;</span>
@@ -222,7 +222,7 @@
 <p>如图，复位信号 <code>rst</code> 对于第二个 ff 来说，是一个片选信号 <code>ce</code>，这样的设计产生额外的逻辑，是不好的。</p>
 <p><img alt="bad style" src="/images/the-art-of-reset-design-in-fpga/bad_style.png" /></p>
 <p><strong>Good Style:</strong></p>
-<div class="codehilite"><pre><span class="n">module</span> <span class="nf">GOODSTYLE</span> <span class="p">(</span>
+<div class="highlight"><pre><span class="n">module</span> <span class="nf">GOODSTYLE</span> <span class="p">(</span>
     <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">q</span>
     <span class="p">);</span>
 
@@ -256,7 +256,7 @@
 <p>如图，复位信号 <code>rst</code> 对于两个 ff 来说，都是复位信号，不需要额外的逻辑，这样的设计是比较好的。</p>
 <p><img alt="good style" src="/images/the-art-of-reset-design-in-fpga/good_style.png" /></p>
 <p><br></p>
-<h2 id="reset-distribution-tree">Reset Distribution Tree</h2>
+<h2>Reset Distribution Tree</h2>
 <hr />
 <p>复位信号的 <code>reset distribution tree</code> 和 时钟信号的 <code>clock distribution tree</code> 差不多同等重要，因为在设计中，几乎每个器件都有时钟端口和复位端口(同步/异步)。</p>
 <p><code>reset distribution tree</code> 和 <code>clock distribution tree</code> 最大的区别就是它们对 <code>skew</code> 的要求不同。不像时钟信号的要求那么严格，复位信号之间的 skew 不需要那么严格，只要复位信号的延迟足够小，满足能在一个时钟周期内到达所有的复位负载端，并且满足各个寄存器和触发器的 <code>recovery time</code> 即可。</p>
@@ -267,7 +267,7 @@
 <p>为了加速 reset 信号到达触发器，触发器使用的时钟与 reset 信号是并行的。如图所示。但是，这时候 reset 和 clock 是异步的，所以必须在 <code>PAR</code> 之后进行 <code>STA</code>，保证异步复位信号释放(release)和使能(enable)时满足 <code>建立时间(setuo time)</code> 和 <code>保持时间(hold time)</code>。</p>
 <p><img alt="reset tree driven delayed clock" src="/images/the-art-of-reset-design-in-fpga/reset_tree_parallel_clock.png" /></p>
 <p><br></p>
-<h2 id="reset-glitch-filtering">Reset Glitch Filtering</h2>
+<h2>Reset Glitch Filtering</h2>
 <hr />
 <p>使用异步复位信号时，考虑到异步复位信号对毛次比较敏感，所以在一些系统中需要处理毛次，下图显示了一种简单但是比较丑陋的方法(时延不是固定的，会随温度、电压变化)</p>
 <p><img alt="reset glitch filtering" src="/images/the-art-of-reset-design-in-fpga/reset_glitch_filtering.png" /></p>
@@ -281,7 +281,7 @@
 </li>
 </ol>
 <p><br></p>
-<h2 id="multi-clock-reset">Multi-clock Reset</h2>
+<h2>Multi-clock Reset</h2>
 <hr />
 <p>在一个系统中，往往有多个时钟，这时候有必要为每个时钟域分配一个复位信号。</p>
 <p>因为只有一个全局复位的话，它与系统的时钟都没有关系，是异步复位信号，要求这个信号满足所有时钟域的 recovery 和 removal 时序不是一件容易的事情，因为为每个时钟域分配复位是有必要的。</p>
@@ -295,7 +295,7 @@
 <p>Xilinx 的杂志上的一篇文章，<a href="http://www.eetimes.com/document.asp?doc_id=1278998">How do I reset my FPGA</a>，作者 Srikanth Erusla-gandi 是 Xilinx 的员工和培训人员。他在文中提供了一张图来说明典型的系统复位方案，图中 <code>MMCM</code> 的 <code>lock</code> 和外部输入的复位信号相与，目的是为了保证提供给后面的同步器的时钟信号是稳定的；每个时钟域都有一个同步器来同步复位信号。</p>
 <p><img alt="typical reset implementation in FPGA" src="/images/the-art-of-reset-design-in-fpga/typical_reset.jpg" /></p>
 <p><br></p>
-<h2 id="understanding-the-flip-flop-reset-behavior">Understanding the flip-flop reset behavior</h2>
+<h2>Understanding the flip-flop reset behavior</h2>
 <hr />
 <p>在开始详细讨论之前，首先得理解 FPGA 的基本单元 Slice 中的 FF 的复位方式。Xilinx 的 Virtex 5 系列的芯片中的 FF 的类型都是 DFF (D-type flip flop)，这些 DFF 的控制端口包括一个时钟 CLK，一个高有效的使能 CE，一个高有效的置位/复位 SR。这个 SR 端口可以配置为同步的置位/复位，也可以配置为异步方式的置位/复位。如下图所示</p>
 <p><img alt="dff" src="/images/the-art-of-reset-design-in-fpga/dff.jpg" /></p>
@@ -305,7 +305,7 @@
 <p>如果我们在定义 reg 变量时给它一个初始值，那么 FPGA 在上电配置(GSR 变高)时，载入这个值。</p>
 <p>虽然 FPGA 的 FF 可以配额为 preset/clear/set/reset，但是一个单独的 FF 每次只能配置为其中的一种，如果在代码中多于一个 preset/clear/set/reset，那么就会产生其他的逻辑，消耗 FPGA 资源。</p>
 <p><br></p>
-<h2 id="active-low-vs-active-high">Active low  V.S.  Active high</h2>
+<h2>Active low  V.S.  Active high</h2>
 <hr />
 <p>大多数书籍和博客都推荐使用 “异步复位，低电平有效” 的复位方案，却没有明确说明为什么使用 “低电平有效”。</p>
 <p>目前大多数书籍中都使用 低电平复位，网上给出的理由是</p>
@@ -332,12 +332,12 @@
 </li>
 </ol>
 <p><br></p>
-<h2 id="synchronous-vs-asynchronous">Synchronous V.S. Asynchronous</h2>
+<h2>Synchronous V.S. Asynchronous</h2>
 <hr />
-<h3 id="synchronous-reset">Synchronous Reset</h3>
+<h3>Synchronous Reset</h3>
 <p>模块的 <code>sensitivity list</code> 中不包含 <code>rst</code> 信号。</p>
 <p><strong>code:</strong></p>
-<div class="codehilite"><pre><span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+<div class="highlight"><pre><span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
         <span class="n">q</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
     <span class="n">end</span>
@@ -351,7 +351,7 @@
 <p><strong>RTL Schematic:</strong></p>
 <p><img alt="sync reset" src="/images/the-art-of-reset-design-in-fpga/sync_reset.png" /></p>
 <p>其中 <code>fdr</code> 是 Xilinx 的原语，表示 <code>Singal Data Rate D Flip-Flop with Synchronous Reset and Clock Enable (posedge clk)</code></p>
-<div class="codehilite"><pre><span class="c1">// FDRE: Single Data Rate D Flip-Flop with Synchronous Reset and</span>
+<div class="highlight"><pre><span class="c1">// FDRE: Single Data Rate D Flip-Flop with Synchronous Reset and</span>
 <span class="c1">//       Clock Enable (posedge clk).</span>
 <span class="c1">//       All families.</span>
 <span class="c1">// Xilinx HDL Language Template, version 13.3</span>
@@ -371,7 +371,7 @@
 
 
 <p>有时候，有些器件不带同步复位专用端口，这时候一般会将复位信号综合为输入信号的使能信号，这时候就需要额外的逻辑资源了。</p>
-<h4 id="advantage">Advantage</h4>
+<h4>Advantage</h4>
 <ol>
 <li>
 <p>保证设计是 100% 同步，有利于时序分析，也利于仿真</p>
@@ -383,7 +383,7 @@
 <p>在某些设计中，复位信号是由内部逻辑产生的，推荐使用同步复位，因为这样可以避免逻辑产生的毛刺</p>
 </li>
 </ol>
-<h4 id="disadvantage">Disadvantage</h4>
+<h4>Disadvantage</h4>
 <ol>
 <li>
 <p>同步复位需要保证复位信号具有一定的脉冲宽度(脉冲延展器)，使其能被时钟沿采样到</p>
@@ -402,9 +402,9 @@
 <p>所以，是否占用多余的资源，还得针对具体的板子分析。</p>
 </li>
 </ol>
-<h3 id="asynchronous">Asynchronous</h3>
+<h3>Asynchronous</h3>
 <p><strong>code:</strong></p>
-<div class="codehilite"><pre><span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+<div class="highlight"><pre><span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
         <span class="n">q</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
     <span class="n">end</span>
@@ -418,7 +418,7 @@
 <p><strong>RTL Schematic:</strong></p>
 <p><img alt="aync reset" src="/images/the-art-of-reset-design-in-fpga/async_reset.png" /></p>
 <p>其中 <code>fdc</code> 是 Xilinx 的原语，表示 <code>Single Data Rate D Flip-Flop with Asynchronous Clear and Clock Enable (posedge clk)</code></p>
-<div class="codehilite"><pre><span class="c1">// FDCE: Single Data Rate D Flip-Flop with Asynchronous Clear and</span>
+<div class="highlight"><pre><span class="c1">// FDCE: Single Data Rate D Flip-Flop with Asynchronous Clear and</span>
 <span class="c1">//       Clock Enable (posedge clk).</span>
 <span class="c1">//       All families.</span>
 <span class="c1">// Xilinx HDL Language Template, version 13.3</span>
@@ -438,7 +438,7 @@
 
 
 <p>异步复位的优缺点和同步复位是相对应的：</p>
-<h4 id="advantage_1">Advantage</h4>
+<h4>Advantage</h4>
 <ol>
 <li>
 <p>脉冲宽度没有限制，可以快速复位</p>
@@ -453,7 +453,7 @@
 <p>无需额外的组合逻辑 (同上，具体分析)</p>
 </li>
 </ol>
-<h4 id="disadvantage_1">Disadvantage</h4>
+<h4>Disadvantage</h4>
 <ol>
 <li>
 <p>不是同步电路，不利于时序分析，设计者要正确约束异步复位信号比同步复位复杂</p>
@@ -465,13 +465,13 @@
 <p>容易在复位信号撤销的时候(release)不满足 <code>removal time</code> 时序要求，从而产生亚稳态 (关于亚稳态，网上有很多论文、博客都有详细说明)</p>
 </li>
 </ol>
-<h3 id="reset-synchronizer">Reset Synchronizer</h3>
+<h3>Reset Synchronizer</h3>
 <p>两种复位方式各有优缺点，设计者应该根据实际情况选择合适的复位方法。目前，很多文献书籍中都推荐一种 “异步复位，同步释放” 的方法。这种方法可以将两者结合起来，取长补短。</p>
 <p>它的原理如下图所示</p>
 <p><img alt="reset synchronizer" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer.png" /></p>
 <p>针对 Xilinx 器件，用代码具体实现</p>
 <p><strong>code:</strong></p>
-<div class="codehilite"><pre><span class="n">module</span> <span class="nf">SYSRST</span><span class="p">(</span>
+<div class="highlight"><pre><span class="n">module</span> <span class="nf">SYSRST</span><span class="p">(</span>
     <span class="n">clk</span><span class="p">,</span> <span class="n">rst_pb</span><span class="p">,</span> <span class="n">sys_rst</span>
     <span class="p">);</span>
 
@@ -520,7 +520,7 @@
 <p>为什么不直接使用异步复位呢？因为异步复位容易产生亚稳态的问题。</p>
 <p>为什么不直接使用同步复位呢？因为很多器件只有异步复位端口，不支持同步复位端口，如果要使用同步复位，就会产生额外的逻辑，消耗资源。</p>
 <p>所以，这种方法的根本思想就是 <strong>异步信号同步化</strong>。</p>
-<h4 id="conclusion">Conclusion</h4>
+<h4>Conclusion</h4>
 <p>知道了这点，选择复位信号的策略就很明显了：</p>
 <ol>
 <li>
@@ -534,7 +534,7 @@
 </li>
 </ol>
 <p><br></p>
-<h2 id="reference">Reference</h2>
+<h2>Reference</h2>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2002SJ_Resets.pdf">Synchronous Resets? Asynchronous Resets? I am so confused! How will I ever know which to use?</a></p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2003Boston_Resets.pdf">Asynchronous &amp; Synchronous Reset Design Techniques - Part Deux</a></p>
 <p><a href="http://www.xilinx.com/support/documentation/white_papers/wp272.pdf">Get Smart About Reset: Think Local, Not Global</a></p>
@@ -548,11 +548,11 @@
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
     </ul>
 </section>
     <hr />
@@ -631,13 +631,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -646,28 +641,23 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/vim.html">
                                 Vim
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/syntax.html">
-                                syntax
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -681,13 +671,38 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/syntax.html">
+                                syntax
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/clock-resource.html">
+                                clock resource
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
                                 时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -701,13 +716,38 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -721,33 +761,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -756,43 +771,8 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fsm.html">
-                                FSM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/sublime-text.html">
-                                Sublime Text
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/clock-resource.html">
-                                clock resource
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -801,13 +781,33 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/sublime-text.html">
+                                Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
                             </a>
                         </li>
                     </ul>

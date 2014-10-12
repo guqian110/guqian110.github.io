@@ -6,7 +6,7 @@
 &lt;p&gt;《数字信号处理》算是前一门课的深入，现在利用计算机处理信号，首先就是要将模拟信号数字化，然后进行处理。这门课也就是讲相关的知识。&lt;/p&gt;
 &lt;p&gt;一般教材就讲两大部分：第一部分首先承接《信号与系统》，时域的连续信号要在计算机中处理就必须采样，变为时域离散信号，这部分就讲离散时间信号的处理，比如 z 变换 和离散傅立叶变换。第二部分讲数字滤波器的设计，包括 FIR 和 IIR 两种。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="signal-processing"&gt;Signal Processing&lt;/h2&gt;
+&lt;h2&gt;Signal Processing&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;em&gt;这部分是我串联的这两本书中很小的一部分知识，算是一个备忘的笔记吧，作为一名学渣，一个月不看也会忘记不少 =.=&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;从 《信号与系统》 中我们可以知道：&lt;/em&gt;&lt;/p&gt;
@@ -33,9 +33,9 @@
 &lt;p&gt;知乎上还有一篇专栏的文章，得到了非常多人的赞同，可以进一步参考。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://zhuanlan.zhihu.com/wille/19763358"&gt;傅里叶分析之掐死教程（完整版）更新于2014.06.06&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="matlab"&gt;Matlab&lt;/h2&gt;
+&lt;h2&gt;Matlab&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;h3 id="basic"&gt;basic&lt;/h3&gt;
+&lt;h3&gt;basic&lt;/h3&gt;
 &lt;p&gt;分析各种变化，可以得到以下的关系：&lt;/p&gt;
 &lt;p&gt;N 点的 DFT（FFT），其结果对应的&lt;/p&gt;
 &lt;p&gt;数字角频率 w 为 [0, 2pi)&lt;/p&gt;
@@ -43,7 +43,7 @@
 &lt;p&gt;模拟频率 f 为 [0, fs)&lt;/p&gt;
 &lt;p&gt;所以对于 N 点 FFT 的结果，对应的横坐标频率的范围为 [0, fs)。&lt;/p&gt;
 &lt;p&gt;matlab 提供了函数 fft 和 fftshift 直接完成变换。&lt;/p&gt;
-&lt;h3 id="adv"&gt;adv&lt;/h3&gt;
+&lt;h3&gt;adv&lt;/h3&gt;
 &lt;p&gt;假设我们的采样频率为 Fs （采样周期为 T = 1/Fs），一共采了 N 个点，那么相当于对信号进行了截断，截断长度为 &lt;code&gt;L = N * T&lt;/code&gt; 秒。&lt;/p&gt;
 &lt;p&gt;这 3 个参数就决定了我们的最终结果。&lt;/p&gt;
 &lt;p&gt;在非周期信号处理中存在下面的 3 个问题：&lt;/p&gt;
@@ -64,7 +64,7 @@
 &lt;p&gt;&lt;strong&gt;非周期信号&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;比如矩形脉冲信号，宽度为 [-tau/2, tau/2]，对应的频谱为 Sa 函数，零点为 1/tau，2/tau，3/tau ...&lt;/p&gt;
 &lt;p&gt;假设 tau = 1，采样频率 Fs = 10 Hz，那么如果要求频率分辨率为 f0 = Fs/N = 1/40 Hz 的话，可以推出 N = 390。所以时域采样结果应该是 195 个 0，之后是 10 个 1，最后是 195 个 0。&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;zeros&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;195&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ones&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;zeros&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;195&lt;/span&gt;&lt;span class="p"&gt;)];&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;zeros&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;195&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;ones&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;zeros&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;195&lt;/span&gt;&lt;span class="p"&gt;)];&lt;/span&gt;
     &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fft&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
     &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fftshift&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
     &lt;span class="n"&gt;mag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;abs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -79,7 +79,7 @@
 &lt;p&gt;&lt;strong&gt;周期信号&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;比如 s(t) = 1 + 0.5cos(2&lt;em&gt;pi&lt;/em&gt;15&lt;em&gt;t) + 2sin(2&lt;/em&gt;pi&lt;em&gt;40&lt;/em&gt;t);&lt;/p&gt;
 &lt;p&gt;最大的频率分量为 fmax =  40 Hz，如果采用频率为 10 倍，即 Fs = 400 Hz，如果要求频率分辨率为 0.5 Hz，那么可以得到 N = 800，为了计算方便使用 N = 1024；&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="n"&gt;f1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;f1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;f2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;sample&lt;/span&gt; &lt;span class="n"&gt;frequency&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt; &lt;span class="n"&gt;Hz&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sample&lt;/span&gt; &lt;span class="n"&gt;number&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt;
     &lt;span class="n"&gt;Fs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -110,12 +110,12 @@
 &lt;p&gt;结果如下图所示，可以看到与预期相符，在 0、15、40 处有冲激函数。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="periodic" src="/images/digital_signal_processing_and_matlab/periodic.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="reference"&gt;Reference&lt;/h2&gt;
+&lt;h2&gt;Reference&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/3712794/"&gt;信号与系统引论&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/4025528/"&gt;数字信号处理&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://book.douban.com/subject/24868505/"&gt;数字信号处理教程——MATLAB释义与实现&lt;/a&gt;&lt;/p&gt;</summary><category term="Com"></category><category term="digital procesing"></category><category term="matlab"></category></entry><entry><title>学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</title><link href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html" rel="alternate"></link><updated>2014-05-13T23:16:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-05-13:pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html</id><summary type="html">&lt;h2 id="why-ofdm"&gt;Why OFDM&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://book.douban.com/subject/24868505/"&gt;数字信号处理教程——MATLAB释义与实现&lt;/a&gt;&lt;/p&gt;</summary><category term="Com"></category><category term="digital procesing"></category><category term="matlab"></category></entry><entry><title>学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</title><link href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html" rel="alternate"></link><updated>2014-05-13T23:16:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-05-13:pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html</id><summary type="html">&lt;h2&gt;Why OFDM&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;h3 id="background"&gt;Background&lt;/h3&gt;
+&lt;h3&gt;Background&lt;/h3&gt;
 &lt;p&gt;移动通信的信道模型一般建立为 &lt;strong&gt;时变多径信道模型&lt;/strong&gt;，描述信道多径时延特性的一个重要统计参量是 &lt;strong&gt;均方根时延扩展&lt;/strong&gt; 。&lt;/p&gt;
 &lt;p&gt;经过无线信道的时变多径传输，接收到的信号幅度会有起伏变化（瑞利分布 or 莱斯分布），这种现象称为 &lt;strong&gt;信号衰落&lt;/strong&gt; 。按照已调信号的带宽可以将衰落分为两类：&lt;/p&gt;
 &lt;ul&gt;
@@ -124,18 +124,18 @@
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;判断信号受到何种衰落：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;定义信道的 &lt;strong&gt;相干带宽&lt;/strong&gt; 。当数字信号的带宽越小于信道的相干带宽，则经过时变多经信道后，在信号带宽内的不同频率分量的幅度的相关性越大，不同的频率分量近似经历相同的衰落，即平坦性衰落，平坦性衰落对接收信号的波形无明显影响，码间干扰可以忽略，该系统称为 &lt;strong&gt;窄带系统&lt;/strong&gt; 。当数字信号的带宽相对于信道的相干带宽越大时，信号带宽内的不同频率分量通过信道传输时会受到不同的衰落，即频率选择性衰落，频率选择性衰落使信号中的不同频率分量产生不同的幅度变化，造成接收信号的严重失真，引起吗见干扰，产生误码，该系统称为 &lt;strong&gt;宽带系统&lt;/strong&gt; 。&lt;/p&gt;
-&lt;h3 id="problem"&gt;Problem&lt;/h3&gt;
-&lt;h4 id="_1"&gt;需求&lt;/h4&gt;
+&lt;h3&gt;Problem&lt;/h3&gt;
+&lt;h4&gt;需求&lt;/h4&gt;
 &lt;p&gt;无线信道的频率资源是有限的，要求数字通信系统有效利用信道频带。希望数据传输速率越高越好。&lt;/p&gt;
-&lt;h4 id="_2"&gt;瓶颈&lt;/h4&gt;
+&lt;h4&gt;瓶颈&lt;/h4&gt;
 &lt;p&gt;在系统设计选择数字调制方式时，必须兼顾 &lt;strong&gt;频带利用率&lt;/strong&gt; 和 &lt;strong&gt;误码性能&lt;/strong&gt; 。在 AWGN 信道下，在满足误码性能的前提下，应该尽可能采用频带利用率高的数字调制方式。&lt;/p&gt;
 &lt;p&gt;然而，在以衰落为特征的移动通信系统中，影响误码性能的不仅仅是 &lt;strong&gt;加性噪声&lt;/strong&gt;，还包括 &lt;strong&gt;衰落&lt;/strong&gt; 和 &lt;strong&gt;码间干扰&lt;/strong&gt; 。实现高速无线通信并非易事。&lt;/p&gt;
 &lt;p&gt;为避免码间干扰，数字调制信号的最大符号速率受到很大的限制 。&lt;/p&gt;
-&lt;h3 id="solution"&gt;Solution&lt;/h3&gt;
+&lt;h3&gt;Solution&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;信道均衡&lt;/strong&gt; 是一种经典的对抗码间干扰的技术，许多移动通信系统都采用信道均衡技术消除码间干扰。但是如果数据速率非常高，采用单载波传输数据，需要设计几十审计上百个抽头的均衡器，这简直是硬件设计的噩梦 。&lt;/p&gt;
 &lt;p&gt;既要对抗码间干扰，又要满足低复杂度且高效的手段传输高速数据业务，我们可以采用另外一种技术 —— &lt;strong&gt;OFDM&lt;/strong&gt; 。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="ofdm-history"&gt;OFDM History&lt;/h2&gt;
+&lt;h2&gt;OFDM History&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;多载波调制技术早在 20 世纪 50年代末至 60 年代初就已经应用于军事高频无线通信中，由于实现复杂，没有被广泛应用 。OFDM 就是一种多载波调制，其子载波间隔是子载波符号间隔的倒数，各子载波的频谱是重叠的，这种重叠可以使频谱效率显著提高 。&lt;/p&gt;
 &lt;p&gt;20 世纪 70 年代，Weinstein 和 Ebert 提出用 &lt;strong&gt;离傅里叶变换(DFT)&lt;/strong&gt; 及其 &lt;strong&gt;逆变换(IDFT)&lt;/strong&gt; 进行 OFDM 多载波调制方式的运算。&lt;/p&gt;
@@ -143,34 +143,34 @@
 &lt;p&gt;在 20 世纪 80 年代，随着 OFDM 理论的不断完善、数字信号处理及微电子技术的不断快速发展，OFDM 技术也逐步走向实用化 。&lt;/p&gt;
 &lt;p&gt;大约从 20 世纪 90 年代起，OFDM 技术开始应用于各种有线及无线通信中，包括：DSL、DAB、DVB、WLAN等。OFDM 已经成为下一代蜂窝移动通信空中接口的候选技术 。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="ofdm-theory"&gt;OFDM Theory&lt;/h2&gt;
+&lt;h2&gt;OFDM Theory&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;Orthogonal frequency-division multiplexing (OFDM) 的基本原理是将高速的数据流分解为多路并行的低速数据流，在多个载波上同时进行传输。&lt;/p&gt;
 &lt;p&gt;通过将高速数据分解为多个并行低速速率，克服了信道时延扩展对数据速率的限制，其中各个子载波之间是相互正交的关系，如图：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="carrier wave" src="/images/learning-ofdm-basic/carriers.png" /&gt;&lt;/p&gt;
 &lt;p&gt;OFDM 每个子载波的调制方式可以相互不同，比如 BPSK、QPSK、QAM 等方式 。&lt;/p&gt;
 &lt;p&gt;(OFDM 系统的内容可以写一本书了，简单写写 :-P )&lt;/p&gt;
-&lt;h3 id="ofdm"&gt;OFDM 基带数字实现&lt;/h3&gt;
-&lt;h4 id="transmitter"&gt;发送端 Transmitter&lt;/h4&gt;
+&lt;h3&gt;OFDM 基带数字实现&lt;/h3&gt;
+&lt;h4&gt;发送端 Transmitter&lt;/h4&gt;
 &lt;p&gt;基带系统发送端要实现的功能是将待发送序列 {A1,A2,A3...} 变换，得到复包络的采样值 {a1,a2,a3...} 。&lt;/p&gt;
 &lt;p&gt;为了实现 OFDM 调制的基带数字实现，首先要将 OFDM 信号的复包络进行采样，成为离散时间信号 。根据公式(《通信原理》)，采样结果正好是对发送序列进行离散傅里叶反变换(IDFT)的结果，所以，我们可以 &lt;em&gt;借助 IDFT 即可得到 OFDM 复包络的时间采样 。&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;发送端框图：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="transmitter" src="/images/learning-ofdm-basic/transmitter.png" /&gt;&lt;/p&gt;
-&lt;h4 id="receiver"&gt;接收端 Receiver&lt;/h4&gt;
+&lt;h4&gt;接收端 Receiver&lt;/h4&gt;
 &lt;p&gt;基带系统接收端要实现的功能是对采样序列 {a1,a2,a3...} 进行变换，得到发送端发送过来的信息序列 {A1,A2,A3...} 。&lt;/p&gt;
 &lt;p&gt;接收端通过 I/Q 正交解调可以恢复 OFDM 信号的复包络，将其采样得到的时间序列 。因为发送端采用的 IDFT 是可逆变换，所以对采样结果进行 DFT 就可以得到发送序列 。&lt;/p&gt;
 &lt;p&gt;当序列的点数为 2 的整幂次时，DFT 和 IDFT 存在快速算法： FFT 和 IFFT 。&lt;/p&gt;
 &lt;p&gt;接收端框图：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="receiver" src="/images/learning-ofdm-basic/receiver.png" /&gt;&lt;/p&gt;
-&lt;h3 id="cyclic-prefix"&gt;循环前缀 cyclic prefix&lt;/h3&gt;
+&lt;h3&gt;循环前缀 cyclic prefix&lt;/h3&gt;
 &lt;p&gt;为了有效对抗多径信道的时延扩展，OFDM 系统由多个子载波构成，只要子载波的取值可以满足符号周期远大于信道的时延扩展，就可以达到目标。在此基础上，还需要采取措施消除前后两个 OFDM 符号之间的 &lt;strong&gt;码间干扰 ISI&lt;/strong&gt; 。&lt;/p&gt;
 &lt;p&gt;一种方法是在每个 OFDM 符号之间插入 &lt;strong&gt;保护间隔 Guard Interval&lt;/strong&gt; 。为了对抗信号因信道延迟的影响，Gurad interval(Tg) 长度要大于最大的 Delay spread，即 Tg &amp;gt; delay spread time。&lt;/p&gt;
 &lt;p&gt;在保护区间未放信号的 OFDM 系统称 ZP-OFDM(zero padding)。ZP-OFDM 有比较低的传输功率，但在接收端接收于 zero padding 区域信号时，会破坏载波的正交性造成 “&lt;strong&gt;载波间的干扰（ICI）&lt;/strong&gt;”，所以复制 OFDM symbol 后半段信号并摆放于保护区间内，称之为 &lt;strong&gt;循环字首(cyclic prefix)&lt;/strong&gt; 。&lt;/p&gt;
-&lt;h3 id="_3"&gt;加窗技术&lt;/h3&gt;
+&lt;h3&gt;加窗技术&lt;/h3&gt;
 &lt;p&gt;前面介绍了 OFDM 符号的生成、循环前缀消除码间干扰，但是此时符号边界有尖锐的相位跳变，由此可知，OFDM 的带外衰减是比较慢的 。虽然随着载波数目的增大，OFDM 信号的带外衰减会增加，但是仍然不够快 。&lt;/p&gt;
 &lt;p&gt;为了使 OFDM 信号的带外衰减更快，可以采用对单个 OFDM 符号加窗的方法 。OFDM 的窗函数可以使信号的幅度在u符号边界更平滑地过渡到 0 。常用的窗函数是 &lt;strong&gt;升余弦滚降窗&lt;/strong&gt; 。&lt;/p&gt;
 &lt;p&gt;增大滚降因子虽然能够使带外衰减更快，但降低了 OFDM 系统对多经实验的容忍能力，所以 &lt;em&gt;在实际系统设计中，应当选择较小的滚降因子 。&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="ofdm_1"&gt;OFDM 系统设计&lt;/h3&gt;
+&lt;h3&gt;OFDM 系统设计&lt;/h3&gt;
 &lt;p&gt;OFDM 系统框图如下：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="ofdm-system" src="/images/learning-ofdm-basic/ofdm_system.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;其中，&lt;strong&gt;交织&lt;/strong&gt; 是为了克服深衰落发生突发差错的影响，如果交织器的长度足够大，解交织后可将突发差错改造为独立差错，再通过纠错译码来纠正 。&lt;/p&gt;
@@ -179,23 +179,23 @@
 &lt;p&gt;&lt;strong&gt;在接收端：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;接收端于发送端进行相反的变换，恢复出原数据 .&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="_4"&gt;参考&lt;/h2&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1446684/"&gt;《通信原理》&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/4130536/"&gt;《移动通信原理》&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Orthogonal_frequency-division_multiplexing"&gt;OFDM wikipedia&lt;/a&gt;&lt;/p&gt;</summary><category term="Com"></category><category term="OFDM"></category></entry><entry><title>原码、反码、补码</title><link href="http://guqian110.github.io/pages/2014/03/19/signed_number_representations.html" rel="alternate"></link><updated>2014-03-19T14:31:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-03-19:pages/2014/03/19/signed_number_representations.html</id><summary type="html">&lt;p&gt;最近找到一本好书——&lt;a href="http://book.douban.com/subject/4822685/"&gt;《编码: 隐匿在计算机软硬件背后的语言》&lt;/a&gt;。作者是大名鼎鼎的 &lt;a href="http://en.wikipedia.org/wiki/Charles_Petzold"&gt;Charles Petzold&lt;/a&gt; (&lt;a href="http://charlespetzold.com/"&gt;个人网站&lt;/a&gt;)。书的介绍也很有意思，据说完全不懂计算机的人也能看懂...于是买了本来拜读一下（这种文章当然是英文版最好了，只是学生党没银子，只好买翻译版了）&lt;/p&gt;
 &lt;p&gt;看到用继电器搭建加法器、减法器，讨论二进制编码方式那章，想起一直不是很清楚的原码、反码、补码等，果断 &lt;a href="https://www.google.com.hk/"&gt;Google&lt;/a&gt;、&lt;a href="http://en.wikipedia.org/wiki/Main_Page"&gt;Wiki&lt;/a&gt;，于是总结出下文。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="_1"&gt;基本概念&lt;/h2&gt;
+&lt;h2&gt;基本概念&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;h3 id="_2"&gt;机器数&lt;/h3&gt;
+&lt;h3&gt;机器数&lt;/h3&gt;
 &lt;p&gt;顾名思义，一个数字在机器中的存储方式，“&lt;em&gt;数&lt;/em&gt; ” 是指 有符号数（&lt;code&gt;signed number&lt;/code&gt;），即包含了正负号的数，“&lt;em&gt;机器&lt;/em&gt; ” 当然是指计算机（&lt;code&gt;Computer&lt;/code&gt;）了。&lt;/p&gt;
 &lt;p&gt;从小学毕业，刚进入初中，我们就知道数字是有符号的：&lt;em&gt;正数&lt;/em&gt; &amp;amp; &lt;em&gt;负数&lt;/em&gt;。但是在计算机的哲学体系中，整个世界只有两个元素：0 &amp;amp; 1 ，没有额外的专门表示正负号的符号。怎么办呢？解决方法就是添加一位来表示符号。于是，人们约定把符号位放在一个数字的 &lt;em&gt;最高有效位&lt;/em&gt;（Most significant bit, &lt;code&gt;MSB&lt;/code&gt;），在&lt;a href="http://zh.wikipedia.org/wiki/%E5%AD%97%E8%8A%82%E5%BA%8F#.E5.A4.A7.E7.AB.AF.E5.BA.8F"&gt;大端序&lt;/a&gt;中，&lt;code&gt;MSB&lt;/code&gt; 指的是一个二进制数的最左边的一位。一般，&lt;code&gt;MSB&lt;/code&gt; 等于 0  表示正数，1 表示负数。&lt;/p&gt;
-&lt;h3 id="_3"&gt;真值&lt;/h3&gt;
+&lt;h3&gt;真值&lt;/h3&gt;
 &lt;p&gt;因为机器数中有一位表示符号，所以机器数的形式值不等于真正的数值，机器数对应的数值称为机器数的 &lt;em&gt;真值&lt;/em&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;
 举个栗子：&lt;/p&gt;
 &lt;p&gt;用 8 bit 表示一个数字，因为有符号位的存在，可以表示的范围为 (-127, -0, +0, +127) 。&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# +5 的 机器数 = 0000_0101 ；真值 = + 000_0101&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# +5 的 机器数 = 0000_0101 ；真值 = + 000_0101&lt;/span&gt;
 
 &lt;span class="c"&gt;# -5 的 机器数 = 1000_0101 ；真值 = - 000_0101&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -211,25 +211,25 @@
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;下面分别讨论：&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="_4"&gt;机器数表示法&lt;/h2&gt;
+&lt;h2&gt;机器数表示法&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;h3 id="sign-and-magnitude"&gt;原码（sign and magnitude）&lt;/h3&gt;
-&lt;h4 id="_5"&gt;编码规则&lt;/h4&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 正数：  0_xxxxxxx&lt;/span&gt;
+&lt;h3&gt;原码（sign and magnitude）&lt;/h3&gt;
+&lt;h4&gt;编码规则&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 正数：  0_xxxxxxx&lt;/span&gt;
 
 &lt;span class="c"&gt;# 负数：  1_xxxxxxx&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;8 bit 的原码可以表示的范围是 [ -127, -0, +0, +127 ]，共 255 个数&lt;/p&gt;
-&lt;h4 id="_6"&gt;计算法则&lt;/h4&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 两数符号相同：  低位相加，最高位的符号位不变（当低位相加产生进位时，溢出 Overflow）&lt;/span&gt;
+&lt;h4&gt;计算法则&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 两数符号相同：  低位相加，最高位的符号位不变（当低位相加产生进位时，溢出 Overflow）&lt;/span&gt;
 
 &lt;span class="c"&gt;# 两数符号不同：  比较绝对值的大小，差的绝对值 = 大数 - 小数 ，符号位和大数的符号位相同&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h4 id="_7"&gt;缺点&lt;/h4&gt;
+&lt;h4&gt;缺点&lt;/h4&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;电路复杂&lt;/p&gt;
@@ -245,7 +245,7 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h4 id="_8"&gt;总结&lt;/h4&gt;
+&lt;h4&gt;总结&lt;/h4&gt;
 &lt;p&gt;This approach is directly comparable to the common way of showing a sign (placing a "+" or "−" next to the number's magnitude). Some early binary computers (e.g., &lt;a href="http://en.wikipedia.org/wiki/IBM_7090"&gt;IBM 7090&lt;/a&gt;) used this representation, perhaps because of its natural relation to common usage. Signed magnitude is the most common way of representing the significand in floating point values.
 （&lt;a href="http://en.wikipedia.org/wiki/Signed_magnitude#Signed_magnitude_representation"&gt;Wiki&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -253,7 +253,7 @@
 &lt;p&gt;&lt;em&gt;虽然 &lt;code&gt;原码&lt;/code&gt; 的编码方式最接近人类的习惯，但是，并不适合在计算机中使用，为了解决原码计算中的一些问题，于是 &lt;code&gt;反码&lt;/code&gt; 就出现了&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h3 id="ones-complement"&gt;反码（Ones' complement）&lt;/h3&gt;
+&lt;h3&gt;反码（Ones' complement）&lt;/h3&gt;
 &lt;p&gt;首先，来看看 &lt;a href="http://www.charlespetzold.com/code/"&gt;Code&lt;/a&gt; 中介绍了基于10进制的补码：&lt;/p&gt;
 &lt;p&gt;实现一个减法&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;253 - 176 =？&lt;/code&gt;&lt;/p&gt;
@@ -263,17 +263,17 @@
 &lt;p&gt;这个运算的关键在于：&lt;em&gt;把负数用 9 的补数表示，减法转化为加法&lt;/em&gt; 。同理，我们推广到 2 进制，就得到了 &lt;code&gt;1 的补数(Ones' complement)&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;把减数从一串 1 当中减去，结果就称为这个数的 “1 的补数”，在求 1 的补数的时候，其实并不需要做减法，因为求 1 的补数，只需要将原来的 1 变为 0 ，0 变为 1 即可，也就是取反，在电路中只需要一个反向器就可以实现，所以 &lt;code&gt;1 的补数&lt;/code&gt; 也称为 &lt;code&gt;反码&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;从上面的描述就可以很容易写出反码的编码规则&lt;/p&gt;
-&lt;h4 id="_9"&gt;编码规则&lt;/h4&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 正数    反码 = 原码&lt;/span&gt;
+&lt;h4&gt;编码规则&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 正数    反码 = 原码&lt;/span&gt;
 
 &lt;span class="c"&gt;# 负数    反码 = 符号位不变，其他位取反&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;8 bit 的反码可以表示的范围是 [ -127, -0, +0, +127 ]，共 255 个数&lt;/p&gt;
-&lt;h4 id="_10"&gt;计算法则&lt;/h4&gt;
+&lt;h4&gt;计算法则&lt;/h4&gt;
 &lt;p&gt;反码的计算不用区分符号和绝对值，直接进行计算，计算结果若有溢出，需要将溢出加到最低位，这种操作称为 “循环进位”（end-around carry）&lt;/p&gt;
-&lt;h4 id="_11"&gt;优缺点&lt;/h4&gt;
+&lt;h4&gt;优缺点&lt;/h4&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;优点，电路简单&lt;/p&gt;
@@ -291,14 +291,14 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h4 id="_12"&gt;总结&lt;/h4&gt;
+&lt;h4&gt;总结&lt;/h4&gt;
 &lt;p&gt;The &lt;a href="http://en.wikipedia.org/wiki/PDP-1"&gt;PDP-1&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/CDC_160_series"&gt;CDC 160 series&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/CDC_6000_series"&gt;CDC 6000 series&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/UNIVAC_1100"&gt;UNIVAC 1100 series&lt;/a&gt;, and the &lt;a href="http://en.wikipedia.org/wiki/LINC"&gt;LINC&lt;/a&gt; computer used Ones' complement representation.（&lt;a href="http://en.wikipedia.org/wiki/Signed_number_representations#Ones.27_complement"&gt;Wiki&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;em&gt;&lt;code&gt;反码&lt;/code&gt; 中仍然没有避免 0 有两种编码方式的问题，虽然对于人来说，+0 和 -0 没有区别，但是对于计算机来说，判断一个数是否为0，要进行两次判断。为了解决 0 的表示问题和硬件上的 “循环进位”，于是人们又发明了 &lt;code&gt;补码&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h3 id="twos-complement"&gt;补码（Two's complement）&lt;/h3&gt;
+&lt;h3&gt;补码（Two's complement）&lt;/h3&gt;
 &lt;p&gt;前面介绍的&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;253 - 176 =？&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;按照反码的方法可以转换为&lt;/p&gt;
@@ -310,8 +310,8 @@
 &lt;p&gt;因为对一位二进制数 b 取补码就是 &lt;code&gt;1 - b + 1 = 10 - b&lt;/code&gt;，相当于从 2 里面减去 b ,所以，这种方法称为 &lt;code&gt;2 的补数&lt;/code&gt;，这种编码方式简称 &lt;code&gt;补码&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;举例说明，要表示 -4 ，需要对 &lt;code&gt;0000_0100&lt;/code&gt;取补码，&lt;code&gt;1111_1111 - 0000_0100 + 1 = 1_0000_0000 - 0000_0100&lt;/code&gt;，相当于从2^8里面减去 4 。&lt;/p&gt;
 &lt;p&gt;从上面的计算过程可以很容易写出补码的编码规则&lt;/p&gt;
-&lt;h4 id="_13"&gt;编码规则&lt;/h4&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 正数    补码 = 原码&lt;/span&gt;
+&lt;h4&gt;编码规则&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 正数    补码 = 原码&lt;/span&gt;
 
 &lt;span class="c"&gt;# 负数    补码 = 反码 + 1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -320,17 +320,17 @@
 &lt;p&gt;8 bit补码可以表示的范围是 [ -128, -1, +0, +127 ]，共 256 个数 。&lt;/p&gt;
 &lt;p&gt;目前大多数计算机内部使用的都是补码，所以对于编程中的 32 位 &lt;code&gt;int&lt;/code&gt; 型变量，它可以表示的范围就是 [ -2^32, +2^32 - 1] 。&lt;/p&gt;
 &lt;p&gt;P.S. -128 没有对应的 原码 和反码，它的补码为 &lt;code&gt;1000_0000&lt;/code&gt; 。&lt;/p&gt;
-&lt;h4 id="_14"&gt;计算法则&lt;/h4&gt;
+&lt;h4&gt;计算法则&lt;/h4&gt;
 &lt;p&gt;采用补码的系统，减法转换成加法（减法等同于加上一个负数，所以不再有减法），忽略计算结果最高位的进位，不必加回到最低位上去。&lt;/p&gt;
-&lt;h4 id="_15"&gt;优点&lt;/h4&gt;
+&lt;h4&gt;优点&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;电路简单，从计算法则中可以看到，不用考虑 “循环进位” 的问题，所以，补码系统的电路是最简单的，这也是补码系统应用最广泛的原因&lt;/li&gt;
 &lt;li&gt;0 的表示是唯一的，&lt;code&gt;0000_0000&lt;/code&gt;，不再有 -0 的困扰&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id="_16"&gt;补码中的数学原理&lt;/h4&gt;
+&lt;h4&gt;补码中的数学原理&lt;/h4&gt;
 &lt;p&gt;补码能将减法转化为加法，其数学原理就是 &lt;em&gt;模&lt;/em&gt; 。&lt;/p&gt;
 &lt;p&gt;举个栗子：&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 如果有个手表的时间为6点，实际时间为4点，那么如何校准呢？&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 如果有个手表的时间为6点，实际时间为4点，那么如何校准呢？&lt;/span&gt;
 
 &lt;span class="c"&gt;# 答案有两种方法：&lt;/span&gt;
 
@@ -343,12 +343,12 @@
 &lt;p&gt;即有公式：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;A - B = A + (-B + M)&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;这个式子中的 &lt;code&gt;-B + M&lt;/code&gt; 即为 &lt;code&gt;B&lt;/code&gt; 的 &lt;em&gt;补数&lt;/em&gt; （类似于几何中的&lt;em&gt;补角&lt;/em&gt;） 。&lt;/p&gt;
-&lt;h4 id="_17"&gt;溢出问题（摘自 &lt;a href="http://baike.baidu.com/view/60437.htm"&gt;百度百科&lt;/a&gt;）&lt;/h4&gt;
+&lt;h4&gt;溢出问题（摘自 &lt;a href="http://baike.baidu.com/view/60437.htm"&gt;百度百科&lt;/a&gt;）&lt;/h4&gt;
 &lt;p&gt;无论采用何种机器数，只要运算的结果大于数值设备所能表示数的范围，就会产生溢出。 溢出现象应当作一种故障来处理，因为它使结果数发生错误。异号两数相加时，实际是两数的绝对值相减，不可能产生溢出，但有可能出现正常进位；同号两数相加时，实际上是两数的绝对值相加，既可能产生溢出，也可能出现正常进位。&lt;/p&gt;
 &lt;p&gt;由于补码运算存在符号位进位自然丢失而运算结果正确的问题，因此，应区分补码的溢出与正常进位。&lt;/p&gt;
 &lt;p&gt;详细论证过程不再复制粘贴了...直接给出结论&lt;/p&gt;
 &lt;p&gt;结论：在相加过程中最高位产生的进位和次高位产生的进位如果相同则没有溢出，如果不同则表示有溢出。逻辑电路的实现可以把这两个进位连接到一个异或门，把异或门的输出连接到溢出标志位。&lt;/p&gt;
-&lt;h4 id="_18"&gt;总结&lt;/h4&gt;
+&lt;h4&gt;总结&lt;/h4&gt;
 &lt;p&gt;由 &lt;em&gt;“减去一个数 = 加上一个负数”&lt;/em&gt;，计算机系统内部就不再有减法操作&lt;/p&gt;
 &lt;p&gt;由 &lt;em&gt;“负数的表示由取模运算转变为补码表示”&lt;/em&gt;，计算机系统就可以用一个正数来表示负数&lt;/p&gt;
 &lt;p&gt;所以，计算机内部只需要加法器就可以完成 加减法 和 正负数 的表示 。&lt;/p&gt;
@@ -356,11 +356,11 @@
 &lt;p&gt;&lt;em&gt;Two's complement is the easiest to implement in hardware, which may be the ultimate reason for its widespread popularity. Processors on the early mainframes often consisted of thousands of transistors – eliminating a significant number of transistors was a significant cost savings. Mainframes such as the IBM System/360, the GE-600 series, and the PDP-6 and PDP-10 used two's complement, as did minicomputers such as the PDP-5 and PDP-8 and the PDP-11 and VAX. The architects of the early integrated circuit-based CPUs (Intel 8080, etc.) chose to use two's complement math. As IC technology advanced, virtually all adopted two's complement technology. x86, m68k, Power Architecture, MIPS, SPARC, ARM, Itanium, PA-RISC, and DEC Alpha processors are all two's complement.&lt;/em&gt;(&lt;a href="http://en.wikipedia.org/wiki/Signed_number_representations#Two.27s_complement"&gt;Wiki&lt;/a&gt;)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
-&lt;h2 id="_19"&gt;有符号数和无符号数（摘自 &lt;a href="http://learn.akae.cn/media/ch14s03.html"&gt;整数的加减运算&lt;/a&gt;）&lt;/h2&gt;
+&lt;h2&gt;有符号数和无符号数（摘自 &lt;a href="http://learn.akae.cn/media/ch14s03.html"&gt;整数的加减运算&lt;/a&gt;）&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;如果把所有的位数都用来表示数值的大小，那么8 bit 二进制数可以表示的范围是 [0, 255] ，这种称为无符号数 。其实计算机做加法时并不区分操作数是有符号数还是无符号数，计算过程都一样 。&lt;/p&gt;
 &lt;p&gt;举个栗子：&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="c"&gt;#   1000_0010              130                  -126&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="c"&gt;#   1000_0010              130                  -126&lt;/span&gt;
     &lt;span class="c"&gt;# + 1111_1000     =&amp;gt;   +   256          =&amp;gt;  +   -  8&lt;/span&gt;
     &lt;span class="c"&gt;# --------------      ---------------      -----------&lt;/span&gt;
     &lt;span class="c"&gt;# 1_0111_1010              122 + 256             122&lt;/span&gt;
@@ -377,7 +377,7 @@
 &lt;hr /&gt;
 &lt;p&gt;从 &lt;code&gt;原码&lt;/code&gt; 到 &lt;code&gt;反码&lt;/code&gt;，再到 &lt;code&gt;补码&lt;/code&gt;，可以清楚看到为了解决问题而改进的技术路线，虽然这些是非常基础知识，可能对我们对写程序没有很大的帮助，但是搞清楚这些不仅让你对计算机底层更加了解，更加关键的是 &lt;em&gt;这个学习过程&lt;/em&gt; 和 &lt;em&gt;解决编码问题的思路&lt;/em&gt; 。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2 id="_20"&gt;参考文献&lt;/h2&gt;
+&lt;h2&gt;参考文献&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Signed_number_representations"&gt;Signed number representations——Wiki&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Ones'_complement"&gt;Ones' complement&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Two's_complement"&gt;Two's complement&lt;/a&gt;&lt;/p&gt;

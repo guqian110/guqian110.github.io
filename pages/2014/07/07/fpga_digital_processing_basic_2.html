@@ -115,7 +115,7 @@
 </footer><!-- /.post-info -->                    </div>
                 </div>
                 <p>讨论 FPGA 中无符号数 unsigned 和有符号数 signed 的问题。</p>
-<h2 id="basic-knowledge">Basic Knowledge</h2>
+<h2>Basic Knowledge</h2>
 <hr />
 <p><strong>整数的分类：</strong> 无符号数 <code>unsigned</code> 和 有符号数 <code>signed</code>。</p>
 <p><strong>数制：</strong> 10、2、8、16 进制</p>
@@ -128,9 +128,9 @@
 <p>以前写过一篇总结，<a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic_1.html">FPGA 数字处理基础 (1)</a></p>
 <p>本文算是上面文章的续吧。</p>
 <p><br></p>
-<h2 id="unsigned-in-verilog">(un)signed in Verilog</h2>
+<h2>(un)signed in Verilog</h2>
 <hr />
-<h3 id="integer">Integer</h3>
+<h3>Integer</h3>
 <p>在 Verilog 中表示一个整数可以有两种方法：</p>
 <ol>
 <li>
@@ -143,18 +143,18 @@
 </li>
 </ol>
 <p><strong>在 FPGA 也采用补码系统</strong>，即在综合时，综合工具会将有符号数翻译为补码，在硬件中存储起来。</p>
-<div class="codehilite"><pre><span class="mi">4</span><span class="err">&#39;</span><span class="n">d5</span>   <span class="c1">// 这个数为无符号数，理解为 5, 占用 8 bit，存储的值为 0101</span>
+<div class="highlight"><pre><span class="mi">4</span><span class="err">&#39;</span><span class="n">d5</span>   <span class="c1">// 这个数为无符号数，理解为 5, 占用 8 bit，存储的值为 0101</span>
 <span class="mi">4</span><span class="err">&#39;</span><span class="n">sd5</span>  <span class="c1">// 这个数为有符号数，理解为 5, 占用 8 bit，存储的值为 0101</span>
 <span class="o">-</span><span class="mi">4</span><span class="err">&#39;</span><span class="n">d5</span>  <span class="c1">// 这个数为无符号数，理解为 -5, 占用 8 bit，存储的值为 1011</span>
 <span class="o">-</span><span class="mi">4</span><span class="err">‘</span><span class="n">sd5</span> <span class="c1">// 这个数为有符号数，理解为 -5, 占用 8 bit，存储的值为 1011</span>
 </pre></div>
 
 
-<h3 id="register">Register</h3>
+<h3>Register</h3>
 <p>Verilog 中数据的基本类型： <code>wire</code>、<code>reg</code>、<code>integer</code></p>
 <p>在 Verilog-1995 中，规定所有的 wire、reg 都是 unsigned 类型，只有 integer 是 signed 类型。但是 integer 的宽度是固定的(与宿主机的字是一样的，最小为 32 位)，这样子，造成了很大的不方便和浪费。</p>
 <p>在 Verilog-2001 中，添加了 wire、reg 也可以是 signed 类型了。</p>
-<div class="codehilite"><pre><span class="n">reg</span>             <span class="p">[</span><span class="mi">8</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">a</span><span class="p">;</span>  <span class="c1">// unsigned</span>
+<div class="highlight"><pre><span class="n">reg</span>             <span class="p">[</span><span class="mi">8</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">a</span><span class="p">;</span>  <span class="c1">// unsigned</span>
 <span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="mi">8</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">b</span><span class="p">;</span>  <span class="c1">// signed</span>
 </pre></div>
 
@@ -182,68 +182,68 @@
 <p>编写一个简单的测试程序，查看综合结果和仿真波形，就可以知道综合时的策略。</p>
 <p><strong>module: <a href="http://guqian110.github.io/files/test_signed.v">test_signed.v</a></strong></p>
 <p><strong>testbench: <a href="http://guqian110.github.io/files/tb_test_signed.v">tb_test_signed.v</a></strong></p>
-<h4 id="1-unsigned-reg-unsigned-value">1. unsigned reg &amp; unsigned value</h4>
+<h4>1. unsigned reg &amp; unsigned value</h4>
 <p>定义 reg 为 unsigned 类型</p>
-<div class="codehilite"><pre><span class="n">reg</span>     <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
+<div class="highlight"><pre><span class="n">reg</span>     <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
 <span class="n">reg</span>     <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// unsigned</span>
 </pre></div>
 
 
 <p>赋值为 unsigned 类型</p>
-<div class="codehilite"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">d10</span><span class="p">;</span>  <span class="c1">// unsigned</span>
+<div class="highlight"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">d10</span><span class="p">;</span>  <span class="c1">// unsigned</span>
 </pre></div>
 
 
 <p>那么可以从 RTL Schematic 中看到，综合出来的比较器是 unsigned 类型。</p>
-<h4 id="2-unsigned-reg-signed-value">2. unsigned reg &amp; signed value</h4>
+<h4>2. unsigned reg &amp; signed value</h4>
 <p>定义 reg 为 unsigned 类型</p>
-<div class="codehilite"><pre><span class="n">reg</span>     <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
+<div class="highlight"><pre><span class="n">reg</span>     <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
 <span class="n">reg</span>     <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// unsigned</span>
 </pre></div>
 
 
 <p>赋值为 signed 类型</p>
-<div class="codehilite"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span><span class="n">sd10</span><span class="p">;</span>    <span class="c1">// signed</span>
+<div class="highlight"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span><span class="n">sd10</span><span class="p">;</span>    <span class="c1">// signed</span>
 </pre></div>
 
 
 <p>那么综合出来的比较器是 unsigned 类型。</p>
-<h4 id="3-signed-reg-signed-value">3. signed reg &amp; signed value</h4>
+<h4>3. signed reg &amp; signed value</h4>
 <p>定义 reg 为 signed 类型</p>
-<div class="codehilite"><pre><span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
+<div class="highlight"><pre><span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
 <span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// signed</span>
 </pre></div>
 
 
 <p>赋值为 signed 类型</p>
-<div class="codehilite"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span><span class="n">sd10</span><span class="p">;</span>    <span class="c1">// signed</span>
+<div class="highlight"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">8</span><span class="err">&#39;</span><span class="n">sd10</span><span class="p">;</span>    <span class="c1">// signed</span>
 </pre></div>
 
 
 <p>那么综合出来的比较器是 signed 类型。</p>
-<h4 id="4-signed-reg-unsigned-value">4. signed reg &amp; unsigned value</h4>
+<h4>4. signed reg &amp; unsigned value</h4>
 <p>定义 reg 为 signed 类型</p>
-<div class="codehilite"><pre><span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
+<div class="highlight"><pre><span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
 <span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// unsigned</span>
 </pre></div>
 
 
 <p>赋值为 unsigned 类型</p>
-<div class="codehilite"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">d10</span><span class="p">;</span>  <span class="c1">// unsigned</span>
+<div class="highlight"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">d10</span><span class="p">;</span>  <span class="c1">// unsigned</span>
 </pre></div>
 
 
 <p>那么综合出来的比较器是 signed 类型。</p>
-<h4 id="5-signed-reg-unsigned-reg">5. signed reg &amp; unsigned reg</h4>
+<h4>5. signed reg &amp; unsigned reg</h4>
 <p>如果参与运算的两个变量一个是 signed，另一个是 unsigned。（注意这种现象应该避免，一般我们是不会将两种不同类型的数据混在一起进行计算的）</p>
 <p>定义 i 为 unsigned 类型，flag 为 signed 类型</p>
-<div class="codehilite"><pre><span class="n">reg</span>             <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
+<div class="highlight"><pre><span class="n">reg</span>             <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
 <span class="n">reg</span>     <span class="kt">signed</span>  <span class="p">[</span><span class="n">SIZE</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// signed</span>
 </pre></div>
 
 
 <p>给 flag 赋值为 signed 的 -5</p>
-<div class="codehilite"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">4</span><span class="err">&#39;</span><span class="n">d5</span><span class="p">;</span>      <span class="c1">// sigend</span>
+<div class="highlight"><pre><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">4</span><span class="err">&#39;</span><span class="n">d5</span><span class="p">;</span>      <span class="c1">// sigend</span>
 </pre></div>
 
 
@@ -269,7 +269,7 @@ Help
 </blockquote>
 <p>花费了大量时间上网找资料，在论坛里问别人无果，最后自己动手写程序测试，最后才发现原来官方资料里面早就写的清清楚楚 =.=</p>
 <p><br></p>
-<h2 id="conclusion">Conclusion</h2>
+<h2>Conclusion</h2>
 <hr />
 <p>说了这么多，总结下来就是下面这几句话：</p>
 <p><strong>经验：</strong></p>
@@ -302,10 +302,10 @@ Help
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic_1.html">FPGA 数字处理基础 (1)</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
     </ul>
 </section>
     <hr />
@@ -384,13 +384,8 @@ Help
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -399,28 +394,23 @@ Help
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/vim.html">
                                 Vim
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/syntax.html">
-                                syntax
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -434,13 +424,38 @@ Help
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/syntax.html">
+                                syntax
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/clock-resource.html">
+                                clock resource
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
                                 时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -454,13 +469,38 @@ Help
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -474,33 +514,8 @@ Help
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -509,43 +524,8 @@ Help
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fsm.html">
-                                FSM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/sublime-text.html">
-                                Sublime Text
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/clock-resource.html">
-                                clock resource
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -554,13 +534,33 @@ Help
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/sublime-text.html">
+                                Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
                             </a>
                         </li>
                     </ul>

@@ -121,12 +121,12 @@
 <p>这些组成部分添加到代码主体部分，目的是为了实现常用代码共享。通常这些代码被放在 <code>library</code> 中，我们可以将自己设计的一些常用代码添加到 <code>library</code> 中，这有利于使一个复杂设计具有更清晰的结构。</p>
 <p>总之，经常使用的代码可以以 <code>component</code>, <code>function</code>, <code>procedure</code> 的形式放到 <code>package</code> 中，然后被编译到目标 <code>library</code> 中。</p>
 <p><br></p>
-<h2 id="packages-and-components">Packages and Components</h2>
+<h2>Packages and Components</h2>
 <hr />
-<h3 id="package">Package</h3>
+<h3>Package</h3>
 <p>除了 <code>component</code>, <code>function</code>, <code>procedure</code> 之外，package 中还可以包含 <code>TYPE</code>, <code>CONSTANT</code> 的定义。</p>
 <p><strong>syntax</strong></p>
-<div class="codehilite"><pre><span class="n">PACKAGE</span> <span class="n">package_name</span> <span class="n">IS</span>
+<div class="highlight"><pre><span class="n">PACKAGE</span> <span class="n">package_name</span> <span class="n">IS</span>
     <span class="p">(</span><span class="n">declarations</span><span class="p">)</span>
 <span class="n">END</span> <span class="n">package_name</span><span class="p">;</span>
 
@@ -146,7 +146,7 @@
 </li>
 </ul>
 <p><strong>example</strong></p>
-<div class="codehilite"><pre><span class="o">---------</span> <span class="n">package</span> <span class="n">define</span><span class="o">-------------</span>
+<div class="highlight"><pre><span class="o">---------</span> <span class="n">package</span> <span class="n">define</span><span class="o">-------------</span>
 <span class="n">LIRRARY</span> <span class="n">IEEE</span><span class="p">;</span>
 <span class="n">USE</span> <span class="n">IDEE</span><span class="p">.</span><span class="n">STD_LOGIC_1164</span><span class="p">.</span><span class="n">ALL</span><span class="p">;</span>
 
@@ -171,12 +171,12 @@
 </pre></div>
 
 
-<h3 id="componet">Componet</h3>
+<h3>Componet</h3>
 <p>VHDL 中的 <code>component</code> 和 Verilog HDL 中的 <code>module</code> 类似：</p>
 <p>一个 component 是一段完整的代码（包括 library, entity, architecture 这些组成部分），如果将这些代码声明为一个 component，那么就可以被其他电路调用，从而使代码具有了层次化的结构。</p>
 <p>使用 component 必须先声明这个元件，然后再例化这个元件（类似 C++，变量先声明，在定义）。声明和例化都必须在 architecture 中进行。</p>
 <p><strong>declaration syntax</strong></p>
-<div class="codehilite"><pre><span class="n">COMPONENT</span> <span class="n">component_name</span> <span class="n">IS</span>
+<div class="highlight"><pre><span class="n">COMPONENT</span> <span class="n">component_name</span> <span class="n">IS</span>
     <span class="n">PORT</span> <span class="p">(</span>
         <span class="nl">port_name:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
         <span class="nl">port_name:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
@@ -186,7 +186,7 @@
 
 
 <p><strong>instantiation syntax</strong></p>
-<div class="codehilite"><pre><span class="n">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">port_list</span><span class="o">);</span>
+<div class="highlight"><pre><span class="n">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">port_list</span><span class="o">);</span>
 </pre></div>
 
 
@@ -212,24 +212,24 @@
 <ul>
 <li>
 <p>方法一：每次使用 STL 都添加作用域</p>
-<div class="codehilite"><pre><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;hello world!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;hello world!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 
 
 </li>
 <li>
 <p>方法二：声明一次作用域</p>
-<div class="codehilite"><pre><span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">using</span> <span class="n">namespace</span> <span class="n">std</span><span class="p">;</span>
 </pre></div>
 
 
 </li>
 </ul>
-<h3 id="port-map">port map</h3>
+<h3>port map</h3>
 <p>同 Verilog HDL 一样，两种端口映射的方法：位置映射、名字映射。</p>
 <p>位置映射书写简单，但是容易出错；名字映射书写繁琐，但是不易出错，端口连接也更清晰，未连接的端口要使用关键词 <code>open</code>。</p>
 <p><strong>example</strong></p>
-<div class="codehilite"><pre><span class="o">--</span> <span class="n">positional</span>
+<div class="highlight"><pre><span class="o">--</span> <span class="n">positional</span>
 <span class="nl">U1:</span> <span class="n">inverter</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 
 <span class="o">--</span> <span class="n">nominal</span>
@@ -237,25 +237,25 @@
 </pre></div>
 
 
-<h3 id="generic-map">generic map</h3>
+<h3>generic map</h3>
 <p>generic 功能类似于 Veriog HDL 中的 parameter，所以在例化时 component 时，可以重载参数，使设计更方便灵活。</p>
 <p><strong>syntax</strong></p>
-<div class="codehilite"><pre><span class="n">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="n">GENERIC</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">param</span><span class="o">.</span><span class="na">list</span><span class="o">)</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">port</span> <span class="n">list</span><span class="o">);</span>
+<div class="highlight"><pre><span class="n">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="n">GENERIC</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">param</span><span class="o">.</span><span class="na">list</span><span class="o">)</span> <span class="n">PORT</span> <span class="n">MAP</span> <span class="o">(</span><span class="n">port</span> <span class="n">list</span><span class="o">);</span>
 </pre></div>
 
 
 <p>也就是说，在例化时，添加一段 <code>GENERIC MAP (param.list)</code> 就可以了。</p>
 <p><br></p>
-<h2 id="functions-and-procedure">Functions and Procedure</h2>
+<h2>Functions and Procedure</h2>
 <hr />
 <p>function 和 procedure 统称为 子程序，它们和 process 相似，内部包含的都是顺序描述的代码，通常使用相同的顺序描述语句。但是，function 和 procedure 的存在主要是为了建库，以达到代码重用和共享的目的，当然它们也可以直接建立在主代码中。</p>
-<h3 id="function">Function</h3>
+<h3>Function</h3>
 <p>一个 function 就是一段顺序描述的代码。</p>
 <p>在写代码的过程中，我们通常会遇到一些有共性的问题，我们希望实现这些功能的代码可以被共享和重用，从而使代码变得简洁，易于理解，function 的建立和使用就能达到这个目睹。
 function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> 等语句，但是不能有 <code>signal</code> 和 <code>component</code>。</p>
 <p>function 的使用方法：先创建函数体本身，再调用函数。</p>
 <p><strong>Function Body</strong></p>
-<div class="codehilite"><pre><span class="nx">FUNCTION</span> <span class="nx">function_name</span> <span class="cp">[</span><span class="o">&lt;</span><span class="nx">parameter</span> <span class="nb">list</span><span class="o">&gt;</span><span class="cp">]</span> <span class="nx">RETURN</span> <span class="nx">data_type</span> <span class="nx">IS</span>
+<div class="highlight"><pre><span class="nx">FUNCTION</span> <span class="nx">function_name</span> <span class="cp">[</span><span class="o">&lt;</span><span class="nx">parameter</span> <span class="nb">list</span><span class="o">&gt;</span><span class="cp">]</span> <span class="nx">RETURN</span> <span class="nx">data_type</span> <span class="nx">IS</span>
     <span class="cp">[</span><span class="nx">declarations</span><span class="cp">]</span>
 <span class="nx">BEGIN</span>
     <span class="p">(</span><span class="nx">sequential</span> <span class="nx">statements</span><span class="p">)</span>
@@ -264,7 +264,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 
 
 <p>其中，<parameter list> 指函数的输入参数：</p>
-<div class="codehilite"><pre><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="n">CONSTANT</span><span class="p">]</span> <span class="n">constant_name</span> <span class="o">:</span> <span class="n">constant_type</span><span class="p">;</span>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="n">CONSTANT</span><span class="p">]</span> <span class="n">constant_name</span> <span class="o">:</span> <span class="n">constant_type</span><span class="p">;</span>
 <span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">SIGNAL</span> <span class="n">signal_name</span> <span class="o">:</span> <span class="n">signal_type</span><span class="p">;</span>
 </pre></div>
 
@@ -272,7 +272,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 <p>参数可以是 constant, signal，但是不能是 variable；参数的个数可以是任意个，类型也任意。</p>
 <p><strong>Function Call</strong></p>
 <p>函数可以单独构成表达式，也可以作为表达式的一部分。</p>
-<div class="codehilite"><pre><span class="o">--</span><span class="n">example</span>
+<div class="highlight"><pre><span class="o">--</span><span class="n">example</span>
 <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">conv_integer</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
 <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">maximum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="p">...</span>
 </pre></div>
@@ -288,11 +288,11 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 <p>Main Code 中，既可以在 entity 中，也可以在 architecture 中</p>
 </li>
 </ul>
-<h3 id="procedure">Procedure</h3>
+<h3>Procedure</h3>
 <p>procedure 和 function 类似，目的也相同，不同之处在于 procedure 可以有多个返回值。</p>
 <p>与 function 类似，procedure 也需要定义和调用两个过程。</p>
 <p><strong>Procedure Body</strong></p>
-<div class="codehilite"><pre><span class="n">PROCEDURE</span> <span class="n">procedure_name</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span><span class="p">]</span> <span class="n">IS</span>
+<div class="highlight"><pre><span class="n">PROCEDURE</span> <span class="n">procedure_name</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span><span class="p">]</span> <span class="n">IS</span>
     <span class="p">[</span><span class="n">declarations</span><span class="p">]</span>
 <span class="n">BEGIN</span>
     <span class="p">(</span><span class="n">sequential</span> <span class="n">statements</span><span class="p">)</span>
@@ -301,7 +301,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 
 
 <p>其中，<parameter list> 指出了 procedure 的输入输出参数：</p>
-<div class="codehilite"><pre><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="n">CONSTANT</span><span class="p">]</span> <span class="n">constant_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="n">type</span><span class="p">;</span>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="n">CONSTANT</span><span class="p">]</span> <span class="n">constant_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="n">type</span><span class="p">;</span>
 <span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">SIGNAL</span> <span class="n">signal_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="n">type</span><span class="p">;</span>
 <span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">VARIABLE</span> <span class="n">variable_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="n">type</span><span class="p">;</span>
 </pre></div>
@@ -311,7 +311,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 <p>和 function 一样，procedure 内部的 wait 语句，signal 声明，component 调用都是不可综合的。</p>
 <p><strong>Procedure Call</strong></p>
 <p>procedure 的调用就是它自己。</p>
-<div class="codehilite"><pre><span class="o">--</span><span class="n">example</span>
+<div class="highlight"><pre><span class="o">--</span><span class="n">example</span>
 <span class="n">compute_min_max</span> <span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">in3</span><span class="p">,</span> <span class="n">out1</span><span class="p">,</span> <span class="n">out2</span><span class="p">);</span>
 <span class="n">divide</span> <span class="p">(</span><span class="n">dividend</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="n">quotient</span><span class="p">,</span> <span class="n">remainder</span><span class="p">);</span>
 </pre></div>
@@ -319,7 +319,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 
 <p><strong>Procedure Location</strong></p>
 <p>procedure 的存放和 function 类似，通常放在 package 中，当然也可以放在主代码中。</p>
-<h3 id="function-versus-procedure-summary">FUNCTION versus PROCEDURE Summary</h3>
+<h3>FUNCTION versus PROCEDURE Summary</h3>
 <ul>
 <li>
 <p>function 有任意个输入参数和一个返回值，输入参数只能是 constant, signal</p>
@@ -338,7 +338,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 </li>
 </ul>
 <p><br></p>
-<h2 id="reference">Reference</h2>
+<h2>Reference</h2>
 <p><a href="http://www.amazon.com/Circuit-Design-VHDL-Volnei-Pedroni/dp/0262162245">Circuit Design with VHDL</a></p>
             </div>
             <!-- /.entry-content -->
@@ -346,10 +346,10 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
     </ul>
 </section>
     <hr />
@@ -428,13 +428,8 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/verilog.html">
-                                Verilog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -443,28 +438,23 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/c.html">
-                                C
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/vim.html">
                                 Vim
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/syntax.html">
-                                syntax
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -478,13 +468,38 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/syntax.html">
+                                syntax
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/clock-resource.html">
+                                clock resource
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
                                 时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -498,13 +513,38 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -518,33 +558,8 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/pkm.html">
-                                PKM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -553,43 +568,8 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fsm.html">
-                                FSM
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/sublime-text.html">
-                                Sublime Text
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/warcraft.html">
-                                WarCraft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/clock-resource.html">
-                                clock resource
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -598,13 +578,33 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/sublime-text.html">
+                                Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
                             </a>
                         </li>
                     </ul>

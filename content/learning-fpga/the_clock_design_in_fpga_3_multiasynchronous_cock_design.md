@@ -390,7 +390,7 @@ enable signal in order to load a data value into the register. If both the load 
 
 在 [The Art of Hardware Architecture][art] 这本书中，有详细的时序图来说明了一种握手机制下，这种机制采用了 full handshaking 中等待对方的方法，但是对握手信号进行了精简（partial II 类型）。如下图：
 
-![datapath timing](/images/the_clock_design_in_fpga_3_multiasynchronous_clock_design/datapath_timing.png)
+![datapath timing](/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/datapath_timing.png)
 
 注意：
 
