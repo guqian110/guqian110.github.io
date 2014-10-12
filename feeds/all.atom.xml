@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-10-09T23:01:00+08:00</updated><entry><title>FPGA 时钟设计 3 —— 跨时钟域设计</title><link href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html" rel="alternate"></link><updated>2014-10-09T23:01:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-10-09:pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html</id><summary type="html">&lt;h2 id="problem"&gt;Problem&lt;/h2&gt;
-&lt;hr /&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-10-09T23:01:00+08:00</updated><entry><title>FPGA 时钟设计 3 —— 跨时钟域设计</title><link href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html" rel="alternate"></link><updated>2014-10-09T23:01:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-10-09:pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html</id><summary type="html">
+&lt;h2 id="problem"&gt;Problem&lt;/h2&gt;
+&lt;hr/&gt;
 &lt;p&gt;在前面一篇总结 &lt;a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html"&gt;Latch V.S. Flip-flop&lt;/a&gt; 的博文中，已经解释了 flip-flop 的一些参数：建立时间 &lt;code&gt;setup time&lt;/code&gt;、保持时间 &lt;code&gt;hold time&lt;/code&gt;、回复时间 &lt;code&gt;recovery time&lt;/code&gt;、撤销时间 &lt;code&gt;removal time&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;如果不满足这些参数的要求，则会发生所谓的 亚稳态 &lt;code&gt;Metastability&lt;/code&gt; 的问题。下面是 Altera 官方的一篇关于亚稳态的 white paper，详细介绍了亚稳态的产生原因、它是如何导致设计出现问题、以及描述它的参数 MTBF (Mean Time Between Failures) 如何计算。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.altera.com.hk/literature/wp/wp-01082-quartus-ii-metastability.pdf"&gt;Understanding Metastability in FPGAs&lt;/a&gt;&lt;/p&gt;
@@ -12,13 +13,13 @@
 &lt;p&gt;"When sampling a changing data signal with a clock ... the order of the events determines the outcome. The smaller the time difference between the events, the longer it takes to determine which came first. When two events occur very close together, the decision process can take longer than the time allotted, and a synchronization failure occurs."&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Illustation 1: &lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="failure" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronization_failure.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="failure" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronization_failure.png"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Illustation 2: &lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;如果不加处理，亚稳态产生的错误值将会传播到设计的其他部分，到这更加严重的问题&lt;/p&gt;
-&lt;p&gt;&lt;img alt="propagatetion" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/propagation.png" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="propagatetion" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/propagation.png"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="synchronous-design"&gt;Synchronous Design&lt;/h2&gt;
-&lt;hr /&gt;
+&lt;hr/&gt;
 &lt;p&gt;多时钟域导致的亚稳态的问题的根本原因就是：信号和时钟是异步的，也就是设计不是同步设计 &lt;code&gt;Synchronous Design&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;同步化设计思想&lt;/strong&gt; 是 FPGA 中非常重要的原则：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Asynchronous Circuits&lt;/strong&gt;&lt;/p&gt;
@@ -35,15 +36,15 @@
 &lt;p&gt;&lt;strong&gt;FPGA 同步设计中，时序电路应尽量采用同步电路，尽可能使用同步器件，尽量减小或不使用门控时钟（为了降低系统功耗以外）。设计中不用西哦他能够时钟经过逻辑运算得到控制信号，避免使用非时钟信号最为触发器的时钟输入。&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;下面提到的所有方法，就是同步化思想的应用，其核心目的就是将本时钟域外的 &lt;strong&gt;异步信号同步化&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="solution"&gt;Solution&lt;/h2&gt;
-&lt;hr /&gt;
+&lt;hr/&gt;
 &lt;h3 id="synchronizer"&gt;Synchronizer&lt;/h3&gt;
 &lt;p&gt;通常使用 &lt;code&gt;MTBF (Mean Time Between Failures)&lt;/code&gt; 来描述 flip-flop 亚稳态指标，MTBF 越大，表示出现故障的间隔越大，表示设计越可靠。&lt;/p&gt;
 &lt;p&gt;以一个典型的 0.25 us 工艺的 ASIC 库中的 flip-flop 的参数计算可以得到 MTBF = 2.01 d，即两天就会出现一次亚稳态。显然这是不能接受的，但是如果将两个 flip-flop 级联在一起，计算结果则变成了 9.57×109 years，显然这个概率基本就可以忽略不计，可以看作是消除了亚稳态。&lt;/p&gt;
 &lt;p&gt;理论上，亚稳态是不可能完全消除的，一般级联多少个 flip-flop，由实际指标要求和设计者的强迫症习惯决定，对于普通的应用来说，2 级 flip-flop 级联已经足够了。&lt;/p&gt;
 &lt;p&gt;如图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="synchronizer" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronizer.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="synchronizer" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronizer.png"/&gt;&lt;/p&gt;
 &lt;p&gt;通常，同步器 synchronizer 由两个 flip-flop 串联而成，它们中间没有其他的组合电路。第一个 flip-flop 有很大的可能性会产生亚稳态，但是当第二个 flip-flop 获得前一个 flip-flop 的输出时，前一个 flip-flop 已经退出了亚稳态，并且输出稳定，这样就避免了第一级 flip-flop 的亚稳态对下一级逻辑造成的影响。&lt;/p&gt;
 &lt;p&gt;为了让 synchronizer 正常工作，从某个 时钟域传递过来的信号应该先通过原时钟域的一个 flip-flop，然后不经过两个时钟域间的任何组合逻辑，直接进入 synchronizer。之所以这样要求，是因为 synchronizer 的第一级 flip-flop 对组合逻辑产生的毛刺非常敏感，如果一个足够长的信号毛刺正好满足 setup/hold time 的要求，那么它就会通过 synchronizer，给新时钟域后续逻辑一个虚假的信号。&lt;/p&gt;
 &lt;p&gt;synchronizer 有很多设计方法，因为一种方法不能满足所有的应用需求。synchronizer 的类型基本上分为 3 种：&lt;/p&gt;
@@ -62,7 +63,7 @@
 &lt;h4 id="level-synchronizer"&gt;level synchronizer&lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;Schematic:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;电平同步器的结构图就是前面的图，在 Clifford E. Cummings 的 &lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf"&gt;paper&lt;/a&gt; 中有更详细的图解说明：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="level" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/level.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="level" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/level.png"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Code:&lt;/strong&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;module LVLSYNC(
     rst, clk_i, din, clk_o, dout
@@ -108,7 +109,7 @@
 endmodule
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;RTL:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="level rtl" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/level_rtl.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="level rtl" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/level_rtl.png"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Restriction:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;使用 level synchronizer 的要求是：跨域时钟域的这个信号持续时间 &amp;gt;= 2 个新时钟域时钟周期。&lt;/p&gt;
 &lt;p&gt;之所以这样要求是因为：synchronizer 要花费两个时钟周期来同步这个异步信号，如果这个信号长度短于两个时钟周期，则不能正常工作。&lt;/p&gt;
@@ -116,7 +117,7 @@ endmodule
 &lt;h4 id="edge-detecting-synchronizer"&gt;edge-detecting synchronizer&lt;/h4&gt;
 &lt;p&gt;边沿检测同步器 是在 level synchronizer 的输出端增加了一个 flip-flop，如下图所示。这个电路的功能是实现上升沿检测，产生一个和时钟周期等宽，高电平有效的脉冲；如果将与门的两个输入端交换，则会完成下降沿检测。如果改为非门，则可以得到一个低电平脉冲有效的电路。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Schematic:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="edge-detecting" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/edge-detecting.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="edge-detecting" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/edge-detecting.png"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Code:&lt;/strong&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;module EDGESYNC(
     rst, clk_i, din, clk_o, dout
@@ -165,14 +166,14 @@ endmodule
 endmodule
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;RTL:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="edge rtl" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/edge_rtl.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="edge rtl" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/edge_rtl.png"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Restriction:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;使用 edge-detecting synchronizer 的要求是：输入信号的宽度 &amp;gt;= 同步时钟周期 + 第一个 flip-flop 的 hold time。最保险的脉冲宽度是同步周期的两倍。&lt;/p&gt;
 &lt;p&gt;edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较快时钟域时可以正常工作，它会产生一个脉冲表示输入信号的上升沿或者下降沿。但是反过来，将一个快时钟域的信号同步到慢时钟域时，并不能正常工作，这时候需要使用 pusle synchronizer。&lt;/p&gt;
 &lt;h4 id="pulse-synchronizer"&gt;pulse synchronizer&lt;/h4&gt;
 &lt;p&gt;脉冲同步器的基本功能是从某个时钟域中取出一个单时钟宽度的脉冲，然后在新的时钟域中建立另外一个单时钟宽度的脉冲。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Schematic:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="pusle" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/pulse.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pusle" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/pulse.png"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Code:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;...&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;RTL:&lt;/strong&gt;&lt;/p&gt;
@@ -182,7 +183,7 @@ endmodule
 &lt;p&gt;如果两个输入脉冲相互过近，则新时钟域的输出脉冲也会紧密相邻。&lt;/p&gt;
 &lt;h4 id="summary"&gt;Summary&lt;/h4&gt;
 &lt;p&gt;总结 3 种同步器的特点，有下表：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="synchronizer sum" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronizer_sum.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="synchronizer sum" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronizer_sum.png"/&gt;&lt;/p&gt;
 &lt;p&gt;经过 synchronizer 的信号在两个时钟之后变为有效，一般延时为 1～2 新时钟周期，可以粗略估计延时为 2 个时钟周期，设计者需要仔细考虑同步延迟对于跨时钟域的信号时序造成的影响。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输，这时候通常采用其他的方法，比如握手协议和 FIFO 等。&lt;/em&gt;&lt;/p&gt;
 &lt;h3 id="handshaking"&gt;Handshaking&lt;/h3&gt;
@@ -200,7 +201,7 @@ endmodule
 &lt;/ol&gt;
 &lt;p&gt;这两种握手协议都要用到 synchronizer，每种都有各自的优缺点，下面分别讨论：&lt;/p&gt;
 &lt;h4 id="full-handshaking"&gt;full handshaking&lt;/h4&gt;
-&lt;p&gt;&lt;img alt="full" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/full.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="full" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/full.png"/&gt;&lt;/p&gt;
 &lt;p&gt;如图所示，全握手协议中，双方电路在声明或中止各自的握手信号前都要等待对方的相应。首先，发送方电路A声明它的请求信号，然后接收方电路B检测到该请求有效后，声明它的效应信号；当电路A检测到响应信号有效之后，中止自己的请求信号；最后，当电路B检测到请求无效之后，中止自己的相应信号。这样，算是完成了一次通信。除非A检测到无效的响应信号，否则它不会再声明新的请求信号。这种机制要求请求电路A必须延迟它的下一个请求，直到它检测到无效的响应信号（意味着上次请求已完成）。&lt;/p&gt;
 &lt;p&gt;这种类型的握手使用了 level synchronizer。可以根据两点来粗略估计这个协议的时序：信号跨域一个时钟域需要花费 2 个时钟周期，信号在跨域时钟域之前被电路寄存花费 1 个时钟周期。所以，发送端A需要 5 个周期，接收端B需要 6 个周期。&lt;/p&gt;
 &lt;p&gt;全握手很强健，因为通过检测请求和响应信号，每个电路都清楚地知道对方的状态，这种方式的不足之处是完成整个过程要花费很多时钟周期。&lt;/p&gt;
@@ -209,15 +210,15 @@ endmodule
 &lt;p&gt;部分握手比全握手在健壮性方面稍弱，因为握手信号并不指示各自电路的状态，每一电路都必须保存状态信息（在全握手里这个信息被送出去），但是，由于无需等待对方的响应，完整的时间序列花费较少的时间。&lt;/p&gt;
 &lt;p&gt;有两种类型的部分握手：&lt;/p&gt;
 &lt;p&gt;第一种握手方法中，电路A以有效电平声明其请求信号，电路B以一个单时钟宽度脉冲作为响应。此时，电路B并不关心电路A何时中止它的请求。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="partial-1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="partial-1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_1.png"/&gt;&lt;/p&gt;
 &lt;p&gt;但是为了这种方法成立，电路A中止请求信号至少要 1 个时钟周期长度，否则，电路B就不能区别前一个和后一个新的请求。&lt;/p&gt;
 &lt;p&gt;在这种握手方式下，电路B为请求信号使用一个 level synchronizer；电路A为响应信号使用一个 pusle synchronizer。只有当电路B检测到请求信号时才发出响应脉冲，这样电路A控制请求信号的时序，就能控制自己synchronizer接收到的脉冲间隔。&lt;/p&gt;
 &lt;p&gt;同样，使用前面的方法可以估算出这种握手协议的时序：发送端电路A需要花费 3 个时钟周期，接收端B需要花费 5 个时钟周期。&lt;/p&gt;
 &lt;p&gt;第二种握手方法中，电路A使用一个单时钟宽度脉冲发出它的请求，电路B也以一个单时钟宽度脉冲响应这个请求。这种情况下，两个电路都需要保存状态，以指示请求正待处理。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="partial-2" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="partial-2" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_2.png"/&gt;&lt;/p&gt;
 &lt;p&gt;这种握手使用的是 pusle synchronizer。完整的时序是：电路A需要花费 2 个时钟周期，电路B需要花费 3 个时钟周期。&lt;/p&gt;
 &lt;h4 id="summary_1"&gt;summary&lt;/h4&gt;
-&lt;p&gt;&lt;img alt="handshaing sum" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/handshaking_sum.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="handshaing sum" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/handshaking_sum.png"/&gt;&lt;/p&gt;
 &lt;p&gt;因为 handshaking 内部采用了 synchronizer，所以可以解决异步信号导致的亚稳态现象。根据实际要求，选择不同的 synchronizer 和握手信号，就有了前面介绍的 3 种不同的 handshaking：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -250,18 +251,18 @@ endmodule
 &lt;p&gt;&lt;strong&gt;Problem - Two simultaneously required control signals&lt;/strong&gt;
  a register in the new clock domain requires both a load signal and an
 enable signal in order to load a data value into the register. If both the load and enable signals are being sent from one clock domain, there is a chance that a small skew between the control signals could cause the two signals to be synchronized into different clock cycles within the new clock domain. In this example, this would cause the data to the register to not be loaded.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="problem 1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/problem_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="problem 1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/problem_1.png"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt; Solution - Consolidating control signals before passing&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="solution 1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/solution_1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="solution 1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/solution_1.png"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Problem - Two phase-shifted sequencing control signals&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;The problem is that in the first clock domain, the aen1 control signal might terminate slightly before the aen2 control signal is asserted, and the second clock domain might try to sample the aen1 and aen2 control signals in the middle of this slight time gap, causing a one-cycle gap to form in the enable control-signal chain in the second clock domain. This would cause the a2 output signal to be missed by the second flip-flop.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="problem 2" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/problem_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="problem 2" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/problem_2.png"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt; Solution - Logic to generate the proper sequencing signals&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="solution 2" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/solution_2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="solution 2" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/solution_2.png"/&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id="solution_1"&gt;solution&lt;/h4&gt;
 &lt;p&gt;有一种解决这个问题的方法是：&lt;strong&gt;使用一个保持寄存器 + 一个握手信号&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="solution" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/datapath.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="solution" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/datapath.png"/&gt;&lt;/p&gt;
 &lt;p&gt;保持寄存器保持信号总线的数据，握手信号指示目标时钟域何时可以对总线进行采样，源时钟域何时可以更换当前寄存器中保存的内容。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;In this design, the transmitting circuit stores the data (signal bus) in the holding register as it asserts the request signal. These two actions can happen at once because the request signal takes at least one clock cycle before the receiving circuit detects it (the minimum handshake-synchronization delay). When the receiving circuit samples the data (signal bus), it asserts the acknowledgment signal.&lt;/p&gt;
@@ -272,7 +273,7 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;采用这种方法可以避免亚稳态的出现的原因就是它规定了异步信号（保持寄存器）什么时候可以变化，虽然是异步信号，但是在采样的时候人为地确保了它保持稳定，满足 setup/hold time 的要求，所以不会有亚稳态的问题。&lt;/p&gt;
 &lt;p&gt;这里的握手机制可以采用 full handshaking，也可以采用 partial handshaking，设计者应该根据实际需求来选择。&lt;/p&gt;
 &lt;p&gt;在 &lt;a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960"&gt;The Art of Hardware Architecture&lt;/a&gt; 这本书中，有详细的时序图来说明了一种握手机制下，这种机制采用了 full handshaking 中等待对方的方法，但是对握手信号进行了精简（partial II 类型）。如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="datapath timing" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/datapath_timing.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="datapath timing" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/datapath_timing.png"/&gt;&lt;/p&gt;
 &lt;p&gt;注意：&lt;/p&gt;
 &lt;p&gt;如果发送端的数据速率很快/无法控制发送端发送数据的速度，那么就有可能无法满足握手机制中要求数据保持稳定这一要求，这时候这种方法就不再适用，而应该采用其他的方法，比如 FIFO。&lt;/p&gt;
 &lt;h3 id="advanced-datapath-design"&gt;Advanced Datapath Design&lt;/h3&gt;
@@ -301,7 +302,7 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;It is given that any signal passing from one clock domain to another clock domain is going to have setup and hold time problems. No worst-case (max time) timing analysis is required for synchronizer modules. Only best case (min time) timing analysis is required between first and second stage flip-flops to ensure that all hold times are met. Also, gate-level simulations can more easily be configured to ignore setup and hold time violations on the first stage of each synchronizer.&lt;/p&gt;
 &lt;p&gt;采用这种设计方式的原因如上所示，可以减少不必要的时序验证，而且脚本也更容易写，总之可以使时序验证工作更容易。&lt;/p&gt;
 &lt;p&gt;举例如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="partitioning" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partitioning.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="partitioning" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partitioning.png"/&gt;&lt;/p&gt;
 &lt;h3 id="clock-name-conventions"&gt;Clock Name Conventions&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Guideline:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Use a clock naming convention to identify the clock source of every signal in a design.&lt;/p&gt;
@@ -309,9 +310,9 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;A naming convention helps all team members to identify the clock domain for every signal in a design and also makes grouping of signals for timing analysis easier to do using regular expression "wild-carding" from within a synthesis script.&lt;/p&gt;
 &lt;p&gt;作者还举例说明了一个这样的例子：1995 年为 In Focus projectors 设计 video ASIC 时，他们就采用了这样的方法，对于 mircroprocessor 的时钟命名为 uClk，对于 video 的时钟则命名为 vClk。对应的时钟域中的信号的名字也添加了对应的前缀，比如udata，uwrite，uadder等。&lt;/p&gt;
 &lt;p&gt;使用了这样的策略后，整个设计团队的攻城狮们都可以很方便地确定某个信号是否为异步信号，如何处理。当时有个攻城狮没有按照这种策略，使用了自己的命名方式，在一次会议之后，大家墙裂建议他修改命名，结果也证明修改之后遇到的问题、出错的概率都小了很多。&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="summary_2"&gt;Summary&lt;/h2&gt;
-&lt;hr /&gt;
+&lt;hr/&gt;
 &lt;p&gt;以上，就是一些在多时钟域设计中处理异步数据的常用方法，总结如下：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -333,7 +334,7 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;采用良好的命名习惯，如前缀的方式，可以帮助设计。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="reference"&gt;Reference&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf"&gt;Synthesis and Scripting Techniques for Designing Multi-Asynchronous Clock Designs&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://inst.eecs.berkeley.edu/~cs150/sp10/Collections/Papers/ClockCrossing.pdf"&gt;Crossing the abyss: asynchronous signals in a synchronous world&lt;/a&gt;&lt;/p&gt;

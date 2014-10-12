@@ -6,6 +6,8 @@ Slug: the_clock_design_in_fpga_3_multiasynchronous_clock_design
 Author: Chien Gu
 Summary: 总结 FPGA 中跨时钟域的设计
 
+[TOC]
+
 ## Problem
 * * *
 
