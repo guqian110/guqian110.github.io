@@ -119,14 +119,14 @@
 <p>每种类型都定义了其存储空间要求和可以在该类型的所有对象上执行的操作。C++ 是 在 C 的基础上扩充得到的，为了和 C 兼容， C++ 在必要时必须能够直接处理硬件，所以 C++ 提供的一组基本内置类型，如int、char等，这些类型与它们在机器硬件上的标示方式紧密相关。（所以，C++ 可以称为 “具有高级语言库的低级语言”）</p>
 <p>本文只限于总结 C++ 的内置类型（Built-in Types），不讨论自定义类型 。</p>
 <p><br></p>
-<h2>基本内置类型</h2>
+<h2 id="_1">基本内置类型</h2>
 <hr />
-<h3>算术类型</h3>
+<h3 id="_2">算术类型</h3>
 <p>C++ 语言自身定义了一组基本类型来表示不同的数据，如整数、浮点数、字母、bool 类型等，这些类型统称为 <em>算术类型（Arithmetic type）</em> 。</p>
 <p><strong>size</strong></p>
 <p>算术类型的存储空间依机器而定，即用多少二进制位 bit 来表示一个数 。C++ 标准规定了每个算术类型的最小存储空间，但它并不阻止编译器使用更大的存储空间 。事实上，对于 <code>int</code> 类型，几乎所有的编译器使用的存储空间都比所要求的大 。</p>
 <p>使用 <code>sizeof()</code> 操作符可以查询对象或类型的大小（以字节为单位），包含头文件</p>
-<div class="highlight"><pre>    <span class="c">#include &lt;limits&gt;</span>
+<div class="codehilite"><pre>    <span class="c">#include &lt;limits&gt;</span>
 </pre></div>
 
 
@@ -137,7 +137,7 @@
 <p><strong>Integral Types</strong></p>
 <p>表示整数、字符、布尔值的算术类型合称为 整型（integral types）。</p>
 <p>整数的基本表示类型是 <code>int</code> 。int 类型前面可以加两类修饰说明，表示数据位数长短的 <code>short</code> 和 <code>long</code> ；表示有无符号的 <code>signed</code> 和 <code>unsigned</code> 。组合出来的结果就有 4 种：</p>
-<div class="highlight"><pre>    <span class="kt">signed</span> <span class="kt">short</span> <span class="kt">int</span>
+<div class="codehilite"><pre>    <span class="kt">signed</span> <span class="kt">short</span> <span class="kt">int</span>
     <span class="kt">unsigned</span> <span class="kt">short</span> <span class="kt">int</span>
     <span class="kt">signed</span> <span class="kt">long</span> <span class="kt">int</span>
     <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">int</span>
@@ -162,7 +162,7 @@
 </blockquote>
 <p>于是，编写一个测试小程序就可以知道我们使用的编译器是如何处理的。</p>
 <p>源代码：</p>
-<div class="highlight"><pre>    <span class="kt">char</span> <span class="n">ch1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<div class="codehilite"><pre>    <span class="kt">char</span> <span class="n">ch1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
     <span class="n">printf</span><span class="p">(</span><span class="s">&quot;ch1 = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">ch1</span><span class="p">);</span>
 </pre></div>
 
@@ -181,38 +181,38 @@
 <p>The float type is usually not precise enough for real programsfloat is guaranteed to offer only 6 significant digits. The double type guarantees at least 10 significant digits, which is sufficient for most calculations.</p>
 <p>Determining which floating-point type to use is easier: It is almost always right to use double. The loss of precision implicit in float is significant, whereas the cost of double precision calculations versus single precision is negligible. In fact, on some machines, double precision is faster than single. The precision offered by long double usually is unnecessary and often entails considerable extra run-time cost.</p>
 </blockquote>
-<h3>void</h3>
+<h3 id="void">void</h3>
 <p>void 类型没有对应的值，仅用在有限的一些情况下，通常用作无返回值函数的返回类型。</p>
 <p><br></p>
-<h2>初始化 Initialize</h2>
+<h2 id="initialize">初始化 Initialize</h2>
 <hr />
-<h3>初始化 &amp; 赋值</h3>
+<h3 id="_3">初始化 &amp; 赋值</h3>
 <p>首先是初始化的必要性：</p>
 <p>在 C++ 中，初始化是一个非常重要的概念，给变量一个初始值几乎总是正确的，但不要求必须这么做。定义变量时，应该给变量赋初始值，除非确定将变量用于其他意图之前会覆盖这个初值。如果不能保证读取变量前重置变量，就应该初始化变量。变量没有初始化是很常见的导致程序崩溃/结果错误的原因，而且有时候很难像 Debug 一样找到这个错误（bug 导致程序一定不对，但是没有初始化的变量的结果是随机的）。所以，良好的习惯是对每个变量都进行初始化 。</p>
 <p>其次是初始化和赋值的区别：</p>
 <p>初始化 <code>Initialization</code>：创建变量并且给它赋初始值</p>
 <p>赋值 <code>Assigment</code>：擦除变量的当前值并用新值代替</p>
 <p>C++ 提供两种初始化变量的方法：复制初始化（<code>copy-initialization</code>）和直接初始化（<code>direct-initialization</code>）。复制初始化使用 <code>=</code>，直接初始化使用 <code>()</code> 。</p>
-<div class="highlight"><pre>    <span class="kt">int</span> <span class="n">ival</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>    <span class="c1">// copy-initialization</span>
+<div class="codehilite"><pre>    <span class="kt">int</span> <span class="n">ival</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>    <span class="c1">// copy-initialization</span>
     <span class="kt">int</span> <span class="nf">ival</span> <span class="p">(</span><span class="mi">1024</span><span class="p">);</span>    <span class="c1">// direct-initialization</span>
 </pre></div>
 
 
 <p>使用 <code>=</code> 很容易让人把初始化和赋值混淆在一起，但是在 C++ 中这是两种不同的操作，当涉及到类对象时，两种不同的初始化方式的区别是很微妙的。目前先不考虑这点，只需要知道直接初始化语法更灵活而且效率高。</p>
-<h3>内置类型初始化</h3>
+<h3 id="_4">内置类型初始化</h3>
 <p>当我们定义一个变量却没有初始化时，系统 <em>有可能</em> 会为我们进行隐式的初始化。至于系统是否帮我们隐式初始化变量，以及为变量赋予一个怎样的初始值，这要取决于 <em>该变量的类型</em> 以及我们 <em>在何处定义的该变量</em> 。</p>
 <p>这里我们只考虑内置类型的初始化：</p>
 <p>内置类型的变量是否自动初始化取决于变量定义的位置。在函数体外（全局范围）定义的变量都初始化为 0，函数体内定义的变量不进行自动初始化 。</p>
 <p><br></p>
-<h2>算术类型转换</h2>
+<h2 id="_5">算术类型转换</h2>
 <hr />
-<h3>隐式类型转换</h3>
+<h3 id="_6">隐式类型转换</h3>
 <p>当两个操作数类型不同时，C++ 并不是直接把两个数加在一起，而是提供了一组转换规则，以便在执行算术操作之前，将两个数转换为同一数据类型。这些转换规则由编译器自动执行，不需要程序眼介入，有时甚至不需要程序员了解。因此，它们被称为 隐式类型转换 (<code>implicit type conversion</code>) 。</p>
 <p>在以下情况会发生隐式类型转换：</p>
 <ul>
 <li>混合类型表达式，操作数被转换为相同类型</li>
 </ul>
-<div class="highlight"><pre>        <span class="kt">int</span> <span class="n">ival</span><span class="p">;</span>
+<div class="codehilite"><pre>        <span class="kt">int</span> <span class="n">ival</span><span class="p">;</span>
         <span class="kt">double</span> <span class="n">dval</span><span class="p">;</span>
         <span class="n">ival</span> <span class="o">&gt;=</span> <span class="n">dval</span><span class="p">;</span>   <span class="c1">// ival converted to double</span>
 </pre></div>
@@ -221,7 +221,7 @@
 <ul>
 <li>用作条件表达式被转化为 bool 型</li>
 </ul>
-<div class="highlight"><pre>        <span class="kt">int</span> <span class="n">ival</span><span class="p">;</span>
+<div class="codehilite"><pre>        <span class="kt">int</span> <span class="n">ival</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">ival</span><span class="p">)</span>       <span class="c1">// ival converted to bool</span>
         <span class="k">while</span> <span class="p">(</span> <span class="n">cin</span><span class="p">)</span>    <span class="c1">// cin converted to bool</span>
 </pre></div>
@@ -230,14 +230,14 @@
 <ul>
 <li>用表达式初始化（赋值）某一变量，表达式被转化为该变量类型</li>
 </ul>
-<div class="highlight"><pre>        <span class="kt">int</span> <span class="n">ival</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span>    <span class="c1">// 3.14 converted to int</span>
+<div class="codehilite"><pre>        <span class="kt">int</span> <span class="n">ival</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span>    <span class="c1">// 3.14 converted to int</span>
         <span class="kt">int</span> <span class="o">*</span><span class="n">ip</span><span class="p">;</span>
         <span class="n">ip</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>             <span class="c1">// the int 0 converted to a null pointer of type int *</span>
 </pre></div>
 
 
 <p>另外，函数调用时也可能发生隐式类型转化。</p>
-<h3>算术类型转换</h3>
+<h3 id="_7">算术类型转换</h3>
 <p>C++ 语言为内置类型提供了一组转化规则，其中最常用的就是算术转化（arithmetic conversion）。算术转化规则定义了一个 <em>类型转换层次</em>，该层次规定了操作数应该按照什么次序转换为表达式中最宽的数据类型。</p>
 <p>有两条通用规则：</p>
 <ol>
@@ -267,7 +267,7 @@
 <p>下面程序</p>
 </li>
 </ol>
-<div class="highlight"><pre>        <span class="kt">unsigned</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<div class="codehilite"><pre>        <span class="kt">unsigned</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
         <span class="kt">signed</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20</span><span class="p">;</span>
         <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
         <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;unsigned int b&#39; = &quot;</span> <span class="o">&lt;&lt;</span> <span class="kt">unsigned</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
@@ -276,14 +276,14 @@
 
 
 <p>运行结果为</p>
-<div class="highlight"><pre>        <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">b</span><span class="err">&#39;</span> <span class="o">=</span> <span class="mi">4294967276</span>
+<div class="codehilite"><pre>        <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">b</span><span class="err">&#39;</span> <span class="o">=</span> <span class="mi">4294967276</span>
         <span class="n">c</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 
 
 <p>因为 <code>b = -2</code> 被转化为一个很大的正数 <code>b' = 4294967276</code></p>
 <p><br></p>
-<h2>references</h2>
+<h2 id="references">references</h2>
 <p><a href="http://book.douban.com/subject/1767741/">c++ Primer</a></p>
 <p><a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx">C++之char , signed char , unsigned char，以及Integral Promotion</a></p>
 <p><a href="http://book.51cto.com/art/200912/166574.htm">Linux C编程一站式学习：整型</a></p>
@@ -361,18 +361,13 @@
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/fpga.html">
                                 FPGA
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/com.html">
-                                Com
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -381,8 +376,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/com.html">
+                                Com
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -391,28 +391,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/vim.html">
                                 Vim
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/vhdl.html">
-                                VHDL
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -421,13 +406,53 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/vhdl.html">
+                                VHDL
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -436,18 +461,33 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/pkm.html">
                                 PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -461,51 +501,6 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/sublime-text.html">
                                 Sublime Text
                             </a>
@@ -516,8 +511,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -526,28 +526,28 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
-                                digital procesing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ofdm.html">
                                 OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
                             </a>
                         </li>
                     </ul>

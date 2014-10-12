@@ -122,7 +122,7 @@
 <p><strong>Author</strong> : Chien Gu (guqian110@gmail.com)</p>
 <p><strong>Summary</strong> : This is a brief Verilog HDL coding style guide for BUPT MITC lab to design circuits on FPGA. This guide is only concerned about code format and dose not involve principles for writing synthesisable codes.</p>
 <p><br></p>
-<h2>总则</h2>
+<h2 id="_1">总则</h2>
 <hr />
 <ul>
 <li>
@@ -139,11 +139,11 @@
 </li>
 </ul>
 <p><br></p>
-<h2>分述</h2>
+<h2 id="_2">分述</h2>
 <hr />
-<h3>head of file</h3>
+<h3 id="head-of-file">head of file</h3>
 <p>Xilinx ISE 自动生成的标准文件头部，添加 <code>Email</code>、<code>File Name</code> 两个信息，最终结果：</p>
-<div class="highlight"><pre><span class="c1">//////////////////////////////////////////////////////////////////////////////////</span>
+<div class="codehilite"><pre><span class="c1">//////////////////////////////////////////////////////////////////////////////////</span>
 <span class="c1">// Company: </span>
 <span class="c1">// Engineer: </span>
 <span class="c1">// Email:</span>
@@ -168,7 +168,7 @@
 </pre></div>
 
 
-<h3>module</h3>
+<h3 id="module">module</h3>
 <p><strong>模块命名大小写：</strong></p>
 <ul>
 <li>文件名：xxx.v (小写)</li>
@@ -184,7 +184,7 @@
 <p><strong>模块调用规范：</strong></p>
 <p>使用 <em>信号映射法</em></p>
 <p>举例说明：</p>
-<div class="highlight"><pre><span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+<div class="codehilite"><pre><span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
 <span class="c1">// Module Declaration                                                            //</span>
 <span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
 <span class="k">module</span> <span class="no">MODULE_NAME</span> <span class="p">(</span>
@@ -261,9 +261,9 @@
 </pre></div>
 
 
-<h3>FSM</h3>
+<h3 id="fsm">FSM</h3>
 <p>有限状态机(Finite State Machine) 使用三段式格式。举例</p>
-<div class="highlight"><pre><span class="c1">// FSM-1</span>
+<div class="codehilite"><pre><span class="c1">// FSM-1</span>
 <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
         <span class="c1">// reset</span>
@@ -313,14 +313,14 @@
 </pre></div>
 
 
-<h3>always</h3>
+<h3 id="always">always</h3>
 <ul>
 <li>一个 <code>always</code> 中不要同时含有 <em>组合逻辑</em> 和 <em>时序逻辑</em>，分开写在不同的 <code>always</code> 块中。</li>
 <li>组合逻辑使用 <em>阻塞赋值(=)</em>，时序逻辑使用 <em>非阻塞赋值(&lt;=)</em></li>
 <li>不要在多个 <code>always</code> 中对同一信号赋值，也不要在一个 <code>always</code> 中对一个信号进行多次赋值</li>
 </ul>
 <p>标准 <code>always</code> 格式</p>
-<div class="highlight"><pre><span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+<div class="codehilite"><pre><span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
         <span class="c1">// reset</span>
 
@@ -333,9 +333,9 @@
 </pre></div>
 
 
-<h3>parameter</h3>
+<h3 id="parameter">parameter</h3>
 <p>parameter 全部大写，用 parameter 定义有实际意义的常数，比如 LED 亮灯状态、状态机状态等，避免 "magic number"。举例：</p>
-<div class="highlight"><pre><span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+<div class="codehilite"><pre><span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
 <span class="c1">// Parameter Declarations                                                        //</span>
 <span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
     <span class="k">parameter</span>   <span class="no">DIN</span>     <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
@@ -345,9 +345,9 @@
 </pre></div>
 
 
-<h3>if-else</h3>
+<h3 id="if-else">if-else</h3>
 <p>标准 <code>if-else</code> 格式</p>
-<div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="n">begin</span>
+<div class="codehilite"><pre><span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="n">begin</span>
     <span class="c1">// do something</span>
 
 <span class="n">end</span>
@@ -358,9 +358,9 @@
 </pre></div>
 
 
-<h3>case-default</h3>
+<h3 id="case-default">case-default</h3>
 <p>标准 <code>case</code> 格式</p>
-<div class="highlight"><pre><span class="k">case</span> <span class="p">(</span><span class="n">variable</span><span class="p">)</span>
+<div class="codehilite"><pre><span class="k">case</span> <span class="p">(</span><span class="n">variable</span><span class="p">)</span>
     <span class="nl">vaule1:</span> <span class="n">begian</span>
         <span class="c1">// do something</span>
 
@@ -376,12 +376,12 @@
 </pre></div>
 
 
-<h3>naming</h3>
+<h3 id="naming">naming</h3>
 <ol>
 <li>
 <p><strong>模块名</strong></p>
 <p>单词首字母缩写，大写。举例</p>
-<div class="highlight"><pre><span class="n">DMI</span>     <span class="c1">// Data Memory Interface</span>
+<div class="codehilite"><pre><span class="n">DMI</span>     <span class="c1">// Data Memory Interface</span>
 <span class="n">DEC</span>     <span class="c1">// Decoder</span>
 </pre></div>
 
@@ -390,7 +390,7 @@
 <li>
 <p><strong>模块间信号名</strong></p>
 <p>分为两部分，第一部分表示信号方向，大写，第二部分表示信号意义，小写，下划线连接。举例</p>
-<div class="highlight"><pre><span class="n">wire</span> <span class="n">CPUMMU_wr_req</span><span class="p">;</span>     <span class="c1">// write request form CPU to MMU</span>
+<div class="codehilite"><pre><span class="n">wire</span> <span class="n">CPUMMU_wr_req</span><span class="p">;</span>     <span class="c1">// write request form CPU to MMU</span>
 </pre></div>
 
 
@@ -398,7 +398,7 @@
 <li>
 <p><strong>模块内命名</strong></p>
 <p>单词缩写，下划线连接，小写。举例</p>
-<div class="highlight"><pre><span class="n">wire</span> <span class="n">sdram_wr_en</span><span class="p">;</span>       <span class="c1">// SDRAM write enable</span>
+<div class="codehilite"><pre><span class="n">wire</span> <span class="n">sdram_wr_en</span><span class="p">;</span>       <span class="c1">// SDRAM write enable</span>
 </pre></div>
 
 
@@ -406,7 +406,7 @@
 <li>
 <p><strong>系统级命名</strong></p>
 <p>时钟信号、置位信号、复位信号等需要输送到各个模块的全局信号，以 <code>SYS_</code> 前缀开头。举例</p>
-<div class="highlight"><pre><span class="n">wire</span> <span class="n">SYS_clk_100MHz</span><span class="p">;</span>         <span class="c1">// system clock</span>
+<div class="codehilite"><pre><span class="n">wire</span> <span class="n">SYS_clk_100MHz</span><span class="p">;</span>         <span class="c1">// system clock</span>
 <span class="n">wire</span> <span class="n">SYS_set_cnt</span><span class="p">;</span>            <span class="c1">// system counter set</span>
 <span class="n">wire</span> <span class="n">SYS_rst_cnt</span><span class="p">;</span>            <span class="c1">// system counter reset</span>
 </pre></div>
@@ -416,7 +416,7 @@
 <li>
 <p><strong>低电平有效信号命名</strong></p>
 <p>低电平有效信号加后缀 <code>_n</code>，举例</p>
-<div class="highlight"><pre><span class="n">wire</span> <span class="n">rst_n</span><span class="p">;</span>             <span class="c1">// low valid reset</span>
+<div class="codehilite"><pre><span class="n">wire</span> <span class="n">rst_n</span><span class="p">;</span>             <span class="c1">// low valid reset</span>
 </pre></div>
 
 
@@ -424,7 +424,7 @@
 <li>
 <p><strong>经过锁存器的信号</strong></p>
 <p>经过锁存器的信号加后缀 <code>_r</code>，以和锁存前区别。举例</p>
-<div class="highlight"><pre><span class="n">reg</span> <span class="n">din_r</span><span class="p">;</span>              <span class="c1">// latch input data</span>
+<div class="codehilite"><pre><span class="n">reg</span> <span class="n">din_r</span><span class="p">;</span>              <span class="c1">// latch input data</span>
 </pre></div>
 
 
@@ -432,7 +432,7 @@
 <li>
 <p><strong>参数名</strong></p>
 <p>实际意义缩写，大写。举例</p>
-<div class="highlight"><pre><span class="n">parameter</span>   <span class="n">IDLE</span> <span class="o">=</span> <span class="mi">10</span><span class="err">&#39;</span><span class="n">d0</span><span class="p">,</span>
+<div class="codehilite"><pre><span class="n">parameter</span>   <span class="n">IDLE</span> <span class="o">=</span> <span class="mi">10</span><span class="err">&#39;</span><span class="n">d0</span><span class="p">,</span>
             <span class="n">WAIT</span> <span class="o">=</span> <span class="mi">10</span><span class="err">&#39;</span><span class="n">d1</span><span class="p">;</span>
 </pre></div>
 
@@ -596,7 +596,7 @@
 </tr>
 </tbody>
 </table>
-<h3>incedent</h3>
+<h3 id="incedent">incedent</h3>
 <ul>
 <li>
 <p><strong>tab</strong></p>
@@ -607,7 +607,7 @@
 <ul>
 <li>
 <p>信号端口定义，关键字、宽度说明、信号名之间对齐。举例</p>
-<div class="highlight"><pre><span class="n">input</span>          <span class="n">clk</span><span class="p">;</span>
+<div class="codehilite"><pre><span class="n">input</span>          <span class="n">clk</span><span class="p">;</span>
 <span class="n">input</span>          <span class="n">rst_n</span><span class="p">;</span>
 <span class="n">input</span>  <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">din</span><span class="p">;</span>
 
@@ -618,7 +618,7 @@
 </li>
 <li>
 <p>二元运算符用 <code>space</code> 隔开</p>
-<div class="highlight"><pre><span class="n">assign</span> <span class="n">dout</span> <span class="o">=</span> <span class="n">dout_en</span> <span class="o">?</span> <span class="n">result</span> <span class="o">:</span> <span class="nb">NULL</span><span class="p">;</span>
+<div class="codehilite"><pre><span class="n">assign</span> <span class="n">dout</span> <span class="o">=</span> <span class="n">dout_en</span> <span class="o">?</span> <span class="n">result</span> <span class="o">:</span> <span class="nb">NULL</span><span class="p">;</span>
 </pre></div>
 
 
@@ -626,10 +626,10 @@
 </ul>
 </li>
 </ul>
-<h3>comments</h3>
+<h3 id="comments">comments</h3>
 <p>采用英文，合理注释。修改代码一定要注释，添加 Revision 信息 。</p>
 <p><br></p>
-<h2>建议</h2>
+<h2 id="_3">建议</h2>
 <hr />
 <p><strong>开发工具：</strong></p>
 <ul>
@@ -645,9 +645,9 @@
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/02/xilinx_fft_core_notes.html">Xilinx FFT IP core 笔记</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
     </ul>
 </section>
     <hr />
@@ -716,18 +716,13 @@
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/fpga.html">
                                 FPGA
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/com.html">
-                                Com
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -736,8 +731,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/com.html">
+                                Com
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -746,28 +746,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/vim.html">
                                 Vim
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/vhdl.html">
-                                VHDL
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -776,13 +761,53 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/vhdl.html">
+                                VHDL
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -791,18 +816,33 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/pkm.html">
                                 PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -816,51 +856,6 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/sublime-text.html">
                                 Sublime Text
                             </a>
@@ -871,8 +866,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -881,28 +881,28 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
-                                digital procesing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ofdm.html">
                                 OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
                             </a>
                         </li>
                     </ul>

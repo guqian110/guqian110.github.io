@@ -114,11 +114,11 @@
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h2>为什么要使用 const 限定符</h2>
+                <h2 id="const">为什么要使用 const 限定符</h2>
 <hr />
-<h3>一个需要使用 const 的简单例子</h3>
+<h3 id="const_1">一个需要使用 const 的简单例子</h3>
 <p><a href="http://book.douban.com/subject/1767741/"><em>C++ Primer</em></a> 中的例子</p>
-<div class="highlight"><pre>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">index</span> <span class="o">!=</span> <span class="mi">512</span><span class="p">;</span> <span class="o">++</span><span class="n">index</span><span class="p">)</span> <span class="p">{</span>
+<div class="codehilite"><pre>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">index</span> <span class="o">!=</span> <span class="mi">512</span><span class="p">;</span> <span class="o">++</span><span class="n">index</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// ...</span>
     <span class="p">}</span>
 </pre></div>
@@ -130,7 +130,7 @@
 <p><strong>第二个问题是 程序的可维护性</strong></p>
 <p>如歌这个程序非常庞大，512 这个数字出现了 100 次，进一步假设这 100 次中，有 80 次是表示某个缓冲区的大小，剩余 20 次用于其他目的 。现在，我们需要把缓冲区的大小增大到 1024，要实现这个目标，必须检查每个 512 出现的位置，必须确定哪些是表示缓冲区大小，哪些不是 。</p>
 <p>解决这两个问题的方法是定义一个变量，并且初始化为 512</p>
-<div class="highlight"><pre>    <span class="kt">int</span> <span class="n">buf_size</span> <span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
+<div class="codehilite"><pre>    <span class="kt">int</span> <span class="n">buf_size</span> <span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
     <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">index</span> <span class="o">!=</span> <span class="n">buf_size</span><span class="p">;</span> <span class="o">++</span><span class="n">index</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">//...</span>
     <span class="p">}</span>
@@ -140,13 +140,13 @@
 <p>通过定义一个好记的变量，就可以增强程序的可读性，而且需要改变这个值时，只需要咋初始化的地方做修改 。这种方法不仅明显减小了工作量，而且大大减小了出错的可能性 。</p>
 <p><em>看起来问题好像已经解决了，但是，事实上，我们可以进一步</em></p>
 <p>在上面的代码中，<code>buf_size</code> 是可以被修改的，它有可能会被有意或者无意修改 。为了避免这种情况，就需要使用 const 限定符了 。</p>
-<div class="highlight"><pre>    <span class="k">const</span> <span class="n">buf_size</span> <span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
+<div class="codehilite"><pre>    <span class="k">const</span> <span class="n">buf_size</span> <span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
 </pre></div>
 
 
 <p>定义 <code>buf_size</code> 为 <strong>常量（constant）</strong>，并且初始化为 512 .<strong>变量（variable）</strong> <code>buf_size</code> 仍然是一个左值，但是这个左值现在是不能被修改的。（因为 const 把变量转化为常量，所以在定义的时候必须初始化！）</p>
 <p><br></p>
-<h2>如何使用 const 限定符</h2>
+<h2 id="const_2">如何使用 const 限定符</h2>
 <hr />
 <p>C++ Primer 中有这么一句话</p>
 <blockquote>
@@ -157,9 +157,9 @@
 <p>The variable bufSize is still an lvalue</p>
 </blockquote>
 <p>这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性“</p>
-<h3>文件的局部变量</h3>
+<h3 id="_1">文件的局部变量</h3>
 <p>const 限定符修同时也改变了变量的作用范围 。普通非 const 变量的默认是具有 <em>外部连接（external linkage）</em>的，在全局作用域内定义非 const 变量时，它在整个程序中都可以被访问 。比如</p>
-<div class="highlight"><pre>    <span class="c1">// file1.cpp</span>
+<div class="codehilite"><pre>    <span class="c1">// file1.cpp</span>
     <span class="kt">int</span> <span class="n">counter</span><span class="p">;</span>
 
     <span class="c1">//file2.cpp</span>
@@ -169,7 +169,7 @@
 
 
 <p>但是，对于 全局作用域内的 const 类型的对象，其默认是 <em>内部连接（internal linkage）</em>，仅在定义该对象的文件内可见，不能被其他文件访问 。要想在整个程序里面访问，就必须在定义的时候显式地声明为 <code>extern</code> 类型 。比如</p>
-<div class="highlight"><pre>    <span class="c1">//file1.cpp</span>
+<div class="codehilite"><pre>    <span class="c1">//file1.cpp</span>
     <span class="k">extern</span> <span class="kt">int</span> <span class="n">buf_size</span> <span class="o">=</span> <span class="n">fcn</span> <span class="p">();</span>
 
     <span class="c1">//fiel2.cpp</span>
@@ -179,12 +179,12 @@
 </pre></div>
 
 
-<h3>使用 const 的方法</h3>
+<h3 id="const_3">使用 const 的方法</h3>
 <ul>
 <li>
 <p>定义在头文件中 inlcude</p>
 <p>如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 ”重定义“  的问题 。</p>
-<div class="highlight"><pre><span class="c1">// file1.h</span>
+<div class="codehilite"><pre><span class="c1">// file1.h</span>
 <span class="k">const</span> <span class="k">int</span> <span class="n">bufsize</span> <span class="o">=</span> <span class="mh">512</span><span class="p">;</span>
 
 <span class="c1">// file2.cpp</span>
@@ -198,7 +198,7 @@
 <p>定义时声明为 extern</p>
 <p>如果 const 变量不是用常量表达式初始化的，那么就不能把它当在头文件中 。只能在源文件中定义并初始化 。因为 const 变量是文件局部变量，所以要在其他文件中使用该变量，必须在定义时加上 <code>extern</code> 声明 。</p>
 <p>比如</p>
-<div class="highlight"><pre><span class="c1">// file1.cpp</span>
+<div class="codehilite"><pre><span class="c1">// file1.cpp</span>
 <span class="k">extern</span> <span class="k">const</span> <span class="k">int</span> <span class="n">bufsize</span> <span class="o">=</span> <span class="mh">512</span><span class="p">;</span>
 </pre></div>
 
@@ -206,7 +206,7 @@
 <ul>
 <li>
 <p>在头文件中声明为 extern 类型，以使其他文件共享。</p>
-<div class="highlight"><pre><span class="c1">// file1.h</span>
+<div class="codehilite"><pre><span class="c1">// file1.h</span>
 <span class="k">extern</span> <span class="k">const</span> <span class="k">int</span> <span class="n">bufsize</span><span class="p">;</span>
 
 <span class="c1">// fil2.cpp</span>
@@ -218,7 +218,7 @@
 </li>
 <li>
 <p>不需要在头文件中声明，在其他文件中使用前声明</p>
-<div class="highlight"><pre><span class="c1">// file2.cpp</span>
+<div class="codehilite"><pre><span class="c1">// file2.cpp</span>
 <span class="k">extern</span> <span class="k">const</span> <span class="k">int</span> <span class="n">bufsize</span><span class="p">;</span>
 <span class="k">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">bufsize</span><span class="p">;</span>
 </pre></div>
@@ -236,7 +236,7 @@ still being finished. It was then seen as a good idea and included in C. But som
 C came to mean “an ordinary variable that cannot be changed.” <em>In C, it always occupies
 storage and its name is global. The C compiler cannot treat a const as a compile-time
 constant.</em> In C, if you say</p>
-<div class="highlight"><pre>  <span class="k">const</span> <span class="n">bufsize</span> <span class="o">=</span><span class="mi">100</span><span class="p">;</span>
+<div class="codehilite"><pre>  <span class="k">const</span> <span class="n">bufsize</span> <span class="o">=</span><span class="mi">100</span><span class="p">;</span>
   <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="n">bufsize</span><span class="p">];</span>
 </pre></div>
 
@@ -254,13 +254,13 @@ takes a reference argument) or you define it as extern, then storage is created 
 <p>Since a const in C++ defaults to internal linkage, you can’t just define a const in one file and
 reference it as an extern in another file. To give a const external linkage so it can be
 referenced from another file, you must explicitly define it as extern, like this:</p>
-<div class="highlight"><pre>  <span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<div class="codehilite"><pre>  <span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 </pre></div>
 
 
 <p>Notice that by giving it an initializer and saying it is extern, you force storage to be created for the const(although the compiler still has the option of doing constant folding here). The
 initialization establishes this as a definition, not a declaration. The declaration:</p>
-<div class="highlight"><pre>  <span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+<div class="codehilite"><pre>  <span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
 </pre></div>
 
 
@@ -270,9 +270,9 @@ distinguishes a declaration from a definition (in C it’s always a definition, 
 necessary).</em> With an external constdeclaration, the compiler cannot do constant folding
 because it doesn’t know the value.</p>
 </blockquote>
-<h3>const 引用 &amp; const 对象</h3>
+<h3 id="const-const">const 引用 &amp; const 对象</h3>
 <p>在引用的定义中声明 const，此 const 约束的是引用，而不是引用的对象 。比如</p>
-<div class="highlight"><pre>    <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref</span> <span class="o">=</span> <span class="n">ival</span>
+<div class="codehilite"><pre>    <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref</span> <span class="o">=</span> <span class="n">ival</span>
 </pre></div>
 
 
@@ -283,24 +283,24 @@ because it doesn’t know the value.</p>
 <p>当对象是 const 类型时，隐含的含义是该对象不能被修改，所以只能定义 const 类型的引用指向它；nonconst 类型的引用隐含的意思是可以通过引用修改对象值，这对于 const 类型的对象来说是不允许的 。</p>
 <p>当对象是 nonconst 类型时，隐含的含义是该对象可以通过引用来修改，此时，const 引用和 nonconst 引用都可以指向该对象 。当使用 nonconst 引用时，可以通过引用修改对象的值；当使用 const 引用时，虽然对象的值是可以改变的，但是不能通过该引用修改，因为引用的类型是 const，定义以后，不能再修改 。 </p>
 <p><br></p>
-<h2>何时应该使用 const</h2>
+<h2 id="const_4">何时应该使用 const</h2>
 <hr />
 <p>Scott Meyers 大神的经典著作 <a href="http://book.douban.com/subject/1842426/">Effective C++</a> 里面提到的关于 const 的使用 。</p>
-<h3>Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</h3>
+<h3 id="effective-c-02-constenuminline-defineprefer-constsenumsand-inline-to-define">Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</h3>
 <p>使用const 代替 #define，事实上 <code>const</code> 的最初动机就是取代预处理器 <code>#define</code> 来进行值替代 。因为 #define 不被视为语言的一部分，这就是它的问题所在 。</p>
-<div class="highlight"><pre>    <span class="c">#define ASPECT_RATIO 1.653;</span>
+<div class="codehilite"><pre>    <span class="c">#define ASPECT_RATIO 1.653;</span>
 </pre></div>
 
 
 <p>记号名 ASPECT_RATIO 也许从未被编译器看见，也许在编译器开始处理代码前就被与处理器移走了，于是记号没有进入记号表，当出现编译错误时，也许会提示是 1.653 而不是 ASPECT_RATIO，这回带来很多困惑 。</p>
 <p>解决之道就是以一个常量代替上述的宏</p>
-<div class="highlight"><pre>    <span class="k">const</span> <span class="kt">double</span> <span class="n">AspectRatio</span> <span class="o">=</span> <span class="mf">1.653</span><span class="p">;</span>
+<div class="codehilite"><pre>    <span class="k">const</span> <span class="kt">double</span> <span class="n">AspectRatio</span> <span class="o">=</span> <span class="mf">1.653</span><span class="p">;</span>
 </pre></div>
 
 
-<h3>Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</h3>
+<h3 id="effective-c-03-constuse-const-whenever-possile">Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</h3>
 <p><br></p>
-<h2>参考</h2>
+<h2 id="_2">参考</h2>
 <p><a href="http://book.douban.com/subject/1767741/">C++ Primer</a></p>
 <p><a href="http://book.douban.com/subject/1459728/">Thinking in C++</a></p>
 <p><a href="http://book.douban.com/subject/1842426/">Effective C++</a></p>
@@ -378,18 +378,13 @@ because it doesn’t know the value.</p>
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/fpga.html">
                                 FPGA
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/com.html">
-                                Com
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -398,8 +393,13 @@ because it doesn’t know the value.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/com.html">
+                                Com
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -408,28 +408,13 @@ because it doesn’t know the value.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/vim.html">
                                 Vim
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/vhdl.html">
-                                VHDL
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -438,13 +423,53 @@ because it doesn’t know the value.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/vhdl.html">
+                                VHDL
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -453,18 +478,33 @@ because it doesn’t know the value.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/pkm.html">
                                 PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -478,51 +518,6 @@ because it doesn’t know the value.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/sublime-text.html">
                                 Sublime Text
                             </a>
@@ -533,8 +528,13 @@ because it doesn’t know the value.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -543,28 +543,28 @@ because it doesn’t know the value.</p>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
-                                digital procesing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ofdm.html">
                                 OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
                             </a>
                         </li>
                     </ul>

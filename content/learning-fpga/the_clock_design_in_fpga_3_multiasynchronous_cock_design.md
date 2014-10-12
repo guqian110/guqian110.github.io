@@ -317,7 +317,18 @@ edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较�
 
 ![handshaing sum](/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/handshaking_sum.png)
 
-握手机制可以避免亚稳态的出现的原因就是它规定了异步信号什么时候可以变化，虽然是异步信号，但是在采样的时候人为地确保了异步数据保持稳定，满足 setup/hold time 的要求，所以不会有亚稳态的问题。
+因为 handshaking 内部采用了 synchronizer，所以可以解决异步信号导致的亚稳态现象。根据实际要求，选择不同的 synchronizer 和握手信号，就有了前面介绍的 3 种不同的 handshaking：
+
++ full handshaking
+是最健壮的，因为在这种机制下，两部分电路都在等待收到对方的确认信号之后才发送新的握手信号，两部分电路是相互都知道对方目前所处于的状态，而且用了两组握手信号（request/acknowledge，de-request/de-acknowledge），相当于完成了两次握手。但是，最健壮的代价就是花费的时间最长，而且要求信号在收到对方的回复之前要保持不变，这就限制了发送信号的速率和节奏。
+
++ partial handshaking 是对 full 的精简，动机就是减少握手所花费的时间，从减少花费时间的方法上，就有了两种不同的 partial shandshaking。
+
++ partial I 精简了 1 个握手信号 de-acknowledge，剩下了 3 个握手信号，相当于完成了1次半的握手。而且修改了 full 中 level synchronizer 的方式，接收电路 B 发送的不再是电平信号，而是一个单时钟宽度的脉冲，所以电路A则必须使用 pusle synchronizer 来检测来自 B 的握手信号。通过减少一个握手信号和改进一方的 synchronizer，partial I 就比 full 方式节约了很多时间。
+
++ partial II 则更进一步，在 partial I 的基础上又精简掉一个握手信号，只剩下 2 个握手信号，只完成1次握手。而且两部分电路的 synchronizer 同时修改为 pusle 方式。这样子进一步减少了握手花费的时间。
+
++ partial 和 full 的本质区别不在于synchronizer 的类型和握手信号的多少，而在于握手的方式。 partial 不用再等待对方的回答，就继续进行自己的下一步操作，而 full 必须等到对方的回复才进行下一步的操作，所以从某种意义上，full 方式才是真正的“握手”，而 partial 并不符合 “握手” 的意思，毕竟根本不管对方的反应，自顾自地挥手叫哪门子的握手 =.=
 
 *这些握手协议针对的都是跨时钟域的单一信号，但当几组信号要跨越时钟域时，设计者就需要更加复杂的信号传递方法。*
 
@@ -373,6 +384,20 @@ enable signal in order to load a data value into the register. If both the load 
 
 和request一起送过来的还有数据总线 上的数据信号，但是对于数据信号，不能简单地对每一位使用 synchronizer 来同步（原因前面已经说过了）。虽然对于接收电路来说，数据总线上的数据也是异步的，但是我们可以强制要求在握手过程中，数据保持不变，这样虽然数据是异步的，只要发送端满足保持寄存器数据在握手过程中不变化这一条件，那么即使数据总线上的数据到达接收时钟域有一些小的偏差 skew，但是不会超出 1 个时钟周期，在 synchronizer 最好的状态下，只花费了 1 个时钟周期就同步到了握手请求request，这时候数据总线上的数据已经是稳定不变的有效数据了，所以可以采样到正确的有效数据，不会存在亚稳态的问题。
 
+采用这种方法可以避免亚稳态的出现的原因就是它规定了异步信号（保持寄存器）什么时候可以变化，虽然是异步信号，但是在采样的时候人为地确保了它保持稳定，满足 setup/hold time 的要求，所以不会有亚稳态的问题。
+
+这里的握手机制可以采用 full handshaking，也可以采用 partial handshaking，设计者应该根据实际需求来选择。
+
+在 [The Art of Hardware Architecture][art] 这本书中，有详细的时序图来说明了一种握手机制下，这种机制采用了 full handshaking 中等待对方的方法，但是对握手信号进行了精简（partial II 类型）。如下图：
+
+![datapath timing](/images/the_clock_design_in_fpga_3_multiasynchronous_clock_design/datapath_timing.png)
+
+注意：
+
+如果发送端的数据速率很快/无法控制发送端发送数据的速度，那么就有可能无法满足握手机制中要求数据保持稳定这一要求，这时候这种方法就不再适用，而应该采用其他的方法，比如 FIFO。
+
+[art]: http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960
+
 ### Advanced Datapath Design
 
 有时候，数据在跨时钟域时需要“堆积”起来，这时候只使用单个的寄存器就无法完成工作。比如某个传输电路突发式地发送数据，接收电路来不及采样，为了保持数据不丢失，就必须先把数据存储起来；还有一种情况是接收电路的采样速率比发送速度快，但是位宽却不够，仍然需要将没有采样的数据先暂存起来，这时候就需要使用 FIFO。
@@ -383,9 +408,11 @@ enable signal in order to load a data value into the register. If both the load 
 
 2. 宽度匹配
 
-使用 FIFO 的优点是可以减轻我们设计的压力，因为有现成的 IP core，这些 IP core 在内部针对异步数据读写的问题作了非常严谨复杂的设计，对外提供了非常简单的接口。实际上我们所做的就是逃避责任，将异步数据的问题交给了 IP core 来处理。但是相应的也有缺点：耗费更多的资源。
+FIFO 的实现可以直接使用 IP core，也可以自己写代码实现。
 
-在 [Synthesis and Scripting Techniques for Designing Multi-Asynchronous Clock Designs][paper1] 和 [Crossing the abyss: asynchronous signals in a synchronous world][paper2] 两篇 paper 中都有一些实现 FIFO 使用的相关技术的介绍，比如指针逻辑的处理，内部 gray code 计数器的实现等。这里就偷懒不细说了（以后再补） :P
+如果是自己写代码实现，那么异步信号的问题还是需要我们在实现 FIFO 是仔细考虑的；如果是采用 IP core 的方式，那么可以很大程度地缓解我们的压力，因为事实上我们是把异步信号的问题交给了设计 IP core 的人来处理...这些 IP core 在内部针对异步数据读写的问题作了非常严谨复杂的设计，对外提供了非常简单的接口。采用这种方式虽然轻松，但是相应的地也有缺点：耗费更多的资源。
+
+在 [Synthesis and Scripting Techniques for Designing Multi-Asynchronous Clock Designs][paper1] 和 [Crossing the abyss: asynchronous signals in a synchronous world][paper2] 两篇 paper 和 [The Art][art] 中都有一些实现 FIFO 使用的相关技术的介绍，比如指针逻辑的处理，内部 gray code 计数器的实现等。这里就偷懒不细说了（以后再补） :P
 
 [paper2]: http://inst.eecs.berkeley.edu/~cs150/sp10/Collections/Papers/ClockCrossing.pdf
 
@@ -465,3 +492,5 @@ A naming convention helps all team members to identify the clock domain for ever
 [跨越鸿沟：同步世界中的异步信号](http://bbs.ednchina.com/BLOG_ARTICLE_175526.HTM)
 
 [Understanding Metastability in FPGAs][wp-01082]
+
+[The Art of Hardware Architecture][art]

@@ -116,7 +116,7 @@
                 </div>
                 <p>总结初步配置 Vim，让 Vim 更顺手 。</p>
 <p><br></p>
-<h2>在哪里配置 Vim</h2>
+<h2 id="vim">在哪里配置 Vim</h2>
 <hr />
 <p><a href="http://book.douban.com/subject/6126937/">学习 Vi 和 Vim 编辑器</a>：</p>
 <blockquote>
@@ -142,7 +142,7 @@
 <li>
 <p>/usr/share/vim/vimrc</p>
 <p>输入命令</p>
-<div class="highlight"><pre> <span class="n">ll</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">vim</span><span class="o">/</span><span class="n">vimrc</span>
+<div class="codehilite"><pre> <span class="n">ll</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">vim</span><span class="o">/</span><span class="n">vimrc</span>
 </pre></div>
 
 
@@ -154,13 +154,13 @@
 </li>
 </ol>
 <p><br></p>
-<h2>映射 <code>esc</code> 键</h2>
+<h2 id="esc">映射 <code>esc</code> 键</h2>
 <hr />
 <p>因为历史原因，Joy 设计 vi 时采用的键盘和我们现在用的标准键盘布局并不一样，当时他的键盘的 <code>esc</code> 键在现在我们的 <code>Caps Lock</code> 键的位置，所以才设计使用 <code>esc</code> 作为模式转换键 。为了更加方便顺手地使用 vim，当然要把这两个键相互调换一下 。</p>
 <p>在 vim 的官网上就有介绍如何实现两个按键的调换</p>
 <p><a href="http://vim.wikia.com/wiki/Map_caps_lock_to_escape_in_XWindows">Map caps lock to escape in XWindows</a></p>
 <p>具体方法，在 <code>～/</code> 目录下新建一个文件，加入一下内容</p>
-<div class="highlight"><pre><span class="o">!</span> <span class="n">Swap</span> <span class="n">caps</span> <span class="n">lock</span> <span class="n">and</span> <span class="n">escape</span>
+<div class="codehilite"><pre><span class="o">!</span> <span class="n">Swap</span> <span class="n">caps</span> <span class="n">lock</span> <span class="n">and</span> <span class="n">escape</span>
 <span class="n">remove</span> <span class="n">Lock</span> <span class="o">=</span> <span class="n">Caps_Lock</span>
 <span class="n">keysym</span> <span class="n">Escape</span> <span class="o">=</span> <span class="n">Caps_Lock</span>
 <span class="n">keysym</span> <span class="n">Caps_Lock</span> <span class="o">=</span> <span class="n">Escape</span>
@@ -170,27 +170,27 @@
 
 <p>保存为 .speedswrapper</p>
 <p>然后输入命令</p>
-<div class="highlight"><pre><span class="n">xmodmap</span> <span class="o">~/</span><span class="p">.</span><span class="n">speedswrapper</span>
+<div class="codehilite"><pre><span class="n">xmodmap</span> <span class="o">~/</span><span class="p">.</span><span class="n">speedswrapper</span>
 </pre></div>
 
 
 <p>这时，对于整个系统范围，这两个键已经调换了位置 。</p>
 <p><br></p>
-<h2>设置颜色主题 colorscheme</h2>
+<h2 id="colorscheme">设置颜色主题 colorscheme</h2>
 <hr />
 <p>Vim 自带一些颜色主题，一般存放在 <code>/usr/share/vim/vim7x</code> 目录下（我的 Vim 版本为 7.3，所以路径为 <code>/usr/share/vim/vim73</code>）.</p>
 <p>如果对系统自带的主题不满意，网上有很多不错的主题，个人最喜欢 <a href="https://github.com/tomasr/molokai">molikai</a> 主题，把下载下来的配色文件拷贝到 <code>usr/share/vim/vim73</code> 路径下，打开 vim 后 输入</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">colorscheme</span> <span class="n">molikai</span>
+<div class="codehilite"><pre><span class="o">:</span><span class="n">colorscheme</span> <span class="n">molikai</span>
 </pre></div>
 
 
 <p>就 ok 了～ 不过这个方法在关闭 vim 后就恢复了，要想省去每次都输命令的烦恼，只需要在下一步 .vimrc 文件中加入以下内容就可以了</p>
-<div class="highlight"><pre><span class="n">colorscheme</span> <span class="n">molikai</span>
+<div class="codehilite"><pre><span class="n">colorscheme</span> <span class="n">molikai</span>
 </pre></div>
 
 
 <p><br></p>
-<h2>编写 .Vimrc</h2>
+<h2 id="vimrc">编写 .Vimrc</h2>
 <hr />
 <p>vimrc 文件是配置 Vim 编辑特性比较好的地方，差不多任何 Vim 选项都能在次文件中被设置为打开或者关闭，而且它特别适合设置全局变量与定义函数、缩写、按键映射 。</p>
 <ul>
@@ -201,14 +201,14 @@
 <p>可以用冒号 <code>:</code> 表示 ex 命令</p>
 </li>
 </ul>
-<h3>配置 Vim 特性</h3>
+<h3 id="vim_1">配置 Vim 特性</h3>
 <p>vimrc 配置很简单，网上有很多人都分享了自己的配置方案 。我找到一份注释良好的<a href="https://github.com/amix/vimrc">配置范例</a>，这篇博客的作者总结了自己 8 年的使用经验，给出了两份配置文件，基本版 <a href="https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim">Basic</a> 和 终极版<a href="https://github.com/amix/vimrc">Ultimate</a> 。</p>
 <p>作为码农，当然要选择终极版了～不过个人喜欢用 Vundle 管理我的 Vim 插件（计划下篇博客记录我的配置过程），不是很喜欢作者选择的所有插件，想自己定制插件组合，那么目前只需要看 基础版就足够了 。</p>
 <p>copy 了一份基础版到自己的 github 中，有备无患 :-D</p>
 <p><a href="">Copy of basic vimrc configure file</a></p>
 <p>我自己的配置文件：</p>
 <p><a href="">My .vimrc file</a></p>
-<div class="highlight"><pre><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<div class="codehilite"><pre><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
 <span class="s2">&quot;</span> <span class="nx">General</span>
 <span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
 <span class="s2">set nocompatible</span>
@@ -366,7 +366,7 @@
 
 
 <p><br></p>
-<h2>参考</h2>
+<h2 id="_1">参考</h2>
 <p><a href="http://book.douban.com/subject/6126937/">学习vi 和 Vim 编辑器</a></p>
 <p><a href="https://github.com/amix/vimrc">The Ultimate vimrc</a></p>
             </div>
@@ -374,11 +374,11 @@
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/04/learning_linux_ssh.html">学习 Linux SSH</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/10/run_warcraft_on_ubuntu.html">在 Ubuntu 下运行 WarCraft</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/12/learning_yocto_from_zero_1_getting_started.html">Yocto 从零单排 1 —— 入门</a></li>
     </ul>
 </section>
     <hr />
@@ -447,18 +447,13 @@
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/fpga.html">
                                 FPGA
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/com.html">
-                                Com
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -467,8 +462,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/com.html">
+                                Com
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -477,28 +477,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/vim.html">
                                 Vim
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/vhdl.html">
-                                VHDL
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -507,13 +492,53 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/vhdl.html">
+                                VHDL
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -522,18 +547,33 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/pkm.html">
                                 PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -547,51 +587,6 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/sublime-text.html">
                                 Sublime Text
                             </a>
@@ -602,8 +597,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -612,28 +612,28 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
-                                digital procesing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ofdm.html">
                                 OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
                             </a>
                         </li>
                     </ul>

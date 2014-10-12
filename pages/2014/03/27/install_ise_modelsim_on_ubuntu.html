@@ -120,43 +120,43 @@
 <p>ISE 14.7 for Linux</p>
 <p>ModelSim 6.5b for Linux</p>
 <p><br></p>
-<h2>下载</h2>
+<h2 id="_1">下载</h2>
 <hr />
-<h3>ISE Design Suit for Linux</h3>
+<h3 id="ise-design-suit-for-linux">ISE Design Suit for Linux</h3>
 <p>Xilinx 官方网站上有<a href="https://secure.xilinx.com/webreg/register.do?group=dlc&amp;htmlfile=&amp;emailFile=&amp;cancellink=&amp;eFrom=&amp;eSubject=&amp;version=14.7&amp;akdm=1&amp;filename=Xilinx_ISE_DS_Lin_14.7_1015_1.tar">下载链接</a>，但是在校园网内下载速度实在是蛋疼，还好有校内 bt 资源。</p>
 <p>我下载下来的 ISE 版本为 <strong>14.7</strong>，tar 包大小为 6.5 G 。</p>
-<h3>ModelSim for Linux</h3>
+<h3 id="modelsim-for-linux">ModelSim for Linux</h3>
 <p>网上的教程（2011 年前）都说是 <a href="http://www.mentor.com/products/fpga/model">ModelSim 官方网站</a> 上提供 ftp 下载链接，但是好像现在官网上不再提供下载链接了，我只找到 ModelSim PE Student Edition，而且还是 Windows 平台的...</p>
 <p>花费了一下午的时间，不停地在各个论坛注册下载附件，终于把 ModelSim_6.5b for Linux 下载下来了,结果安装时提示找不到 <code>libxp.so.6</code> 库，于是 <code>apt-get</code> 到一些 <code>libxp</code> 的库，安装后仍然提示找不到，无奈放弃了，准备老老实实用 <code>ism</code> 了（以后有时间了再慢慢折腾 T_T）</p>
 <p><br></p>
-<h2>安装</h2>
+<h2 id="_2">安装</h2>
 <hr />
-<h3>ISE DS 14.7</h3>
+<h3 id="ise-ds-147">ISE DS 14.7</h3>
 <p>首先解压</p>
-<div class="highlight"><pre>    <span class="n">tar</span> <span class="o">-</span><span class="n">xvf</span> <span class="n">Xilinx_ISE_DS_Lin_14</span><span class="mf">.7</span><span class="n">_1015_1</span><span class="p">.</span><span class="n">tar</span>
+<div class="codehilite"><pre>    <span class="n">tar</span> <span class="o">-</span><span class="n">xvf</span> <span class="n">Xilinx_ISE_DS_Lin_14</span><span class="mf">.7</span><span class="n">_1015_1</span><span class="p">.</span><span class="n">tar</span>
 </pre></div>
 
 
 <p>接着进入解压出来的目录并给安装文件赋予执行的权限</p>
-<div class="highlight"><pre>    <span class="n">cd</span> <span class="n">Xilinx_ISE_DS_Lin_14</span><span class="mf">.7</span><span class="n">_1015_1</span><span class="o">/</span>
+<div class="codehilite"><pre>    <span class="n">cd</span> <span class="n">Xilinx_ISE_DS_Lin_14</span><span class="mf">.7</span><span class="n">_1015_1</span><span class="o">/</span>
     <span class="n">sudo</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">xsetup</span>
 </pre></div>
 
 
 <p>然后执行 xsetup</p>
-<div class="highlight"><pre>    <span class="n">sudo</span> <span class="p">.</span><span class="o">/</span><span class="n">xsetup</span>
+<div class="codehilite"><pre>    <span class="n">sudo</span> <span class="p">.</span><span class="o">/</span><span class="n">xsetup</span>
 </pre></div>
 
 
 <p>然后熟悉的图形界面就出来，和 Windows 下一样，同意安装许可协议，不停地下一步就可以安装成功。</p>
 <p>安装完成以后，运行</p>
-<div class="highlight"><pre>    <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span><span class="o">/</span><span class="mf">14.7</span><span class="o">/</span><span class="n">ISE_DS</span>
+<div class="codehilite"><pre>    <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span><span class="o">/</span><span class="mf">14.7</span><span class="o">/</span><span class="n">ISE_DS</span>
     <span class="n">source</span> <span class="n">settings64</span><span class="p">.</span><span class="n">sh</span>
 </pre></div>
 
 
 <p>此时，已经可以从终端运行 ISE 了</p>
-<div class="highlight"><pre>    <span class="n">nohup</span> <span class="n">ise</span><span class="o">&amp;</span>
+<div class="codehilite"><pre>    <span class="n">nohup</span> <span class="n">ise</span><span class="o">&amp;</span>
 </pre></div>
 
 
@@ -181,53 +181,53 @@
 <p><a href="http://rmdir.de/~michael/xilinx/">XILINX JTAG tools on Linux without proprietary kernel modules</a></p>
 <p>所以按照说明</p>
 <p>首先安装 usb 驱动开发包，在 64 位系统下</p>
-<div class="highlight"><pre>    <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libusb</span><span class="o">-</span><span class="n">dev</span> <span class="n">libc6</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="n">i386</span> <span class="n">fxload</span>
+<div class="codehilite"><pre>    <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libusb</span><span class="o">-</span><span class="n">dev</span> <span class="n">libc6</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="n">i386</span> <span class="n">fxload</span>
 </pre></div>
 
 
 <p>接着下载驱动程序的源代码</p>
-<div class="highlight"><pre>    <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span>
+<div class="codehilite"><pre>    <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span>
     <span class="n">sudo</span> <span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="o">:</span><span class="c1">//git.zerfleddert.de/usb-driver</span>
 </pre></div>
 
 
 <p>然后编译驱动程序</p>
-<div class="highlight"><pre>    <span class="n">cd</span> <span class="n">usb</span><span class="o">-</span><span class="n">driver</span><span class="o">/</span>
+<div class="codehilite"><pre>    <span class="n">cd</span> <span class="n">usb</span><span class="o">-</span><span class="n">driver</span><span class="o">/</span>
     <span class="n">sudo</span> <span class="n">make</span>
 </pre></div>
 
 
 <p>下载下来的源代码中有个脚本可以设置好一切，我们只需要运行脚本就 ok</p>
-<div class="highlight"><pre>    <span class="p">.</span><span class="o">/</span><span class="n">setup_pcusb</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span><span class="o">/</span><span class="mf">14.7</span><span class="o">/</span><span class="n">ISE_DS</span><span class="o">/</span><span class="n">ISE</span><span class="o">/</span>
+<div class="codehilite"><pre>    <span class="p">.</span><span class="o">/</span><span class="n">setup_pcusb</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span><span class="o">/</span><span class="mf">14.7</span><span class="o">/</span><span class="n">ISE_DS</span><span class="o">/</span><span class="n">ISE</span><span class="o">/</span>
 </pre></div>
 
 
 <p>把 Xilinx 路径添加到系统 PATH 中</p>
-<div class="highlight"><pre>    <span class="n">echo</span> <span class="s">&quot;PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
+<div class="codehilite"><pre>    <span class="n">echo</span> <span class="s">&quot;PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
     <span class="n">echo</span> <span class="s">&quot;export PATH&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
 </pre></div>
 
 
 <p>这时候，写个小测试的程序，<code>Systhesize</code> -&gt; <code>Implement</code> -&gt; <code>Generate Programming File</code>，打开 <code>iMPACT</code>, 如图所示，可以看到已经识别出 JTAG 链上的芯片</p>
 <p><img alt="jtag" src="/images/install-ise-modelsim/jtag.png" /></p>
-<h3>ModelSim</h3>
+<h3 id="modelsim">ModelSim</h3>
 <p>待续...</p>
 <p><br></p>
-<h2>配置 ISE &amp; ModelSim</h2>
+<h2 id="ise-modelsim">配置 ISE &amp; ModelSim</h2>
 <hr />
-<h3>ISE</h3>
+<h3 id="ise">ISE</h3>
 <p>其实也没有特殊配置的地方，主要是自定义代码编辑器，目前我的主要使用的是 <code>sublime text 2</code>，正在向 <code>vim</code> 过度ing</p>
 <p>具体步骤 Edit -&gt; Preferences -&gt; Editors，选择 <code>custom</code>，在右侧的 “Command line syntax” 中写自定义编辑器的执行路径</p>
 <p>配置自定义编辑器为 vim</p>
-<div class="highlight"><pre>    <span class="n">gnome</span><span class="o">-</span><span class="n">terminal</span> <span class="o">--</span><span class="n">maximize</span> <span class="o">-</span><span class="n">x</span> <span class="n">vim</span> <span class="err">$</span><span class="mi">1</span>
+<div class="codehilite"><pre>    <span class="n">gnome</span><span class="o">-</span><span class="n">terminal</span> <span class="o">--</span><span class="n">maximize</span> <span class="o">-</span><span class="n">x</span> <span class="n">vim</span> <span class="err">$</span><span class="mi">1</span>
 </pre></div>
 
 
-<h3>ModelSim</h3>
+<h3 id="modelsim_1">ModelSim</h3>
 <p>ModelSim 编译 Xilinx库，ISE 关联 ModelSim</p>
 <p>待续...</p>
 <p><br></p>
-<h2>参考</h2>
+<h2 id="_3">参考</h2>
 <p><a href="http://rmdir.de/~michael/xilinx/">XILINX JTAG tools on Linux without proprietary kernel modules</a></p>
 <p><a href="http://www.george-smart.co.uk/wiki/Xilinx_JTAG_Linux">Xilinx JTAG Linux</a></p>
 <p><a href="http://blog.csdn.net/yunz1994/article/details/12350071">【Linux软件安装】Ubuntu12.04: Xilinx ISE 14.6</a></p>
@@ -236,11 +236,11 @@
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/05/12/learning_yocto_from_zero_1_getting_started.html">Yocto 从零单排 1 —— 入门</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/21/learning_linux_package_management.html">学习 Linux 软件包依赖管理</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/10/run_warcraft_on_ubuntu.html">在 Ubuntu 下运行 WarCraft</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/04/learning_linux_ssh.html">学习 Linux SSH</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
     </ul>
 </section>
     <hr />
@@ -309,18 +309,13 @@
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/fpga.html">
                                 FPGA
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/com.html">
-                                Com
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -329,8 +324,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/com.html">
+                                Com
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -339,28 +339,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/vim.html">
                                 Vim
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/vhdl.html">
-                                VHDL
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -369,13 +354,53 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/vhdl.html">
+                                VHDL
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -384,18 +409,33 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/pkm.html">
                                 PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -409,51 +449,6 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/sublime-text.html">
                                 Sublime Text
                             </a>
@@ -464,8 +459,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -474,28 +474,28 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
-                                digital procesing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ofdm.html">
                                 OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
                             </a>
                         </li>
                     </ul>

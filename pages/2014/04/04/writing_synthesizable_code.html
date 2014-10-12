@@ -116,7 +116,7 @@
                 </div>
                 <p>对电路建模方法有很多种，可以用绘制原理图，也可以用 <em>硬件描述语言（Hardware Description Language）</em> 建模 。硬件描述语言中最常用的就是 Verlilog 和 VHDL 。</p>
 <p>Verilog HDL和VHDL相比有很多优点，有C语言基础的话很容易上手。搜集了一些网上大神的经验总结和书上的例子，所以对于和我一样的初学者，这篇博客应该还是很有提高作用的，至于具体语法，任何一本书都讲的很详细。</p>
-<h2>HDL</h2>
+<h2 id="hdl">HDL</h2>
 <hr />
 <p>从网上找到一篇文章，把 HDL 的历史说的非常清楚。</p>
 <p>作者 董培良 </p>
@@ -127,23 +127,23 @@
 <p>Verilog HDL 也形成于差不多的年代，是由 Gateway Design Automation 公司大约在 1983 年左右开发的。其架构同 VHDL 相似，但主要被用来进行硬件仿真。或许私人公司更注重实用，Verilog 要比 VHDL 简洁得多。</p>
 <p>由此可见，这两种最流行的用于电路设计的语言，没有一种是为了设计硬件而开发的（更何况 80 年代还没有现在的那些功能强大的EDA软件呢）。因此，当初制订 HDL 语言标准的时候，并没有考虑这些代码如何用硬件来实现。换句话说，有些代码写起来简单，实现起来却可能非常复杂，或者几乎不可能实现。</p>
 <p><br></p>
-<h2>可综合代码</h2>
+<h2 id="_1">可综合代码</h2>
 <hr />
 <p>任何符合 HDL 语法标准的代码都是对硬件行为的一种描述，但不一定是可直接对应成电路的设计信息。行为描述可以基于不同的层次，如系统级，算法级，寄存器传输级(RTL)、门级等等。以目前大部分EDA软件的综合能力来说，<strong>只有RTL或更低层次的行为描述才能保证是可综合的</strong>。而众多初学者试图做的，却是想让软件去综合 <em>算法级或者更加抽象的硬件行为描述</em>。</p>
-<h3>所有综合工具都支持的语法：</h3>
-<div class="highlight"><pre>    <span class="nx">always</span><span class="p">,</span> <span class="nx">assign</span><span class="p">,</span> <span class="nx">begin</span><span class="p">,</span> <span class="nx">end</span><span class="p">,</span> 
+<h3 id="_2">所有综合工具都支持的语法：</h3>
+<div class="codehilite"><pre>    <span class="nx">always</span><span class="p">,</span> <span class="nx">assign</span><span class="p">,</span> <span class="nx">begin</span><span class="p">,</span> <span class="nx">end</span><span class="p">,</span> 
     <span class="nx">wire</span><span class="p">,</span> <span class="nx">tri</span><span class="p">,</span> <span class="nx">inout</span><span class="p">,</span> <span class="nx">aupply0</span><span class="p">,</span> <span class="nx">supply1</span><span class="p">,</span> <span class="nx">input</span><span class="p">,</span> <span class="nx">reg</span><span class="p">,</span> <span class="nx">integer</span><span class="p">,</span> <span class="k">default</span><span class="p">,</span> 
     <span class="nx">and</span><span class="p">,</span> <span class="nx">nand</span><span class="p">,</span> <span class="nx">or</span><span class="p">,</span> <span class="nx">nor</span><span class="p">,</span> <span class="nx">xor</span><span class="p">,</span> <span class="nx">xnor</span><span class="p">,</span> <span class="nx">buf</span><span class="p">,</span> <span class="nx">not</span><span class="p">,</span> <span class="nx">bufif0</span><span class="p">,</span><span class="nx">bufif1</span><span class="p">,</span> <span class="nx">notif0</span><span class="p">,</span> <span class="nx">notif1</span><span class="p">,</span> 
     <span class="k">if</span><span class="p">,</span> <span class="k">case</span><span class="p">,</span> <span class="k">for</span><span class="p">,</span> <span class="kd">function</span><span class="p">,</span> <span class="nx">instantitation</span><span class="p">,</span> <span class="nx">module</span><span class="p">,</span> <span class="nx">negedge</span><span class="p">,</span> <span class="nx">posedge</span><span class="p">,</span> <span class="nx">operators</span><span class="p">,</span> <span class="nx">output</span><span class="p">,</span> <span class="nx">parameter</span>  
 </pre></div>
 
 
-<h3>有些工具支持，有些工具不支持的语法：</h3>
-<div class="highlight"><pre>    <span class="n">asex</span><span class="p">,</span> <span class="n">casez</span><span class="p">,</span> <span class="n">wand</span><span class="p">,</span> <span class="n">triand</span><span class="p">,</span> <span class="n">wor</span><span class="p">,</span> <span class="n">trior</span><span class="p">,</span> <span class="n">real</span><span class="p">,</span> <span class="n">disable</span><span class="p">,</span> <span class="n">forever</span><span class="p">,</span> <span class="n">arrays</span><span class="p">,</span> <span class="n">memories</span><span class="p">,</span> <span class="n">repreat</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span><span class="k">while</span>
+<h3 id="_3">有些工具支持，有些工具不支持的语法：</h3>
+<div class="codehilite"><pre>    <span class="n">asex</span><span class="p">,</span> <span class="n">casez</span><span class="p">,</span> <span class="n">wand</span><span class="p">,</span> <span class="n">triand</span><span class="p">,</span> <span class="n">wor</span><span class="p">,</span> <span class="n">trior</span><span class="p">,</span> <span class="n">real</span><span class="p">,</span> <span class="n">disable</span><span class="p">,</span> <span class="n">forever</span><span class="p">,</span> <span class="n">arrays</span><span class="p">,</span> <span class="n">memories</span><span class="p">,</span> <span class="n">repreat</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span><span class="k">while</span>
 </pre></div>
 
 
-<h3>建立可综合模块的原则</h3>
+<h3 id="_4">建立可综合模块的原则</h3>
 <ul>
 <li>
 <p>不要用 initial （FPGA 上电时初始状态不定，一般需要上电复位信号，在复位信号有效的时候进行初始化，上电复位信号可以由外部手动输入，也可以系统自己产生 —— 写一个实现上电产生自动复位信号的模块）。P.S. 现在的综合软件功能已经足够强大，即使写了 initial 语句，在 ISE 13.3 中仍然是可综合的，而且没有 warning 和 info 的提示）</p>
@@ -190,10 +190,10 @@
 </li>
 </ul>
 <p><br></p>
-<h2>不可综合代码</h2>
+<h2 id="_5">不可综合代码</h2>
 <hr />
-<h3>不可综合语法：</h3>
-<div class="highlight"><pre>    <span class="n">time</span><span class="p">,</span> <span class="n">defparam</span><span class="p">,</span> <span class="err">$</span><span class="n">finish</span><span class="p">,</span> <span class="n">fork</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">delays</span><span class="p">,</span> <span class="n">UDP</span><span class="p">,</span> <span class="n">wait</span>
+<h3 id="_6">不可综合语法：</h3>
+<div class="codehilite"><pre>    <span class="n">time</span><span class="p">,</span> <span class="n">defparam</span><span class="p">,</span> <span class="err">$</span><span class="n">finish</span><span class="p">,</span> <span class="n">fork</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">delays</span><span class="p">,</span> <span class="n">UDP</span><span class="p">,</span> <span class="n">wait</span>
 </pre></div>
 
 
@@ -236,11 +236,11 @@
 </li>
 </ul>
 <p><br></p>
-<h2>判断是否可综合</h2>
+<h2 id="_7">判断是否可综合</h2>
 <hr />
 <p>继续引用 <strong>董培良</strong> 的文章：</p>
 <p>用一句简单的话概括：电脑永远没有你聪明 。具体来说，通常 EDA 软件对 HDL 代码的综合能力总是比人差 。对于一段代码，如果你不能想象出一个较直观的硬件实现方法，那 EDA 软件肯定也不行。比如说，加法器、多路选择器是大家都很熟悉的电路，所以类似</p>
-<div class="highlight"><pre>        <span class="n">A</span><span class="o">+</span><span class="n">B</span><span class="o">-</span><span class="n">C</span>
+<div class="codehilite"><pre>        <span class="n">A</span><span class="o">+</span><span class="n">B</span><span class="o">-</span><span class="n">C</span>
         <span class="p">(</span><span class="n">A</span><span class="o">&gt;</span><span class="n">B</span><span class="p">)</span><span class="o">?</span><span class="n">C</span><span class="o">:</span><span class="n">D</span>
 </pre></div>
 
@@ -249,18 +249,18 @@
 <p>不过，这样的判断标准非常主观模糊，遇到具体情况还得按设计人员自己的经验来判断 。如果要一个相对客观的标准，一般来说：在 RTL 级的描述中，所有逻辑运算和加减法运算、以及他们的有限次组合，基本上是可综合的，否则就有无法综合的可能性 。当然，这样的标准仍然有缺陷，更况且 EDA 的技术也在不断发展，过去无法综合的代码或许将来行，某些软件不支持的代码换个软件或许行 。比如固定次数的循环，含一个常数参数的乘法运算等等，有些 EDA 软件支持对它们的综合，而有些软件不行。</p>
 <p>所以，正确的判断仍然要靠实践来积累经验。当你可以较准确判断代码的可综合性的时候，你对 HDL 的掌握就算完全入门了。</p>
 <p><br></p>
-<h2>参考</h2>
+<h2 id="_8">参考</h2>
 <p><a href="http://www.dzkf.cn/html/EDAjishu/2006/0720/9.html">浅谈VHDL/Verilog的可综合性以及对初学者的一些建议</a></p>
             </div>
             <!-- /.entry-content -->
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
     </ul>
 </section>
     <hr />
@@ -329,18 +329,13 @@
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
-                            <a href="http://guqian110.github.io/tag/linux.html">
-                                Linux
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/fpga.html">
                                 FPGA
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/com.html">
-                                Com
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -349,8 +344,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/com.html">
+                                Com
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
@@ -359,28 +359,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/review.html">
-                                review
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/vim.html">
                                 Vim
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/code.html">
-                                Code
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/vhdl.html">
-                                VHDL
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -389,13 +374,53 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/vhdl.html">
+                                VHDL
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/digital-processing.html">
                                 digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -404,18 +429,33 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/wine.html">
-                                Wine
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/ssh.html">
-                                SSH
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/pkm.html">
                                 PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -429,51 +469,6 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
-                                Open-source Hardware
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
-                                Steve Jobs
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/gmail.html">
-                                Gmail
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/yocto.html">
-                                Yocto
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
-                                时间管理
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/package-management.html">
-                                Package Management
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/sublime-text.html">
                                 Sublime Text
                             </a>
@@ -484,8 +479,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/latch.html">
-                                latch
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -494,28 +494,28 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
-                                digital procesing
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/build-blog.html">
-                                Build Blog
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/coding-style.html">
-                                coding style
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ofdm.html">
                                 OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
                             </a>
                         </li>
                     </ul>
