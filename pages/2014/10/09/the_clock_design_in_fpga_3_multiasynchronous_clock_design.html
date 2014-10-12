@@ -53,10 +53,19 @@
                             <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
                         </li>
                         <li >
+                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li >
                             <a href="http://guqian110.github.io/category/com.html">Com</a>
                         </li>
                         <li class="active">
                             <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/misc.html">Misc</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -105,7 +114,7 @@
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h2 id="problem">Problem</h2>
+                <h2>Problem</h2>
 <hr />
 <p>在前面一篇总结 <a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">Latch V.S. Flip-flop</a> 的博文中，已经解释了 flip-flop 的一些参数：建立时间 <code>setup time</code>、保持时间 <code>hold time</code>、回复时间 <code>recovery time</code>、撤销时间 <code>removal time</code>。</p>
 <p>如果不满足这些参数的要求，则会发生所谓的 亚稳态 <code>Metastability</code> 的问题。下面是 Altera 官方的一篇关于亚稳态的 white paper，详细介绍了亚稳态的产生原因、它是如何导致设计出现问题、以及描述它的参数 MTBF (Mean Time Between Failures) 如何计算。</p>
@@ -123,7 +132,7 @@
 <p>如果不加处理，亚稳态产生的错误值将会传播到设计的其他部分，到这更加严重的问题</p>
 <p><img alt="propagatetion" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/propagation.png" /></p>
 <p><br></p>
-<h2 id="synchronous-design">Synchronous Design</h2>
+<h2>Synchronous Design</h2>
 <hr />
 <p>多时钟域导致的亚稳态的问题的根本原因就是：信号和时钟是异步的，也就是设计不是同步设计 <code>Synchronous Design</code>。</p>
 <p><strong>同步化设计思想</strong> 是 FPGA 中非常重要的原则：</p>
@@ -142,9 +151,9 @@
 </blockquote>
 <p>下面提到的所有方法，就是同步化思想的应用，其核心目的就是将本时钟域外的 <strong>异步信号同步化</strong>。</p>
 <p><br></p>
-<h2 id="solution">Solution</h2>
+<h2>Solution</h2>
 <hr />
-<h3 id="synchronizer">Synchronizer</h3>
+<h3>Synchronizer</h3>
 <p>通常使用 <code>MTBF (Mean Time Between Failures)</code> 来描述 flip-flop 亚稳态指标，MTBF 越大，表示出现故障的间隔越大，表示设计越可靠。</p>
 <p>以一个典型的 0.25 us 工艺的 ASIC 库中的 flip-flop 的参数计算可以得到 MTBF = 2.01 d，即两天就会出现一次亚稳态。显然这是不能接受的，但是如果将两个 flip-flop 级联在一起，计算结果则变成了 9.57×109 years，显然这个概率基本就可以忽略不计，可以看作是消除了亚稳态。</p>
 <p>理论上，亚稳态是不可能完全消除的，一般级联多少个 flip-flop，由实际指标要求和设计者的强迫症习惯决定，对于普通的应用来说，2 级 flip-flop 级联已经足够了。</p>
@@ -165,12 +174,12 @@
 </li>
 </ol>
 <p>下面分别讨论：</p>
-<h4 id="level-synchronizer">level synchronizer</h4>
+<h4>level synchronizer</h4>
 <p><strong>Schematic:</strong></p>
 <p>电平同步器的结构图就是前面的图，在 Clifford E. Cummings 的 <a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">paper</a> 中有更详细的图解说明：</p>
 <p><img alt="level" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/level.png" /></p>
 <p><strong>Code:</strong></p>
-<div class="codehilite"><pre><span class="n">module</span> <span class="nf">LVLSYNC</span><span class="p">(</span>
+<div class="highlight"><pre><span class="n">module</span> <span class="nf">LVLSYNC</span><span class="p">(</span>
     <span class="n">rst</span><span class="p">,</span> <span class="n">clk_i</span><span class="p">,</span> <span class="n">din</span><span class="p">,</span> <span class="n">clk_o</span><span class="p">,</span> <span class="n">dout</span>
     <span class="p">);</span>
 
@@ -221,12 +230,12 @@
 <p>使用 level synchronizer 的要求是：跨域时钟域的这个信号持续时间 &gt;= 2 个新时钟域时钟周期。</p>
 <p>之所以这样要求是因为：synchronizer 要花费两个时钟周期来同步这个异步信号，如果这个信号长度短于两个时钟周期，则不能正常工作。</p>
 <p>level synchronizer 是其他两种同步器的核心。</p>
-<h4 id="edge-detecting-synchronizer">edge-detecting synchronizer</h4>
+<h4>edge-detecting synchronizer</h4>
 <p>边沿检测同步器 是在 level synchronizer 的输出端增加了一个 flip-flop，如下图所示。这个电路的功能是实现上升沿检测，产生一个和时钟周期等宽，高电平有效的脉冲；如果将与门的两个输入端交换，则会完成下降沿检测。如果改为非门，则可以得到一个低电平脉冲有效的电路。</p>
 <p><strong>Schematic:</strong></p>
 <p><img alt="edge-detecting" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/edge-detecting.png" /></p>
 <p><strong>Code:</strong></p>
-<div class="codehilite"><pre><span class="n">module</span> <span class="nf">EDGESYNC</span><span class="p">(</span>
+<div class="highlight"><pre><span class="n">module</span> <span class="nf">EDGESYNC</span><span class="p">(</span>
     <span class="n">rst</span><span class="p">,</span> <span class="n">clk_i</span><span class="p">,</span> <span class="n">din</span><span class="p">,</span> <span class="n">clk_o</span><span class="p">,</span> <span class="n">dout</span>
     <span class="p">);</span>
 
@@ -279,7 +288,7 @@
 <p><strong>Restriction:</strong></p>
 <p>使用 edge-detecting synchronizer 的要求是：输入信号的宽度 &gt;= 同步时钟周期 + 第一个 flip-flop 的 hold time。最保险的脉冲宽度是同步周期的两倍。</p>
 <p>edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较快时钟域时可以正常工作，它会产生一个脉冲表示输入信号的上升沿或者下降沿。但是反过来，将一个快时钟域的信号同步到慢时钟域时，并不能正常工作，这时候需要使用 pusle synchronizer。</p>
-<h4 id="pulse-synchronizer">pulse synchronizer</h4>
+<h4>pulse synchronizer</h4>
 <p>脉冲同步器的基本功能是从某个时钟域中取出一个单时钟宽度的脉冲，然后在新的时钟域中建立另外一个单时钟宽度的脉冲。</p>
 <p><strong>Schematic:</strong></p>
 <p><img alt="pusle" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/pulse.png" /></p>
@@ -290,12 +299,12 @@
 <p><strong>Restriction:</strong></p>
 <p>使用 pusle synchronizer 的要求是：输入脉冲之间的最小间隔 &gt;= 2 个同步时钟周期。</p>
 <p>如果两个输入脉冲相互过近，则新时钟域的输出脉冲也会紧密相邻。</p>
-<h4 id="summary">Summary</h4>
+<h4>Summary</h4>
 <p>总结 3 种同步器的特点，有下表：</p>
 <p><img alt="synchronizer sum" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronizer_sum.png" /></p>
 <p>经过 synchronizer 的信号在两个时钟之后变为有效，一般延时为 1～2 新时钟周期，可以粗略估计延时为 2 个时钟周期，设计者需要仔细考虑同步延迟对于跨时钟域的信号时序造成的影响。</p>
 <p><em>在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输，这时候通常采用其他的方法，比如握手协议和 FIFO 等。</em></p>
-<h3 id="handshaking">Handshaking</h3>
+<h3>Handshaking</h3>
 <blockquote>
 <p>Handshaking allows digital circuits to effectively communicate with each other when the response time of one or both circuits is unpredictable. For example, an arbitrated bus allows more than one circuit to request access to a single bus, such as PCI or AMBA (Advanced Microcontroller Bus Architecture), using arbitration to determine which circuit gains access to the bus. Each circuit signals a request, and the arbitration logic determines which request “wins.” This winning circuit receives an acknowledgment indicating that it has access to the bus. It then discontinues its request and begins the bus transaction.</p>
 </blockquote>
@@ -309,12 +318,12 @@
 </li>
 </ol>
 <p>这两种握手协议都要用到 synchronizer，每种都有各自的优缺点，下面分别讨论：</p>
-<h4 id="full-handshaking">full handshaking</h4>
+<h4>full handshaking</h4>
 <p><img alt="full" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/full.png" /></p>
 <p>如图所示，全握手协议中，双方电路在声明或中止各自的握手信号前都要等待对方的相应。首先，发送方电路A声明它的请求信号，然后接收方电路B检测到该请求有效后，声明它的效应信号；当电路A检测到响应信号有效之后，中止自己的请求信号；最后，当电路B检测到请求无效之后，中止自己的相应信号。这样，算是完成了一次通信。除非A检测到无效的响应信号，否则它不会再声明新的请求信号。这种机制要求请求电路A必须延迟它的下一个请求，直到它检测到无效的响应信号（意味着上次请求已完成）。</p>
 <p>这种类型的握手使用了 level synchronizer。可以根据两点来粗略估计这个协议的时序：信号跨域一个时钟域需要花费 2 个时钟周期，信号在跨域时钟域之前被电路寄存花费 1 个时钟周期。所以，发送端A需要 5 个周期，接收端B需要 6 个周期。</p>
 <p>全握手很强健，因为通过检测请求和响应信号，每个电路都清楚地知道对方的状态，这种方式的不足之处是完成整个过程要花费很多时钟周期。</p>
-<h4 id="partial-handshaking">partial handshaking</h4>
+<h4>partial handshaking</h4>
 <p>另一中类型是部分握手。部分握手的双方不用等对方的响应就中止各自的信号，并继续执行握手命令序列。</p>
 <p>部分握手比全握手在健壮性方面稍弱，因为握手信号并不指示各自电路的状态，每一电路都必须保存状态信息（在全握手里这个信息被送出去），但是，由于无需等待对方的响应，完整的时间序列花费较少的时间。</p>
 <p>有两种类型的部分握手：</p>
@@ -326,7 +335,7 @@
 <p>第二种握手方法中，电路A使用一个单时钟宽度脉冲发出它的请求，电路B也以一个单时钟宽度脉冲响应这个请求。这种情况下，两个电路都需要保存状态，以指示请求正待处理。</p>
 <p><img alt="partial-2" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_2.png" /></p>
 <p>这种握手使用的是 pusle synchronizer。完整的时序是：电路A需要花费 2 个时钟周期，电路B需要花费 3 个时钟周期。</p>
-<h4 id="summary_1">summary</h4>
+<h4>summary</h4>
 <p><img alt="handshaing sum" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/handshaking_sum.png" /></p>
 <p>因为 handshaking 内部采用了 synchronizer，所以可以解决异步信号导致的亚稳态现象。根据实际要求，选择不同的 synchronizer 和握手信号，就有了前面介绍的 3 种不同的 handshaking：</p>
 <ul>
@@ -348,11 +357,11 @@
 </li>
 </ul>
 <p><em>这些握手协议针对的都是跨时钟域的单一信号，但当几组信号要跨越时钟域时，设计者就需要更加复杂的信号传递方法。</em></p>
-<h3 id="datapath-design">Datapath Design</h3>
+<h3>Datapath Design</h3>
 <p>在进行信号同步时，有一个重要的原则：</p>
 <p><strong>不应该在设计中的多个地方对同一信号进行同步，即禁止单个信号扇出至多个同步器。</strong></p>
 <p>因为synchronizer要花 1~2 个时钟周期，设计者不能确切预测到每个信号何时跨越时钟域，此外，在新时钟域中一组经过同步后的信号其时序是不定的，因为synchronier的延迟可以是 1～2 个时钟周期，这种情况下各个同步信号间形成一种“竞争状况”，这种竞争状况在需要跨域时钟域传输的多组信号间也会发生，例如数据总线、地址总线、控制总线等。因此，<strong>不能对组中的每个信号单独使用synchronizer，也不能对数据/地址总线的每一位单独使用同步器</strong>，因为在新的时钟域中，要求每个信号同时有效。</p>
-<h4 id="problem_1">problem</h4>
+<h4>problem</h4>
 <p>Clifford E. Cummings 在他的文章中举例说明了几种常见的错误：</p>
 <blockquote>
 <p>A frequent mistake made by engineers when working on multi-clock designs is passing multiple control signals from one clock domain to another and overlooking the importance of the sequencing of the control signals. <strong>Simply using synchronizers on all control signals is not always good enough</strong> as will be shown in the following examples. </p>
@@ -369,7 +378,7 @@ enable signal in order to load a data value into the register. If both the load 
 <p><strong> Solution - Logic to generate the proper sequencing signals</strong></p>
 <p><img alt="solution 2" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/solution_2.png" /></p>
 </blockquote>
-<h4 id="solution_1">solution</h4>
+<h4>solution</h4>
 <p>有一种解决这个问题的方法是：<strong>使用一个保持寄存器 + 一个握手信号</strong>。</p>
 <p><img alt="solution" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/datapath.png" /></p>
 <p>保持寄存器保持信号总线的数据，握手信号指示目标时钟域何时可以对总线进行采样，源时钟域何时可以更换当前寄存器中保存的内容。</p>
@@ -385,7 +394,7 @@ enable signal in order to load a data value into the register. If both the load 
 <p><img alt="datapath timing" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/datapath_timing.png" /></p>
 <p>注意：</p>
 <p>如果发送端的数据速率很快/无法控制发送端发送数据的速度，那么就有可能无法满足握手机制中要求数据保持稳定这一要求，这时候这种方法就不再适用，而应该采用其他的方法，比如 FIFO。</p>
-<h3 id="advanced-datapath-design">Advanced Datapath Design</h3>
+<h3>Advanced Datapath Design</h3>
 <p>有时候，数据在跨时钟域时需要“堆积”起来，这时候只使用单个的寄存器就无法完成工作。比如某个传输电路突发式地发送数据，接收电路来不及采样，为了保持数据不丢失，就必须先把数据存储起来；还有一种情况是接收电路的采样速率比发送速度快，但是位宽却不够，仍然需要将没有采样的数据先暂存起来，这时候就需要使用 FIFO。</p>
 <p>基本上，使用 FIFO 的目的有两个：</p>
 <ol>
@@ -400,7 +409,7 @@ enable signal in order to load a data value into the register. If both the load 
 <p>如果是自己写代码实现，那么异步信号的问题还是需要我们在实现 FIFO 是仔细考虑的；如果是采用 IP core 的方式，那么可以很大程度地缓解我们的压力，因为事实上我们是把异步信号的问题交给了设计 IP core 的人来处理...这些 IP core 在内部针对异步数据读写的问题作了非常严谨复杂的设计，对外提供了非常简单的接口。采用这种方式虽然轻松，但是相应的地也有缺点：耗费更多的资源。</p>
 <p>在 <a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">Synthesis and Scripting Techniques for Designing Multi-Asynchronous Clock Designs</a> 和 <a href="http://inst.eecs.berkeley.edu/~cs150/sp10/Collections/Papers/ClockCrossing.pdf">Crossing the abyss: asynchronous signals in a synchronous world</a> 两篇 paper 和 <a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art</a> 中都有一些实现 FIFO 使用的相关技术的介绍，比如指针逻辑的处理，内部 gray code 计数器的实现等。这里就偷懒不细说了（以后再补） :P</p>
 <p><em>关于跨时钟域 <a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">papaer1</a> 中还有一些其他方面的技巧，可以帮助我们更好的实现设计。</em></p>
-<h3 id="desing-partitioning">Desing Partitioning</h3>
+<h3>Desing Partitioning</h3>
 <p><strong>Guideline:</strong></p>
 <p>Only allow one clock per module.</p>
 <p><strong>Reason:</strong></p>
@@ -412,7 +421,7 @@ enable signal in order to load a data value into the register. If both the load 
 <p>采用这种设计方式的原因如上所示，可以减少不必要的时序验证，而且脚本也更容易写，总之可以使时序验证工作更容易。</p>
 <p>举例如下图所示：</p>
 <p><img alt="partitioning" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partitioning.png" /></p>
-<h3 id="clock-name-conventions">Clock Name Conventions</h3>
+<h3>Clock Name Conventions</h3>
 <p><strong>Guideline:</strong></p>
 <p>Use a clock naming convention to identify the clock source of every signal in a design.</p>
 <p><strong>Reason:</strong></p>
@@ -420,7 +429,7 @@ enable signal in order to load a data value into the register. If both the load 
 <p>作者还举例说明了一个这样的例子：1995 年为 In Focus projectors 设计 video ASIC 时，他们就采用了这样的方法，对于 mircroprocessor 的时钟命名为 uClk，对于 video 的时钟则命名为 vClk。对应的时钟域中的信号的名字也添加了对应的前缀，比如udata，uwrite，uadder等。</p>
 <p>使用了这样的策略后，整个设计团队的攻城狮们都可以很方便地确定某个信号是否为异步信号，如何处理。当时有个攻城狮没有按照这种策略，使用了自己的命名方式，在一次会议之后，大家墙裂建议他修改命名，结果也证明修改之后遇到的问题、出错的概率都小了很多。</p>
 <p><br></p>
-<h2 id="summary_2">Summary</h2>
+<h2>Summary</h2>
 <hr />
 <p>以上，就是一些在多时钟域设计中处理异步数据的常用方法，总结如下：</p>
 <ol>
@@ -444,7 +453,7 @@ enable signal in order to load a data value into the register. If both the load 
 </li>
 </ol>
 <p><br></p>
-<h2 id="reference">Reference</h2>
+<h2>Reference</h2>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">Synthesis and Scripting Techniques for Designing Multi-Asynchronous Clock Designs</a></p>
 <p><a href="http://inst.eecs.berkeley.edu/~cs150/sp10/Collections/Papers/ClockCrossing.pdf">Crossing the abyss: asynchronous signals in a synchronous world</a></p>
 <p><a href="http://book.douban.com/subject/10593491/">Xilinx FPGA高级设计及应用</a></p>
@@ -459,10 +468,10 @@ enable signal in order to load a data value into the register. If both the load 
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
     </ul>
 </section>
     <hr />
@@ -531,8 +540,53 @@ enable signal in order to load a data value into the register. If both the load 
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/fpga.html">
                                 FPGA
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/com.html">
+                                Com
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/digital-processing.html">
+                                digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -541,23 +595,33 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/vhdl.html">
                                 VHDL
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-processing.html">
-                                digital processing
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
-                                digital procesing
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -566,33 +630,13 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/sublime-text.html">
-                                Sublime Text
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/com.html">
-                                Com
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -601,13 +645,88 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/latch.html">
                                 latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/sublime-text.html">
+                                Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/clock-resource.html">
+                                clock resource
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
                             </a>
                         </li>
                     </ul>

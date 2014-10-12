@@ -53,10 +53,19 @@
                             <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
                         </li>
                         <li >
+                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li >
                             <a href="http://guqian110.github.io/category/com.html">Com</a>
                         </li>
                         <li class="active">
                             <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/misc.html">Misc</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -111,7 +120,7 @@
 </blockquote>
 <p>总结一下 FPGA 中的时钟设计原则。</p>
 <p><br></p>
-<h2 id="clock-design">Clock Design</h2>
+<h2>Clock Design</h2>
 <hr />
 <blockquote>
 <p>在 FPGA/CPLD 中通常采用几种时钟类型：</p>
@@ -146,12 +155,12 @@
 <p>分频/倍频时钟 Divied/Multiplied Clock</p>
 </li>
 </ol>
-<h3 id="gloabl-clock">Gloabl Clock</h3>
+<h3>Gloabl Clock</h3>
 <p>关于全局时钟，前面一篇 blog  <a href="">FPGA 时钟设计 1 —— 时钟资源总结</a> 中有总结。</p>
 <p>对于一个项目来说，全局时钟是 <strong>最简单</strong>、<strong>最可预测</strong> 的时钟。</p>
 <p>在 PLD/FPGA 项目中 <strong>最好的时钟方案</strong> 是：由专用的全局时钟输入引脚驱动的单个主时钟去钟控设计项目中的每一个触发器。只要可能就应该尽量在设计中采用全局时钟</p>
 <p>PLD/FPGA 都具有专门的全局时钟引脚，它直接连接到器件中的每一个寄存器，这种全局时钟提供最短的时钟到输出的延时。</p>
-<h3 id="gated-clock">Gated Clock</h3>
+<h3>Gated Clock</h3>
 <p>门控时钟的意思是通过组合逻辑，控制、禁止或允许时钟输入到寄存器和其他同步原件上的一种方法。因为它能够有效地降低功耗，所以被广泛地应用于 ASIC 设计中。但是，它不符合 <code>同步设计</code> 的思想，可能会影响系统设计的实现和验证，所以，<strong>在 FPGA 设计中应该避免使用门控时钟。</strong></p>
 <p>因为 ASIC 和 FPGA 结构设计上的区别，两者对待门控时钟的态度是完全不同的：</p>
 <p><a href="http://electronics.stackexchange.com/questions/73398/gated-clocks-and-clock-enables-in-fpga-and-asics">Gated clocks and clock enables in FPGA and ASICS</a></p>
@@ -160,7 +169,7 @@
 <p>就是使用寄存器 <code>时钟使能 (clock enable, CE)</code> 端口。</p>
 <p>单纯从功能来看，使用使能时钟代替门控时钟是一个不错的选项，但是使能时钟在使能信号关闭时，时钟信号仍然工作，它无法像门控时钟那样降低系统的功耗。</p>
 <p>推译带使能端的触发器的代码：</p>
-<div class="codehilite"><pre>    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+<div class="highlight"><pre>    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
             <span class="n">dout</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">;</span>
         <span class="n">end</span>
@@ -195,7 +204,7 @@
 </ol>
 <p>这些条件的目的就是为了避免组合逻辑中的竞争带来的毛刺。</p>
 <p>根据数字电路的知识，我们知道可以通过添加“冗余逻辑”的方法来消除组合逻辑的冒险，但是，FPGA 的编译器在 综合时会去掉这些冗余逻辑，所以不能采用这种方法。</p>
-<h3 id="logic-clock">Logic Clock</h3>
+<h3>Logic Clock</h3>
 <p>有时候会用到组合逻辑的输出作为时钟信号或者复位信号，但是这种时钟信号有两个非常重要的缺陷：</p>
 <ol>
 <li>
@@ -207,12 +216,12 @@
 </ol>
 <p>（看到书上提出一个解决方案是：使用系统专用的时钟信号，将组合逻辑的输出打一拍，避免组合逻辑的直接输出，达到同步的效果。但是我个人认为这个方案不是非常好。）</p>
 <p>综上，对于 FPGA 来说，还是应该<strong>尽量避免使用组合逻辑的输出作为时钟</strong>。</p>
-<h3 id="dividemultiplied-clock">Divide/Multiplied Clock</h3>
+<h3>Divide/Multiplied Clock</h3>
 <p>在我们的设计中，一般都不止一个时钟频率。如果不加注意，随意使用分频时钟，这叫做时钟满天飞，是非常不好的设计风格。</p>
 <p>对于 FPGA 来说，一般都内嵌了多个时钟管理单元，利用它们可以非常方便地达到多时钟的目的，这样的时钟信号是最稳定的。</p>
 <p>对于某些无法使用时钟管理单元的器件，则应该使用 <code>使能时钟 (clock enable, ce)</code> 。具体方法就是：时钟还是使用原始的未分频的时钟，分频信号用来当作使能端来用。</p>
 <p><br></p>
-<h2 id="other-tips">Other Tips</h2>
+<h2>Other Tips</h2>
 <hr />
 <ul>
 <li>
@@ -229,7 +238,7 @@
 </li>
 </ul>
 <p><br></p>
-<h2 id="reference">Reference</h2>
+<h2>Reference</h2>
 <p><a href="http://book.douban.com/subject/10593491/">Xilinx FPGA 高级设计及应用</a></p>
 <p><a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG">FPGA 高手设计实战真经 100 则</a></p>
 <p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发实用教程</a></p>
@@ -240,10 +249,10 @@
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
     </ul>
 </section>
     <hr />
@@ -312,8 +321,53 @@
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group " id="tags">
                         <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/fpga.html">
                                 FPGA
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/com.html">
+                                Com
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                Vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                Verilog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/digital-processing.html">
+                                digital processing
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
@@ -322,23 +376,33 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                Code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/vhdl.html">
                                 VHDL
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
-                            <a href="http://guqian110.github.io/tag/clock-design.html">
-                                clock design
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-processing.html">
-                                digital processing
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
-                                digital procesing
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -347,33 +411,13 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/sublime-text.html">
-                                Sublime Text
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
-                                Intel Galileo
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/arduino.html">
-                                Arduino
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/reset.html">
-                                reset
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/com.html">
-                                Com
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/matlab.html">
-                                matlab
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -382,13 +426,88 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                FSM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/latch.html">
                                 latch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
-                            <a href="http://guqian110.github.io/tag/parameterization.html">
-                                parameterization
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/sublime-text.html">
+                                Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/clock-resource.html">
+                                clock resource
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
                             </a>
                         </li>
                     </ul>
