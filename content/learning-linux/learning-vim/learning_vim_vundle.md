@@ -69,12 +69,14 @@ Vundle 的安装需要 [Git][Git] 。
 
 从 GitHub 上 clone 下来就可以了
 
+    #!Shell
     git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
 ### 配置 Vundle
 
 将下列内容加入到 `.vimrc` 文件中
 
+    #!Shell
     set nocompatible              " be iMproved, required
     filetype off                  " required
 
@@ -140,25 +142,30 @@ Vundle 的安装需要 [Git][Git] 。
 
 + 列表
 
+        #!Shell
         :Bundles    // 列出所有插件（包括未安装的）
         :BundleList // 列出已安装的插件
 
 + 安装
 
+        #!Shell
         :BundleInstall
 
 + 搜索
 
+        #!Shell
         :BundleSearch   // 后面不接插件名时，同 Bundles，列出了 4000 个插件
 
 + 更新
 
+        #!Shell
         :BundleInstall! 
 
 + 删除
 
     在 `.vimrc` 文件中删除/注释掉相应的插件名，然后输入命令
     
+        #!Shell
         :BundleClean
 
 <br>
@@ -167,6 +174,7 @@ Vundle 的安装需要 [Git][Git] 。
 
 列出一些我安装的插件，这些插件都是大家比较常用的，可以从相关的网站或者帮助文档中找到使用说明或者 `README`，计划在后续中写一写使用心得～
 
+    #!Shell
     Bundle 'taglist.vim'
     Bundle 'The-NERD-tree'
     Bundle 'SuperTab'

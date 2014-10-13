@@ -35,6 +35,7 @@ Ubuntu 软件仓里搜索 Wine，就可以找到 `Wine Windows Program Loader`�
 
 使用 `apt-get`
 
+    #!Shell
     apt-cache search wine
     suod apt-get install wine
 
@@ -61,12 +62,14 @@ P.S. 若是其他系统，找不到对应的二进制包，可以直接从官网
 
 在终端下导入注册表
 
+    #!Shell
     wine regedit
 
 然后导入这两个文件，再次尝试，还是不行...
 
 不急，游戏目录下还有一个程序叫 `War3RegFixer.exe`，看名字就知道是我们需要的
 
+    #!Shell
     wine War3RegFixer.exe
     
 因为我的 Ubuntu 是英文版的，打开后是乱码...
@@ -79,6 +82,7 @@ P.S. 若是其他系统，找不到对应的二进制包，可以直接从官网
 
 第一次运行的结果一般不会全屏，处女座的强迫症犯了，还好比较简单 ：D
 
+    #!Shell
     wine regedit
 
 找到 `HKEY_CURRENT_USER/Software/Blizzard Entertainment/Warcraft III/Video`，里面有两个注册表值 `resheight` 和 `reswidth`，将他们设为和当前分辨率相同的十进制数值就可以了。
@@ -95,12 +99,14 @@ P.S. 若是其他系统，找不到对应的二进制包，可以直接从官网
 
 现在就可以在终端下运行 war3.exe 了
 
+    #!Shell
     wine war3.exe
 
 熟悉的画面就出来了～
 
 这样子运行如果切出游戏，有时会导致 war3 崩溃或者切换不出去。一个解决方法是以窗口模式运行，只需要添加参数 `-window` 即可
 
+    #!Shell
     wine war3.exe -window
 
 效果如下
@@ -116,6 +122,7 @@ P.S. 若是其他系统，找不到对应的二进制包，可以直接从官网
 
 新建文件 `frozen-throne.desktop` 文件，添加以下内容
 
+    #!Shell
     [Desktop Entry]
     Version = 1.0
     Name = Frozen Throne

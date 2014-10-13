@@ -32,6 +32,7 @@ Summary: 总结初步配置 Vim，让 Vim 更顺手 。
 
     输入命令
 
+        #!Shell
          ll /usr/share/vim/vimrc
 
     就可以看到，本文件是 `/etc/vim/vimrc` 的软链接 。
@@ -55,6 +56,7 @@ Summary: 总结初步配置 Vim，让 Vim 更顺手 。
 
 具体方法，在 `～/` 目录下新建一个文件，加入一下内容
 
+    #!Shell
     ! Swap caps lock and escape
     remove Lock = Caps_Lock
     keysym Escape = Caps_Lock
@@ -65,6 +67,7 @@ Summary: 总结初步配置 Vim，让 Vim 更顺手 。
 
 然后输入命令
 
+    #!Shell
     xmodmap ~/.speedswrapper
 
 这时，对于整个系统范围，这两个键已经调换了位置 。
@@ -80,10 +83,12 @@ Vim 自带一些颜色主题，一般存放在 `/usr/share/vim/vim7x` 目录下�
 
 如果对系统自带的主题不满意，网上有很多不错的主题，个人最喜欢 [molikai][molikai] 主题，把下载下来的配色文件拷贝到 `usr/share/vim/vim73` 路径下，打开 vim 后 输入
 
+    #!Shell
     :colorscheme molikai
 
 就 ok 了～ 不过这个方法在关闭 vim 后就恢复了，要想省去每次都输命令的烦恼，只需要在下一步 .vimrc 文件中加入以下内容就可以了
 
+    #!Shell
     colorscheme molikai
 
 [molikai]: https://github.com/tomasr/molokai
@@ -113,6 +118,7 @@ copy 了一份基础版到自己的 github 中，有备无患 :-D
 
 [My .vimrc file]()
 
+    #!Shell
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " General
     """""""""""""""""""""""""""""""""""""""""""""""""""""""""
