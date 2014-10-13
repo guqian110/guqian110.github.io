@@ -135,25 +135,25 @@
 <hr />
 <h3>查看 session 介绍</h3>
 <p>在 Vim 中输入</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">session</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">session</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>就可以看到关于 <code>session</code> 的介绍：</p>
 <blockquote>
 <p>A Session keeps the Views for all windows, plus the global settings.  You can save a Session and when you restore it later the window layout looks the same. You can use a Session to quickly switch between different projects, automatically loading the files you were last working on in that project.</p>
 </blockquote>
 <p>在我使用的 Vim 7.3 中， <code>help</code> 中的 <code>usr_21.txt</code> 的主题是 <code>Go away and come back</code>，其中 <code>21.4</code>  节保存的就是关于 session 的说明，在 Vim 中输入</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="mf">21.4</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="mf">21.4</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>就可以看到关于 session 的详细介绍 。</p>
 <h3>配置 session</h3>
 <p>Session 保存的信息由 <code>sessionoptions</code> 确定，详细用法可以查看 help</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="err">&#39;</span><span class="n">sessionoption</span><span class="err">&#39;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="err">&#39;</span><span class="n">sessionoption</span><span class="err">&#39;</span>
 </pre></div>
-
+</td></tr></table>
 
 <blockquote>
 <ul>
@@ -168,35 +168,38 @@
 <p>也就是说 session 保存的会话的属性默认的有 8 个 ：<strong>当前编辑的空窗口、缓冲区、当前目录、折叠信息、帮助信息、选项、标签页、窗口大小信息 。</strong></p>
 <p>在上面的设置中，不要同时包含 <code>curdir</code> 和 <code>sesdir</code> 两个选项，若两个选项都不包含，则保存 session 时，会保存绝路径 。添加 <code>sesdir</code> 可以将当前目录设置为 <code>session-file</code>  所在的目录，这个设置有个很有用的地方就是，当我们通过网络访问我们的工程或者有很多个工程版本，这时候只需要每个工程下保存一个 session-file 即可 。</p>
 <p>删除/加入 某个选项的方法</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">set</span> <span class="n">sessionoptions</span><span class="o">-=</span><span class="n">curdir</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">set</span> <span class="n">sessionoptions</span><span class="o">-=</span><span class="n">curdir</span>
 <span class="o">:</span><span class="n">set</span> <span class="n">sessionoptions</span><span class="o">+=</span><span class="n">sesdir</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3>保存 session 文件</h3>
 <p>详细的语法可以在 help 中查看</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">mksession</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">mksession</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>使用 <code>mksession</code> 命令保存会话</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">set</span> <span class="n">sessionoptopms</span><span class="o">-=</span><span class="n">curdir</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">set</span> <span class="n">sessionoptopms</span><span class="o">-=</span><span class="n">curdir</span>
 <span class="o">:</span><span class="n">set</span> <span class="n">sessionoptions</span><span class="o">+=</span><span class="n">sesdir</span>
 <span class="o">:</span><span class="n">mksession</span> <span class="n">project</span><span class="p">.</span><span class="n">vim</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>如果 session-file 已经存在，则使用</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">mksession</span><span class="o">!</span> <span class="n">project</span><span class="p">.</span><span class="n">vim</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">mksession</span><span class="o">!</span> <span class="n">project</span><span class="p">.</span><span class="n">vim</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3>载入 session 文件</h3>
 <p>然后退出 Vim，在别的目录下打开，干点别的事，这时候我们想起刚才的工程里面有个小 bug，想恢复过去，这时候就是只需要使用 <code>source</code> 命令即可 。</p>
 <p>使用 <code>source</code> 命令</p>
-<div class="highlight"><pre><span class="n">source</span> <span class="n">PATHto</span><span class="o">/</span><span class="n">project</span><span class="p">.</span><span class="n">vim</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">source</span> <span class="n">PATHto</span><span class="o">/</span><span class="n">project</span><span class="p">.</span><span class="n">vim</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>这时候可以看到，已经恢复了之前的状态 。</p>
 <p><br></p>
@@ -215,18 +218,18 @@ enter Vim and directly start working in your desired setup.</li>
 <hr />
 <h3>查看 viminfo 介绍</h3>
 <p>在 Vim 中输入</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">viminfo</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">viminfo</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>就可以看到关于 <code>viminfo</code> 的介绍：</p>
 <blockquote>
 <p>If you exit Vim and later start it again, you would normally lose a lot of information.  The viminfo file can be used to remember that information, which enables you to continue where you left off.</p>
 </blockquote>
 <p>在 Vim 7.3 中， <code>help</code> 中的 <code>usr_21.txt</code> 的主题是 <code>Go away and come back</code>，其中 <code>21.3</code>  节保存的就是关于 viminfo 的说明，在 Vim 中输入</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="mf">21.3</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="mf">21.3</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>就可以看到关于 viminfo 的详细介绍 。</p>
 <p>viminfo 文件可以保存的内容有：</p>
@@ -243,45 +246,48 @@ enter Vim and directly start working in your desired setup.</li>
 <h3>保存 viminfo 文件</h3>
 <p>其实 Vim 每次退出时都会在 <code>～/</code> 目录下保存一个 <code>.viminfo</code> 的文件，但是每次打开关闭一个文件都会覆盖上次的记录，所以我们需要为工程手动保存一个 viminfo 文件，并且保存在工程目录下，防止被覆盖 。</p>
 <p>保存命令 <code>:wviminfo</code> 的帮助</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="o">:</span><span class="n">wviminfo</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="o">:</span><span class="n">wviminfo</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>使用 <code>wviminfo</code> 保存</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">wviminfo</span> <span class="n">project</span><span class="p">.</span><span class="n">viminfo</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">wviminfo</span> <span class="n">project</span><span class="p">.</span><span class="n">viminfo</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3>载入 viminfo 文件</h3>
 <p>载入命令 <code>rviminfo</code> 帮助</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="o">:</span><span class="n">rviminfo</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="o">:</span><span class="n">rviminfo</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>载入 viminfo 文件</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">rviminfo</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="p">.</span><span class="n">viminfo</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">rviminfo</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="p">.</span><span class="n">viminfo</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><br></p>
 <h2>总结</h2>
 <p>为了节省每次都要手动输入一些设置命令，我们可以把部分相同的设置放在 <code>.vimrc</code> 文件中</p>
-<div class="highlight"><pre><span class="n">set</span> <span class="n">sessionoptions</span><span class="o">-=</span><span class="n">curdir</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">set</span> <span class="n">sessionoptions</span><span class="o">-=</span><span class="n">curdir</span>
 <span class="n">set</span> <span class="n">sessionoptions</span><span class="o">+=</span><span class="n">sesdir</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>每次退出 Vim 时保存</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">mksession</span> <span class="n">project</span><span class="p">.</span><span class="n">vim</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">mksession</span> <span class="n">project</span><span class="p">.</span><span class="n">vim</span>
 <span class="o">:</span><span class="n">wviminfo</span> <span class="n">project</span><span class="p">.</span><span class="n">viminfo</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>进入 Vim 想恢复项目设置时</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">source</span> <span class="n">projetc</span><span class="p">.</span><span class="n">vim</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">source</span> <span class="n">projetc</span><span class="p">.</span><span class="n">vim</span>
 <span class="o">:</span><span class="n">rviminfo</span> <span class="n">projetc</span><span class="p">.</span><span class="n">viminfo</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><br></p>
 <h2>参考</h2>
@@ -296,7 +302,7 @@ enter Vim and directly start working in your desired setup.</li>
         <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/21/learning_linux_package_management.html">学习 Linux 软件包依赖管理</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/13/learning_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
     </ul>
 </section>
     <hr />

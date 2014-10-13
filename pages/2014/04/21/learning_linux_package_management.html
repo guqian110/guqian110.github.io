@@ -166,18 +166,22 @@ Package management systems are designed to save organizations time and money thr
 <p>dpkg 由 Matt Welsh、Carl Streeter、 Ian Murdock 用 Perl 语言编写，后来在 1994 年。 Ian Jackson 改用 C 重写了大部分内容 。</p>
 <p>dpkg 是 “Debian package” 的缩写，它最初是为 Debian 系统编写的，也可以在使用 <code>.deb</code> 格式的 Ubuntu 系统上使用 。</p>
 <h4>常用语法</h4>
-<div class="highlight"><pre><span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">peackage</span><span class="p">.</span><span class="n">deb</span>        <span class="c1">// install</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">peackage</span><span class="p">.</span><span class="n">deb</span>        <span class="c1">// install</span>
 <span class="n">dpkg</span> <span class="o">-</span><span class="n">r</span> <span class="n">package</span><span class="p">.</span><span class="n">deb</span>         <span class="c1">// remove</span>
 <span class="n">dpkg</span> <span class="o">-</span><span class="n">l</span> <span class="p">[</span><span class="n">optional</span> <span class="n">pattern</span><span class="p">]</span>  <span class="c1">// list installed package</span>
 <span class="n">dpkg</span> <span class="o">--</span><span class="n">configure</span> <span class="n">package</span>    <span class="c1">// configure package</span>
 </pre></div>
-
+</td></tr></table>
 
 <h4>详细用法</h4>
-<div class="highlight"><pre><span class="n">dpkg</span> <span class="o">--</span><span class="n">help</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">dpkg</span> <span class="o">--</span><span class="n">help</span>
 <span class="n">man</span> <span class="n">dpkg</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3>Apt</h3>
 <p><a href="http://en.wikipedia.org/wiki/Advanced_Packaging_Tool">Advanced Packaging Tool on wiki</a></p>
@@ -187,21 +191,28 @@ Package management systems are designed to save organizations time and money thr
 <p>apt 最初是设计为 dpkg 的前端，用来处理 <code>.deb</code> 格式的文件，后来它被 <code>APT-RPM</code> 组织改造可以支持 RPM 包管理系统 。</p>
 <p>apt 由 <code>apt-get</code>、<code>apt-cache</code> 和 <code>apt-config</code> 等小工具组成</p>
 <h4>常用语法</h4>
-<div class="highlight"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">package</span>             <span class="c1">// install</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">package</span>             <span class="c1">// install</span>
 <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">remove</span> <span class="n">package</span>              <span class="c1">// remove</span>
 <span class="n">apt</span><span class="o">-</span><span class="n">cache</span> <span class="n">search</span> <span class="n">package</span>            <span class="c1">// search</span>
 <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>                      <span class="c1">// update source list</span>
 <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">upgrade</span>                     <span class="c1">// upgrade installed software</span>
 </pre></div>
-
+</td></tr></table>
 
 <h4>详细用法</h4>
-<div class="highlight"><pre><span class="n">man</span> <span class="n">apt</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">man</span> <span class="n">apt</span>
 <span class="n">man</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span>
 <span class="n">man</span> <span class="n">apt</span><span class="o">-</span><span class="n">update</span>
 <span class="n">man</span> <span class="n">apt</span><span class="o">-</span><span class="n">upgrade</span>
 </pre></div>
-
+</td></tr></table>
 
 <h4>彩蛋</h4>
 <ul>
@@ -236,7 +247,13 @@ Package management systems are designed to save organizations time and money thr
 </blockquote>
 <p>aptitude 是 APT 的文本界面客户端，它的交互性比 apt 好，似乎在处理依赖问题上也更好一些（我遇到的问题，用 aptitude 可以很方便地解决而 apt 不行 ）</p>
 <h4>常用语法</h4>
-<div class="highlight"><pre><span class="n">aptitude</span> <span class="n">install</span> <span class="n">package</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">aptitude</span> <span class="n">install</span> <span class="n">package</span>
 <span class="n">aptitude</span> <span class="n">remove</span> <span class="n">package</span>
 <span class="n">aptitude</span> <span class="n">clean</span>
 <span class="n">aptitude</span> <span class="n">search</span> <span class="n">package</span>
@@ -244,13 +261,14 @@ Package management systems are designed to save organizations time and money thr
 <span class="n">aptitude</span> <span class="n">update</span>
 <span class="n">aptitude</span> <span class="n">dist</span><span class="o">-</span><span class="n">update</span>
 </pre></div>
-
+</td></tr></table>
 
 <h4>详细用法</h4>
-<div class="highlight"><pre><span class="n">man</span> <span class="n">aptitude</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">man</span> <span class="n">aptitude</span>
 <span class="n">aptitude</span> <span class="o">-</span><span class="n">h</span>
 </pre></div>
-
+</td></tr></table>
 
 <h4>彩蛋</h4>
 <p><img alt="aptitude" src="/images/learning-linux-package-management/aptitude.png" /></p>
@@ -266,9 +284,9 @@ Package management systems are designed to save organizations time and money thr
 <p>有些软件要求的库的版本高于(&gt;=)xx.xxx，有些软件要求库的版本必须是(=)xx.xxx，如果我们的库不能满足要求则无法安装软件 。一般 <code>apt-get</code> 会处理比较简单的依赖关系，但是有些依赖关系 <code>apt-get</code> 并不能解决 。这时候可以试试 <code>aptitude</code> 。</p>
 <h3>问题</h3>
 <p>为新安装的 Ubuntu 安装开发环境时，遇到了库版本过高的问题，执行下面的命令</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>结果 apt-get 提示有不满足依赖关系的包</p>
 <blockquote>
@@ -296,9 +314,9 @@ The following packages have unmet dependencies:
 E: Unable to correct problems, you have held broken packages.</p>
 </blockquote>
 <p>于是我们手动安装特定的库</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">dpkg</span><span class="o">-</span><span class="n">dev</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">dpkg</span><span class="o">-</span><span class="n">dev</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>结果提示我们库版本过高</p>
 <blockquote>
@@ -338,14 +356,14 @@ E: Unable to correct problems, you have held broken packages.</p>
 <li>
 <p>apt-get 直接指定安装特定的版本</p>
 <p>首先查询是否提供低版本的包</p>
-<div class="highlight"><pre><span class="n">apt</span><span class="o">-</span><span class="n">cache</span> <span class="n">showpkg</span> <span class="n">package_name</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">apt</span><span class="o">-</span><span class="n">cache</span> <span class="n">showpkg</span> <span class="n">package_name</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>若有则指定安装某个版本</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">package_name</span><span class="o">=</span><span class="n">version</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">package_name</span><span class="o">=</span><span class="n">version</span>
 </pre></div>
-
+</td></tr></table>
 
 </li>
 <li>
@@ -353,9 +371,9 @@ E: Unable to correct problems, you have held broken packages.</p>
 </li>
 </ol>
 <p>我采用的第二种方法：</p>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">aptitude</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">aptitude</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>结果如下</p>
 <blockquote>
@@ -432,9 +450,9 @@ Do you want to continue? [Y/n/?] </p>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/13/learning_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/13/learning_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
     </ul>
 </section>
     <hr />

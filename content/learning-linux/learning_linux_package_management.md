@@ -76,6 +76,7 @@ dpkg 是 “Debian package” 的缩写，它最初是为 Debian 系统编写的
 
 #### 常用语法
 
+    #!Shell
     dpkg -i peackage.deb        // install
     dpkg -r package.deb         // remove
     dpkg -l [optional pattern]  // list installed package
@@ -83,6 +84,7 @@ dpkg 是 “Debian package” 的缩写，它最初是为 Debian 系统编写的
 
 #### 详细用法
 
+    #!Shell
     dpkg --help
     man dpkg
 
@@ -98,6 +100,7 @@ apt 由 `apt-get`、`apt-cache` 和 `apt-config` 等小工具组成
 
 #### 常用语法
 
+    #!Shell
     apt-get install package             // install
     apt-get remove package              // remove
     apt-cache search package            // search
@@ -106,6 +109,7 @@ apt 由 `apt-get`、`apt-cache` 和 `apt-config` 等小工具组成
 
 #### 详细用法
 
+    #!Shell
     man apt
     man apt-get
     man apt-update
@@ -141,6 +145,7 @@ aptitude 是 APT 的文本界面客户端，它的交互性比 apt 好，似乎�
 
 #### 常用语法
 
+    #!Shell
     aptitude install package
     aptitude remove package
     aptitude clean
@@ -151,6 +156,7 @@ aptitude 是 APT 的文本界面客户端，它的交互性比 apt 好，似乎�
 
 #### 详细用法
 
+    #!Shell
     man aptitude
     aptitude -h
 
@@ -183,6 +189,7 @@ YUM 是一个基于 RPM 包管理的字符前端软件包管理器。能够从�
 
 为新安装的 Ubuntu 安装开发环境时，遇到了库版本过高的问题，执行下面的命令
 
+    #!Shell
     sudo apt-get install build-essential
 
 结果 apt-get 提示有不满足依赖关系的包
@@ -212,6 +219,7 @@ YUM 是一个基于 RPM 包管理的字符前端软件包管理器。能够从�
 
 于是我们手动安装特定的库
 
+    #!Shell
     sudo apt-get install dpkg-dev
     
 结果提示我们库版本过高
@@ -255,16 +263,19 @@ YUM 是一个基于 RPM 包管理的字符前端软件包管理器。能够从�
 
     首先查询是否提供低版本的包
 
+        #!Shell
         apt-cache showpkg package_name
     
     若有则指定安装某个版本
     
+        #!Shell
         sudo apt-get install package_name=version
 
 2. 使用 aptitude 自动处理
 
 我采用的第二种方法：
 
+    #!Shell
     sudo aptitude install build-essential
 
 结果如下

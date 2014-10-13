@@ -28,6 +28,7 @@ Vim 要实现这个功能，涉及到两个地方的配置：`session` & `viminf
 
 在 Vim 中输入
 
+    #!Shell
     :help session
 
 就可以看到关于 `session` 的介绍：
@@ -36,6 +37,7 @@ Vim 要实现这个功能，涉及到两个地方的配置：`session` & `viminf
 
 在我使用的 Vim 7.3 中， `help` 中的 `usr_21.txt` 的主题是 ` Go away and come back`，其中 `21.4`  节保存的就是关于 session 的说明，在 Vim 中输入
 
+    #!Shell
     :help 21.4
 
 就可以看到关于 session 的详细介绍 。
@@ -44,6 +46,7 @@ Vim 要实现这个功能，涉及到两个地方的配置：`session` & `viminf
 
 Session 保存的信息由 `sessionoptions` 确定，详细用法可以查看 help
 
+    #!Shell
     :help 'sessionoption'
 
 > + 'sessionoptions' 'ssop' string  (default: **"blank,buffers,curdir,folds,help,options,tabpages,winsize"**)
@@ -56,6 +59,7 @@ Session 保存的信息由 `sessionoptions` 确定，详细用法可以查看 he
 
 删除/加入 某个选项的方法
 
+    #!Shell
     :set sessionoptions-=curdir
     :set sessionoptions+=sesdir
 
@@ -63,16 +67,19 @@ Session 保存的信息由 `sessionoptions` 确定，详细用法可以查看 he
 
 详细的语法可以在 help 中查看
 
+    #!Shell
     :help mksession
 
 使用 `mksession` 命令保存会话
 
+    #!Shell
     :set sessionoptopms-=curdir
     :set sessionoptions+=sesdir
     :mksession project.vim
     
 如果 session-file 已经存在，则使用
 
+    #!Shell
     :mksession! project.vim
 
 ### 载入 session 文件
@@ -81,6 +88,7 @@ Session 保存的信息由 `sessionoptions` 确定，详细用法可以查看 he
 
 使用 `source` 命令
 
+    #!Shell
     source PATHto/project.vim
     
 这时候可以看到，已经恢复了之前的状态 。
@@ -104,6 +112,7 @@ enter Vim and directly start working in your desired setup.
 
 在 Vim 中输入
 
+    #!Shell
     :help viminfo
 
 就可以看到关于 `viminfo` 的介绍：
@@ -112,6 +121,7 @@ enter Vim and directly start working in your desired setup.
 
 在 Vim 7.3 中， `help` 中的 `usr_21.txt` 的主题是 ` Go away and come back`，其中 `21.3`  节保存的就是关于 viminfo 的说明，在 Vim 中输入
 
+    #!Shell
     :help 21.3
 
 就可以看到关于 viminfo 的详细介绍 。
@@ -133,20 +143,24 @@ viminfo 文件可以保存的内容有：
 
 保存命令 `:wviminfo` 的帮助
 
+    #!Shell
     :help :wviminfo
 
 使用 `wviminfo` 保存
 
+    #!Shell
     :wviminfo project.viminfo
 
 ### 载入 viminfo 文件
 
 载入命令 `rviminfo` 帮助
 
+    #!Shell
     :help :rviminfo
 
 载入 viminfo 文件
 
+    #!Shell
     :rviminfo path/to/project.viminfo
 
 <br>
@@ -155,16 +169,19 @@ viminfo 文件可以保存的内容有：
 
 为了节省每次都要手动输入一些设置命令，我们可以把部分相同的设置放在 `.vimrc` 文件中
 
+    #!Shell
     set sessionoptions-=curdir
     set sessionoptions+=sesdir
 
 每次退出 Vim 时保存
 
+    #!Shell
     :mksession project.vim
     :wviminfo project.viminfo
 
 进入 Vim 想恢复项目设置时
 
+    #!Shell
     :source projetc.vim
     :rviminfo projetc.viminfo
     
