@@ -277,6 +277,7 @@ VHDL 语法虽然枯燥无味，但是只有对数据类型、运算操作符及
 
 VHDL93 中引入的操作，语法：
 
+    #!VHDL
     <left operand><shift operator><right operand>;
     
 + left operand 必须是 `bit_vector` 类型

@@ -117,6 +117,7 @@ matlab 提供了函数 fft 和 fftshift 直接完成变换。
 
 假设 tau = 1，采样频率 Fs = 10 Hz，那么如果要求频率分辨率为 f0 = Fs/N = 1/40 Hz 的话，可以推出 N = 390。所以时域采样结果应该是 195 个 0，之后是 10 个 1，最后是 195 个 0。
 
+        #!matlab
         x = [zeros(1,195), ones(1,10), zeros(1,195)];
         y = fft(x);
         y = fftshift(y);
@@ -135,6 +136,7 @@ matlab 提供了函数 fft 和 fftshift 直接完成变换。
 
 最大的频率分量为 fmax =  40 Hz，如果采用频率为 10 倍，即 Fs = 400 Hz，如果要求频率分辨率为 0.5 Hz，那么可以得到 N = 800，为了计算方便使用 N = 1024；
 
+        #!matlab
         f1 = 15;
         f2 = 40;
         % sample frequency is 400 Hz, sample number is 1024

@@ -127,7 +127,8 @@
 </blockquote>
 <p>在我最开始的测试小程序中，是先判断 <code>rfd</code> 信号，根据 rfd 来给 start 赋值。</p>
 <p><em>思路是：首先必须等 IP core 准备好接收新数据时，才能开始</em></p>
-<div class="highlight"><pre>    <span class="k">if</span> <span class="p">(</span><span class="n">rfd</span><span class="p">)</span> <span class="n">begin</span>
+<div class="highlight"><pre>    <span class="err">#</span><span class="o">!</span><span class="n">verilog</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rfd</span><span class="p">)</span> <span class="n">begin</span>
         <span class="n">start</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="n">end</span>
     <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">busy</span><span class="p">)</span> <span class="n">begin</span>
@@ -141,7 +142,8 @@
 
 <p>但是仿真出来的结果显示 IP core 根本就没有工作，后来改了这两个信号的先后关系，</p>
 <p><em>新思路：程序将输入 start 置有效，通知 IP core 需要调用，然后 IP core 根据自己的状态给出标识信号（rfd / busy），外部电路等到 rfd 有效时才输入需要变换的信号。</em></p>
-<div class="highlight"><pre>    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+<div class="highlight"><pre>    <span class="err">#</span><span class="o">!</span><span class="n">verilog</span>
+    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
             <span class="n">start</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span>
         <span class="n">end</span>
@@ -183,7 +185,8 @@
 <p>The initial value and reset value of CP_LEN is 0 (no cyclic prefix). The core uses the log2(point size) MSBs of CP_LEN for the cyclic prefix length. So, when the point size decreases, the leftover LSBs are ignored. This effectively scales the cyclic prefix length with the point size, keeping them in approximately constant proportion. However, all bits of CP_LEN are latched into the core on CP_LEN_WE and are used in later transforms if the point size increases.</p>
 </blockquote>
 <p>仔细读了一遍才明白，CP_LEN 起作用的是高位的数据 —— 从 MSB 起共 log2(point size) 位。比如我测试程序设置的最大点数为 4096，这是 CP_LEN 的位宽为 12 比特，但是在程序运行过程中，我重配置为 64 点，所以这时候应该从 CP_LEN 的最高位数起，共 log2(64) = 6 比特数据起作用。如果我想设置 CP 的长度为 8 点，则应该如下</p>
-<div class="highlight"><pre>    <span class="n">cp_len</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="err">&#39;</span><span class="n">b001000_000000</span><span class="p">;</span>
+<div class="highlight"><pre>    <span class="err">#</span><span class="o">!</span><span class="n">verilog</span>
+    <span class="n">cp_len</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="err">&#39;</span><span class="n">b001000_000000</span><span class="p">;</span>
 </pre></div>
 
 
@@ -272,7 +275,8 @@
 <p><strong>运行时重配置</strong></p>
 <p>变换长度为 64 点，cp 长度为 10</p>
 <h3>Matlab</h3>
-<div class="highlight"><pre>    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="mi">63</span><span class="p">];</span>
+<div class="highlight"><pre>    <span class="err">#</span><span class="o">!</span><span class="n">matlab</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="mi">63</span><span class="p">];</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
     <span class="n">re</span> <span class="o">=</span> <span class="n">real</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
     <span class="n">im</span> <span class="o">=</span> <span class="n">imag</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
@@ -290,11 +294,11 @@
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic_1.html">FPGA 数字处理基础 (1)</a></li>
     </ul>
 </section>
     <hr />

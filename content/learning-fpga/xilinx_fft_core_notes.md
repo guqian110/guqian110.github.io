@@ -27,6 +27,7 @@ datasheet 中没有专门描述 `start` 信号和其他信号的时序关系，�
 
 *思路是：首先必须等 IP core 准备好接收新数据时，才能开始*
 
+        #!verilog
         if (rfd) begin
             start <= 1;
         end
@@ -41,7 +42,7 @@ datasheet 中没有专门描述 `start` 信号和其他信号的时序关系，�
 
 *新思路：程序将输入 start 置有效，通知 IP core 需要调用，然后 IP core 根据自己的状态给出标识信号（rfd / busy），外部电路等到 rfd 有效时才输入需要变换的信号。*
 
-
+        #!verilog
         always @(posedge clk or posedge rst) begin
             if (rst) begin
                 start <= 1;
@@ -103,6 +104,7 @@ datasheet 中没有专门描述 `start` 信号和其他信号的时序关系，�
 
 仔细读了一遍才明白，CP_LEN 起作用的是高位的数据 —— 从 MSB 起共 log2(point size) 位。比如我测试程序设置的最大点数为 4096，这是 CP_LEN 的位宽为 12 比特，但是在程序运行过程中，我重配置为 64 点，所以这时候应该从 CP_LEN 的最高位数起，共 log2(64) = 6 比特数据起作用。如果我想设置 CP 的长度为 8 点，则应该如下
 
+        #!verilog
         cp_len <= 12'b001000_000000;
 
 这时候，如下图所示，结果与预期相符。
@@ -190,6 +192,7 @@ page3:
 
 ### Matlab
 
+        #!matlab
         x = [0:63];
         y = fft(x);
         re = real(y);
