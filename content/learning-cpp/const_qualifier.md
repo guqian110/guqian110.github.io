@@ -13,11 +13,10 @@ Summary: 总结 const 限定符的用法。
 
 [*C++ Primer*][cpp-primer] 中的例子
 
-```C++
+    #!C++
     for (int index = 0; index != 512; ++index) {
         // ...
     }
-```
 
 这段代码语法上是没有问题的，但是事实上是有两个小问题的，而且两个小问题都和数字 `512` 有关 。
 
@@ -31,12 +30,11 @@ Summary: 总结 const 限定符的用法。
 
 解决这两个问题的方法是定义一个变量，并且初始化为 512
 
-```C++
+    #!C++
     int buf_size = 512;
     for (int index =0; index != buf_size; ++index) {
         //...
     }
-```
 
 通过定义一个好记的变量，就可以增强程序的可读性，而且需要改变这个值时，只需要咋初始化的地方做修改 。这种方法不仅明显减小了工作量，而且大大减小了出错的可能性 。
 
@@ -44,9 +42,8 @@ Summary: 总结 const 限定符的用法。
 
 在上面的代码中，`buf_size` 是可以被修改的，它有可能会被有意或者无意修改 。为了避免这种情况，就需要使用 const 限定符了 。
 
-```C++
+    #!C++
     const buf_size = 512;
-```
 
 定义 `buf_size ` 为 **常量（constant）**，并且初始化为 512 .**变量（variable）** `buf_size` 仍然是一个左值，但是这个左值现在是不能被修改的。（因为 const 把变量转化为常量，所以在定义的时候必须初始化！）
 
@@ -71,18 +68,17 @@ C++ Primer 中有这么一句话
 
 const 限定符修同时也改变了变量的作用范围 。普通非 const 变量的默认是具有 *外部连接（external linkage）*的，在全局作用域内定义非 const 变量时，它在整个程序中都可以被访问 。比如
 
-```C++
+    #!C++
     // file1.cpp
     int counter;
    
     //file2.cpp
     extern int counter;
     ++counter;
-```
 
 但是，对于 全局作用域内的 const 类型的对象，其默认是 *内部连接（internal linkage）*，仅在定义该对象的文件内可见，不能被其他文件访问 。要想在整个程序里面访问，就必须在定义的时候显式地声明为 `extern` 类型 。比如
 
-```C++
+    #!C++
     //file1.cpp
     extern int buf_size = fcn ();
     
@@ -90,7 +86,6 @@ const 限定符修同时也改变了变量的作用范围 。普通非 const 变
     extern const int buf_size;
     for (int index = 0; index != buf_size; ++index)
         //...
-```
 
 ### 使用 const 的方法
 
@@ -98,6 +93,7 @@ const 限定符修同时也改变了变量的作用范围 。普通非 const 变
 
     如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 ”重定义“  的问题 。
     
+        #!C++
         // file1.h
         const int bufsize = 512;
         
@@ -111,11 +107,13 @@ const 限定符修同时也改变了变量的作用范围 。普通非 const 变
     
     比如
 
+        #!C++
         // file1.cpp
         extern const int bufsize = 512;
 
     + 在头文件中声明为 extern 类型，以使其他文件共享。
     
+            #!C++
             // file1.h
             extern const int bufsize;
             
@@ -125,6 +123,7 @@ const 限定符修同时也改变了变量的作用范围 。普通非 const 变
 
     + 不需要在头文件中声明，在其他文件中使用前声明
 
+            #!C++
             // file2.cpp
             extern const int bufsize;
             int size = bufsize;
@@ -177,9 +176,8 @@ because it doesn’t know the value.
 
 在引用的定义中声明 const，此 const 约束的是引用，而不是引用的对象 。比如
 
-```C++
+    #!C++
     const int &ref = ival
-```
 
 其中，`const` 修饰的是 `int &`，规定了引用 `ref` 为 const 类型变量，而 `ival` 的类型则由其他语句定义说明 。
 
@@ -204,17 +202,15 @@ Scott Meyers 大神的经典著作 [Effective C++][Effective C++] 里面提到�
 
 使用const 代替 #define，事实上 `const` 的最初动机就是取代预处理器 `#define` 来进行值替代 。因为 #define 不被视为语言的一部分，这就是它的问题所在 。
 
-```C++
+    #!C++
     #define ASPECT_RATIO 1.653;
-```
 
 记号名 ASPECT_RATIO 也许从未被编译器看见，也许在编译器开始处理代码前就被与处理器移走了，于是记号没有进入记号表，当出现编译错误时，也许会提示是 1.653 而不是 ASPECT_RATIO，这回带来很多困惑 。
 
 解决之道就是以一个常量代替上述的宏
 
-```C++
+    #!C++
     const double AspectRatio = 1.653;
-```
 
 ### Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）
 
