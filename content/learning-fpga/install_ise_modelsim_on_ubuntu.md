@@ -44,37 +44,32 @@ Xilinx 官方网站上有[下载链接][ise-download]，但是在校园网内下
 
 首先解压
 
-```Shell
+    #!shell
     tar -xvf Xilinx_ISE_DS_Lin_14.7_1015_1.tar
-```
 
 接着进入解压出来的目录并给安装文件赋予执行的权限
 
-```Shell
+    #!shell
     cd Xilinx_ISE_DS_Lin_14.7_1015_1/
     sudo chmod +x xsetup
-```
 
 然后执行 xsetup
 
-```Shell
+    #!shell
     sudo ./xsetup
-```
 
 然后熟悉的图形界面就出来，和 Windows 下一样，同意安装许可协议，不停地下一步就可以安装成功。
 
 安装完成以后，运行
 
-```Shell
+    #!shell
     cd /opt/Xilinx/14.7/ISE_DS
     source settings64.sh
-```
 
 此时，已经可以从终端运行 ISE 了
 
-```Shell
+    #!shell
     nohup ise&
-```
 
 熟悉的图形界面出来了：
 
@@ -109,36 +104,31 @@ P.S.
 
 首先安装 usb 驱动开发包，在 64 位系统下
 
-```Shell
+    #!shell
     sudo apt-get install libusb-dev libc6-dev-i386 fxload
-```
 
 接着下载驱动程序的源代码
 
-```Shell
+    #!shell
     cd /opt/Xilinx
     sudo git clone git://git.zerfleddert.de/usb-driver
-```
 
 然后编译驱动程序
 
-```Shell
+    #!shell
     cd usb-driver/
     sudo make
-```
 
 下载下来的源代码中有个脚本可以设置好一切，我们只需要运行脚本就 ok
 
-```Shell
+    #!shell
     ./setup_pcusb /opt/Xilinx/14.7/ISE_DS/ISE/
-```
 
 把 Xilinx 路径添加到系统 PATH 中
 
-```Shell
+    #!shell
     echo "PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/" >> ~/.bashrc
     echo "export PATH" >> ~/.bashrc
-```
 
 这时候，写个小测试的程序，`Systhesize` -> `Implement` -> `Generate Programming File`，打开 `iMPACT`, 如图所示，可以看到已经识别出 JTAG 链上的芯片
 
@@ -161,9 +151,8 @@ P.S.
 
 配置自定义编辑器为 vim
 
-```Shell
+    #!shell
     gnome-terminal --maximize -x vim $1
-```
 
 ### ModelSim
 ModelSim 编译 Xilinx库，ISE 关联 ModelSim

@@ -29,9 +29,8 @@ C++ 语言自身定义了一组基本类型来表示不同的数据，如整数�
 
 使用 `sizeof()` 操作符可以查询对象或类型的大小（以字节为单位），包含头文件
 
-```C++
+    #!C++
     #include <limits>
-```
 
 就可以使用 STL 库中的 `numeric_limits<T>::max` 和 `numeric_limits<T>::min` 查询各个内置内类类型的最大值和最小值。
 
@@ -47,12 +46,11 @@ C++ 语言自身定义了一组基本类型来表示不同的数据，如整数�
 
 整数的基本表示类型是 `int` 。int 类型前面可以加两类修饰说明，表示数据位数长短的 `short` 和 `long` ；表示有无符号的 `signed` 和 `unsigned` 。组合出来的结果就有 4 种：
 
-```C++
+    #!C++
     signed short int
     unsigned short int
     signed long int
     unsigned long int
-```
 
 每一种的数据长短和可以表示的范围都不相同。
 
@@ -78,10 +76,9 @@ signed/unsigned 可以描述的类型有 int 和 char 两种，在 C 的标准�
 
 源代码：
 
-```C++
+    #!C++
     char ch1 = -1;
     printf("ch1 = %d\n",ch1);
-```
 
 运行结果：
 
@@ -133,10 +130,9 @@ void 类型没有对应的值，仅用在有限的一些情况下，通常用作
 
 C++ 提供两种初始化变量的方法：复制初始化（`copy-initialization`）和直接初始化（`direct-initialization`）。复制初始化使用 `=`，直接初始化使用 `()` 。
 
-```C++
+    #!C++
     int ival = 1024;    // copy-initialization
     int ival (1024);    // direct-initialization
-```
 
 使用 `=` 很容易让人把初始化和赋值混淆在一起，但是在 C++ 中这是两种不同的操作，当涉及到类对象时，两种不同的初始化方式的区别是很微妙的。目前先不考虑这点，只需要知道直接初始化语法更灵活而且效率高。
 
@@ -161,27 +157,24 @@ C++ 提供两种初始化变量的方法：复制初始化（`copy-initializatio
 
 + 混合类型表达式，操作数被转换为相同类型
 
-```C++
+        #!C++
         int ival;
         double dval;
         ival >= dval;   // ival converted to double
-```
 
 + 用作条件表达式被转化为 bool 型
 
-```C++
+        #!C++
         int ival;
         if (ival)       // ival converted to bool
         while ( cin)    // cin converted to bool
-```
 
 + 用表达式初始化（赋值）某一变量，表达式被转化为该变量类型
 
-```C++
+        #!C++
         int ival = 3.14;    // 3.14 converted to int
         int *ip;
         ip = 0;             // the int 0 converted to a null pointer of type int *
-```
 
 另外，函数调用时也可能发生隐式类型转化。
 
@@ -209,20 +202,17 @@ unsigned 操作数的转换依赖于机器中整型的相对大小，所以，�
 
 2. 下面程序
 
-```C++
+        #!C++
         unsigned a = 4;
         signed b = -20;
         int c = (a+b > 4) ? 1 : 0;
         cout << "unsigned int b' = " << unsigned(b) << endl;
-        cout << "c = " << c << endl;
-```
 
 运行结果为
 
-```C++
+        #!C++
         unsigned int b' = 4294967276
         c = 1
-```
 
 因为 `b = -2` 被转化为一个很大的正数 `b' = 4294967276`
 

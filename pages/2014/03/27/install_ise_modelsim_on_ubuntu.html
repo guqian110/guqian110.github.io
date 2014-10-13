@@ -133,32 +133,34 @@
 <hr />
 <h3>ISE DS 14.7</h3>
 <p>首先解压</p>
-<div class="highlight"><pre>    <span class="n">tar</span> <span class="o">-</span><span class="n">xvf</span> <span class="n">Xilinx_ISE_DS_Lin_14</span><span class="mf">.7</span><span class="n">_1015_1</span><span class="p">.</span><span class="n">tar</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">tar</span> <span class="o">-</span><span class="n">xvf</span> <span class="n">Xilinx_ISE_DS_Lin_14</span><span class="mf">.7</span><span class="n">_1015_1</span><span class="p">.</span><span class="n">tar</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>接着进入解压出来的目录并给安装文件赋予执行的权限</p>
-<div class="highlight"><pre>    <span class="n">cd</span> <span class="n">Xilinx_ISE_DS_Lin_14</span><span class="mf">.7</span><span class="n">_1015_1</span><span class="o">/</span>
-    <span class="n">sudo</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">xsetup</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">cd</span> <span class="n">Xilinx_ISE_DS_Lin_14</span><span class="mf">.7</span><span class="n">_1015_1</span><span class="o">/</span>
+<span class="n">sudo</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="n">xsetup</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>然后执行 xsetup</p>
-<div class="highlight"><pre>    <span class="n">sudo</span> <span class="p">.</span><span class="o">/</span><span class="n">xsetup</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">sudo</span> <span class="p">.</span><span class="o">/</span><span class="n">xsetup</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>然后熟悉的图形界面就出来，和 Windows 下一样，同意安装许可协议，不停地下一步就可以安装成功。</p>
 <p>安装完成以后，运行</p>
-<div class="highlight"><pre>    <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span><span class="o">/</span><span class="mf">14.7</span><span class="o">/</span><span class="n">ISE_DS</span>
-    <span class="n">source</span> <span class="n">settings64</span><span class="p">.</span><span class="n">sh</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span><span class="o">/</span><span class="mf">14.7</span><span class="o">/</span><span class="n">ISE_DS</span>
+<span class="n">source</span> <span class="n">settings64</span><span class="p">.</span><span class="n">sh</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>此时，已经可以从终端运行 ISE 了</p>
-<div class="highlight"><pre>    <span class="n">nohup</span> <span class="n">ise</span><span class="o">&amp;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">nohup</span> <span class="n">ise</span><span class="o">&amp;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>熟悉的图形界面出来了：</p>
 <p><img alt="ise" src="/images/install-ise-modelsim/ise_start.png" /></p>
@@ -181,32 +183,35 @@
 <p><a href="http://rmdir.de/~michael/xilinx/">XILINX JTAG tools on Linux without proprietary kernel modules</a></p>
 <p>所以按照说明</p>
 <p>首先安装 usb 驱动开发包，在 64 位系统下</p>
-<div class="highlight"><pre>    <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libusb</span><span class="o">-</span><span class="n">dev</span> <span class="n">libc6</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="n">i386</span> <span class="n">fxload</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libusb</span><span class="o">-</span><span class="n">dev</span> <span class="n">libc6</span><span class="o">-</span><span class="n">dev</span><span class="o">-</span><span class="n">i386</span> <span class="n">fxload</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>接着下载驱动程序的源代码</p>
-<div class="highlight"><pre>    <span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span>
-    <span class="n">sudo</span> <span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="o">:</span><span class="c1">//git.zerfleddert.de/usb-driver</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span>
+<span class="n">sudo</span> <span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="o">:</span><span class="c1">//git.zerfleddert.de/usb-driver</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>然后编译驱动程序</p>
-<div class="highlight"><pre>    <span class="n">cd</span> <span class="n">usb</span><span class="o">-</span><span class="n">driver</span><span class="o">/</span>
-    <span class="n">sudo</span> <span class="n">make</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">cd</span> <span class="n">usb</span><span class="o">-</span><span class="n">driver</span><span class="o">/</span>
+<span class="n">sudo</span> <span class="n">make</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>下载下来的源代码中有个脚本可以设置好一切，我们只需要运行脚本就 ok</p>
-<div class="highlight"><pre>    <span class="p">.</span><span class="o">/</span><span class="n">setup_pcusb</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span><span class="o">/</span><span class="mf">14.7</span><span class="o">/</span><span class="n">ISE_DS</span><span class="o">/</span><span class="n">ISE</span><span class="o">/</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">.</span><span class="o">/</span><span class="n">setup_pcusb</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">Xilinx</span><span class="o">/</span><span class="mf">14.7</span><span class="o">/</span><span class="n">ISE_DS</span><span class="o">/</span><span class="n">ISE</span><span class="o">/</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>把 Xilinx 路径添加到系统 PATH 中</p>
-<div class="highlight"><pre>    <span class="n">echo</span> <span class="s">&quot;PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
-    <span class="n">echo</span> <span class="s">&quot;export PATH&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">echo</span> <span class="s">&quot;PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
+<span class="n">echo</span> <span class="s">&quot;export PATH&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>这时候，写个小测试的程序，<code>Systhesize</code> -&gt; <code>Implement</code> -&gt; <code>Generate Programming File</code>，打开 <code>iMPACT</code>, 如图所示，可以看到已经识别出 JTAG 链上的芯片</p>
 <p><img alt="jtag" src="/images/install-ise-modelsim/jtag.png" /></p>
@@ -219,9 +224,9 @@
 <p>其实也没有特殊配置的地方，主要是自定义代码编辑器，目前我的主要使用的是 <code>sublime text 2</code>，正在向 <code>vim</code> 过度ing</p>
 <p>具体步骤 Edit -&gt; Preferences -&gt; Editors，选择 <code>custom</code>，在右侧的 “Command line syntax” 中写自定义编辑器的执行路径</p>
 <p>配置自定义编辑器为 vim</p>
-<div class="highlight"><pre>    <span class="n">gnome</span><span class="o">-</span><span class="n">terminal</span> <span class="o">--</span><span class="n">maximize</span> <span class="o">-</span><span class="n">x</span> <span class="n">vim</span> <span class="err">$</span><span class="mi">1</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">gnome</span><span class="o">-</span><span class="n">terminal</span> <span class="o">--</span><span class="n">maximize</span> <span class="o">-</span><span class="n">x</span> <span class="n">vim</span> <span class="err">$</span><span class="mi">1</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3>ModelSim</h3>
 <p>ModelSim 编译 Xilinx库，ISE 关联 ModelSim</p>
