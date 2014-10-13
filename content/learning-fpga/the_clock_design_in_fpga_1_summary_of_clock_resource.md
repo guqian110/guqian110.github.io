@@ -181,6 +181,7 @@ Xilinx 芯片全局时钟资源的使用方法主要有 5 种：
 
     随着综合工具/布局布线工具的不同而变化，大多数综合工具会自动分析时钟信号的扇出数目，在全局时钟资源富裕的情况下，使扇出数目最大的信号自动指定使用全局时钟资源。这时候我们必须保证满足下面的原则，否则会报错。如果不能满足，则必须在约束文件中明确声明该信号不使用全局时钟资源。
     
+        #!verilog
         NET "CLK" CLOCK_DEDICATED_ROUTE = FALSE;
 
 ### Principle in Using global clock
@@ -206,6 +207,7 @@ Xilinx 芯片全局时钟资源的使用方法主要有 5 种：
 
     可以在约束编辑器中的专用约束Misc选项中，指定所选信号使用低抖动延迟资源“Low Skew”来指定，也可以在ucf文件中添加“USELOWSKEWLINES"约束命令。
     
+        #!verilog
         NET “s1" USELOWSKEWLINES;
         NET “s2" USELOWSKEWLINES;
         NET “s3" USELOWSKEWLINES;

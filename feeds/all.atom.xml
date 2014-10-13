@@ -2446,9 +2446,9 @@ function 中可以使用 &lt;code&gt;if&lt;/code&gt;, &lt;code&gt;case&lt;/code&
 &lt;li&gt;
 &lt;p&gt;在综合阶段/实现阶段通过约束文件的方式实现&lt;/p&gt;
 &lt;p&gt;随着综合工具/布局布线工具的不同而变化，大多数综合工具会自动分析时钟信号的扇出数目，在全局时钟资源富裕的情况下，使扇出数目最大的信号自动指定使用全局时钟资源。这时候我们必须保证满足下面的原则，否则会报错。如果不能满足，则必须在约束文件中明确声明该信号不使用全局时钟资源。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;NET&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;CLK&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;CLOCK_DEDICATED_ROUTE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FALSE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="no"&gt;NET&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;CLK&amp;quot;&lt;/span&gt; &lt;span class="no"&gt;CLOCK_DEDICATED_ROUTE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;FALSE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -2471,11 +2471,13 @@ function 中可以使用 &lt;code&gt;if&lt;/code&gt;, &lt;code&gt;case&lt;/code&
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;使用方法&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;可以在约束编辑器中的专用约束Misc选项中，指定所选信号使用低抖动延迟资源“Low Skew”来指定，也可以在ucf文件中添加“USELOWSKEWLINES"约束命令。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;NET&lt;/span&gt; &lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;s1&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; USELOWSKEWLINES;&lt;/span&gt;
-&lt;span class="n"&gt;NET&lt;/span&gt; &lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;s2&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; USELOWSKEWLINES;&lt;/span&gt;
-&lt;span class="n"&gt;NET&lt;/span&gt; &lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;s3&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; USELOWSKEWLINES;&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="no"&gt;NET&lt;/span&gt; &lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;s1&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; USELOWSKEWLINES;&lt;/span&gt;
+&lt;span class="no"&gt;NET&lt;/span&gt; &lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;s2&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; USELOWSKEWLINES;&lt;/span&gt;
+&lt;span class="no"&gt;NET&lt;/span&gt; &lt;span class="err"&gt;“&lt;/span&gt;&lt;span class="n"&gt;s3&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; USELOWSKEWLINES;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;/li&gt;
 &lt;/ul&gt;
