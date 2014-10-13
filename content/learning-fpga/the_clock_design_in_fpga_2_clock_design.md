@@ -67,20 +67,20 @@ PLD/FPGA 都具有专门的全局时钟引脚，它直接连接到器件中的�
 
 推译带使能端的触发器的代码：
 
-        #!verilog
-        always @(posedge clk or posedge rst) begin
-            if (rst) begin
-                dout <= 0;
+    #!verilog
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            dout <= 0;
+        end
+        else begin
+            if (ce) begin
+                dout <= din;
             end
             else begin
-                if (ce) begin
-                    dout <= din;
-                end
-                else begin
-                    dout <= dout;
-                end
+                dout <= dout;
             end
         end
+    end
 
 得到的结果就是原语 `FDCE`
 

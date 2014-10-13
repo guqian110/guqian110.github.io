@@ -117,14 +117,14 @@ matlab 提供了函数 fft 和 fftshift 直接完成变换。
 
 假设 tau = 1，采样频率 Fs = 10 Hz，那么如果要求频率分辨率为 f0 = Fs/N = 1/40 Hz 的话，可以推出 N = 390。所以时域采样结果应该是 195 个 0，之后是 10 个 1，最后是 195 个 0。
 
-        #!matlab
-        x = [zeros(1,195), ones(1,10), zeros(1,195)];
-        y = fft(x);
-        y = fftshift(y);
-        mag = abs(y);
-        Fs = 10;
-        f = [-Fs/2 : 1/40 : Fs/2-1/40];
-        plot(f,mag,'*');
+    #!matlab
+    x = [zeros(1,195), ones(1,10), zeros(1,195)];
+    y = fft(x);
+    y = fftshift(y);
+    mag = abs(y);
+    Fs = 10;
+    f = [-Fs/2 : 1/40 : Fs/2-1/40];
+    plot(f,mag,'*');
         
 结果如下图所示，与预期是相符合的，1/tau 的整数倍处都是过零点。
 
@@ -136,32 +136,32 @@ matlab 提供了函数 fft 和 fftshift 直接完成变换。
 
 最大的频率分量为 fmax =  40 Hz，如果采用频率为 10 倍，即 Fs = 400 Hz，如果要求频率分辨率为 0.5 Hz，那么可以得到 N = 800，为了计算方便使用 N = 1024；
 
-        #!matlab
-        f1 = 15;
-        f2 = 40;
-        % sample frequency is 400 Hz, sample number is 1024
-        Fs = 400;
-        N = 1024;
-        n = [0:N-1];
-        t = n/Fs;
-        x = 1 + 0.5*cos(2*pi*f1*t) + 2*sin(2*pi*f2*t);
-        y = fft(x); % fft operation
-        y = fftshift(y);
-        mag = abs(y); % magnitude
-        f0 = Fs/N;
-        f = [-Fs/2 : f0 : Fs/2 - f0];
-        % plot time domain singal
-        subplot(2,1,1);
-        plot(x);
-        xlabel('time/s');
-        ylabel('magnitude');
-        title('time domain signal');
-        grid on;
-        % plot frequency domain signal
-        subplot(2,1,2);
-        plot(f,mag);
-        title('fft result');
-        grid on;
+    #!matlab
+    f1 = 15;
+    f2 = 40;
+    % sample frequency is 400 Hz, sample number is 1024
+    Fs = 400;
+    N = 1024;
+    n = [0:N-1];
+    t = n/Fs;
+    x = 1 + 0.5*cos(2*pi*f1*t) + 2*sin(2*pi*f2*t);
+    y = fft(x); % fft operation
+    y = fftshift(y);
+    mag = abs(y); % magnitude
+    f0 = Fs/N;
+    f = [-Fs/2 : f0 : Fs/2 - f0];
+    % plot time domain singal
+    subplot(2,1,1);
+    plot(x);
+    xlabel('time/s');
+    ylabel('magnitude');
+    title('time domain signal');
+    grid on;
+    % plot frequency domain signal
+    subplot(2,1,2);
+    plot(f,mag);
+    title('fft result');
+    grid on;
 
 
 结果如下图所示，可以看到与预期相符，在 0、15、40 处有冲激函数。
