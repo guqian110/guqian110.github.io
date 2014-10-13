@@ -621,9 +621,9 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;在电路设计中，要对Latch特别谨慎，如果综合出和设计意图不一致的 Latch，会导致设计错误，包括仿真和综合。因此，要避免产生意外的 Latch。&lt;/p&gt;
 &lt;h4&gt;Reason&lt;/h4&gt;
 &lt;p&gt;如果组合逻辑完全不使用 always 语句，那么就不会产生 latch，比如&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;电路不需要保存 dout 的前一个值，所以不会产生 latch。&lt;/p&gt;
 &lt;p&gt;如果组合逻辑使用了 always 语句，那么就有可能产生 Latch ：&lt;/p&gt;
@@ -631,13 +631,17 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;li&gt;
 &lt;p&gt;不完整的 if-else&lt;/p&gt;
 &lt;p&gt;code:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din_a&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din_a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="n"&gt;din_a&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din_a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
         &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;end&lt;/span&gt;
-&lt;span class="n"&gt;end&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;RTL Schematic:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="if_latch" src="/images/latch_versus_flip_flop/if_latch.png" /&gt;&lt;/p&gt;
@@ -645,14 +649,19 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;li&gt;
 &lt;p&gt;不完整的 case&lt;/p&gt;
 &lt;p&gt;code:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din_c&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_a&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="n"&gt;din_c&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_a&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
     &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din_c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din_a&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b01&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;endcase&lt;/span&gt;
-&lt;span class="n"&gt;end&lt;/span&gt;
+        &lt;span class="mh"&gt;2&amp;#39;b00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din_a&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="mh"&gt;2&amp;#39;b01&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;endcase&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;RTL Schematic:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="case_latch" src="/images/latch_versus_flip_flop/case_latch.png" /&gt;&lt;/p&gt;
@@ -664,16 +673,23 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;li&gt;
 &lt;p&gt;使用完整的 if-else&lt;/p&gt;
 &lt;p&gt;code:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din_a&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din_a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="n"&gt;din_a&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din_a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
         &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;end&lt;/span&gt;
-    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
         &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din_a&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;end&lt;/span&gt;
-&lt;span class="n"&gt;end&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;RTL Schematic:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="if-else" src="/images/latch_versus_flip_flop/if_else.png" /&gt;&lt;/p&gt;
@@ -681,15 +697,21 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;li&gt;
 &lt;p&gt;使用完整的 case，添加 default 分支&lt;/p&gt;
 &lt;p&gt;code:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din_c&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_a&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="n"&gt;din_c&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_a&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
     &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din_c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din_a&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b01&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="nl"&gt;default:&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b00&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;endcase&lt;/span&gt;
-&lt;span class="n"&gt;end&lt;/span&gt;
+        &lt;span class="mh"&gt;2&amp;#39;b00&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din_a&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="mh"&gt;2&amp;#39;b01&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din_b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;2&amp;#39;b00&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;endcase&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;RTL Schemtatic:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="case-default" src="/images/latch_versus_flip_flop/case_default.png" /&gt;&lt;/p&gt;
@@ -702,7 +724,8 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;因此较好的应用规则是:&lt;strong&gt;要学会分析是否需要锁存器以及代码是否会产生意想不到的锁存器。只有这样才能灵活运用锁存器。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;下面通过实例来给予说明。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;example1&lt;/strong&gt;: 通过Verilog HDL实现序列最大值搜索程序，并保持检测到的最大值&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="nf"&gt;latch_demo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;  
+&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;verilog&lt;/span&gt;
+  &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;latch_demo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;  
           &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;dout&lt;/span&gt;  
       &lt;span class="p"&gt;);&lt;/span&gt;  
       &lt;span class="n"&gt;input&lt;/span&gt;   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
@@ -720,7 +743,8 @@ enable signal in order to load a data value into the register. If both the load 
 
 
 &lt;p&gt;上述代码在ISE中的综合结果会给出设计中包含Latch的警告。但实际上，abmax_tmp锁存器正是我们需要的，所以，虽然有警告，但是代码设计是没有问题的。将上述代码的if语句补全：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;abmax_tmp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;verilog&lt;/span&gt;
+ &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;abmax_tmp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  
       &lt;span class="n"&gt;abmax_tmp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
   &lt;span class="k"&gt;else&lt;/span&gt;  
       &lt;span class="n"&gt;abmax_tmp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;abmax_tmp&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -730,7 +754,8 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;经过综合后，仍然有Latch的警告。无论Latch是否是用户需要的，ISE都会给出警告，主要原因就是Latch对整个设计的时序性能影响较大。所以，在设计中要尽量避免Latch，但是确实需要使用的情况，也可以使用。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;example2:&lt;/strong&gt; 用Verilog HDL实现一个锁存器，当输入数据大于127时，将输入数据输出，否则输出0&lt;/p&gt;
 &lt;p&gt;不期望的 latch 指的是与设计意图不符，产生的 Latch。主要问题在于设计人员没有合理使用Verilog HDL语言，常见的原因是对条件语句（if、casse）的分支描述不完整，导致电路的功能不是预期的，发生了错误。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="nf"&gt;latch_demo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;  
+&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;verilog&lt;/span&gt;
+  &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;latch_demo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;  
       &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;dout&lt;/span&gt;  
   &lt;span class="p"&gt;);&lt;/span&gt;  
   &lt;span class="n"&gt;input&lt;/span&gt;   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
@@ -748,10 +773,11 @@ enable signal in order to load a data value into the register. If both the load 
 
 
 &lt;p&gt;综合后的结果，在比较器后面级联了锁存器，这是因为if语句缺少else分支造成的。查看仿真结果，当输入小于127时，输出保持了上次的127，不是0，没有达到设计要求。修改方法很简单，就是将if-else补全。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;   &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;127&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
-      &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
-  &lt;span class="k"&gt;else&lt;/span&gt;  
-      &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;   &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;verilog&lt;/span&gt;
+   &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;din&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;127&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+       &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+   &lt;span class="k"&gt;else&lt;/span&gt;  
+       &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
