@@ -125,74 +125,88 @@
 <p>Memory: 2.0 GiB</p>
 <p>OS type: 32-bit</p>
 <p><br></p>
-<h2 id="wine">安装 Wine</h2>
+<h2>安装 Wine</h2>
 <hr />
 <p><a href="http://en.wikipedia.org/wiki/Wine_(software)">Wine</a> 是 wine is not an emulator 的缩写，它可以在 x86、x86-64 上容许类 Unix 操作系统在 X Window System 下运行 Microsoft Windows 程序的软件 .它的官方网址：http://www.winehq.org/</p>
 <p>方法一：</p>
 <p>Ubuntu 软件仓里搜索 Wine，就可以找到 <code>Wine Windows Program Loader</code>，直接安装即可</p>
 <p>方法二：</p>
 <p>使用 <code>apt-get</code></p>
-<pre><code>apt-cache search wine
-suod apt-get install wine
-</code></pre>
+<div class="highlight"><pre><span class="n">apt</span><span class="o">-</span><span class="n">cache</span> <span class="n">search</span> <span class="n">wine</span>
+<span class="n">suod</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">wine</span>
+</pre></div>
+
+
 <p>P.S. 若是其他系统，找不到对应的二进制包，可以直接从官网上下载源码，自己编译（官网上有详细的 <a href="http://wiki.winehq.org/FAQ_zhcn">FAQ</a>）</p>
 <p><br></p>
-<h2 id="warcraft">拷贝 WarCraft</h2>
+<h2>拷贝 WarCraft</h2>
 <hr />
 <p>如果是双系统，则不必拷贝 WarCraft 文件夹，因为我电脑上只有 Ubuntu，所以从同学那里拷贝了一个，放在了 <code>～/</code> 目录下 。</p>
 <p><br></p>
-<h2 id="wine-warcraft">配置 Wine &amp; WarCraft</h2>
+<h2>配置 Wine &amp; WarCraft</h2>
 <hr />
-<h3 id="cd-key">CD key 注册表问题</h3>
+<h3>CD key 注册表问题</h3>
 <p>直接以 wine 运行 <code>war3.exe</code> 时提示没有 CD key，在 WarCraft 目录下找到了两个注册表文件，<code>War3.reg</code> 和 <code>一键导入.reg</code> 。</p>
 <p>在终端下导入注册表</p>
-<pre><code>wine regedit
-</code></pre>
+<div class="highlight"><pre><span class="n">wine</span> <span class="n">regedit</span>
+</pre></div>
+
+
 <p>然后导入这两个文件，再次尝试，还是不行...</p>
 <p>不急，游戏目录下还有一个程序叫 <code>War3RegFixer.exe</code>，看名字就知道是我们需要的</p>
-<pre><code>wine War3RegFixer.exe
-</code></pre>
+<div class="highlight"><pre><span class="n">wine</span> <span class="n">War3RegFixer</span><span class="p">.</span><span class="n">exe</span>
+</pre></div>
+
+
 <p>因为我的 Ubuntu 是英文版的，打开后是乱码...</p>
 <p><img alt="war3regfixer" src="/images/run-warcraft-on-ubuntu/war3regfixer.png" /></p>
 <p>找了一台 Windows 电脑，运行了一下，按照向导就可以修复 CD key 的问题 。</p>
-<h3 id="_1">分辨率问题</h3>
+<h3>分辨率问题</h3>
 <p>第一次运行的结果一般不会全屏，处女座的强迫症犯了，还好比较简单 ：D</p>
-<pre><code>wine regedit
-</code></pre>
+<div class="highlight"><pre><span class="n">wine</span> <span class="n">regedit</span>
+</pre></div>
+
+
 <p>找到 <code>HKEY_CURRENT_USER/Software/Blizzard Entertainment/Warcraft III/Video</code>，里面有两个注册表值 <code>resheight</code> 和 <code>reswidth</code>，将他们设为和当前分辨率相同的十进制数值就可以了。</p>
-<h3 id="_2">画面卡</h3>
+<h3>画面卡</h3>
 <p>因为 Wine 对 DirectX 的支持还不够好，如果电脑配置比较低，运行的时候添加参数 <code>-opengl</code> 就可以了，为了避免每次运行都要输入参数，可以在注册表 <code>HKEY_CURRENT_USER/Software/Blizzard Entertainment/Warcraft III/</code> 下新建整数（DWORD），名为 <code>Gfx OpenGL</code>，值为 1 。</p>
 <p><br></p>
-<h2 id="_3">运行</h2>
-<h3 id="_4">终端下</h3>
+<h2>运行</h2>
+<h3>终端下</h3>
 <p>现在就可以在终端下运行 war3.exe 了</p>
-<pre><code>wine war3.exe
-</code></pre>
+<div class="highlight"><pre><span class="n">wine</span> <span class="n">war3</span><span class="p">.</span><span class="n">exe</span>
+</pre></div>
+
+
 <p>熟悉的画面就出来了～</p>
 <p>这样子运行如果切出游戏，有时会导致 war3 崩溃或者切换不出去。一个解决方法是以窗口模式运行，只需要添加参数 <code>-window</code> 即可</p>
-<pre><code>wine war3.exe -window
-</code></pre>
+<div class="highlight"><pre><span class="n">wine</span> <span class="n">war3</span><span class="p">.</span><span class="n">exe</span> <span class="o">-</span><span class="n">window</span>
+</pre></div>
+
+
 <p>效果如下</p>
 <p><img alt="war3window" src="/images/run-warcraft-on-ubuntu/war3window.png" /></p>
 <p>不过个人不是很喜欢，因为鼠标总是超出窗口，极其不方便，影响游戏操作和感受 ：D</p>
-<h3 id="_5">桌面启动器</h3>
+<h3>桌面启动器</h3>
 <p>我们可以为 war3 添加一个桌面启动器，这样就不用进入终端启动了</p>
 <p>新建文件 <code>frozen-throne.desktop</code> 文件，添加以下内容</p>
-<pre><code>[Desktop Entry]
-Version = 1.0
-Name = Frozen Throne
-Exec = /home/chien/WarCraft/war3.exe
-Terminal = false
-Icon = /home/chien/WarCraft/war3.jpg
-Type = Application
-</code></pre>
+<div class="highlight"><pre><span class="k">[Desktop Entry]</span>
+<span class="na">Version</span> <span class="o">=</span> <span class="s">1.0</span>
+<span class="na">Name</span> <span class="o">=</span> <span class="s">Frozen Throne</span>
+<span class="na">Exec</span> <span class="o">=</span> <span class="s">/home/chien/WarCraft/war3.exe</span>
+<span class="na">Terminal</span> <span class="o">=</span> <span class="s">false</span>
+<span class="na">Icon</span> <span class="o">=</span> <span class="s">/home/chien/WarCraft/war3.jpg</span>
+<span class="na">Type</span> <span class="o">=</span> <span class="s">Application</span>
+</pre></div>
+
+
 <p>然后把这个文件移动到 <code>/usr/share/applicants/</code> ，这时在 unity 中搜索 <code>froz</code>，就能看到我们刚才新建的启动器了～</p>
 <p><img alt="war3desktop" src="/images/run-warcraft-on-ubuntu/war3desktop.png" /></p>
 <p><br></p>
 <p>至此，就可以在 Ubuntu 下享受 War3 了</p>
 <p>gl hf！</p>
 <p><br></p>
-<h2 id="_6">参考</h2>
+<h2>参考</h2>
 <p><a href="http://linux-wiki.cn/wiki/zh-hans/%E7%94%A8Wine%E8%BF%90%E8%A1%8C%E9%AD%94%E5%85%BD%E4%BA%89%E9%9C%B8III">用Wine运行魔兽争霸III</a></p>
 <p><a href="http://blog.ubuntusoft.com/wine-warcraft-3.html#.U0Xt11SSx38">Wine 魔兽争霸3的一些设置</a></p>
 <p><a href="http://hi.baidu.com/chenwzox/item/4e6346f1575a7ab231c199b4">Wine魔兽争霸3，流畅运行+键盘操作+窗口化</a></p>
@@ -202,10 +216,10 @@ Type = Application
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/04/21/learning_linux_package_management.html">学习 Linux 软件包依赖管理</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/13/learning_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/04/learning_linux_ssh.html">学习 Linux SSH</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/12/learning_yocto_from_zero_1_getting_started.html">Yocto 从零单排 1 —— 入门</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/13/learning_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
     </ul>
 </section>
     <hr />

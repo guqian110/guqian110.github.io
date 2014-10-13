@@ -117,7 +117,7 @@
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h2 id="code-structure">Code Structure</h2>
+                <h2>Code Structure</h2>
 <hr />
 <ul>
 <li>
@@ -125,9 +125,11 @@
 </li>
 <li>
 <p>Library 用来设计重用和代码共享，使代码结构更清晰</p>
-<pre><code>LIBRARY library_name;
-USE library_name.package_name.package_parts;
-</code></pre>
+<div class="highlight"><pre><span class="n">LIBRARY</span> <span class="n">library_name</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">library_name</span><span class="p">.</span><span class="n">package_name</span><span class="p">.</span><span class="n">package_parts</span><span class="p">;</span>
+</pre></div>
+
+
 <ul>
 <li>
 <p>常用的 3 个 Library：<code>ieee</code>、<code>std</code>、<code>work</code></p>
@@ -139,13 +141,15 @@ USE library_name.package_name.package_parts;
 </li>
 <li>
 <p>Entity 描述电路的输入/输出引脚</p>
-<pre><code>ENTITY entity_name IS
-    PORT (
-        port_name: signal_mode signal_type;
-        port_name: signal_mode signal_type;
-        ...);
-END entity_name;
-</code></pre>
+<div class="highlight"><pre><span class="n">ENTITY</span> <span class="n">entity_name</span> <span class="n">IS</span>
+    <span class="n">PORT</span> <span class="p">(</span>
+        <span class="nl">port_name:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
+        <span class="nl">port_name:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
+        <span class="p">...);</span>
+<span class="n">END</span> <span class="n">entity_name</span><span class="p">;</span>
+</pre></div>
+
+
 <ul>
 <li>
 <p>singal_mode 可以是 4 种类型： <code>in</code> <code>out</code> <code>inout</code> <code>buffer</code></p>
@@ -177,22 +181,30 @@ END entity_name;
 </li>
 </ul>
 <p><br></p>
-<h2 id="data-types">Data Types</h2>
+<h2>Data Types</h2>
 <hr />
 <p>前面的 Entity 中的端口定义：</p>
-<pre><code>port_name: signal_mode signal_type;
-</code></pre>
+<div class="highlight"><pre><span class="n">port_name</span><span class="o">:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="o">;</span>
+</pre></div>
+
+
 <p>还有其它地方声明的信号 <code>signal</code> :</p>
-<pre><code>signal name : type [range] [:= initial_value];
-</code></pre>
+<div class="highlight"><pre><span class="n">signal</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="p">[</span><span class="n">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
+</pre></div>
+
+
 <p>还有 常量 <code>constant</code> 声明：</p>
-<pre><code>constant name : type := value;
-</code></pre>
+<div class="highlight"><pre><span class="n">constant</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="o">:=</span> <span class="n">value</span><span class="p">;</span>
+</pre></div>
+
+
 <p>还有 变量 <code>variable</code> 声明：</p>
-<pre><code>variable name : type [range] [:= initial_value];
-</code></pre>
+<div class="highlight"><pre><span class="n">variable</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="p">[</span><span class="n">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
+</pre></div>
+
+
 <p>这些声明中都包含了数据类型字段。一个信号/常量/变量的数据类型决定了它能取到什么样的值，还有可以进行什么样的操作。</p>
-<h3 id="pre-defined-data-types">Pre-defined Data Types</h3>
+<h3>Pre-defined Data Types</h3>
 <p>IEEE 1164 标准中包含了一些预先定义的数据类型。</p>
 <ul>
 <li>
@@ -208,17 +220,19 @@ END entity_name;
 <p><code>ieee</code> 库中的 <code>std_logic_signed</code> 和 <code>std_logic_unsigned</code> 包集：包含一些函数，可以使 <code>std_logic_vector</code> 类型的数据可以像 <code>signed</code> 和 <code>unsigned</code> 一样进行运算</p>
 </li>
 </ul>
-<h4 id="bit-bit_vector"><code>bit</code> &amp; <code>bit_vector</code></h4>
+<h4><code>bit</code> &amp; <code>bit_vector</code></h4>
 <ul>
-<li>用 '0' 和 '1' 赋值<pre><code>signal x : bit;
-signal y : bit_vector (3 downto 0);
+<li>用 '0' 和 '1' 赋值<div class="highlight"><pre><span class="n">signal</span> <span class="n">x</span> <span class="o">:</span> <span class="n">bit</span><span class="p">;</span>
+<span class="n">signal</span> <span class="n">y</span> <span class="o">:</span> <span class="n">bit_vector</span> <span class="p">(</span><span class="mi">3</span> <span class="n">downto</span> <span class="mi">0</span><span class="p">);</span>
 
-x &lt;= '1';
-y &lt;= "0011"
-</code></pre>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="n">y</span> <span class="o">&lt;=</span> <span class="s">&quot;0011&quot;</span>
+</pre></div>
+
+
 </li>
 </ul>
-<h4 id="std_logic-std_logic_vector"><code>std_logic</code> &amp; <code>std_logic_vector</code></h4>
+<h4><code>std_logic</code> &amp; <code>std_logic_vector</code></h4>
 <ul>
 <li>
 <p><code>ieee 1164</code> 标准中引入的 8 逻辑值系统</p>
@@ -227,7 +241,7 @@ y &lt;= "0011"
 <p>不同于 bit 类型，可以取 8 种不同的值，但只有 <code>0</code>、<code>1</code>、<code>Z</code> 是可综合的，其他 5 种用来仿真</p>
 </li>
 </ul>
-<h4 id="std_ulogic-std_ulogic_vector"><code>std_ulogic</code> &amp; <code>std_ulogic_vector</code></h4>
+<h4><code>std_ulogic</code> &amp; <code>std_ulogic_vector</code></h4>
 <ul>
 <li>
 <p><code>ieee 1164</code> 标准中定义的具有 9 种逻辑值的数据类型</p>
@@ -236,31 +250,31 @@ y &lt;= "0011"
 <p><code>std_logic</code> 是 <code>std_ulogic</code> 的子集</p>
 </li>
 </ul>
-<h4 id="boolean"><code>boolean</code></h4>
+<h4><code>boolean</code></h4>
 <ul>
 <li>只有两种取值：<code>true</code>、<code>false</code></li>
 </ul>
-<h4 id="integer"><code>integer</code></h4>
+<h4><code>integer</code></h4>
 <ul>
 <li>32 位的整数 (-2 147 483 647 ~ +2 147 483 647)</li>
 </ul>
-<h4 id="natural"><code>natural</code></h4>
+<h4><code>natural</code></h4>
 <ul>
 <li>非负整数 (0 ~ +2 147483 647)</li>
 </ul>
-<h4 id="real"><code>real</code></h4>
+<h4><code>real</code></h4>
 <ul>
 <li>实数，不可综合</li>
 </ul>
-<h4 id="physical-literal"><code>physical literal</code></h4>
+<h4><code>physical literal</code></h4>
 <ul>
 <li>表示物理量，不可综合</li>
 </ul>
-<h4 id="character"><code>character</code></h4>
+<h4><code>character</code></h4>
 <ul>
 <li>单一/一串 ASCII 字符</li>
 </ul>
-<h4 id="signed-unsigned"><code>signed</code> &amp; <code>unsigned</code></h4>
+<h4><code>signed</code> &amp; <code>unsigned</code></h4>
 <ul>
 <li>
 <p><code>ieee</code> 库中的 <code>std_logic_arith</code> 包中定义的数据类型</p>
@@ -269,19 +283,23 @@ y &lt;= "0011"
 <p>和 <code>std_logic_vector</code> 类似，但是可以支持与整数类似的算术运算。</p>
 </li>
 </ul>
-<h3 id="user-defined-data-types">User-defined Data Types</h3>
-<pre><code>-- integer
-TYPE student_grade IS RANGE 0 TO 100;
+<h3>User-defined Data Types</h3>
+<div class="highlight"><pre><span class="o">--</span> <span class="n">integer</span>
+<span class="n">TYPE</span> <span class="n">student_grade</span> <span class="n">IS</span> <span class="n">RANGE</span> <span class="mi">0</span> <span class="n">TO</span> <span class="mi">100</span><span class="p">;</span>
 
--- enumerated
-TYPE state IS (idle, forward, backward, stop);
-TYPE color IS (red, green, blue, white);
-</code></pre>
-<h3 id="subtypes">Subtypes</h3>
-<pre><code>SUBTYPE my_color IS color RANGE red TO blue;
--- my_color = (red, green, blue);
-</code></pre>
-<h3 id="arrays">Arrays</h3>
+<span class="o">--</span> <span class="n">enumerated</span>
+<span class="n">TYPE</span> <span class="n">state</span> <span class="n">IS</span> <span class="p">(</span><span class="n">idle</span><span class="p">,</span> <span class="n">forward</span><span class="p">,</span> <span class="n">backward</span><span class="p">,</span> <span class="n">stop</span><span class="p">);</span>
+<span class="n">TYPE</span> <span class="n">color</span> <span class="nf">IS</span> <span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">,</span> <span class="n">white</span><span class="p">);</span>
+</pre></div>
+
+
+<h3>Subtypes</h3>
+<div class="highlight"><pre><span class="n">SUBTYPE</span> <span class="n">my_color</span> <span class="n">IS</span> <span class="n">color</span> <span class="n">RANGE</span> <span class="n">red</span> <span class="n">TO</span> <span class="n">blue</span><span class="p">;</span>
+<span class="o">--</span> <span class="n">my_color</span> <span class="o">=</span> <span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">);</span>
+</pre></div>
+
+
+<h3>Arrays</h3>
 <ul>
 <li>
 <p>可以认为 VHDL 预定义的数据类型只有 <code>scalar</code>(single bit) 和 <code>vector</code>(one-dimensional array of bits) 两种类型。</p>
@@ -299,54 +317,62 @@ TYPE color IS (red, green, blue, white);
 </li>
 <li>
 <p>syntax:</p>
-<pre><code> TYPE type_name IS ARRAY (specification) OF data_type;
-</code></pre>
+<div class="highlight"><pre> <span class="n">TYPE</span> <span class="n">type_name</span> <span class="n">IS</span> <span class="n">ARRAY</span> <span class="p">(</span><span class="n">specification</span><span class="p">)</span> <span class="n">OF</span> <span class="n">data_type</span><span class="p">;</span>
+</pre></div>
+
+
 </li>
 <li>
 <p>example:</p>
-<pre><code>--1D array
-TYPE matrix IS ARRAY (0 TO 3) OF STD_LOGIC_VECTOR (7 DOWNTO 0);
---2D array
-TYPE matrix2D IS ARRAY (0 TO 3, 7 DOWNTO 0) OF STD_LOGIC;
-</code></pre>
+<div class="highlight"><pre><span class="o">--</span><span class="mi">1</span><span class="n">D</span> <span class="n">array</span>
+<span class="n">TYPE</span> <span class="n">matrix</span> <span class="n">IS</span> <span class="n">ARRAY</span> <span class="p">(</span><span class="mi">0</span> <span class="n">TO</span> <span class="mi">3</span><span class="p">)</span> <span class="n">OF</span> <span class="n">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">7</span> <span class="n">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+<span class="o">--</span><span class="mi">2</span><span class="n">D</span> <span class="n">array</span>
+<span class="n">TYPE</span> <span class="n">matrix2D</span> <span class="n">IS</span> <span class="n">ARRAY</span> <span class="p">(</span><span class="mi">0</span> <span class="n">TO</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span> <span class="n">DOWNTO</span> <span class="mi">0</span><span class="p">)</span> <span class="n">OF</span> <span class="n">STD_LOGIC</span><span class="p">;</span>
+</pre></div>
+
+
 </li>
 </ul>
-<h3 id="port-array">Port Array</h3>
+<h3>Port Array</h3>
 <p>有时在定义端口时，需要把端口定义为矢量阵列。但是在 <code>Entity</code> 中不允许使用 <code>type</code> 定义，所以我们必须自己定义包集 (package)，然后使用 <code>use</code> 声明使用该用户自定义的包集，最后才能在 Entity 中使用这种新定义的类型。</p>
-<h3 id="signed-and-unsigned-data-types">Signed and Unsigned Data Types</h3>
+<h3>Signed and Unsigned Data Types</h3>
 <ul>
 <li>
 <p><code>ieee</code> 库中的 <code>std_logic_arith</code> 包中定义了有符号数 (<code>signed</code>) 和无符号数 (<code>unsigned</code>) 两种数据类型。</p>
 </li>
 <li>
 <p>只有先声明使用这个库下的包，才能在代码中使用 signed/unsigned</p>
-<pre><code>use ieee.std_logic_arith.all;
+<div class="highlight"><pre><span class="n">use</span> <span class="n">ieee</span><span class="p">.</span><span class="n">std_logic_arith</span><span class="p">.</span><span class="n">all</span><span class="p">;</span>
 
-signal x signed (7 downto 0);
-signal y unsigned (0 to 3);
-</code></pre>
+<span class="n">signal</span> <span class="n">x</span> <span class="nf">signed</span> <span class="p">(</span><span class="mi">7</span> <span class="n">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">signal</span> <span class="n">y</span> <span class="nf">unsigned</span> <span class="p">(</span><span class="mi">0</span> <span class="n">to</span> <span class="mi">3</span><span class="p">);</span>
+</pre></div>
+
+
 </li>
 <li>
 <p>使用它们主要是为了进行算术运算，但是它们不支持逻辑运算。( std_logic_vector 不支持算术运算，但是支持逻辑运算)</p>
 </li>
 <li>
 <p>如果信号的类型只能是 std_logic_vector，那么通过其他方法也是可以进行算术运算的，解决方案就是声明使用 <code>ieee</code> 的 <code>std_logic_unsigned</code> 和 <code>std_logic_signed</code> 两个包集，声明之后，std_logic_vector 就可以像 signed/unsigned 一样进行算术运算了。</p>
-<pre><code>use ieee.std_logic_signed.all;
--- use ieee.std_logic_unsigned.all;
+<div class="highlight"><pre><span class="n">use</span> <span class="n">ieee</span><span class="p">.</span><span class="n">std_logic_signed</span><span class="p">.</span><span class="n">all</span><span class="p">;</span>
+<span class="o">--</span> <span class="n">use</span> <span class="n">ieee</span><span class="p">.</span><span class="n">std_logic_unsigned</span><span class="p">.</span><span class="n">all</span><span class="p">;</span>
 
-signal a in std_logic_vector (7 downto 0);
-signal b in std_logic_vector (7 downto 0);
-signal x out std_logic_vector (7 downto 0);
+<span class="n">signal</span> <span class="n">a</span> <span class="n">in</span> <span class="nf">std_logic_vector</span> <span class="p">(</span><span class="mi">7</span> <span class="n">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">signal</span> <span class="n">b</span> <span class="n">in</span> <span class="nf">std_logic_vector</span> <span class="p">(</span><span class="mi">7</span> <span class="n">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="n">signal</span> <span class="n">x</span> <span class="n">out</span> <span class="nf">std_logic_vector</span> <span class="p">(</span><span class="mi">7</span> <span class="n">downto</span> <span class="mi">0</span><span class="p">);</span>
 
-x &lt;= a + b;     --legal, arithmetic
-x &lt;= a and b;   --legal, logiccal
-</code></pre>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>     <span class="o">--</span><span class="n">legal</span><span class="p">,</span> <span class="n">arithmetic</span>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="n">and</span> <span class="n">b</span><span class="p">;</span>   <span class="o">--</span><span class="n">legal</span><span class="p">,</span> <span class="n">logiccal</span>
+</pre></div>
+
+
 <ul>
 <li>需要注意的是，这两个包不能同时存在于同一份代码中，因为这样会引入二义性。比如上面例子中的 “+” 运算，如果我们同时包含了这两个包集，那么编译器不知道我们定义的运算到底应该重载哪一个，综合时会报错。</li>
 </ul>
 </li>
 </ul>
-<h3 id="data-conversion">Data Conversion</h3>
+<h3>Data Conversion</h3>
 <ul>
 <li>
 <p>在 VHDL 中，不同类型的数据是不能直接进行算术/逻辑运算的，所以必要时必须进行类型转换操作。</p>
@@ -367,10 +393,10 @@ x &lt;= a and b;   --legal, logiccal
 </li>
 </ul>
 <p><br></p>
-<h2 id="operators-and-attributes">Operators and Attributes</h2>
+<h2>Operators and Attributes</h2>
 <hr />
 <p>VHDL 语法虽然枯燥无味，但是只有对数据类型、运算操作符及其属性有了深刻认识，才能写出高质量和高效率的代码。</p>
-<h3 id="opreators">Opreators</h3>
+<h3>Opreators</h3>
 <ul>
 <li>
 <p>VHDL 提供了 6 种预定义的预算符：</p>
@@ -396,7 +422,7 @@ x &lt;= a and b;   --legal, logiccal
 </ul>
 </li>
 </ul>
-<h4 id="assignment"><code>assignment</code></h4>
+<h4><code>assignment</code></h4>
 <p>一共 3 种：</p>
 <ul>
 <li>
@@ -409,12 +435,12 @@ x &lt;= a and b;   --legal, logiccal
 <p><code>=&gt;</code> 用于给矢量(vector)对象的某些位赋值，常和 <code>others</code> 一起使用</p>
 </li>
 </ul>
-<h4 id="logical"><code>logical</code></h4>
+<h4><code>logical</code></h4>
 <p>进行逻辑运算，操作数必须是 <code>bit</code>, <code>std_logic</code>, <code>std_ulogic</code> 类型或者它们的扩展，即<code>bit_vector</code>, <code>std_logic_vector</code>, <code>std_ulogic</code> 类型。</p>
 <ul>
 <li><code>NOT</code>, <code>AND</code>, <code>OR</code>, <code>NAND</code>, <code>NOR</code>, <code>XOR</code></li>
 </ul>
-<h4 id="arithmetic"><code>arithmetic</code></h4>
+<h4><code>arithmetic</code></h4>
 <ul>
 <li>
 <p>操作数是 <code>signed</code>, <code>unsigned</code>, <code>integer</code>, <code>real</code>，其中 <code>real</code> 类型是不可综合的</p>
@@ -424,12 +450,14 @@ x &lt;= a and b;   --legal, logiccal
 </li>
 <li><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>**</code>, <code>MOD</code>, <code>REM</code>, <code>ABS</code></li>
 </ul>
-<h4 id="comparison"><code>comparison</code></h4>
+<h4><code>comparison</code></h4>
 <p>一共有 6 种：<code>=</code>, <code>/=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></p>
-<h4 id="shift"><code>shift</code></h4>
+<h4><code>shift</code></h4>
 <p>VHDL93 中引入的操作，语法：</p>
-<pre><code>&lt;left operand&gt;&lt;shift operator&gt;&lt;right operand&gt;;
-</code></pre>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="n">left</span> <span class="n">operand</span><span class="o">&gt;&lt;</span><span class="n">shift</span> <span class="n">operator</span><span class="o">&gt;&lt;</span><span class="n">right</span> <span class="n">operand</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+
+
 <ul>
 <li>
 <p>left operand 必须是 <code>bit_vector</code> 类型</p>
@@ -441,7 +469,7 @@ x &lt;= a and b;   --legal, logiccal
 <p>shift operator 有：<code>sll</code>, <code>srl</code>, <code>sla</code>, <code>sra</code>, <code>rol</code>, <code>ror</code></p>
 </li>
 </ul>
-<h4 id="concatenation"><code>concatenation</code></h4>
+<h4><code>concatenation</code></h4>
 <p>用于位的拼接。</p>
 <ul>
 <li>
@@ -451,9 +479,9 @@ x &lt;= a and b;   --legal, logiccal
 <p>操作符：<code>&amp;</code>, <code>(, , ,)</code></p>
 </li>
 </ul>
-<h3 id="attributes">Attributes</h3>
+<h3>Attributes</h3>
 <p>VHDL 中的属性语句可以获得相关数据/对象 的信息，使代码更加灵活。</p>
-<h4 id="pre-defined">Pre-defined</h4>
+<h4>Pre-defined</h4>
 <p>内置的预定义属性可以分为两大类：数值类属性 和 信号类属性。</p>
 <ul>
 <li>
@@ -464,35 +492,43 @@ x &lt;= a and b;   --legal, logiccal
 <p>大多数信号类属性都是不可综合的，只有 <code>s'event</code> 和 <code>s'stable</code> 是可综合的。</p>
 </li>
 </ul>
-<h4 id="user-defined">User-defined</h4>
+<h4>User-defined</h4>
 <p>也可以用户自己定义一个新的属性，并描述某个对象的这个属性的值是多少，之后就可以使用这个属性了。</p>
 <p><strong>syntax</strong></p>
-<pre><code>ATTRIBUTE attribute_name: attribute_type;  -- declaration
-ATTIRBUTE attribute_name OF target_name: class IS value;  -- specification
-</code></pre>
-<p>example：</p>
-<pre><code>ATTRIBUTE number_of_inputs: INTEGER;
-ATTRIBUTE number_of_inputs OF nand3: SIGNAL IS 3;
+<div class="highlight"><pre><span class="n">ATTRIBUTE</span> <span class="n">attribute_name</span><span class="o">:</span> <span class="n">attribute_type</span><span class="p">;</span>  <span class="o">--</span> <span class="n">declaration</span>
+<span class="n">ATTIRBUTE</span> <span class="n">attribute_name</span> <span class="n">OF</span> <span class="n">target_name</span><span class="o">:</span> <span class="n">class</span> <span class="n">IS</span> <span class="n">value</span><span class="p">;</span>  <span class="o">--</span> <span class="n">specification</span>
+</pre></div>
 
-input &lt;= nand3'number_of_inputs;
-</code></pre>
+
+<p>example：</p>
+<div class="highlight"><pre><span class="n">ATTRIBUTE</span> <span class="n">number_of_inputs</span><span class="o">:</span> <span class="n">INTEGER</span><span class="p">;</span>
+<span class="n">ATTRIBUTE</span> <span class="n">number_of_inputs</span> <span class="n">OF</span> <span class="n">nand3</span><span class="o">:</span> <span class="n">SIGNAL</span> <span class="n">IS</span> <span class="mi">3</span><span class="p">;</span>
+
+<span class="n">input</span> <span class="o">&lt;=</span> <span class="n">nand3</span><span class="err">&#39;</span><span class="n">number_of_inputs</span><span class="p">;</span>
+</pre></div>
+
+
 <p>首先定义了一个新的属性，名字叫 <code>number_of_inputs</code>，表示输入端口的个数，然后针对对象 nand3 (3输入的与非门) 这个对象，描述它的这个属性的类型为 signal 类型，取值为 3；最后，使用这个属性，将 nand3 的这个属性的值赋值给 input 对象。</p>
-<h3 id="operator-overloading">Operator Overloading</h3>
+<h3>Operator Overloading</h3>
 <p>用户不仅可以自定义属性，还可以自定义操作符。预定义的操作符的操作数必须是特定的类型，对于某些类型，我们可以自定义操作符对应的操作。</p>
 <p>VHDL 中的自定义操作符作用和 C++ 中的操作符重载 方法、目的都很类似。首先构造一个函数，然后调用这个函数即可。</p>
-<h3 id="generic">GENERIC</h3>
+<h3>GENERIC</h3>
 <p><code>generic</code> 必须在 ENTITY 中声明，它可以指定常规参数，所指定的参数是<strong>静态的</strong>，<strong>全局的</strong>。感觉类似于 Verilog 中的 <code>define</code> 吧，但是显然 Verilog 中的 <code>parameter</code> 是更好的设计，因为全局变量/常量很不安全。</p>
 <p><strong>syntax</strong></p>
-<pre><code>GENERIC (parameter_name: parameter_type := parameter_value);
-</code></pre>
+<div class="highlight"><pre><span class="n">GENERIC</span> <span class="p">(</span><span class="n">parameter_name</span><span class="o">:</span> <span class="n">parameter_type</span> <span class="o">:=</span> <span class="n">parameter_value</span><span class="p">);</span>
+</pre></div>
+
+
 <p><strong>example</strong></p>
-<pre><code>ENTITY my_entity IS
-    GENERIC (n: INTEGER := 8);
-    PORT (...);
-END my_entity;
-</code></pre>
+<div class="highlight"><pre><span class="n">ENTITY</span> <span class="n">my_entity</span> <span class="n">IS</span>
+    <span class="nf">GENERIC</span> <span class="p">(</span><span class="n">n</span><span class="o">:</span> <span class="n">INTEGER</span> <span class="o">:=</span> <span class="mi">8</span><span class="p">);</span>
+    <span class="n">PORT</span> <span class="p">(...);</span>
+<span class="n">END</span> <span class="n">my_entity</span><span class="p">;</span>
+</pre></div>
+
+
 <p><br></p>
-<h2 id="concurrent-code">Concurrent Code</h2>
+<h2>Concurrent Code</h2>
 <hr />
 <p>从本质上讲，HDL 是 描述 (Description) 语言，对应的是硬件电路，而硬件电路是时刻工作的，所以，它的代码是并发执行的。只有 <code>process</code>，<code>function</code>，<code>procedure</code> 中的代买是顺序执行的，而且当这些模块作为一个共同的整体时，它们之间也是并行的。</p>
 <p>在并发代码中可以使用下列各项：</p>
@@ -511,109 +547,137 @@ END my_entity;
 </li>
 </ul>
 <p>仔细观察可以发现，其实 when, generate, block 语句和预算语句相比，只是添加了一些条件判断，它们主要的核心还是运算操作符组成的运算，所以，并行代码的核心就是这些并行的运算语句。</p>
-<h3 id="when"><code>when</code></h3>
+<h3><code>when</code></h3>
 <p><strong>When/else syntax:</strong></p>
-<pre><code>assignment WHEN condition ELSE
-assignment WHEN condition ELSE
-...;
-</code></pre>
+<div class="highlight"><pre><span class="n">assignment</span> <span class="n">WHEN</span> <span class="n">condition</span> <span class="n">ELSE</span>
+<span class="n">assignment</span> <span class="n">WHEN</span> <span class="n">condition</span> <span class="n">ELSE</span>
+<span class="p">...;</span>
+</pre></div>
+
+
 <p><strong>with/select/when syntax:</strong></p>
-<pre><code>WITH identifier SELECT
-assignment WHEN value,
-assignment WHEN value,
-...;
-</code></pre>
-<h3 id="generate"><code>generate</code></h3>
+<div class="highlight"><pre><span class="n">WITH</span> <span class="n">identifier</span> <span class="n">SELECT</span>
+<span class="n">assignment</span> <span class="n">WHEN</span> <span class="n">value</span><span class="p">,</span>
+<span class="n">assignment</span> <span class="n">WHEN</span> <span class="n">value</span><span class="p">,</span>
+<span class="p">...;</span>
+</pre></div>
+
+
+<h3><code>generate</code></h3>
 <p>功能类似于 Verilog HDL 中的 generate，它常和 for/if 一起使用。
 因为描述的对象是电路，最终的电路是固定的，功能也是静态的，所以，对于 generate，它的循环操作的上下界必须是静态的，否则代码是不可综合的。</p>
 <p>实际上，引入 generate 的主要目的是为了写出更加通用的代码，达到修改最少代码，实现不同设计的目的，也就是动态编译。而引入 for 循环，只是为了减少代码量。</p>
-<h3 id="block"><code>block</code></h3>
+<h3><code>block</code></h3>
 <p>VHDL 中存在两种类型的块 block：简单块 (simple block) 和 卫式块 (guarded block):</p>
 <p><strong>simple block</strong></p>
 <p>simple block 只是对原有代码进行了区域分割，目的也仅仅是为了增强代码的可读性和可维护性。</p>
 <p>syntax:</p>
-<pre><code>label: BLOCK
-    [declarative part]
-BEGIN
-    (concurrent statement)
-END BLOCK label;
-</code></pre>
+<div class="highlight"><pre><span class="nl">label:</span> <span class="n">BLOCK</span>
+    <span class="p">[</span><span class="n">declarative</span> <span class="n">part</span><span class="p">]</span>
+<span class="n">BEGIN</span>
+    <span class="p">(</span><span class="n">concurrent</span> <span class="n">statement</span><span class="p">)</span>
+<span class="n">END</span> <span class="n">BLOCK</span> <span class="n">label</span><span class="p">;</span>
+</pre></div>
+
+
 <p><strong>guarded block</strong></p>
 <p>guarder block 是一种特殊的 block，它比 simple block 多了一个表达式，叫做 <code>guard expression</code>，只有当这个表达式为 True 时，这个 block 才会执行。</p>
 <p>syntax:</p>
-<pre><code>label: BLOCK (guard expression)
-    [declarative part]
-BEGIN
-    (concurrent guarded and unguarded statements)
-END BLOCK label;
-</code></pre>
+<div class="highlight"><pre><span class="nl">label:</span> <span class="n">BLOCK</span> <span class="p">(</span><span class="n">guard</span> <span class="n">expression</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">declarative</span> <span class="n">part</span><span class="p">]</span>
+<span class="n">BEGIN</span>
+    <span class="p">(</span><span class="n">concurrent</span> <span class="n">guarded</span> <span class="n">and</span> <span class="n">unguarded</span> <span class="n">statements</span><span class="p">)</span>
+<span class="n">END</span> <span class="n">BLOCK</span> <span class="n">label</span><span class="p">;</span>
+</pre></div>
+
+
 <p><br></p>
-<h2 id="sequential-code">Sequential Code</h2>
+<h2>Sequential Code</h2>
 <hr />
 <p>VHDL 本质是并发执行的代码，但是在 <code>process</code>, <code>function</code>, <code>procedure</code> 内部的代码是顺序执行的，当它们作为一个整体时，相互之间也是并发执行的。</p>
 <p>顺序代码并非只能与时序逻辑 (<code>sequential logic</code>) 对应，同样也可以用它们来实现组合逻辑 (<code>combinational logic</code>)。</p>
 <p>顺序代码也称为描述代码 (<code>behavioral code</code>)。</p>
 <p>这里主要讨论顺序代码，也就是这 3 个块中的代码，包括 <code>if</code>, <code>wait</code>, <code>case</code>, <code>loop</code> 语句。</p>
-<h3 id="process"><code>process</code></h3>
+<h3><code>process</code></h3>
 <p>作用类似于 Verilog HDL 中的 always 语句。</p>
 <p><strong>syntax</strong></p>
-<pre><code>[lable:] PROCESS (sensitivity list)
-    [VARIABLE name: type [range][ := initial_value;]]
-BEGIN
-    (sequential code)
-END PROCESS [label];
-</code></pre>
-<h3 id="if"><code>if</code></h3>
+<div class="highlight"><pre><span class="p">[</span><span class="n">lable</span><span class="o">:</span><span class="p">]</span> <span class="n">PROCESS</span> <span class="p">(</span><span class="n">sensitivity</span> <span class="n">list</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">VARIABLE</span> <span class="n">name</span><span class="o">:</span> <span class="n">type</span> <span class="p">[</span><span class="n">range</span><span class="p">][</span> <span class="o">:=</span> <span class="n">initial_value</span><span class="p">;]]</span>
+<span class="n">BEGIN</span>
+    <span class="p">(</span><span class="n">sequential</span> <span class="n">code</span><span class="p">)</span>
+<span class="n">END</span> <span class="n">PROCESS</span> <span class="p">[</span><span class="n">label</span><span class="p">];</span>
+</pre></div>
+
+
+<h3><code>if</code></h3>
 <p><strong>syntax</strong></p>
-<pre><code>IF conditions THEN assignments;
-ELSIF conditions THEN assignments;
-...
-ELSE assignments;
-END IF;
-</code></pre>
-<h3 id="wait"><code>wait</code></h3>
+<div class="highlight"><pre><span class="n">IF</span> <span class="n">conditions</span> <span class="n">THEN</span> <span class="n">assignments</span><span class="p">;</span>
+<span class="n">ELSIF</span> <span class="n">conditions</span> <span class="n">THEN</span> <span class="n">assignments</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">ELSE</span> <span class="n">assignments</span><span class="p">;</span>
+<span class="n">END</span> <span class="n">IF</span><span class="p">;</span>
+</pre></div>
+
+
+<h3><code>wait</code></h3>
 <p>如果在 process 中使用了 wait 语句，那么 process 就不能含有敏感信号列表了，所以此时 wait 必须是 process 的第一条语句。</p>
 <p><strong>syntax1</strong></p>
-<pre><code>WAIT UNTILL signal_condition;
-</code></pre>
+<div class="highlight"><pre><span class="n">WAIT</span> <span class="n">UNTILL</span> <span class="n">signal_condition</span><span class="p">;</span>
+</pre></div>
+
+
 <p><strong>syntax2</strong></p>
-<pre><code>WAIT ON signal1 [, signal2, ...];
-</code></pre>
+<div class="highlight"><pre><span class="n">WAIT</span> <span class="n">ON</span> <span class="n">signal1</span> <span class="p">[,</span> <span class="n">signal2</span><span class="p">,</span> <span class="p">...];</span>
+</pre></div>
+
+
 <p><strong>syntax3</strong></p>
-<pre><code>WAIT FOR time;  --simulation only
-</code></pre>
-<h3 id="case"><code>case</code></h3>
+<div class="highlight"><pre><span class="n">WAIT</span> <span class="n">FOR</span> <span class="n">time</span><span class="p">;</span>  <span class="o">--</span><span class="n">simulation</span> <span class="n">only</span>
+</pre></div>
+
+
+<h3><code>case</code></h3>
 <p>case 和 when 的区别在于，case 允许在每个测试条件下执行多个赋值操作，而 when 只能执行一个赋值操作。</p>
 <p><strong>syntax</strong></p>
-<pre><code>CASE identifier IS
-    WHEN value =&gt; assignment;
-    WHEN value =&gt; assignment;
-    ...
-END CASE;
-</code></pre>
-<h3 id="loop"><code>loop</code></h3>
+<div class="highlight"><pre><span class="n">CASE</span> <span class="n">identifier</span> <span class="n">IS</span>
+    <span class="n">WHEN</span> <span class="n">value</span> <span class="o">=&gt;</span> <span class="n">assignment</span><span class="p">;</span>
+    <span class="n">WHEN</span> <span class="n">value</span> <span class="o">=&gt;</span> <span class="n">assignment</span><span class="p">;</span>
+    <span class="p">...</span>
+<span class="n">END</span> <span class="n">CASE</span><span class="p">;</span>
+</pre></div>
+
+
+<h3><code>loop</code></h3>
 <p><strong>syntax1: FOR/LOOP repeat a fix number of times</strong></p>
-<pre><code>[label:] FOR identifier IN range LOOP
-    (sequential statements)
-END LOOP [label];
-</code></pre>
+<div class="highlight"><pre><span class="p">[</span><span class="n">label</span><span class="o">:</span><span class="p">]</span> <span class="n">FOR</span> <span class="n">identifier</span> <span class="n">IN</span> <span class="n">range</span> <span class="n">LOOP</span>
+    <span class="p">(</span><span class="n">sequential</span> <span class="n">statements</span><span class="p">)</span>
+<span class="n">END</span> <span class="n">LOOP</span> <span class="p">[</span><span class="n">label</span><span class="p">];</span>
+</pre></div>
+
+
 <p><strong>syntax: WHILE/LOOP</strong></p>
-<pre><code>[label:] WHILE condition LOOP
-    (sequential statements)
-END LOOP [label];
-</code></pre>
+<div class="highlight"><pre><span class="p">[</span><span class="n">label</span><span class="o">:</span><span class="p">]</span> <span class="n">WHILE</span> <span class="n">condition</span> <span class="n">LOOP</span>
+    <span class="p">(</span><span class="n">sequential</span> <span class="n">statements</span><span class="p">)</span>
+<span class="n">END</span> <span class="n">LOOP</span> <span class="p">[</span><span class="n">label</span><span class="p">];</span>
+</pre></div>
+
+
 <p><strong>syntax3: EXIT</strong></p>
-<pre><code>[label:] EXIT [label] [WHEN condition];
-</code></pre>
+<div class="highlight"><pre><span class="p">[</span><span class="n">label</span><span class="o">:</span><span class="p">]</span> <span class="n">EXIT</span> <span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="p">[</span><span class="n">WHEN</span> <span class="n">condition</span><span class="p">];</span>
+</pre></div>
+
+
 <p><strong>syntax4: NEXT</strong></p>
-<pre><code>[label:] NEXT [loop_label] [WHEN condition];
-</code></pre>
+<div class="highlight"><pre><span class="p">[</span><span class="n">label</span><span class="o">:</span><span class="p">]</span> <span class="n">NEXT</span> <span class="p">[</span><span class="n">loop_label</span><span class="p">]</span> <span class="p">[</span><span class="n">WHEN</span> <span class="n">condition</span><span class="p">];</span>
+</pre></div>
+
+
 <p><br></p>
-<h2 id="signals-variables">Signals &amp; Variables</h2>
+<h2>Signals &amp; Variables</h2>
 <hr />
 <p>VHDL 提供了 <code>signal</code> 和 <code>variable</code> 两种对象来处理非静态数据；提供了 <code>constant</code> 和 <code>generic</code> 来处理静态数据。</p>
 <p><code>constant</code> 和 <code>signal</code> 是全局的，可以在顺序执行的代码中，也可以在并发执行的代码中；<code>variable</code> 是局部的，只能值顺序代码中，并且它们的值是不能向外传递的(如果像传递出去，必须先把这个变量值传递给一个信号，再由这个信号传递出去)。</p>
-<h3 id="constant"><code>constant</code></h3>
+<h3><code>constant</code></h3>
 <p>constant 可以定义在 package, entity, architecture 中，对应的作用域也不同。</p>
 <ul>
 <li>
@@ -627,13 +691,17 @@ END LOOP [label];
 </li>
 </ul>
 <p><strong>syntax</strong></p>
-<pre><code>CONSTANT name : type := value;
-</code></pre>
-<h3 id="signal"><code>signal</code></h3>
+<div class="highlight"><pre><span class="n">CONSTANT</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="o">:=</span> <span class="n">value</span><span class="p">;</span>
+</pre></div>
+
+
+<h3><code>signal</code></h3>
 <p>VHDL 中的 <code>signal</code> 代表的是逻辑电路中的 “硬”连线，既可以用于电路的输入输出端口，也可以用于 内部单元之间的连接。</p>
 <p><strong>syntax</strong></p>
-<pre><code>SIGNAL name : type [range] [:= initial_value];
-</code></pre>
+<div class="highlight"><pre><span class="n">SIGNAL</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="p">[</span><span class="n">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
+</pre></div>
+
+
 <ul>
 <li>
 <p>和 Verilog HDL 的 always 中的 reg 类似，VHDL 的 process 中的 signal 也是在进程结束时更新值。</p>
@@ -642,13 +710,15 @@ END LOOP [label];
 <p>对同一个信号多次重复赋值，结果取决于编译器。(Xilinx XST 不报错，认为最后一次赋值是有效的)</p>
 </li>
 </ul>
-<h3 id="variable"><code>variable</code></h3>
+<h3><code>variable</code></h3>
 <p>相比于 signal 是局部的，variable 只能在 process，function，procedure 中使用，而且对它的赋值是立即更新的，新的值可以在下一行代码中立即使用。</p>
 <p><strong>syntax</strong></p>
-<pre><code>VARIABLE name : type [range] [:= initial_value];
-</code></pre>
+<div class="highlight"><pre><span class="n">VARIABLE</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="p">[</span><span class="n">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
+</pre></div>
+
+
 <p><br></p>
-<h2 id="reference">Reference</h2>
+<h2>Reference</h2>
 <p><a href="http://www.amazon.com/Circuit-Design-VHDL-Volnei-Pedroni/dp/0262162245">Circuit Design with VHDL</a></p>
             </div>
             <!-- /.entry-content -->
@@ -657,9 +727,9 @@ END LOOP [label];
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
     </ul>
 </section>
     <hr />

@@ -114,7 +114,7 @@
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h2 id="sublime-text">Sublime Text</h2>
+                <h2>Sublime Text</h2>
 <hr />
 <p>代码编辑器之于程序员，就如同剑之于战士。程序员关于代码编辑器的争论从来就没有停止过，每个程序员都有自己熟悉的编辑器，他们热爱自己的 “武器”，甚至可以形成 “宗教”，比如 Vim 和 Emac 的战争。</p>
 <p>如今，这个无休止的争论中要加入一个新成员了，她就是 <a href="http://www.sublimetext.com/">Sublime Text</a> 。其实她也不是 “新” 成员了，早在 2011 年她就诞生了，不过经过不断的改进，终于人们不得不正视这个新人，不仅仅因为漂亮的外在美，还有强大的内在美 :-P</p>
@@ -127,16 +127,18 @@
 <p><a href="http://www.iplaysoft.com/sublimetext.html">Others: Sublime Text 2 - 性感无比的代码编辑器！程序员必备神器！跨平台支持Win/Mac/Linux</a></p>
 <p>P.S. 我使用的是 Sublime Text 2，虽然已经有 3 了，但是 3 还在 Beta 阶段，大家貌似对 3 不是很满意</p>
 <p><br></p>
-<h2 id="vim-mode">Vim Mode</h2>
+<h2>Vim Mode</h2>
 <hr />
 <p>ST 是自带 Vim 模式的（Vintage Mode），但是这个模式默认是没有开启的，毕竟对于大多数普通人来说， Vim 实在是不太友好...</p>
 <p>打开 ST 的 <code>Preferences/Setting - Defalut</code>，在最后一行有句</p>
-<pre><code>"ignored_packages": ["Vintage"]
-</code></pre>
+<div class="highlight"><pre><span class="s">&quot;ignored_packages&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s">&quot;Vintage&quot;</span><span class="p">]</span>
+</pre></div>
+
+
 <p>只需要将方括号中的 Vintage 去掉就可以了。推荐在 Setting - User 中修改。</p>
 <p><a href="https://www.sublimetext.com/docs/2/vintage.html">官方说明</a></p>
 <p><br></p>
-<h2 id="package-control">Package Control</h2>
+<h2>Package Control</h2>
 <hr />
 <p>ST 的一个强大之处就在于可以安装各种插件，要安装插件有两种方法：</p>
 <ol>
@@ -148,7 +150,7 @@
 </li>
 </ol>
 <p>第一种方法虽然麻烦，但是在没有网络的环境下，我们可以从别人那拷贝过来即可；第二种方法最方便了，不过要求有网络。</p>
-<h3 id="installation">Installation</h3>
+<h3>Installation</h3>
 <p>ST 默认是没有安装 Package Control 的，需要我们手动安装：</p>
 <ol>
 <li>
@@ -156,33 +158,35 @@
 </li>
 <li>
 <p>在控制台中粘贴以下命令</p>
-<pre><code>import urllib2,os; pf='Package Control.sublime-package'; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),'wb').write(urllib2.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read()); print 'Please restart Sublime Text to finish installation'
-</code></pre>
+<div class="highlight"><pre><span class="n">import</span> <span class="n">urllib2</span><span class="p">,</span><span class="n">os</span><span class="p">;</span> <span class="n">pf</span><span class="o">=</span><span class="err">&#39;</span><span class="n">Package</span> <span class="n">Control</span><span class="p">.</span><span class="n">sublime</span><span class="o">-</span><span class="n">package</span><span class="err">&#39;</span><span class="p">;</span> <span class="n">ipp</span><span class="o">=</span><span class="n">sublime</span><span class="p">.</span><span class="n">installed_packages_path</span><span class="p">();</span> <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">if</span> <span class="n">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">else</span> <span class="n">None</span><span class="p">;</span> <span class="n">urllib2</span><span class="p">.</span><span class="n">install_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="p">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="p">.</span><span class="n">ProxyHandler</span><span class="p">()));</span> <span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">ipp</span><span class="p">,</span><span class="n">pf</span><span class="p">),</span><span class="err">&#39;</span><span class="n">wb</span><span class="err">&#39;</span><span class="p">).</span><span class="n">write</span><span class="p">(</span><span class="n">urllib2</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//sublime.wbond.net/&#39;+pf.replace(&#39; &#39;,&#39;%20&#39;)).read()); print &#39;Please restart Sublime Text to finish installation&#39;</span>
+</pre></div>
+
+
 </li>
 <li>
 <p>安装完成之后，重启 ST 即可</p>
 </li>
 </ol>
-<h3 id="using">Using</h3>
+<h3>Using</h3>
 <p>按下 <code>Ctrl + Shift + P</code>，在弹出的命令面板，输入 <code>package</code>，就会自动弹出相关的命令，可以选择 <code>Install</code>、<code>Remove</code>、<code>Disable</code>、<code>Enable</code>、<code>List</code>、<code>Update</code> 等命令。</p>
 <p><a href="https://sublime.wbond.net/">sublime wbond</a> 上列出了 Package Control 可以找到的所有的插件，有详细的安装和使用说明。</p>
 <p>网上也有很多文章介绍了大量的常用插件，我们可以按照需求自己挑选需要的插件进行安装。</p>
 <p><br></p>
-<h2 id="verilog-hdl">Verilog HDL</h2>
+<h2>Verilog HDL</h2>
 <hr />
 <p>常用的插件，比如括号匹配、智能补全、自动对齐、Tags、注释生成、Terminal、Build、Git 等插件就不再赘述了，说一下网上介绍的比较少，但我自己使用比较多的关于 Verilog 的插件。</p>
 <p>可以通过 Package 下载到两个插件，<code>Verilog</code> 和<code>Verilog-Automatic</code>。第一个插件主要功能是支持 Verilog 的代码高亮和补全，第二个插件可以帮助我们自动生成模块例化、端口添加连接等功能。</p>
 <p>其中，第一个插件的 Snippet 并不太让人满意，在原 Snippet 的基础上，我添加了一些我常用到的 Snippets。</p>
-<h3 id="always">always</h3>
+<h3>always</h3>
 <p>因为插件作者只添加了异步高有效复位方式的 <code>always</code> 块，而我们同步和异步两种方式都可能会用到，所以，我添加同步复位的 Snippet</p>
 <p>ST 2 的 Package 都存放在 <code>/home/.config/sublime-text-2/Packages</code> 目录下面，我们需要修改的就是这个目录下的 <code>Verilog/Snippets</code> 下的 <code>.tmSnippet</code> 文件。修改后的结果如下：</p>
 <p><strong>always_async.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;always @(posedge clk or ${1:posedge} ${2:rst}) begin
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always @(posedge clk or ${1:posedge} ${2:rst}) begin
     if ($2) begin
         // reset
         $3
@@ -190,25 +194,27 @@
     else if ($4) begin
         $0
     end
-end&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;always_async&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;always_async&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_async<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_async<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p><strong>always_sync.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;always @(posedge clk) begin
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always @(posedge clk) begin
     if (${1:rst}) begin
         // reset
         $2
@@ -216,100 +222,108 @@ end&lt;/string&gt;
     else begin
         $0
     end
-end&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;always_sync&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;always_sync&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_sync<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>always_sync<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p>修改之后的结果如下图所示：</p>
 <p><img alt="always" src="/images/sublime-text-2-and-verilog/always.gif" /></p>
-<h3 id="if-else">if-else</h3>
+<h3>if-else</h3>
 <p>原来的 if snippet 没有 else 分支，所以，添加了一个有 else 分支的 if 语句。</p>
 <p><strong>if.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;if ($1) begin
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if ($1) begin
     $0
-end&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;if&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;if&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p><strong>if-else.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;if ($1) begin
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if ($1) begin
     $2
 end
 else begin
     $0
-end&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;if_else&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;if_else&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if_else<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if_else<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p>修改后的结果如下图：</p>
 <p><img alt="if-else" src="/images/sublime-text-2-and-verilog/if-else.gif" /></p>
-<h3 id="parameter">parameter</h3>
+<h3>parameter</h3>
 <p>原来是没有 parameter 的snippets 的，拷贝一份其他的 snippet，修改其中的一些设置，即可</p>
 <p><strong>parameter.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;parameter   $1 = $2,
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>parameter   $1 = $2,
             $3 = $0
-&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;parameter&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;parameter&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>parameter<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>parameter<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p>修改后的结果如下图所示：</p>
 <p><img alt="parameter" src="/images/sublime-text-2-and-verilog/parameter.gif" /></p>
-<h3 id="case">case</h3>
+<h3>case</h3>
 <p>原来是没有 case 的 snippet，方法同上，可以修改出我们想要的 case snippet</p>
 <p><strong>case.tmSnippet</strong></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;
-&lt;plist version="1.0"&gt;
-&lt;dict&gt;
-    &lt;key&gt;content&lt;/key&gt;
-    &lt;string&gt;case ($1)
+<div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd&quot;&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case ($1)
     $2: begin
         $3
     end
@@ -325,18 +339,20 @@ end&lt;/string&gt;
     default: begin
         $10
     end
-endcase&lt;/string&gt;
-    &lt;key&gt;name&lt;/key&gt;
-    &lt;string&gt;case&lt;/string&gt;
-    &lt;key&gt;scope&lt;/key&gt;
-    &lt;string&gt;source.verilog&lt;/string&gt;
-    &lt;key&gt;tabTrigger&lt;/key&gt;
-    &lt;string&gt;case&lt;/string&gt;
-    &lt;key&gt;uuid&lt;/key&gt;
-    &lt;string&gt;026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC&lt;/string&gt;
-&lt;/dict&gt;
-&lt;/plist&gt;
-</code></pre>
+endcase<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</pre></div>
+
+
 <p>修改后的效果如下：</p>
 <p><img alt="case" src="/images/sublime-text-2-and-verilog/case.gif" /></p>
 <p><br></p>
@@ -347,10 +363,10 @@ endcase&lt;/string&gt;
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
     </ul>
 </section>
     <hr />

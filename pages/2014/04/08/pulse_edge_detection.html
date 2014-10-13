@@ -113,126 +113,129 @@
                 </div>
                 <p>脉冲边沿检测是 FPGA 设计中经常用到的方法，本文总结一下其原理和实现代码，可以将其加入我们自己的代码库中，以备以后使用 。</p>
 <p><br></p>
-<h2 id="_1">脉冲边沿检测原理</h2>
+<h2>脉冲边沿检测原理</h2>
 <hr />
 <p><img alt="pulse" src="/images/learning-fpga-pulse-edge-detection/pulse.jpg" /></p>
 <p>如图，任何一个脉冲既有上升沿也有下降沿，系统的时钟周期一定要比脉冲宽度小，而且越小越好，即频率越高越好 。</p>
 <p><strong>脉冲边沿的特点就是：边沿两侧的电平发生了变化 。</strong> 利用这一点，我们就可以设计出检测边沿的方法 。</p>
 <p><strong>操作方法：</strong> 建立 2 个寄存器，形成二级寄存器，在时钟触发中，首先把数据送入第一个寄存器中，然后在下一个时钟上沿到来时，将第一个寄存器中的数据存入第二个寄存器，也就是说第二个寄存器中的数据始终比第一个寄存器晚一个周期，即晚一个数据 。根据系统时钟检测，如果前后进来的信号发生了变化，可以用异或运算，异或结果为1，说明电平发生了变化，有边沿产生。</p>
 <p><br></p>
-<h2 id="_2">脉冲边沿检测方法</h2>
+<h2>脉冲边沿检测方法</h2>
 <hr />
-<h3 id="_3">检测是否有边沿</h3>
+<h3>检测是否有边沿</h3>
 <p><strong>程序：</strong></p>
-<p>```Verilog
-    module DETECT_EDGE (<br />
-        clk,rst_n,trig_in,trig_edge<br />
-        ); </p>
-<pre><code>    input clk;  
-    input rst_n;  
-    input trig_in;
+<div class="highlight"><pre>    <span class="n">module</span> <span class="nf">DETECT_EDGE</span> <span class="p">(</span>  
+        <span class="n">clk</span><span class="p">,</span><span class="n">rst_n</span><span class="p">,</span><span class="n">trig_in</span><span class="p">,</span><span class="n">trig_edge</span>  
+        <span class="p">);</span> 
 
-    output trigedge;
+        <span class="n">input</span> <span class="n">clk</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">rst_n</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">trig_in</span><span class="p">;</span>  
 
-    reg trig_r1;  
-    reg trig_r2;
+        <span class="n">output</span> <span class="n">trigedge</span><span class="p">;</span>  
 
-    always @ (posedge clk or negedge rst_n) begin  
-        if (!rst_n) begin  
-            trig_r1 &lt;= 1'b0;  
-            trig_r2 &lt;= 1'b0;  
-        end  
-        else begin  
-            trig_r1 &lt;= trig_in;  
-            trig_r2 &lt;= trig_r1;  
-        end  
-    end
+        <span class="n">reg</span> <span class="n">trig_r1</span><span class="p">;</span>  
+        <span class="n">reg</span> <span class="n">trig_r2</span><span class="p">;</span>  
 
-    assign trigEdge = trig_r1 ^ trig_r2;
+        <span class="n">always</span> <span class="err">@</span> <span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>  
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>  
+                <span class="n">trig_r1</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
+                <span class="n">trig_r2</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
+            <span class="n">end</span>  
+            <span class="k">else</span> <span class="n">begin</span>  
+                <span class="n">trig_r1</span> <span class="o">&lt;=</span> <span class="n">trig_in</span><span class="p">;</span>  
+                <span class="n">trig_r2</span> <span class="o">&lt;=</span> <span class="n">trig_r1</span><span class="p">;</span>  
+            <span class="n">end</span>  
+        <span class="n">end</span>  
 
-endmodule
-</code></pre>
-<p>```</p>
+        <span class="n">assign</span> <span class="n">trigEdge</span> <span class="o">=</span> <span class="n">trig_r1</span> <span class="o">^</span> <span class="n">trig_r2</span><span class="p">;</span>  
+
+    <span class="n">endmodule</span>
+</pre></div>
+
+
 <p><strong>综合结果：</strong></p>
 <p><img alt="rtl1" src="/images/learning-fpga-pulse-edge-detection/rtl1.png" /></p>
 <p><strong>仿真结果：</strong></p>
 <p><img alt="sim1" src="/images/learning-fpga-pulse-edge-detection/sim1.png" /></p>
-<h3 id="_4">检测 上/下 边沿</h3>
+<h3>检测 上/下 边沿</h3>
 <p><strong>下降沿检测原理：</strong> 将第一个寄存器中的数据取反与第二个寄存器的数据相与，产生的数存入一个新的寄存器里，这样产生的结果是当第一个寄存器中的数据由 1 变为 0 时，就会在新的寄存器里产生一个高电平，并维持一个周期 。</p>
 <p><strong>上升沿检测原理：</strong> 将第二个寄存器中的数据取反与第一个寄存器的数据相与，产生的数存入一个新的寄存器里，这样产生的结果是当第一个寄存器中的数据由 0 变为 1 时（上升沿，此时 r1 变为 1，但 r2 仍保持前一周期的 0），就会在新的寄存器里产生一个高电平，并维持一个周期 。</p>
 <p><strong>程序：</strong></p>
-<p>```Verilog
-    module DETECT_EDGE (<br />
-        clk,rst_n,trig_in,trig_pos_edge,trig_neg_edge<br />
-        );  </p>
-<pre><code>    input clk;  
-    input rst_n;  
-    input trig_in;
+<div class="highlight"><pre>    <span class="n">module</span> <span class="nf">DETECT_EDGE</span> <span class="p">(</span>  
+        <span class="n">clk</span><span class="p">,</span><span class="n">rst_n</span><span class="p">,</span><span class="n">trig_in</span><span class="p">,</span><span class="n">trig_pos_edge</span><span class="p">,</span><span class="n">trig_neg_edge</span>  
+        <span class="p">);</span>  
 
-    output trig_pos_edge;  
-    output trig_neg_edge;
+        <span class="n">input</span> <span class="n">clk</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">rst_n</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">trig_in</span><span class="p">;</span>  
 
-    reg trig_r0;  
-    reg trig_r1;  
-    reg trig_r2;
+        <span class="n">output</span> <span class="n">trig_pos_edge</span><span class="p">;</span>  
+        <span class="n">output</span> <span class="n">trig_neg_edge</span><span class="p">;</span>  
 
-    always @ (posedge clk or negedge rst_n) begin  
-        if (!rst_n) begin  
-            trig_r0 &lt;= 1'b0;  
-            trig_r1 &lt;= 1'b0;  
-            trig_r2 &lt;= 1'b0;  
-        end  
-        else begin  
-            trig_r0 &lt;= trig_in;  
-            trig_r1 &lt;= trig_r0;  
-            trig_r2 &lt;= trig_r1;  
-        end  
-    end
+        <span class="n">reg</span> <span class="n">trig_r0</span><span class="p">;</span>  
+        <span class="n">reg</span> <span class="n">trig_r1</span><span class="p">;</span>  
+        <span class="n">reg</span> <span class="n">trig_r2</span><span class="p">;</span>  
 
-    assign trig_pos_edge = trig_r1 &amp; (!trig_r2);    // Detect posedge  
-    assign trig_neg_edge = (!trig_r1) &amp; trig_r2;    // Detect negedge
+        <span class="n">always</span> <span class="err">@</span> <span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>  
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>  
+                <span class="n">trig_r0</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
+                <span class="n">trig_r1</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
+                <span class="n">trig_r2</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
+            <span class="n">end</span>  
+            <span class="k">else</span> <span class="n">begin</span>  
+                <span class="n">trig_r0</span> <span class="o">&lt;=</span> <span class="n">trig_in</span><span class="p">;</span>  
+                <span class="n">trig_r1</span> <span class="o">&lt;=</span> <span class="n">trig_r0</span><span class="p">;</span>  
+                <span class="n">trig_r2</span> <span class="o">&lt;=</span> <span class="n">trig_r1</span><span class="p">;</span>  
+            <span class="n">end</span>  
+        <span class="n">end</span>  
 
-endmodule
-</code></pre>
-<p>```</p>
+        <span class="n">assign</span> <span class="n">trig_pos_edge</span> <span class="o">=</span> <span class="n">trig_r1</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">!</span><span class="n">trig_r2</span><span class="p">);</span>    <span class="c1">// Detect posedge  </span>
+        <span class="n">assign</span> <span class="n">trig_neg_edge</span> <span class="o">=</span> <span class="p">(</span><span class="o">!</span><span class="n">trig_r1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">trig_r2</span><span class="p">;</span>    <span class="c1">// Detect negedge  </span>
+
+    <span class="n">endmodule</span>  
+</pre></div>
+
+
 <p><strong>综合结果：</strong></p>
 <p><img alt="rtl2" src="/images/learning-fpga-pulse-edge-detection/rtl2.png" /></p>
 <p><strong>仿真结果：</strong></p>
 <p><img alt="sim2" src="/images/learning-fpga-pulse-edge-detection/sim2.png" /></p>
 <p><br></p>
 <p><strong>另外一种写法：</strong></p>
-<p>```Verilog
-    module DETECT_EDGE (<br />
-        clk,rst_n,trig_in,tirg_pos_edge,trig_neg_edge<br />
-        );  </p>
-<pre><code>    input clk;  
-    input rst_n;  
-    input trig_in;
+<div class="highlight"><pre>    <span class="n">module</span> <span class="nf">DETECT_EDGE</span> <span class="p">(</span>  
+        <span class="n">clk</span><span class="p">,</span><span class="n">rst_n</span><span class="p">,</span><span class="n">trig_in</span><span class="p">,</span><span class="n">tirg_pos_edge</span><span class="p">,</span><span class="n">trig_neg_edge</span>  
+        <span class="p">);</span>  
 
-    output trig_pos_edge;  
-    output trig_neg_edge;
+        <span class="n">input</span> <span class="n">clk</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">rst_n</span><span class="p">;</span>  
+        <span class="n">input</span> <span class="n">trig_in</span><span class="p">;</span>  
 
-    reg [2:0] trig_r;
+        <span class="n">output</span> <span class="n">trig_pos_edge</span><span class="p">;</span>  
+        <span class="n">output</span> <span class="n">trig_neg_edge</span><span class="p">;</span>  
 
-    always @ (posedge clk or negedge rst_n) begin  
-        if (!rst_n)  
-            trig_r &lt;= 3'b0;  
-        else  
-            trig_r &lt;= {trig_r[1:0],trig_in};  
-    end
+        <span class="n">reg</span> <span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">trig_r</span><span class="p">;</span>  
 
-    assign trig_pos_edge = (trig_r[1:0] == 2'b01);  
-    assign trig_neg_edge = (trig_r[1:0] == 2'b10);
+        <span class="n">always</span> <span class="err">@</span> <span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="n">begin</span>  
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span>  
+                <span class="n">trig_r</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>  
+            <span class="k">else</span>  
+                <span class="n">trig_r</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">trig_r</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">],</span><span class="n">trig_in</span><span class="p">};</span>  
+        <span class="n">end</span>  
 
-endmodule
-</code></pre>
-<p>```</p>
+        <span class="n">assign</span> <span class="n">trig_pos_edge</span> <span class="o">=</span> <span class="p">(</span><span class="n">trig_r</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="err">&#39;</span><span class="n">b01</span><span class="p">);</span>  
+        <span class="n">assign</span> <span class="n">trig_neg_edge</span> <span class="o">=</span> <span class="p">(</span><span class="n">trig_r</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="err">&#39;</span><span class="n">b10</span><span class="p">);</span>  
+
+    <span class="n">endmodule</span>
+</pre></div>
+
+
 <p><strong>综合结果：</strong></p>
 <p><img alt="rtl3" src="/images/learning-fpga-pulse-edge-detection/rtl3.png" /></p>
 <p><strong>仿真结果：</strong></p>
 <p><img alt="sim3" src="/images/learning-fpga-pulse-edge-detection/sim3.png" /></p>
 <p><br></p>
-<h2 id="_5">脉冲边沿检测应用</h2>
+<h2>脉冲边沿检测应用</h2>
 <hr />
 <p>理想的键盘输入特性：</p>
 <p><img alt="keyboard1" src="/images/learning-fpga-pulse-edge-detection/keyboard1.png" /></p>
@@ -240,45 +243,48 @@ endmodule
 <p>实际的键盘输入特性：</p>
 <p><img alt="keyboard2" src="/images/learning-fpga-pulse-edge-detection/keyboard2.jpg" /></p>
 <p><strong>软件消抖</strong> 要占用系统资源，在系统资源充足的情况下使用软件消抖更加简单 。软件消抖的实质在于降低键盘输入端口的采样频率，将高频抖动略去 。实际应用中通常采用延时跳过高频抖动区间，然后再检测输入做出相应处理。一般程序代码如下：</p>
-<p><code>C
-    if (value == 0)         //一旦检测到键值
-    {
-        Delay();            //延时20ms，有效滤除按键的抖动
-        if(value == 0)      //再次确定键值是否有效
-        {
-            do something    //执行相应处理
-        }
-    }</code></p>
+<div class="highlight"><pre>    <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>         <span class="c1">//一旦检测到键值</span>
+    <span class="p">{</span>
+        <span class="n">Delay</span><span class="p">();</span>            <span class="c1">//延时20ms，有效滤除按键的抖动</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>      <span class="c1">//再次确定键值是否有效</span>
+        <span class="p">{</span>
+            <span class="k">do</span> <span class="n">something</span>    <span class="c1">//执行相应处理</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+
 <p>这段软消抖程序从机理上看不会有什么问题，通常在软件程序不太 "繁忙" 的情况下也能够很好的消抖并做相应处理 。但是如果在延时期间产生了中断，则此中断可能无法得到响应 。</p>
 <p>对于硬件资源丰富的 FPGA 系统，可以使用硬件来减轻软件工作量，通常称之为 <strong>"硬件加速"</strong> 。在按键信号输入到软件系统前用逻辑对其进行一下简单的处理即可实现所谓的"硬件消抖"，代码如下：</p>
-<p>```Verilog
-    //对输入信号inpio硬件滤波，每20ms采样一次当前值
-    reg[18:0] cnt; //20ms计数器</p>
-<pre><code>always @ (posedge clk_25m or negedge rst_n)
-    if (!rst_n)
-        cnt &lt;= 19'd0;
-    else if (cnt &lt; 19'd500000)
-        cnt &lt;= cnt+1'b1;
-    else 
-        cnt &lt;= 19'd0;
+<div class="highlight"><pre>    <span class="c1">//对输入信号inpio硬件滤波，每20ms采样一次当前值</span>
+    <span class="n">reg</span><span class="p">[</span><span class="mi">18</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">cnt</span><span class="p">;</span> <span class="c1">//20ms计数器</span>
 
-reg[1:0] inpior; //当前inpio信号锁存，每20ms锁存一拍
+    <span class="n">always</span> <span class="err">@</span> <span class="p">(</span><span class="n">posedge</span> <span class="n">clk_25m</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span>
+            <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mi">19</span><span class="err">&#39;</span><span class="n">d0</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">&lt;</span> <span class="mi">19</span><span class="err">&#39;</span><span class="n">d500000</span><span class="p">)</span>
+            <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="n">cnt</span><span class="o">+</span><span class="mi">1</span><span class="err">&#39;</span><span class="n">b1</span><span class="p">;</span>
+        <span class="k">else</span> 
+            <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mi">19</span><span class="err">&#39;</span><span class="n">d0</span><span class="p">;</span>
 
-always @ (posedge clk_25m or negedge rst_n)
-    if (!rst_n)
-        inpior &lt;= 2'b11;
-    else if (cnt == 19'h7ffff)
-        inpior &lt;= {inpior[0],inpior};
-    else
-        inpior &lt;= inpior;
+    <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span> <span class="n">inpior</span><span class="p">;</span> <span class="c1">//当前inpio信号锁存，每20ms锁存一拍</span>
 
-wire inpio_swin = inpior[0] | inpior[1]; //前后20ms两次锁存值都为0时才为0
-</code></pre>
-<p>```</p>
+    <span class="n">always</span> <span class="err">@</span> <span class="p">(</span><span class="n">posedge</span> <span class="n">clk_25m</span> <span class="n">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span>
+            <span class="n">inpior</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="err">&#39;</span><span class="n">b11</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">cnt</span> <span class="o">==</span> <span class="mi">19</span><span class="err">&#39;</span><span class="n">h7ffff</span><span class="p">)</span>
+            <span class="n">inpior</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">inpior</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">inpior</span><span class="p">};</span>
+        <span class="k">else</span>
+            <span class="n">inpior</span> <span class="o">&lt;=</span> <span class="n">inpior</span><span class="p">;</span>
+
+    <span class="n">wire</span> <span class="n">inpio_swin</span> <span class="o">=</span> <span class="n">inpior</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|</span> <span class="n">inpior</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">//前后20ms两次锁存值都为0时才为0</span>
+</pre></div>
+
+
 <p>该程序中设置了一个 20 ms 计数器，通过间隔 20 ms 对输入信号 inpio 采样两次，两次相同则认为键盘输入稳定，得到用硬件逻辑处理后的 inpio_swin 信号则是消抖处理过的信号 。程序不再需要 delay() 来滤波了，也不会出现使用纯软件处理出现的 "中断失去响应" 的情况了，这就是 "硬件加速" 的效果 。</p>
 <p>我们可以看到，传统单片机等系统大多是串行处理，即顺序执行，只能并行处理一些中断程序 。对于这样的系统，只能采用单纯软件或硬件电路消抖，但都不那么完美 。而对于 FPGA 等并行处理的系统，其优势就很明显，只要片内逻辑资源够用，通过硬件加速软件消抖的处理，完全可以做到按键消抖并行化，不影响系统的实时性 。</p>
 <p><br></p>
-<h2 id="_6">参考</h2>
+<h2>参考</h2>
 <p><a href="http://bbs.ednchina.com/BLOG_ARTICLE_213430.HTM">脉冲边沿检测（Verilog）</a></p>
 <p><a href="http://blog.csdn.net/lg2lh/article/details/8104551">脉冲边沿检测原理verilog版本</a></p>
 <p><a href="http://blog.csdn.net/LVY33/article/details/6225925">脉冲边缘检测法</a></p>
@@ -288,11 +294,11 @@ wire inpio_swin = inpior[0] | inpior[1]; //前后20ms两次锁存值都为0时�
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
     </ul>
 </section>
     <hr />

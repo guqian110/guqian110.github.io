@@ -122,7 +122,7 @@
 <p><strong>Author</strong> : Chien Gu (guqian110@gmail.com)</p>
 <p><strong>Summary</strong> : This is a brief Verilog HDL coding style guide for BUPT MITC lab to design circuits on FPGA. This guide is only concerned about code format and dose not involve principles for writing synthesisable codes.</p>
 <p><br></p>
-<h2 id="_1">总则</h2>
+<h2>总则</h2>
 <hr />
 <ul>
 <li>
@@ -139,34 +139,36 @@
 </li>
 </ul>
 <p><br></p>
-<h2 id="_2">分述</h2>
+<h2>分述</h2>
 <hr />
-<h3 id="head-of-file">head of file</h3>
+<h3>head of file</h3>
 <p>Xilinx ISE 自动生成的标准文件头部，添加 <code>Email</code>、<code>File Name</code> 两个信息，最终结果：</p>
-<pre><code>//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// Email:
-// 
-// Create Date:    20:43:36 11/12/2013 
-// Design Name: 
-// Module Name:    CLKMGN
-// File Name:      clkmgn.v
-// Project Name: 
-// Target Devices: 
-// Tool versions: 
-// Description: 
-//
-// Dependencies: 
-// 
-//
-// Revision: 
-// Revision 0.01 - File Created
-// Additional Comments: 
-//
-//////////////////////////////////////////////////////////////////////////////////
-</code></pre>
-<h3 id="module">module</h3>
+<div class="highlight"><pre><span class="c1">//////////////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">// Company: </span>
+<span class="c1">// Engineer: </span>
+<span class="c1">// Email:</span>
+<span class="c1">// </span>
+<span class="c1">// Create Date:    20:43:36 11/12/2013 </span>
+<span class="c1">// Design Name: </span>
+<span class="c1">// Module Name:    CLKMGN</span>
+<span class="c1">// File Name:      clkmgn.v</span>
+<span class="c1">// Project Name: </span>
+<span class="c1">// Target Devices: </span>
+<span class="c1">// Tool versions: </span>
+<span class="c1">// Description: </span>
+<span class="c1">//</span>
+<span class="c1">// Dependencies: </span>
+<span class="c1">// </span>
+<span class="c1">//</span>
+<span class="c1">// Revision: </span>
+<span class="c1">// Revision 0.01 - File Created</span>
+<span class="c1">// Additional Comments: </span>
+<span class="c1">//</span>
+<span class="c1">//////////////////////////////////////////////////////////////////////////////////</span>
+</pre></div>
+
+
+<h3>module</h3>
 <p><strong>模块命名大小写：</strong></p>
 <ul>
 <li>文件名：xxx.v (小写)</li>
@@ -182,253 +184,419 @@
 <p><strong>模块调用规范：</strong></p>
 <p>使用 <em>信号映射法</em></p>
 <p>举例说明：</p>
-<pre><code>///////////////////////////////////////////////////////////////////////////////////
-// Module Declaration                                                            //
-///////////////////////////////////////////////////////////////////////////////////
-module MODULE_NAME (
-    // input ports
-    port_1, port_2, ... port_n,
-    // output ports
-    port_1, port_2, ... port_m
-    );
+<div class="highlight"><pre><span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">// Module Declaration                                                            //</span>
+<span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+<span class="k">module</span> <span class="no">MODULE_NAME</span> <span class="p">(</span>
+    <span class="c1">// input ports</span>
+    <span class="n">port_1</span><span class="p">,</span> <span class="n">port_2</span><span class="p">,</span> <span class="p">...</span> <span class="n">port_n</span><span class="p">,</span>
+    <span class="c1">// output ports</span>
+    <span class="n">port_1</span><span class="p">,</span> <span class="n">port_2</span><span class="p">,</span> <span class="p">...</span> <span class="n">port_m</span>
+    <span class="p">);</span>
 
-////////////////////////////////////////////////////////////////////////////////////
-// Port Declarations                                                              //
-////////////////////////////////////////////////////////////////////////////////////
-    //input ports
-    input   port_1;         // comments
-    input   port_2;
-    ...
-    input   port_n;
+<span class="c1">////////////////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">// Port Declarations                                                              //</span>
+<span class="c1">////////////////////////////////////////////////////////////////////////////////////</span>
+    <span class="c1">//input ports</span>
+    <span class="k">input</span>   <span class="n">port_1</span><span class="p">;</span>         <span class="c1">// comments</span>
+    <span class="k">input</span>   <span class="n">port_2</span><span class="p">;</span>
+    <span class="p">...</span>
+    <span class="k">input</span>   <span class="n">port_n</span><span class="p">;</span>
 
-    //output ports
-    output  port_1;         // comments
-    output  port_2;
-    ...
-    output  port_m;
+    <span class="c1">//output ports</span>
+    <span class="k">output</span>  <span class="n">port_1</span><span class="p">;</span>         <span class="c1">// comments</span>
+    <span class="k">output</span>  <span class="n">port_2</span><span class="p">;</span>
+    <span class="p">...</span>
+    <span class="k">output</span>  <span class="n">port_m</span><span class="p">;</span>
 
-///////////////////////////////////////////////////////////////////////////////////
-// Parameter Declarations                                                        //
-///////////////////////////////////////////////////////////////////////////////////
-    parameter   DIN     = 16,
-                DOUTA   = 16,
-                DOUTE   = 16,
-                DOUTCTR = 16;
+<span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">// Parameter Declarations                                                        //</span>
+<span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+    <span class="k">parameter</span>   <span class="no">DIN</span>     <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+                <span class="no">DOUTA</span>   <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+                <span class="no">DOUTE</span>   <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+                <span class="no">DOUTCTR</span> <span class="o">=</span> <span class="mh">16</span><span class="p">;</span>
 
-///////////////////////////////////////////////////////////////////////////////////
-// Wire &amp; Reg Declarations                                                       //
-///////////////////////////////////////////////////////////////////////////////////
-    wire    wire_1;
-    wire    wire_2;
-    ...
-    wire    wire_x;
+<span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">// Wire &amp; Reg Declarations                                                       //</span>
+<span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+    <span class="k">wire</span>    <span class="n">wire_1</span><span class="p">;</span>
+    <span class="k">wire</span>    <span class="n">wire_2</span><span class="p">;</span>
+    <span class="p">...</span>
+    <span class="k">wire</span>    <span class="n">wire_x</span><span class="p">;</span>
 
-    reg     reg_1;
-    reg     reg_2;
-    ...
-    reg     reg_y;
+    <span class="k">reg</span>     <span class="n">reg_1</span><span class="p">;</span>
+    <span class="k">reg</span>     <span class="n">reg_2</span><span class="p">;</span>
+    <span class="p">...</span>
+    <span class="k">reg</span>     <span class="n">reg_y</span><span class="p">;</span>
 
-///////////////////////////////////////////////////////////////////////////////////
-// Main Body of Code                                                             //
-///////////////////////////////////////////////////////////////////////////////////
+<span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">// Main Body of Code                                                             //</span>
+<span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
 
-    ///////////////////////////////////////////////////////////
-    // Instantiate sub module                                //
-    ///////////////////////////////////////////////////////////
-    MODULE_NAMW_A U_MODULE_NAMW_A (
-        .A(A)
-        .B(B)
-        ...
-        );
+    <span class="c1">///////////////////////////////////////////////////////////</span>
+    <span class="c1">// Instantiate sub module                                //</span>
+    <span class="c1">///////////////////////////////////////////////////////////</span>
+    <span class="no">MODULE_NAMW_A</span> <span class="no">U_MODULE_NAMW_A</span> <span class="p">(</span>
+        <span class="p">.</span><span class="no">A</span><span class="p">(</span><span class="no">A</span><span class="p">)</span>
+        <span class="p">.</span><span class="no">B</span><span class="p">(</span><span class="no">B</span><span class="p">)</span>
+        <span class="p">...</span>
+        <span class="p">);</span>
 
-    always @(posdge clk) begin
-        if (rst) begin
-            // reset
-            ...
-        end
-        else begin
-            // do something
-            ...
-        end
-    end
+    <span class="k">always</span> <span class="p">@(</span><span class="n">posdge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="c1">// reset</span>
+            <span class="p">...</span>
+        <span class="k">end</span>
+        <span class="k">else</span> <span class="k">begin</span>
+            <span class="c1">// do something</span>
+            <span class="p">...</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
 
-    assign wire_1 = wire_2;
-    ...
+    <span class="k">assign</span> <span class="n">wire_1</span> <span class="o">=</span> <span class="n">wire_2</span><span class="p">;</span>
+    <span class="p">...</span>
 
-endmodule
-</code></pre>
-<h3 id="fsm">FSM</h3>
+<span class="k">endmodule</span>
+</pre></div>
+
+
+<h3>FSM</h3>
 <p>有限状态机(Finite State Machine) 使用三段式格式。举例</p>
-<pre><code>// FSM-1
-always @(posedge clk) begin
-    if (rst) begin
-        // reset
-        CS &lt;= IDLE;
-    end
-    else begin
-        // next state
-        CS &lt;= NS;
-    end
-end
+<div class="highlight"><pre><span class="c1">// FSM-1</span>
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// reset</span>
+        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+    <span class="k">end</span>
+    <span class="k">else</span> <span class="k">begin</span>
+        <span class="c1">// next state</span>
+        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">NS</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
 
-// FSM-2
-always @* begin
-    NS = 8'bx;
-    case (CS)
-        IDLE: begin
-            // ...
-        end
-        S1: begin
-            // ...
-        end
-        default: begin
-            NS = IDLE;
-        end
-    endcase
-end
+<span class="c1">// FSM-2</span>
+<span class="k">always</span> <span class="p">@</span><span class="o">*</span> <span class="k">begin</span>
+    <span class="no">NS</span> <span class="o">=</span> <span class="mh">8</span><span class="p">&#39;</span><span class="n">bx</span><span class="p">;</span>
+    <span class="k">case</span> <span class="p">(</span><span class="no">CS</span><span class="p">)</span>
+        <span class="nl">IDLE:</span> <span class="k">begin</span>
+            <span class="c1">// ...</span>
+        <span class="k">end</span>
+        <span class="nl">S1:</span> <span class="k">begin</span>
+            <span class="c1">// ...</span>
+        <span class="k">end</span>
+        <span class="k">default</span><span class="o">:</span> <span class="k">begin</span>
+            <span class="no">NS</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+        <span class="k">end</span>
+    <span class="k">endcase</span>
+<span class="k">end</span>
 
-// FSM-3
-always @(posdge clk) begin
-    if (rst) begin
-        // reset
+<span class="c1">// FSM-3</span>
+<span class="k">always</span> <span class="p">@(</span><span class="n">posdge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// reset</span>
 
-    end
-    else begin
-        // default output
-        // ...
-        case (NS)
-            IDLE: begin
-                // ...
-            end
-            defaut: begin
-                // ...
-            end
-        endcase
-    end
-end
-</code></pre>
-<h3 id="always">always</h3>
+    <span class="k">end</span>
+    <span class="k">else</span> <span class="k">begin</span>
+        <span class="c1">// default output</span>
+        <span class="c1">// ...</span>
+        <span class="k">case</span> <span class="p">(</span><span class="no">NS</span><span class="p">)</span>
+            <span class="nl">IDLE:</span> <span class="k">begin</span>
+                <span class="c1">// ...</span>
+            <span class="k">end</span>
+            <span class="nl">defaut:</span> <span class="k">begin</span>
+                <span class="c1">// ...</span>
+            <span class="k">end</span>
+        <span class="k">endcase</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<h3>always</h3>
 <ul>
 <li>一个 <code>always</code> 中不要同时含有 <em>组合逻辑</em> 和 <em>时序逻辑</em>，分开写在不同的 <code>always</code> 块中。</li>
 <li>组合逻辑使用 <em>阻塞赋值(=)</em>，时序逻辑使用 <em>非阻塞赋值(&lt;=)</em></li>
 <li>不要在多个 <code>always</code> 中对同一信号赋值，也不要在一个 <code>always</code> 中对一个信号进行多次赋值</li>
 </ul>
 <p>标准 <code>always</code> 格式</p>
-<pre><code>always @(posedge clk) begin
-    if (rst) begin
-        // reset
+<div class="highlight"><pre><span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+        <span class="c1">// reset</span>
 
-    end
-    else begin
-        // do somethig
+    <span class="n">end</span>
+    <span class="k">else</span> <span class="n">begin</span>
+        <span class="c1">// do somethig</span>
 
-    end
-end
-</code></pre>
-<h3 id="parameter">parameter</h3>
+    <span class="n">end</span>
+<span class="n">end</span>
+</pre></div>
+
+
+<h3>parameter</h3>
 <p>parameter 全部大写，用 parameter 定义有实际意义的常数，比如 LED 亮灯状态、状态机状态等，避免 "magic number"。举例：</p>
-<pre><code>///////////////////////////////////////////////////////////////////////////////////
-// Parameter Declarations                                                        //
-///////////////////////////////////////////////////////////////////////////////////
-    parameter   DIN     = 16,
-                DOUTA   = 16,
-                DOUTE   = 16,
-                DOUTCTR = 16;
-</code></pre>
-<h3 id="if-else">if-else</h3>
+<div class="highlight"><pre><span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+<span class="c1">// Parameter Declarations                                                        //</span>
+<span class="c1">///////////////////////////////////////////////////////////////////////////////////</span>
+    <span class="k">parameter</span>   <span class="no">DIN</span>     <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+                <span class="no">DOUTA</span>   <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+                <span class="no">DOUTE</span>   <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+                <span class="no">DOUTCTR</span> <span class="o">=</span> <span class="mh">16</span><span class="p">;</span>
+</pre></div>
+
+
+<h3>if-else</h3>
 <p>标准 <code>if-else</code> 格式</p>
-<pre><code>if (condition) begin
-    // do something
+<div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="n">begin</span>
+    <span class="c1">// do something</span>
 
-end
-else begin
-    // do something
+<span class="n">end</span>
+<span class="k">else</span> <span class="n">begin</span>
+    <span class="c1">// do something</span>
 
-end
-</code></pre>
-<h3 id="case-default">case-default</h3>
+<span class="n">end</span>
+</pre></div>
+
+
+<h3>case-default</h3>
 <p>标准 <code>case</code> 格式</p>
-<pre><code>case (variable)
-    vaule1: begian
-        // do something
+<div class="highlight"><pre><span class="k">case</span> <span class="p">(</span><span class="n">variable</span><span class="p">)</span>
+    <span class="nl">vaule1:</span> <span class="n">begian</span>
+        <span class="c1">// do something</span>
 
-    end
-    value2: begin
-        // do something
+    <span class="n">end</span>
+    <span class="nl">value2:</span> <span class="n">begin</span>
+        <span class="c1">// do something</span>
 
-    end
-    default: begin
-        // do something
-    end
-endcase
-</code></pre>
-<h3 id="naming">naming</h3>
+    <span class="n">end</span>
+    <span class="nl">default:</span> <span class="n">begin</span>
+        <span class="c1">// do something</span>
+    <span class="n">end</span>
+<span class="n">endcase</span>
+</pre></div>
+
+
+<h3>naming</h3>
 <ol>
 <li>
 <p><strong>模块名</strong></p>
 <p>单词首字母缩写，大写。举例</p>
-<pre><code>DMI     // Data Memory Interface
-DEC     // Decoder
-</code></pre>
+<div class="highlight"><pre><span class="n">DMI</span>     <span class="c1">// Data Memory Interface</span>
+<span class="n">DEC</span>     <span class="c1">// Decoder</span>
+</pre></div>
+
+
 </li>
 <li>
 <p><strong>模块间信号名</strong></p>
 <p>分为两部分，第一部分表示信号方向，大写，第二部分表示信号意义，小写，下划线连接。举例</p>
-<pre><code>wire CPUMMU_wr_req;     // write request form CPU to MMU
-</code></pre>
+<div class="highlight"><pre><span class="n">wire</span> <span class="n">CPUMMU_wr_req</span><span class="p">;</span>     <span class="c1">// write request form CPU to MMU</span>
+</pre></div>
+
+
 </li>
 <li>
 <p><strong>模块内命名</strong></p>
 <p>单词缩写，下划线连接，小写。举例</p>
-<pre><code>wire sdram_wr_en;       // SDRAM write enable
-</code></pre>
+<div class="highlight"><pre><span class="n">wire</span> <span class="n">sdram_wr_en</span><span class="p">;</span>       <span class="c1">// SDRAM write enable</span>
+</pre></div>
+
+
 </li>
 <li>
 <p><strong>系统级命名</strong></p>
 <p>时钟信号、置位信号、复位信号等需要输送到各个模块的全局信号，以 <code>SYS_</code> 前缀开头。举例</p>
-<pre><code>wire SYS_clk_100MHz;         // system clock
-wire SYS_set_cnt;            // system counter set
-wire SYS_rst_cnt;            // system counter reset
-</code></pre>
+<div class="highlight"><pre><span class="n">wire</span> <span class="n">SYS_clk_100MHz</span><span class="p">;</span>         <span class="c1">// system clock</span>
+<span class="n">wire</span> <span class="n">SYS_set_cnt</span><span class="p">;</span>            <span class="c1">// system counter set</span>
+<span class="n">wire</span> <span class="n">SYS_rst_cnt</span><span class="p">;</span>            <span class="c1">// system counter reset</span>
+</pre></div>
+
+
 </li>
 <li>
 <p><strong>低电平有效信号命名</strong></p>
 <p>低电平有效信号加后缀 <code>_n</code>，举例</p>
-<pre><code>wire rst_n;             // low valid reset
-</code></pre>
+<div class="highlight"><pre><span class="n">wire</span> <span class="n">rst_n</span><span class="p">;</span>             <span class="c1">// low valid reset</span>
+</pre></div>
+
+
 </li>
 <li>
 <p><strong>经过锁存器的信号</strong></p>
 <p>经过锁存器的信号加后缀 <code>_r</code>，以和锁存前区别。举例</p>
-<pre><code>reg din_r;              // latch input data
-</code></pre>
+<div class="highlight"><pre><span class="n">reg</span> <span class="n">din_r</span><span class="p">;</span>              <span class="c1">// latch input data</span>
+</pre></div>
+
+
 </li>
 <li>
 <p><strong>参数名</strong></p>
 <p>实际意义缩写，大写。举例</p>
-<pre><code>parameter   IDLE = 10'd0,
-            WAIT = 10'd1;
-</code></pre>
+<div class="highlight"><pre><span class="n">parameter</span>   <span class="n">IDLE</span> <span class="o">=</span> <span class="mi">10</span><span class="err">&#39;</span><span class="n">d0</span><span class="p">,</span>
+            <span class="n">WAIT</span> <span class="o">=</span> <span class="mi">10</span><span class="err">&#39;</span><span class="n">d1</span><span class="p">;</span>
+</pre></div>
+
+
 </li>
 </ol>
 <p><strong>常用信号名缩写：</strong></p>
-<p>|name|short||name|short||name|short|
-|----|-----||----|-----||----|-----|
-|acknowledge  |ack||error|err||ready|rdy|
-|adress|addr||enable|en||receive|rx|
-|arbiter|arb||frame|frm||request|req|
-|check|chk||generate|gen||resest|rst|
-|clock|clk||grant|gnt||segment|seg|
-|config|cfg||increase|inc||source|src|
-|control|ctrl||input|in||statistic|stat|
-|counter|cnt||length|len||switcher|sf|
-|data in|din||output|out||timer|tmr|
-|data out|dout||packet|pkt||tmporary|tmp|
-|decode|de||priority|pri||transmit|tx|
-|decrease|dec||pointer|ptr||valid|vld|
-|delay|dly||read|rd||write enable  |wr_en|
-|disable|dis||read enbale  |rd_en||write|wr|</p>
-<h3 id="incedent">incedent</h3>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>short</th>
+<th></th>
+<th>name</th>
+<th>short</th>
+<th></th>
+<th>name</th>
+<th>short</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>acknowledge</td>
+<td>ack</td>
+<td></td>
+<td>error</td>
+<td>err</td>
+<td></td>
+<td>ready</td>
+<td>rdy</td>
+</tr>
+<tr>
+<td>adress</td>
+<td>addr</td>
+<td></td>
+<td>enable</td>
+<td>en</td>
+<td></td>
+<td>receive</td>
+<td>rx</td>
+</tr>
+<tr>
+<td>arbiter</td>
+<td>arb</td>
+<td></td>
+<td>frame</td>
+<td>frm</td>
+<td></td>
+<td>request</td>
+<td>req</td>
+</tr>
+<tr>
+<td>check</td>
+<td>chk</td>
+<td></td>
+<td>generate</td>
+<td>gen</td>
+<td></td>
+<td>resest</td>
+<td>rst</td>
+</tr>
+<tr>
+<td>clock</td>
+<td>clk</td>
+<td></td>
+<td>grant</td>
+<td>gnt</td>
+<td></td>
+<td>segment</td>
+<td>seg</td>
+</tr>
+<tr>
+<td>config</td>
+<td>cfg</td>
+<td></td>
+<td>increase</td>
+<td>inc</td>
+<td></td>
+<td>source</td>
+<td>src</td>
+</tr>
+<tr>
+<td>control</td>
+<td>ctrl</td>
+<td></td>
+<td>input</td>
+<td>in</td>
+<td></td>
+<td>statistic</td>
+<td>stat</td>
+</tr>
+<tr>
+<td>counter</td>
+<td>cnt</td>
+<td></td>
+<td>length</td>
+<td>len</td>
+<td></td>
+<td>switcher</td>
+<td>sf</td>
+</tr>
+<tr>
+<td>data in</td>
+<td>din</td>
+<td></td>
+<td>output</td>
+<td>out</td>
+<td></td>
+<td>timer</td>
+<td>tmr</td>
+</tr>
+<tr>
+<td>data out</td>
+<td>dout</td>
+<td></td>
+<td>packet</td>
+<td>pkt</td>
+<td></td>
+<td>tmporary</td>
+<td>tmp</td>
+</tr>
+<tr>
+<td>decode</td>
+<td>de</td>
+<td></td>
+<td>priority</td>
+<td>pri</td>
+<td></td>
+<td>transmit</td>
+<td>tx</td>
+</tr>
+<tr>
+<td>decrease</td>
+<td>dec</td>
+<td></td>
+<td>pointer</td>
+<td>ptr</td>
+<td></td>
+<td>valid</td>
+<td>vld</td>
+</tr>
+<tr>
+<td>delay</td>
+<td>dly</td>
+<td></td>
+<td>read</td>
+<td>rd</td>
+<td></td>
+<td>write enable</td>
+<td>wr_en</td>
+</tr>
+<tr>
+<td>disable</td>
+<td>dis</td>
+<td></td>
+<td>read enbale</td>
+<td>rd_en</td>
+<td></td>
+<td>write</td>
+<td>wr</td>
+</tr>
+</tbody>
+</table>
+<h3>incedent</h3>
 <ul>
 <li>
 <p><strong>tab</strong></p>
@@ -439,25 +607,29 @@ wire SYS_rst_cnt;            // system counter reset
 <ul>
 <li>
 <p>信号端口定义，关键字、宽度说明、信号名之间对齐。举例</p>
-<pre><code>input          clk;
-input          rst_n;
-input  [7:0]   din;
+<div class="highlight"><pre><span class="n">input</span>          <span class="n">clk</span><span class="p">;</span>
+<span class="n">input</span>          <span class="n">rst_n</span><span class="p">;</span>
+<span class="n">input</span>  <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">din</span><span class="p">;</span>
 
-output [7:0]   dout;
-</code></pre>
+<span class="n">output</span> <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">dout</span><span class="p">;</span>
+</pre></div>
+
+
 </li>
 <li>
 <p>二元运算符用 <code>space</code> 隔开</p>
-<pre><code>assign dout = dout_en ? result : NULL;
-</code></pre>
+<div class="highlight"><pre><span class="n">assign</span> <span class="n">dout</span> <span class="o">=</span> <span class="n">dout_en</span> <span class="o">?</span> <span class="n">result</span> <span class="o">:</span> <span class="nb">NULL</span><span class="p">;</span>
+</pre></div>
+
+
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="comments">comments</h3>
+<h3>comments</h3>
 <p>采用英文，合理注释。修改代码一定要注释，添加 Revision 信息 。</p>
 <p><br></p>
-<h2 id="_3">建议</h2>
+<h2>建议</h2>
 <hr />
 <p><strong>开发工具：</strong></p>
 <ul>
@@ -474,8 +646,8 @@ output [7:0]   dout;
         <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
     </ul>
 </section>
     <hr />

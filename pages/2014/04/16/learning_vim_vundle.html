@@ -116,14 +116,14 @@
                 </div>
                 <p>学习 Vim，使用 Vundle 管理插件 。</p>
 <p><br></p>
-<h2 id="vim">Vim 插件</h2>
+<h2>Vim 插件</h2>
 <hr />
 <p>Vim 的强大之处在于它的可扩展性，你可以把它当作一个简单的文本编辑器，也可以安装各种功能强大的插件，把它武装成一个 IDE 。</p>
 <p>我们可以从以下几个地方找到 Vim 插件，一般比较常用的插件从官网上都可以找到，还有一些插件是大神们自己写的，托管在 GitHub 上 。</p>
 <p><a href="http://www.vim.org/scripts/script_search_results.php">Vim 官网</a></p>
 <p><a href="https://github.com/">GitHub</a></p>
 <p><br></p>
-<h2 id="vundle">什么是 Vundle</h2>
+<h2>什么是 Vundle</h2>
 <hr />
 <p>Vim 的插件虽然强大，但是因为 Vim 根本就没有插件管理这个概念，所有插件的文件都散布在~/.vim下的几个文件夹中，配置 vim 的过程, 就是在网上不停的搜插件，拷贝到 <code>~/.vim</code> 下，发现更新，要重新下载重新拷贝，想要删除某个不需要插件，更是要小心翼翼的不要删错。配置出顺手的 Vim, 需要极大的耐心和运气，而且如果换一台电脑，就要重复一次这样的痛苦经历 。</p>
 <p>自然地，因为管理插件的需求，最早出现了一些管理插件的脚本，但是写脚本需要一定的 shell 知识，直接 copy 别人的自己并不一定适用 。后来，出现了一些插件，比如 pathogen，muzuiget，vim-flavor，Vundle 等 。</p>
@@ -153,60 +153,64 @@
 </li>
 </ul>
 <p><br></p>
-<h2 id="vundle_1">如何使用 Vundle 管理插件</h2>
+<h2>如何使用 Vundle 管理插件</h2>
 <hr />
-<h3 id="vundle_2">安装 Vundle</h3>
+<h3>安装 Vundle</h3>
 <p>Vundle 的安装需要 <a href="http://git-scm.com/">Git</a> 。</p>
 <p>从 GitHub 上 clone 下来就可以了</p>
-<pre><code>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-</code></pre>
-<h3 id="vundle_3">配置 Vundle</h3>
+<div class="highlight"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/gmarik/vundle.git ~/.vim/bundle/vundle</span>
+</pre></div>
+
+
+<h3>配置 Vundle</h3>
 <p>将下列内容加入到 <code>.vimrc</code> 文件中</p>
-<pre><code>set nocompatible              " be iMproved, required
-filetype off                  " required
+<div class="highlight"><pre><span class="n">set</span> <span class="n">nocompatible</span>              <span class="s">&quot; be iMproved, required</span>
+<span class="n">filetype</span> <span class="n">off</span>                  <span class="s">&quot; required</span>
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-" alternatively, pass a path where Vundle should install plugins
-"let path = '~/some/path/here'
-"call vundle#rc(path)
+<span class="s">&quot; set the runtime path to include Vundle and initialize</span>
+<span class="n">set</span> <span class="n">rtp</span><span class="o">+=~/</span><span class="p">.</span><span class="n">vim</span><span class="o">/</span><span class="n">bundle</span><span class="o">/</span><span class="n">vundle</span><span class="o">/</span>
+<span class="n">call</span> <span class="n">vundle</span><span class="err">#</span><span class="n">rc</span><span class="p">()</span>
+<span class="s">&quot; alternatively, pass a path where Vundle should install plugins</span>
+<span class="s">&quot;let path = &#39;~/some/path/here&#39;</span>
+<span class="s">&quot;call vundle#rc(path)</span>
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/vundle'
-" The following are examples of different formats supported.
+<span class="s">&quot; let Vundle manage Vundle, required</span>
+<span class="n">Plugin</span> <span class="err">&#39;</span><span class="n">gmarik</span><span class="o">/</span><span class="n">vundle</span><span class="err">&#39;</span>
+<span class="s">&quot; The following are examples of different formats supported.</span>
 
-" Keep Plugin commands between here and filetype plugin indent on.
-" scripts on GitHub repos
-Plugin 'tpope/vim-fugitive'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'tpope/vim-rails.git'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" scripts from http://vim-scripts.org/vim/scripts.html
-Plugin 'L9'
-Plugin 'FuzzyFinder'
-" scripts not on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-Plugin 'file:///home/gmarik/path/to/plugin'
-" ...
+<span class="s">&quot; Keep Plugin commands between here and filetype plugin indent on.</span>
+<span class="s">&quot; scripts on GitHub repos</span>
+<span class="n">Plugin</span> <span class="err">&#39;</span><span class="n">tpope</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">fugitive</span><span class="err">&#39;</span>
+<span class="n">Plugin</span> <span class="err">&#39;</span><span class="n">Lokaltog</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">easymotion</span><span class="err">&#39;</span>
+<span class="n">Plugin</span> <span class="err">&#39;</span><span class="n">tpope</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">rails</span><span class="p">.</span><span class="n">git</span><span class="err">&#39;</span>
+<span class="s">&quot; The sparkup vim script is in a subdirectory of this repo called vim.</span>
+<span class="s">&quot; Pass the path to set the runtimepath properly.</span>
+<span class="n">Plugin</span> <span class="err">&#39;</span><span class="n">rstacruz</span><span class="o">/</span><span class="n">sparkup</span><span class="err">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="err">&#39;</span><span class="n">rtp</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">vim</span><span class="o">/</span><span class="err">&#39;</span><span class="p">}</span>
+<span class="s">&quot; scripts from http://vim-scripts.org/vim/scripts.html</span>
+<span class="n">Plugin</span> <span class="err">&#39;</span><span class="n">L9</span><span class="err">&#39;</span>
+<span class="n">Plugin</span> <span class="err">&#39;</span><span class="n">FuzzyFinder</span><span class="err">&#39;</span>
+<span class="s">&quot; scripts not on GitHub</span>
+<span class="n">Plugin</span> <span class="err">&#39;</span><span class="n">git</span><span class="o">:</span><span class="c1">//git.wincent.com/command-t.git&#39;</span>
+<span class="s">&quot; git repos on your local machine (i.e. when working on your own plugin)</span>
+<span class="n">Plugin</span> <span class="err">&#39;</span><span class="n">file</span><span class="o">:</span><span class="c1">///home/gmarik/path/to/plugin&#39;</span>
+<span class="s">&quot; ...</span>
 
-filetype plugin indent on     " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList          - list configured plugins
-" :PluginInstall(!)    - install (update) plugins
-" :PluginSearch(!) foo - search (or refresh cache first) for foo
-" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Plugin commands are not allowed.
-" Put your stuff after this line
-</code></pre>
+<span class="n">filetype</span> <span class="n">plugin</span> <span class="n">indent</span> <span class="n">on</span>     <span class="s">&quot; required</span>
+<span class="s">&quot; To ignore plugin indent changes, instead use:</span>
+<span class="s">&quot;filetype plugin on</span>
+<span class="s">&quot;</span>
+<span class="s">&quot; Brief help</span>
+<span class="s">&quot; :PluginList          - list configured plugins</span>
+<span class="s">&quot; :PluginInstall(!)    - install (update) plugins</span>
+<span class="s">&quot; :PluginSearch(!) foo - search (or refresh cache first) for foo</span>
+<span class="s">&quot; :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins</span>
+<span class="s">&quot;</span>
+<span class="s">&quot; see :h vundle for more details or wiki for FAQ</span>
+<span class="s">&quot; NOTE: comments after Plugin commands are not allowed.</span>
+<span class="s">&quot; Put your stuff after this line</span>
+</pre></div>
+
+
 <p>从上面的配置文件中可以看到，Vundle 把插件分为了 3 类：</p>
 <ol>
 <li>
@@ -222,65 +226,77 @@ filetype plugin indent on     " required
 <p>不是 GitHub 上的脚本，需要写出插件的详细路径</p>
 </li>
 </ol>
-<h3 id="vundle_4">运行 Vundle</h3>
+<h3>运行 Vundle</h3>
 <p>修改好 <code>.vimrc</code> 文件后，打开 Vim，使用以下命令管理插件</p>
 <ul>
 <li>
 <p>列表</p>
-<pre><code>:Bundles    // 列出所有插件（包括未安装的）
-:BundleList // 列出已安装的插件
-</code></pre>
+<div class="highlight"><pre><span class="o">:</span><span class="n">Bundles</span>    <span class="c1">// 列出所有插件（包括未安装的）</span>
+<span class="o">:</span><span class="n">BundleList</span> <span class="c1">// 列出已安装的插件</span>
+</pre></div>
+
+
 </li>
 <li>
 <p>安装</p>
-<pre><code>:BundleInstall
-</code></pre>
+<div class="highlight"><pre><span class="o">:</span><span class="n">BundleInstall</span>
+</pre></div>
+
+
 </li>
 <li>
 <p>搜索</p>
-<pre><code>:BundleSearch   // 后面不接插件名时，同 Bundles，列出了 4000 个插件
-</code></pre>
+<div class="highlight"><pre><span class="o">:</span><span class="n">BundleSearch</span>   <span class="c1">// 后面不接插件名时，同 Bundles，列出了 4000 个插件</span>
+</pre></div>
+
+
 </li>
 <li>
 <p>更新</p>
-<pre><code>:BundleInstall!
-</code></pre>
+<div class="highlight"><pre><span class="o">:</span><span class="n">BundleInstall</span><span class="o">!</span>
+</pre></div>
+
+
 </li>
 <li>
 <p>删除</p>
 <p>在 <code>.vimrc</code> 文件中删除/注释掉相应的插件名，然后输入命令</p>
-<pre><code>:BundleClean
-</code></pre>
+<div class="highlight"><pre><span class="o">:</span><span class="n">BundleClean</span>
+</pre></div>
+
+
 </li>
 </ul>
 <p><br></p>
 <p><strong> P.S. 我安装的插件</strong></p>
 <p>列出一些我安装的插件，这些插件都是大家比较常用的，可以从相关的网站或者帮助文档中找到使用说明或者 <code>README</code>，计划在后续中写一写使用心得～</p>
-<pre><code>Bundle 'taglist.vim'
-Bundle 'The-NERD-tree'
-Bundle 'SuperTab'
-Bundle 'snipMate'
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle 'bufexplorer.zip'
-Bundle 'winmanager'
-Bundle 'a.vim'
-Bundle 'c.vim'
-Bundle 'Markdown'
-Bundle 'Conque-Shell'
-Bundle 'vimwiki'
-Bundle 'genutils'
-Bundle 'lookupfile'
-Bundle 'DoxygenToolkit.vim'
-"Bundle 'ManPageView'
-Bundle 'calendar.vim'
-Bundle 'AutoClose'
-"scripts on GitHub repos
-Bundle 'suan/vim-instant-markdown'
-Bundle 'godlygeek/tabular'
-</code></pre>
+<div class="highlight"><pre><span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">taglist</span><span class="p">.</span><span class="n">vim</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">The</span><span class="o">-</span><span class="n">NERD</span><span class="o">-</span><span class="n">tree</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">SuperTab</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">snipMate</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">L9</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">FuzzyFinder</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">bufexplorer</span><span class="p">.</span><span class="n">zip</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">winmanager</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">a</span><span class="p">.</span><span class="n">vim</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">c</span><span class="p">.</span><span class="n">vim</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">Markdown</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">Conque</span><span class="o">-</span><span class="n">Shell</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">vimwiki</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">genutils</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">lookupfile</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">DoxygenToolkit</span><span class="p">.</span><span class="n">vim</span><span class="err">&#39;</span>
+<span class="s">&quot;Bundle &#39;ManPageView&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">calendar</span><span class="p">.</span><span class="n">vim</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">AutoClose</span><span class="err">&#39;</span>
+<span class="s">&quot;scripts on GitHub repos</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">suan</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">instant</span><span class="o">-</span><span class="n">markdown</span><span class="err">&#39;</span>
+<span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">godlygeek</span><span class="o">/</span><span class="n">tabular</span><span class="err">&#39;</span>
+</pre></div>
+
+
 <p><br></p>
-<h2 id="_1">参考</h2>
+<h2>参考</h2>
 <p><a href="http://zuyunfei.com/2013/04/12/killer-plugin-of-vim-vundle/">vim中的杀手级插件: vundle</a></p>
 <p><a href="http://www.zfanw.com/blog/vundle-vim-plugin-management.html">Vundle 管理 Vim 插件</a></p>
             </div>
@@ -291,8 +307,8 @@ Bundle 'godlygeek/tabular'
         <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/13/learning_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/04/learning_linux_ssh.html">学习 Linux SSH</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/21/learning_linux_package_management.html">学习 Linux 软件包依赖管理</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/12/learning_yocto_from_zero_1_getting_started.html">Yocto 从零单排 1 —— 入门</a></li>
     </ul>
 </section>
     <hr />
