@@ -37,6 +37,7 @@ Verilog 的参数化建模是有一定限制的，它的参数值是编译时计
 
 ``define` 是编译器指令，功能是全局宏定义的文本代替。它类似于 C 语言中的 `#define`，用法如下：
 
+    #!verilog
     // define
     `define     WORD_REG    reg     [31:0]
     
@@ -57,6 +58,7 @@ Verilog 的参数化建模是有一定限制的，它的参数值是编译时计
 
 2. 对于第二个问题，和 C++ 类似，头文件应该使用头文件保护符。
 
+        #!verilog
         // global_define.vh head file
         `ifndef GLOBAL_DEFINE_VH
             `define     MAX = 8
@@ -81,6 +83,7 @@ Verilog 的参数化建模是有一定限制的，它的参数值是编译时计
 
 应该避免硬编码设计 `hard literal`，使用参数 `parameter` 来代替。举个例子
 
+    #!verilog
     // use parameter
     parameter   SIZE = 8,
                 MAX = 10;
@@ -96,6 +99,7 @@ Verilog-2001 中添加了一个新的关键字 `localparam`，用来定义模块
 
 虽然 localparam 不能被外部模块修改，但是它可以用 parameter 来初始化。
 
+    #!verilog
     parameter  N = 8;
     localparam N1 = N - 1;
 
@@ -114,6 +118,7 @@ Verilog-2001 中添加了一个新的关键字 `localparam`，用来定义模块
 
 举个栗子，模块 myreg
 
+    #!verilog
     module myreg (q, d, clk, rst);
         parameter   Trst = 1,
                     Tclk = 1,
@@ -123,6 +128,7 @@ Verilog-2001 中添加了一个新的关键字 `localparam`，用来定义模块
     
 在上一层的模块中传递参数例化这个模块
 
+    #!verilog
     module  bad_warpper (q, d, clk, rst)
         // legal parameter passing
         myreg   #(1, 1, 8) r1(.q(q), .d(d), .clk(clk), .rst(rst) );
@@ -142,10 +148,12 @@ Verilog-2001 中添加了一个新的关键字 `localparam`，用来定义模块
 
 **Syntax**
 
+    #!verilog
     defparam path.name = value;
     
 比如在上面的例子中
 
+    #!verilog
     defparam    r1.SIZE = 8;
 
 **Pro**
@@ -184,6 +192,7 @@ the IEEE Verilog-2001 standard."
 
 类似于模块例化时端口连接的方式，比如上例中只想改变 SIZE 的值
 
+    #!verilog
     myreg   #(.SIZE(8)) r1(.q(q), .d(d), .clk(clk), .rst(rst) );
 
 **Pro**
@@ -227,6 +236,7 @@ Verilog 的条件编译和 C 也十分类似。前面介绍 define 时，已经�
 
 **Syntax**
 
+    #!verilog
     // example1
     `ifdef text_macro
         // do something
@@ -259,6 +269,7 @@ Verilog 的条件编译和 C 也十分类似。前面介绍 define 时，已经�
 
 举个栗子，比如我们写了一个程序，在 debug 阶段，在程序中添加了很多显示中间变量的语句，到最后 release 时，当然要去掉这些语句。最差的方法当然是删掉这些代码，但是如果以后我们还想 debug 时，又得手动写，而且时间长了，我们自己都记不清该加哪些语句了。稍微好点的方法是把它们注释起来，但是同样，时间长了，哪些该注释，那些不该注释又混淆了。最好的方法就是用条件编译。我们可以定义一个宏 DEBUG
 
+    #!verilog
     `define DEBUG
     
     // conditional compilation

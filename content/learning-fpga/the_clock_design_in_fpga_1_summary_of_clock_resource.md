@@ -208,9 +208,9 @@ Xilinx 芯片全局时钟资源的使用方法主要有 5 种：
     可以在约束编辑器中的专用约束Misc选项中，指定所选信号使用低抖动延迟资源“Low Skew”来指定，也可以在ucf文件中添加“USELOWSKEWLINES"约束命令。
     
         #!verilog
-        NET “s1" USELOWSKEWLINES;
-        NET “s2" USELOWSKEWLINES;
-        NET “s3" USELOWSKEWLINES;
+        NET "s1" USELOWSKEWLINES;
+        NET "s2" USELOWSKEWLINES;
+        NET "s3" USELOWSKEWLINES;
 
 <br>
 
