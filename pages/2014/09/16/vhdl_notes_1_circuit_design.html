@@ -125,10 +125,11 @@
 </li>
 <li>
 <p>Library 用来设计重用和代码共享，使代码结构更清晰</p>
-<div class="highlight"><pre><span class="n">LIBRARY</span> <span class="n">library_name</span><span class="p">;</span>
-<span class="n">USE</span> <span class="n">library_name</span><span class="p">.</span><span class="n">package_name</span><span class="p">.</span><span class="n">package_parts</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">LIBRARY</span> <span class="nn">library_name</span><span class="p">;</span>
+<span class="k">USE</span> <span class="nn">library_name.package_name.package_parts</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <ul>
 <li>
@@ -141,14 +142,19 @@
 </li>
 <li>
 <p>Entity 描述电路的输入/输出引脚</p>
-<div class="highlight"><pre><span class="n">ENTITY</span> <span class="n">entity_name</span> <span class="n">IS</span>
-    <span class="n">PORT</span> <span class="p">(</span>
-        <span class="nl">port_name:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
-        <span class="nl">port_name:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">ENTITY</span> <span class="nc">entity_name</span> <span class="k">IS</span>
+    <span class="k">PORT</span> <span class="p">(</span>
+        <span class="n">port_name</span><span class="o">:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
+        <span class="n">port_name</span><span class="o">:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
         <span class="p">...);</span>
-<span class="n">END</span> <span class="n">entity_name</span><span class="p">;</span>
+<span class="k">END</span> <span class="nc">entity_name</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <ul>
 <li>
@@ -184,24 +190,24 @@
 <h2>Data Types</h2>
 <hr />
 <p>前面的 Entity 中的端口定义：</p>
-<div class="highlight"><pre><span class="n">port_name</span><span class="o">:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="o">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">port_name</span><span class="o">:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>还有其它地方声明的信号 <code>signal</code> :</p>
-<div class="highlight"><pre><span class="n">signal</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="p">[</span><span class="n">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">signal</span> <span class="n">name</span> <span class="o">:</span> <span class="k">type</span> <span class="p">[</span><span class="k">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>还有 常量 <code>constant</code> 声明：</p>
-<div class="highlight"><pre><span class="n">constant</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="o">:=</span> <span class="n">value</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">constant</span> <span class="n">name</span> <span class="o">:</span> <span class="k">type</span> <span class="o">:=</span> <span class="n">value</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>还有 变量 <code>variable</code> 声明：</p>
-<div class="highlight"><pre><span class="n">variable</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="p">[</span><span class="n">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">variable</span> <span class="n">name</span> <span class="o">:</span> <span class="k">type</span> <span class="p">[</span><span class="k">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>这些声明中都包含了数据类型字段。一个信号/常量/变量的数据类型决定了它能取到什么样的值，还有可以进行什么样的操作。</p>
 <h3>Pre-defined Data Types</h3>
@@ -222,13 +228,17 @@
 </ul>
 <h4><code>bit</code> &amp; <code>bit_vector</code></h4>
 <ul>
-<li>用 '0' 和 '1' 赋值<div class="highlight"><pre><span class="n">signal</span> <span class="n">x</span> <span class="o">:</span> <span class="n">bit</span><span class="p">;</span>
-<span class="n">signal</span> <span class="n">y</span> <span class="o">:</span> <span class="n">bit_vector</span> <span class="p">(</span><span class="mi">3</span> <span class="n">downto</span> <span class="mi">0</span><span class="p">);</span>
+<li>用 '0' 和 '1' 赋值<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">signal</span> <span class="n">x</span> <span class="o">:</span> <span class="kt">bit</span><span class="p">;</span>
+<span class="k">signal</span> <span class="n">y</span> <span class="o">:</span> <span class="kt">bit_vector</span> <span class="p">(</span><span class="mi">3</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
 
 <span class="n">x</span> <span class="o">&lt;=</span> <span class="sc">&#39;1&#39;</span><span class="p">;</span>
 <span class="n">y</span> <span class="o">&lt;=</span> <span class="s">&quot;0011&quot;</span>
 </pre></div>
-
+</td></tr></table>
 
 </li>
 </ul>
@@ -284,20 +294,26 @@
 </li>
 </ul>
 <h3>User-defined Data Types</h3>
-<div class="highlight"><pre><span class="o">--</span> <span class="n">integer</span>
-<span class="n">TYPE</span> <span class="n">student_grade</span> <span class="n">IS</span> <span class="n">RANGE</span> <span class="mi">0</span> <span class="n">TO</span> <span class="mi">100</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">-- integer</span>
+<span class="k">TYPE</span> <span class="n">student_grade</span> <span class="k">IS</span> <span class="k">RANGE</span> <span class="mi">0</span> <span class="k">TO</span> <span class="mi">100</span><span class="p">;</span>
 
-<span class="o">--</span> <span class="n">enumerated</span>
-<span class="n">TYPE</span> <span class="n">state</span> <span class="n">IS</span> <span class="p">(</span><span class="n">idle</span><span class="p">,</span> <span class="n">forward</span><span class="p">,</span> <span class="n">backward</span><span class="p">,</span> <span class="n">stop</span><span class="p">);</span>
-<span class="n">TYPE</span> <span class="n">color</span> <span class="nf">IS</span> <span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">,</span> <span class="n">white</span><span class="p">);</span>
+<span class="c1">-- enumerated</span>
+<span class="k">TYPE</span> <span class="n">state</span> <span class="k">IS</span> <span class="p">(</span><span class="n">idle</span><span class="p">,</span> <span class="n">forward</span><span class="p">,</span> <span class="n">backward</span><span class="p">,</span> <span class="n">stop</span><span class="p">);</span>
+<span class="k">TYPE</span> <span class="n">color</span> <span class="k">IS</span> <span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">,</span> <span class="n">white</span><span class="p">);</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3>Subtypes</h3>
-<div class="highlight"><pre><span class="n">SUBTYPE</span> <span class="n">my_color</span> <span class="n">IS</span> <span class="n">color</span> <span class="n">RANGE</span> <span class="n">red</span> <span class="n">TO</span> <span class="n">blue</span><span class="p">;</span>
-<span class="o">--</span> <span class="n">my_color</span> <span class="o">=</span> <span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">);</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">SUBTYPE</span> <span class="n">my_color</span> <span class="k">IS</span> <span class="n">color</span> <span class="k">RANGE</span> <span class="n">red</span> <span class="k">TO</span> <span class="n">blue</span><span class="p">;</span>
+<span class="c1">-- my_color = (red, green, blue);</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3>Arrays</h3>
 <ul>
@@ -317,19 +333,22 @@
 </li>
 <li>
 <p>syntax:</p>
-<div class="highlight"><pre> <span class="n">TYPE</span> <span class="n">type_name</span> <span class="n">IS</span> <span class="n">ARRAY</span> <span class="p">(</span><span class="n">specification</span><span class="p">)</span> <span class="n">OF</span> <span class="n">data_type</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre> <span class="k">TYPE</span> <span class="n">type_name</span> <span class="k">IS</span> <span class="k">ARRAY</span> <span class="p">(</span><span class="n">specification</span><span class="p">)</span> <span class="k">OF</span> <span class="n">data_type</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 </li>
 <li>
 <p>example:</p>
-<div class="highlight"><pre><span class="o">--</span><span class="mi">1</span><span class="n">D</span> <span class="n">array</span>
-<span class="n">TYPE</span> <span class="n">matrix</span> <span class="n">IS</span> <span class="n">ARRAY</span> <span class="p">(</span><span class="mi">0</span> <span class="n">TO</span> <span class="mi">3</span><span class="p">)</span> <span class="n">OF</span> <span class="n">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">7</span> <span class="n">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
-<span class="o">--</span><span class="mi">2</span><span class="n">D</span> <span class="n">array</span>
-<span class="n">TYPE</span> <span class="n">matrix2D</span> <span class="n">IS</span> <span class="n">ARRAY</span> <span class="p">(</span><span class="mi">0</span> <span class="n">TO</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span> <span class="n">DOWNTO</span> <span class="mi">0</span><span class="p">)</span> <span class="n">OF</span> <span class="n">STD_LOGIC</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">--1D array</span>
+<span class="k">TYPE</span> <span class="n">matrix</span> <span class="k">IS</span> <span class="k">ARRAY</span> <span class="p">(</span><span class="mi">0</span> <span class="k">TO</span> <span class="mi">3</span><span class="p">)</span> <span class="k">OF</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">7</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">);</span>
+<span class="c1">--2D array</span>
+<span class="k">TYPE</span> <span class="n">matrix2D</span> <span class="k">IS</span> <span class="k">ARRAY</span> <span class="p">(</span><span class="mi">0</span> <span class="k">TO</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">)</span> <span class="k">OF</span> <span class="kt">STD_LOGIC</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 </li>
 </ul>
@@ -342,12 +361,15 @@
 </li>
 <li>
 <p>只有先声明使用这个库下的包，才能在代码中使用 signed/unsigned</p>
-<div class="highlight"><pre><span class="n">use</span> <span class="n">ieee</span><span class="p">.</span><span class="n">std_logic_arith</span><span class="p">.</span><span class="n">all</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">use</span> <span class="nn">ieee.std_logic_arith.all</span><span class="p">;</span>
 
-<span class="n">signal</span> <span class="n">x</span> <span class="nf">signed</span> <span class="p">(</span><span class="mi">7</span> <span class="n">downto</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">signal</span> <span class="n">y</span> <span class="nf">unsigned</span> <span class="p">(</span><span class="mi">0</span> <span class="n">to</span> <span class="mi">3</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">x</span> <span class="n">signed</span> <span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">y</span> <span class="n">unsigned</span> <span class="p">(</span><span class="mi">0</span> <span class="k">to</span> <span class="mi">3</span><span class="p">);</span>
 </pre></div>
-
+</td></tr></table>
 
 </li>
 <li>
@@ -355,17 +377,25 @@
 </li>
 <li>
 <p>如果信号的类型只能是 std_logic_vector，那么通过其他方法也是可以进行算术运算的，解决方案就是声明使用 <code>ieee</code> 的 <code>std_logic_unsigned</code> 和 <code>std_logic_signed</code> 两个包集，声明之后，std_logic_vector 就可以像 signed/unsigned 一样进行算术运算了。</p>
-<div class="highlight"><pre><span class="n">use</span> <span class="n">ieee</span><span class="p">.</span><span class="n">std_logic_signed</span><span class="p">.</span><span class="n">all</span><span class="p">;</span>
-<span class="o">--</span> <span class="n">use</span> <span class="n">ieee</span><span class="p">.</span><span class="n">std_logic_unsigned</span><span class="p">.</span><span class="n">all</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">use</span> <span class="nn">ieee.std_logic_signed.all</span><span class="p">;</span>
+<span class="c1">-- use ieee.std_logic_unsigned.all;</span>
 
-<span class="n">signal</span> <span class="n">a</span> <span class="n">in</span> <span class="nf">std_logic_vector</span> <span class="p">(</span><span class="mi">7</span> <span class="n">downto</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">signal</span> <span class="n">b</span> <span class="n">in</span> <span class="nf">std_logic_vector</span> <span class="p">(</span><span class="mi">7</span> <span class="n">downto</span> <span class="mi">0</span><span class="p">);</span>
-<span class="n">signal</span> <span class="n">x</span> <span class="n">out</span> <span class="nf">std_logic_vector</span> <span class="p">(</span><span class="mi">7</span> <span class="n">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">a</span> <span class="k">in</span> <span class="kt">std_logic_vector</span> <span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">b</span> <span class="k">in</span> <span class="kt">std_logic_vector</span> <span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span> <span class="n">x</span> <span class="k">out</span> <span class="kt">std_logic_vector</span> <span class="p">(</span><span class="mi">7</span> <span class="k">downto</span> <span class="mi">0</span><span class="p">);</span>
 
-<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>     <span class="o">--</span><span class="n">legal</span><span class="p">,</span> <span class="n">arithmetic</span>
-<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="n">and</span> <span class="n">b</span><span class="p">;</span>   <span class="o">--</span><span class="n">legal</span><span class="p">,</span> <span class="n">logiccal</span>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>     <span class="c1">--legal, arithmetic</span>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="k">and</span> <span class="n">b</span><span class="p">;</span>   <span class="c1">--legal, logiccal</span>
 </pre></div>
-
+</td></tr></table>
 
 <ul>
 <li>需要注意的是，这两个包不能同时存在于同一份代码中，因为这样会引入二义性。比如上面例子中的 “+” 运算，如果我们同时包含了这两个包集，那么编译器不知道我们定义的运算到底应该重载哪一个，综合时会报错。</li>
@@ -495,18 +525,22 @@
 <h4>User-defined</h4>
 <p>也可以用户自己定义一个新的属性，并描述某个对象的这个属性的值是多少，之后就可以使用这个属性了。</p>
 <p><strong>syntax</strong></p>
-<div class="highlight"><pre><span class="n">ATTRIBUTE</span> <span class="n">attribute_name</span><span class="o">:</span> <span class="n">attribute_type</span><span class="p">;</span>  <span class="o">--</span> <span class="n">declaration</span>
-<span class="n">ATTIRBUTE</span> <span class="n">attribute_name</span> <span class="n">OF</span> <span class="n">target_name</span><span class="o">:</span> <span class="n">class</span> <span class="n">IS</span> <span class="n">value</span><span class="p">;</span>  <span class="o">--</span> <span class="n">specification</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">ATTRIBUTE</span> <span class="n">attribute_name</span><span class="o">:</span> <span class="n">attribute_type</span><span class="p">;</span>  <span class="c1">-- declaration</span>
+<span class="n">ATTIRBUTE</span> <span class="n">attribute_name</span> <span class="k">OF</span> <span class="n">target_name</span><span class="o">:</span> <span class="n">class</span> <span class="k">IS</span> <span class="n">value</span><span class="p">;</span>  <span class="c1">-- specification</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>example：</p>
-<div class="highlight"><pre><span class="n">ATTRIBUTE</span> <span class="n">number_of_inputs</span><span class="o">:</span> <span class="n">INTEGER</span><span class="p">;</span>
-<span class="n">ATTRIBUTE</span> <span class="n">number_of_inputs</span> <span class="n">OF</span> <span class="n">nand3</span><span class="o">:</span> <span class="n">SIGNAL</span> <span class="n">IS</span> <span class="mi">3</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">ATTRIBUTE</span> <span class="n">number_of_inputs</span><span class="o">:</span> <span class="kt">INTEGER</span><span class="p">;</span>
+<span class="k">ATTRIBUTE</span> <span class="n">number_of_inputs</span> <span class="k">OF</span> <span class="n">nand3</span><span class="o">:</span> <span class="k">SIGNAL</span> <span class="k">IS</span> <span class="mi">3</span><span class="p">;</span>
 
-<span class="n">input</span> <span class="o">&lt;=</span> <span class="n">nand3</span><span class="err">&#39;</span><span class="n">number_of_inputs</span><span class="p">;</span>
+<span class="n">input</span> <span class="o">&lt;=</span> <span class="n">nand3</span><span class="na">&#39;number_of_inputs</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>首先定义了一个新的属性，名字叫 <code>number_of_inputs</code>，表示输入端口的个数，然后针对对象 nand3 (3输入的与非门) 这个对象，描述它的这个属性的类型为 signal 类型，取值为 3；最后，使用这个属性，将 nand3 的这个属性的值赋值给 input 对象。</p>
 <h3>Operator Overloading</h3>
@@ -515,17 +549,20 @@
 <h3>GENERIC</h3>
 <p><code>generic</code> 必须在 ENTITY 中声明，它可以指定常规参数，所指定的参数是<strong>静态的</strong>，<strong>全局的</strong>。感觉类似于 Verilog 中的 <code>define</code> 吧，但是显然 Verilog 中的 <code>parameter</code> 是更好的设计，因为全局变量/常量很不安全。</p>
 <p><strong>syntax</strong></p>
-<div class="highlight"><pre><span class="n">GENERIC</span> <span class="p">(</span><span class="n">parameter_name</span><span class="o">:</span> <span class="n">parameter_type</span> <span class="o">:=</span> <span class="n">parameter_value</span><span class="p">);</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">GENERIC</span> <span class="p">(</span><span class="n">parameter_name</span><span class="o">:</span> <span class="n">parameter_type</span> <span class="o">:=</span> <span class="n">parameter_value</span><span class="p">);</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>example</strong></p>
-<div class="highlight"><pre><span class="n">ENTITY</span> <span class="n">my_entity</span> <span class="n">IS</span>
-    <span class="nf">GENERIC</span> <span class="p">(</span><span class="n">n</span><span class="o">:</span> <span class="n">INTEGER</span> <span class="o">:=</span> <span class="mi">8</span><span class="p">);</span>
-    <span class="n">PORT</span> <span class="p">(...);</span>
-<span class="n">END</span> <span class="n">my_entity</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">ENTITY</span> <span class="nc">my_entity</span> <span class="k">IS</span>
+    <span class="k">GENERIC</span> <span class="p">(</span><span class="n">n</span><span class="o">:</span> <span class="kt">INTEGER</span> <span class="o">:=</span> <span class="mi">8</span><span class="p">);</span>
+    <span class="k">PORT</span> <span class="p">(...);</span>
+<span class="k">END</span> <span class="nc">my_entity</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><br></p>
 <h2>Concurrent Code</h2>
@@ -549,19 +586,24 @@
 <p>仔细观察可以发现，其实 when, generate, block 语句和预算语句相比，只是添加了一些条件判断，它们主要的核心还是运算操作符组成的运算，所以，并行代码的核心就是这些并行的运算语句。</p>
 <h3><code>when</code></h3>
 <p><strong>When/else syntax:</strong></p>
-<div class="highlight"><pre><span class="n">assignment</span> <span class="n">WHEN</span> <span class="n">condition</span> <span class="n">ELSE</span>
-<span class="n">assignment</span> <span class="n">WHEN</span> <span class="n">condition</span> <span class="n">ELSE</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">assignment</span> <span class="k">WHEN</span> <span class="n">condition</span> <span class="k">ELSE</span>
+<span class="n">assignment</span> <span class="k">WHEN</span> <span class="n">condition</span> <span class="k">ELSE</span>
 <span class="p">...;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>with/select/when syntax:</strong></p>
-<div class="highlight"><pre><span class="n">WITH</span> <span class="n">identifier</span> <span class="n">SELECT</span>
-<span class="n">assignment</span> <span class="n">WHEN</span> <span class="n">value</span><span class="p">,</span>
-<span class="n">assignment</span> <span class="n">WHEN</span> <span class="n">value</span><span class="p">,</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">WITH</span> <span class="n">identifier</span> <span class="k">SELECT</span>
+<span class="n">assignment</span> <span class="k">WHEN</span> <span class="n">value</span><span class="p">,</span>
+<span class="n">assignment</span> <span class="k">WHEN</span> <span class="n">value</span><span class="p">,</span>
 <span class="p">...;</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3><code>generate</code></h3>
 <p>功能类似于 Verilog HDL 中的 generate，它常和 for/if 一起使用。
@@ -572,24 +614,32 @@
 <p><strong>simple block</strong></p>
 <p>simple block 只是对原有代码进行了区域分割，目的也仅仅是为了增强代码的可读性和可维护性。</p>
 <p>syntax:</p>
-<div class="highlight"><pre><span class="nl">label:</span> <span class="n">BLOCK</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">label</span><span class="o">:</span> <span class="k">BLOCK</span>
     <span class="p">[</span><span class="n">declarative</span> <span class="n">part</span><span class="p">]</span>
-<span class="n">BEGIN</span>
+<span class="k">BEGIN</span>
     <span class="p">(</span><span class="n">concurrent</span> <span class="n">statement</span><span class="p">)</span>
-<span class="n">END</span> <span class="n">BLOCK</span> <span class="n">label</span><span class="p">;</span>
+<span class="k">END</span> <span class="k">BLOCK</span> <span class="k">label</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>guarded block</strong></p>
 <p>guarder block 是一种特殊的 block，它比 simple block 多了一个表达式，叫做 <code>guard expression</code>，只有当这个表达式为 True 时，这个 block 才会执行。</p>
 <p>syntax:</p>
-<div class="highlight"><pre><span class="nl">label:</span> <span class="n">BLOCK</span> <span class="p">(</span><span class="n">guard</span> <span class="n">expression</span><span class="p">)</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">label</span><span class="o">:</span> <span class="k">BLOCK</span> <span class="p">(</span><span class="n">guard</span> <span class="n">expression</span><span class="p">)</span>
     <span class="p">[</span><span class="n">declarative</span> <span class="n">part</span><span class="p">]</span>
-<span class="n">BEGIN</span>
-    <span class="p">(</span><span class="n">concurrent</span> <span class="n">guarded</span> <span class="n">and</span> <span class="n">unguarded</span> <span class="n">statements</span><span class="p">)</span>
-<span class="n">END</span> <span class="n">BLOCK</span> <span class="n">label</span><span class="p">;</span>
+<span class="k">BEGIN</span>
+    <span class="p">(</span><span class="n">concurrent</span> <span class="k">guarded</span> <span class="k">and</span> <span class="n">unguarded</span> <span class="n">statements</span><span class="p">)</span>
+<span class="k">END</span> <span class="k">BLOCK</span> <span class="k">label</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><br></p>
 <h2>Sequential Code</h2>
@@ -601,76 +651,92 @@
 <h3><code>process</code></h3>
 <p>作用类似于 Verilog HDL 中的 always 语句。</p>
 <p><strong>syntax</strong></p>
-<div class="highlight"><pre><span class="p">[</span><span class="n">lable</span><span class="o">:</span><span class="p">]</span> <span class="n">PROCESS</span> <span class="p">(</span><span class="n">sensitivity</span> <span class="n">list</span><span class="p">)</span>
-    <span class="p">[</span><span class="n">VARIABLE</span> <span class="n">name</span><span class="o">:</span> <span class="n">type</span> <span class="p">[</span><span class="n">range</span><span class="p">][</span> <span class="o">:=</span> <span class="n">initial_value</span><span class="p">;]]</span>
-<span class="n">BEGIN</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">[</span><span class="n">lable</span><span class="o">:</span><span class="p">]</span> <span class="k">PROCESS</span> <span class="p">(</span><span class="n">sensitivity</span> <span class="n">list</span><span class="p">)</span>
+    <span class="p">[</span><span class="k">VARIABLE</span> <span class="n">name</span><span class="o">:</span> <span class="k">type</span> <span class="p">[</span><span class="k">range</span><span class="p">][</span> <span class="o">:=</span> <span class="n">initial_value</span><span class="p">;]]</span>
+<span class="k">BEGIN</span>
     <span class="p">(</span><span class="n">sequential</span> <span class="n">code</span><span class="p">)</span>
-<span class="n">END</span> <span class="n">PROCESS</span> <span class="p">[</span><span class="n">label</span><span class="p">];</span>
+<span class="k">END</span> <span class="k">PROCESS</span> <span class="err">[</span><span class="k">label</span><span class="err">]</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3><code>if</code></h3>
 <p><strong>syntax</strong></p>
-<div class="highlight"><pre><span class="n">IF</span> <span class="n">conditions</span> <span class="n">THEN</span> <span class="n">assignments</span><span class="p">;</span>
-<span class="n">ELSIF</span> <span class="n">conditions</span> <span class="n">THEN</span> <span class="n">assignments</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">IF</span> <span class="n">conditions</span> <span class="k">THEN</span> <span class="n">assignments</span><span class="p">;</span>
+<span class="k">ELSIF</span> <span class="n">conditions</span> <span class="k">THEN</span> <span class="n">assignments</span><span class="p">;</span>
 <span class="p">...</span>
-<span class="n">ELSE</span> <span class="n">assignments</span><span class="p">;</span>
-<span class="n">END</span> <span class="n">IF</span><span class="p">;</span>
+<span class="k">ELSE</span> <span class="n">assignments</span><span class="p">;</span>
+<span class="k">END</span> <span class="k">IF</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3><code>wait</code></h3>
 <p>如果在 process 中使用了 wait 语句，那么 process 就不能含有敏感信号列表了，所以此时 wait 必须是 process 的第一条语句。</p>
 <p><strong>syntax1</strong></p>
-<div class="highlight"><pre><span class="n">WAIT</span> <span class="n">UNTILL</span> <span class="n">signal_condition</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">WAIT</span> <span class="n">UNTILL</span> <span class="n">signal_condition</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>syntax2</strong></p>
-<div class="highlight"><pre><span class="n">WAIT</span> <span class="n">ON</span> <span class="n">signal1</span> <span class="p">[,</span> <span class="n">signal2</span><span class="p">,</span> <span class="p">...];</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">WAIT</span> <span class="k">ON</span> <span class="n">signal1</span> <span class="p">[,</span> <span class="n">signal2</span><span class="p">,</span> <span class="p">...];</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>syntax3</strong></p>
-<div class="highlight"><pre><span class="n">WAIT</span> <span class="n">FOR</span> <span class="n">time</span><span class="p">;</span>  <span class="o">--</span><span class="n">simulation</span> <span class="n">only</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">WAIT</span> <span class="k">FOR</span> <span class="kt">time</span><span class="p">;</span>  <span class="c1">--simulation only</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3><code>case</code></h3>
 <p>case 和 when 的区别在于，case 允许在每个测试条件下执行多个赋值操作，而 when 只能执行一个赋值操作。</p>
 <p><strong>syntax</strong></p>
-<div class="highlight"><pre><span class="n">CASE</span> <span class="n">identifier</span> <span class="n">IS</span>
-    <span class="n">WHEN</span> <span class="n">value</span> <span class="o">=&gt;</span> <span class="n">assignment</span><span class="p">;</span>
-    <span class="n">WHEN</span> <span class="n">value</span> <span class="o">=&gt;</span> <span class="n">assignment</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">CASE</span> <span class="n">identifier</span> <span class="k">IS</span>
+    <span class="k">WHEN</span> <span class="n">value</span> <span class="o">=&gt;</span> <span class="n">assignment</span><span class="p">;</span>
+    <span class="k">WHEN</span> <span class="n">value</span> <span class="o">=&gt;</span> <span class="n">assignment</span><span class="p">;</span>
     <span class="p">...</span>
-<span class="n">END</span> <span class="n">CASE</span><span class="p">;</span>
+<span class="k">END</span> <span class="k">CASE</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3><code>loop</code></h3>
 <p><strong>syntax1: FOR/LOOP repeat a fix number of times</strong></p>
-<div class="highlight"><pre><span class="p">[</span><span class="n">label</span><span class="o">:</span><span class="p">]</span> <span class="n">FOR</span> <span class="n">identifier</span> <span class="n">IN</span> <span class="n">range</span> <span class="n">LOOP</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">[</span><span class="k">label</span><span class="o">:</span><span class="p">]</span> <span class="k">FOR</span> <span class="n">identifier</span> <span class="k">IN</span> <span class="k">range</span> <span class="k">LOOP</span>
     <span class="p">(</span><span class="n">sequential</span> <span class="n">statements</span><span class="p">)</span>
-<span class="n">END</span> <span class="n">LOOP</span> <span class="p">[</span><span class="n">label</span><span class="p">];</span>
+<span class="k">END</span> <span class="k">LOOP</span> <span class="err">[</span><span class="k">label</span><span class="err">]</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>syntax: WHILE/LOOP</strong></p>
-<div class="highlight"><pre><span class="p">[</span><span class="n">label</span><span class="o">:</span><span class="p">]</span> <span class="n">WHILE</span> <span class="n">condition</span> <span class="n">LOOP</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">[</span><span class="k">label</span><span class="o">:</span><span class="p">]</span> <span class="k">WHILE</span> <span class="n">condition</span> <span class="k">LOOP</span>
     <span class="p">(</span><span class="n">sequential</span> <span class="n">statements</span><span class="p">)</span>
-<span class="n">END</span> <span class="n">LOOP</span> <span class="p">[</span><span class="n">label</span><span class="p">];</span>
+<span class="k">END</span> <span class="k">LOOP</span> <span class="err">[</span><span class="k">label</span><span class="err">]</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>syntax3: EXIT</strong></p>
-<div class="highlight"><pre><span class="p">[</span><span class="n">label</span><span class="o">:</span><span class="p">]</span> <span class="n">EXIT</span> <span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="p">[</span><span class="n">WHEN</span> <span class="n">condition</span><span class="p">];</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">[</span><span class="k">label</span><span class="o">:</span><span class="p">]</span> <span class="k">EXIT</span> <span class="p">[</span><span class="k">label</span><span class="p">]</span> <span class="p">[</span><span class="k">WHEN</span> <span class="n">condition</span><span class="p">];</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>syntax4: NEXT</strong></p>
-<div class="highlight"><pre><span class="p">[</span><span class="n">label</span><span class="o">:</span><span class="p">]</span> <span class="n">NEXT</span> <span class="p">[</span><span class="n">loop_label</span><span class="p">]</span> <span class="p">[</span><span class="n">WHEN</span> <span class="n">condition</span><span class="p">];</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="p">[</span><span class="k">label</span><span class="o">:</span><span class="p">]</span> <span class="k">NEXT</span> <span class="p">[</span><span class="n">loop_label</span><span class="p">]</span> <span class="p">[</span><span class="k">WHEN</span> <span class="n">condition</span><span class="p">];</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><br></p>
 <h2>Signals &amp; Variables</h2>
@@ -691,16 +757,16 @@
 </li>
 </ul>
 <p><strong>syntax</strong></p>
-<div class="highlight"><pre><span class="n">CONSTANT</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="o">:=</span> <span class="n">value</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">CONSTANT</span> <span class="n">name</span> <span class="o">:</span> <span class="k">type</span> <span class="o">:=</span> <span class="n">value</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3><code>signal</code></h3>
 <p>VHDL 中的 <code>signal</code> 代表的是逻辑电路中的 “硬”连线，既可以用于电路的输入输出端口，也可以用于 内部单元之间的连接。</p>
 <p><strong>syntax</strong></p>
-<div class="highlight"><pre><span class="n">SIGNAL</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="p">[</span><span class="n">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">SIGNAL</span> <span class="n">name</span> <span class="o">:</span> <span class="k">type</span> <span class="p">[</span><span class="k">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
 </pre></div>
-
+</td></tr></table>
 
 <ul>
 <li>
@@ -713,9 +779,9 @@
 <h3><code>variable</code></h3>
 <p>相比于 signal 是局部的，variable 只能在 process，function，procedure 中使用，而且对它的赋值是立即更新的，新的值可以在下一行代码中立即使用。</p>
 <p><strong>syntax</strong></p>
-<div class="highlight"><pre><span class="n">VARIABLE</span> <span class="n">name</span> <span class="o">:</span> <span class="n">type</span> <span class="p">[</span><span class="n">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">VARIABLE</span> <span class="n">name</span> <span class="o">:</span> <span class="k">type</span> <span class="p">[</span><span class="k">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><br></p>
 <h2>Reference</h2>
@@ -726,10 +792,10 @@
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
     </ul>
 </section>
     <hr />

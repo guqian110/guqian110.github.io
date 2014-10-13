@@ -13,6 +13,7 @@ Summary: VHDL 笔记, 电路设计
 
 + Library 用来设计重用和代码共享，使代码结构更清晰
 
+        #!VHDL
         LIBRARY library_name;
         USE library_name.package_name.package_parts;
     
@@ -22,6 +23,7 @@ Summary: VHDL 笔记, 电路设计
 
 + Entity 描述电路的输入/输出引脚
 
+        #!VHDL
         ENTITY entity_name IS
             PORT (
                 port_name: signal_mode signal_type;
@@ -52,18 +54,22 @@ Summary: VHDL 笔记, 电路设计
 
 前面的 Entity 中的端口定义：
 
+    #!VHDL
     port_name: signal_mode signal_type;
     
 还有其它地方声明的信号 `signal` :
 
+    #!VHDL
     signal name : type [range] [:= initial_value];
 
 还有 常量 `constant` 声明：
 
+    #!VHDL
     constant name : type := value;
 
 还有 变量 `variable` 声明：
 
+    #!VHDL
     variable name : type [range] [:= initial_value];
 
 这些声明中都包含了数据类型字段。一个信号/常量/变量的数据类型决定了它能取到什么样的值，还有可以进行什么样的操作。
@@ -84,6 +90,7 @@ IEEE 1164 标准中包含了一些预先定义的数据类型。
 
 + 用 '0' 和 '1' 赋值
 
+        #!VHDL
         signal x : bit;
         signal y : bit_vector (3 downto 0);
 
@@ -134,6 +141,7 @@ IEEE 1164 标准中包含了一些预先定义的数据类型。
 
 ### User-defined Data Types
 
+    #!VHDL
     -- integer
     TYPE student_grade IS RANGE 0 TO 100;
     
@@ -143,6 +151,7 @@ IEEE 1164 标准中包含了一些预先定义的数据类型。
     
 ### Subtypes
 
+    #!VHDL
     SUBTYPE my_color IS color RANGE red TO blue;
     -- my_color = (red, green, blue);
     
@@ -158,10 +167,12 @@ IEEE 1164 标准中包含了一些预先定义的数据类型。
 
 + syntax:
 
+        #!VHDL
          TYPE type_name IS ARRAY (specification) OF data_type;
 
 + example:
 
+        #!VHDL
         --1D array
         TYPE matrix IS ARRAY (0 TO 3) OF STD_LOGIC_VECTOR (7 DOWNTO 0);
         --2D array
@@ -177,6 +188,7 @@ IEEE 1164 标准中包含了一些预先定义的数据类型。
 
 + 只有先声明使用这个库下的包，才能在代码中使用 signed/unsigned
 
+        #!VHDL
         use ieee.std_logic_arith.all;
         
         signal x signed (7 downto 0);
@@ -186,6 +198,7 @@ IEEE 1164 标准中包含了一些预先定义的数据类型。
 
 + 如果信号的类型只能是 std_logic_vector，那么通过其他方法也是可以进行算术运算的，解决方案就是声明使用 `ieee` 的 `std_logic_unsigned` 和 `std_logic_signed` 两个包集，声明之后，std_logic_vector 就可以像 signed/unsigned 一样进行算术运算了。
 
+        #!VHDL
         use ieee.std_logic_signed.all;
         -- use ieee.std_logic_unsigned.all;
         
@@ -300,11 +313,13 @@ VHDL 中的属性语句可以获得相关数据/对象 的信息，使代码更�
 
 **syntax**
 
+    #!VHDL
     ATTRIBUTE attribute_name: attribute_type;  -- declaration
     ATTIRBUTE attribute_name OF target_name: class IS value;  -- specification
 
 example：
 
+    #!VHDL
     ATTRIBUTE number_of_inputs: INTEGER;
     ATTRIBUTE number_of_inputs OF nand3: SIGNAL IS 3;
     
@@ -324,10 +339,12 @@ VHDL 中的自定义操作符作用和 C++ 中的操作符重载 方法、目的
 
 **syntax**
 
+    #!VHDL
     GENERIC (parameter_name: parameter_type := parameter_value);
     
 **example**
 
+    #!VHDL
     ENTITY my_entity IS
         GENERIC (n: INTEGER := 8);
         PORT (...);
@@ -356,12 +373,14 @@ VHDL 中的自定义操作符作用和 C++ 中的操作符重载 方法、目的
 
 **When/else syntax:**
 
+    #!VHDL
     assignment WHEN condition ELSE
     assignment WHEN condition ELSE
     ...;
     
 **with/select/when syntax:**
 
+    #!VHDL
     WITH identifier SELECT
     assignment WHEN value,
     assignment WHEN value,
@@ -384,6 +403,7 @@ simple block 只是对原有代码进行了区域分割，目的也仅仅是为�
 
 syntax:
 
+    #!VHDL
     label: BLOCK
         [declarative part]
     BEGIN
@@ -396,6 +416,7 @@ guarder block 是一种特殊的 block，它比 simple block 多了一个表达�
 
 syntax:
 
+    #!VHDL
     label: BLOCK (guard expression)
         [declarative part]
     BEGIN
@@ -421,6 +442,7 @@ VHDL 本质是并发执行的代码，但是在 `process`, `function`, `procedur
 
 **syntax**
 
+    #!VHDL
     [lable:] PROCESS (sensitivity list)
         [VARIABLE name: type [range][ := initial_value;]]
     BEGIN
@@ -431,6 +453,7 @@ VHDL 本质是并发执行的代码，但是在 `process`, `function`, `procedur
 
 **syntax**
 
+    #!VHDL
     IF conditions THEN assignments;
     ELSIF conditions THEN assignments;
     ...
@@ -443,14 +466,17 @@ VHDL 本质是并发执行的代码，但是在 `process`, `function`, `procedur
 
 **syntax1**
 
+    #!VHDL
     WAIT UNTILL signal_condition;
     
 **syntax2**
 
+    #!VHDL
     WAIT ON signal1 [, signal2, ...];
 
 **syntax3**
 
+    #!VHDL
     WAIT FOR time;  --simulation only
     
 ### `case`
@@ -459,6 +485,7 @@ case 和 when 的区别在于，case 允许在每个测试条件下执行多个�
 
 **syntax**
 
+    #!VHDL
     CASE identifier IS
         WHEN value => assignment;
         WHEN value => assignment;
@@ -469,22 +496,26 @@ case 和 when 的区别在于，case 允许在每个测试条件下执行多个�
 
 **syntax1: FOR/LOOP repeat a fix number of times**
 
+    #!VHDL
     [label:] FOR identifier IN range LOOP
         (sequential statements)
     END LOOP [label];
     
 **syntax: WHILE/LOOP**
 
+    #!VHDL
     [label:] WHILE condition LOOP
         (sequential statements)
     END LOOP [label];
     
 **syntax3: EXIT**
 
+    #!VHDL
     [label:] EXIT [label] [WHEN condition];
     
 **syntax4: NEXT**
 
+    #!VHDL
     [label:] NEXT [loop_label] [WHEN condition];
 
 <br>
@@ -508,6 +539,7 @@ constant 可以定义在 package, entity, architecture 中，对应的作用域�
 
 **syntax**
 
+    #!VHDL
     CONSTANT name : type := value;
     
 ### `signal`
@@ -516,6 +548,7 @@ VHDL 中的 `signal` 代表的是逻辑电路中的 “硬”连线，既可以�
 
 **syntax**
 
+    #!VHDL
     SIGNAL name : type [range] [:= initial_value];
     
 + 和 Verilog HDL 的 always 中的 reg 类似，VHDL 的 process 中的 signal 也是在进程结束时更新值。
@@ -528,6 +561,7 @@ VHDL 中的 `signal` 代表的是逻辑电路中的 “硬”连线，既可以�
 
 **syntax**
 
+    #!VHDL
     VARIABLE name : type [range] [:= initial_value];
 
 <br>
