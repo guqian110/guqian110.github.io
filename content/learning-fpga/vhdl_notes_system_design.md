@@ -23,6 +23,7 @@ Summary: VHDL 笔记，系统设计
 
 **syntax**
 
+    #!verilog
     PACKAGE package_name IS
         (declarations)
     END package_name;
@@ -39,6 +40,7 @@ Summary: VHDL 笔记，系统设计
 
 **example**
 
+    #!verilog
     --------- package define-------------
     LIRRARY IEEE;
     USE IDEE.STD_LOGIC_1164.ALL;
@@ -72,6 +74,7 @@ VHDL 中的 `component` 和 Verilog HDL 中的 `module` 类似：
 
 **declaration syntax**
 
+    #!verilog
     COMPONENT component_name IS
         PORT (
             port_name: signal_mode signal_type;
@@ -81,6 +84,7 @@ VHDL 中的 `component` 和 Verilog HDL 中的 `module` 类似：
     
 **instantiation syntax**
 
+    #!verilog
     label: component_name PORT MAP (port_list);
 
 可以看到：
@@ -113,6 +117,7 @@ VHDL 中的 `component` 和 Verilog HDL 中的 `module` 类似：
 
 **example**
 
+    #!verilog
     -- positional
     U1: inverter PORT MAP (x, y);
     
@@ -125,6 +130,7 @@ generic 功能类似于 Veriog HDL 中的 parameter，所以在例化时 compone
 
 **syntax**
     
+    #!verilog
     label: component_name GENERIC MAP (param.list) PORT MAP (port list);
     
 也就是说，在例化时，添加一段 `GENERIC MAP (param.list)` 就可以了。
@@ -147,6 +153,7 @@ function 的使用方法：先创建函数体本身，再调用函数。
 
 **Function Body**
 
+    #!verilog
     FUNCTION function_name [<parameter list>] RETURN data_type IS
         [declarations]
     BEGIN
@@ -164,6 +171,7 @@ function 的使用方法：先创建函数体本身，再调用函数。
 
 函数可以单独构成表达式，也可以作为表达式的一部分。
 
+    #!verilog
     --example
     x <= conv_integer(a);
     if x > maximum(a, b) ...
@@ -184,6 +192,7 @@ procedure 和 function 类似，目的也相同，不同之处在于 procedure �
 
 **Procedure Body**
 
+    #!verilog
     PROCEDURE procedure_name [<parameter list>] IS
         [declarations]
     BEGIN
@@ -192,6 +201,7 @@ procedure 和 function 类似，目的也相同，不同之处在于 procedure �
 
 其中，<parameter list> 指出了 procedure 的输入输出参数：
 
+    #!verilog
     <parameter list> = [CONSTANT] constant_name : mode type;
     <parameter list> = SIGNAL signal_name : mode type;
     <parameter list> = VARIABLE variable_name : mode type;
@@ -204,6 +214,7 @@ procedure 和 function 类似，目的也相同，不同之处在于 procedure �
 
 procedure 的调用就是它自己。
 
+    #!verilog
     --example
     compute_min_max (in1, in2, in3, out1, out2);
     divide (dividend, divisor, quotient, remainder);

@@ -362,7 +362,6 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 >
 > **example1**: 通过Verilog HDL实现序列最大值搜索程序，并保持检测到的最大值
 >
->       #!verilog
 >       module latch_demo(  
 >               din,dout  
 >           );  
@@ -380,7 +379,6 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 >
 > 上述代码在ISE中的综合结果会给出设计中包含Latch的警告。但实际上，abmax_tmp锁存器正是我们需要的，所以，虽然有警告，但是代码设计是没有问题的。将上述代码的if语句补全：
 > 
->      #!verilog
 >      if (a > abmax_tmp)  
 >           abmax_tmp = a;  
 >       else  
@@ -392,7 +390,6 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 > 
 > 不期望的 latch 指的是与设计意图不符，产生的 Latch。主要问题在于设计人员没有合理使用Verilog HDL语言，常见的原因是对条件语句（if、casse）的分支描述不完整，导致电路的功能不是预期的，发生了错误。
 >
->       #!verilog
 >       module latch_demo(  
 >           din,dout  
 >       );  
@@ -410,7 +407,6 @@ latch 和 flip-flop 的特点决定了它们各自的应用场景
 >
 > 综合后的结果，在比较器后面级联了锁存器，这是因为if语句缺少else分支造成的。查看仿真结果，当输入小于127时，输出保持了上次的127，不是0，没有达到设计要求。修改方法很简单，就是将if-else补全。
 >
->        #!verilog
 >        if (din > 127 )
 >            dout = din;  
 >        else  
