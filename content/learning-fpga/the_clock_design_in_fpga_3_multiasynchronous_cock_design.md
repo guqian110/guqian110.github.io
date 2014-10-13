@@ -115,7 +115,7 @@ synchronizer 有很多设计方法，因为一种方法不能满足所有的应�
 
 **Code:**
 
-    :::verilog
+    #!verilog
     module LVLSYNC(
         rst, clk_i, din, clk_o, dout
         );
@@ -181,6 +181,7 @@ level synchronizer 是其他两种同步器的核心。
 
 **Code:**
 
+    #!verilog
     module EDGESYNC(
         rst, clk_i, din, clk_o, dout
         );
