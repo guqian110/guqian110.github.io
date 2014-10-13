@@ -103,6 +103,7 @@ VHDL 中的 `component` 和 Verilog HDL 中的 `module` 类似：
 
 + 方法一：每次使用 STL 都添加作用域
 
+        #!C++
         std::cout << "hello world!" << std::endl;
     
 + 方法二：声明一次作用域
