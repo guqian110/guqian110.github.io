@@ -180,48 +180,48 @@
 <p>电平同步器的结构图就是前面的图，在 Clifford E. Cummings 的 <a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">paper</a> 中有更详细的图解说明：</p>
 <p><img alt="level" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/level.png" /></p>
 <p><strong>Code:</strong></p>
-<div class="highlight"><pre><span class="n">module</span> <span class="nf">LVLSYNC</span><span class="p">(</span>
+<div class="highlight"><pre><span class="k">module</span> <span class="no">LVLSYNC</span><span class="p">(</span>
     <span class="n">rst</span><span class="p">,</span> <span class="n">clk_i</span><span class="p">,</span> <span class="n">din</span><span class="p">,</span> <span class="n">clk_o</span><span class="p">,</span> <span class="n">dout</span>
     <span class="p">);</span>
 
     <span class="c1">// input</span>
-    <span class="n">input</span>       <span class="n">rst</span><span class="p">;</span>
-    <span class="n">input</span>       <span class="n">clk_i</span><span class="p">;</span>
-    <span class="n">input</span>       <span class="n">clk_o</span><span class="p">;</span>
-    <span class="n">input</span>       <span class="n">din</span><span class="p">;</span>
+    <span class="k">input</span>       <span class="n">rst</span><span class="p">;</span>
+    <span class="k">input</span>       <span class="n">clk_i</span><span class="p">;</span>
+    <span class="k">input</span>       <span class="n">clk_o</span><span class="p">;</span>
+    <span class="k">input</span>       <span class="n">din</span><span class="p">;</span>
 
     <span class="c1">// output</span>
-    <span class="n">output</span>      <span class="n">dout</span><span class="p">;</span>
+    <span class="k">output</span>      <span class="n">dout</span><span class="p">;</span>
 
     <span class="c1">// output attribute</span>
-    <span class="n">reg</span>         <span class="n">dout</span><span class="p">;</span>
+    <span class="kt">reg</span>         <span class="n">dout</span><span class="p">;</span>
 
-    <span class="n">reg</span>         <span class="n">din_q</span><span class="p">;</span>
-    <span class="n">reg</span>         <span class="n">dout_q</span><span class="p">;</span>
+    <span class="kt">reg</span>         <span class="n">din_q</span><span class="p">;</span>
+    <span class="kt">reg</span>         <span class="n">dout_q</span><span class="p">;</span>
 
     <span class="c1">// reg the din using orign clock</span>
-    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk_i</span><span class="p">)</span> <span class="n">begin</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
-            <span class="n">din_q</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
-        <span class="n">end</span>
-        <span class="k">else</span> <span class="n">begin</span>
+    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk_i</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="n">din_q</span> <span class="o">&lt;=</span> <span class="mh">1&#39;b0</span><span class="p">;</span>
+        <span class="k">end</span>
+        <span class="k">else</span> <span class="k">begin</span>
             <span class="n">din_q</span> <span class="o">&lt;=</span> <span class="n">din</span><span class="p">;</span>
-        <span class="n">end</span>
-    <span class="n">end</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
 
     <span class="c1">// using two level DFF to synchronize the din_q</span>
-    <span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk_o</span><span class="p">)</span> <span class="n">begin</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
-            <span class="n">dout_q</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
-            <span class="n">dout</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
-        <span class="n">end</span>
-        <span class="k">else</span> <span class="n">begin</span>
+    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk_o</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
+            <span class="n">dout_q</span> <span class="o">&lt;=</span> <span class="mh">1&#39;b0</span><span class="p">;</span>
+            <span class="n">dout</span> <span class="o">&lt;=</span> <span class="mh">1&#39;b0</span><span class="p">;</span>
+        <span class="k">end</span>
+        <span class="k">else</span> <span class="k">begin</span>
             <span class="n">dout_q</span> <span class="o">&lt;=</span> <span class="n">din_q</span><span class="p">;</span>
             <span class="n">dout</span> <span class="o">&lt;=</span> <span class="n">dout_q</span><span class="p">;</span>
-        <span class="n">end</span>
-    <span class="n">end</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
 
-<span class="n">endmodule</span>
+<span class="k">endmodule</span>
 </pre></div>
 
 
@@ -470,7 +470,7 @@ enable signal in order to load a data value into the register. If both the load 
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic_1.html">FPGA 数字处理基础 (1)</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
     </ul>

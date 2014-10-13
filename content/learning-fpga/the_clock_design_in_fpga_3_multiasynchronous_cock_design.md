@@ -115,6 +115,7 @@ synchronizer 有很多设计方法，因为一种方法不能满足所有的应�
 
 **Code:**
 
+    :::verilog
     module LVLSYNC(
         rst, clk_i, din, clk_o, dout
         );
