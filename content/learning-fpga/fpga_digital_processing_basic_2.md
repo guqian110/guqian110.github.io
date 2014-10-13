@@ -53,6 +53,7 @@ Summary: 总结 FPGA 处理数字信号的基础知识 (2)
     
 **在 FPGA 也采用补码系统**，即在综合时，综合工具会将有符号数翻译为补码，在硬件中存储起来。
     
+    #!verilog
     4'd5   // 这个数为无符号数，理解为 5, 占用 8 bit，存储的值为 0101
     4'sd5  // 这个数为有符号数，理解为 5, 占用 8 bit，存储的值为 0101
     -4'd5  // 这个数为无符号数，理解为 -5, 占用 8 bit，存储的值为 1011
@@ -66,6 +67,7 @@ Verilog 中数据的基本类型： `wire`、`reg`、`integer`
 
 在 Verilog-2001 中，添加了 wire、reg 也可以是 signed 类型了。
 
+    #!verilog
     reg             [8:0]   a;  // unsigned
     reg     signed  [8:0]   b;  // signed
 
@@ -99,11 +101,13 @@ Verilog 中数据的基本类型： `wire`、`reg`、`integer`
 
 定义 reg 为 unsigned 类型
 
+    #!verilog
     reg     [SIZE - 1 : 0]  i;      // unsigned
     reg     [SIZE - 1 : 0]  flag;   // unsigned
     
 赋值为 unsigned 类型
 
+    #!verilog
     flag <= 8'd10;  // unsigned
 
 那么可以从 RTL Schematic 中看到，综合出来的比较器是 unsigned 类型。
@@ -112,11 +116,13 @@ Verilog 中数据的基本类型： `wire`、`reg`、`integer`
 
 定义 reg 为 unsigned 类型
 
+    #!verilog
     reg     [SIZE - 1 : 0]  i;      // unsigned
     reg     [SIZE - 1 : 0]  flag;   // unsigned
     
 赋值为 signed 类型
 
+    #!verilog
     flag <= -8'sd10;    // signed
 
 那么综合出来的比较器是 unsigned 类型。
@@ -125,11 +131,13 @@ Verilog 中数据的基本类型： `wire`、`reg`、`integer`
 
 定义 reg 为 signed 类型
 
+    #!verilog
     reg     signed  [SIZE - 1 : 0]  i;      // signed
     reg     signed  [SIZE - 1 : 0]  flag;   // signed
     
 赋值为 signed 类型
 
+    #!verilog
     flag <= -8'sd10;    // signed
 
 那么综合出来的比较器是 signed 类型。
@@ -138,11 +146,13 @@ Verilog 中数据的基本类型： `wire`、`reg`、`integer`
 
 定义 reg 为 signed 类型
 
+    #!verilog
     reg     signed  [SIZE - 1 : 0]  i;      // signed
     reg     signed  [SIZE - 1 : 0]  flag;   // unsigned
     
 赋值为 unsigned 类型
 
+    #!verilog
     flag <= 8'd10;  // unsigned
 
 那么综合出来的比较器是 signed 类型。
@@ -153,11 +163,13 @@ Verilog 中数据的基本类型： `wire`、`reg`、`integer`
 
 定义 i 为 unsigned 类型，flag 为 signed 类型
 
+    #!verilog
     reg             [SIZE - 1 : 0]  i;      // unsigned
     reg     signed  [SIZE - 1 : 0]  flag;   // signed
 
 给 flag 赋值为 signed 的 -5
 
+    #!verilog
     flag <= -4'd5;      // sigend
     
 综合出来的比较器为 unsigned 类型。

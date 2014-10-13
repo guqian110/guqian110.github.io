@@ -90,6 +90,7 @@ Arduino 官方的 IDE 中 `Board` 选项中没有 Galileo，所以我们应该�
     
     在 Linux 终端下，必须以 `sudo` 权限运行 IDE，否则即使板子已经连接了 PC，在 IDE 下的 `Tools\Serial Port` 是 disable 的，不能选择端口
     
+        #!Shell
         $ sudo ./arduino &
         
 4. Linux 下 disable modem manager

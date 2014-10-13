@@ -94,6 +94,7 @@ summary: 博客搬家，温故而知新。
 
 三段式代码模板
 
+    #!verilog
     reg     [7:0]   CS;
     reg     [7:0]   NS;
     
@@ -169,6 +170,7 @@ FPGA 上电时，GSR(Global Set/Reset) 拉高，对所有 寄存器/RAM 进行�
 
 1. 一般，FSM 使用其他的复位(同步 or 异步)。
 
+        #!verilog
         // Synchronous Reset
         always @(posedge clk) begin
             if (rst) begin
@@ -233,6 +235,7 @@ Binary、Gray 编码使用最少的触发器，较多的组合逻辑。而 One-H
 
     在第二段 `always` 中，
 
+        #!verilog
         default: begian
             NS = IDLE;
         end
@@ -249,6 +252,7 @@ Binary、Gray 编码使用最少的触发器，较多的组合逻辑。而 One-H
 
 在第二个 `always block` 中，第一句是
 
+    #!verilog
     NS = 8'bx;
     
 这是个很有用的小技巧，它可以帮助我们在综合前发现状态是否完备：如果状态完备，则在下面的 `case` 中会给 `NS` 合适的值；如果状态不完备，则状态机会进入错误状态，输出不定，仿真时可以很快的发现。而且，综合工具对于 `x` 采取的态度是 `don't care`，综合时会自动将其忽略，生成的电路最简洁。
@@ -283,6 +287,7 @@ Binary、Gray 编码使用最少的触发器，较多的组合逻辑。而 One-H
 
 这时候可以采用三段式实现，三段式的输出是寄存器输出，所以消除了毛次；同时，如果三段式的第三段判断输出采用
 
+    #!verilog
     case (NS)
         IDLE: begin
             // ....

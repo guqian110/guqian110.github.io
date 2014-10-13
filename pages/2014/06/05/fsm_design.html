@@ -173,60 +173,111 @@
 <p>在两段式描述中，当前状态的输出用组合逻辑实现，可能存在竞争和冒险，产生毛刺。则要求对状态机的输出用寄存器打一拍，但很多情况不允许插入寄存器节拍，此时使用三段式描述。其优势在于能够根据状态转移规律，在上一状态根据输入条件判断出当前状态的输出，从而不需要额外插入时钟节拍。</p>
 <p><strong>三段式：</strong>有三个always block，一个时序逻辑采用同步时序的方式描述状态转移，一个采用组合逻辑的方式判断状态转移条件、描述状态转移规律，第三个模块使用同步时序的方式描述每个状态的输出。<em>代码容易维护，时序逻辑的输出解决了两段式组合逻辑的毛刺问题</em>，但是从资源消耗的角度上看，<em>三段式的资源消耗多一些，且输出比另外两种会延时一个时钟周期。</em></p>
 <p>三段式代码模板</p>
-<div class="highlight"><pre><span class="n">reg</span>     <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">CS</span><span class="p">;</span>
-<span class="n">reg</span>     <span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">NS</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52</pre></div></td><td class="code"><div class="highlight"><pre><span class="kt">reg</span>     <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="no">CS</span><span class="p">;</span>
+<span class="kt">reg</span>     <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="no">NS</span><span class="p">;</span>
 
-<span class="n">parameter</span>   <span class="n">IDLE</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">b0000_0001</span><span class="p">,</span>
-            <span class="n">WAIT</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">b0000_0010</span><span class="p">,</span>
-            <span class="n">STRT</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">b0000_0100</span><span class="p">,</span>
+<span class="k">parameter</span>   <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">8&#39;b0000</span><span class="n">_0001</span><span class="p">,</span>
+            <span class="no">WAIT</span> <span class="o">=</span> <span class="mh">8&#39;b0000</span><span class="n">_0010</span><span class="p">,</span>
+            <span class="no">STRT</span> <span class="o">=</span> <span class="mh">8&#39;b0000</span><span class="n">_0100</span><span class="p">,</span>
             <span class="p">...</span>
 
-<span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
-        <span class="n">CS</span> <span class="o">&lt;=</span> <span class="n">IDLE</span><span class="p">;</span>
-    <span class="n">end</span>
-    <span class="k">else</span> <span class="n">begin</span>
-        <span class="n">CS</span> <span class="o">&lt;=</span> <span class="n">NS</span><span class="p">;</span>
-    <span class="n">end</span>
-<span class="n">end</span>
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+    <span class="k">end</span>
+    <span class="k">else</span> <span class="k">begin</span>
+        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">NS</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
 
-<span class="n">always</span> <span class="err">@</span><span class="o">*</span>  <span class="n">begin</span>
-    <span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">bx</span><span class="p">;</span>               <span class="c1">//初始化寄存器，避免生成latch</span>
-    <span class="k">case</span> <span class="p">(</span><span class="n">CS</span><span class="p">)</span>
-        <span class="nl">IDLE:</span> <span class="n">begin</span>
+<span class="k">always</span> <span class="p">@</span><span class="o">*</span>  <span class="k">begin</span>
+    <span class="no">NS</span> <span class="o">=</span> <span class="mh">8</span><span class="p">&#39;</span><span class="n">bx</span><span class="p">;</span>               <span class="c1">//初始化寄存器，避免生成latch</span>
+    <span class="k">case</span> <span class="p">(</span><span class="no">CS</span><span class="p">)</span>
+        <span class="nl">IDLE:</span> <span class="k">begin</span>
             <span class="c1">// ...</span>
-        <span class="n">end</span>
-        <span class="nl">S1:</span> <span class="n">begin</span>
+        <span class="k">end</span>
+        <span class="nl">S1:</span> <span class="k">begin</span>
             <span class="c1">// ...</span>
-        <span class="n">end</span>
-       <span class="nl">default:</span> <span class="n">begin</span>
-            <span class="n">NS</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>      <span class="c1">// 注意</span>
-       <span class="n">end</span>
-    <span class="n">endcase</span>
-<span class="n">end</span>
+        <span class="k">end</span>
+       <span class="k">default</span><span class="o">:</span> <span class="k">begin</span>
+            <span class="no">NS</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>      <span class="c1">// 注意</span>
+       <span class="k">end</span>
+    <span class="k">endcase</span>
+<span class="k">end</span>
 
-<span class="n">always</span> <span class="err">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="n">begin</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="n">begin</span>
+<span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
         <span class="c1">// reset</span>
         <span class="c1">// ...</span>
-    <span class="n">end</span>
-    <span class="k">else</span> <span class="n">begin</span>
+    <span class="k">end</span>
+    <span class="k">else</span> <span class="k">begin</span>
         <span class="c1">// ...          //初始化一组值，避免latch</span>
-        <span class="k">case</span> <span class="p">(</span><span class="n">NS</span><span class="p">)</span>           <span class="c1">//注意为NS</span>
-            <span class="nl">IDLE:</span> <span class="n">begin</span>
+        <span class="k">case</span> <span class="p">(</span><span class="no">NS</span><span class="p">)</span>           <span class="c1">//注意为NS</span>
+            <span class="nl">IDLE:</span> <span class="k">begin</span>
                 <span class="c1">// ...</span>
-            <span class="n">end</span>
-            <span class="nl">S1:</span> <span class="n">begin</span>
+            <span class="k">end</span>
+            <span class="nl">S1:</span> <span class="k">begin</span>
                 <span class="c1">// ...</span>
-            <span class="n">end</span>
-            <span class="nl">default:</span> <span class="n">begin</span>
+            <span class="k">end</span>
+            <span class="k">default</span><span class="o">:</span> <span class="k">begin</span>
                 <span class="c1">// ...</span>
-            <span class="n">end</span>
-        <span class="n">endcase</span>
-    <span class="n">end</span>
-<span class="n">end</span>
+            <span class="k">end</span>
+        <span class="k">endcase</span>
+    <span class="k">end</span>
+<span class="k">end</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><strong>一段 or 三段？</strong></p>
 <p>一般来说，三段式的效果更好，唯一的缺点是占用的资源稍微多一点(对于拥有丰富的触发器资源的 FPGA 来说，这个缺点可以忽略吧)。所以除非是非常简单的状态机用一段式实现，其他情况下三段式更简单。</p>
@@ -240,7 +291,15 @@
 <ol>
 <li>
 <p>一般，FSM 使用其他的复位(同步 or 异步)。</p>
-<div class="highlight"><pre><span class="c1">// Synchronous Reset</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">// Synchronous Reset</span>
 <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
         <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
@@ -250,7 +309,7 @@
     <span class="k">end</span>
 <span class="k">end</span>
 </pre></div>
-
+</td></tr></table>
 
 </li>
 <li>
@@ -285,11 +344,13 @@
 <li>
 <p>书写完备的 <code>case</code> 语句。在代码中对每一种可能的取值对进行描述，对于不使用的状态编码，一定要有 <code>default</code> 分支进行说明。</p>
 <p>在第二段 <code>always</code> 中，</p>
-<div class="highlight"><pre><span class="k">default</span><span class="o">:</span> <span class="n">begian</span>
-    <span class="n">NS</span> <span class="o">=</span> <span class="n">IDLE</span><span class="o">;</span>
-<span class="n">end</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">default</span><span class="o">:</span> <span class="n">begian</span>
+    <span class="no">NS</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+<span class="k">end</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>这里应该赋值 <code>8'bx</code> 更合理，因为状态机上电时处于未知状态，所以应该赋值 <code>x</code> 更符合实际，但是这样赋值必须有个条件，就是必须所有的状态编码都全部被使用了，不然就会出现锁死现象，FSM 无法返回工作状态。我们前面使用的是 One-Hot 编码方式，有大量无效状态，所以这里不能赋值为 <code>x</code>。</p>
 </li>
@@ -301,9 +362,9 @@
 <p>(XST 的选项 <code>safe implementation</code> 值默认为 <code>None</code>，如果应用环境要求 FSM 必须能恢复任何错误，比如航天、医疗、汽车等，这时我们可以打开这个设置，这时综合工具会添加额外的逻辑，保证 FSM 可以从无效状态恢复过来。)</p>
 <h3>检查状态完备性</h3>
 <p>在第二个 <code>always block</code> 中，第一句是</p>
-<div class="highlight"><pre><span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">bx</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="no">NS</span> <span class="o">=</span> <span class="mh">8</span><span class="p">&#39;</span><span class="n">bx</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>这是个很有用的小技巧，它可以帮助我们在综合前发现状态是否完备：如果状态完备，则在下面的 <code>case</code> 中会给 <code>NS</code> 合适的值；如果状态不完备，则状态机会进入错误状态，输出不定，仿真时可以很快的发现。而且，综合工具对于 <code>x</code> 采取的态度是 <code>don't care</code>，综合时会自动将其忽略，生成的电路最简洁。</p>
 <h3>避免 Latch</h3>
@@ -333,17 +394,25 @@
 <h3>case (NS) vs case (CS)</h3>
 <p>采用二段式实现状态机，它的输出是组合逻辑，可能存在竞争和冒险，产生毛刺，要消除毛刺就要对输出用寄存器打一拍，但是很多时候，是不允许插入寄存器节拍的。</p>
 <p>这时候可以采用三段式实现，三段式的输出是寄存器输出，所以消除了毛次；同时，如果三段式的第三段判断输出采用</p>
-<div class="highlight"><pre><span class="k">case</span> <span class="p">(</span><span class="n">NS</span><span class="p">)</span>
-    <span class="nl">IDLE:</span> <span class="n">begin</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">case</span> <span class="p">(</span><span class="no">NS</span><span class="p">)</span>
+    <span class="nl">IDLE:</span> <span class="k">begin</span>
         <span class="c1">// ....</span>
-    <span class="n">end</span>
+    <span class="k">end</span>
     <span class="c1">// ...</span>
-    <span class="nl">default:</span> <span class="n">begian</span>
+    <span class="k">default</span><span class="o">:</span> <span class="n">begian</span>
         <span class="c1">// ...</span>
-    <span class="n">end</span>
-<span class="n">endcase</span>
+    <span class="k">end</span>
+<span class="k">endcase</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>就可以提前判断下一状态的输出，节省了一个节拍，使输出和状态变化同步。</p>
 <p>设计一个简单的 FSM，测试使用 <code>case(CS)</code> 和 <code>case(NS)</code> 的结果：</p>
@@ -378,9 +447,9 @@ Design using NC-Verilog and BuildGates</a></p>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/02/xilinx_fft_core_notes.html">Xilinx FFT IP core 笔记</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a></li>
     </ul>
 </section>
     <hr />

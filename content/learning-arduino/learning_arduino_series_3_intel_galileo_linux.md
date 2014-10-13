@@ -53,18 +53,22 @@ Galileo 默认是不开启 `Lan` 的，也不开启 `Telnet` 服务，所以我�
 
 1. 开启 telnet 服务
     
+        #!Shell
         system("telnetd -l /bin/sh");
 
 2. 设置 IP 地址
 
+        #!Shell
         system("ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up");
 
 3. 将板子的以太网配置状态显示在 serial monitor 中
 
+        #!Shell
         system("ifconfig eth0 > /dev/ttyACM0")
 
 全部代码如下
 
+    #!Arduino
     void setup() {
       // put your setup code here, to run once:
       // Initial serial prot
@@ -104,6 +108,7 @@ Galileo 默认是不开启 `Lan` 的，也不开启 `Telnet` 服务，所以我�
     
 2. 查看 PC 的网络配置
 
+        #!Shell
         $ ifconfig eth0
     
     查询结果
@@ -112,6 +117,7 @@ Galileo 默认是不开启 `Lan` 的，也不开启 `Telnet` 服务，所以我�
 
 3. 打开 PC 的终端 Terminal，使用 telnet 登录
 
+        #!Shell
         telnet 169.254.1.1
         
     登录结果，如图
@@ -241,6 +247,7 @@ Galileo 默认是不开启 `Lan` 的，也不开启 `Telnet` 服务，所以我�
 
 不过这种方法的缺点是每个命令传递到 Galileo 后会开辟一个新的进程，当命令执行完返回结果时，这个进程自动结束，所以会产生一些 “问题”：当我们 `cd` 到某个子目录后，返回结果之后，我们又回到的之前的目录，举例
 
+    #!Shell
     $ cd home
     $ pwd
     
@@ -248,6 +255,7 @@ Galileo 默认是不开启 `Lan` 的，也不开启 `Telnet` 服务，所以我�
     
 解决方法就是将命令写在一行
 
+    #!Shell
     $ cd home; pwd
 
     // result is home directory

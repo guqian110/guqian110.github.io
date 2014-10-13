@@ -40,6 +40,7 @@ Xilinx 有个 White Paper，[Get Smart About Reset: Think Local, Not Global][wp2
 
 设定初值的语法很简单，只需要在定义变量时给它初始值就可以了：
 
+    #!verilog
     reg tmp = 0;
 
 和 reg 类似，BRAM 也可以在配置的时候初始化，随着嵌入式系统的 BRAM 逐渐增大，BRAM 初始化非常有用：因为预先定义 RAM 的值可以使仿真更容易，而且无需使用引导顺序为嵌入式设计清空内存。
@@ -117,6 +118,7 @@ P.S. 事实上没有一个通用的、适合所有器件的复位方案，我们
 
 **Bad Style:**
 
+    #!verilog
     module BADSTYLE (
         clk, rst, d, q);
         
@@ -149,6 +151,7 @@ P.S. 事实上没有一个通用的、适合所有器件的复位方案，我们
 
 **Good Style:**
 
+    #!verilog
     module GOODSTYLE (
         clk, rst, d, q
         );
@@ -302,6 +305,7 @@ Xilinx 的杂志上的一篇文章，[How do I reset my FPGA][article1]，作者
 
 **code:**
         
+    #!verilog
     always @(posedge clk) begin
         if (rst) begin
             q <= 1'b0;
@@ -317,6 +321,7 @@ Xilinx 的杂志上的一篇文章，[How do I reset my FPGA][article1]，作者
 
 其中 `fdr` 是 Xilinx 的原语，表示 `Singal Data Rate D Flip-Flop with Synchronous Reset and Clock Enable (posedge clk)`
 
+    #!verilog
     // FDRE: Single Data Rate D Flip-Flop with Synchronous Reset and
     //       Clock Enable (posedge clk).
     //       All families.
@@ -366,6 +371,7 @@ Xilinx 的杂志上的一篇文章，[How do I reset my FPGA][article1]，作者
 
 **code:**
 
+    #!verilog
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             q <= 1'b0;
@@ -381,6 +387,7 @@ Xilinx 的杂志上的一篇文章，[How do I reset my FPGA][article1]，作者
 
 其中 `fdc` 是 Xilinx 的原语，表示 `Single Data Rate D Flip-Flop with Asynchronous Clear and Clock Enable (posedge clk)`
 
+    #!verilog
     // FDCE: Single Data Rate D Flip-Flop with Asynchronous Clear and
     //       Clock Enable (posedge clk).
     //       All families.
@@ -430,6 +437,7 @@ Xilinx 的杂志上的一篇文章，[How do I reset my FPGA][article1]，作者
 
 **code:**
 
+    #!verilog
     module SYSRST(
         clk, rst_pb, sys_rst
         );

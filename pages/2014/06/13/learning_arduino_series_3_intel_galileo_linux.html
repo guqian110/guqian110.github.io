@@ -148,28 +148,45 @@
 <ol>
 <li>
 <p>开启 telnet 服务</p>
-<div class="highlight"><pre><span class="n">system</span><span class="p">(</span><span class="s">&quot;telnetd -l /bin/sh&quot;</span><span class="p">);</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">system</span><span class="p">(</span><span class="s">&quot;telnetd -l /bin/sh&quot;</span><span class="p">);</span>
 </pre></div>
-
+</td></tr></table>
 
 </li>
 <li>
 <p>设置 IP 地址</p>
-<div class="highlight"><pre><span class="n">system</span><span class="p">(</span><span class="s">&quot;ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up&quot;</span><span class="p">);</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">system</span><span class="p">(</span><span class="s">&quot;ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up&quot;</span><span class="p">);</span>
 </pre></div>
-
+</td></tr></table>
 
 </li>
 <li>
 <p>将板子的以太网配置状态显示在 serial monitor 中</p>
-<div class="highlight"><pre><span class="n">system</span><span class="p">(</span><span class="s">&quot;ifconfig eth0 &gt; /dev/ttyACM0&quot;</span><span class="p">)</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">system</span><span class="p">(</span><span class="s">&quot;ifconfig eth0 &gt; /dev/ttyACM0&quot;</span><span class="p">)</span>
 </pre></div>
-
+</td></tr></table>
 
 </li>
 </ol>
 <p>全部代码如下</p>
-<div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
   <span class="c1">// put your setup code here, to run once:</span>
   <span class="c1">// Initial serial prot</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
@@ -188,7 +205,7 @@
   <span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
-
+</td></tr></table>
 
 <h3>Step 2: Connect，Upload</h3>
 <ol>
@@ -214,18 +231,18 @@
 </li>
 <li>
 <p>查看 PC 的网络配置</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">ifconfig</span> <span class="n">eth0</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="err">$</span> <span class="n">ifconfig</span> <span class="n">eth0</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>查询结果</p>
 <p><img alt="pc_ethernet_quary" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_quary.png" /></p>
 </li>
 <li>
 <p>打开 PC 的终端 Terminal，使用 telnet 登录</p>
-<div class="highlight"><pre><span class="n">telnet</span> <span class="mf">169.254.1.1</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">telnet</span> <span class="mf">169.254.1.1</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>登录结果，如图</p>
 <p><img alt="pc_ethernet_login" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_telnet_login.png" /></p>
@@ -335,19 +352,24 @@
 <p><a href="(https://communities.intel.com/message/222211)">Poor man's telnet for Galileo</a></p>
 <p>他的 sketch 的原理就是使用 <code>system()</code> 函数将我们在 serial monitor 中的命令传到到 Linux shell 中 ，并将命令的结果返回到 serial monitor 中 。</p>
 <p>不过这种方法的缺点是每个命令传递到 Galileo 后会开辟一个新的进程，当命令执行完返回结果时，这个进程自动结束，所以会产生一些 “问题”：当我们 <code>cd</code> 到某个子目录后，返回结果之后，我们又回到的之前的目录，举例</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">cd</span> <span class="n">home</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="err">$</span> <span class="n">cd</span> <span class="n">home</span>
 <span class="err">$</span> <span class="n">pwd</span>
 
 <span class="c1">// result is root dirctory</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>解决方法就是将命令写在一行</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">cd</span> <span class="n">home</span><span class="p">;</span> <span class="n">pwd</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="err">$</span> <span class="n">cd</span> <span class="n">home</span><span class="p">;</span> <span class="n">pwd</span>
 
 <span class="c1">// result is home directory</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><br></p>
 <h2>Reference</h2>
@@ -360,11 +382,11 @@
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/27/learing_arduino_series_1_getting_started.html">学习 Arduino #1 Arduino 入门</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/10/run_warcraft_on_ubuntu.html">在 Ubuntu 下运行 WarCraft</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/21/learning_linux_package_management.html">学习 Linux 软件包依赖管理</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/04/learning_linux_ssh.html">学习 Linux SSH</a></li>
     </ul>
 </section>
     <hr />
