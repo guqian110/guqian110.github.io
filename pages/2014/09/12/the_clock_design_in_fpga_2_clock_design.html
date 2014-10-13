@@ -229,9 +229,19 @@
 <p>（看到书上提出一个解决方案是：使用系统专用的时钟信号，将组合逻辑的输出打一拍，避免组合逻辑的直接输出，达到同步的效果。但是我个人认为这个方案不是非常好。）</p>
 <p>综上，对于 FPGA 来说，还是应该<strong>尽量避免使用组合逻辑的输出作为时钟</strong>。</p>
 <h3>Divide/Multiplied Clock</h3>
+<p><strong>Guideline：</strong> 尽量避免分频时钟</p>
 <p>在我们的设计中，一般都不止一个时钟频率。如果不加注意，随意使用分频时钟，这叫做时钟满天飞，是非常不好的设计风格。</p>
-<p>对于 FPGA 来说，一般都内嵌了多个时钟管理单元，利用它们可以非常方便地达到多时钟的目的，这样的时钟信号是最稳定的。</p>
-<p>对于某些无法使用时钟管理单元的器件，则应该使用 <code>使能时钟 (clock enable, ce)</code> 。具体方法就是：时钟还是使用原始的未分频的时钟，分频信号用来当作使能端来用。</p>
+<p>如果一定要使用分频时钟：</p>
+<ol>
+<li>
+<p>对于资源比较丰富的 FPGA</p>
+<p>使用内部提供的 PLL/DLL，输出时钟信号可以配置成不同的频率（倍频/分频）和相位，这样的分频时钟是最稳定的。</p>
+</li>
+<li>
+<p>对于无法使用 PLL/DLL 的 FPGA</p>
+<p>对于这些情况，首先检查是否可以用 <code>CE</code> (clock enable) 来代替分频时钟，如果不行，则使用 <a href="http://guqian110.github.io/pages/2014/10/13/clock_dividers.html">时钟分频器</a> 中讨论的分频方法。</p>
+</li>
+</ol>
 <p><br></p>
 <h2>Other Tips</h2>
 <hr />
@@ -261,10 +271,10 @@
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/10/13/clock_dividers.html">时钟分频器</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/10/13/clock_dividers.html">时钟分频器</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
     </ul>
 </section>
     <hr />
