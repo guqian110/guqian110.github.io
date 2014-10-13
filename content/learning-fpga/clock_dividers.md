@@ -174,7 +174,7 @@ Timing:
     
 所以可以用 3 次 8 分频 + 7 次 9 分频得到 8.7 分频。因为 `10 -7 = 3`，前 3 次累积之和都小于 10，所以前 3 次进行 9 分频，第四次累积值为 12，去除进位后余 2，待下次继续累积，第四次结果 12 > 10，所以进行 8 分频。分频方案如下图所示：
 
-![example](/iamges/clock-dividers/example.png)
+![example](/images/clock-dividers/example.png)
 
 [blog1]: http://blog.sina.com.cn/s/blog_6840802c0100izey.html
 
