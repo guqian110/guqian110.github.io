@@ -85,11 +85,13 @@ wikipedia 上的[小故事][story]：
 
 1. 解决包依赖关系：安装 openjdk-7-jre (openjdk-6-jre, sun's java 6 runtime, the sun-java6-jre package, the oracle JRE 7 应该也可以)
 
+        #!Shell
         sudo apt-get install openjdk-7-jre
     
 2. 下载合适的 [Arduino IDE][ide]
 3. 解压、切换到解压路径，运行目录下的 `arduino` 脚本
 
+        #!Shell
         tar -zxvf arduino-1.0.5-linux32.tgz
         cd arduino-1.0.5
         ./arduino
@@ -98,10 +100,12 @@ wikipedia 上的[小故事][story]：
 
 1. 下载 & 安装
 
+        #!Shell
         sudo apt-get install arduino arduino-core
 
 2. 运行
 
+        #!Shell
         $ arduino
 
 [windows]: http://arduino.cc/en/Guide/Windows
@@ -124,6 +128,7 @@ Arduino IDE 是用 Java 写的跨平台的程序，它源自 [Processing program
 
 Arduino 的示例程序 "Blink"：(等同于 C 的 hello world，对于硬件最简单就是控制一个 LED 的亮灭)
 
+    #!Arduino
     /*
     Blink
     Turns on an LED on for one second, then off for one second, repeatedly.
