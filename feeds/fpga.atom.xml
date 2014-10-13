@@ -73,16 +73,18 @@
 &lt;/ol&gt;
 &lt;p&gt;在 &lt;a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960"&gt;The Art&lt;/a&gt; 中，举例介绍了 3 分频的情况：&lt;/p&gt;
 &lt;p&gt;Schematic:&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/clock-dividers/divide_3_sch.png"&gt;schematic&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="schematic" src="/images/clock-dividers/divide_3_sch.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Timing:&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/clock-dividers/divide_3_timing.png"&gt;timing&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="timing" src="/images/clock-dividers/divide_3_timing.png" /&gt;&lt;/p&gt;
 &lt;h3&gt;half integer clock divider&lt;/h3&gt;
 &lt;p&gt;这种分频系数为 (N+1/2)，应该归类到小数分频中，但是因为它的小数部分是特殊的 1/2，所以可以在前面的讨论的基础上得到。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960"&gt;The Art&lt;/a&gt; 中分类讨论了半整数分频：&lt;/p&gt;
 &lt;h4&gt;50% Duty Cycle&lt;/h4&gt;
 &lt;p&gt;以 1.5 分频为例，&lt;/p&gt;
 &lt;p&gt;Schematic:&lt;/p&gt;
+&lt;p&gt;&lt;a href="/images/clock-dividers/divide_1_5_sch.png"&gt;1.5 sch&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Timing:&lt;/p&gt;
+&lt;p&gt;&lt;a href="/images/clock-dividers/divide_1_5_timing.png"&gt;1.5 timing&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;这种方法在仿真的时候是没有问题的，但是综合时可能会产生致命的问题：在切换时钟时，如果两路时钟信号的时延不相等，那么切换的时候就会产生毛刺。&lt;/p&gt;
 &lt;p&gt;(Xilinx 提供的原语 &lt;code&gt;BUFGMUX&lt;/code&gt; 有去除切换时钟时候的毛刺的功能，但是它只适用于全局时钟网络)&lt;/p&gt;
 &lt;h4&gt;Non 50% Duty Cycle&lt;/h4&gt;
@@ -96,7 +98,7 @@
 &lt;p&gt;首先，可以采用长度为 (2N+1) 的移位寄存器，这些寄存器中只有一个是 1，其他都是 0，然后在时钟的驱动下循环移位，则就有了 (2N+1) 个时钟周期的计数。&lt;/p&gt;
 &lt;p&gt;其次，两个脉冲可以从这个移位寄存器中选取两个作为输出，但是不能简单地直接使用，因为无论怎样选择，这两个脉冲都不是等间隔分布的（一共 2N+1 个计数，抽取 2 个，剩余 2N-1 个计数，那么 2N-1 是个奇数，无法平分为两部分，所以不是等间隔的）。所以难点就在于如何得到两个等间隔的分布。The Art 的解决方法如下，以 4.5 分频为例：&lt;/p&gt;
 &lt;p&gt;Timing:&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/clock-dividers/divide_4_5_timing.png"&gt;4.5 timing&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="4.5 timing" src="/images/clock-dividers/divide_4_5_timing.png" /&gt;&lt;/p&gt;
 &lt;p&gt;从图中可以看到，当选择了两个连续的寄存器 (A, B)相或作为第一个脉冲输出之后，再选取相隔 N 的两个连续的寄存器 (C, D)，把它们移动半个时钟周期后，和原始的 D 相或，作为第二个脉冲输出，容易分析，它们是等间隔的。&lt;/p&gt;
 &lt;h3&gt;fraction divider&lt;/h3&gt;
 &lt;p&gt;大概有两种方法吧：&lt;/p&gt;
@@ -133,7 +135,7 @@
 
 
 &lt;p&gt;所以可以用 3 次 8 分频 + 7 次 9 分频得到 8.7 分频。因为 &lt;code&gt;10 -7 = 3&lt;/code&gt;，前 3 次累积之和都小于 10，所以前 3 次进行 9 分频，第四次累积值为 12，去除进位后余 2，待下次继续累积，第四次结果 12 &amp;gt; 10，所以进行 8 分频。分频方案如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;a href="/iamges/clock-dividers/example.png"&gt;example&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="example" src="/iamges/clock-dividers/example.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Summary&lt;/h2&gt;
 &lt;hr /&gt;

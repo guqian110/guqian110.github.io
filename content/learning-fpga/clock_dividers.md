@@ -84,11 +84,11 @@ Summary: 总结常用的时钟分频方法
 
 Schematic:
 
-[schematic](/images/clock-dividers/divide_3_sch.png)
+![schematic](/images/clock-dividers/divide_3_sch.png)
 
 Timing:
 
-[timing](/images/clock-dividers/divide_3_timing.png)
+![timing](/images/clock-dividers/divide_3_timing.png)
 
 [art]: http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960
 
@@ -104,7 +104,11 @@ Timing:
 
 Schematic:
 
+[1.5 sch](/images/clock-dividers/divide_1_5_sch.png)
+
 Timing:
+
+[1.5 timing](/images/clock-dividers/divide_1_5_timing.png)
 
 这种方法在仿真的时候是没有问题的，但是综合时可能会产生致命的问题：在切换时钟时，如果两路时钟信号的时延不相等，那么切换的时候就会产生毛刺。
 
@@ -126,7 +130,7 @@ Timing:
 
 Timing:
 
-[4.5 timing](/images/clock-dividers/divide_4_5_timing.png)
+![4.5 timing](/images/clock-dividers/divide_4_5_timing.png)
 
 从图中可以看到，当选择了两个连续的寄存器 (A, B)相或作为第一个脉冲输出之后，再选取相隔 N 的两个连续的寄存器 (C, D)，把它们移动半个时钟周期后，和原始的 D 相或，作为第二个脉冲输出，容易分析，它们是等间隔的。
 
@@ -170,7 +174,7 @@ Timing:
     
 所以可以用 3 次 8 分频 + 7 次 9 分频得到 8.7 分频。因为 `10 -7 = 3`，前 3 次累积之和都小于 10，所以前 3 次进行 9 分频，第四次累积值为 12，去除进位后余 2，待下次继续累积，第四次结果 12 > 10，所以进行 8 分频。分频方案如下图所示：
 
-[example](/iamges/clock-dividers/example.png)
+![example](/iamges/clock-dividers/example.png)
 
 [blog1]: http://blog.sina.com.cn/s/blog_6840802c0100izey.html
 

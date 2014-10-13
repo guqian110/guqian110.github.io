@@ -188,16 +188,18 @@
 </ol>
 <p>在 <a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art</a> 中，举例介绍了 3 分频的情况：</p>
 <p>Schematic:</p>
-<p><a href="/images/clock-dividers/divide_3_sch.png">schematic</a></p>
+<p><img alt="schematic" src="/images/clock-dividers/divide_3_sch.png" /></p>
 <p>Timing:</p>
-<p><a href="/images/clock-dividers/divide_3_timing.png">timing</a></p>
+<p><img alt="timing" src="/images/clock-dividers/divide_3_timing.png" /></p>
 <h3>half integer clock divider</h3>
 <p>这种分频系数为 (N+1/2)，应该归类到小数分频中，但是因为它的小数部分是特殊的 1/2，所以可以在前面的讨论的基础上得到。</p>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art</a> 中分类讨论了半整数分频：</p>
 <h4>50% Duty Cycle</h4>
 <p>以 1.5 分频为例，</p>
 <p>Schematic:</p>
+<p><a href="/images/clock-dividers/divide_1_5_sch.png">1.5 sch</a></p>
 <p>Timing:</p>
+<p><a href="/images/clock-dividers/divide_1_5_timing.png">1.5 timing</a></p>
 <p>这种方法在仿真的时候是没有问题的，但是综合时可能会产生致命的问题：在切换时钟时，如果两路时钟信号的时延不相等，那么切换的时候就会产生毛刺。</p>
 <p>(Xilinx 提供的原语 <code>BUFGMUX</code> 有去除切换时钟时候的毛刺的功能，但是它只适用于全局时钟网络)</p>
 <h4>Non 50% Duty Cycle</h4>
@@ -211,7 +213,7 @@
 <p>首先，可以采用长度为 (2N+1) 的移位寄存器，这些寄存器中只有一个是 1，其他都是 0，然后在时钟的驱动下循环移位，则就有了 (2N+1) 个时钟周期的计数。</p>
 <p>其次，两个脉冲可以从这个移位寄存器中选取两个作为输出，但是不能简单地直接使用，因为无论怎样选择，这两个脉冲都不是等间隔分布的（一共 2N+1 个计数，抽取 2 个，剩余 2N-1 个计数，那么 2N-1 是个奇数，无法平分为两部分，所以不是等间隔的）。所以难点就在于如何得到两个等间隔的分布。The Art 的解决方法如下，以 4.5 分频为例：</p>
 <p>Timing:</p>
-<p><a href="/images/clock-dividers/divide_4_5_timing.png">4.5 timing</a></p>
+<p><img alt="4.5 timing" src="/images/clock-dividers/divide_4_5_timing.png" /></p>
 <p>从图中可以看到，当选择了两个连续的寄存器 (A, B)相或作为第一个脉冲输出之后，再选取相隔 N 的两个连续的寄存器 (C, D)，把它们移动半个时钟周期后，和原始的 D 相或，作为第二个脉冲输出，容易分析，它们是等间隔的。</p>
 <h3>fraction divider</h3>
 <p>大概有两种方法吧：</p>
@@ -248,7 +250,7 @@
 
 
 <p>所以可以用 3 次 8 分频 + 7 次 9 分频得到 8.7 分频。因为 <code>10 -7 = 3</code>，前 3 次累积之和都小于 10，所以前 3 次进行 9 分频，第四次累积值为 12，去除进位后余 2，待下次继续累积，第四次结果 12 &gt; 10，所以进行 8 分频。分频方案如下图所示：</p>
-<p><a href="/iamges/clock-dividers/example.png">example</a></p>
+<p><img alt="example" src="/iamges/clock-dividers/example.png" /></p>
 <p><br></p>
 <h2>Summary</h2>
 <hr />
@@ -265,11 +267,11 @@
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/03/learning_fpga_getting_started.html">学习 FPGA 入门</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
     </ul>
 </section>
     <hr />
