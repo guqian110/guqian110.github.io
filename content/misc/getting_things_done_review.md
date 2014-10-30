@@ -66,7 +66,7 @@ GTD 书里面最终目的就是帮助我们达到所谓的 “黑带” `black b
 
 ### Workflow
 
-![workflow](/images/getting-things-dong-review/workflow.png)
+![workflow](/images/getting-things-done-review/workflow.png)
 
 ### Methodology
 
