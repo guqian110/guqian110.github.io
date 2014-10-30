@@ -20,7 +20,9 @@ Summary: 总结 GTD 方法。
 网上有很多介绍 GTD 方法论的博客：
 
 [小强的时间管理博客][gtdlife]
+
 [学无止境@一点一滴][gtdstudy]
+
 [褪墨・时间管理][mifengtd]
 
 这些大多是专业的培训师之类的人写的博客，里面的内容很全面也很详细（总共可能有 100+ 的文章），但是阅读体验却不好。我想主要原因是他们作为培训师、讲师身份，只有复杂、系统地介绍才能衬托出他们的专业。而作为一个普通人，我相信很多人都体验都是：好大一碗成功学鸡汤 =.=
@@ -64,7 +66,7 @@ GTD 书里面最终目的就是帮助我们达到所谓的 “黑带” `black b
 
 ### Workflow
 
-![workflow](/images/get-things-dong-review/workflow.png)
+![workflow](/images/getting-things-dong-review/workflow.png)
 
 ### Methodology
 
@@ -170,12 +172,6 @@ GTD 的方法其实并不高深，它实际上主要就是解决了两个问题�
 
 简单的功能可以帮助我们集中注意力，Google 的很多产品都遵循这个原则，比如 Calendar、Task、Keep、Translate 等，而 Evernote 虽然功能强大，但是有时候让我无从下手，不想打开；当然关键功能必须要有，比如最近很火的一款应用 Todist，作为一款 todo list 类型的软件，免费版本却没有提醒功能，他们是有多想挣钱啊 =.=
 
-### Mind Map
-
-最后贴上一张我总结的 MM：
-
-![gtd mm](/images/getting-things-done-review/gtd_mm.png)
-
 <br>
 
 ## Review
@@ -199,9 +195,20 @@ GTD 的方法其实并不高深，它实际上主要就是解决了两个问题�
 |Calendar| Google Calendar|
 |Reminder & Memo|Google Keep|
 
+
 说明一下选择 EN 的最大的理由：它的跨平台性，Windows + *nix + Andriod，基本涵盖了我校园（宿舍 + 实验室）的生活，至于 Google 就不用说了，Gmail + Calendar + Keep + Drive 的组合别说有多舒服了～
 
 关于 “Next Action List”，我个人觉得并不是特别适合我，就平时的事（学习 + 项目 + 杂事）而言，学习和项目很难用 Next Action 来做计划，而杂事都是一些鸡毛蒜皮的小事，用不着分步骤来完成。我每天都活动基本上是固定的，哪个时间段干什么早就形成了一种模式，所以我将 “Next Action List” 改为 “Daily Plan”。
+
+<br>
+
+## Mind Map
+
+最后贴上一张我总结的 MM：
+
+![gtd mm](/images/getting-things-done-review/gtd_mm.jpg)
+
+<br>
 
 ## Reference
 
