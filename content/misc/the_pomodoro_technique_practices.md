@@ -1,4 +1,4 @@
-Titile: 番茄工作法 总结 + 实践
+Title: 番茄工作法 总结 + 实践
 Date: 2014-11-02 21:46
 Category: Misc
 Tag: pomodoro technique
