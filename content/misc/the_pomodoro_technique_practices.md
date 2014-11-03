@@ -33,21 +33,21 @@ Summary: 总结 番茄工作法 的方法和实践。
 
 首先，网上贴张别人总结好的 Mind Map (出处见水印)：
 
-[mm](/images/the-pomodoro-technique-practices/mind_map.jpg)
+![mm](/images/the-pomodoro-technique-practices/mind_map.jpg)
 
 番茄工作法非常简单，具有非常强的可操作性，这也是它能风靡世界的原因吧。
 
 番茄工作法一共包含 5 个步骤：
 
-[five stage](/images/the-pomodoro-technique-practices/five_stages.png)
+![five stage](/images/the-pomodoro-technique-practices/five_stages.png)
 
 其中有一些必须遵守的法则：
 
-[rules](/images/the-pomodoro-technique-practices/rules.png)
+![rules](/images/the-pomodoro-technique-practices/rules.png)
 
 也可以用一张图总结出什么是番茄工作法：
 
-[flow](/images/the-pomodoro-technique-practices/workflow.png)
+![flow](/images/the-pomodoro-technique-practices/workflow.png)
 
 综上，找一只笔和几张纸，列出要完成的工作，然后设定计时器，开始工作！就这么简单。
 
