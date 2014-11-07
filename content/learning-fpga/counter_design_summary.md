@@ -263,7 +263,7 @@ ripple counter 的每个 flip-flop 使用前一级的 flip-flop 的输出信号�
 
 示意图：
 
-[ripple counter](/images/counter-design-summary/ripple_counter.png)
+![ripple counter](/images/counter-design-summary/ripple_counter.png)
 
 (ref: http://www.eecs.tufts.edu/~dsculley/tutorial/flopsandcounters/flops6.html)
 

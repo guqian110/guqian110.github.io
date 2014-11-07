@@ -454,7 +454,7 @@
 <p>前面总结的这些计数器都是同步计数器，组成它们的 flip-flop 是由同一个脉冲信号触发的。还有一种计数器是异步计数器，它内部的 flip-flop 不是由同一个脉冲信号触发的。由于 FPGA 特殊的结构原因，在 FPGA 中应该使用同步设计，所以一般 FPGA 不会使用这种计数器。</p>
 <p>ripple counter 的每个 flip-flop 使用前一级的 flip-flop 的输出信号作为触发信号，所以后一级的触发器必须等到前一级的触发器输出之后才能工作，所以对于一个长度为 N 的触发器链，从输入时间开始，要等 N 个触发器依次工作完之后才能输出有效结果。</p>
 <p>示意图：</p>
-<p><a href="/images/counter-design-summary/ripple_counter.png">ripple counter</a></p>
+<p><img alt="ripple counter" src="/images/counter-design-summary/ripple_counter.png" /></p>
 <p>(ref: http://www.eecs.tufts.edu/~dsculley/tutorial/flopsandcounters/flops6.html)</p>
 <p><strong>Adv</strong></p>
 <ol>
