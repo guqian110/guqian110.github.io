@@ -112,7 +112,7 @@
 <hr />
 <p>计数器 在数字电路设计 和 计算机程序设计 中都应用非常广泛，其功能顾名思义，就是用来计数。这里只讨论数字电路设计中的计数器。</p>
 <p>通常，将包含触发器 flip-flop 的电路（即使含有组合电路部分）认为是时序电路。时序电路通常不以电路命名，而是以功能进行分类，分别是 <strong>寄存器</strong> 和 <strong>计数器</strong>。</p>
-<p>计数器 <a href="http://en.wikipedia.org/wiki/Counter">counter</a> 从本质上来说也是寄存器，不过它是在雨点设定好的状态序列中转移，尽管计数器是寄存器的一种特殊形式，通常还是以不同的名称来加以区分。</p>
+<p>计数器 <a href="http://en.wikipedia.org/wiki/Counter">counter</a> 从本质上来说也是寄存器，不过它是在预先设定好的状态序列中转移，尽管计数器是寄存器的一种特殊形式，通常还是以不同的名称来加以区分。</p>
 <p><br></p>
 <h2>Type</h2>
 <p>按照不同的标准来划分，计数器可以有不同的划分方法：</p>
@@ -324,9 +324,9 @@
 </td></tr></table>
 
 <h3>Ring Counter</h3>
-<p>基于线性移位寄存器 <a href="http://en.wikipedia.org/wiki/Linear_feedback_shift_register"><code>LFSR</code> (Linear feedback shift register) </a> 可以衍生出两种计数器：[环形计数器 (ring counter)][ring_counter wiki] 和 扭环计数器（约翰逊计数器）。</p>
+<p>基于线性移位寄存器 <a href="http://en.wikipedia.org/wiki/Linear_feedback_shift_register"><code>LFSR</code> (Linear feedback shift register) </a> 可以衍生出两种计数器：<a href="http://en.wikipedia.org/wiki/Ring_counter">环形计数器 (ring counter)</a> 和 扭环计数器（约翰逊计数器）。</p>
 <p>将 LFSR 中存储的数字设置为独热码的形式，即只有一位为 1，其他位为 0。然后把最后一级的输出直接反馈到第一级的输入，这样，输入和输出组成了一个环形，所以称为 环形计数器。4 bit 的环形计数器电路图如下：</p>
-<p><a href="/images/counter-design-summary/ring_counter.png">ring counter</a></p>
+<p><img alt="ring counter" src="/images/counter-design-summary/ring_counter.png" /></p>
 <p>(ref: http://electronics-course.com/ring-counter)</p>
 <p><strong>Adv</strong></p>
 <ol>
@@ -481,7 +481,7 @@
 <p>在大神 Clifford E. Cummings 的论文 </p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">synthesis and scripting techniques for designing multi-asynchronous clock designs</a></p>
 <p>中有详细介绍如何设计一个 Gray Code Counter 的过程，其基本思想就是利用一个 binary counter 来实现目的，计数器的计数功能由内部的 binary counter 实现，将 binary 的计数结果通过一个 binary2gray 的转换电路转化为 gray code 后再输出；输出的 gray code 反馈回计数器之前，再通过一个 gray2bianry 的电路转化回 binary 形式，以供内部的 binary counter 使用。模块示意图如下：</p>
-<p><a href="/images/counter-design-summary/gray_code_counter.png">gray code counter</a></p>
+<p><img alt="gray code counter" src="/images/counter-design-summary/gray_code_counter.png" /></p>
 <p>代码略...</p>
 <p><br></p>
 <h2>Reference</h2>

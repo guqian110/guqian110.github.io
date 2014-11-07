@@ -3,7 +3,7 @@
 &lt;hr /&gt;
 &lt;p&gt;计数器 在数字电路设计 和 计算机程序设计 中都应用非常广泛，其功能顾名思义，就是用来计数。这里只讨论数字电路设计中的计数器。&lt;/p&gt;
 &lt;p&gt;通常，将包含触发器 flip-flop 的电路（即使含有组合电路部分）认为是时序电路。时序电路通常不以电路命名，而是以功能进行分类，分别是 &lt;strong&gt;寄存器&lt;/strong&gt; 和 &lt;strong&gt;计数器&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;计数器 &lt;a href="http://en.wikipedia.org/wiki/Counter"&gt;counter&lt;/a&gt; 从本质上来说也是寄存器，不过它是在雨点设定好的状态序列中转移，尽管计数器是寄存器的一种特殊形式，通常还是以不同的名称来加以区分。&lt;/p&gt;
+&lt;p&gt;计数器 &lt;a href="http://en.wikipedia.org/wiki/Counter"&gt;counter&lt;/a&gt; 从本质上来说也是寄存器，不过它是在预先设定好的状态序列中转移，尽管计数器是寄存器的一种特殊形式，通常还是以不同的名称来加以区分。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Type&lt;/h2&gt;
 &lt;p&gt;按照不同的标准来划分，计数器可以有不同的划分方法：&lt;/p&gt;
@@ -215,9 +215,9 @@
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;h3&gt;Ring Counter&lt;/h3&gt;
-&lt;p&gt;基于线性移位寄存器 &lt;a href="http://en.wikipedia.org/wiki/Linear_feedback_shift_register"&gt;&lt;code&gt;LFSR&lt;/code&gt; (Linear feedback shift register) &lt;/a&gt; 可以衍生出两种计数器：[环形计数器 (ring counter)][ring_counter wiki] 和 扭环计数器（约翰逊计数器）。&lt;/p&gt;
+&lt;p&gt;基于线性移位寄存器 &lt;a href="http://en.wikipedia.org/wiki/Linear_feedback_shift_register"&gt;&lt;code&gt;LFSR&lt;/code&gt; (Linear feedback shift register) &lt;/a&gt; 可以衍生出两种计数器：&lt;a href="http://en.wikipedia.org/wiki/Ring_counter"&gt;环形计数器 (ring counter)&lt;/a&gt; 和 扭环计数器（约翰逊计数器）。&lt;/p&gt;
 &lt;p&gt;将 LFSR 中存储的数字设置为独热码的形式，即只有一位为 1，其他位为 0。然后把最后一级的输出直接反馈到第一级的输入，这样，输入和输出组成了一个环形，所以称为 环形计数器。4 bit 的环形计数器电路图如下：&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/counter-design-summary/ring_counter.png"&gt;ring counter&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="ring counter" src="/images/counter-design-summary/ring_counter.png" /&gt;&lt;/p&gt;
 &lt;p&gt;(ref: http://electronics-course.com/ring-counter)&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Adv&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
@@ -372,7 +372,7 @@
 &lt;p&gt;在大神 Clifford E. Cummings 的论文 &lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf"&gt;synthesis and scripting techniques for designing multi-asynchronous clock designs&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;中有详细介绍如何设计一个 Gray Code Counter 的过程，其基本思想就是利用一个 binary counter 来实现目的，计数器的计数功能由内部的 binary counter 实现，将 binary 的计数结果通过一个 binary2gray 的转换电路转化为 gray code 后再输出；输出的 gray code 反馈回计数器之前，再通过一个 gray2bianry 的电路转化回 binary 形式，以供内部的 binary counter 使用。模块示意图如下：&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/counter-design-summary/gray_code_counter.png"&gt;gray code counter&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gray code counter" src="/images/counter-design-summary/gray_code_counter.png" /&gt;&lt;/p&gt;
 &lt;p&gt;代码略...&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Reference&lt;/h2&gt;
