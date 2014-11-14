@@ -2337,7 +2337,7 @@ function 中可以使用 &lt;code&gt;if&lt;/code&gt;, &lt;code&gt;case&lt;/code&
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Concurrent Code&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;p&gt;从本质上讲，HDL 是 描述 (Description) 语言，对应的是硬件电路，而硬件电路是时刻工作的，所以，它的代码是并发执行的。只有 &lt;code&gt;process&lt;/code&gt;，&lt;code&gt;function&lt;/code&gt;，&lt;code&gt;procedure&lt;/code&gt; 中的代买是顺序执行的，而且当这些模块作为一个共同的整体时，它们之间也是并行的。&lt;/p&gt;
+&lt;p&gt;从本质上讲，HDL 是 描述 (Description) 语言，对应的是硬件电路，而硬件电路是时刻工作的，所以，它的代码是并发执行的。只有 &lt;code&gt;process&lt;/code&gt;，&lt;code&gt;function&lt;/code&gt;，&lt;code&gt;procedure&lt;/code&gt; 中的代码是顺序执行的，而且当这些模块作为一个共同的整体时，它们之间也是并行的。&lt;/p&gt;
 &lt;p&gt;在并发代码中可以使用下列各项：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -2353,7 +2353,7 @@ function 中可以使用 &lt;code&gt;if&lt;/code&gt;, &lt;code&gt;case&lt;/code&
 &lt;p&gt;&lt;code&gt;block&lt;/code&gt; 语句&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;仔细观察可以发现，其实 when, generate, block 语句和预算语句相比，只是添加了一些条件判断，它们主要的核心还是运算操作符组成的运算，所以，并行代码的核心就是这些并行的运算语句。&lt;/p&gt;
+&lt;p&gt;仔细观察可以发现，其实 when, generate, block 语句和运算语句相比，只是添加了一些条件判断，它们主要的核心还是运算操作符组成的运算，所以，并行代码的核心就是这些并行的运算语句。&lt;/p&gt;
 &lt;h3&gt;&lt;code&gt;when&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;When/else syntax:&lt;/strong&gt;&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
@@ -2512,7 +2512,7 @@ function 中可以使用 &lt;code&gt;if&lt;/code&gt;, &lt;code&gt;case&lt;/code&
 &lt;h2&gt;Signals &amp;amp; Variables&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;VHDL 提供了 &lt;code&gt;signal&lt;/code&gt; 和 &lt;code&gt;variable&lt;/code&gt; 两种对象来处理非静态数据；提供了 &lt;code&gt;constant&lt;/code&gt; 和 &lt;code&gt;generic&lt;/code&gt; 来处理静态数据。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;constant&lt;/code&gt; 和 &lt;code&gt;signal&lt;/code&gt; 是全局的，可以在顺序执行的代码中，也可以在并发执行的代码中；&lt;code&gt;variable&lt;/code&gt; 是局部的，只能值顺序代码中，并且它们的值是不能向外传递的(如果像传递出去，必须先把这个变量值传递给一个信号，再由这个信号传递出去)。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;constant&lt;/code&gt; 和 &lt;code&gt;signal&lt;/code&gt; 是全局的，可以在顺序执行的代码中，也可以在并发执行的代码中；&lt;code&gt;variable&lt;/code&gt; 是局部的，只能值顺序代码中，并且它们的值是不能向外传递的(如果想传递出去，必须先把这个变量值传递给一个信号，再由这个信号传递出去)。&lt;/p&gt;
 &lt;h3&gt;&lt;code&gt;constant&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;constant 可以定义在 package, entity, architecture 中，对应的作用域也不同。&lt;/p&gt;
 &lt;ul&gt;

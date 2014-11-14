@@ -567,7 +567,7 @@
 <p><br></p>
 <h2>Concurrent Code</h2>
 <hr />
-<p>从本质上讲，HDL 是 描述 (Description) 语言，对应的是硬件电路，而硬件电路是时刻工作的，所以，它的代码是并发执行的。只有 <code>process</code>，<code>function</code>，<code>procedure</code> 中的代买是顺序执行的，而且当这些模块作为一个共同的整体时，它们之间也是并行的。</p>
+<p>从本质上讲，HDL 是 描述 (Description) 语言，对应的是硬件电路，而硬件电路是时刻工作的，所以，它的代码是并发执行的。只有 <code>process</code>，<code>function</code>，<code>procedure</code> 中的代码是顺序执行的，而且当这些模块作为一个共同的整体时，它们之间也是并行的。</p>
 <p>在并发代码中可以使用下列各项：</p>
 <ul>
 <li>
@@ -583,7 +583,7 @@
 <p><code>block</code> 语句</p>
 </li>
 </ul>
-<p>仔细观察可以发现，其实 when, generate, block 语句和预算语句相比，只是添加了一些条件判断，它们主要的核心还是运算操作符组成的运算，所以，并行代码的核心就是这些并行的运算语句。</p>
+<p>仔细观察可以发现，其实 when, generate, block 语句和运算语句相比，只是添加了一些条件判断，它们主要的核心还是运算操作符组成的运算，所以，并行代码的核心就是这些并行的运算语句。</p>
 <h3><code>when</code></h3>
 <p><strong>When/else syntax:</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -742,7 +742,7 @@
 <h2>Signals &amp; Variables</h2>
 <hr />
 <p>VHDL 提供了 <code>signal</code> 和 <code>variable</code> 两种对象来处理非静态数据；提供了 <code>constant</code> 和 <code>generic</code> 来处理静态数据。</p>
-<p><code>constant</code> 和 <code>signal</code> 是全局的，可以在顺序执行的代码中，也可以在并发执行的代码中；<code>variable</code> 是局部的，只能值顺序代码中，并且它们的值是不能向外传递的(如果像传递出去，必须先把这个变量值传递给一个信号，再由这个信号传递出去)。</p>
+<p><code>constant</code> 和 <code>signal</code> 是全局的，可以在顺序执行的代码中，也可以在并发执行的代码中；<code>variable</code> 是局部的，只能值顺序代码中，并且它们的值是不能向外传递的(如果想传递出去，必须先把这个变量值传递给一个信号，再由这个信号传递出去)。</p>
 <h3><code>constant</code></h3>
 <p>constant 可以定义在 package, entity, architecture 中，对应的作用域也不同。</p>
 <ul>
@@ -792,9 +792,9 @@
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/04/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/10/13/clock_dividers.html">时钟分频器</a></li>
     </ul>
 </section>
