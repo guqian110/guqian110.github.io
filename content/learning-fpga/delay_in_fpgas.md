@@ -62,7 +62,7 @@ interval is the fact that the switches in the output stage of a digital componen
 
 + 对于上升、下降、关闭时延，可以使用逗号按照顺序将三者分开：
 
-        --!verilog
+        #!verilog
         assign #(1, 2) A_xor_wire = eq0 ^ eq1;
         assign #(1, 2, 3) A_xor_wire = eq0 ^ eq1;
 
@@ -72,7 +72,7 @@ interval is the fact that the switches in the output stage of a digital componen
     
 + 对于最小值、典型值、最大值可以使用分号按照 min:typ:max 的顺序，将 3 者分开：
 
-        --!verilog
+        #!verilog
         assgin #(2:3:4, 3:4:5) A_xor_wire = eq0 ^ eq1;
 
     表示上升时延的 min:typ:max = 2:3:4，下降时延的 min:typ:max = 3:4:5。
@@ -80,7 +80,7 @@ interval is the fact that the switches in the output stage of a digital componen
 
 需要注意到一点是，**当延时出现在 wire 信号的定义处时，会和普通的赋值语句中的延时稍有不同。**
 
-    --!verilog
+    #!verilog
     wire #10 wireA;
     
 这个叫做 `net delay`，它是和 wireA 绑定的，对 wireA 进行的任何赋值必须延迟 10 个时间单位之后才有效。当在连续赋值语句中，延时是属于连续赋值语句的一部分，而不属于 net，所以只在这一句中有效，对其他赋值语句没有影响。

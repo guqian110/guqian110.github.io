@@ -173,30 +173,28 @@ interval is the fact that the switches in the output stage of a digital componen
 <ul>
 <li>
 <p>对于上升、下降、关闭时延，可以使用逗号按照顺序将三者分开：</p>
-<div class="highlight"><pre><span class="o">--!</span><span class="n">verilog</span>
-<span class="n">assign</span> <span class="err">#</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
-<span class="n">assign</span> <span class="err">#</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">assign</span> <span class="p">#(</span><span class="mh">1</span><span class="p">,</span> <span class="mh">2</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
+<span class="k">assign</span> <span class="p">#(</span><span class="mh">1</span><span class="p">,</span> <span class="mh">2</span><span class="p">,</span> <span class="mh">3</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>第一句表示一个异或门上升时延为 1，下降时延为 2，关闭和X时延为两者中的最小值，即 1；</p>
 <p>第二句表示一个异或门的上升、下降、关闭时延分别是 1，2，3，X时延为 3 者中的最小值，即 1。</p>
 </li>
 <li>
 <p>对于最小值、典型值、最大值可以使用分号按照 min:typ:max 的顺序，将 3 者分开：</p>
-<div class="highlight"><pre><span class="o">--!</span><span class="n">verilog</span>
-<span class="n">assgin</span> <span class="err">#</span><span class="p">(</span><span class="mi">2</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="o">:</span><span class="mi">4</span><span class="o">:</span><span class="mi">5</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">assgin</span> <span class="p">#(</span><span class="mh">2</span><span class="o">:</span><span class="mh">3</span><span class="o">:</span><span class="mh">4</span><span class="p">,</span> <span class="mh">3</span><span class="o">:</span><span class="mh">4</span><span class="o">:</span><span class="mh">5</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>表示上升时延的 min:typ:max = 2:3:4，下降时延的 min:typ:max = 3:4:5。</p>
 </li>
 </ul>
 <p>需要注意到一点是，<strong>当延时出现在 wire 信号的定义处时，会和普通的赋值语句中的延时稍有不同。</strong></p>
-<div class="highlight"><pre><span class="o">--!</span><span class="n">verilog</span>
-<span class="n">wire</span> <span class="err">#</span><span class="mi">10</span> <span class="n">wireA</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="kt">wire</span> <span class="p">#</span><span class="mh">10</span> <span class="n">wireA</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>这个叫做 <code>net delay</code>，它是和 wireA 绑定的，对 wireA 进行的任何赋值必须延迟 10 个时间单位之后才有效。当在连续赋值语句中，延时是属于连续赋值语句的一部分，而不属于 net，所以只在这一句中有效，对其他赋值语句没有影响。</p>
 <p><strong>一般来说，assign 语句中的延时特性会被综合工具忽略。</strong>因为综合工具需要完成的功能就是将代码描述映射为逻辑电路，而逻辑电路中的延时是由最基本的单元库和走线延时决定的，用户是无法对逻辑单元指定延时长度的，只能在综合、实现时添加时序约束条件，使工具尽量满足要求。</p>
@@ -269,9 +267,9 @@ chains can cause various design problems, including an increase in a design’s 
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html">FPGA 中的复位设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/10/13/clock_dividers.html">时钟分频器</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
     </ul>
 </section>
     <hr />
