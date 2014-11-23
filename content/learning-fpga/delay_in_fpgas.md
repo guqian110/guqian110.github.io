@@ -1,5 +1,5 @@
 Title: FPGA 中的延时
-Date: 2014-11-23 24:03
+Date: 2014-11-23 14:03
 Category: FPGA
 Tags: FPGA, delay
 Slug: delay__in_fpgas

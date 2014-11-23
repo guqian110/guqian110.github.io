@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>Verilog 中的参数化建模 - Geek Bunny's World</title>
+    <title>FPGA 中的延时 - Geek Bunny's World</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -14,13 +14,13 @@
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Geek Bunny's World" />
             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="Verilog 中的参数化建模"/>
-            <meta property="og:url" content="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html"/>
-            <meta property="og:description" content="总结 Verilog 模块化建模的技术"/>
-            <meta property="article:published_time" content="2014-07-09" />
+            <meta property="og:title" content="FPGA 中的延时"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2014/11/23/delay__in_fpgas.html"/>
+            <meta property="og:description" content="总结电路中的时延及其 FPGA 中的实现"/>
+            <meta property="article:published_time" content="2014-11-23" />
             <meta property="article:section" content="FPGA" />
             <meta property="article:tag" content="FPGA" />
-            <meta property="article:tag" content="parameterization" />
+            <meta property="article:tag" content="delay" />
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -82,17 +82,17 @@
             <ol class="breadcrumb">
                 <li><a href="http://guqian110.github.io" title="Geek Bunny's World"><i class="fa fa-home fa-lg"></i></a></li>
                 <li><a href="http://guqian110.github.io/category/fpga.html" title="FPGA">FPGA</a></li>
-                <li class="active">Verilog 中的参数化建模</li>
+                <li class="active">FPGA 中的延时</li>
             </ol>
 
     <section id="content">
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html"
+                    <a href="http://guqian110.github.io/pages/2014/11/23/delay__in_fpgas.html"
                        rel="bookmark"
-                       title="Permalink to Verilog 中的参数化建模">
-                        Verilog 中的参数化建模
+                       title="Permalink to FPGA 中的延时">
+                        FPGA 中的延时
                     </a>
                 </h1>
             </header>
@@ -102,7 +102,7 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-07-09T23:03:00"> Wed 09 July 2014</time>
+        <i class="fa fa-calendar"></i><time datetime="2014-11-23T14:03:00"> Sun 23 November 2014</time>
     </span>
 
 
@@ -110,363 +110,158 @@
 <span class="label label-default">Tags</span>
 	<a href="http://guqian110.github.io/tag/fpga.html">FPGA</a>
         /
-	<a href="http://guqian110.github.io/tag/parameterization.html">parameterization</a>
+	<a href="http://guqian110.github.io/tag/delay.html">delay</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>和写软件程序一样，我们也希望 Verilog 的模块也可以重利用。要使模块可以重复利用，关键就在于避免硬编码(hard literal)，使模块参数化。</p>
-<p>参数化建模的好处是可以使代码清晰，便于后续维护和修改。</p>
-<p>Verilog 的参数化建模是有一定限制的，它的参数值是编译时计算的，不会引入任何实际的硬件电路。参数必须在编译时确定值。也就是说只能达到动态编译，固态运行，而非软件的动态编译，动态运行。</p>
-<p>这主要是因为它是描述(Description)硬件的语言，而非软件设计(Design)语言。</p>
-<p>比如一个计数器，我们可以设置一个参数来指定它的计数周期(动态编译)，但是这个计数周期在综合之后就是固定值了(固态运行)，不能在运行的时候动态地改为另外一个值(除非电路综合时同时产生了多个计数器，这种情况不算真正意义上的动态运行，而且也达不到真正意义上的动态运行，因为不可能把所有可能的计数器都实现了备用，耗费资源而且没有实际意义)。</p>
-<p>参数化建模的主要目的是：</p>
-<p><strong>提高模块的通用性，只需要修改参数，不用修改其他代码就可以适用于不同的环境中。</strong></p>
-<p>总结一下我找到的资料，具体的参数化建模方法一共就 3 种：</p>
+                <h2>Delay in circuits</h2>
+<p>从模拟电路的知识，我们可以知道 <strong>电路中存在很多类型不同的延时。</strong> 比如：</p>
 <ol>
 <li>
-<p><code>`define</code> 宏定义</p>
+<p><strong>propagation delay</strong></p>
+<p>我们通常假设信号在电平之间变化时瞬间完成的，但是实际情况并不是瞬间完成，电路需要花费一段时间才能完成电平的转化。晶体管的开关特性对于不同的变化有不同的表现：</p>
+<ul>
+<li>
+<p>上升延时 (<code>rising delay</code>)，输出变为 1</p>
 </li>
 <li>
-<p><code>parameter</code> 模块参数化</p>
+<p>下降延时 (<code>falling delay</code>)，输出变为 0</p>
 </li>
 <li>
-<p><code>`ifdef</code> 等 条件编译</p>
-</li>
-</ol>
-<p>下面详细说明</p>
-<p><br></p>
-<h2>Define Macro Substitution</h2>
-<hr />
-<p><code>`define</code> 是编译器指令，功能是全局宏定义的文本代替。它类似于 C 语言中的 <code>#define</code>，用法如下：</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">// define</span>
-<span class="cp">`define     WORD_REG    reg     [31:0]</span>
-
-<span class="c1">// using</span>
-<span class="no">`WORD_REG</span>   <span class="n">reg32</span><span class="p">;</span>
-</pre></div>
-</td></tr></table>
-
-<p><strong>Problem</strong></p>
-<p>`define 定义的宏的作用域是全局的，这种机制会导致两个问题</p>
-<ol>
-<li>
-<p>可能会有在不同文件中发生重定义的问题</p>
+<p>关闭延时 (<code>turn-off delay</code>)，输出变为高阻 Z</p>
 </li>
 <li>
-<p>编译顺序有要求 file-order dependent，必须确保使用前，宏定义有效，所以每个使用到宏定义的源文件必须包含这个头文件，这会导致多重包含的问题。</p>
+<p>输出变为 X 的时延</p>
 </li>
-</ol>
-<p><strong>Solution</strong></p>
-<ol>
-<li>
-<p>对于第一个问题，尽可能把所有的宏定义放在同一个头文件中，比如 "global_define.vh"</p>
-</li>
-<li>
-<p>对于第二个问题，和 C++ 类似，头文件应该使用头文件保护符。</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">// global_define.vh head file</span>
-<span class="no">`ifndef</span> <span class="no">GLOBAL_DEFINE_VH</span>
-<span class="cp">    `define     MAX = 8</span>
-<span class="cp">    `define     SIZE = 4</span>
-    <span class="c1">// ...</span>
-<span class="no">`enif</span>
-</pre></div>
-</td></tr></table>
-
-</li>
-</ol>
-<h3>Guideline</h3>
-<ol>
-<li>
-<p>只有那些要求有全局作用域、并且在其他地方不会被修改的常量才用 define 来定义</p>
-</li>
-<li>
-<p>对于那些只限于模块内的常量，不要使用 define</p>
-</li>
-<li>
-<p>尽可能将所有的 define 都放在同一个文件中，然后在编译时先读取这个文件</p>
-</li>
-<li>
-<p>不要使用 <code>`undef</code> </p>
-</li>
-</ol>
-<h2>Parameter</h2>
-<hr />
-<h3>Parameter</h3>
-<p>应该避免硬编码设计 <code>hard literal</code>，使用参数 <code>parameter</code> 来代替。举个例子</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">// use parameter</span>
-<span class="k">parameter</span>   <span class="no">SIZE</span> <span class="o">=</span> <span class="mh">8</span><span class="p">,</span>
-            <span class="no">MAX</span> <span class="o">=</span> <span class="mh">10</span><span class="p">;</span>
-
-<span class="kt">reg</span>     <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>      <span class="n">din_r</span><span class="p">;</span>
-
-<span class="c1">// DO NOT use hard literal</span>
-<span class="kt">reg</span>     <span class="p">[</span><span class="mh">7</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>     <span class="n">din_r</span><span class="p">;</span>
-</pre></div>
-</td></tr></table>
-
-<h3>Localparam</h3>
-<p>Verilog-2001 中添加了一个新的关键字 <code>localparam</code>，用来定义模块内部的、不能被其他模块修改的局部常量，概念类似于 C++ 中 class 的 protect 成员。</p>
-<p>虽然 localparam 不能被外部模块修改，但是它可以用 parameter 来初始化。</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">parameter</span>  <span class="no">N</span> <span class="o">=</span> <span class="mh">8</span><span class="p">;</span>
-<span class="k">localparam</span> <span class="no">N1</span> <span class="o">=</span> <span class="no">N</span> <span class="o">-</span> <span class="mh">1</span><span class="p">;</span>
-</pre></div>
-</td></tr></table>
-
-<h3>Parameter Redefinition</h3>
-<p>在 Verilog-2001 出现之前，Verilog-1995 中只有两种方法实现参数重定义：</p>
-<ol>
-<li>使用 # 符号，顺序列表重定义</li>
-<li>使用 defparam</li>
-</ol>
-<p>逐个讨论</p>
-<h4>1. Uisng <code>#</code></h4>
-<p><strong>Syntax</strong></p>
-<p>举个栗子，模块 myreg</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">module</span> <span class="n">myreg</span> <span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">);</span>
-    <span class="k">parameter</span>   <span class="n">Trst</span> <span class="o">=</span> <span class="mh">1</span><span class="p">,</span>
-                <span class="n">Tclk</span> <span class="o">=</span> <span class="mh">1</span><span class="p">,</span>
-                <span class="no">SIZE</span> <span class="o">=</span> <span class="mh">4</span><span class="p">;</span>
-    <span class="c1">// ...</span>
-<span class="k">endmodule</span>
-</pre></div>
-</td></tr></table>
-
-<p>在上一层的模块中传递参数例化这个模块</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">module</span>  <span class="n">bad_warpper</span> <span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">)</span>
-    <span class="c1">// legal parameter passing</span>
-    <span class="n">myreg</span>   <span class="p">#(</span><span class="mh">1</span><span class="p">,</span> <span class="mh">1</span><span class="p">,</span> <span class="mh">8</span><span class="p">)</span> <span class="n">r1</span><span class="p">(.</span><span class="n">q</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span> <span class="p">.</span><span class="n">rst</span><span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="p">);</span>
-    <span class="c1">// illegal parameter passing</span>
-    <span class="c1">// myreg #(,,8) r1(.q(q), .d(d), .clk(clk), .rst(rst) );</span>
-<span class="k">endmodule</span>
-</pre></div>
-</td></tr></table>
-
-<p><strong>Pro</strong></p>
-<p>虽然每次例化都要说明所有的参数值，但是比第二种方法好</p>
-<p><strong>Con</strong></p>
-<p>每次例化都要说明所有的参数值。</p>
-<h4>2. Using <code>defparam</code></h4>
-<p><strong>Syntax</strong></p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">defparam</span> <span class="n">path</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
-</pre></div>
-</td></tr></table>
-
-<p>比如在上面的例子中</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">defparam</span>    <span class="n">r1</span><span class="p">.</span><span class="no">SIZE</span> <span class="o">=</span> <span class="mh">8</span><span class="p">;</span>
-</pre></div>
-</td></tr></table>
-
-<p><strong>Pro</strong></p>
-<p>可以放在任何文件的任何地方，不用再重复没有修改的参数值</p>
-<p><strong>Con</strong></p>
-<p>因为 defparam 有这么 "强" 的功能，反而会导致一系列的问题</p>
-<ol>
-<li>
-<p>Hierarchical deparam. </p>
-<p>比如顶层模块使用 defparam 修改子模块的参数，子模块中又使用 defparam 修改顶层模块要传递进来的参数，形成一个环，这样子可能导致综合时不提示错误，但是结果与预期不符。</p>
-</li>
-<li>
-<p>Multiple defparams</p>
-<p>在 单个文件 / 多个文件 中重复定义 defparam，会有微妙的问题，Verilog-1995 中没有定义这种现象，实际结果依赖于使用的综合工具。</p>
-</li>
-</ol>
-<p>因为 defparam 有这么多缺点，所以在 2001 年之前，Synopsys 是不支持 defparam 的，网上很多转载的博客都说 defparam 是不可综合的，实际上在后来，Synopsys 在压力之下添加了对其的支持。而我用 XST 也证明是支持 defparam 可综合。</p>
-<p>综上原因，Verilog Standards Group (VSG) 倡议大家抵制使用 defparam，大神 Clifford E. Cummings 在论文中建议综合工具如果用户坚持使用 defparam 语句，必须添加以一个参数 <code>+Iamstupid</code>...</p>
+</ul>
+<p>原因就是（<a href="http://www.amazon.cn/Digital-Design-An-Embedded-Systems-Approach-Using-Verilog-Ashenden-Peter-J/dp/0123695279">Digital Design (Verilog): An Embedded Systems Approach Using Verilog</a>）：</p>
 <blockquote>
-<p>"The Verilog compiler found a defparam statement in the source code at
-(file_name/line#).
-To use defparam statements in the Verilog source code, you must include the switch
-+Iamstupid on the command line which will degrade compiler performance and introduce
-potential problems but is bug-compatible with Verilog-1995 implementations.
-Defparam statements can be replaced with named parameter redefinition as define by
-the IEEE Verilog-2001 standard."</p>
+<p>One factor that causes signal changes to occur over a nonzero time
+interval is the fact that the switches in the output stage of a digital component, illustrated in Figure 1.15, do not open or close instantaneously. Rather, their resistance changes between near zero and a very large value over some time interval. However, a more significant factor, especially in CMOS circuits, is the fact that logic gates have a significant amount of capacitance at each input.</p>
 </blockquote>
-<p><em>总结一下，可以发现 Verilog-1995 中的两种方法都不怎么好，显然 VSG 也发现了这个问题，所以在 Verilog-2001 中，出现了第三种方法，并且墙裂推荐使用这种新方法。</em></p>
-<h4>3. Using named parameter redefinition</h4>
-<p><strong>Syntax</strong></p>
-<p>类似于模块例化时端口连接的方式，比如上例中只想改变 SIZE 的值</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">myreg</span>   <span class="p">#(.</span><span class="no">SIZE</span><span class="p">(</span><span class="mh">8</span><span class="p">))</span> <span class="n">r1</span><span class="p">(.</span><span class="n">q</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span> <span class="p">.</span><span class="n">rst</span><span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="p">);</span>
-</pre></div>
-</td></tr></table>
-
-<p><strong>Pro</strong></p>
-<p>结合了前两种方法的有点，既显示说明了哪个参数值改变了，也将参数传递放在了实例化的语句中。这种方法是最干净的 (cleanest) 方法，不依赖于任何综合工具。</p>
-<p><strong>Con</strong></p>
-<p>貌似没有～</p>
-<h3>Guideline</h3>
-<ol>
-<li>不要使用 defparam，应该使用 named parameter redefinition。</li>
-</ol>
-<h3>Example</h3>
-<ol>
-<li>
-<p>clock cycle definition</p>
-<p>因为时钟是一个设计中最基本的常量，它不会在随着模块变化，所以应该用 <code>`define</code> 来定义，并且将它放在顶层的头文件中。</p>
+<p>这个答案也解释了为什么在设计中要避免大扇出信号：因为大扇出意味着输出端并联着很多电容，电容负载较大时造成连接信号转换相对较慢的原因。</p>
+<blockquote>
+<p>The total capacitive load is thus the sum of the individual capacitive loads. The effect is to make transitions on the connecting signal correspondingly slower. For CMOS components, this effect is much more significant than the static load of component inputs.</p>
+</blockquote>
+<p>我们可以把对晶体管的讨论推广到其他的数字元件：</p>
+<blockquote>
+<p>A similar argument regarding time taken to switch transistors on and off and to charge and discharge capacitance also applies within a digital component. Without going into the details of a component’s circuit, we can summarize the argument by saying that, due to the switching time of the internal transistors, it takes some time for a change of logic level at an input to cause a corresponding change at the output. We call that time the <code>propagation delay</code>, denoted by <code>tpd</code>, of the component.</p>
+</blockquote>
 </li>
 <li>
-<p>FSM</p>
-<p>在一个设计中可能有不止一个 FSM，而通常 FSM 有一些共同的状态名字，比如 IDLE、READY、READ、WRITE、ERROR、DONE 等，所以应该用 <code>localparam</code> 来定义这些常量。</p>
+<p><strong>wire delay</strong></p>
+<p>另外一种延时是信号在导线上传播时产生的延时，一般我们都把这种延时假设也 0，也就是说导线时理想的导体，信号经由导线的传输没有任何延迟。如果导线很短，或者芯片上不超过 1mm 的导线来说，这种假设是合理的。但是当设计高速电路时，不能忽略这种导线存在的寄生电容和电感，这时候导线应该被视为传输线，必须精心设计。</p>
+<p>至于如何设计应该属于模拟电路的部分，这里不讨论。</p>
 </li>
 </ol>
+<p>关于上面的两种延时，<a href="http://www.amazon.com/FPGA-Based-System-paperback-Prentice-Semiconductor/dp/0137033486">FPGA-Based System Design</a> 里面有详细讨论如何建模、如何计算具体时延的值。</p>
+<p>即使对于同一种信号跳变，延时也分为不同的类型：</p>
+<ul>
+<li>
+<p>最小值 (<code>minimum</code>)</p>
+</li>
+<li>
+<p>典型值 (<code>typical</code>)</p>
+</li>
+<li>
+<p>最大值 (<code>maximum</code>)</p>
+</li>
+</ul>
 <p><br></p>
-<h2>Conditional Compilation</h2>
-<hr />
-<p>Verilog 的条件编译和 C 也十分类似。前面介绍 define 时，已经用到了条件编译中的 <code>`ifdef</code>。条件编译一共有 5 个关键字，分别是：</p>
-<div class="highlight"><pre><span class="err">`</span><span class="n">ifdef</span>  <span class="err">`</span><span class="k">else</span>   <span class="err">`</span><span class="n">elsif</span>  <span class="err">`</span><span class="n">endif</span>  <span class="err">`</span><span class="n">ifndef</span>
+<h2>Models in Verilog HDL</h2>
+<p>为了对电路中的时延现象进行建模，Verilog HDL 定义了延时语法。</p>
+<ul>
+<li>
+<p>对于上升、下降、关闭时延，可以使用逗号按照顺序将三者分开：</p>
+<div class="highlight"><pre><span class="o">--!</span><span class="n">verilog</span>
+<span class="n">assign</span> <span class="err">#</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
+<span class="n">assign</span> <span class="err">#</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
 </pre></div>
 
 
-<p>条件编译一般在以下情况中使用</p>
+<p>第一句表示一个异或门上升时延为 1，下降时延为 2，关闭和X时延为两者中的最小值，即 1；</p>
+<p>第二句表示一个异或门的上升、下降、关闭时延分别是 1，2，3，X时延为 3 者中的最小值，即 1。</p>
+</li>
+<li>
+<p>对于最小值、典型值、最大值可以使用分号按照 min:typ:max 的顺序，将 3 者分开：</p>
+<div class="highlight"><pre><span class="o">--!</span><span class="n">verilog</span>
+<span class="n">assgin</span> <span class="err">#</span><span class="p">(</span><span class="mi">2</span><span class="o">:</span><span class="mi">3</span><span class="o">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="o">:</span><span class="mi">4</span><span class="o">:</span><span class="mi">5</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
+</pre></div>
+
+
+<p>表示上升时延的 min:typ:max = 2:3:4，下降时延的 min:typ:max = 3:4:5。</p>
+</li>
+</ul>
+<p>需要注意到一点是，<strong>当延时出现在 wire 信号的定义处时，会和普通的赋值语句中的延时稍有不同。</strong></p>
+<div class="highlight"><pre><span class="o">--!</span><span class="n">verilog</span>
+<span class="n">wire</span> <span class="err">#</span><span class="mi">10</span> <span class="n">wireA</span><span class="p">;</span>
+</pre></div>
+
+
+<p>这个叫做 <code>net delay</code>，它是和 wireA 绑定的，对 wireA 进行的任何赋值必须延迟 10 个时间单位之后才有效。当在连续赋值语句中，延时是属于连续赋值语句的一部分，而不属于 net，所以只在这一句中有效，对其他赋值语句没有影响。</p>
+<p><strong>一般来说，assign 语句中的延时特性会被综合工具忽略。</strong>因为综合工具需要完成的功能就是将代码描述映射为逻辑电路，而逻辑电路中的延时是由最基本的单元库和走线延时决定的，用户是无法对逻辑单元指定延时长度的，只能在综合、实现时添加时序约束条件，使工具尽量满足要求。</p>
+<p><br></p>
+<h2>Implement</h2>
+<p>Verilog HDL 中的延时语法不可综合并不代表就不能在实际电路中实现延时。</p>
+<p>在实际电路中，不同的情况下需要采用不同的方法来实现延时：一般来说，异步电路的时延通过门延时来完成，比较难预测，而同步电路的时延通过触发器或者计数器来实现。</p>
+<h3>in ASICs</h3>
+<p>在早期的逻辑电路图设计阶段，有且设计者养成了手工加入 Buffer 或者非门调整数据
+延时的习惯，以保证本级模块的时钟对上级模块数据的建立及保持时间的要求。这些做法目
+前主要应用于两种场合：</p>
 <ol>
 <li>
-<p>选择一个模块的不同部分</p>
+<p>分离电路</p>
+<p>使用分立逻辑单元（如 74 系列）搭建数字电路一般为复杂度比较低、系统灵活性比较低的场合。使用分立元件时，由于可以使用的元件比较少，而且一般设计频率比较低，时序裕量比较大，所以采用 Buffer、非门等单元来调整时延时可以接受的。</p>
 </li>
 <li>
-<p>选择不同的时序和结构</p>
-</li>
-<li>
-<p>选择不同的仿真激励</p>
+<p>ASIC 领域</p>
+<p>在 ASIC 中采用这种方法，是以严格的仿真和时序约束为前提的。</p>
 </li>
 </ol>
-<p><strong>Syntax</strong></p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">// example1</span>
-<span class="no">`ifdef</span> <span class="n">text_macro</span>
-    <span class="c1">// do something</span>
-<span class="no">`endif</span>
-
-<span class="c1">// example2</span>
-<span class="no">`ifdef</span> <span class="n">text_macro</span>
-    <span class="c1">// do something</span>
-<span class="no">`else</span>
-    <span class="c1">// do something</span>
-<span class="no">`endif</span>
-
-<span class="c1">// example3</span>
-<span class="no">`ifdef</span> <span class="n">text_macro</span>
-    <span class="c1">// do something</span>
-<span class="no">`elsif</span>
-    <span class="c1">// do something</span>
-<span class="no">`else</span>
-    <span class="c1">// do something</span>
-<span class="no">`endif</span>
-
-<span class="c1">// example4</span>
-<span class="no">`ifndef</span> <span class="n">text_macro</span>
-    <span class="c1">// do something</span>
-<span class="no">`else</span>
-    <span class="c1">// do something</span>
-<span class="no">`endif</span>
-</pre></div>
-</td></tr></table>
-
-<p>条件编译是一个非常好的技术，它可以帮助我们更好的管理代码。</p>
-<p>举个栗子，比如我们写了一个程序，在 debug 阶段，在程序中添加了很多显示中间变量的语句，到最后 release 时，当然要去掉这些语句。最差的方法当然是删掉这些代码，但是如果以后我们还想 debug 时，又得手动写，而且时间长了，我们自己都记不清该加哪些语句了。稍微好点的方法是把它们注释起来，但是同样，时间长了，哪些该注释，那些不该注释又混淆了。最好的方法就是用条件编译。我们可以定义一个宏 DEBUG</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">`define DEBUG</span>
-
-<span class="c1">// conditional compilation</span>
-<span class="no">`ifdef</span> <span class="no">DEBUG</span>
-    <span class="c1">// debug</span>
-<span class="no">`else</span>
-    <span class="c1">// release</span>
-<span class="no">`endif</span>
-</pre></div>
-</td></tr></table>
-
-<p>这样，我们只需要选择是否注释第一行的宏定义就可快速在 debug 和 release 之间切换。</p>
-<p>再比如在 Verilog 的模块中，针对不同的应用环境，我们要实现不同的模块，这时候也可以使用条件编译选择具体综合哪段代码。</p>
-<p><br></p>
-<h2>Summary</h2>
-<hr />
-<p>总结一下，就是一下几点</p>
-<p><strong>Guideline</strong></p>
+<h3>in FPGAs</h3>
+<p>在 ASIC 中采用的添加 Buffer、非门的设计方法并不适合 FPGA/CPLD 等可编程逻辑，在 FPGA 中应该尽量避免这种设计。</p>
+<p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art of Hardware Architecture</a>：</p>
+<blockquote>
+<p>Delay chains occur when two or more consecutive nodes with a single fan-in and a single fan-out are used to cause delay. Often inverters are chained together to add delay. Delay chains generally result from asynchronous design practices, and are sometimes used to resolve race conditions created by other combinational logic. In both FPGA and ASIC, delays can change with each place-and-route. Delay
+chains can cause various design problems, including an increase in a design’s sensitivity to operating conditions, a decrease in a design’s reliability, and difficulties when migrating to different device architecture. <strong>Avoid using delay chains in a design, rely on synchronous practices instead.</strong></p>
+</blockquote>
+<p>总结下来主要就是 3 个原因：</p>
 <ol>
 <li>
-<p>只有那些要求有全局作用域、并且在其他地方不会被修改的常量才用 define 来定义</p>
+<p>设计的可靠度低</p>
+<p>Buffer、非门都是组合逻辑，组合逻辑最大的问题就是容易出现毛刺，电路可靠度不高，这种方法的时序裕量小，对环境敏感（特别是温度），一旦外界环境发生变化，时序可能就会完全紊乱、导致电路瘫痪。</p>
 </li>
 <li>
-<p>对于那些只限于模块内的常量，不要使用 define</p>
+<p>设计的移植难度大</p>
+<p>一旦芯片换代，或者需要将设计移植到不同的器件上时，就必须对延时进行重新调整，电路的可维护性和扩展性差。</p>
 </li>
 <li>
-<p>尽可能将所有的 define 都放在同一个文件中，然后在编译时先读取这个文件</p>
+<p>信号通过多级非门时，综合器可能会将其优化掉。</p>
+<p>虽然可以在代码中添加约束，防止综合器将其优化掉，但是不推荐这种方法，理由见前两条。</p>
+</li>
+</ol>
+<p><a href="http://www.amazon.cn/Xilinx-FPGA%E9%AB%98%E7%BA%A7%E8%AE%BE%E8%AE%A1%E5%8F%8A%E5%BA%94%E7%94%A8-%E6%B1%A4%E7%90%A6/dp/B007TLVUT8">Xilinx FPGA高级设计及应用</a> 介绍了 FPGA 中应该采用的方法：</p>
+<ol>
+<li>
+<p><strong>专门的延时器件</strong></p>
+<p>在 FPGA/CPLD 内部延时电路结构由一种标准的宏单元描述。虽然各家芯片的宏单元描述不同，但总的来说都是 <strong>一些逻辑 + 一个/两个触发器构成</strong>。</p>
+<p>Altera FPGA 中可以对信号加一个或多个 LCELL 来产生一个延时。（Xilinx 的没有查到...）</p>
+<p>虽然厂家提供了延时单元，但是这种延时并不稳定，会随着外界环境（比如温度）的变化而变化，所以并不提倡这种方法。</p>
+<p>网上有人讨论这种方法的应用：<a href="http://bbs.eccn.com/viewthread.php?tid=181856">fpga内部的延时单元</a></p>
 </li>
 <li>
-<p>不要使用 <code>`undef</code> </p>
-</li>
-<li>
-<p>不要使用 defparam，应该使用 named parameter redefinition。</p>
-</li>
-<li>
-<p>需要时使用条件编译</p>
+<p><strong>触发器 or 计数器</strong></p>
+<p>如果延时相对较小，可以使用高频时钟来驱动一个移位寄存器，将待延时的信号当作输入，按照需要的延时来设置移位寄存器的级数，最后的输出即延时的结果。</p>
+<p>如果延时相对较大，可以使用计数器来延时输出。</p>
 </li>
 </ol>
 <p><br></p>
 <h2>Reference</h2>
-<p>IEEE Std 1364-1995</p>
-<p>IEEE Std 1364-2001</p>
-<p><a href="http://www.sunburst-design.com/papers/CummingsHDLCON2002_Parameters_rev1_2.pdf">New Verilog-2001 Techniques for Creating Parameterized Models</a></p>
-<p><a href="http://www.cnblogs.com/oomusou/archive/2008/07/09/verilog_parameter.html">(原创) 如何使用参数式模组? (SOC) (Verilog) (C/C++) (template)</a></p>
-<p><a href="http://blog.chinaaet.com/detail/14875">艾米电子 - 参数与常量，Verilog</a></p>
-<p><a href="http://www.eefocus.com/ilove314/blog/2012-03/231583_52a1d.html">Verilog代码可移植性设计</a></p>
+<p><a href="http://www.amazon.cn/Digital-Design-An-Embedded-Systems-Approach-Using-Verilog-Ashenden-Peter-J/dp/0123695279">Digital Design (Verilog): An Embedded Systems Approach Using Verilog</a></p>
+<p><a href="http://www.amazon.com/FPGA-Based-System-paperback-Prentice-Semiconductor/dp/0137033486">FPGA-Based System Design</a></p>
+<p><a href="http://book.douban.com/subject/1882474/">设计与验证Verilog HDL</a></p>
+<p><a href="http://www.amazon.cn/Xilinx-FPGA%E9%AB%98%E7%BA%A7%E8%AE%BE%E8%AE%A1%E5%8F%8A%E5%BA%94%E7%94%A8-%E6%B1%A4%E7%90%A6/dp/B007TLVUT8">Xilinx FPGA高级设计及应用</a></p>
+<p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art of Hardware Architecture: Design Methods and Techniques for Digital Circuits</a></p>
             </div>
             <!-- /.entry-content -->
 <section class="well" id="related-posts">
@@ -486,8 +281,8 @@ the IEEE Verilog-2001 standard."</p>
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
-            var disqus_identifier = 'parameterization_modeling_in_veriog';
-            var disqus_url = 'http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html';
+            var disqus_identifier = 'delay__in_fpgas';
+            var disqus_url = 'http://guqian110.github.io/pages/2014/11/23/delay__in_fpgas.html';
             var disqus_config = function () {
                 this.language = "zh";
             };
