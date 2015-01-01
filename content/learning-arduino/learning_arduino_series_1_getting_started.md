@@ -3,7 +3,7 @@ Date: 2014-05-27 12:34
 Category: Arduino
 Tags: Arduino, Open-source Hardware
 Slug: learing_arduino_series_1_getting_started
-Author: Chien Gu
+Author: Qian Gu
 Summary: 学习 Arduino，#1 Arduino 入门
 
 ## What is Arduino

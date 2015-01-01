@@ -3,7 +3,7 @@ Date: 2014-07-09 23:03
 Category: FPGA
 Tags: FPGA, parameterization
 Slug: parameterization_modeling_in_veriog
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 Verilog 模块化建模的技术
 
 和写软件程序一样，我们也希望 Verilog 的模块也可以重利用。要使模块可以重复利用，关键就在于避免硬编码(hard literal)，使模块参数化。

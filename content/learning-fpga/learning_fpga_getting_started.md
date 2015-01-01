@@ -3,7 +3,7 @@ Date: 2014-04-03 12:40
 Category: FPGA
 Tags: FPGA
 Slug: learning_fpga_getting_started
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 FPGA 的学习经历，温故而知新。
 
 ## FPGA 是什么

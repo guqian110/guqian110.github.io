@@ -3,7 +3,7 @@ Date: 2014-07-04 23:31
 Category: FPGA
 Tags: FPGA, Sublime Text
 Slug: sublime_text_2_and_verilog
-Author: Chien Gu
+Author: Qian Gu
 Summary: 介绍神器 Sublime Text 在 HDL 方面的简单应用
 
 ## Sublime Text

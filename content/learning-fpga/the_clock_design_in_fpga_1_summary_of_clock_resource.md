@@ -3,7 +3,7 @@ Date: 2014-08-28 22:45
 Category: FPGA
 Tags: FPGA,clock resource
 Slug: the_clock_design_in_fpga_1_summary_of_clock_resource
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 Xilinx FPGA 中的时钟资源
 
 关于一款芯片，最权威、最新的资料当然是厂家的官方文件。很多大牛都推荐直接阅读原厂的 datasheet 和 user guide。根据我的体验，这确实是最好的途径。原因有两个：

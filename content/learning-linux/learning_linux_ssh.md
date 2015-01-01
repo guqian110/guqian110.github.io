@@ -3,7 +3,7 @@ Date: 2014-04-04 17:00
 Category: Linux
 Tags: Linux,SSH
 Slug: learning_linux_ssh
-Author: Chien Gu
+Author: Qian Gu
 Summary: 学习 SSH、SCP 命令，建立两台电脑相互访问 。
 
 实验室的师兄师姐毕业了，继承了他们的旧电脑 。宿舍的笔记本和实验室的电脑出现了相互之间传送同步文件的需求 。想到了两种方法：

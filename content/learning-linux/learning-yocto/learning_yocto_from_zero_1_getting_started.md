@@ -3,7 +3,7 @@ Date: 2014-05-12 12:46
 Category: Linux
 Tags: Linux, Yocto
 Slug: learning_yocto_from_zero_1_getting_started
-Author: Chien Gu
+Author: Qian Gu
 Summary: yocto 从零单排第一期，了解什么是 yocto
 
 最近做嵌入式，开始学习 Yocto 项目相关的知识。网上关于 Yocto 的介绍、博客不少，但是大多数都是英文的。中文博客也有，不过都是一些大牛写的笔记，对于新手来说，并不是很容易懂,于是，就有了我的 “Yocto 从零单排” ^_^

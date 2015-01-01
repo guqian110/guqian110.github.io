@@ -3,7 +3,7 @@ Date: 2014-10-09 23:01
 Category: FPGA
 Tags: FPGA,clock design
 Slug: the_clock_design_in_fpga_3_multiasynchronous_clock_design
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 FPGA 中跨时钟域的设计
 
 [TOC]

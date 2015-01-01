@@ -3,7 +3,7 @@ Date: 2014-04-20 14:32
 Category: Linux
 Tags: Linux,Vim
 Slug: learning_vim_save_project_configuration
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结将 Vim 配置为 IDE 的过程之一，保存项目设置 。
 
 > + 关于 Vim 和 IDE 的争论，这是程序猿的圣战，不再浪费时间 :-D

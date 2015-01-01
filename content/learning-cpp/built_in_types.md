@@ -3,7 +3,7 @@ Date: 2014-03-31 13:37
 Category: C/C++
 Tags: C,C++
 Slug: built_in_types
-Author: Chien Gu
+Author: Qian Gu
 Summary: 重读经典 C++ Primer，总结 C++ 内置数据类型。
 
 类型是程序设计的基础。一些程序设计语言，比如 Smalltalk 和 Python，在运行的时候才检查预计中的对象的类型，想反，C++ 是静态类型（statically typed）语言，在编译时执行类型检查。导致的结果是：

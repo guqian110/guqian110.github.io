@@ -3,7 +3,7 @@ Date: 2014-09-12 12:45
 Category: FPGA
 Tags: FPGA,clock design
 Slug: the_clock_design_in_fpga_2_clock_design
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 FPGA 中的时钟设计方案
 
 > 无论是离散逻辑、可编程逻辑，还是用全定制硅器件实现的任何数字设计，为了成功地操作，可靠的时钟是非常关键的。

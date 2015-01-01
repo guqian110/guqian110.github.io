@@ -3,7 +3,7 @@ Date: 2014-10-30 12:51
 Category: Misc
 Tags: GTD, review
 Slug: getting_things_done_review
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 GTD 方法。
 
 最近了解学习了 GTD，总结一下。

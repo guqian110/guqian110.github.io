@@ -3,7 +3,7 @@ Date: 2014-04-04 01:35
 Category: FPGA
 Tags: FPGA,Verilog
 Slug: writing_synthesizable_code
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结可综合 Verilog HDL 代码，如何编写可综合的代码
 
 对电路建模方法有很多种，可以用绘制原理图，也可以用 *硬件描述语言（Hardware Description Language）* 建模 。硬件描述语言中最常用的就是 Verlilog 和 VHDL 。

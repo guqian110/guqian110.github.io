@@ -3,7 +3,7 @@ Date: 2014-04-09 17:14
 Category: Misc
 Tags: Steve Jobs, review
 Slug: steve_jobs_review
-Author: Chien Gu
+Author: Qian Gu
 Summary: 博客搬家，搬运一些以前写过的文字。 
 
 一直想买本 [《乔布斯传》][jobs]，但是被 ￥68.00 的定价击败了，舍不得花钱买 :D 但是电子书的体验真的太差，看了一半就没有坚持下来。突然发现有个同学有本崭新的《乔布斯传》，于是借来用闲暇时间看了一个多月才看完...

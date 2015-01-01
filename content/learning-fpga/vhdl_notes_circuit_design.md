@@ -3,7 +3,7 @@ Date: 2014-09-16 14:56
 Category: FPGA
 Tags: FPGA, VHDL, syntax
 Slug: vhdl_notes_1_circuit_design
-Author: Chien Gu
+Author: Qian Gu
 Summary: VHDL 笔记, 电路设计
 
 ## Code Structure

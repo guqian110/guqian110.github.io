@@ -3,7 +3,7 @@ Date: 2014-06-20 00:22
 Category: FPGA
 Tags: FPGA, reset
 Slug: the_art_of_reset_design_in_fpga
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 FPGA 中的复位设计
 
 

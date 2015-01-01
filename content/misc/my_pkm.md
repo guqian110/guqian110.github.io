@@ -3,7 +3,7 @@ Date: 2014-05-06 15:57
 Category: Misc
 Tags: PKM 
 Slug: my_pkm 
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结学习习惯和 PKM 工具。
 
 ## PKM

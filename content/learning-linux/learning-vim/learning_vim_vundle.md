@@ -3,7 +3,7 @@ Date: 2014-04-16 17:06
 Category: Linux
 Tags: Linux,Vim
 Slug: learning_vim_vundle
-Author: Chien Gu
+Author: Qian Gu
 Summary: 学习 Vim，使用 Vundle 管理插件 。
 
 学习 Vim，使用 Vundle 管理插件 。

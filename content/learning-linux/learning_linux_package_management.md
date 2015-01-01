@@ -3,7 +3,7 @@ Date: 2014-04-21 13:43
 Category: Linux
 Tags: Linux,Package Management
 Slug: learning_linux_package_management
-Author: Chien Gu
+Author: Qian Gu
 Summary: 安装软件时遇到依赖库版本过高的问题，学习总结 Linux 软件包管理 。
 
 ## Linux 软件包依赖问题

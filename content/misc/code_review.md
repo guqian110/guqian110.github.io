@@ -3,7 +3,7 @@ Date: 2014-03-21 16:33
 Category: Misc
 Tags: Code, review
 Slug: code_review
-Author: Chien Gu
+Author: Qian Gu
 Summary: 最近花了一个星期的时间，终于把 Code 看完了，感慨颇深。
 
 最近花了一个星期的时间，终于把 [*Code*][Code] 看完了，看完全书，观后感总结出来就一个字——爽～

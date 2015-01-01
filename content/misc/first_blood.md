@@ -3,7 +3,7 @@ Date: 2014-03-17 14:29
 Category: Misc
 Tags: Build Blog
 Slug: first_blood
-Author: Chien Gu
+Author: Qian Gu
 Summary: 利用 Markdown + Pelican + Github 搭建属于自己的博客
 
 

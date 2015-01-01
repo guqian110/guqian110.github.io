@@ -3,7 +3,7 @@ Date: 2014-03-19 14:31
 Category: Com
 Tags: Com, Code
 Slug: signed_number_representations
-Author: Chien Gu
+Author: Qian Gu
 Summary: 最近找到一本好书——《编码: 隐匿在计算机软硬件背后的语言》 。作者是大名鼎鼎的 Charles Petzold 。看到用继电器搭建加法器、减法器，讨论二进制编码方式那章，想起一直不是很清楚的原码、反码、补码等，果断 Google、Wiki，于是总结出下文 。
 
 最近找到一本好书——[《编码: 隐匿在计算机软硬件背后的语言》][bianma]。作者是大名鼎鼎的 [Charles Petzold][CPwiki] ([个人网站][CP])。书的介绍也很有意思，据说完全不懂计算机的人也能看懂...于是买了本来拜读一下（这种文章当然是英文版最好了，只是学生党没银子，只好买翻译版了）

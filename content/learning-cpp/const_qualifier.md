@@ -3,7 +3,7 @@ Date: 2014-04-09 11:13
 Category: C/C++
 Tags: C,C++
 Slug: cosnt_qualifier 
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 const 限定符的用法。
 
 ## 为什么要使用 const 限定符

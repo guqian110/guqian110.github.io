@@ -3,7 +3,7 @@ Date: 2014-04-07 16:16
 Category: FPGA
 Tags: FPGA
 Slug: learning_fpga_how_to
-Author: Chien Gu
+Author: Qian Gu
 Summary: 转载一篇初学 FPGA 时看到的文章，感觉对于初学者来说还不错~
 
 学习 FPGA 差不多一年多，长期混迹于各大论坛，让我学习到了很多知识，转载一篇文章。

@@ -3,7 +3,7 @@ Date: 2014-11-4 20:40
 Category: FPGA
 Tag: FPGA, counter design
 Slug: counter_design_summary
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 FPGA 中的计数器设计
 
 ## Introduction

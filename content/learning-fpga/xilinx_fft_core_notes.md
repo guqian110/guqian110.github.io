@@ -3,7 +3,7 @@ Date: 2014-09-02 23:12
 Category: FPGA
 Tags: FPGA, fft
 Slug: xilinx_fft_core_notes
-Author: Chien Gu
+Author: Qian Gu
 Summary: 使用 Xilinx FFT IP core (xfft v7.1) 的笔记
 
 关于 FFT 的背景介绍就不再赘述，通原书和网上的教程、课件很多；关于这个 IP 核的介绍也就不再粘贴复制了，原版的 datasheet 必然是最全面的，仅记录我的使用时遇到的问题和需要注意到细节。

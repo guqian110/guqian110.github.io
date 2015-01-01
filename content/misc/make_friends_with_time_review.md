@@ -3,7 +3,7 @@ Date: 2014-04-25 15:50
 Category: Misc
 Tags: 时间管理, review
 Slug: make_friends_with_time_review
-Author: Chien Gu
+Author: Qian Gu
 Summary: 最近花了两个星期的时间，终于把 《把时间当作朋友》 看完了，写写心得体会。
 
 ## 如梦初醒

@@ -3,7 +3,7 @@ Date: 2014-09-23 23:02
 Category: FPGA
 Tags: FPGA, latch, flip-flop
 Slug: latch_versus_flip_flop
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 Latch 和 Flip-Flop
 
 

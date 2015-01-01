@@ -3,7 +3,7 @@ Date: 2014-09-03 23:16
 Category: Com
 Tags: Com, digital procesing, matlab
 Slug: digital_signal_processing_and_matlab
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结信号处理和matlab相关应用
 
 学了这么多年的通信，却还是对信号处理的知识一知半解，应付考试还可以，但在实际应用中还是感到力不从心，很多知识都忘了。翻了一下午的 《信号与系统》、《数字信号处理》，简单总结一下。

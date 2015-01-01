@@ -3,7 +3,7 @@ Date: 2014-06-05 17:55
 Category: FPGA
 Tags: FPGA, FSM, Verilog
 Slug: fsm_design
-Author: Chien Gu
+Author: Qian Gu
 summary: 博客搬家，温故而知新。
 
 有限状态机是数字电路中经常出现、非常重要的电路，设计一个安全、高效的状态机有一套程序化的方法，我们在数字电路课中就学习过了。搬运以前写的博客，总结一下相关知识，温故而知新～

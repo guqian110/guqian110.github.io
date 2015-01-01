@@ -3,7 +3,7 @@ Date: 2014-03-27 20:52
 Category: FPGA
 Tags: FPGA,Linux
 Slug: install_ise_modelsim_on_ubuntu
-Author: Chien Gu
+Author: Qian Gu
 Summary: 从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来，总结一下 ISE 的安装配置过程。
 
 从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来。

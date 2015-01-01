@@ -3,7 +3,7 @@ Date: 2014-11-02 21:46
 Category: Misc
 Tag: pomodoro technique
 Slug: the_pomodoro_technique_practices
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 番茄工作法 的方法和实践。
 
 忙里偷闲，学习一下大名鼎鼎的 **番茄工作法**。

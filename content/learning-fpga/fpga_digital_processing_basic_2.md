@@ -3,7 +3,7 @@ Date: 2014-07-07 23:28
 Category: FPGA
 Tags: FPGA, digital processing
 Slug: fpga_digital_processing_basic_2
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 FPGA 处理数字信号的基础知识 (2)
 
 讨论 FPGA 中无符号数 unsigned 和有符号数 signed 的问题。
