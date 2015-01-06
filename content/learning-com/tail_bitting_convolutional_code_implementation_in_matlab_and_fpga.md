@@ -127,7 +127,7 @@ convenc 函数有几种方式来调用：
 
 ![sim1](/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim1.png)
 
-![sim2](images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim2.png)
+![sim2](/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim2.png)
 
 和 matlab 中结果对比，结果是一致的。
 
