@@ -173,18 +173,15 @@
 <p>TRELLIS 是 Matlab 内部定义的一种数据结构，它的值可以按照语法定义，更方便的方法是通过 <code>poly2trellis</code> 这个函数，由多项式描述方式转化得到。</p>
 <p>查阅 poly2trellis 的 help 就可以看到它的用法。</p>
 <div class="highlight"><pre><span class="n">trellis</span> <span class="o">=</span> <span class="n">poly2trellis</span><span class="p">(</span><span class="n">ConstraintLength</span><span class="p">,</span> <span class="n">CodeGenerator</span><span class="p">)</span>
+</pre></div>
 
-<span class="err">其中，`</span><span class="n">ConstraintLength</span><span class="err">`</span> <span class="err">是个</span> <span class="mi">1</span><span class="err">×</span><span class="n">k</span> <span class="err">维的向量，表示编码器的约束长度；`</span><span class="n">CodeGenerator</span><span class="err">`</span> <span class="err">是个</span> <span class="n">k</span><span class="err">×</span><span class="n">n</span> <span class="err">维的向量，表示编码器中各个寄存器的抽头。</span>
 
-<span class="n">help</span> <span class="err">中以一个</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span> <span class="err">码率的编码器为例，其结构如下图所示：</span>
-
-<span class="o">!</span><span class="p">[</span><span class="n">exmaple</span><span class="p">](</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">tail</span><span class="o">-</span><span class="n">bitting</span><span class="o">-</span><span class="n">convolutional</span><span class="o">-</span><span class="n">code</span><span class="o">-</span><span class="n">implementation</span><span class="o">-</span><span class="n">in</span><span class="o">-</span><span class="n">matlab</span><span class="o">-</span><span class="n">and</span><span class="o">-</span><span class="n">fpga</span><span class="o">/</span><span class="n">example</span><span class="p">.</span><span class="n">png</span><span class="p">)</span>
-
-<span class="err">两组寄存器的长度分别为</span> <span class="mi">4</span> <span class="err">和</span> <span class="mi">3</span><span class="err">，所以</span> <span class="n">constraintlength</span> <span class="err">的取值为</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span><span class="err">；将每路输出的抽头用</span> <span class="mi">8</span> <span class="err">进制来表示，即可得到</span> <span class="n">codegenerator</span> <span class="err">的取值</span> <span class="p">[</span><span class="mi">27</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">0</span><span class="p">;</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">]</span><span class="err">，表示第一路输出由第一组寄存器的</span> <span class="mi">27</span> <span class="err">组合方式</span> <span class="o">+</span> <span class="err">第二组寄存器的</span> <span class="mi">0</span> <span class="err">组合方式得到，第二路输出由第一组寄存器的</span> <span class="mi">33</span> <span class="err">组合方式</span> <span class="o">+</span> <span class="err">第二组寄存器的</span> <span class="mi">5</span> <span class="err">组合方式得到，第三路同理。</span>
-
-<span class="err">应用到我们的编码器中，很容易写出其栅格描述</span>
-
-    <span class="n">tre</span> <span class="o">=</span> <span class="n">poly2trellis</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="p">[</span><span class="mi">133</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">165</span><span class="p">]);</span>
+<p>其中，<code>ConstraintLength</code> 是个 1×k 维的向量，表示编码器的约束长度；<code>CodeGenerator</code> 是个 k×n 维的向量，表示编码器中各个寄存器的抽头。</p>
+<p>help 中以一个 2/3 码率的编码器为例，其结构如下图所示：</p>
+<p><img alt="exmaple" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/example.png" /></p>
+<p>两组寄存器的长度分别为 4 和 3，所以 constraintlength 的取值为 [5, 4]；将每路输出的抽头用 8 进制来表示，即可得到 codegenerator 的取值 [27, 33, 0; 0, 5, 13]，表示第一路输出由第一组寄存器的 27 组合方式 + 第二组寄存器的 0 组合方式得到，第二路输出由第一组寄存器的 33 组合方式 + 第二组寄存器的 5 组合方式得到，第三路同理。</p>
+<p>应用到我们的编码器中，很容易写出其栅格描述</p>
+<div class="highlight"><pre><span class="n">tre</span> <span class="o">=</span> <span class="n">poly2trellis</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="p">[</span><span class="mi">133</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">165</span><span class="p">]);</span>
 </pre></div>
 
 
@@ -235,8 +232,8 @@
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_tbce.v">testbench</a></p>
 <h3>simulation</h3>
 <p>如下图所示</p>
-<p><img alt="sim1" src="/images/tail-bitting-convolutional-code-implementation-in-matbal-and-fpga/sim1.png" /></p>
-<p><img alt="sim2" src="images/tail-bitting-convolutional-code-implementation-in-matbal-and-fpga/sim2.png" /></p>
+<p><img alt="sim1" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim1.png" /></p>
+<p><img alt="sim2" src="images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim2.png" /></p>
 <p>和 matlab 中结果对比，结果是一致的。</p>
 <h2>Summary</h2>
 <hr />

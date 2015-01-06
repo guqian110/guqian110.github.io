@@ -69,17 +69,17 @@ convenc 函数有几种方式来调用：
 
         trellis = poly2trellis(ConstraintLength, CodeGenerator)
 
-        其中，`ConstraintLength` 是个 1×k 维的向量，表示编码器的约束长度；`CodeGenerator` 是个 k×n 维的向量，表示编码器中各个寄存器的抽头。
+    其中，`ConstraintLength` 是个 1×k 维的向量，表示编码器的约束长度；`CodeGenerator` 是个 k×n 维的向量，表示编码器中各个寄存器的抽头。
 
-        help 中以一个 2/3 码率的编码器为例，其结构如下图所示：
+    help 中以一个 2/3 码率的编码器为例，其结构如下图所示：
 
-        ![exmaple](/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/example.png)
+    ![exmaple](/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/example.png)
 
-        两组寄存器的长度分别为 4 和 3，所以 constraintlength 的取值为 [5, 4]；将每路输出的抽头用 8 进制来表示，即可得到 codegenerator 的取值 [27, 33, 0; 0, 5, 13]，表示第一路输出由第一组寄存器的 27 组合方式 + 第二组寄存器的 0 组合方式得到，第二路输出由第一组寄存器的 33 组合方式 + 第二组寄存器的 5 组合方式得到，第三路同理。
+    两组寄存器的长度分别为 4 和 3，所以 constraintlength 的取值为 [5, 4]；将每路输出的抽头用 8 进制来表示，即可得到 codegenerator 的取值 [27, 33, 0; 0, 5, 13]，表示第一路输出由第一组寄存器的 27 组合方式 + 第二组寄存器的 0 组合方式得到，第二路输出由第一组寄存器的 33 组合方式 + 第二组寄存器的 5 组合方式得到，第三路同理。
 
-        应用到我们的编码器中，很容易写出其栅格描述
+    应用到我们的编码器中，很容易写出其栅格描述
 
-            tre = poly2trellis(7, [133, 171, 165]);
+        tre = poly2trellis(7, [133, 171, 165]);
 
 + 第三个参数 INIT_STATE 是移位寄存器的初始值
 
@@ -125,9 +125,9 @@ convenc 函数有几种方式来调用：
 
 如下图所示
 
-![sim1](/images/tail-bitting-convolutional-code-implementation-in-matbal-and-fpga/sim1.png)
+![sim1](/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim1.png)
 
-![sim2](images/tail-bitting-convolutional-code-implementation-in-matbal-and-fpga/sim2.png)
+![sim2](images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim2.png)
 
 和 matlab 中结果对比，结果是一致的。
 

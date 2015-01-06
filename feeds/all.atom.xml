@@ -64,18 +64,15 @@
 &lt;p&gt;TRELLIS 是 Matlab 内部定义的一种数据结构，它的值可以按照语法定义，更方便的方法是通过 &lt;code&gt;poly2trellis&lt;/code&gt; 这个函数，由多项式描述方式转化得到。&lt;/p&gt;
 &lt;p&gt;查阅 poly2trellis 的 help 就可以看到它的用法。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;trellis&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;poly2trellis&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ConstraintLength&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;CodeGenerator&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
-&lt;span class="err"&gt;其中，`&lt;/span&gt;&lt;span class="n"&gt;ConstraintLength&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;是个&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;×&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="err"&gt;维的向量，表示编码器的约束长度；`&lt;/span&gt;&lt;span class="n"&gt;CodeGenerator&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;是个&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="err"&gt;×&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="err"&gt;维的向量，表示编码器中各个寄存器的抽头。&lt;/span&gt;
 
-&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="err"&gt;中以一个&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="err"&gt;码率的编码器为例，其结构如下图所示：&lt;/span&gt;
-
-&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;exmaple&lt;/span&gt;&lt;span class="p"&gt;](&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;images&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;bitting&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;convolutional&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;implementation&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;matlab&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;and&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpga&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;png&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="err"&gt;两组寄存器的长度分别为&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="err"&gt;和&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="err"&gt;，所以&lt;/span&gt; &lt;span class="n"&gt;constraintlength&lt;/span&gt; &lt;span class="err"&gt;的取值为&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="err"&gt;；将每路输出的抽头用&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="err"&gt;进制来表示，即可得到&lt;/span&gt; &lt;span class="n"&gt;codegenerator&lt;/span&gt; &lt;span class="err"&gt;的取值&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;27&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="err"&gt;，表示第一路输出由第一组寄存器的&lt;/span&gt; &lt;span class="mi"&gt;27&lt;/span&gt; &lt;span class="err"&gt;组合方式&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;第二组寄存器的&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="err"&gt;组合方式得到，第二路输出由第一组寄存器的&lt;/span&gt; &lt;span class="mi"&gt;33&lt;/span&gt; &lt;span class="err"&gt;组合方式&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;第二组寄存器的&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="err"&gt;组合方式得到，第三路同理。&lt;/span&gt;
-
-&lt;span class="err"&gt;应用到我们的编码器中，很容易写出其栅格描述&lt;/span&gt;
-
-    &lt;span class="n"&gt;tre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;poly2trellis&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;133&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;171&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;165&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+&lt;p&gt;其中，&lt;code&gt;ConstraintLength&lt;/code&gt; 是个 1×k 维的向量，表示编码器的约束长度；&lt;code&gt;CodeGenerator&lt;/code&gt; 是个 k×n 维的向量，表示编码器中各个寄存器的抽头。&lt;/p&gt;
+&lt;p&gt;help 中以一个 2/3 码率的编码器为例，其结构如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="exmaple" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/example.png" /&gt;&lt;/p&gt;
+&lt;p&gt;两组寄存器的长度分别为 4 和 3，所以 constraintlength 的取值为 [5, 4]；将每路输出的抽头用 8 进制来表示，即可得到 codegenerator 的取值 [27, 33, 0; 0, 5, 13]，表示第一路输出由第一组寄存器的 27 组合方式 + 第二组寄存器的 0 组合方式得到，第二路输出由第一组寄存器的 33 组合方式 + 第二组寄存器的 5 组合方式得到，第三路同理。&lt;/p&gt;
+&lt;p&gt;应用到我们的编码器中，很容易写出其栅格描述&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;tre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;poly2trellis&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;133&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;171&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;165&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -126,8 +123,8 @@
 &lt;p&gt;&lt;a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_tbce.v"&gt;testbench&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;simulation&lt;/h3&gt;
 &lt;p&gt;如下图所示&lt;/p&gt;
-&lt;p&gt;&lt;img alt="sim1" src="/images/tail-bitting-convolutional-code-implementation-in-matbal-and-fpga/sim1.png" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="sim2" src="images/tail-bitting-convolutional-code-implementation-in-matbal-and-fpga/sim2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="sim1" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="sim2" src="images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim2.png" /&gt;&lt;/p&gt;
 &lt;p&gt;和 matlab 中结果对比，结果是一致的。&lt;/p&gt;
 &lt;h2&gt;Summary&lt;/h2&gt;
 &lt;hr /&gt;
