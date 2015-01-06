@@ -1,5 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/com.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-09-03T23:16:00+08:00</updated><entry><title>数字信号处理和相关matlab函数总结</title><link href="http://guqian110.github.io/pages/2014/09/03/digital_signal_processing_and_matlab.html" rel="alternate"></link><updated>2014-09-03T23:16:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-09-03:pages/2014/09/03/digital_signal_processing_and_matlab.html</id><summary type="html">&lt;p&gt;学了这么多年的通信，却还是对信号处理的知识一知半解，应付考试还可以，但在实际应用中还是感到力不从心，很多知识都忘了。翻了一下午的 《信号与系统》、《数字信号处理》，简单总结一下。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/com.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-07T00:00:00+08:00</updated><entry><title>LTE 咬尾卷积编码器的 Matlab 及 FPGA 实现</title><link href="http://guqian110.github.io/pages/2015/01/07/tail_bitting_convolutional_code_implementation_in_matlab_and_fpga.html" rel="alternate"></link><updated>2015-01-07T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-07:pages/2015/01/07/tail_bitting_convolutional_code_implementation_in_matlab_and_fpga.html</id><summary type="html">&lt;h2&gt;Tail Bitting&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;咬尾卷积编码是一种特殊的卷积编码，它通过将编码器的移位寄存器的初始值设置为输入流的尾比特值，使得移位寄存器的初始和最终状态相同。和普通的卷积编码相比，咬尾的方案最大的优点是克服了编码时的码率损失，并且适合迭代译码，不过付出的代价是译码复杂度的增加。在 LTE 的标准中，咬尾卷积编码是一种备选的信道编码方案。&lt;/p&gt;
+&lt;p&gt;通常以 (n, k, K) 来描述卷积编码，其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;k&lt;/code&gt; 表示编码器的 &lt;em&gt;输入码元数&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;n&lt;/code&gt; 表示编码器的 &lt;em&gt;输出码元数&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;K&lt;/code&gt; 表示编码器的 &lt;em&gt;约束长度&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由输入的 k 个信息比特，得到 n 个编码结果，所以 &lt;em&gt;编码效率&lt;/em&gt; = k/n&lt;/p&gt;
+&lt;p&gt;约束长度 &lt;code&gt;K&lt;/code&gt; 的意思是，编码结果不仅取决于当前输入的 k 比特信息，还取决于前 (K-1) 段时间内的信息位。在 k = 1 的条件下，编码器需要的 &lt;em&gt;移位寄存器级数&lt;/em&gt; m = K - 1。&lt;/p&gt;
+&lt;p&gt;LTE 标准中编码器的结构如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="coder" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/coder.jpg" /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;假设输入的比特流为 c1, c2, c3, ... 得到的编码结果为 d1, d2, d3, ...&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;其中移位寄存器 D 从左到右一次是 S0, S1, ... S5。对其初始化时，S0 = Ck-1, S1 = Ck-2, ... S5 = Ck-6。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进行编码时，有抽头的寄存器之间进行模 2 加法（即异或）运算。每次对一个输入信息完成编码之后，移位寄存器右移一位，抛弃最右端的移位结果，采用前一个输入作为最左端的信息位。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;当最后的比特进行编码完之后，寄存器又回到了设定的初始状态，就像一条蛇咬住了自己的尾巴，所以称为 咬尾 Tail Bitting。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;图中的 G1，G2, G3 是 &lt;em&gt;生成式&lt;/em&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上的内容已经提供了足够的信息供我们实现，关于更多的卷积编码、LTE 标准等请查阅 wiki 和专业书籍。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Matlab Implementation&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;Matlab 的 &lt;code&gt;Communications System Toolbox&lt;/code&gt; 中提供了大量的常用函数，其中就有卷积编码函数 &lt;code&gt;convenc&lt;/code&gt;。我们就是基于这个函数实现LTE中的咬尾卷积编码。&lt;/p&gt;
+&lt;p&gt;通过&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;convenc&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;和 hlep browser，可以查到这个函数的用法，简单解释如下:&lt;/p&gt;
+&lt;p&gt;convenc 函数有几种方式来调用：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;CODE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;convenc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MSG&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;TRELLIS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;CODE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;convenc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MSG&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;TRELLIS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;PUNCPAT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;CODE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;convenc&lt;/span&gt;&lt;span class="p"&gt;(...,&lt;/span&gt; &lt;span class="n"&gt;INIT_STATE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;第一个参数 &lt;code&gt;MSG&lt;/code&gt; 是待编码的信息比特&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第二个参数 &lt;code&gt;TRELLIS&lt;/code&gt; 是编码器的栅格描述&lt;/p&gt;
+&lt;p&gt;TRELLIS 是 Matlab 内部定义的一种数据结构，它的值可以按照语法定义，更方便的方法是通过 &lt;code&gt;poly2trellis&lt;/code&gt; 这个函数，由多项式描述方式转化得到。&lt;/p&gt;
+&lt;p&gt;查阅 poly2trellis 的 help 就可以看到它的用法。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;trellis&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;poly2trellis&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ConstraintLength&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;CodeGenerator&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="err"&gt;其中，`&lt;/span&gt;&lt;span class="n"&gt;ConstraintLength&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;是个&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;×&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="err"&gt;维的向量，表示编码器的约束长度；`&lt;/span&gt;&lt;span class="n"&gt;CodeGenerator&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt; &lt;span class="err"&gt;是个&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="err"&gt;×&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="err"&gt;维的向量，表示编码器中各个寄存器的抽头。&lt;/span&gt;
+
+&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="err"&gt;中以一个&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="err"&gt;码率的编码器为例，其结构如下图所示：&lt;/span&gt;
+
+&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;exmaple&lt;/span&gt;&lt;span class="p"&gt;](&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;images&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tail&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;bitting&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;convolutional&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;implementation&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;matlab&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;and&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpga&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;example&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;png&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="err"&gt;两组寄存器的长度分别为&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="err"&gt;和&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="err"&gt;，所以&lt;/span&gt; &lt;span class="n"&gt;constraintlength&lt;/span&gt; &lt;span class="err"&gt;的取值为&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="err"&gt;；将每路输出的抽头用&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="err"&gt;进制来表示，即可得到&lt;/span&gt; &lt;span class="n"&gt;codegenerator&lt;/span&gt; &lt;span class="err"&gt;的取值&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;27&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="err"&gt;，表示第一路输出由第一组寄存器的&lt;/span&gt; &lt;span class="mi"&gt;27&lt;/span&gt; &lt;span class="err"&gt;组合方式&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;第二组寄存器的&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="err"&gt;组合方式得到，第二路输出由第一组寄存器的&lt;/span&gt; &lt;span class="mi"&gt;33&lt;/span&gt; &lt;span class="err"&gt;组合方式&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;第二组寄存器的&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="err"&gt;组合方式得到，第三路同理。&lt;/span&gt;
+
+&lt;span class="err"&gt;应用到我们的编码器中，很容易写出其栅格描述&lt;/span&gt;
+
+    &lt;span class="n"&gt;tre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;poly2trellis&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;133&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;171&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;165&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第三个参数 INIT_STATE 是移位寄存器的初始值&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;INIT_STATE&lt;/code&gt; 用来设定寄存器的初始状态，其取值就是寄存器的值。&lt;/p&gt;
+&lt;p&gt;在下面的程序中，我们的测试向量的最后 6 bit 为 010110，所以对应的&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;init&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;综上，可以写出 matlab 程序来实现咬尾卷积编码，如下：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8
+9&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  
+&lt;span class="c"&gt;% using a to test coder&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="c"&gt;% describe the coder&lt;/span&gt;
+&lt;span class="n"&gt;tre&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;poly2trellis&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;133&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;171&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;165&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
+&lt;span class="c"&gt;% init state is depend on a&lt;/span&gt;
+&lt;span class="n"&gt;init&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="c"&gt;% encode&lt;/span&gt;
+&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;convenc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tre&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;得到的编码结果是：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mi"&gt;0&lt;/span&gt;  &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;0&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;0&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;0&lt;/span&gt;   &lt;span class="mi"&gt;0&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;0&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;0&lt;/span&gt;   &lt;span class="mi"&gt;0&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;0&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;0&lt;/span&gt;   &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;数据的格式是将 3 位并行结果串行输出： d00, d01, d02, d10, d11, d12, ...&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Verlog Implementation&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;用 verilog 来实现编码器就相对简单直观的多，毕竟只有一组移位寄存器和一些抽头的异或运算。&lt;/p&gt;
+&lt;h3&gt;module &amp;amp; testbench&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tbce.v"&gt;module&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_tbce.v"&gt;testbench&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;simulation&lt;/h3&gt;
+&lt;p&gt;如下图所示&lt;/p&gt;
+&lt;p&gt;&lt;img alt="sim1" src="/images/tail-bitting-convolutional-code-implementation-in-matbal-and-fpga/sim1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="sim2" src="images/tail-bitting-convolutional-code-implementation-in-matbal-and-fpga/sim2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;和 matlab 中结果对比，结果是一致的。&lt;/p&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;一个简单的咬尾卷积编码花费了一上午的时间才搞定，最大的收获就是：心态很重要，欲速则不达。没有认真看 help 就写程序，本来想节省时间，结果去相反 =.=&lt;/p&gt;
+&lt;p&gt;戒骄戒躁！！！&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Reference&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://book.douban.com/subject/1446684/"&gt;通信原理&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://book.douban.com/subject/24784764/"&gt;无线通信新协议与新算法&lt;/a&gt;&lt;/p&gt;</summary></entry><entry><title>数字信号处理和相关matlab函数总结</title><link href="http://guqian110.github.io/pages/2014/09/03/digital_signal_processing_and_matlab.html" rel="alternate"></link><updated>2014-09-03T23:16:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-09-03:pages/2014/09/03/digital_signal_processing_and_matlab.html</id><summary type="html">&lt;p&gt;学了这么多年的通信，却还是对信号处理的知识一知半解，应付考试还可以，但在实际应用中还是感到力不从心，很多知识都忘了。翻了一下午的 《信号与系统》、《数字信号处理》，简单总结一下。&lt;/p&gt;
 &lt;p&gt;《信号与系统》算是通信专业最基础的专业课了。&lt;/p&gt;
 &lt;p&gt;信号部分主要介绍信号的相关定义、分类、常用信号和三大变换：傅立叶变换、拉普拉斯变换和z 变换。&lt;/p&gt;
 &lt;p&gt;系统部分主要从时域和频域使用不同的方法分析线性时不变系统（LTI）的性质。&lt;/p&gt;

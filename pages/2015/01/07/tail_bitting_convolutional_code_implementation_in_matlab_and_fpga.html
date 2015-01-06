@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>学习 Arduino #2 初识 Intel Galileo 开发板 - Geek Bunny's World</title>
+    <title>LTE 咬尾卷积编码器的 Matlab 及 FPGA 实现 - Geek Bunny's World</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -14,13 +14,11 @@
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Geek Bunny's World" />
             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="学习 Arduino #2 初识 Intel Galileo 开发板"/>
-            <meta property="og:url" content="http://guqian110.github.io/pages/2014/05/29/learing_arduino_series_2_intel_galileo_development_board.html"/>
-            <meta property="og:description" content="学习 Arduino，#2 初识 Intel Galileo 开发板"/>
-            <meta property="article:published_time" content="2014-05-29" />
-            <meta property="article:section" content="Arduino" />
-            <meta property="article:tag" content="Arduino" />
-            <meta property="article:tag" content="Intel Galileo" />
+            <meta property="og:title" content="LTE 咬尾卷积编码器的 Matlab 及 FPGA 实现"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2015/01/07/tail_bitting_convolutional_code_implementation_in_matlab_and_fpga.html"/>
+            <meta property="og:description" content="总结咬尾卷积编码的 Matlab 及 FPGA 实现方法。"/>
+            <meta property="article:published_time" content="2015-01-07" />
+            <meta property="article:section" content="Com" />
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -49,13 +47,13 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                        <li class="active">
+                        <li >
                             <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
                         </li>
                         <li >
                             <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="http://guqian110.github.io/category/com.html">Com</a>
                         </li>
                         <li >
@@ -81,18 +79,18 @@
         <div class="col-sm-9">
             <ol class="breadcrumb">
                 <li><a href="http://guqian110.github.io" title="Geek Bunny's World"><i class="fa fa-home fa-lg"></i></a></li>
-                <li><a href="http://guqian110.github.io/category/arduino.html" title="Arduino">Arduino</a></li>
-                <li class="active">学习 Arduino #2 初识 Intel Galileo 开发板</li>
+                <li><a href="http://guqian110.github.io/category/com.html" title="Com">Com</a></li>
+                <li class="active">LTE 咬尾卷积编码器的 Matlab 及 FPGA 实现</li>
             </ol>
 
     <section id="content">
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://guqian110.github.io/pages/2014/05/29/learing_arduino_series_2_intel_galileo_development_board.html"
+                    <a href="http://guqian110.github.io/pages/2015/01/07/tail_bitting_convolutional_code_implementation_in_matlab_and_fpga.html"
                        rel="bookmark"
-                       title="Permalink to 学习 Arduino #2 初识 Intel Galileo 开发板">
-                        学习 Arduino #2 初识 Intel Galileo 开发板
+                       title="Permalink to LTE 咬尾卷积编码器的 Matlab 及 FPGA 实现">
+                        LTE 咬尾卷积编码器的 Matlab 及 FPGA 实现
                     </a>
                 </h1>
             </header>
@@ -102,111 +100,154 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-05-29T23:27:00"> Thu 29 May 2014</time>
+        <i class="fa fa-calendar"></i><time datetime="2015-01-07T00:00:00"> Wed 07 January 2015</time>
     </span>
 
 
 
-<span class="label label-default">Tags</span>
-	<a href="http://guqian110.github.io/tag/arduino.html">Arduino</a>
-        /
-	<a href="http://guqian110.github.io/tag/intel-galileo.html">Intel Galileo</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h2>Preface</h2>
+                <h2>Tail Bitting</h2>
 <hr />
-<p>Arduino 有很多开发板，分别针对不同的应用环境含有不同的模块。学习一款 Intel 推出的开发板 —— <em>Intel Galileo Development Board</em> 。</p>
-<p>Intel Gailileo Development Board 是 Intel 进入 Arduino 领域的试水产品，它含有一颗 Quark Soc X1000 CPU，这是一款 32 位、x86 构架、低功耗的 SoC 芯片，它的主频可以达到 400 MHz，内部有 512 KB 的 SRAM，同时 Galileo 有丰富的接口(USB, JTag, RS232, Ethernet, mPCIE...)，支持很多外围设备。</p>
-<p>Galileo 试图达到的目标是融合 Arduino 对硬件操作的便利和 Linux 系统对硬件操作完整支持。所以，Galileo 也兼容 Arduino 接口，你可以很方便的把 Arduino 项目移植到 Galileo 上运行，使用常用的一些 Arduino 库(Ethernet, Wi-Fi, SD, EEPROM...)也可以获得内部 Linux 系统的完整功能(Python, SSH, Telnet， OpenCV...)。</p>
-<p>总结一下我学习这块板子的知识，不仅仅为 Arduino 开发做准备，也为后面的一个竞赛(基于Yocto 项目)开发积累知识～</p>
-<p><br></p>
-<h2>Official Arduino Boards</h2>
-<hr />
-<p>Arduino 官网上列出所有了官方开发板，其中也包含了官方认证过的开发板(Intel Galileo)，和一些推荐的第三方产品</p>
-<p><a href="http://arduino.cc/en/Main/Products">Arduino Products</a></p>
-<p>还详细列出了这些开发板上的微控制器的区别</p>
-<p><a href="http://arduino.cc/en/Products.Compare">Compare boards specs</a></p>
-<p><br></p>
-<p><em>官方的开发板的核心都是 Atmel 的微控制器，基于市场战略的需求，看到数莓派、Arduino发展的热火朝天，Intel 也坐不住了(瞎猜的 =.=)，推出了新的基于 Intel 架构(x86)、可以和 Arduino 兼容的开发板。Galileo 是这个家族中的第一款，目前 Intel 又推出了一款新的开发板，取名叫 Edison。(Intel 这是要把所有科学家的名字都取个遍么)</em></p>
-<p><br></p>
-<h2>Intel Galileo Board</h2>
-<hr />
-<h3>Arduinco.cc</h3>
-<p>在 Arduino 官网上有一篇简单介绍 Galileo 的网页</p>
-<p><a href="http://arduino.cc/en/ArduinoCertified/IntelGalileo">Intel Galileo on arduino.cc</a></p>
-<h3>Intel Official Introduction</h3>
-<p>Arduino 官网上的介绍只是非常简单的介绍，Intel 自己的官网上有关于 Galileo 全部的详细资料</p>
-<p><a href="http://www.intel.cn/content/www/cn/zh/do-it-yourself/galileo-maker-quark-board.html">Galileo Maker Quark Board</a></p>
-<p>关于 Galileo 的全部文档，包括 Datasheet、Schematic、Quick Start、User Guide 等：</p>
-<p><a href="https://communities.intel.com/community/makers/documentation/galileodocuments">Intel Galileo Development Board Documents</a></p>
-<h3>Other Introductions</h3>
-<p><strong>首先</strong> 送上一篇非常好的介绍文章（来自 Ifanr.com），介绍了在 Maker 眼中，这个板子到底可以 hack 到什么程度～</p>
-<p><a href="http://www.ifanr.com/388835">x86 版的 Arduino 来了，Intel Galileo 开发板的体验、分析和应用【超长文多图】</a></p>
-<p><strong>再</strong> 附上一篇完爆我的总结的教程～</p>
-<p><a href="https://learn.sparkfun.com/tutorials/galileo-getting-started-guide">Galileo Getting Started Guide</a></p>
-<p>这篇教程基本就是按照 Intel 官方的 Getting Started 流程写的，总结一下我遇到的问题 (Windows 7 &amp; Linux Ubuntu)。</p>
-<p>Arduino 官方的 IDE 中 <code>Board</code> 选项中没有 Galileo，所以我们应该从 Intel 下载定制过的 IDE。</p>
-<ol>
+<p>咬尾卷积编码是一种特殊的卷积编码，它通过将编码器的移位寄存器的初始值设置为输入流的尾比特值，使得移位寄存器的初始和最终状态相同。和普通的卷积编码相比，咬尾的方案最大的优点是克服了编码时的码率损失，并且适合迭代译码，不过付出的代价是译码复杂度的增加。在 LTE 的标准中，咬尾卷积编码是一种备选的信道编码方案。</p>
+<p>通常以 (n, k, K) 来描述卷积编码，其中：</p>
+<ul>
 <li>
-<p>Windows IDE 闪退</p>
-<p>这个 IDE 在部分 Windows 下有闪退的现象。</p>
-<p>原因 是 Intel 的 IDE 版本采用的是未发布的 1.5.3, 它会检测系统的语言设置，当系统不是 En/US 时，就会退出。</p>
-<p>解决方法 更改系统语言设置 或者 使用一款名为 Locale Emulator 的软件。</p>
+<p><code>k</code> 表示编码器的 <em>输入码元数</em></p>
 </li>
 <li>
-<p>IDE 解压路径</p>
-<p>Windows 下的解压路径 <em>必须是顶层目录</em>，比如 <code>D:\arduino-1.5.3</code>，否则在 <code>Verify</code> 时会提示找不到特定的文件/目录。Linux 下无此问题。</p>
+<p><code>n</code> 表示编码器的 <em>输出码元数</em></p>
 </li>
 <li>
-<p>Linux 连接板子和 PC</p>
-<p>在 Windows 下第一次连接系统自动安装驱动肯定会失败的，需要我们手动指定驱动文件的路径。</p>
-<p>在 Linux 终端下，必须以 <code>sudo</code> 权限运行 IDE，否则即使板子已经连接了 PC，在 IDE 下的 <code>Tools\Serial Port</code> 是 disable 的，不能选择端口</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="p">.</span><span class="o">/</span><span class="n">arduino</span> <span class="o">&amp;</span>
+<p><code>K</code> 表示编码器的 <em>约束长度</em></p>
+</li>
+</ul>
+<p>由输入的 k 个信息比特，得到 n 个编码结果，所以 <em>编码效率</em> = k/n</p>
+<p>约束长度 <code>K</code> 的意思是，编码结果不仅取决于当前输入的 k 比特信息，还取决于前 (K-1) 段时间内的信息位。在 k = 1 的条件下，编码器需要的 <em>移位寄存器级数</em> m = K - 1。</p>
+<p>LTE 标准中编码器的结构如下图所示：</p>
+<p><img alt="coder" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/coder.jpg" /></p>
+<ul>
+<li>
+<p>假设输入的比特流为 c1, c2, c3, ... 得到的编码结果为 d1, d2, d3, ...</p>
+</li>
+<li>
+<p>其中移位寄存器 D 从左到右一次是 S0, S1, ... S5。对其初始化时，S0 = Ck-1, S1 = Ck-2, ... S5 = Ck-6。</p>
+</li>
+<li>
+<p>进行编码时，有抽头的寄存器之间进行模 2 加法（即异或）运算。每次对一个输入信息完成编码之后，移位寄存器右移一位，抛弃最右端的移位结果，采用前一个输入作为最左端的信息位。</p>
+</li>
+<li>
+<p>当最后的比特进行编码完之后，寄存器又回到了设定的初始状态，就像一条蛇咬住了自己的尾巴，所以称为 咬尾 Tail Bitting。</p>
+</li>
+<li>
+<p>图中的 G1，G2, G3 是 <em>生成式</em>。</p>
+</li>
+</ul>
+<p>以上的内容已经提供了足够的信息供我们实现，关于更多的卷积编码、LTE 标准等请查阅 wiki 和专业书籍。</p>
+<p><br></p>
+<h2>Matlab Implementation</h2>
+<hr />
+<p>Matlab 的 <code>Communications System Toolbox</code> 中提供了大量的常用函数，其中就有卷积编码函数 <code>convenc</code>。我们就是基于这个函数实现LTE中的咬尾卷积编码。</p>
+<p>通过</p>
+<div class="highlight"><pre><span class="n">help</span> <span class="n">convenc</span>
 </pre></div>
-</td></tr></table>
+
+
+<p>和 hlep browser，可以查到这个函数的用法，简单解释如下:</p>
+<p>convenc 函数有几种方式来调用：</p>
+<div class="highlight"><pre><span class="n">CODE</span> <span class="o">=</span> <span class="n">convenc</span><span class="p">(</span><span class="n">MSG</span><span class="p">,</span> <span class="n">TRELLIS</span><span class="p">)</span>
+
+<span class="n">CODE</span> <span class="o">=</span> <span class="n">convenc</span><span class="p">(</span><span class="n">MSG</span><span class="p">,</span> <span class="n">TRELLIS</span><span class="p">,</span> <span class="n">PUNCPAT</span><span class="p">)</span>
+
+<span class="n">CODE</span> <span class="o">=</span> <span class="n">convenc</span><span class="p">(...,</span> <span class="n">INIT_STATE</span><span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>
+<p>第一个参数 <code>MSG</code> 是待编码的信息比特</p>
+</li>
+<li>
+<p>第二个参数 <code>TRELLIS</code> 是编码器的栅格描述</p>
+<p>TRELLIS 是 Matlab 内部定义的一种数据结构，它的值可以按照语法定义，更方便的方法是通过 <code>poly2trellis</code> 这个函数，由多项式描述方式转化得到。</p>
+<p>查阅 poly2trellis 的 help 就可以看到它的用法。</p>
+<div class="highlight"><pre><span class="n">trellis</span> <span class="o">=</span> <span class="n">poly2trellis</span><span class="p">(</span><span class="n">ConstraintLength</span><span class="p">,</span> <span class="n">CodeGenerator</span><span class="p">)</span>
+
+<span class="err">其中，`</span><span class="n">ConstraintLength</span><span class="err">`</span> <span class="err">是个</span> <span class="mi">1</span><span class="err">×</span><span class="n">k</span> <span class="err">维的向量，表示编码器的约束长度；`</span><span class="n">CodeGenerator</span><span class="err">`</span> <span class="err">是个</span> <span class="n">k</span><span class="err">×</span><span class="n">n</span> <span class="err">维的向量，表示编码器中各个寄存器的抽头。</span>
+
+<span class="n">help</span> <span class="err">中以一个</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span> <span class="err">码率的编码器为例，其结构如下图所示：</span>
+
+<span class="o">!</span><span class="p">[</span><span class="n">exmaple</span><span class="p">](</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">tail</span><span class="o">-</span><span class="n">bitting</span><span class="o">-</span><span class="n">convolutional</span><span class="o">-</span><span class="n">code</span><span class="o">-</span><span class="n">implementation</span><span class="o">-</span><span class="n">in</span><span class="o">-</span><span class="n">matlab</span><span class="o">-</span><span class="n">and</span><span class="o">-</span><span class="n">fpga</span><span class="o">/</span><span class="n">example</span><span class="p">.</span><span class="n">png</span><span class="p">)</span>
+
+<span class="err">两组寄存器的长度分别为</span> <span class="mi">4</span> <span class="err">和</span> <span class="mi">3</span><span class="err">，所以</span> <span class="n">constraintlength</span> <span class="err">的取值为</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span><span class="err">；将每路输出的抽头用</span> <span class="mi">8</span> <span class="err">进制来表示，即可得到</span> <span class="n">codegenerator</span> <span class="err">的取值</span> <span class="p">[</span><span class="mi">27</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">0</span><span class="p">;</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">]</span><span class="err">，表示第一路输出由第一组寄存器的</span> <span class="mi">27</span> <span class="err">组合方式</span> <span class="o">+</span> <span class="err">第二组寄存器的</span> <span class="mi">0</span> <span class="err">组合方式得到，第二路输出由第一组寄存器的</span> <span class="mi">33</span> <span class="err">组合方式</span> <span class="o">+</span> <span class="err">第二组寄存器的</span> <span class="mi">5</span> <span class="err">组合方式得到，第三路同理。</span>
+
+<span class="err">应用到我们的编码器中，很容易写出其栅格描述</span>
+
+    <span class="n">tre</span> <span class="o">=</span> <span class="n">poly2trellis</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="p">[</span><span class="mi">133</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">165</span><span class="p">]);</span>
+</pre></div>
+
 
 </li>
 <li>
-<p>Linux 下 disable modem manager</p>
-<p>前面的教程中提到，在大多数 Linux 发行版下，都需要 disable modem manager 才能 <code>Upload</code> 成功，不过我在 Ubuntu 下没有遇到这个问题...</p>
+<p>第三个参数 INIT_STATE 是移位寄存器的初始值</p>
+<p><code>INIT_STATE</code> 用来设定寄存器的初始状态，其取值就是寄存器的值。</p>
+<p>在下面的程序中，我们的测试向量的最后 6 bit 为 010110，所以对应的</p>
+<div class="highlight"><pre><span class="n">init</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span>
+</pre></div>
+
+
 </li>
-</ol>
-<p><strong>然后</strong> 扯几句</p>
-<ol>
-<li>
-<p>硬件配置</p>
-<p>从 Board Guide 中找到的截图如下</p>
-<p><img alt="key_componets_1" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_1.png" /></p>
-<p><img alt="key_componets_2" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_2.png" /></p>
-<p>从它的配置中可以看到，Galileo 并不是一款简单的 Arduino 开发板，它的硬件系统其实是按照 PC 来设计的，如果我们只是简单的把它当作 Arduino 开发板来应用，有点大材小用了，这样子完全没有体现出 Galileo 的优势，只是一个速度更快的 Arduino 罢了。</p>
-<p>事实上，如果功能上没有比传统的 Arduino 更强大的功能，估计 Intel 也不会推出这个产品了～Galileo 的真正强大的地方在于：</p>
-<blockquote>
-<p>背后基于 UEFI/Linux 的软件平台以及 Galileo 自身的硬件配置。为此，Intel 提供了丰富的开发文档、软件代码支持，方便开发人员真正的发挥出 Galileo 的所有潜力。</p>
-</blockquote>
-</li>
-<li>
-<p>软件构架</p>
-<p>Galileo 不仅仅是硬件上按照 PC 设计的，事实上，它的软件构架也和 PC 一样。和普通的单片机不同，它并不是简单的运行用户开发的程序那么简单。它实际上运行着一个操作系统 —— 包含 UEFI(BIOS 的替代者)、Grub、嵌入式 Linux 系统，用户编写的 <code>Sketch</code> 只是一个在 Linux 上面运行的应用而已。</p>
-<p>Galileo 启动时可以从 ISP Flash 中启动一个微型的 Linux 系统，也可以从 MicroSD 卡中启动一个完整版的 Linux 系统。我们 <code>Upload</code> 时，Arduino IDE 将程序编译链接成一个标准的 Linux ELF 文件，并且下载到 Arduino 板子上运行，如图所示</p>
-<p><img alt="target_software" src="/images/learning-arduino-series-2-intel-galileo-development-board/target_software.png" /></p>
-</li>
-<li>
-<p>开发嵌入式 Linux 设备</p>
-<p>或许这才是 Galileo 的 "正经" 用途吧...基于 Yocto Project，我们可以开发属于自己的 Linux 系统。</p>
-</li>
-</ol>
-<p>最后，送上一个别人的 Galileo 开箱视频</p>
-<p><embed src="http://player.youku.com/player.php/sid/XNjQ0NTMzMjYw/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed></p>
+</ul>
+<p>综上，可以写出 matlab 程序来实现咬尾卷积编码，如下：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">clear</span><span class="p">;</span>  
+<span class="c">% using a to test coder</span>
+<span class="n">a</span> <span class="p">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">];</span>
+<span class="c">% describe the coder</span>
+<span class="n">tre</span> <span class="p">=</span> <span class="n">poly2trellis</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="p">[</span><span class="mi">133</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">165</span><span class="p">]);</span>
+<span class="c">% init state is depend on a</span>
+<span class="n">init</span> <span class="p">=</span> <span class="mi">22</span><span class="p">;</span>
+<span class="c">% encode</span>
+<span class="n">b</span> <span class="p">=</span> <span class="n">convenc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">tre</span><span class="p">,</span> <span class="n">init</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>得到的编码结果是：</p>
+<div class="highlight"><pre><span class="mi">0</span>  <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span>
+</pre></div>
+
+
+<p>数据的格式是将 3 位并行结果串行输出： d00, d01, d02, d10, d11, d12, ...</p>
+<p><br></p>
+<h2>Verlog Implementation</h2>
+<hr />
+<p>用 verilog 来实现编码器就相对简单直观的多，毕竟只有一组移位寄存器和一些抽头的异或运算。</p>
+<h3>module &amp; testbench</h3>
+<p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tbce.v">module</a></p>
+<p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_tbce.v">testbench</a></p>
+<h3>simulation</h3>
+<p>如下图所示</p>
+<p><img alt="sim1" src="/images/tail-bitting-convolutional-code-implementation-in-matbal-and-fpga/sim1.png" /></p>
+<p><img alt="sim2" src="images/tail-bitting-convolutional-code-implementation-in-matbal-and-fpga/sim2.png" /></p>
+<p>和 matlab 中结果对比，结果是一致的。</p>
+<h2>Summary</h2>
+<hr />
+<p>一个简单的咬尾卷积编码花费了一上午的时间才搞定，最大的收获就是：心态很重要，欲速则不达。没有认真看 help 就写程序，本来想节省时间，结果去相反 =.=</p>
+<p>戒骄戒躁！！！</p>
+<p><br></p>
+<h2>Reference</h2>
+<p><a href="http://book.douban.com/subject/1446684/">通信原理</a></p>
+<p><a href="http://book.douban.com/subject/24784764/">无线通信新协议与新算法</a></p>
             </div>
             <!-- /.entry-content -->
-<section class="well" id="related-posts">
-    <h4>Related Posts:</h4>
-    <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/05/27/learing_arduino_series_1_getting_started.html">学习 Arduino #1 Arduino 入门</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/06/13/learning_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
-    </ul>
-</section>
     <hr />
     <section class="comments" id="comments">
         <h2>Comments</h2>
@@ -214,8 +255,8 @@
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
-            var disqus_identifier = 'learing_arduino_series_2_intel_galileo_development_board';
-            var disqus_url = 'http://guqian110.github.io/pages/2014/05/29/learing_arduino_series_2_intel_galileo_development_board.html';
+            var disqus_identifier = 'tail_bitting_convolutional_code_implementation_in_matlab_and_fpga';
+            var disqus_url = 'http://guqian110.github.io/pages/2015/01/07/tail_bitting_convolutional_code_implementation_in_matlab_and_fpga.html';
             var disqus_config = function () {
                 this.language = "zh";
             };
