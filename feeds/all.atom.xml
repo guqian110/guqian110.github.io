@@ -1,5 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-07T00:00:00+08:00</updated><entry><title>LTE 咬尾卷积编码器的 Matlab 及 FPGA 实现</title><link href="http://guqian110.github.io/pages/2015/01/07/tail_bitting_convolutional_code_implementation_in_matlab_and_fpga.html" rel="alternate"></link><updated>2015-01-07T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-07:pages/2015/01/07/tail_bitting_convolutional_code_implementation_in_matlab_and_fpga.html</id><summary type="html">&lt;h2&gt;Tail Bitting&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-11T18:49:00+08:00</updated><entry><title>如何优雅的分析代码</title><link href="http://guqian110.github.io/pages/2015/01/11/how_to_analysize_code_elegantly.html" rel="alternate"></link><updated>2015-01-11T18:49:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-11:pages/2015/01/11/how_to_analysize_code_elegantly.html</id><summary type="html">&lt;p&gt;当我们来接手一个别人的工程时，阅读别人的代码是一件很痛苦的事。成千上百的函数，糟糕的代码风格，不知所云的注释，这些都是让人抓狂。那么，问题就来了：&lt;strong&gt;如何优雅地分析别人的代码？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;答案就是：&lt;strong&gt;Doxygen + Graphviz&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;整个工作流程很简单，我们在写程序时按照 Doxygen 约定的格式注释代码（不注释也可以），Doxygen 会对代码进行分析，然后列出程序中的变量、类定义、数据结构、函数表用关系等，然后调用 Graphviz 将结果用图形化的形式表现出来。&lt;/p&gt;
+&lt;p&gt;这个功能在自动生成文档、代码分析时非常强大，下面分别简单介绍一下。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在 Linux 环境下，Vim 有插件 &lt;strong&gt;DoxygenToolKIt.vim&lt;/strong&gt; 可以帮助我们很方便地写出 Doxygen 风格的代码。这里只介绍 Doxygen + Graphviz，DoxygenToolKit.vim 在另外一篇中介绍。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Graphviz&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;What is Graphviz?&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://www.graphviz.org/"&gt;Graphviz official website&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Graphviz is open source graph visualization software. Graph visualization is a way of representing structural information as diagrams of abstract graphs and networks. It has important applications in networking, bioinformatics,  software engineering, database and web design, machine learning, and in visual interfaces for other technical domains. &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Installation&lt;/h3&gt;
+&lt;p&gt;官方网站上有各个平台（Windows/Unix/Linnux/Mac）的安装文件和源码，在 Ubuntu 13.10 saucy 下，直接使用 apt-get 安装即可：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;graphviz&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;More&lt;/h3&gt;
+&lt;p&gt;更多详细的介绍见官网的 About、Documentation、Wiki、FAQ。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Doxygen&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;What is Doxygen&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://www.stack.nl/~dimitri/doxygen/index.html"&gt;Doxygen Official website&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Doxygen is the de facto standard tool for generating documentation from annotated C++ sources, but it also supports other popular programming languages such as C, Objective-C, C#, PHP, Java, Python, IDL (Corba, Microsoft, and UNO/OpenOffice flavors), Fortran, VHDL, Tcl, and to some extent D.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Installation&lt;/h3&gt;
+&lt;p&gt;官网上的 Manual 中有详细的介绍，对于不同平台，采用不同的安装方式（从源码编译安装、二进制文件安装），下面仅记录我在 Ubuntu 下使用源码编码的方式安装过程。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;下载源代码&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/doxygen/doxygen.git&lt;/span&gt;
+&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;doxygen&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;configure&lt;/span&gt;
+&lt;span class="n"&gt;make&lt;/span&gt;
+&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;安装成功之后，在 &lt;code&gt;/usr/bin/&lt;/code&gt; 或者 &lt;code&gt;/usr/local/bin&lt;/code&gt; 目录下可以查看到二进制 &lt;code&gt;doxygen&lt;/code&gt; 文件。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;若 configure 出错，检查依赖关系，安装需要系统中有 GNU 工具（flex, bison, libiconv and GNU make, and strip）和 Perl 支持。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;因为 Doxygen 要调用 Graphviz，所以先安装 Graphviz，然后编译安装 Doxygen&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Getting Started&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://www.stack.nl/~dimitri/doxygen/manual/starting.html"&gt;Getting Started&lt;/a&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;检查 Doxygen 是否支持你项目所使用的语言&lt;/p&gt;
+&lt;p&gt;Doxygen 支持  C, C++, C#, Objective-C, IDL, Java, VHDL, PHP, Python, Tcl, Fortran, D&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;创建一个配置文件&lt;/p&gt;
+&lt;p&gt;Doxygen 使用一个配置文件来工作，，每个项目都应该有一个自己对应的配置文件。我们可以使用 &lt;code&gt;doxygen -g&lt;/code&gt; 来让 Doxygen 自动生成一个参考配置文件，然后修改其中个别配置即可.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;doxygen&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;常用配置：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;PROJECT_NAME = "Test Project"&lt;/code&gt; 配置项目名称&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;PROJECT_NUMBER = 1.0&lt;/code&gt; 配置项目版本号&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;OUTPUT_DIRECTORY = ./doxygen-output&lt;/code&gt; 配置输出结果目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;OPTIMIZE_OUTPUT_FOR_C = YES&lt;/code&gt; 设置针对哪种语言进行优化&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;EXTRACT_ALL = YES&lt;/code&gt; 默认是 &lt;code&gt;NO&lt;/code&gt;，即默认只对有标准注释的文件进行分析。如果我们希望对一个没有按照标准格式注释的项目进行分析，那么就要改为 &lt;code&gt;YES&lt;/code&gt;，这在接手一个旧项目，分析代码时尤其有效。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;HAVE_DOT = YES&lt;/code&gt; 设置 Doxygen 调用 dot 工具（graphviz 的一部分）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;DOT_PATH = /usr/local/graphviz&lt;/code&gt; 指定 graphviz 的路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;运行 Doxygen&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;doxygen&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果前一步没有指定配置文件的名字的话，直接运行 &lt;code&gt;doxygen&lt;/code&gt; 即可。&lt;/p&gt;
+&lt;p&gt;运行完之后，就可以在指定的输出目录中看到结果，用浏览器可以看到 HTML 版本的结果。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;按照 Doxygen 格式注释代码&lt;/p&gt;
+&lt;p&gt;这一步应该在最前面，即先按照 Doxygen 风格格式注释好代码，然后再进行分析。官网上针对不同的编程语言，有详细的举例说明：&lt;a href="http://www.stack.nl/~dimitri/doxygen/manual/docblocks.html#specialblock"&gt;Documenting the code&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;最后展示一张我的效果图：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="image" src="/images/how-to-analysize-code-elegantly/result.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ref.&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://blog.csdn.net/blood008/article/details/6567169"&gt;linux doxygen 的安装和使用&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.stack.nl/~dimitri/doxygen/index.html"&gt;Doxygen&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.graphviz.org/"&gt;Graphviz&lt;/a&gt;&lt;/p&gt;</summary><category term="doxygen"></category><category term="code"></category></entry><entry><title>LTE 咬尾卷积编码器的 Matlab 及 FPGA 实现</title><link href="http://guqian110.github.io/pages/2015/01/07/tail_bitting_convolutional_code_implementation_in_matlab_and_fpga.html" rel="alternate"></link><updated>2015-01-07T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-07:pages/2015/01/07/tail_bitting_convolutional_code_implementation_in_matlab_and_fpga.html</id><summary type="html">&lt;h2&gt;Tail Bitting&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;咬尾卷积编码是一种特殊的卷积编码，它通过将编码器的移位寄存器的初始值设置为输入流的尾比特值，使得移位寄存器的初始和最终状态相同。和普通的卷积编码相比，咬尾的方案最大的优点是克服了编码时的码率损失，并且适合迭代译码，不过付出的代价是译码复杂度的增加。在 LTE 的标准中，咬尾卷积编码是一种备选的信道编码方案。&lt;/p&gt;
 &lt;p&gt;通常以 (n, k, K) 来描述卷积编码，其中：&lt;/p&gt;
