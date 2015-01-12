@@ -1,5 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-11T18:49:00+08:00</updated><entry><title>如何优雅的分析代码</title><link href="http://guqian110.github.io/pages/2015/01/11/how_to_analysize_code_elegantly.html" rel="alternate"></link><updated>2015-01-11T18:49:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-11:pages/2015/01/11/how_to_analysize_code_elegantly.html</id><summary type="html">&lt;p&gt;当我们来接手一个别人的工程时，阅读别人的代码是一件很痛苦的事。成千上百的函数，糟糕的代码风格，不知所云的注释，这些都是让人抓狂。那么，问题就来了：&lt;strong&gt;如何优雅地分析别人的代码？&lt;/strong&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-12T15:21:00+08:00</updated><entry><title>学习 Vim 插件 DoxygenToolKit.vim</title><link href="http://guqian110.github.io/pages/2015/01/12/learning_vim_doxygentoolkit.html" rel="alternate"></link><updated>2015-01-12T15:21:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-12:pages/2015/01/12/learning_vim_doxygentoolkit.html</id><summary type="html">&lt;p&gt;前面一篇博客已经介绍过 Doxygen 了，Doxygen 的确是一个非常给力的工具，但是为了生存文档，我们必须在注释上花费很大的时间和精力。&lt;/p&gt;
+&lt;p&gt;那么问题又来了：&lt;strong&gt;如何才能既享受 Doxygen 的强大功能，同时又避免大量的重复性的注释内容？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;解决思路： 让编辑器来替我们写那些格式和内容固定的部分，我们只负责写真正的有效内容。&lt;/p&gt;
+&lt;p&gt;所以，答案就是：&lt;strong&gt;Vim + DoxygenToolKit.vim 插件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;DoxygenToolKit&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;DoxygenToolKit 是 Vim 的一款插件，用它可以很方便地添加 Doxygen 风格的注释，可以节省大量时间和精力，提高写代码的效率。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=987"&gt;DoxygenToolKit Official Website&lt;/a&gt; 官网上介绍，目前定义了 5 个功能：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Generates a doxygen license comment.  The tag text is configurable. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Generates a doxygen author skeleton.  The tag text is configurable. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Generates a doxygen comment skeleton for a C, C++ or Python function or class, including @brief, @param (for each named argument), and @return. The tag  text as well as a comment block header and footer are configurable. (Consequently, you can have \brief, etc. if you wish, with little effort.) &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ignore code fragment placed in a block defined by #ifdef ... #endif (C/C++).  The  block name must be given to the function. All of the corresponding blocks 
+in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any other name that you have configured).  Then you have to update PREDEFINED value in your doxygen configuration file with correct block name. You also have to set ENABLE_PREPROCESSING to YES. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Generate a doxygen group (begining and ending). The tag text is configurable. &lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Installation&lt;/h3&gt;
+&lt;p&gt;如果我们使用 Vundle 管理插件，安装步骤就非常简单了：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在 Vundle 中加入：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolkit&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;打开 Vim，输入命令：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleInstall&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Vundle 会自动完成安装 :-D&lt;/p&gt;
+&lt;h3&gt;Configuration&lt;/h3&gt;
+&lt;p&gt;DoxygenToolKit 的配置由脚本文件的 &lt;code&gt;g:DoxygenToolkit_*&lt;/code&gt; 变量决定，我们可以在 &lt;code&gt;.vimrc&lt;/code&gt; 文件中修改这些参数，根据自己的情况修改自定义。&lt;/p&gt;
+&lt;p&gt;作者给出了自己的一些设置，我修改过之后：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_briefTag_pre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;@Brief &amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_paramTag_pre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;@Param &amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_returnTag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;@Returns &amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_briefTag_funcName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;yes &amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_authorName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Qian Gu guqian110@gmail.com&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_commentType&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C++ &amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;doxygen_enhanced_color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Usage&lt;/h3&gt;
+&lt;p&gt;官网上也给出了使用方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;License&lt;/p&gt;
+&lt;p&gt;将光标放在需要生成 License 的地方，然后输入命令 &lt;code&gt;:DoxLic&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Author&lt;/p&gt;
+&lt;p&gt;将光标放在合适的地方，然后输入命令 &lt;code&gt;:DoxAuthor&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Function / Class&lt;/p&gt;
+&lt;p&gt;将光标放在 function 或者 class 的名字所在的一行，然后输入命令 &lt;code&gt;:Dox&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ignore code fragment (C/C++ Only)&lt;/p&gt;
+&lt;p&gt;如果想忽略调试部分的代码，那么只需要执行命令 &lt;code&gt;:DoxUndoc(DEBUG)&lt;/code&gt; 即可&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Group&lt;/p&gt;
+&lt;p&gt;输入命令 &lt;code&gt;DoxBlock&lt;/code&gt; 来插入一个注释块&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;为了方便使用，我们可以自定义一些 map，省去输入命令的繁琐。&lt;/p&gt;
+&lt;h3&gt;Example&lt;/h3&gt;
+&lt;p&gt;同样是官网上的例子：&lt;/p&gt;
+&lt;p&gt;假设有个函数如下&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kt"&gt;int&lt;/span&gt; 
+&lt;span class="nf"&gt;foo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;mychar&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;myint&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="kt"&gt;double&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;myarray&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;mask&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;DEFAULT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+&lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;//... &lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;那么执行 &lt;code&gt;:Dox&lt;/code&gt; 命令之后会生成以下内容&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/** &lt;/span&gt;
+&lt;span class="cm"&gt;* @brief &lt;/span&gt;
+&lt;span class="cm"&gt;* &lt;/span&gt;
+&lt;span class="cm"&gt;* @param mychar &lt;/span&gt;
+&lt;span class="cm"&gt;* @param myint &lt;/span&gt;
+&lt;span class="cm"&gt;* @param myarray &lt;/span&gt;
+&lt;span class="cm"&gt;* @param mask &lt;/span&gt;
+&lt;span class="cm"&gt;* &lt;/span&gt;
+&lt;span class="cm"&gt;* @return &lt;/span&gt;
+&lt;span class="cm"&gt;*/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=987"&gt;DoxygenToolKit.vim&lt;/a&gt;&lt;/p&gt;</summary><category term="Linux"></category><category term="Vim"></category><category term="DoxygenToolKit"></category></entry><entry><title>如何优雅的分析代码</title><link href="http://guqian110.github.io/pages/2015/01/11/how_to_analysize_code_elegantly.html" rel="alternate"></link><updated>2015-01-11T18:49:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-11:pages/2015/01/11/how_to_analysize_code_elegantly.html</id><summary type="html">&lt;p&gt;当我们来接手一个别人的工程时，阅读别人的代码是一件很痛苦的事。成千上百的函数，糟糕的代码风格，不知所云的注释，这些都是让人抓狂。那么，问题就来了：&lt;strong&gt;如何优雅地分析别人的代码？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;答案就是：&lt;strong&gt;Doxygen + Graphviz&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;整个工作流程很简单，我们在写程序时按照 Doxygen 约定的格式注释代码（不注释也可以），Doxygen 会对代码进行分析，然后列出程序中的变量、类定义、数据结构、函数表用关系等，然后调用 Graphviz 将结果用图形化的形式表现出来。&lt;/p&gt;
 &lt;p&gt;这个功能在自动生成文档、代码分析时非常强大，下面分别简单介绍一下。&lt;/p&gt;
