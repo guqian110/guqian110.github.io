@@ -128,8 +128,6 @@ Summary: 学习 Doxygen + Graphviz 的使用方法
 
 我们在 C/C++ 风格注释块中加入一些特殊符号，这样 Doxygen 就知道需要把这段注释分析生成在文档中，这样的注释在官网中叫做 `Special comment blocks`。下面详细介绍类 C/C++ 语言（C/C++/C#/Objective-C/PHP/Java）的注释，其他语言（Python, VHDL, Fortran, Tcl）见官网。
 
-#### Special Comment Blocks
-
 对于代码中的任何实体（`entity`），都有两种注释，它们一起工作，完成注释功能，但至少得有一个：
 
 + `a brief description`：单行的简短注释
@@ -213,7 +211,7 @@ Summary: 学习 Doxygen + Graphviz 的使用方法
         
 Doxygen 和其他的文档系统的一个不同之处就是它允许把注释写在实体的定义（包括全局函数）之前。这样，就可以把注释直接写在源文件里面而不是头文件中，从而使头文件更加紧凑，而且功能的实现人员也更容易阅读注释。**所以，一个折衷方案就是在声明前写 brief description，在定义前写 detailed description。**
 
-##### Putting documentation after members
+#### Putting documentation after members
 
 在注释结构体、类、枚举类型等时，有时习惯将注释写在代码的后面，而不是前面。因为 Doxygen 默认注释是解释后面的代码，所以这时候就需要在注释中添加一个额外的 `<` 来标明是注释前面的内容。
 
@@ -244,7 +242,7 @@ Qt 风格的注释：
 
 这种添加 `<` 的方法只能用在 成员（`member`）和 参数（`parameter`）中，不能用在描述文件、类、联合体、名字空间和枚举本身。此外, 在后面提到的结构化命令（如`\class`）在这种注释段中是无效的。
 
-##### Examples
+#### Examples
 
 官网上提供了一个例子，分别用 Qt 和 JavaDoc 的风格注释一段相同的 C++ 代码：
 
@@ -382,7 +380,7 @@ Qt 风格的注释：
 
 生成的 HTML 网页：http://www.stack.nl/~dimitri/doxygen/manual/examples/jdstyle/html/class_test.html
 
-##### Documentation at other places
+#### Documentation at other places
 
 我们之前的例子中注释都是在文件、命名空间、类的声明或者定义之前，或者在它们的成员的前/后。虽然一般来说这是很正常的，但是有时候我们需要把代码写在在文档的其他地方。对于文件的注释更是如此，因为对于文件来说，根本就不存在在它之前的地方（"in front of a file"）。
 
