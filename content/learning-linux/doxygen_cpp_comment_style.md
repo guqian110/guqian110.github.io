@@ -217,7 +217,7 @@ BUG 命令：
 
 从网上找到一个Doxygen for C 的示例：
 
-[Doxygen usage example (for C)][doxgen_c]
+[Doxygen usage example (for C)][doxygen_c]
 
 里面有一些注释方法很有借鉴意义，可以当作模板来用。
 
