@@ -6,7 +6,7 @@ Slug: learning_vim_doxygentoolkit
 Author: Qian Gu
 Summary: 学习 Vim 插件 DoxygenToolKit
 
-前面一篇博客已经介绍过 Doxygen 了，Doxygen 的确是一个非常给力的工具，但是为了生存文档，我们必须在注释上花费很大的时间和精力。
+[前面一篇博客][blog1]已经介绍过 Doxygen 了，Doxygen 的确是一个非常给力的工具，但是为了生存文档，我们必须在注释上花费很大的时间和精力。
 
 那么问题又来了：**如何才能既享受 Doxygen 的强大功能，同时又避免大量的重复性的注释内容？**
 
@@ -52,7 +52,7 @@ Vundle 会自动完成安装 :-D
 
 我们有两种方法可以修改设置，方法一是直接在 DoxygenToolKit.vim 脚本文件中修改相关变量；方法二是在 ~/.vimrc 里面修改。显然方法二更加好一点，因为如果用方法一直接改原脚本，可能还得保存备份才能恢复默认值。
 
-因为平时写的 C++ 程序比较多，所以针对[基于 Doxygen 的 C++ 注释风格][blog1]，我们需要进行以下几步：
+因为平时写的 C++ 程序比较多，所以针对[基于 Doxygen 的 C++ 注释风格][blog2]，我们需要进行以下几步：
 
 1. 在 .vimrc 中我特别配置了以下命令：
 
@@ -136,4 +136,7 @@ Vundle 会自动完成安装 :-D
 ## Ref
 
 [DoxygenToolKit.vim][official]
-[blog1]: 
+
+[blog1]: http://guqian110.github.io/pages/2015/01/11/how_to_analysize_code_elegantly.html
+
+[blog2]: http://blog.csdn.net/czyt1988/article/details/8901191
