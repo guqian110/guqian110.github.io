@@ -55,6 +55,7 @@ Doxygen 支持多种注释风格，比如 JavaDoc-like 风格，Qt 风格等。�
 
 + 如果一段代码既是声明也是定义，则 brief 和 detailed 写在一起。使用 `\brief` 命令，并且使用空行将两者分开。一般 brief 写在头文件中，对象的声明之前。
 
+        #!C++
         /// \brief A brief description.
         ///
         /// A detailed description, it
@@ -69,6 +70,7 @@ Doxygen 支持多种注释风格，比如 JavaDoc-like 风格，Qt 风格等。�
 ## File header
 * * *
 
+    #!c++
     /// \file file_name.h
     /// \brief Head file for class Ctest.
     /// 
@@ -82,6 +84,7 @@ Doxygen 支持多种注释风格，比如 JavaDoc-like 风格，Qt 风格等。�
 
 namespace 的注释方式：
 
+    #!c++
     /// \brief A brief namespace description.
     ///
     /// A detailed namespace description, it
@@ -95,6 +98,7 @@ namespace 的注释方式：
 
 class 的定义和声明都在头文件中，所以使用下面这种 brief 和 detailed 结合的方式：
 
+    #!c++
     /// \brief A brief class description.
     ///
     /// A detailed calss description, it
@@ -124,17 +128,20 @@ class 的定义和声明都在头文件中，所以使用下面这种 brief 和 
 
 单行的 `/// ` 注释：
 
+    #!c++
     /// A brief function description.
 
 **detailed:**
 
 至少两行 `/// ` 的注释：
 
+    #!c++
     /// This is the detailed description, it
     /// should be 2 lines at least.
 
 在 detailed description 中还可以添加一些 `structural command`，常用的有 `\param`、`\return`、`\see`、`\note`、`\warning` 等：
 
+    #!c++
     /// This is the detailed description, it
     /// should be 2 lines at least.
     ///
@@ -149,6 +156,7 @@ class 的定义和声明都在头文件中，所以使用下面这种 brief 和 
 
 如果函数声明和定义重合，则 brief 和 detailed 合在一起，并且使用 `\brief` 命令，格式如下：
 
+    #!c++
     /// \brief A brief function description.
     /// 
     /// A detailed description, it
@@ -173,11 +181,13 @@ Doxygen 允许注释出现在对象的定义之前，所以我们可以将注释
 
 变量一般使用 `///< ` 方式即可：
 
+    #!c++
     int m_a; ///< brief description for variable m_a
     double m_b;  ///< brief description for variable m_b
 
 如果需要进行详细描述，则采用类似函数注释的方法（brief + detailed）：
 
+    #!c++
     /// \brief A brief description.
     ///
     /// A detailed description, it
@@ -188,6 +198,7 @@ Doxygen 允许注释出现在对象的定义之前，所以我们可以将注释
 
 类似于 Variable 的注释方式：
 
+    #!c++
     /// \brief A brief description.
     /// 
     /// A detailed description, it
@@ -203,11 +214,13 @@ Doxygen 允许注释出现在对象的定义之前，所以我们可以将注释
 
 TODO 命令：
 
+    #!c++
     /// \todo Task1 to do
     /// \todo Task2 to do
 
 BUG 命令：
 
+    #!c++
     /// \bug Bug1 to be fixed
     /// \bug Bug2 to be fixed
 
