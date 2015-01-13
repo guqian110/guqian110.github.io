@@ -47,12 +47,15 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Vundle 会自动完成安装 :-D&lt;/p&gt;
-&lt;h3&gt;Configuration&lt;/h3&gt;
-&lt;p&gt;DoxygenToolKit 的配置由脚本文件的 &lt;code&gt;g:DoxygenToolkit_*&lt;/code&gt; 变量决定，我们可以在 &lt;code&gt;.vimrc&lt;/code&gt; 文件中修改这些参数，根据自己的情况修改自定义。&lt;/p&gt;
-&lt;p&gt;作者给出了自己的一些设置，我修改过之后：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_briefTag_pre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;@Brief &amp;quot;&lt;/span&gt;
-&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_paramTag_pre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;@Param &amp;quot;&lt;/span&gt;
-&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_returnTag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;@Returns &amp;quot;&lt;/span&gt;
+&lt;h3&gt;Configuration for c++&lt;/h3&gt;
+&lt;p&gt;我们有两种方法可以修改设置，方法一是直接在 DoxygenToolKit.vim 脚本文件中修改相关变量；方法二是在 ~/.vimrc 里面修改。显然方法二更加好一点，因为如果用方法一直接改原脚本，可能还得保存备份才能恢复默认值。&lt;/p&gt;
+&lt;p&gt;因为平时写的 C++ 程序比较多，所以针对&lt;a href=""&gt;基于 Doxygen 的 C++ 注释风格&lt;/a&gt;，我们需要进行以下几步：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在 .vimrc 中我特别配置了以下命令：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_briefTag_pre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\b&lt;/span&gt;&lt;span class="s"&gt;rief &amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_paramTag_pre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;\param &amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_returnTag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\r&lt;/span&gt;&lt;span class="s"&gt;eturn &amp;quot;&lt;/span&gt;
 &lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_briefTag_funcName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;yes &amp;quot;&lt;/span&gt;
 &lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_authorName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Qian Gu guqian110@gmail.com&amp;quot;&lt;/span&gt;
 &lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_commentType&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;C++ &amp;quot;&lt;/span&gt;
@@ -60,6 +63,23 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;即使前一步中设置了 C++ 风格，但是生成的 Lisence 仍然是 &lt;code&gt;//&lt;/code&gt;，而不是我们想要的 &lt;code&gt;///&lt;/code&gt;，所以我们还需要修改原脚本（line 362~363）为：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_startCommentBlock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/// &amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;DoxygenToolKit_interCommentBlock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;/// &amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;最后一步，结构命令的开头提示符默认设置是使用 &lt;code&gt;@&lt;/code&gt;，而 C++ 风格是使用&lt;code&gt;\&lt;/code&gt;，为了避免大范围改动原脚本，只能手动替换了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:%&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;\
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h3&gt;Usage&lt;/h3&gt;
 &lt;p&gt;官网上也给出了使用方法：&lt;/p&gt;
 &lt;ul&gt;

@@ -48,19 +48,31 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
         
 Vundle 会自动完成安装 :-D
 
-### Configuration
+### Configuration for c++
 
-DoxygenToolKit 的配置由脚本文件的 `g:DoxygenToolkit_*` 变量决定，我们可以在 `.vimrc` 文件中修改这些参数，根据自己的情况修改自定义。
+我们有两种方法可以修改设置，方法一是直接在 DoxygenToolKit.vim 脚本文件中修改相关变量；方法二是在 ~/.vimrc 里面修改。显然方法二更加好一点，因为如果用方法一直接改原脚本，可能还得保存备份才能恢复默认值。
 
-作者给出了自己的一些设置，我修改过之后：
+因为平时写的 C++ 程序比较多，所以针对[基于 Doxygen 的 C++ 注释风格][blog1]，我们需要进行以下几步：
 
-    let g:DoxygenToolKit_briefTag_pre = "@Brief "
-    let g:DoxygenToolKit_paramTag_pre = "@Param "
-    let g:DoxygenToolKit_returnTag = "@Returns "
-    let g:DoxygenToolKit_briefTag_funcName = "yes "
-    let g:DoxygenToolKit_authorName = "Qian Gu guqian110@gmail.com"
-    let g:DoxygenToolKit_commentType = "C++ "
-    let g:doxygen_enhanced_color = 1
+1. 在 .vimrc 中我特别配置了以下命令：
+
+        let g:DoxygenToolKit_briefTag_pre = "\brief "
+        let g:DoxygenToolKit_paramTag_pre = "\param "
+        let g:DoxygenToolKit_returnTag = "\return "
+        let g:DoxygenToolKit_briefTag_funcName = "yes "
+        let g:DoxygenToolKit_authorName = "Qian Gu guqian110@gmail.com"
+        let g:DoxygenToolKit_commentType = "C++ "
+        let g:doxygen_enhanced_color = 1
+
+2. 即使前一步中设置了 C++ 风格，但是生成的 Lisence 仍然是 `//`，而不是我们想要的 `///`，所以我们还需要修改原脚本（line 362~363）为：
+
+        let g:DoxygenToolKit_startCommentBlock = "/// "
+        let g:DoxygenToolKit_interCommentBlock = "/// "
+
+3. 最后一步，结构命令的开头提示符默认设置是使用 `@`，而 C++ 风格是使用`\`，为了避免大范围改动原脚本，只能手动替换了
+
+        :%s/@/\
+
 
 ### Usage
 
@@ -124,3 +136,4 @@ DoxygenToolKit 的配置由脚本文件的 `g:DoxygenToolkit_*` 变量决定，�
 ## Ref
 
 [DoxygenToolKit.vim][official]
+[blog1]: 

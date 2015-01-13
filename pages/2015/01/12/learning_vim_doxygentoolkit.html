@@ -165,12 +165,15 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 </li>
 </ol>
 <p>Vundle 会自动完成安装 :-D</p>
-<h3>Configuration</h3>
-<p>DoxygenToolKit 的配置由脚本文件的 <code>g:DoxygenToolkit_*</code> 变量决定，我们可以在 <code>.vimrc</code> 文件中修改这些参数，根据自己的情况修改自定义。</p>
-<p>作者给出了自己的一些设置，我修改过之后：</p>
-<div class="highlight"><pre><span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_briefTag_pre</span> <span class="o">=</span> <span class="s">&quot;@Brief &quot;</span>
-<span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_paramTag_pre</span> <span class="o">=</span> <span class="s">&quot;@Param &quot;</span>
-<span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_returnTag</span> <span class="o">=</span> <span class="s">&quot;@Returns &quot;</span>
+<h3>Configuration for c++</h3>
+<p>我们有两种方法可以修改设置，方法一是直接在 DoxygenToolKit.vim 脚本文件中修改相关变量；方法二是在 ~/.vimrc 里面修改。显然方法二更加好一点，因为如果用方法一直接改原脚本，可能还得保存备份才能恢复默认值。</p>
+<p>因为平时写的 C++ 程序比较多，所以针对<a href="">基于 Doxygen 的 C++ 注释风格</a>，我们需要进行以下几步：</p>
+<ol>
+<li>
+<p>在 .vimrc 中我特别配置了以下命令：</p>
+<div class="highlight"><pre><span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_briefTag_pre</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\b</span><span class="s">rief &quot;</span>
+<span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_paramTag_pre</span> <span class="o">=</span> <span class="s">&quot;\param &quot;</span>
+<span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_returnTag</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\r</span><span class="s">eturn &quot;</span>
 <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_briefTag_funcName</span> <span class="o">=</span> <span class="s">&quot;yes &quot;</span>
 <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_authorName</span> <span class="o">=</span> <span class="s">&quot;Qian Gu guqian110@gmail.com&quot;</span>
 <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_commentType</span> <span class="o">=</span> <span class="s">&quot;C++ &quot;</span>
@@ -178,6 +181,23 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 </pre></div>
 
 
+</li>
+<li>
+<p>即使前一步中设置了 C++ 风格，但是生成的 Lisence 仍然是 <code>//</code>，而不是我们想要的 <code>///</code>，所以我们还需要修改原脚本（line 362~363）为：</p>
+<div class="highlight"><pre><span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_startCommentBlock</span> <span class="o">=</span> <span class="s">&quot;/// &quot;</span>
+<span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_interCommentBlock</span> <span class="o">=</span> <span class="s">&quot;/// &quot;</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>最后一步，结构命令的开头提示符默认设置是使用 <code>@</code>，而 C++ 风格是使用<code>\</code>，为了避免大范围改动原脚本，只能手动替换了</p>
+<div class="highlight"><pre><span class="o">:%</span><span class="n">s</span><span class="o">/</span><span class="err">@</span><span class="o">/</span>\
+</pre></div>
+
+
+</li>
+</ol>
 <h3>Usage</h3>
 <p>官网上也给出了使用方法：</p>
 <ul>
@@ -254,8 +274,8 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/05/12/learning_yocto_from_zero_1_getting_started.html">Yocto 从零单排 1 —— 入门</a></li>
     </ul>
