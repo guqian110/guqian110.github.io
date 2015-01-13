@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/learning-linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-13T00:00:00+08:00</updated><entry><title>基于 Doxygen 的 C++ 注释风格</title><link href="http://guqian110.github.io/pages/2015/01/13/ji-yu-doxygen-de-c-zhu-shi-feng-ge.html" rel="alternate"></link><updated>2015-01-13T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-13:pages/2015/01/13/ji-yu-doxygen-de-c-zhu-shi-feng-ge.html</id><summary type="html">&lt;p&gt;本文内容参考自网上博客内容&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.csdn.net/czyt1988/article/details/8901191"&gt;C++标准注释原则 - 基于doxygen的C++注释&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.sina.com.cn/s/blog_6294abe701012pee.html"&gt;Doxygen C++注释规范及生成帮助文档配置步骤&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://ticktick.blog.51cto.com/823160/188674"&gt;Doxygen详细介绍（三）（Doxygen注释风格）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;重新整理排版了一下。写本文的主要目的是备忘，当作快速参考来查。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Doxygen&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;若想用 Doxygen 生成漂亮的文档，我们必须在以下几个地方添加 Doxygen 风格的注释：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;文件头（包括 头文件 .h 和 源文件 .cpp）&lt;/p&gt;
+&lt;p&gt;主要用于版权声明，描述本文件的功能，以及作者、版本信息等。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;类的定义&lt;/p&gt;
+&lt;p&gt;主要用于描述类的功能，同时也可以包含使用方法、注意事项的 brief description。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;类的成员变量定义&lt;/p&gt;
+&lt;p&gt;对该成员变量进行 brief description。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;类的成员函数定义&lt;/p&gt;
+&lt;p&gt;对该成员函数的功能进行 brief description。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;函数实现&lt;/p&gt;
+&lt;p&gt;对函数的功能、参数、返回值、需要注意的问题、相关说明等进行 detailed description。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;C++ Comment Style&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;Doxygen 支持多种注释风格，比如 JavaDoc-like 风格，Qt 风格等。在写 C++ 代码时，我们应该遵守 C++ 的行注释风格，所谓行注释风格，是指一般 C++ 程序员避免使用 C 风格的注释符号 &lt;code&gt;/* */&lt;/code&gt;，而是使用 3 个连续的 &lt;code&gt;/&lt;/code&gt; 作为注释的开头。除了这个区别之外，其他部分和 JavaDoc 风格类似：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;一个对象的 brief description 用单行的 &lt;code&gt;///&lt;/code&gt; 开始，并且写在代码前面。一般 brief 写在头文件中，对象的声明之前。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;一个对象的 detailed description 用多于两行的 &lt;code&gt;///&lt;/code&gt; 开始，并且写在代码前面。如果注释长度不足两行，第二行的开头仍要写出。一般 detailed 写在源文件中，对象的定义之前。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果一段代码既是声明也是定义，则 brief 和 detailed 写在一起。使用 &lt;code&gt;\brief&lt;/code&gt; 命令，并且使用空行将两者分开。一般 brief 写在头文件中，对象的声明之前。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// \brief A brief description.&lt;/span&gt;
+&lt;span class="c1"&gt;///&lt;/span&gt;
+&lt;span class="c1"&gt;/// A detailed description, it&lt;/span&gt;
+&lt;span class="c1"&gt;/// should be 2 line at least.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面是代码模板：&lt;/p&gt;
+&lt;h3&gt;License&lt;/h3&gt;
+&lt;p&gt;使用 DoxygenToolKit 自动生成的 Lisence 即可。&lt;/p&gt;
+&lt;h2&gt;File header&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// \file file_name.h&lt;/span&gt;
+&lt;span class="c1"&gt;/// \brief Head file for class Ctest.&lt;/span&gt;
+&lt;span class="c1"&gt;/// &lt;/span&gt;
+&lt;span class="c1"&gt;/// A detailed file description.&lt;/span&gt;
+&lt;span class="c1"&gt;///&lt;/span&gt;
+&lt;span class="c1"&gt;/// \author author_name&lt;/span&gt;
+&lt;span class="c1"&gt;/// \version version_number&lt;/span&gt;
+&lt;span class="c1"&gt;/// \date xxxx-xx-xx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Namespace&lt;/h3&gt;
+&lt;p&gt;namespace 的注释方式：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// \brief A brief namespace description.&lt;/span&gt;
+&lt;span class="c1"&gt;///&lt;/span&gt;
+&lt;span class="c1"&gt;/// A detailed namespace description, it&lt;/span&gt;
+&lt;span class="c1"&gt;/// should be 2 lines at least.&lt;/span&gt;
+&lt;span class="n"&gt;namespace&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Class&lt;/h3&gt;
+&lt;p&gt;class 的定义和声明都在头文件中，所以使用下面这种 brief 和 detailed 结合的方式：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// \brief A brief class description.&lt;/span&gt;
+&lt;span class="c1"&gt;///&lt;/span&gt;
+&lt;span class="c1"&gt;/// A detailed calss description, it&lt;/span&gt;
+&lt;span class="c1"&gt;/// should be 2 lines at least.&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;member function&lt;/h4&gt;
+&lt;p&gt;对于成员函数，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;若是在头文件的声明处，使用 brief&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;若是在源文件的定义处，使用 detailed&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;若是在头文件处，声明和定义重合，使用 brief + detailed&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;member variable&lt;/h4&gt;
+&lt;p&gt;对于成员变量，在行末使用 &lt;code&gt;///&amp;lt;&lt;/code&gt;。&lt;/p&gt;
+&lt;h3&gt;Function&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;brief:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;单行的 &lt;code&gt;///&lt;/code&gt; 注释：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// A brief function description.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;detailed:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;至少两行 &lt;code&gt;///&lt;/code&gt; 的注释：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// This is the detailed description, it&lt;/span&gt;
+&lt;span class="c1"&gt;/// should be 2 lines at least.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在 detailed description 中还可以添加一些 &lt;code&gt;structural command&lt;/code&gt;，常用的有 &lt;code&gt;\param&lt;/code&gt;、&lt;code&gt;\return&lt;/code&gt;、&lt;code&gt;\see&lt;/code&gt;、&lt;code&gt;\note&lt;/code&gt;、&lt;code&gt;\warning&lt;/code&gt; 等：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// This is the detailed description, it&lt;/span&gt;
+&lt;span class="c1"&gt;/// should be 2 lines at least.&lt;/span&gt;
+&lt;span class="c1"&gt;///&lt;/span&gt;
+&lt;span class="c1"&gt;/// \param p1 Brief description for p1&lt;/span&gt;
+&lt;span class="c1"&gt;/// \param p2 Brief description for p2&lt;/span&gt;
+&lt;span class="c1"&gt;/// \return Brief description for return value&lt;/span&gt;
+&lt;span class="c1"&gt;/// \note something to note.&lt;/span&gt;
+&lt;span class="c1"&gt;/// \warning Warning.&lt;/span&gt;
+&lt;span class="c1"&gt;/// \see See-also&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;brief + detailed:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果函数声明和定义重合，则 brief 和 detailed 合在一起，并且使用 &lt;code&gt;\brief&lt;/code&gt; 命令，格式如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// \brief A brief function description.&lt;/span&gt;
+&lt;span class="c1"&gt;/// &lt;/span&gt;
+&lt;span class="c1"&gt;/// A detailed description, it&lt;/span&gt;
+&lt;span class="c1"&gt;/// should be 2 lines at least.&lt;/span&gt;
+&lt;span class="c1"&gt;///&lt;/span&gt;
+&lt;span class="c1"&gt;/// \param p1 Description for p1.&lt;/span&gt;
+&lt;span class="c1"&gt;/// \param p2 Description for p2.&lt;/span&gt;
+&lt;span class="c1"&gt;/// \return Description for return value.&lt;/span&gt;
+&lt;span class="n"&gt;bool&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;int&lt;/span&gt; &lt;span class="n"&gt;n1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;char&lt;/span&gt; &lt;span class="n"&gt;c1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在 Doxgyen 的 manual 里面有：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Unlike most other documentation systems, doxygen also allows you to put the documentation of members (including global functions) in front of the definition. This way the documentation can be placed in the source file instead of the header file. This keeps the header file compact, and allows the implementer of the members more direct access to the documentation. As a compromise the brief description could be placed before the declaration and the detailed description before the member definition.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Doxygen 允许注释出现在对象的定义之前，所以我们可以将注释写在源文件中，而不是头文件中。这样做的好处是使头文件更加紧凑、代码的实现者阅读起来也更加直观。所以我们采用的方案是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;在函数声明前写 brief，在函数定义前写 detailed。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对于 inline 函数，使用 brief，尽量保持简洁，不要多于一行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Variable&lt;/h3&gt;
+&lt;p&gt;变量一般使用 &lt;code&gt;///&amp;lt;&lt;/code&gt; 方式即可：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;m_a&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;///&amp;lt; brief description for variable m_a&lt;/span&gt;
+&lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;m_b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  &lt;span class="c1"&gt;///&amp;lt; brief description for variable m_b&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果需要进行详细描述，则采用类似函数注释的方法（brief + detailed）：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// \brief A brief description.&lt;/span&gt;
+&lt;span class="c1"&gt;///&lt;/span&gt;
+&lt;span class="c1"&gt;/// A detailed description, it&lt;/span&gt;
+&lt;span class="c1"&gt;/// should be 2 lines at least.&lt;/span&gt;
+&lt;span class="n"&gt;float&lt;/span&gt; &lt;span class="n"&gt;m_c&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Enum &amp;amp; Struct&lt;/h3&gt;
+&lt;p&gt;类似于 Variable 的注释方式：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// \brief A brief description.&lt;/span&gt;
+&lt;span class="c1"&gt;/// &lt;/span&gt;
+&lt;span class="c1"&gt;/// A detailed description, it&lt;/span&gt;
+&lt;span class="c1"&gt;/// should be 2 lines at least.&lt;/span&gt;
+&lt;span class="k"&gt;enum&lt;/span&gt; &lt;span class="n"&gt;Tenum&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;em_1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;///&amp;lt; enum value em_1&lt;/span&gt;
+    &lt;span class="n"&gt;em_2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;///&amp;lt; enum value em_2&lt;/span&gt;
+    &lt;span class="n"&gt;em_3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;///&amp;lt; enum value em_3&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;emVar&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;///&amp;lt; enum variable.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Others&lt;/h3&gt;
+&lt;p&gt;TODO 命令：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// \todo Task1 to do&lt;/span&gt;
+&lt;span class="c1"&gt;/// \todo Task2 to do&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;BUG 命令：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;/// \bug Bug1 to be fixed&lt;/span&gt;
+&lt;span class="c1"&gt;/// \bug Bug2 to be fixed&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;从网上找到一个Doxygen for C 的示例：&lt;/p&gt;
+&lt;p&gt;[Doxygen usage example (for C)][doxgen_c]&lt;/p&gt;
+&lt;p&gt;里面有一些注释方法很有借鉴意义，可以当作模板来用。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P.P.S&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;又找到一份注释规范的文档，写的挺好，值得一看。&lt;/p&gt;
+&lt;p&gt;&lt;a href="/file/cpp_comment_standard.doc"&gt;C++注释规范&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;</summary><category term="Linux"></category><category term="C++"></category><category term="comment style"></category></entry></feed>
