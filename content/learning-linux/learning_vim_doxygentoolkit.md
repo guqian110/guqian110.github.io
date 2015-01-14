@@ -6,7 +6,7 @@ Slug: learning_vim_doxygentoolkit
 Author: Qian Gu
 Summary: 学习 Vim 插件 DoxygenToolKit
 
-[前面一篇博客][blog1]已经介绍过 Doxygen 了，Doxygen 的确是一个非常给力的工具，但是为了生存文档，我们必须在注释上花费很大的时间和精力。
+[前面一篇博客][blog1]已经介绍过 Doxygen 了，Doxygen 的确是一个非常给力的工具，但是为了生成文档，我们必须在注释上花费很大的时间和精力。
 
 那么问题又来了：**如何才能既享受 Doxygen 的强大功能，同时又避免大量的重复性的注释内容？**
 
@@ -56,23 +56,29 @@ Vundle 会自动完成安装 :-D
 
 1. 在 .vimrc 中我特别配置了以下命令：
 
-        let g:DoxygenToolKit_briefTag_pre = "\brief "
-        let g:DoxygenToolKit_paramTag_pre = "\param "
-        let g:DoxygenToolKit_returnTag = "\return "
-        let g:DoxygenToolKit_briefTag_funcName = "yes "
-        let g:DoxygenToolKit_authorName = "Qian Gu guqian110@gmail.com"
-        let g:DoxygenToolKit_commentType = "C++ "
-        let g:doxygen_enhanced_color = 1
+            let g:DoxygenToolkit_briefTag_funcName = "yes"
+
+            " for C++ style, change the '@' to '\'
+            let g:DoxygenToolkit_commentType = "C++"
+            let g:DoxygenToolkit_briefTag_pre = "\\brief "
+            let g:DoxygenToolkit_templateParamTag_pre = "\\tparam "
+            let g:DoxygenToolkit_paramTag_pre = "\\param "
+            let g:DoxygenToolkit_returnTag = "\\return "
+            let g:DoxygenToolkit_throwTag_pre = "\\throw " " @exception is also valid
+            let g:DoxygenToolkit_fileTag = "\\file "
+            let g:DoxygenToolkit_dateTag = "\\date "
+            let g:DoxygenToolkit_authorTag = "\\author "
+            let g:DoxygenToolkit_versionTag = "\\version "
+            let g:DoxygenToolkit_blockTag = "\\name "
+            let g:DoxygenToolkit_classTag = "\\class "
+            let g:DoxygenToolkit_authorName = "Qian Gu, guqian110@gmail.com"
+            let g:doxygen_enhanced_color = 1
+            "let g:load_doxygen_syntax = 1
 
 2. 即使前一步中设置了 C++ 风格，但是生成的 Lisence 仍然是 `//`，而不是我们想要的 `///`，所以我们还需要修改原脚本（line 362~363）为：
 
         let g:DoxygenToolKit_startCommentBlock = "/// "
         let g:DoxygenToolKit_interCommentBlock = "/// "
-
-3. 最后一步，结构命令的开头提示符默认设置是使用 `@`，而 C++ 风格是使用`\`，为了避免大范围改动原脚本，只能手动替换了
-
-        :%s/@/\
-
 
 ### Usage
 

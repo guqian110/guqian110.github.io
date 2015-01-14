@@ -120,7 +120,7 @@
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p><a href="http://guqian110.github.io/pages/2015/01/11/how_to_analysize_code_elegantly.html">前面一篇博客</a>已经介绍过 Doxygen 了，Doxygen 的确是一个非常给力的工具，但是为了生存文档，我们必须在注释上花费很大的时间和精力。</p>
+                <p><a href="http://guqian110.github.io/pages/2015/01/11/how_to_analysize_code_elegantly.html">前面一篇博客</a>已经介绍过 Doxygen 了，Doxygen 的确是一个非常给力的工具，但是为了生成文档，我们必须在注释上花费很大的时间和精力。</p>
 <p>那么问题又来了：<strong>如何才能既享受 Doxygen 的强大功能，同时又避免大量的重复性的注释内容？</strong></p>
 <p>解决思路： 让编辑器来替我们写那些格式和内容固定的部分，我们只负责写真正的有效内容。</p>
 <p>所以，答案就是：<strong>Vim + DoxygenToolKit.vim 插件</strong></p>
@@ -174,13 +174,24 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 <ol>
 <li>
 <p>在 .vimrc 中我特别配置了以下命令：</p>
-<div class="highlight"><pre><span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_briefTag_pre</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\b</span><span class="s">rief &quot;</span>
-<span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_paramTag_pre</span> <span class="o">=</span> <span class="s">&quot;\param &quot;</span>
-<span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_returnTag</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\r</span><span class="s">eturn &quot;</span>
-<span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_briefTag_funcName</span> <span class="o">=</span> <span class="s">&quot;yes &quot;</span>
-<span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_authorName</span> <span class="o">=</span> <span class="s">&quot;Qian Gu guqian110@gmail.com&quot;</span>
-<span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_commentType</span> <span class="o">=</span> <span class="s">&quot;C++ &quot;</span>
-<span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">doxygen_enhanced_color</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight"><pre>    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_briefTag_funcName</span> <span class="o">=</span> <span class="s">&quot;yes&quot;</span>
+
+    <span class="s">&quot; for C++ style, change the &#39;@&#39; to &#39;</span><span class="se">\&#39;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_commentType</span> <span class="o">=</span> <span class="s">&quot;C++&quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_briefTag_pre</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">brief &quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_templateParamTag_pre</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">tparam &quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_paramTag_pre</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">param &quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_returnTag</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">return &quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_throwTag_pre</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">throw &quot;</span> <span class="s">&quot; @exception is also valid</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_fileTag</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">file &quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_dateTag</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">date &quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_authorTag</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">author &quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_versionTag</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">version &quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_blockTag</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">name &quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_classTag</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">class &quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolkit_authorName</span> <span class="o">=</span> <span class="s">&quot;Qian Gu, guqian110@gmail.com&quot;</span>
+    <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">doxygen_enhanced_color</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="s">&quot;let g:load_doxygen_syntax = 1</span>
 </pre></div>
 
 
@@ -189,13 +200,6 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 <p>即使前一步中设置了 C++ 风格，但是生成的 Lisence 仍然是 <code>//</code>，而不是我们想要的 <code>///</code>，所以我们还需要修改原脚本（line 362~363）为：</p>
 <div class="highlight"><pre><span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_startCommentBlock</span> <span class="o">=</span> <span class="s">&quot;/// &quot;</span>
 <span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">DoxygenToolKit_interCommentBlock</span> <span class="o">=</span> <span class="s">&quot;/// &quot;</span>
-</pre></div>
-
-
-</li>
-<li>
-<p>最后一步，结构命令的开头提示符默认设置是使用 <code>@</code>，而 C++ 风格是使用<code>\</code>，为了避免大范围改动原脚本，只能手动替换了</p>
-<div class="highlight"><pre><span class="o">:%</span><span class="n">s</span><span class="o">/</span><span class="err">@</span><span class="o">/</span>\
 </pre></div>
 
 
@@ -276,11 +280,11 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/05/12/learning_yocto_from_zero_1_getting_started.html">Yocto 从零单排 1 —— 入门</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
     </ul>
 </section>
     <hr />
