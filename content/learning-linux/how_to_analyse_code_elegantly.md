@@ -3,7 +3,7 @@ Date: 2015-01-11 18:49
 Category: Linux
 Tags: doxygen, code
 Author: Qian Gu
-Slug: how_to_analysize_code_elegantly
+Slug: how_to_analyse_code_elegantly
 Summary: 学习 Doxygen + Graphviz 的使用方法
 
 当我们来接手一个别人的工程时，阅读别人的代码是一件很痛苦的事。成千上百的函数，糟糕的代码风格，不知所云的注释，这些都是让人抓狂。那么，问题就来了：**如何优雅地分析别人的代码？**
