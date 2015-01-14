@@ -519,7 +519,7 @@ P.S.
 
 最后展示一张我的效果图：
 
-![image](/images/how-to-analysize-code-elegantly/result.png)
+![image](/images/how-to-analyse-code-elegantly/result.png)
 
 <br>
 
