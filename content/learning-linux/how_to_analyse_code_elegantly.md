@@ -156,7 +156,7 @@ Summary: 学习 Doxygen + Graphviz 的使用方法
         * ... text ...
         */
         
-3. **A Third Alternative**
+3. **C++ Comment Style**
 
     使用连续两个以上的 C++ 注释行组成注释块，并且每行要多写一个 `/` 或者 `!`：
 
