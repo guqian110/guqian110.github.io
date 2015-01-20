@@ -21,7 +21,7 @@
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Graphviz 的缺点：要想用好，需要投入时间和精力去学习使用方法。不仅要学习新的一门语言，还要学习软件的配置方法。&lt;/p&gt;
+&lt;p&gt;Graphviz 的缺点：要想用好，需要投入时间和精力去学习使用方法。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Graphviz 可以帮助我们画数据结构图、模块图、流程图等，是程序猿的画图利器。这里我们只用它来画简单的 流程图 / 状态图 ，所以只要有基本的图论知识，不涉及高级主题，所以学习起来是很轻松的。&lt;/p&gt;
@@ -118,7 +118,29 @@
 &lt;hr /&gt;
 &lt;p&gt;下面是实际程序中的一个例子：&lt;/p&gt;
 &lt;p&gt;dot 脚本：&lt;/p&gt;
-&lt;p&gt;生成的结果：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;digraph&lt;/span&gt; &lt;span class="n"&gt;fsm&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;                                                               
+  &lt;span class="mi"&gt;2&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;a&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;a&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;0/0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="mi"&gt;3&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;a&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;b&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;1/0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="mi"&gt;4&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;b&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;c&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;0/0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="mi"&gt;5&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;b&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;d&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;1/0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="mi"&gt;6&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;c&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;a&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;0/0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="mi"&gt;7&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;c&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;d&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;1/0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="mi"&gt;8&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;d&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;e&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;0/0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="mi"&gt;9&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;d&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;f&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;1/1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="mi"&gt;10&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;e&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;a&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;0/0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="mi"&gt;11&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;e&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;f&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;1/1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="mi"&gt;12&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;f&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;f&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;1/1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="mi"&gt;13&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;f&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;g&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;0/0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="mi"&gt;14&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;g&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;a&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;0/0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="mi"&gt;15&lt;/span&gt;     &lt;span class="s"&gt;&amp;quot;g&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;f&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;label&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;1/1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+ &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用 dot 生成的结果：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="fsm_dot" src="/images/drawing-fsm-state-diagram-using-graphviz/fsm_dot.png" /&gt;&lt;/p&gt;
+&lt;p&gt;使用 circo 生成的结果：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="fsm_circo" src="/images/drawing-fsm-state-diagram-using-graphviz/fsm_circo.png" /&gt;&lt;/p&gt;
 &lt;h2&gt;Ref&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://www.ibm.com/developerworks/cn/aix/library/au-aix-graphviz/"&gt;使用 Graphviz 生成自动化系统图&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.openfoundry.org/en/foss-programs/8820-graphviz-"&gt;Graphviz - 用指令來畫關係圖吧！&lt;/a&gt;&lt;/p&gt;
