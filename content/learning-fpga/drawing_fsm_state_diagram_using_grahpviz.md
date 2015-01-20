@@ -1,6 +1,6 @@
 Title: 利用 Graphviz 画 FSM 状态图
 Date: 2015-01-20 17:55
-Category: FPGA, Linux
+Category: FPGA 
 Tags: FPGA, fsm, graphviz
 Slug: drawing_fsm_state_diagram_using_graphviz
 Author: Qian Gu
@@ -119,7 +119,7 @@ DOT 语法在 [Documentation][documentation] 里面有介绍，它的定义方�
 
 ### Command
 
-example1 的命令格式为
+Graphviz 的命令格式为
 
 	cmd [ flags ] [ input files ]
 
@@ -127,7 +127,7 @@ example1 的命令格式为
 
 其中，flags 可以设置相关属性，比如 `-Tformat`，如果我们需要产生 PNG 图片，那么这里就应该是 `-Tpng`；再比如 `-o` 设置输出目的地。
 
-所以我们上面
+所以我们上面 example1 的命令格式为
 
 	dot example1.dot -Tpng -o exampl1.png
 
