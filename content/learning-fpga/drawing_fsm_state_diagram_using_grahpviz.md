@@ -146,21 +146,21 @@ example2，example3，exampl4 同理。
 dot 脚本：
 
     digraph fsm {                                                               
-      2     "a" -> "a" [label= "0/0"]
-      3     "a" -> "b" [label= "1/0"]
-      4     "b" -> "c" [label= "0/0"]
-      5     "b" -> "d" [label= "1/0"]
-      6     "c" -> "a" [label= "0/0"]
-      7     "c" -> "d" [label= "1/0"]
-      8     "d" -> "e" [label= "0/0"]
-      9     "d" -> "f" [label= "1/1"]
-     10     "e" -> "a" [label= "0/0"]
-     11     "e" -> "f" [label= "1/1"]
-     12     "f" -> "f" [label= "1/1"]
-     13     "f" -> "g" [label= "0/0"]
-     14     "g" -> "a" [label= "0/0"]
-     15     "g" -> "f" [label= "1/1"]
-     16 }
+           "a" -> "a" [label= "0/0"]
+           "a" -> "b" [label= "1/0"]
+           "b" -> "c" [label= "0/0"]
+           "b" -> "d" [label= "1/0"]
+           "c" -> "a" [label= "0/0"]
+           "c" -> "d" [label= "1/0"]
+           "d" -> "e" [label= "0/0"]
+           "d" -> "f" [label= "1/1"]
+           "e" -> "a" [label= "0/0"]
+           "e" -> "f" [label= "1/1"]
+           "f" -> "f" [label= "1/1"]
+           "f" -> "g" [label= "0/0"]
+           "g" -> "a" [label= "0/0"]
+           "g" -> "f" [label= "1/1"]
+    }
 
 使用 dot 生成的结果：
 
