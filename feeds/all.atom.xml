@@ -1,5 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-20T17:55:00+08:00</updated><entry><title>利用 Graphviz 画 FSM 状态图</title><link href="http://guqian110.github.io/pages/2015/01/20/drawing_fsm_state_diagram_using_graphviz.html" rel="alternate"></link><updated>2015-01-20T17:55:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-20:pages/2015/01/20/drawing_fsm_state_diagram_using_graphviz.html</id><summary type="html">&lt;h2&gt;Graphviz&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-21T10:25:00+08:00</updated><entry><title>针对 Verilog 的 Doxygen</title><link href="http://guqian110.github.io/pages/2015/01/21/doxygen_for_verilog.html" rel="alternate"></link><updated>2015-01-21T10:25:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-21:pages/2015/01/21/doxygen_for_verilog.html</id><summary type="html">&lt;p&gt;最近学习了 Doxygen，它可以帮助我们生成美观的文档。Doxygen 支持的程序语言中包含 VHDL，但是不包含 Verilog。&lt;/p&gt;
+&lt;p&gt;那么问题就又来了：&lt;strong&gt;有没有一个支持 Verilog 的类似 Doxygen 的程序？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;答案当然是：&lt;strong&gt;有， Doxverilog&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;机智的网友早就遇到了和我一样的问题：&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.edaboard.co.uk/documentation-generator-for-verilog-t241923.html"&gt;Documentation generator for Verilog&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://sndegroot.blogspot.com/2011/08/documenting-verilog-ams-using.html"&gt;Documenting Verilog (AMS) using Doxygen/Doxverilog&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://sndegroot.blogspot.com/2014/04/doxverilog-has-been-updated.html"&gt;Doxverilog has been updated&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我搜到了两个工具：一个是 perl 脚本&lt;a href="http://www.burbleland.com/v2html/v2html.html"&gt;v2html&lt;/a&gt;，另一个就是 Doxverilog。前者生成的页面美观性实在不敢恭维，理想工具当然是 Doxverilog。&lt;/p&gt;
+&lt;h2&gt;Doxverilog&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Doxverilog  is a nativ verilog parser (Verilog 2001) for Doxygen. After installing this patch you can documentate your verilog project  similar to VHDL in Doxygen.
+Patch against the doxygen-1.7.0 version. &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Doxverilog基于 Doxygen ，只是额外添加了对 Verilog 语言的支持。它托管在 &lt;a href="http://sourceforge.net/projects/doxverilog.berlios/"&gt;sourceforge&lt;/a&gt; 上的压缩包貌似是损坏的，不能正常解压，幸好在 Github 上的还是好的：&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/ewa/doxverilog/tree/master/Doxverilog2.7"&gt;Doxverilog on Github&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;关于 Doxverilog 的安装使用方法，github 上已经说的很清楚了，下面只记录一下我遇到的问题。&lt;/p&gt;
+&lt;h3&gt;Installation&lt;/h3&gt;
+&lt;p&gt;安装步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;patch&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;patch&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;F3&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p0&lt;/span&gt;  &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;linux&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;patch&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;compile&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;configure&lt;/span&gt;
+&lt;span class="n"&gt;make&lt;/span&gt;
+&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;写本文时，Doxverilog 的版本号是 2.7，对应的 Doxygen 的版本号是 1.8.1，而 Doxygen 官网上的版本已经更新到了 1.8.9，如果最新版本可能在编译的时候报错。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 patch 时，可能会遇到询问，一路 y 下去即可。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 compile 时，可能会报错，我遇到的报错是 vhdlparse.cpp 缺少行末分号的小问题，自己添加就行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;编译安装完成之后，我们应该可以使用一个文档来测试一下，如果生成的配置文件中包含 &lt;code&gt;OPTIMIZE_OUTPUT_VERILOG&lt;/code&gt; 这个选项，那么就说明破解安装成功了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Configuration&lt;/h3&gt;
+&lt;p&gt;在修改配置文档时，除了常规的配置选项之外，对于 Verilog 我们还需要额外注意一下几个选项：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;OPTIMIZE_OUTPUT_VERILOG = YES&lt;/code&gt; 针对 Verilog 进行输出优化&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;FILE_PATTERNS = *.v&lt;/code&gt; 标明选择 verilog 源文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Documenting Verilog/VHDL&lt;/h3&gt;
+&lt;p&gt;注释规则：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;对于 Verilog 的注释规则，和 VHDL 类似，唯一的不同之处在于 VHDL 使用 &lt;code&gt;--!&lt;/code&gt; 来开始注释，Verilog 使用 &lt;code&gt;//%&lt;/code&gt; 作为注释的开头。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;VHDL 中使用单行的 &lt;code&gt;--!&lt;/code&gt; 来开始 brief description，使用多行的 &lt;code&gt;--!&lt;/code&gt; 开始 detailed description。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Verilog 使用单行的 &lt;code&gt;//%&lt;/code&gt; 开始 brief description，使用多行的 &lt;code&gt;//%&lt;/code&gt; 开始 detailed description。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;所有的注释都在对应代码的前面，只有一个例外：端口的 brie description 可以写在代码后，而且不用像 C++ 中一样修改注释的头部&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;example:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;下面是 Doxygen 官网是 VHDL 注释的例子：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;-------------------------------------------------------&lt;/span&gt;
+&lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt;
+&lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;brief&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;Mux&lt;/span&gt; &lt;span class="n"&gt;using&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt;
+&lt;span class="o"&gt;-------------------------------------------------------&lt;/span&gt;
+
+&lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="n"&gt;Use&lt;/span&gt; &lt;span class="n"&gt;standard&lt;/span&gt; &lt;span class="n"&gt;library&lt;/span&gt;
+&lt;span class="n"&gt;library&lt;/span&gt; &lt;span class="n"&gt;ieee&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="n"&gt;Use&lt;/span&gt; &lt;span class="n"&gt;logic&lt;/span&gt; &lt;span class="n"&gt;elements&lt;/span&gt;
+    &lt;span class="n"&gt;use&lt;/span&gt; &lt;span class="n"&gt;ieee&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;std_logic_1164&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="n"&gt;Mux&lt;/span&gt; &lt;span class="n"&gt;entity&lt;/span&gt; &lt;span class="n"&gt;brief&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt;
+
+&lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="n"&gt;Detailed&lt;/span&gt; &lt;span class="n"&gt;description&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt; 
+&lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="n"&gt;mux&lt;/span&gt; &lt;span class="n"&gt;design&lt;/span&gt; &lt;span class="n"&gt;element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;entity&lt;/span&gt; &lt;span class="n"&gt;mux_using_with&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt;
+    &lt;span class="n"&gt;port&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;din_0&lt;/span&gt;   &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;  &lt;span class="n"&gt;std_logic&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="n"&gt;Mux&lt;/span&gt; &lt;span class="n"&gt;first&lt;/span&gt; &lt;span class="n"&gt;input&lt;/span&gt;
+        &lt;span class="n"&gt;din_1&lt;/span&gt;   &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;  &lt;span class="n"&gt;std_logic&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="n"&gt;Mux&lt;/span&gt; &lt;span class="n"&gt;Second&lt;/span&gt; &lt;span class="n"&gt;input&lt;/span&gt;
+        &lt;span class="n"&gt;sel&lt;/span&gt;     &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt;  &lt;span class="n"&gt;std_logic&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="n"&gt;Select&lt;/span&gt; &lt;span class="n"&gt;input&lt;/span&gt;
+        &lt;span class="n"&gt;mux_out&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt; &lt;span class="n"&gt;std_logic&lt;/span&gt;  &lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="n"&gt;Mux&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt;
+    &lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="n"&gt;entity&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;brief&lt;/span&gt; &lt;span class="n"&gt;Architecture&lt;/span&gt; &lt;span class="n"&gt;definition&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;MUX&lt;/span&gt;
+&lt;span class="o"&gt;--!&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;details&lt;/span&gt; &lt;span class="n"&gt;More&lt;/span&gt; &lt;span class="n"&gt;details&lt;/span&gt; &lt;span class="n"&gt;about&lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt; &lt;span class="n"&gt;mux&lt;/span&gt; &lt;span class="n"&gt;element&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;architecture&lt;/span&gt; &lt;span class="n"&gt;behavior&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;mux_using_with&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt;
+&lt;span class="n"&gt;begin&lt;/span&gt;
+    &lt;span class="n"&gt;with&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sel&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;select&lt;/span&gt;
+    &lt;span class="n"&gt;mux_out&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;din_0&lt;/span&gt; &lt;span class="n"&gt;when&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+               &lt;span class="n"&gt;din_1&lt;/span&gt; &lt;span class="n"&gt;when&lt;/span&gt; &lt;span class="n"&gt;others&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="n"&gt;architecture&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;生成的 &lt;a href="http://www.stack.nl/~dimitri/doxygen/manual/examples/mux/html/index.html"&gt;结果&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;我写的 Verilog 的注释：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;//% @file mycounter.v&lt;/span&gt;
+&lt;span class="c1"&gt;//% @brief Implementation file of module mycounter.&lt;/span&gt;
+&lt;span class="c1"&gt;//% &lt;/span&gt;
+&lt;span class="c1"&gt;//% @author Qian Gu&lt;/span&gt;
+&lt;span class="c1"&gt;//% @version 1.0&lt;/span&gt;
+&lt;span class="c1"&gt;//% @date 2015-01-20&lt;/span&gt;
+
+&lt;span class="c1"&gt;//% This is a test project,&lt;/span&gt;
+&lt;span class="c1"&gt;//% it&amp;#39;s a increase counter module 256.&lt;/span&gt;
+&lt;span class="c1"&gt;//%&lt;/span&gt;
+&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="n"&gt;mycounter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;dout&lt;/span&gt;
+ &lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="c1"&gt;// Port Declaratiosn&lt;/span&gt;
+    &lt;span class="k"&gt;input&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//% clock signal&lt;/span&gt;
+    &lt;span class="k"&gt;input&lt;/span&gt; &lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//% reset siganl, active high&lt;/span&gt;
+
+    &lt;span class="k"&gt;output&lt;/span&gt; &lt;span class="k"&gt;reg&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;7&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;//% count result&lt;/span&gt;
+
+&lt;span class="c1"&gt;// Main Body of Code&lt;/span&gt;
+
+&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="k"&gt;negedge&lt;/span&gt; &lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;8&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;endmodule&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://www.stack.nl/~dimitri/doxygen/manual/docblocks.html#vhdlblocks"&gt;doxygen manual&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/ewa/doxverilog/tree/master/Doxverilog2.7"&gt;doxverilog&lt;/a&gt;&lt;/p&gt;</summary><category term="doxygen"></category><category term="doxverilog"></category><category term="verilog"></category></entry><entry><title>利用 Graphviz 画 FSM 状态图</title><link href="http://guqian110.github.io/pages/2015/01/20/drawing_fsm_state_diagram_using_graphviz.html" rel="alternate"></link><updated>2015-01-20T17:55:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-20:pages/2015/01/20/drawing_fsm_state_diagram_using_graphviz.html</id><summary type="html">&lt;h2&gt;Graphviz&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;Graphviz 是一个由AT&amp;amp;T实验室启动的开源工具包，用于绘制DOT语言脚本描述的图形。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Graphviz"&gt;wiki&lt;/a&gt;:&lt;/p&gt;
