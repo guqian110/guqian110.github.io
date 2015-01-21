@@ -194,43 +194,104 @@ Patch against the doxygen-1.7.0 version. </p>
 </ul>
 <p><strong>example:</strong></p>
 <p>下面是 Doxygen 官网是 VHDL 注释的例子：</p>
-<div class="highlight"><pre><span class="o">-------------------------------------------------------</span>
-<span class="o">--!</span> <span class="err">@</span><span class="n">file</span>
-<span class="o">--!</span> <span class="err">@</span><span class="n">brief</span> <span class="mi">2</span><span class="o">:</span><span class="mi">1</span> <span class="n">Mux</span> <span class="n">using</span> <span class="n">with</span><span class="o">-</span><span class="n">select</span>
-<span class="o">-------------------------------------------------------</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">-------------------------------------------------------</span>
+<span class="o">--!</span> <span class="err">@</span><span class="k">file</span>
+<span class="o">--!</span> <span class="err">@</span><span class="n">brief</span> <span class="mi">2</span><span class="o">:</span><span class="mi">1</span> <span class="n">Mux</span> <span class="n">using</span> <span class="k">with</span><span class="o">-</span><span class="k">select</span>
+<span class="c1">-------------------------------------------------------</span>
 
-<span class="o">--!</span> <span class="n">Use</span> <span class="n">standard</span> <span class="n">library</span>
-<span class="n">library</span> <span class="n">ieee</span><span class="p">;</span>
-<span class="o">--!</span> <span class="n">Use</span> <span class="n">logic</span> <span class="n">elements</span>
-    <span class="n">use</span> <span class="n">ieee</span><span class="p">.</span><span class="n">std_logic_1164</span><span class="p">.</span><span class="n">all</span><span class="p">;</span>
+<span class="o">--!</span> <span class="k">Use</span> <span class="nn">standard</span> <span class="k">library</span>
+<span class="nn">library</span> <span class="n">ieee</span><span class="p">;</span>
+<span class="o">--!</span> <span class="k">Use</span> <span class="nn">logic</span> <span class="n">elements</span>
+    <span class="k">use</span> <span class="nn">ieee.std_logic_1164.all</span><span class="p">;</span>
 
-<span class="o">--!</span> <span class="n">Mux</span> <span class="n">entity</span> <span class="n">brief</span> <span class="n">description</span>
+<span class="o">--!</span> <span class="n">Mux</span> <span class="k">entity</span> <span class="nc">brief</span> <span class="n">description</span>
 
-<span class="o">--!</span> <span class="n">Detailed</span> <span class="n">description</span> <span class="n">of</span> <span class="n">this</span> 
+<span class="o">--!</span> <span class="n">Detailed</span> <span class="n">description</span> <span class="k">of</span> <span class="n">this</span> 
 <span class="o">--!</span> <span class="n">mux</span> <span class="n">design</span> <span class="n">element</span><span class="p">.</span>
-<span class="n">entity</span> <span class="n">mux_using_with</span> <span class="n">is</span>
-    <span class="n">port</span> <span class="p">(</span>
-        <span class="n">din_0</span>   <span class="o">:</span> <span class="n">in</span>  <span class="n">std_logic</span><span class="p">;</span> <span class="o">--!</span> <span class="n">Mux</span> <span class="n">first</span> <span class="n">input</span>
-        <span class="n">din_1</span>   <span class="o">:</span> <span class="n">in</span>  <span class="n">std_logic</span><span class="p">;</span> <span class="o">--!</span> <span class="n">Mux</span> <span class="n">Second</span> <span class="n">input</span>
-        <span class="n">sel</span>     <span class="o">:</span> <span class="n">in</span>  <span class="n">std_logic</span><span class="p">;</span> <span class="o">--!</span> <span class="n">Select</span> <span class="n">input</span>
-        <span class="n">mux_out</span> <span class="o">:</span> <span class="n">out</span> <span class="n">std_logic</span>  <span class="o">--!</span> <span class="n">Mux</span> <span class="n">output</span>
+<span class="k">entity</span> <span class="nc">mux_using_with</span> <span class="k">is</span>
+    <span class="k">port</span> <span class="p">(</span>
+        <span class="n">din_0</span>   <span class="o">:</span> <span class="k">in</span>  <span class="kt">std_logic</span><span class="p">;</span> <span class="o">--!</span> <span class="n">Mux</span> <span class="n">first</span> <span class="n">input</span>
+        <span class="n">din_1</span>   <span class="o">:</span> <span class="k">in</span>  <span class="kt">std_logic</span><span class="p">;</span> <span class="o">--!</span> <span class="n">Mux</span> <span class="n">Second</span> <span class="n">input</span>
+        <span class="n">sel</span>     <span class="o">:</span> <span class="k">in</span>  <span class="kt">std_logic</span><span class="p">;</span> <span class="o">--!</span> <span class="k">Select</span> <span class="n">input</span>
+        <span class="n">mux_out</span> <span class="o">:</span> <span class="k">out</span> <span class="kt">std_logic</span>  <span class="o">--!</span> <span class="n">Mux</span> <span class="n">output</span>
     <span class="p">);</span>
-<span class="n">end</span> <span class="n">entity</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">entity</span><span class="p">;</span>
 
-<span class="o">--!</span> <span class="err">@</span><span class="n">brief</span> <span class="n">Architecture</span> <span class="n">definition</span> <span class="n">of</span> <span class="n">the</span> <span class="n">MUX</span>
+<span class="o">--!</span> <span class="err">@</span><span class="n">brief</span> <span class="k">Architecture</span> <span class="n">definition</span> <span class="k">of</span> <span class="n">the</span> <span class="n">MUX</span>
 <span class="o">--!</span> <span class="err">@</span><span class="n">details</span> <span class="n">More</span> <span class="n">details</span> <span class="n">about</span> <span class="n">this</span> <span class="n">mux</span> <span class="n">element</span><span class="p">.</span>
-<span class="n">architecture</span> <span class="n">behavior</span> <span class="n">of</span> <span class="n">mux_using_with</span> <span class="n">is</span>
-<span class="n">begin</span>
-    <span class="n">with</span> <span class="p">(</span><span class="n">sel</span><span class="p">)</span> <span class="n">select</span>
-    <span class="n">mux_out</span> <span class="o">&lt;=</span> <span class="n">din_0</span> <span class="n">when</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
-               <span class="n">din_1</span> <span class="n">when</span> <span class="n">others</span><span class="p">;</span>
-<span class="n">end</span> <span class="n">architecture</span><span class="p">;</span>
+<span class="k">architecture</span> <span class="nc">behavior</span> <span class="k">of</span> <span class="nc">mux_using_with</span> <span class="k">is</span>
+<span class="k">begin</span>
+    <span class="k">with</span> <span class="p">(</span><span class="n">sel</span><span class="p">)</span> <span class="k">select</span>
+    <span class="n">mux_out</span> <span class="o">&lt;=</span> <span class="n">din_0</span> <span class="k">when</span> <span class="sc">&#39;0&#39;</span><span class="p">,</span>
+               <span class="n">din_1</span> <span class="k">when</span> <span class="k">others</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">architecture</span><span class="p">;</span>
 </pre></div>
-
+</td></tr></table>
 
 <p>生成的 <a href="http://www.stack.nl/~dimitri/doxygen/manual/examples/mux/html/index.html">结果</a>。</p>
 <p>我写的 Verilog 的注释：</p>
-<div class="highlight"><pre><span class="c1">//% @file mycounter.v</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">//% @file mycounter.v</span>
 <span class="c1">//% @brief Implementation file of module mycounter.</span>
 <span class="c1">//% </span>
 <span class="c1">//% @author Qian Gu</span>
@@ -248,7 +309,7 @@ Patch against the doxygen-1.7.0 version. </p>
     <span class="k">input</span> <span class="n">clk</span><span class="p">;</span> <span class="c1">//% clock signal</span>
     <span class="k">input</span> <span class="n">rst</span><span class="p">;</span> <span class="c1">//% reset siganl, active high</span>
 
-    <span class="k">output</span> <span class="k">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dout</span><span class="p">;</span> <span class="c1">//% count result</span>
+    <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">dout</span><span class="p">;</span> <span class="c1">//% count result</span>
 
 <span class="c1">// Main Body of Code</span>
 
@@ -263,7 +324,7 @@ Patch against the doxygen-1.7.0 version. </p>
 
 <span class="k">endmodule</span>
 </pre></div>
-
+</td></tr></table>
 
 <p><br></p>
 <h2>Ref</h2>
@@ -274,10 +335,10 @@ Patch against the doxygen-1.7.0 version. </p>
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
         <li><a href="http://guqian110.github.io/pages/2015/01/11/how_to_analyse_code_elegantly.html">如何优雅的分析代码</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html">BUPT MITC lab Verilog HDL coding style guide</a></li>
     </ul>
 </section>
     <hr />

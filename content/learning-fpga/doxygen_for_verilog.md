@@ -91,6 +91,7 @@ Doxverilog基于 Doxygen ，只是额外添加了对 Verilog 语言的支持。�
 
 下面是 Doxygen 官网是 VHDL 注释的例子：
 
+    #!VHDL
 	-------------------------------------------------------
     --! @file
     --! @brief 2:1 Mux using with-select
@@ -127,7 +128,7 @@ Doxverilog基于 Doxygen ，只是额外添加了对 Verilog 语言的支持。�
 
 我写的 Verilog 的注释：
 
-
+    #!verilog
     //% @file mycounter.v
     //% @brief Implementation file of module mycounter.
     //% 
