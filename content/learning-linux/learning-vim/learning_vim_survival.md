@@ -6,7 +6,11 @@ Slug: learning_vim_survival
 Author: Qian Gu
 Summary: 这个系列的博客是我学习 Vim 过程中的记录和总结，希望可以帮助到和我一样的菜鸟～ 第一篇：入门/存活 Survival
 
-这个系列的博客是我学习 Vim 过程中的记录和总结，希望可以帮助到和我一样的菜鸟～
+这个系列的博客是我学习 Vim 过程中的记录和总结，内容基本上来自网络上前辈们的博客，还有部分内容是我自己学习的心得。真心感谢前辈们的分享，我会尽量在后面的文章中标明内容出处。比如我学习 Vim 的路线就是按照这个博客
+
+[vi/vim使用进阶: 目录](http://easwy.com/blog/archives/advanced-vim-skills-catalog/)
+
+来学习的，其次希望我的学习历程可以帮助到和我一样的菜鸟，能更好地使用这款神器～
 
 第一篇：入门/存活 Survival
 
