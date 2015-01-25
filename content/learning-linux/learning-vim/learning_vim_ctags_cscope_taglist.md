@@ -120,34 +120,39 @@ The following text is taken from a version of the cscope man page:
 
 >  Cscope is an interactive screen-oriented tool that helps you:
 >
->       + Learn how a C program works without endless flipping through a thick
->       listing.
+>  + Learn how a C program works without endless flipping through a thick listing.
 >
->       + Locate the section of code to change to fix a bug without having to
->       learn the entire program.
+>  + Locate the section of code to change to fix a bug without having to learn the entire program.
 >
->       + Examine the effect of a proposed change such as adding a value to an
->       enum variable.
+>  + Examine the effect of a proposed change such as adding a value to an enum variable.
 >
->       + Verify that a change has been made in all source files such as adding
->       an argument to an existing function.
+>  + Verify that a change has been made in all source files such as adding an argument to an existing function.
 >
->       + Rename a global variable in all source files.
+>  + Rename a global variable in all source files.
 >
->       + Change a constant to a preprocessor symbol in selected lines of files.
+>  + Change a constant to a preprocessor symbol in selected lines of files.
 >
 >  It is designed to answer questions like:
 >
->       + Where is this symbol used?
->       + Where is it defined?
->       + Where did this variable get its value?
->       + What is this global symbol's definition?
->       + Where is this function in the source files?
->       + What functions call this function?
->       + What functions are called by this function?
->       + Where does the message "out of space" come from?
->       + Where is this source file in the directory structure?
->       + What files include this header file?
+>  + Where is this symbol used?
+> 
+>  + Where is it defined?
+> 
+>  + Where did this variable get its value?
+>
+>  + What is this global symbol's definition?
+> 
+>  + Where is this function in the source files?
+> 
+>  + What functions call this function?
+> 
+>  + What functions are called by this function?
+> 
+>  + Where does the message "out of space" come from?
+> 
+>  + Where is this source file in the directory structure?
+>
+>  + What files include this header file?
 >
 >  Cscope answers these questions from a symbol database that it builds the
 >  first time it is used on the source files.  On a subsequent call, cscope
