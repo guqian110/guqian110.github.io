@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-25T21:32:00+08:00</updated><entry><title>学习 Vim 之 Ctags/Cscope/Taglist</title><link href="http://guqian110.github.io/pages/2015/01/25/learning_vim_ctags_cscope_taglist.html" rel="alternate"></link><updated>2015-01-25T21:32:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-25:pages/2015/01/25/learning_vim_ctags_cscope_taglist.html</id><summary type="html">&lt;h2&gt;Background&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;p&gt;tag 文件是一种非常有用的文件，下面的内容都是基于 &lt;code&gt;tag&lt;/code&gt; 的，所以首先得了解什么是 tag？&lt;/p&gt;
+&lt;p&gt;tags 文件是一种非常有用的文件，本文的内容都是基于 &lt;code&gt;tag&lt;/code&gt; 的，所以首先得了解什么是 tag？&lt;/p&gt;
 &lt;p&gt;Vim Manual 里面的简单介绍就足够我们进行下面的内容了。查看 Manual：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;tagsrch&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -50,7 +50,7 @@
 &lt;h3&gt;Config&lt;/h3&gt;
 &lt;p&gt;我们要使用 tags，第一步就是生成 tags 文件。生成 tags 文件时，ex-ctags 提供了很多参数供我们控制生成结果，详细内容可以查看其 manpage，这里有 easwy 大神翻译的中文版：&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/"&gt;Exuberant Ctags中文手册&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;我们可以将配置写在 .vimrc 中，下面是号称“终极 Vimrc ”的一部分内容：&lt;/p&gt;
+&lt;p&gt;我们可以将配置写在 .vimrc 中：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="n"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;tags&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
  &lt;span class="kt"&gt;map&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-F12&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="nx"&gt;ctags&lt;/span&gt; &lt;span class="na"&gt;-R&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="o"&gt;++-&lt;/span&gt;&lt;span class="n"&gt;kinds&lt;/span&gt;&lt;span class="o"&gt;=+&lt;/span&gt;&lt;span class="nx"&gt;p&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;fields&lt;/span&gt;&lt;span class="o"&gt;=+&lt;/span&gt;&lt;span class="nx"&gt;iaS&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;extra&lt;/span&gt;&lt;span class="o"&gt;=+&lt;/span&gt;&lt;span class="nx"&gt;q&lt;/span&gt; &lt;span class="nx"&gt;.&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -111,41 +111,40 @@
 
 
 &lt;p&gt;The following text is taken from a version of the cscope man page:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;                &lt;span class="o"&gt;-----&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;blockquote&gt;
 &lt;p&gt;Cscope is an interactive screen-oriented tool that helps you:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="nx"&gt;Learn&lt;/span&gt; &lt;span class="nx"&gt;how&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;C&lt;/span&gt; &lt;span class="nx"&gt;program&lt;/span&gt; &lt;span class="nx"&gt;works&lt;/span&gt; &lt;span class="nx"&gt;without&lt;/span&gt; &lt;span class="nx"&gt;endless&lt;/span&gt; &lt;span class="nx"&gt;flipping&lt;/span&gt; &lt;span class="nx"&gt;through&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;thick&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Learn&lt;/span&gt; &lt;span class="nx"&gt;how&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;C&lt;/span&gt; &lt;span class="nx"&gt;program&lt;/span&gt; &lt;span class="nx"&gt;works&lt;/span&gt; &lt;span class="nx"&gt;without&lt;/span&gt; &lt;span class="nx"&gt;endless&lt;/span&gt; &lt;span class="nx"&gt;flipping&lt;/span&gt; &lt;span class="nx"&gt;through&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;thick&lt;/span&gt;
   &lt;span class="nx"&gt;listing&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 
-  &lt;span class="nx"&gt;Locate&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;section&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;code&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;change&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;fix&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;bug&lt;/span&gt; &lt;span class="nx"&gt;without&lt;/span&gt; &lt;span class="nx"&gt;having&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Locate&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;section&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;code&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;change&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;fix&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;bug&lt;/span&gt; &lt;span class="nx"&gt;without&lt;/span&gt; &lt;span class="nx"&gt;having&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt;
   &lt;span class="nx"&gt;learn&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;entire&lt;/span&gt; &lt;span class="nx"&gt;program&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 
-  &lt;span class="nx"&gt;Examine&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;effect&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;proposed&lt;/span&gt; &lt;span class="nx"&gt;change&lt;/span&gt; &lt;span class="nx"&gt;such&lt;/span&gt; &lt;span class="nx"&gt;as&lt;/span&gt; &lt;span class="nx"&gt;adding&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;an&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Examine&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;effect&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;proposed&lt;/span&gt; &lt;span class="nx"&gt;change&lt;/span&gt; &lt;span class="nx"&gt;such&lt;/span&gt; &lt;span class="nx"&gt;as&lt;/span&gt; &lt;span class="nx"&gt;adding&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;an&lt;/span&gt;
   &lt;span class="kr"&gt;enum&lt;/span&gt; &lt;span class="nx"&gt;variable&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 
-  &lt;span class="nx"&gt;Verify&lt;/span&gt; &lt;span class="nx"&gt;that&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;change&lt;/span&gt; &lt;span class="nx"&gt;has&lt;/span&gt; &lt;span class="nx"&gt;been&lt;/span&gt; &lt;span class="nx"&gt;made&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;all&lt;/span&gt; &lt;span class="nx"&gt;source&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt; &lt;span class="nx"&gt;such&lt;/span&gt; &lt;span class="nx"&gt;as&lt;/span&gt; &lt;span class="nx"&gt;adding&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Verify&lt;/span&gt; &lt;span class="nx"&gt;that&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;change&lt;/span&gt; &lt;span class="nx"&gt;has&lt;/span&gt; &lt;span class="nx"&gt;been&lt;/span&gt; &lt;span class="nx"&gt;made&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;all&lt;/span&gt; &lt;span class="nx"&gt;source&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt; &lt;span class="nx"&gt;such&lt;/span&gt; &lt;span class="nx"&gt;as&lt;/span&gt; &lt;span class="nx"&gt;adding&lt;/span&gt;
   &lt;span class="nx"&gt;an&lt;/span&gt; &lt;span class="nx"&gt;argument&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;an&lt;/span&gt; &lt;span class="nx"&gt;existing&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 
-  &lt;span class="nx"&gt;Rename&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;global&lt;/span&gt; &lt;span class="nx"&gt;variable&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;all&lt;/span&gt; &lt;span class="nx"&gt;source&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Rename&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;global&lt;/span&gt; &lt;span class="nx"&gt;variable&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;all&lt;/span&gt; &lt;span class="nx"&gt;source&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 
-  &lt;span class="nx"&gt;Change&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;constant&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;preprocessor&lt;/span&gt; &lt;span class="nx"&gt;symbol&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;selected&lt;/span&gt; &lt;span class="nx"&gt;lines&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Change&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;constant&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;preprocessor&lt;/span&gt; &lt;span class="nx"&gt;symbol&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;selected&lt;/span&gt; &lt;span class="nx"&gt;lines&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;It is designed to answer questions like:
-      Where is this symbol used?
-      Where is it defined?
-      Where did this variable get its value?
-      What is this global symbol's definition?
-      Where is this function in the source files?
-      What functions call this function?
-      What functions are called by this function?
-      Where does the message "out of space" come from?
-      Where is this source file in the directory structure?
-      What files include this header file?&lt;/p&gt;
+&lt;p&gt;It is designed to answer questions like:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Where&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="nx"&gt;symbol&lt;/span&gt; &lt;span class="nx"&gt;used&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Where&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="nx"&gt;it&lt;/span&gt; &lt;span class="nx"&gt;defined&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Where&lt;/span&gt; &lt;span class="nx"&gt;did&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="nx"&gt;variable&lt;/span&gt; &lt;span class="nx"&gt;get&lt;/span&gt; &lt;span class="nx"&gt;its&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;What&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="nx"&gt;global&lt;/span&gt; &lt;span class="nx"&gt;symbol&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="nx"&gt;s&lt;/span&gt; &lt;span class="nx"&gt;definition&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Where&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;source&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;What&lt;/span&gt; &lt;span class="nx"&gt;functions&lt;/span&gt; &lt;span class="nx"&gt;call&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;What&lt;/span&gt; &lt;span class="nx"&gt;functions&lt;/span&gt; &lt;span class="nx"&gt;are&lt;/span&gt; &lt;span class="nx"&gt;called&lt;/span&gt; &lt;span class="nx"&gt;by&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Where&lt;/span&gt; &lt;span class="nx"&gt;does&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;message&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;out of space&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;come&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;Where&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="nx"&gt;source&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;directory&lt;/span&gt; &lt;span class="nx"&gt;structure&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+  &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;What&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt; &lt;span class="nx"&gt;include&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="nx"&gt;header&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Cscope answers these questions from a symbol database that it builds the
  first time it is used on the source files.  On a subsequent call, cscope
  rebuilds the database only if a source file has changed or the list of
@@ -292,7 +291,7 @@
 &lt;h2&gt;Taglist&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;h3&gt;Intro&lt;/h3&gt;
-&lt;p&gt;[Taglist 官网][taglist]&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=273"&gt;Taglist 官网&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;使用过 VS 的人都知道，在左侧有一个窗口专门显示当前代码文件中的宏、函数、变量定义，并且随着文件切换自动更新。我们这里介绍的 Taglist 完成的就是类似的功能，让我们可以高效地浏览代码。不过要使用 Taglist，首先要安装前面介绍的 Ctags。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;The "Tag List" plugin is a source code browser plugin for Vim and provides an overview of the structure of source code files and allows 
@@ -348,7 +347,7 @@ you to efficiently browse through source code files for different programming la
 &lt;p&gt;&lt;a href="http://cscope.sourceforge.net/"&gt;cscope 官网&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Cscope"&gt;cscope wiki&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.csdn.net/dengxiayehu/article/details/6330200"&gt;Cscope的使用（领略Vim + Cscope的强大魅力）&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[Taglist 官网][taglist]&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=273"&gt;Taglist 官网&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://easwy.com/blog/archives/advanced-vim-skills-taglist-plugin/"&gt;vi/vim使用进阶: 使用taglist插件&lt;/a&gt;&lt;/p&gt;</summary><category term="vim"></category><category term="ctags"></category><category term="cscope"></category><category term="taglist"></category></entry><entry><title>基于 Doxygen 的 C++ 注释风格</title><link href="http://guqian110.github.io/pages/2015/01/13/doxygen_cpp_comment_style.html" rel="alternate"></link><updated>2015-01-13T18:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-13:pages/2015/01/13/doxygen_cpp_comment_style.html</id><summary type="html">&lt;p&gt;本文内容参考自网上博客内容&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.csdn.net/czyt1988/article/details/8901191"&gt;C++标准注释原则 - 基于doxygen的C++注释&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.sina.com.cn/s/blog_6294abe701012pee.html"&gt;Doxygen C++注释规范及生成帮助文档配置步骤&lt;/a&gt;&lt;/p&gt;

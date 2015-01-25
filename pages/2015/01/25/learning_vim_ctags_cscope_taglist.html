@@ -122,7 +122,7 @@
                 </div>
                 <h2>Background</h2>
 <hr />
-<p>tag 文件是一种非常有用的文件，下面的内容都是基于 <code>tag</code> 的，所以首先得了解什么是 tag？</p>
+<p>tags 文件是一种非常有用的文件，本文的内容都是基于 <code>tag</code> 的，所以首先得了解什么是 tag？</p>
 <p>Vim Manual 里面的简单介绍就足够我们进行下面的内容了。查看 Manual：</p>
 <div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">tagsrch</span>
 </pre></div>
@@ -171,7 +171,7 @@
 <h3>Config</h3>
 <p>我们要使用 tags，第一步就是生成 tags 文件。生成 tags 文件时，ex-ctags 提供了很多参数供我们控制生成结果，详细内容可以查看其 manpage，这里有 easwy 大神翻译的中文版：</p>
 <p><a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/">Exuberant Ctags中文手册</a></p>
-<p>我们可以将配置写在 .vimrc 中，下面是号称“终极 Vimrc ”的一部分内容：</p>
+<p>我们可以将配置写在 .vimrc 中：</p>
 <div class="highlight"><pre> <span class="nb">set</span> <span class="n">tags</span> <span class="o">=</span><span class="nb">tags</span><span class="p">;</span>
  <span class="kt">map</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-F12</span><span class="o">&gt;</span> <span class="p">:</span><span class="o">!</span><span class="nx">ctags</span> <span class="na">-R</span> <span class="o">--</span><span class="nx">c</span><span class="o">++-</span><span class="n">kinds</span><span class="o">=+</span><span class="nx">p</span> <span class="o">--</span><span class="n">fields</span><span class="o">=+</span><span class="nx">iaS</span> <span class="o">--</span><span class="n">extra</span><span class="o">=+</span><span class="nx">q</span> <span class="nx">.</span><span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
 </pre></div>
@@ -232,41 +232,40 @@
 
 
 <p>The following text is taken from a version of the cscope man page:</p>
-<div class="highlight"><pre>                <span class="o">-----</span>
-</pre></div>
-
-
 <blockquote>
 <p>Cscope is an interactive screen-oriented tool that helps you:</p>
-<div class="highlight"><pre>  <span class="nx">Learn</span> <span class="nx">how</span> <span class="nx">a</span> <span class="nx">C</span> <span class="nx">program</span> <span class="nx">works</span> <span class="nx">without</span> <span class="nx">endless</span> <span class="nx">flipping</span> <span class="nx">through</span> <span class="nx">a</span> <span class="nx">thick</span>
+<div class="highlight"><pre>  <span class="o">+</span> <span class="nx">Learn</span> <span class="nx">how</span> <span class="nx">a</span> <span class="nx">C</span> <span class="nx">program</span> <span class="nx">works</span> <span class="nx">without</span> <span class="nx">endless</span> <span class="nx">flipping</span> <span class="nx">through</span> <span class="nx">a</span> <span class="nx">thick</span>
   <span class="nx">listing</span><span class="p">.</span>
 
-  <span class="nx">Locate</span> <span class="nx">the</span> <span class="nx">section</span> <span class="nx">of</span> <span class="nx">code</span> <span class="nx">to</span> <span class="nx">change</span> <span class="nx">to</span> <span class="nx">fix</span> <span class="nx">a</span> <span class="nx">bug</span> <span class="nx">without</span> <span class="nx">having</span> <span class="nx">to</span>
+  <span class="o">+</span> <span class="nx">Locate</span> <span class="nx">the</span> <span class="nx">section</span> <span class="nx">of</span> <span class="nx">code</span> <span class="nx">to</span> <span class="nx">change</span> <span class="nx">to</span> <span class="nx">fix</span> <span class="nx">a</span> <span class="nx">bug</span> <span class="nx">without</span> <span class="nx">having</span> <span class="nx">to</span>
   <span class="nx">learn</span> <span class="nx">the</span> <span class="nx">entire</span> <span class="nx">program</span><span class="p">.</span>
 
-  <span class="nx">Examine</span> <span class="nx">the</span> <span class="nx">effect</span> <span class="nx">of</span> <span class="nx">a</span> <span class="nx">proposed</span> <span class="nx">change</span> <span class="nx">such</span> <span class="nx">as</span> <span class="nx">adding</span> <span class="nx">a</span> <span class="nx">value</span> <span class="nx">to</span> <span class="nx">an</span>
+  <span class="o">+</span> <span class="nx">Examine</span> <span class="nx">the</span> <span class="nx">effect</span> <span class="nx">of</span> <span class="nx">a</span> <span class="nx">proposed</span> <span class="nx">change</span> <span class="nx">such</span> <span class="nx">as</span> <span class="nx">adding</span> <span class="nx">a</span> <span class="nx">value</span> <span class="nx">to</span> <span class="nx">an</span>
   <span class="kr">enum</span> <span class="nx">variable</span><span class="p">.</span>
 
-  <span class="nx">Verify</span> <span class="nx">that</span> <span class="nx">a</span> <span class="nx">change</span> <span class="nx">has</span> <span class="nx">been</span> <span class="nx">made</span> <span class="k">in</span> <span class="nx">all</span> <span class="nx">source</span> <span class="nx">files</span> <span class="nx">such</span> <span class="nx">as</span> <span class="nx">adding</span>
+  <span class="o">+</span> <span class="nx">Verify</span> <span class="nx">that</span> <span class="nx">a</span> <span class="nx">change</span> <span class="nx">has</span> <span class="nx">been</span> <span class="nx">made</span> <span class="k">in</span> <span class="nx">all</span> <span class="nx">source</span> <span class="nx">files</span> <span class="nx">such</span> <span class="nx">as</span> <span class="nx">adding</span>
   <span class="nx">an</span> <span class="nx">argument</span> <span class="nx">to</span> <span class="nx">an</span> <span class="nx">existing</span> <span class="kd">function</span><span class="p">.</span>
 
-  <span class="nx">Rename</span> <span class="nx">a</span> <span class="nx">global</span> <span class="nx">variable</span> <span class="k">in</span> <span class="nx">all</span> <span class="nx">source</span> <span class="nx">files</span><span class="p">.</span>
+  <span class="o">+</span> <span class="nx">Rename</span> <span class="nx">a</span> <span class="nx">global</span> <span class="nx">variable</span> <span class="k">in</span> <span class="nx">all</span> <span class="nx">source</span> <span class="nx">files</span><span class="p">.</span>
 
-  <span class="nx">Change</span> <span class="nx">a</span> <span class="nx">constant</span> <span class="nx">to</span> <span class="nx">a</span> <span class="nx">preprocessor</span> <span class="nx">symbol</span> <span class="k">in</span> <span class="nx">selected</span> <span class="nx">lines</span> <span class="nx">of</span> <span class="nx">files</span><span class="p">.</span>
+  <span class="o">+</span> <span class="nx">Change</span> <span class="nx">a</span> <span class="nx">constant</span> <span class="nx">to</span> <span class="nx">a</span> <span class="nx">preprocessor</span> <span class="nx">symbol</span> <span class="k">in</span> <span class="nx">selected</span> <span class="nx">lines</span> <span class="nx">of</span> <span class="nx">files</span><span class="p">.</span>
 </pre></div>
 
 
-<p>It is designed to answer questions like:
-      Where is this symbol used?
-      Where is it defined?
-      Where did this variable get its value?
-      What is this global symbol's definition?
-      Where is this function in the source files?
-      What functions call this function?
-      What functions are called by this function?
-      Where does the message "out of space" come from?
-      Where is this source file in the directory structure?
-      What files include this header file?</p>
+<p>It is designed to answer questions like:</p>
+<div class="highlight"><pre>  <span class="o">+</span> <span class="nx">Where</span> <span class="nx">is</span> <span class="k">this</span> <span class="nx">symbol</span> <span class="nx">used</span><span class="o">?</span>
+  <span class="o">+</span> <span class="nx">Where</span> <span class="nx">is</span> <span class="nx">it</span> <span class="nx">defined</span><span class="o">?</span>
+  <span class="o">+</span> <span class="nx">Where</span> <span class="nx">did</span> <span class="k">this</span> <span class="nx">variable</span> <span class="nx">get</span> <span class="nx">its</span> <span class="nx">value</span><span class="o">?</span>
+  <span class="o">+</span> <span class="nx">What</span> <span class="nx">is</span> <span class="k">this</span> <span class="nx">global</span> <span class="nx">symbol</span><span class="err">&#39;</span><span class="nx">s</span> <span class="nx">definition</span><span class="o">?</span>
+  <span class="o">+</span> <span class="nx">Where</span> <span class="nx">is</span> <span class="k">this</span> <span class="kd">function</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">source</span> <span class="nx">files</span><span class="o">?</span>
+  <span class="o">+</span> <span class="nx">What</span> <span class="nx">functions</span> <span class="nx">call</span> <span class="k">this</span> <span class="kd">function</span><span class="o">?</span>
+  <span class="o">+</span> <span class="nx">What</span> <span class="nx">functions</span> <span class="nx">are</span> <span class="nx">called</span> <span class="nx">by</span> <span class="k">this</span> <span class="kd">function</span><span class="o">?</span>
+  <span class="o">+</span> <span class="nx">Where</span> <span class="nx">does</span> <span class="nx">the</span> <span class="nx">message</span> <span class="s2">&quot;out of space&quot;</span> <span class="nx">come</span> <span class="nx">from</span><span class="o">?</span>
+  <span class="o">+</span> <span class="nx">Where</span> <span class="nx">is</span> <span class="k">this</span> <span class="nx">source</span> <span class="nx">file</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">directory</span> <span class="nx">structure</span><span class="o">?</span>
+  <span class="o">+</span> <span class="nx">What</span> <span class="nx">files</span> <span class="nx">include</span> <span class="k">this</span> <span class="nx">header</span> <span class="nx">file</span><span class="o">?</span>
+</pre></div>
+
+
 <p>Cscope answers these questions from a symbol database that it builds the
  first time it is used on the source files.  On a subsequent call, cscope
  rebuilds the database only if a source file has changed or the list of
@@ -413,7 +412,7 @@
 <h2>Taglist</h2>
 <hr />
 <h3>Intro</h3>
-<p>[Taglist 官网][taglist]</p>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=273">Taglist 官网</a></p>
 <p>使用过 VS 的人都知道，在左侧有一个窗口专门显示当前代码文件中的宏、函数、变量定义，并且随着文件切换自动更新。我们这里介绍的 Taglist 完成的就是类似的功能，让我们可以高效地浏览代码。不过要使用 Taglist，首先要安装前面介绍的 Ctags。</p>
 <blockquote>
 <p>The "Tag List" plugin is a source code browser plugin for Vim and provides an overview of the structure of source code files and allows 
@@ -469,18 +468,18 @@ you to efficiently browse through source code files for different programming la
 <p><a href="http://cscope.sourceforge.net/">cscope 官网</a></p>
 <p><a href="http://en.wikipedia.org/wiki/Cscope">cscope wiki</a></p>
 <p><a href="http://blog.csdn.net/dengxiayehu/article/details/6330200">Cscope的使用（领略Vim + Cscope的强大魅力）</a></p>
-<p>[Taglist 官网][taglist]</p>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=273">Taglist 官网</a></p>
 <p><a href="http://easwy.com/blog/archives/advanced-vim-skills-taglist-plugin/">vi/vim使用进阶: 使用taglist插件</a></p>
             </div>
             <!-- /.entry-content -->
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2015/01/12/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
+        <li><a href="http://guqian110.github.io/pages/2015/01/12/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
     </ul>
 </section>
     <hr />

@@ -9,7 +9,7 @@ Summary: 总结使用 Ctags/Cscope/Taglist 的使用方法。
 ## Background
 * * *
 
-tag 文件是一种非常有用的文件，下面的内容都是基于 `tag` 的，所以首先得了解什么是 tag？
+tags 文件是一种非常有用的文件，本文的内容都是基于 `tag` 的，所以首先得了解什么是 tag？
 
 Vim Manual 里面的简单介绍就足够我们进行下面的内容了。查看 Manual：
 
@@ -61,7 +61,7 @@ ctags 是 Unix 系统自带的一个工具，但是功能比较少，所以一�
 
 [Exuberant Ctags中文手册][blog1]
 
-我们可以将配置写在 .vimrc 中，下面是号称“终极 Vimrc ”的一部分内容：
+我们可以将配置写在 .vimrc 中：
 
      set tags =tags;
      map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
@@ -118,37 +118,36 @@ Vim help:
 
 The following text is taken from a version of the cscope man page:
 
-				    -----
-
 >  Cscope is an interactive screen-oriented tool that helps you:
 >
->       Learn how a C program works without endless flipping through a thick
+>       + Learn how a C program works without endless flipping through a thick
 >       listing.
 >
->       Locate the section of code to change to fix a bug without having to
+>       + Locate the section of code to change to fix a bug without having to
 >       learn the entire program.
 >
->       Examine the effect of a proposed change such as adding a value to an
+>       + Examine the effect of a proposed change such as adding a value to an
 >       enum variable.
 >
->       Verify that a change has been made in all source files such as adding
+>       + Verify that a change has been made in all source files such as adding
 >       an argument to an existing function.
 >
->       Rename a global variable in all source files.
+>       + Rename a global variable in all source files.
 >
->       Change a constant to a preprocessor symbol in selected lines of files.
+>       + Change a constant to a preprocessor symbol in selected lines of files.
 >
 >  It is designed to answer questions like:
->       Where is this symbol used?
->       Where is it defined?
->       Where did this variable get its value?
->       What is this global symbol's definition?
->       Where is this function in the source files?
->       What functions call this function?
->       What functions are called by this function?
->       Where does the message "out of space" come from?
->       Where is this source file in the directory structure?
->       What files include this header file?
+>
+>       + Where is this symbol used?
+>       + Where is it defined?
+>       + Where did this variable get its value?
+>       + What is this global symbol's definition?
+>       + Where is this function in the source files?
+>       + What functions call this function?
+>       + What functions are called by this function?
+>       + Where does the message "out of space" come from?
+>       + Where is this source file in the directory structure?
+>       + What files include this header file?
 >
 >  Cscope answers these questions from a symbol database that it builds the
 >  first time it is used on the source files.  On a subsequent call, cscope
@@ -342,6 +341,8 @@ you to efficiently browse through source code files for different programming la
 **P.S.**
 
 配合另外一个窗口管理插件 winmanager，我们可以将我们的 Vim 打造成一个伪 IDE :D
+
+[taglist]: http://www.vim.org/scripts/script.php?script_id=273
 
 <br>
 
