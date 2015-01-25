@@ -14,7 +14,7 @@ Summary: 总结将 Vim 配置为 IDE 的过程之一，保存项目设置 。
 
 <br>
 
-很多编辑器都有一个功能是以前打开过的文档会有记忆，再次打开时会直接跳转到上次编辑的地方，比如  [`Sublime Text 2`][sb2]，强大的 Vim 当然也有这个功能，**我们的目标就是让 VIm 和其他 IDE 一样，可以记住上次的编辑状态 。**
+很多编辑器都有一个功能是以前打开过的文档会有记忆，再次打开时会直接跳转到上次编辑的地方，比如  [`Sublime Text 2`][sb2]，强大的 Vim 当然也有这个功能，**我们的目标就是让 Vim 和其他 IDE 一样，可以记住上次的编辑状态 。**
 
 Vim 要实现这个功能，涉及到两个地方的配置：`session` & `viminfo` 。
 
@@ -24,7 +24,8 @@ Vim 要实现这个功能，涉及到两个地方的配置：`session` & `viminf
 
 ## Session
 * * *
-### 查看 session 介绍
+
+### Intro
 
 在 Vim 中输入
 
@@ -42,7 +43,7 @@ Vim 要实现这个功能，涉及到两个地方的配置：`session` & `viminf
 
 就可以看到关于 session 的详细介绍 。
 
-### 配置 session
+### Config 
 
 Session 保存的信息由 `sessionoptions` 确定，详细用法可以查看 help
 
@@ -63,7 +64,7 @@ Session 保存的信息由 `sessionoptions` 确定，详细用法可以查看 he
     :set sessionoptions-=curdir
     :set sessionoptions+=sesdir
 
-### 保存 session 文件
+### Save
 
 详细的语法可以在 help 中查看
 
@@ -82,7 +83,7 @@ Session 保存的信息由 `sessionoptions` 确定，详细用法可以查看 he
     #!Shell
     :mksession! project.vim
 
-### 载入 session 文件
+### Load
 
 然后退出 Vim，在别的目录下打开，干点别的事，这时候我们想起刚才的工程里面有个小 bug，想恢复过去，这时候就是只需要使用 `source` 命令即可 。
 
@@ -108,7 +109,7 @@ enter Vim and directly start working in your desired setup.
 ## Viminfo
 * * *
 
-### 查看 viminfo 介绍
+### Intro
 
 在 Vim 中输入
 
@@ -137,7 +138,7 @@ viminfo 文件可以保存的内容有：
 + The buffer list 缓冲区列表
 + Global variables 全局变量
 
-### 保存 viminfo 文件
+### Save
 
 其实 Vim 每次退出时都会在 `～/` 目录下保存一个 `.viminfo` 的文件，但是每次打开关闭一个文件都会覆盖上次的记录，所以我们需要为工程手动保存一个 viminfo 文件，并且保存在工程目录下，防止被覆盖 。
 

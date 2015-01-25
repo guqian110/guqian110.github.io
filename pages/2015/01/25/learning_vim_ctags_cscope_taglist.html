@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+<head>
+    <title>学习 Vim 之 Ctags/Cscope/Taglist - Geek Bunny's World</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="http://guqian110.github.io/images/favicon.jpg" rel="icon">
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="Geek Bunny's World" />
+            <meta property="og:type" content="article"/>
+            <meta property="og:title" content="学习 Vim 之 Ctags/Cscope/Taglist"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2015/01/25/learning_vim_ctags_cscope_taglist.html"/>
+            <meta property="og:description" content="总结使用 Ctags/Cscope/Taglist 的使用方法。"/>
+            <meta property="article:published_time" content="2015-01-25" />
+            <meta property="article:section" content="Linux" />
+            <meta property="article:tag" content="vim" />
+            <meta property="article:tag" content="ctags" />
+            <meta property="article:tag" content="cscope" />
+            <meta property="article:tag" content="taglist" />
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://guqian110.github.io/theme/css/pygments/monokai.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+        <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Geek Bunny's World ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://guqian110.github.io/" class="navbar-brand">
+<img src="http://guqian110.github.io/images/logo.jpg" width=""/> Geek Bunny's World            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="http://guqian110.github.io/category/arduino.html">Arduino</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/com.html">Com</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
+                        </li>
+                        <li class="active">
+                            <a href="http://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="http://guqian110.github.io/category/misc.html">Misc</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://guqian110.github.io/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="http://guqian110.github.io" title="Geek Bunny's World"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="http://guqian110.github.io/category/linux.html" title="Linux">Linux</a></li>
+                <li class="active">学习 Vim 之 Ctags/Cscope/Taglist</li>
+            </ol>
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://guqian110.github.io/pages/2015/01/25/learning_vim_ctags_cscope_taglist.html"
+                       rel="bookmark"
+                       title="Permalink to 学习 Vim 之 Ctags/Cscope/Taglist">
+                        学习 Vim 之 Ctags/Cscope/Taglist
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-01-25T21:32:00"> Sun 25 January 2015</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://guqian110.github.io/tag/vim.html">vim</a>
+        /
+	<a href="http://guqian110.github.io/tag/ctags.html">ctags</a>
+        /
+	<a href="http://guqian110.github.io/tag/cscope.html">cscope</a>
+        /
+	<a href="http://guqian110.github.io/tag/taglist.html">taglist</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <h2>Background</h2>
+<hr />
+<p>tag 文件是一种非常有用的文件，下面的内容都是基于 <code>tag</code> 的，所以首先得了解什么是 tag？</p>
+<p>Vim Manual 里面的简单介绍就足够我们进行下面的内容了。查看 Manual：</p>
+<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">tagsrch</span>
+</pre></div>
+
+
+<p>使用 tags 文件的步骤：</p>
+<ol>
+<li>
+<p>首先使用 tag 工具（ctags、cscope等）生成 tags 文件</p>
+</li>
+<li>
+<p>其次，将 tags 文件路径导入到 Vim 中，让 Vim 知道从哪个 tags 文件中查找。</p>
+</li>
+<li>
+<p>最后，使用 Vim 的命令查找 tag。</p>
+</li>
+</ol>
+<p><br></p>
+<h2>Ctags</h2>
+<hr />
+<h3>Intro</h3>
+<p><a href="ctags.sourceforge.net/">Ctags 官网</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Ctags">wiki</a></p>
+<blockquote>
+<p><strong>Ctags</strong> is a programming tool that generates an index (or tag) file of names found in source and header files of various programming languages. Depending on the language, functions, variables, class members, macros and so on may be indexed. These tags allow definitions to be quickly and easily located by a text editor or other utility. Alternatively, there is also an output mode that generates a cross reference file, listing information about various names found in a set of language files in human-readable form.</p>
+</blockquote>
+<p>manpage: </p>
+<div class="highlight"><pre><span class="n">man</span> <span class="n">ctags</span>
+</pre></div>
+
+
+<p>vim Manual：</p>
+<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="mf">29.1</span>
+<span class="o">:</span><span class="n">help</span> <span class="n">ctags</span>
+</pre></div>
+
+
+<p>简而言之，Ctags 是一个可以自动提取源文件和头文件中函数、变量、类成员、宏定义等元素的工具，然后它会建立一个 tags 文件，其他编辑器（比如我们使用的 Vim）可以读取这个 tags 文件，从而快速定位代码的位置。</p>
+<p>使用 <code>ctags --list-language</code> 可以查看 ctags 支持的语言，使用 <code>ctags --list-maps</code> 可以查看哪些后缀名对应对应的语言。</p>
+<h3>Install</h3>
+<p>ctags 是 Unix 系统自带的一个工具，但是功能比较少，所以一般使用 Exuberant Ctags。在 Linux 上，Exuberant Ctags 是默认的 Ctags 程序。如果系统中没有安装的话，我们可以从官网上下载源码编译安装，或者直接 apt-get 安装。</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">exuberant</span><span class="o">-</span><span class="n">ctags</span>
+</pre></div>
+
+
+<h3>Config</h3>
+<p>我们要使用 tags，第一步就是生成 tags 文件。生成 tags 文件时，ex-ctags 提供了很多参数供我们控制生成结果，详细内容可以查看其 manpage，这里有 easwy 大神翻译的中文版：</p>
+<p><a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/">Exuberant Ctags中文手册</a></p>
+<p>我们可以将配置写在 .vimrc 中，下面是号称“终极 Vimrc ”的一部分内容：</p>
+<div class="highlight"><pre> <span class="nb">set</span> <span class="n">tags</span> <span class="o">=</span><span class="nb">tags</span><span class="p">;</span>
+ <span class="kt">map</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-F12</span><span class="o">&gt;</span> <span class="p">:</span><span class="o">!</span><span class="nx">ctags</span> <span class="na">-R</span> <span class="o">--</span><span class="nx">c</span><span class="o">++-</span><span class="n">kinds</span><span class="o">=+</span><span class="nx">p</span> <span class="o">--</span><span class="n">fields</span><span class="o">=+</span><span class="nx">iaS</span> <span class="o">--</span><span class="n">extra</span><span class="o">=+</span><span class="nx">q</span> <span class="nx">.</span><span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>这样，我们只需要按 Ctrl-F12 即可自动生成 C++ 项目的 tags 文件。</p>
+<h3>Usage</h3>
+<p>Vim 提供了接口可以调用 tags 文件，它使用一个栈来记录我们在文件中跳转的位置。ctags 其 manual page 中有说明如何在 Vi 中使用 ctags：</p>
+<ol>
+<li>
+<p><code>vi -t tags</code> 打开 vi，并且将光标停留在 <code>tag</code> 定义的地方</p>
+</li>
+<li>
+<p><code>:ta tag</code> 寻找 <code>tag</code></p>
+</li>
+<li>
+<p><code>Ctrl-]</code> 寻找光标处 tag 的定义</p>
+</li>
+<li>
+<p><code>Ctrl-T</code> 返回到 tag 的前一个位置</p>
+</li>
+<li>
+<p><code>tnext</code> 如果某个 tag（比如函数）有多次定义，会匹配到多个结果，本命令跳到下一个结果。</p>
+</li>
+<li>
+<p><code>tprevious</code> 同上，跳转到前一个匹配结果</p>
+</li>
+<li>
+<p><code>tfirst</code> 跳转到第一个匹配结果</p>
+</li>
+<li>
+<p><code>tlast</code> 跳转到最后一个匹配结果</p>
+</li>
+<li>
+<p><code>:ts tag</code> 同上，列出所有匹配到 tag 的结果</p>
+</li>
+<li>
+<p><code>:tags</code> 显示 tagstack 中的内容，即我们的跳转记录</p>
+</li>
+</ol>
+<p><br></p>
+<h2>Cscope</h2>
+<hr />
+<h3>Intro</h3>
+<p><a href="http://cscope.sourceforge.net/">Cscope 官网</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Cscope">cscope wiki</a>:</p>
+<blockquote>
+<p>cscope is a console mode or text-based graphical interface that allows computer programmers or software developers to search C source code (there is limited support for other languages). It is often used on very large projects to find source code, functions, declarations, definitions and regular expressions given a text string. cscope is free and available under a BSD License. The original developer of cscope is Joe Steffen.</p>
+</blockquote>
+<p>man page:</p>
+<div class="highlight"><pre><span class="n">man</span> <span class="n">cscope</span>
+</pre></div>
+
+
+<p>Vim help:</p>
+<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">if_cscop</span>
+</pre></div>
+
+
+<p>The following text is taken from a version of the cscope man page:</p>
+<div class="highlight"><pre>                <span class="o">-----</span>
+</pre></div>
+
+
+<blockquote>
+<p>Cscope is an interactive screen-oriented tool that helps you:</p>
+<div class="highlight"><pre>  <span class="nx">Learn</span> <span class="nx">how</span> <span class="nx">a</span> <span class="nx">C</span> <span class="nx">program</span> <span class="nx">works</span> <span class="nx">without</span> <span class="nx">endless</span> <span class="nx">flipping</span> <span class="nx">through</span> <span class="nx">a</span> <span class="nx">thick</span>
+  <span class="nx">listing</span><span class="p">.</span>
+
+  <span class="nx">Locate</span> <span class="nx">the</span> <span class="nx">section</span> <span class="nx">of</span> <span class="nx">code</span> <span class="nx">to</span> <span class="nx">change</span> <span class="nx">to</span> <span class="nx">fix</span> <span class="nx">a</span> <span class="nx">bug</span> <span class="nx">without</span> <span class="nx">having</span> <span class="nx">to</span>
+  <span class="nx">learn</span> <span class="nx">the</span> <span class="nx">entire</span> <span class="nx">program</span><span class="p">.</span>
+
+  <span class="nx">Examine</span> <span class="nx">the</span> <span class="nx">effect</span> <span class="nx">of</span> <span class="nx">a</span> <span class="nx">proposed</span> <span class="nx">change</span> <span class="nx">such</span> <span class="nx">as</span> <span class="nx">adding</span> <span class="nx">a</span> <span class="nx">value</span> <span class="nx">to</span> <span class="nx">an</span>
+  <span class="kr">enum</span> <span class="nx">variable</span><span class="p">.</span>
+
+  <span class="nx">Verify</span> <span class="nx">that</span> <span class="nx">a</span> <span class="nx">change</span> <span class="nx">has</span> <span class="nx">been</span> <span class="nx">made</span> <span class="k">in</span> <span class="nx">all</span> <span class="nx">source</span> <span class="nx">files</span> <span class="nx">such</span> <span class="nx">as</span> <span class="nx">adding</span>
+  <span class="nx">an</span> <span class="nx">argument</span> <span class="nx">to</span> <span class="nx">an</span> <span class="nx">existing</span> <span class="kd">function</span><span class="p">.</span>
+
+  <span class="nx">Rename</span> <span class="nx">a</span> <span class="nx">global</span> <span class="nx">variable</span> <span class="k">in</span> <span class="nx">all</span> <span class="nx">source</span> <span class="nx">files</span><span class="p">.</span>
+
+  <span class="nx">Change</span> <span class="nx">a</span> <span class="nx">constant</span> <span class="nx">to</span> <span class="nx">a</span> <span class="nx">preprocessor</span> <span class="nx">symbol</span> <span class="k">in</span> <span class="nx">selected</span> <span class="nx">lines</span> <span class="nx">of</span> <span class="nx">files</span><span class="p">.</span>
+</pre></div>
+
+
+<p>It is designed to answer questions like:
+      Where is this symbol used?
+      Where is it defined?
+      Where did this variable get its value?
+      What is this global symbol's definition?
+      Where is this function in the source files?
+      What functions call this function?
+      What functions are called by this function?
+      Where does the message "out of space" come from?
+      Where is this source file in the directory structure?
+      What files include this header file?</p>
+<p>Cscope answers these questions from a symbol database that it builds the
+ first time it is used on the source files.  On a subsequent call, cscope
+ rebuilds the database only if a source file has changed or the list of
+ source files is different.  When the database is rebuilt the data for the
+ unchanged files is copied from the old database, which makes rebuilding
+ much faster than the initial build.</p>
+</blockquote>
+<p>简而言之，就是 ctags 的加强版，ctags 只能让我们跳转到某个 tag 的定义之处，但是无法让我们知道这个 tag 还在哪里出现过，或者被哪个函数调用过，这时候就需要 cscope 来大显身手了～</p>
+<p><strong>P.S.</strong></p>
+<p>cscope 对 C/C++ 支持比较好，当然我们也可以自己定制来支持其他语言，比如 Java，Python 等。</p>
+<h3>Install</h3>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">cscope</span>
+</pre></div>
+
+
+<h3>Usage</h3>
+<p>联合使用 Cscope + Vim 的流程：</p>
+<ol>
+<li>
+<p>使用 cscope 生成数据库文件</p>
+<div class="highlight"><pre><span class="n">cscope</span> <span class="o">-</span><span class="n">Rbkq</span>
+</pre></div>
+
+
+<p>其中参数的含义：</p>
+<ul>
+<li>
+<p>-R 递归，对子目录也建立数据库</p>
+</li>
+<li>
+<p>-b 只生成数据库，不进入 scope 界面</p>
+</li>
+<li>
+<p>-k 生成数据库时，不搜索 <code>/usr/include</code> 目录</p>
+</li>
+<li>
+<p>-q 生成 <code>cscope.in.out</code> 和 <code>cscope.po.out</code> 文件，加快查找速度</p>
+</li>
+</ul>
+<p>更详细的参数见 man page。</p>
+</li>
+<li>
+<p>将数据库导入 Vim 中</p>
+<p>cd 到源文件目录下，执行上一步操作，然后打开 vim 输入下面的命令：</p>
+<div class="highlight"><pre><span class="err">：</span><span class="n">cs</span> <span class="n">add</span> <span class="p">.</span><span class="o">/</span><span class="n">cscope</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>在 Vim 中查找</p>
+<p>通用格式为 <code>:cs find -option label</code>。</p>
+<p>option 可以有很多种模式，在 Vim 中使用 <code>:help cscope-find</code> 来查看 option：</p>
+<div class="highlight"><pre><span class="mi">0</span> <span class="nx">or</span> <span class="nx">s</span><span class="o">:</span> <span class="nx">Find</span> <span class="k">this</span> <span class="nx">C</span> <span class="nx">symbol</span>
+<span class="mi">1</span> <span class="nx">or</span> <span class="nx">g</span><span class="o">:</span> <span class="nx">Find</span> <span class="k">this</span> <span class="nx">definition</span>
+<span class="mi">2</span> <span class="nx">or</span> <span class="nx">d</span><span class="o">:</span> <span class="nx">Find</span> <span class="nx">functions</span> <span class="nx">called</span> <span class="nx">by</span> <span class="k">this</span> <span class="kd">function</span>
+<span class="mi">3</span> <span class="nx">or</span> <span class="nx">c</span><span class="o">:</span> <span class="nx">Find</span> <span class="nx">functions</span> <span class="nx">calling</span> <span class="k">this</span> <span class="kd">function</span>
+<span class="mi">4</span> <span class="nx">or</span> <span class="nx">t</span><span class="o">:</span> <span class="nx">Find</span> <span class="k">this</span> <span class="nx">text</span> <span class="nx">string</span>
+<span class="mi">6</span> <span class="nx">or</span> <span class="nx">e</span><span class="o">:</span> <span class="nx">Find</span> <span class="k">this</span> <span class="nx">egrep</span> <span class="nx">pattern</span>
+<span class="mi">7</span> <span class="nx">or</span> <span class="nx">f</span><span class="o">:</span> <span class="nx">Find</span> <span class="k">this</span> <span class="nx">file</span>
+<span class="mi">8</span> <span class="nx">or</span> <span class="nx">i</span><span class="o">:</span> <span class="nx">Find</span> <span class="nx">files</span> <span class="err">#</span><span class="nx">including</span> <span class="k">this</span> <span class="nx">file</span>
+</pre></div>
+
+
+</li>
+</ol>
+<h3>Config</h3>
+<p>Vim 的 cscope 接口提供了一些参数，可以让我们更加灵活地使用 cscope，可以用 <code>help if_cscop</code> 来查看完整的说明，这里有一份前辈翻译的中文版</p>
+<p><a href="http://blog.csdn.net/dengxiayehu/article/details/6330200">Cscope的使用（领略Vim + Cscope的强大魅力）</a></p>
+<p>下面我找了几个常用的选项：</p>
+<ol>
+<li>
+<p>cscopequickfix</p>
+<p>vim 提供了 <code>cscopequickfix</code> 选项，让查找结果在 quickfix 的窗口显示。</p>
+</li>
+<li>
+<p>同时使用 cscope ctags </p>
+<p>设置 <code>cst</code> 选项，可以同时查找 cscope 和 ctags，查找顺序有 <code>csto</code> 选项来决定。</p>
+</li>
+<li>
+<p><code>:ctags</code> 等同于 <code>:cs find g</code></p>
+</li>
+</ol>
+<p>为了省事，我们可以将一些参数设置写在 .vimrc 文件中，Vim help 中有推荐设置，下面是我修改过的配置：</p>
+<div class="highlight"><pre><span class="k">if</span> <span class="nx">has</span><span class="p">(</span><span class="s2">&quot;cscope&quot;</span><span class="p">)</span>
+    <span class="nb">set</span> <span class="n">csprg</span><span class="o">=</span><span class="p">/</span><span class="nx">usr</span><span class="p">/</span><span class="nx">bin</span><span class="p">/</span><span class="nx">cscope</span>
+    <span class="nb">set</span> <span class="n">cscopequickfix</span><span class="o">=</span><span class="nb">s</span><span class="o">-</span><span class="p">,</span><span class="nx">c</span><span class="o">-</span><span class="p">,</span><span class="nb">d</span><span class="o">-</span><span class="p">,</span><span class="nx">i</span><span class="o">-</span><span class="p">,</span><span class="nb">t</span><span class="o">-</span><span class="p">,</span><span class="nx">e</span><span class="o">-</span>
+    <span class="s2">&quot;set cst &quot;</span><span class="nx">keep</span> <span class="nx">the</span> <span class="nx">regular</span> <span class="kt">tag</span> <span class="nx">behavior</span>
+    <span class="s2">&quot;set csto=0 &quot;</span><span class="nx">keep</span> <span class="nx">the</span> <span class="nx">regular</span> <span class="kt">tag</span> <span class="nx">behavior</span>
+    <span class="nb">set</span> <span class="nx">nocsverb</span>
+    <span class="s2">&quot; add any database in current directory</span>
+<span class="s2">    if filereadable(&quot;</span><span class="nx">cscope.out</span><span class="s2">&quot;)</span>
+<span class="s2">        cs add cscope.out</span>
+<span class="s2">    &quot;</span> <span class="k">else</span> <span class="nb">add</span> <span class="nx">database</span> <span class="nx">pointed</span> <span class="k">to</span> <span class="k">by</span> <span class="nx">environment</span>
+    <span class="nx">elseif</span> <span class="nv">$CSCOPE_DB</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span>
+        <span class="nx">cs</span> <span class="nb">add</span> <span class="nv">$CSCOPE_DB</span>
+    <span class="nx">endif</span>
+    <span class="nb">set</span> <span class="nx">csverb</span>
+<span class="nx">endif</span>
+
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-_</span><span class="o">&gt;</span><span class="nb">s</span> <span class="p">:</span><span class="nx">cs</span> <span class="nb">find</span> <span class="nb">s</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-R</span><span class="o">&gt;=</span><span class="nx">expand</span><span class="p">(</span><span class="s2">&quot;&lt;cword&gt;&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-_</span><span class="o">&gt;</span><span class="nx">g</span> <span class="p">:</span><span class="nx">cs</span> <span class="nb">find</span> <span class="nx">g</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-R</span><span class="o">&gt;=</span><span class="nx">expand</span><span class="p">(</span><span class="s2">&quot;&lt;cword&gt;&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-_</span><span class="o">&gt;</span><span class="nx">c</span> <span class="p">:</span><span class="nx">cs</span> <span class="nb">find</span> <span class="nx">c</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-R</span><span class="o">&gt;=</span><span class="nx">expand</span><span class="p">(</span><span class="s2">&quot;&lt;cword&gt;&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-_</span><span class="o">&gt;</span><span class="nb">t</span> <span class="p">:</span><span class="nx">cs</span> <span class="nb">find</span> <span class="nb">t</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-R</span><span class="o">&gt;=</span><span class="nx">expand</span><span class="p">(</span><span class="s2">&quot;&lt;cword&gt;&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-_</span><span class="o">&gt;</span><span class="nx">e</span> <span class="p">:</span><span class="nx">cs</span> <span class="nb">find</span> <span class="nx">e</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-R</span><span class="o">&gt;=</span><span class="nx">expand</span><span class="p">(</span><span class="s2">&quot;&lt;cword&gt;&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-_</span><span class="o">&gt;</span><span class="nb">f</span> <span class="p">:</span><span class="nx">cs</span> <span class="nb">find</span> <span class="nb">f</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-R</span><span class="o">&gt;=</span><span class="nx">expand</span><span class="p">(</span><span class="s2">&quot;&lt;cfile&gt;&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-_</span><span class="o">&gt;</span><span class="nx">i</span> <span class="p">:</span><span class="nx">cs</span> <span class="nb">find</span> <span class="nx">i</span> <span class="p">^</span><span class="o">&lt;</span><span class="nx">C</span><span class="na">-R</span><span class="o">&gt;=</span><span class="nx">expand</span><span class="p">(</span><span class="s2">&quot;&lt;cfile&gt;&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;</span><span class="err">$</span><span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
+<span class="nx">nmap</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-_</span><span class="o">&gt;</span><span class="nb">d</span> <span class="p">:</span><span class="nx">cs</span> <span class="nb">find</span> <span class="nb">d</span> <span class="o">&lt;</span><span class="nx">C</span><span class="na">-R</span><span class="o">&gt;=</span><span class="nx">expand</span><span class="p">(</span><span class="s2">&quot;&lt;cword&gt;&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
+
+<span class="s2">&quot; Using &#39;CTRL-spacebar&#39; then a search type makes the vim window</span>
+<span class="s2">&quot;</span> <span class="nb">split</span> <span class="nx">horizontally</span><span class="p">,</span> <span class="k">with</span> <span class="nb">search</span> <span class="nb">result</span> <span class="n">displayed</span> <span class="k">in</span>
+<span class="s2">&quot; the new window.</span>
+
+<span class="s2">nmap &lt;C-Space&gt;s :scs find s &lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cword</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+<span class="s2">nmap &lt;C-Space&gt;g :scs find g &lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cword</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+<span class="s2">nmap &lt;C-Space&gt;c :scs find c &lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cword</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+<span class="s2">nmap &lt;C-Space&gt;t :scs find t &lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cword</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+<span class="s2">nmap &lt;C-Space&gt;e :scs find e &lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cword</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+<span class="s2">nmap &lt;C-Space&gt;f :scs find f &lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cfile</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+<span class="s2">nmap &lt;C-Space&gt;i :scs find i ^&lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cfile</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;$&lt;CR&gt;</span>
+<span class="s2">nmap &lt;C-Space&gt;d :scs find d &lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cword</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+
+<span class="s2">&quot;</span> <span class="nx">Hitting</span> <span class="nx">CTRL</span><span class="na">-space</span> <span class="o">*</span><span class="nx">twice</span><span class="o">*</span> <span class="nx">before</span> <span class="nx">the</span> <span class="nb">search</span> <span class="k">type</span> <span class="nx">does</span> <span class="nx">a</span> <span class="nx">vertical</span>
+<span class="s2">&quot; split instead of a horizontal one</span>
+
+<span class="s2">nmap &lt;C-Space&gt;&lt;C-Space&gt;s</span>
+<span class="s2">    </span><span class="se">\:vert scs find s &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+<span class="se">nmap &lt;C-Space&gt;&lt;C-Space&gt;g</span>
+<span class="se">    \:</span><span class="s2">vert scs find g &lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cword</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+<span class="s2">nmap &lt;C-Space&gt;&lt;C-Space&gt;c</span>
+<span class="s2">    </span><span class="se">\:vert scs find c &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+<span class="se">nmap &lt;C-Space&gt;&lt;C-Space&gt;t</span>
+<span class="se">    \:</span><span class="s2">vert scs find t &lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cword</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+<span class="s2">nmap &lt;C-Space&gt;&lt;C-Space&gt;e</span>
+<span class="s2">    </span><span class="se">\:vert scs find e &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+<span class="se">nmap &lt;C-Space&gt;&lt;C-Space&gt;i</span>
+<span class="se">    \:</span><span class="s2">vert scs find i ^&lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cfile</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;$&lt;CR&gt;</span>
+<span class="s2">nmap &lt;C-Space&gt;&lt;C-Space&gt;d</span>
+<span class="s2">    \:vert scs find d &lt;C-R&gt;=expand(&quot;</span><span class="o">&lt;</span><span class="nx">cword</span><span class="o">&gt;</span><span class="s2">&quot;)&lt;CR&gt;&lt;CR&gt;</span>
+</pre></div>
+
+
+<p><br></p>
+<h2>Taglist</h2>
+<hr />
+<h3>Intro</h3>
+<p>[Taglist 官网][taglist]</p>
+<p>使用过 VS 的人都知道，在左侧有一个窗口专门显示当前代码文件中的宏、函数、变量定义，并且随着文件切换自动更新。我们这里介绍的 Taglist 完成的就是类似的功能，让我们可以高效地浏览代码。不过要使用 Taglist，首先要安装前面介绍的 Ctags。</p>
+<blockquote>
+<p>The "Tag List" plugin is a source code browser plugin for Vim and provides an overview of the structure of source code files and allows 
+you to efficiently browse through source code files for different programming languages. </p>
+</blockquote>
+<h3>Install</h3>
+<p>与前面的 ctags、cscope 不同的是，taglist 是一款 Vim 插件。如果使用 Vundle 来管理、安装插件，在 .vimrc 中添加</p>
+<div class="highlight"><pre><span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">taglist</span><span class="p">.</span><span class="n">vim</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p>然后打开 vi，然后输入命令 <code>:BundleInstall</code> 即可。</p>
+<h3>Config</h3>
+<p>使用 <code>:help taglist</code> 查看帮助。</p>
+<p>使用 <code>:TlistToggle</code> 切换是否显示 Taglist 窗口。</p>
+<p>我们可以直接在 .vimrc 中添加以下设置：</p>
+<div class="highlight"><pre><span class="n">let</span> <span class="n">Tlist_Show_One_File</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">let</span> <span class="n">Tlist_Exit_OnlyWindow</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">let</span> <span class="n">Tlist_SHow_Menu</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">let</span> <span class="n">Tlist_File_Fold_Auto_Close</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+
+
+<h3>Usage</h3>
+<p>在 taglist 窗口，我们可以使用下面的一些快捷键：</p>
+<ul>
+<li>
+<p><code>=</code> 折叠所有 tag</p>
+</li>
+<li>
+<p><code>-</code> 折叠单个 tag</p>
+</li>
+<li>
+<p><code>+</code> 打开一个折叠</p>
+</li>
+<li>
+<p><code>x</code> taglist 窗口放大/缩小，方便查看 tag</p>
+</li>
+<li>
+<p><code>u</code> 更新 taglist</p>
+</li>
+<li>
+<p><code>sapce</code> 显示光标处 tag 的原型定义</p>
+</li>
+</ul>
+<p><strong>P.S.</strong></p>
+<p>配合另外一个窗口管理插件 winmanager，我们可以将我们的 Vim 打造成一个伪 IDE :D</p>
+<p><br></p>
+<h2>Ref</h2>
+<p><a href="http://blog.csdn.net/alexdboy/article/details/3871707">ctags的使用及相关参数介绍</a></p>
+<p><a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/">Exuberant Ctags中文手册</a></p>
+<p><a href="http://easwy.com/blog/archives/advanced-vim-skills-use-ctags-tag-file/">vi/vim使用进阶: 使用标签(tag)文件</a></p>
+<p><a href="http://cscope.sourceforge.net/">cscope 官网</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Cscope">cscope wiki</a></p>
+<p><a href="http://blog.csdn.net/dengxiayehu/article/details/6330200">Cscope的使用（领略Vim + Cscope的强大魅力）</a></p>
+<p>[Taglist 官网][taglist]</p>
+<p><a href="http://easwy.com/blog/archives/advanced-vim-skills-taglist-plugin/">vi/vim使用进阶: 使用taglist插件</a></p>
+            </div>
+            <!-- /.entry-content -->
+<section class="well" id="related-posts">
+    <h4>Related Posts:</h4>
+    <ul>
+        <li><a href="http://guqian110.github.io/pages/2015/01/12/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/20/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
+    </ul>
+</section>
+    <hr />
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+            var disqus_identifier = 'learning_vim_ctags_cscope_taglist';
+            var disqus_url = 'http://guqian110.github.io/pages/2015/01/25/learning_vim_ctags_cscope_taglist.html';
+            var disqus_config = function () {
+                this.language = "zh";
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="aboutme">
+<p>
+    <strong>About Qian Gu</strong><br/>
+    ICer + BYR + 通信汪
+</p>        </div>
+        <div class="col-sm-3 well well-sm" id="sidebar">
+
+<aside>
+    <section>
+        <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+                  <ul class="list-group" id="social">
+                    <li class="list-group-item"><a href="http://github.com/guqian110"><i
+                            class="fa fa-github-square fa-lg"></i> GitHub
+                    </a></li>
+                    <li class="list-group-item"><a href="https://plus.google.com/u/0/+QianGu/posts/p/pub"><i
+                            class="fa fa-google-plus-square fa-lg"></i> Google-plus
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.quora.com/Chien-Gu"><i
+                            class="fa fa-quora-square fa-lg"></i> Quora
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.zhihu.com/people/chiengu"><i
+                            class="fa fa-zhihu-square fa-lg"></i> Zhihu
+                    </a></li>
+                    <li class="list-group-item"><a href="http://www.douban.com/people/51504735/"><i
+                            class="fa fa-douban-square fa-lg"></i> Douban
+                    </a></li>
+                  </ul>
+                </li>
+
+
+
+                <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                    <ul class="list-group list-inline tagcloud" id="tags">
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/arduino.html">
+                                Arduino
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/build-blog.html">
+                                Build Blog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/c.html">
+                                C++
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/clock-design.html">
+                                clock design
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/clock-dividers.html">
+                                clock dividers
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/clock-resource.html">
+                                clock resource
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/code.html">
+                                code
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/coding-style.html">
+                                coding style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/com.html">
+                                Com
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/comment-style.html">
+                                comment style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/cscope.html">
+                                cscope
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ctags.html">
+                                ctags
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/delay.html">
+                                delay
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/digital-procesing.html">
+                                digital procesing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/digital-processing.html">
+                                digital processing
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/doxverilog.html">
+                                doxverilog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/doxygen.html">
+                                doxygen
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/doxygentoolkit.html">
+                                DoxygenToolKit
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/fft.html">
+                                fft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/flip-flop.html">
+                                flip-flop
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/fpga.html">
+                                FPGA
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/fsm.html">
+                                fsm
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gmail.html">
+                                Gmail
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/graphviz.html">
+                                graphviz
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/gtd.html">
+                                GTD
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/intel-galileo.html">
+                                Intel Galileo
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/latch.html">
+                                latch
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-1">
+                            <a href="http://guqian110.github.io/tag/linux.html">
+                                Linux
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/matlab.html">
+                                matlab
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ofdm.html">
+                                OFDM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/open-source-hardware.html">
+                                Open-source Hardware
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/package-management.html">
+                                Package Management
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/parameterization.html">
+                                parameterization
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pkm.html">
+                                PKM
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/reset.html">
+                                reset
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/review.html">
+                                review
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/shi-jian-guan-li.html">
+                                时间管理
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ssh.html">
+                                SSH
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/steve-jobs.html">
+                                Steve Jobs
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/sublime-text.html">
+                                Sublime Text
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/syntax.html">
+                                syntax
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/taglist.html">
+                                taglist
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
+                                The Catcher in The Rye
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/verilog.html">
+                                verilog
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-3">
+                            <a href="http://guqian110.github.io/tag/vhdl.html">
+                                VHDL
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/vim.html">
+                                vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/warcraft.html">
+                                WarCraft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/wine.html">
+                                Wine
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/yocto.html">
+                                Yocto
+                            </a>
+                        </li>
+                    </ul>
+                </li>    
+
+    <li class="list-group-item"><h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+        <div id="gh_repos">
+            <p class="list-group-item">Status updating...</p>
+        </div>
+    </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="http://getpelican.com/" target="_blank">
+                Pelican
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://jinja.pocoo.org/" target="_blank">
+                Jinja2
+            </a>
+        </li>
+      </ul>
+    </li>
+
+        </ul>
+    </section>
+
+</aside>        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Qian Gu
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://code.jquery.com/jquery.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://guqian110.github.io/theme/js/respond.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (!window.jXHR) {
+                var jxhr = document.createElement('script');
+                jxhr.type = 'text/javascript';
+                jxhr.src = 'http://guqian110.github.io/theme/js/jXHR.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(jxhr, s);
+            }
+
+            github.showRepos({
+                user: 'guqian110',
+                count: 5,
+                skip_forks: false,
+                target: '#gh_repos'
+            });
+        });
+    </script>
+    <script src="http://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-48826831-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</body>
+</html>

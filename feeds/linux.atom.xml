@@ -1,5 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-13T18:00:00+08:00</updated><entry><title>基于 Doxygen 的 C++ 注释风格</title><link href="http://guqian110.github.io/pages/2015/01/13/doxygen_cpp_comment_style.html" rel="alternate"></link><updated>2015-01-13T18:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-13:pages/2015/01/13/doxygen_cpp_comment_style.html</id><summary type="html">&lt;p&gt;本文内容参考自网上博客内容&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-25T21:32:00+08:00</updated><entry><title>学习 Vim 之 Ctags/Cscope/Taglist</title><link href="http://guqian110.github.io/pages/2015/01/25/learning_vim_ctags_cscope_taglist.html" rel="alternate"></link><updated>2015-01-25T21:32:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-25:pages/2015/01/25/learning_vim_ctags_cscope_taglist.html</id><summary type="html">&lt;h2&gt;Background&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;tag 文件是一种非常有用的文件，下面的内容都是基于 &lt;code&gt;tag&lt;/code&gt; 的，所以首先得了解什么是 tag？&lt;/p&gt;
+&lt;p&gt;Vim Manual 里面的简单介绍就足够我们进行下面的内容了。查看 Manual：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;tagsrch&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用 tags 文件的步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;首先使用 tag 工具（ctags、cscope等）生成 tags 文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;其次，将 tags 文件路径导入到 Vim 中，让 Vim 知道从哪个 tags 文件中查找。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;最后，使用 Vim 的命令查找 tag。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ctags&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;Intro&lt;/h3&gt;
+&lt;p&gt;&lt;a href="ctags.sourceforge.net/"&gt;Ctags 官网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Ctags"&gt;wiki&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Ctags&lt;/strong&gt; is a programming tool that generates an index (or tag) file of names found in source and header files of various programming languages. Depending on the language, functions, variables, class members, macros and so on may be indexed. These tags allow definitions to be quickly and easily located by a text editor or other utility. Alternatively, there is also an output mode that generates a cross reference file, listing information about various names found in a set of language files in human-readable form.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;manpage: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="n"&gt;ctags&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;vim Manual：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="mf"&gt;29.1&lt;/span&gt;
+&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;ctags&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;简而言之，Ctags 是一个可以自动提取源文件和头文件中函数、变量、类成员、宏定义等元素的工具，然后它会建立一个 tags 文件，其他编辑器（比如我们使用的 Vim）可以读取这个 tags 文件，从而快速定位代码的位置。&lt;/p&gt;
+&lt;p&gt;使用 &lt;code&gt;ctags --list-language&lt;/code&gt; 可以查看 ctags 支持的语言，使用 &lt;code&gt;ctags --list-maps&lt;/code&gt; 可以查看哪些后缀名对应对应的语言。&lt;/p&gt;
+&lt;h3&gt;Install&lt;/h3&gt;
+&lt;p&gt;ctags 是 Unix 系统自带的一个工具，但是功能比较少，所以一般使用 Exuberant Ctags。在 Linux 上，Exuberant Ctags 是默认的 Ctags 程序。如果系统中没有安装的话，我们可以从官网上下载源码编译安装，或者直接 apt-get 安装。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;exuberant&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ctags&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Config&lt;/h3&gt;
+&lt;p&gt;我们要使用 tags，第一步就是生成 tags 文件。生成 tags 文件时，ex-ctags 提供了很多参数供我们控制生成结果，详细内容可以查看其 manpage，这里有 easwy 大神翻译的中文版：&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/"&gt;Exuberant Ctags中文手册&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我们可以将配置写在 .vimrc 中，下面是号称“终极 Vimrc ”的一部分内容：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="n"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;tags&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+ &lt;span class="kt"&gt;map&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-F12&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="nx"&gt;ctags&lt;/span&gt; &lt;span class="na"&gt;-R&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="o"&gt;++-&lt;/span&gt;&lt;span class="n"&gt;kinds&lt;/span&gt;&lt;span class="o"&gt;=+&lt;/span&gt;&lt;span class="nx"&gt;p&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;fields&lt;/span&gt;&lt;span class="o"&gt;=+&lt;/span&gt;&lt;span class="nx"&gt;iaS&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;extra&lt;/span&gt;&lt;span class="o"&gt;=+&lt;/span&gt;&lt;span class="nx"&gt;q&lt;/span&gt; &lt;span class="nx"&gt;.&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样，我们只需要按 Ctrl-F12 即可自动生成 C++ 项目的 tags 文件。&lt;/p&gt;
+&lt;h3&gt;Usage&lt;/h3&gt;
+&lt;p&gt;Vim 提供了接口可以调用 tags 文件，它使用一个栈来记录我们在文件中跳转的位置。ctags 其 manual page 中有说明如何在 Vi 中使用 ctags：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;vi -t tags&lt;/code&gt; 打开 vi，并且将光标停留在 &lt;code&gt;tag&lt;/code&gt; 定义的地方&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;:ta tag&lt;/code&gt; 寻找 &lt;code&gt;tag&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Ctrl-]&lt;/code&gt; 寻找光标处 tag 的定义&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Ctrl-T&lt;/code&gt; 返回到 tag 的前一个位置&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;tnext&lt;/code&gt; 如果某个 tag（比如函数）有多次定义，会匹配到多个结果，本命令跳到下一个结果。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;tprevious&lt;/code&gt; 同上，跳转到前一个匹配结果&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;tfirst&lt;/code&gt; 跳转到第一个匹配结果&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;tlast&lt;/code&gt; 跳转到最后一个匹配结果&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;:ts tag&lt;/code&gt; 同上，列出所有匹配到 tag 的结果&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;:tags&lt;/code&gt; 显示 tagstack 中的内容，即我们的跳转记录&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Cscope&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;Intro&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://cscope.sourceforge.net/"&gt;Cscope 官网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Cscope"&gt;cscope wiki&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;cscope is a console mode or text-based graphical interface that allows computer programmers or software developers to search C source code (there is limited support for other languages). It is often used on very large projects to find source code, functions, declarations, definitions and regular expressions given a text string. cscope is free and available under a BSD License. The original developer of cscope is Joe Steffen.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;man page:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;man&lt;/span&gt; &lt;span class="n"&gt;cscope&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Vim help:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;if_cscop&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The following text is taken from a version of the cscope man page:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;                &lt;span class="o"&gt;-----&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;Cscope is an interactive screen-oriented tool that helps you:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="nx"&gt;Learn&lt;/span&gt; &lt;span class="nx"&gt;how&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;C&lt;/span&gt; &lt;span class="nx"&gt;program&lt;/span&gt; &lt;span class="nx"&gt;works&lt;/span&gt; &lt;span class="nx"&gt;without&lt;/span&gt; &lt;span class="nx"&gt;endless&lt;/span&gt; &lt;span class="nx"&gt;flipping&lt;/span&gt; &lt;span class="nx"&gt;through&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;thick&lt;/span&gt;
+  &lt;span class="nx"&gt;listing&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+
+  &lt;span class="nx"&gt;Locate&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;section&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;code&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;change&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;fix&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;bug&lt;/span&gt; &lt;span class="nx"&gt;without&lt;/span&gt; &lt;span class="nx"&gt;having&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt;
+  &lt;span class="nx"&gt;learn&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;entire&lt;/span&gt; &lt;span class="nx"&gt;program&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+
+  &lt;span class="nx"&gt;Examine&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;effect&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;proposed&lt;/span&gt; &lt;span class="nx"&gt;change&lt;/span&gt; &lt;span class="nx"&gt;such&lt;/span&gt; &lt;span class="nx"&gt;as&lt;/span&gt; &lt;span class="nx"&gt;adding&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;value&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;an&lt;/span&gt;
+  &lt;span class="kr"&gt;enum&lt;/span&gt; &lt;span class="nx"&gt;variable&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+
+  &lt;span class="nx"&gt;Verify&lt;/span&gt; &lt;span class="nx"&gt;that&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;change&lt;/span&gt; &lt;span class="nx"&gt;has&lt;/span&gt; &lt;span class="nx"&gt;been&lt;/span&gt; &lt;span class="nx"&gt;made&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;all&lt;/span&gt; &lt;span class="nx"&gt;source&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt; &lt;span class="nx"&gt;such&lt;/span&gt; &lt;span class="nx"&gt;as&lt;/span&gt; &lt;span class="nx"&gt;adding&lt;/span&gt;
+  &lt;span class="nx"&gt;an&lt;/span&gt; &lt;span class="nx"&gt;argument&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;an&lt;/span&gt; &lt;span class="nx"&gt;existing&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+
+  &lt;span class="nx"&gt;Rename&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;global&lt;/span&gt; &lt;span class="nx"&gt;variable&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;all&lt;/span&gt; &lt;span class="nx"&gt;source&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+
+  &lt;span class="nx"&gt;Change&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;constant&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;preprocessor&lt;/span&gt; &lt;span class="nx"&gt;symbol&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;selected&lt;/span&gt; &lt;span class="nx"&gt;lines&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It is designed to answer questions like:
+      Where is this symbol used?
+      Where is it defined?
+      Where did this variable get its value?
+      What is this global symbol's definition?
+      Where is this function in the source files?
+      What functions call this function?
+      What functions are called by this function?
+      Where does the message "out of space" come from?
+      Where is this source file in the directory structure?
+      What files include this header file?&lt;/p&gt;
+&lt;p&gt;Cscope answers these questions from a symbol database that it builds the
+ first time it is used on the source files.  On a subsequent call, cscope
+ rebuilds the database only if a source file has changed or the list of
+ source files is different.  When the database is rebuilt the data for the
+ unchanged files is copied from the old database, which makes rebuilding
+ much faster than the initial build.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;简而言之，就是 ctags 的加强版，ctags 只能让我们跳转到某个 tag 的定义之处，但是无法让我们知道这个 tag 还在哪里出现过，或者被哪个函数调用过，这时候就需要 cscope 来大显身手了～&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;cscope 对 C/C++ 支持比较好，当然我们也可以自己定制来支持其他语言，比如 Java，Python 等。&lt;/p&gt;
+&lt;h3&gt;Install&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;cscope&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Usage&lt;/h3&gt;
+&lt;p&gt;联合使用 Cscope + Vim 的流程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;使用 cscope 生成数据库文件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cscope&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Rbkq&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中参数的含义：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;-R 递归，对子目录也建立数据库&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;-b 只生成数据库，不进入 scope 界面&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;-k 生成数据库时，不搜索 &lt;code&gt;/usr/include&lt;/code&gt; 目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;-q 生成 &lt;code&gt;cscope.in.out&lt;/code&gt; 和 &lt;code&gt;cscope.po.out&lt;/code&gt; 文件，加快查找速度&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;更详细的参数见 man page。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;将数据库导入 Vim 中&lt;/p&gt;
+&lt;p&gt;cd 到源文件目录下，执行上一步操作，然后打开 vim 输入下面的命令：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;：&lt;/span&gt;&lt;span class="n"&gt;cs&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cscope&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 Vim 中查找&lt;/p&gt;
+&lt;p&gt;通用格式为 &lt;code&gt;:cs find -option label&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;option 可以有很多种模式，在 Vim 中使用 &lt;code&gt;:help cscope-find&lt;/code&gt; 来查看 option：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nx"&gt;or&lt;/span&gt; &lt;span class="nx"&gt;s&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Find&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="nx"&gt;C&lt;/span&gt; &lt;span class="nx"&gt;symbol&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="nx"&gt;or&lt;/span&gt; &lt;span class="nx"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Find&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="nx"&gt;definition&lt;/span&gt;
+&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="nx"&gt;or&lt;/span&gt; &lt;span class="nx"&gt;d&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Find&lt;/span&gt; &lt;span class="nx"&gt;functions&lt;/span&gt; &lt;span class="nx"&gt;called&lt;/span&gt; &lt;span class="nx"&gt;by&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;
+&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="nx"&gt;or&lt;/span&gt; &lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Find&lt;/span&gt; &lt;span class="nx"&gt;functions&lt;/span&gt; &lt;span class="nx"&gt;calling&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;
+&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="nx"&gt;or&lt;/span&gt; &lt;span class="nx"&gt;t&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Find&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="nx"&gt;text&lt;/span&gt; &lt;span class="nx"&gt;string&lt;/span&gt;
+&lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="nx"&gt;or&lt;/span&gt; &lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Find&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="nx"&gt;egrep&lt;/span&gt; &lt;span class="nx"&gt;pattern&lt;/span&gt;
+&lt;span class="mi"&gt;7&lt;/span&gt; &lt;span class="nx"&gt;or&lt;/span&gt; &lt;span class="nx"&gt;f&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Find&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt;
+&lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="nx"&gt;or&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;Find&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="nx"&gt;including&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Config&lt;/h3&gt;
+&lt;p&gt;Vim 的 cscope 接口提供了一些参数，可以让我们更加灵活地使用 cscope，可以用 &lt;code&gt;help if_cscop&lt;/code&gt; 来查看完整的说明，这里有一份前辈翻译的中文版&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.csdn.net/dengxiayehu/article/details/6330200"&gt;Cscope的使用（领略Vim + Cscope的强大魅力）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下面我找了几个常用的选项：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;cscopequickfix&lt;/p&gt;
+&lt;p&gt;vim 提供了 &lt;code&gt;cscopequickfix&lt;/code&gt; 选项，让查找结果在 quickfix 的窗口显示。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;同时使用 cscope ctags &lt;/p&gt;
+&lt;p&gt;设置 &lt;code&gt;cst&lt;/code&gt; 选项，可以同时查找 cscope 和 ctags，查找顺序有 &lt;code&gt;csto&lt;/code&gt; 选项来决定。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;:ctags&lt;/code&gt; 等同于 &lt;code&gt;:cs find g&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;为了省事，我们可以将一些参数设置写在 .vimrc 文件中，Vim help 中有推荐设置，下面是我修改过的配置：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;has&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;cscope&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="n"&gt;csprg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;usr&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;cscope&lt;/span&gt;
+    &lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="n"&gt;cscopequickfix&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;s&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nb"&gt;d&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nb"&gt;t&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;set cst &amp;quot;&lt;/span&gt;&lt;span class="nx"&gt;keep&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;regular&lt;/span&gt; &lt;span class="kt"&gt;tag&lt;/span&gt; &lt;span class="nx"&gt;behavior&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;set csto=0 &amp;quot;&lt;/span&gt;&lt;span class="nx"&gt;keep&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;regular&lt;/span&gt; &lt;span class="kt"&gt;tag&lt;/span&gt; &lt;span class="nx"&gt;behavior&lt;/span&gt;
+    &lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nx"&gt;nocsverb&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot; add any database in current directory&lt;/span&gt;
+&lt;span class="s2"&gt;    if filereadable(&amp;quot;&lt;/span&gt;&lt;span class="nx"&gt;cscope.out&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&lt;/span&gt;
+&lt;span class="s2"&gt;        cs add cscope.out&lt;/span&gt;
+&lt;span class="s2"&gt;    &amp;quot;&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="nb"&gt;add&lt;/span&gt; &lt;span class="nx"&gt;database&lt;/span&gt; &lt;span class="nx"&gt;pointed&lt;/span&gt; &lt;span class="k"&gt;to&lt;/span&gt; &lt;span class="k"&gt;by&lt;/span&gt; &lt;span class="nx"&gt;environment&lt;/span&gt;
+    &lt;span class="nx"&gt;elseif&lt;/span&gt; &lt;span class="nv"&gt;$CSCOPE_DB&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+        &lt;span class="nx"&gt;cs&lt;/span&gt; &lt;span class="nb"&gt;add&lt;/span&gt; &lt;span class="nv"&gt;$CSCOPE_DB&lt;/span&gt;
+    &lt;span class="nx"&gt;endif&lt;/span&gt;
+    &lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nx"&gt;csverb&lt;/span&gt;
+&lt;span class="nx"&gt;endif&lt;/span&gt;
+
+&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-_&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nb"&gt;s&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;cs&lt;/span&gt; &lt;span class="nb"&gt;find&lt;/span&gt; &lt;span class="nb"&gt;s&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-R&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="nx"&gt;expand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-_&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;g&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;cs&lt;/span&gt; &lt;span class="nb"&gt;find&lt;/span&gt; &lt;span class="nx"&gt;g&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-R&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="nx"&gt;expand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-_&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;cs&lt;/span&gt; &lt;span class="nb"&gt;find&lt;/span&gt; &lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-R&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="nx"&gt;expand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-_&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nb"&gt;t&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;cs&lt;/span&gt; &lt;span class="nb"&gt;find&lt;/span&gt; &lt;span class="nb"&gt;t&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-R&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="nx"&gt;expand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-_&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;e&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;cs&lt;/span&gt; &lt;span class="nb"&gt;find&lt;/span&gt; &lt;span class="nx"&gt;e&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-R&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="nx"&gt;expand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-_&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nb"&gt;f&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;cs&lt;/span&gt; &lt;span class="nb"&gt;find&lt;/span&gt; &lt;span class="nb"&gt;f&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-R&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="nx"&gt;expand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;cfile&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-_&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;cs&lt;/span&gt; &lt;span class="nb"&gt;find&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="p"&gt;^&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-R&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="nx"&gt;expand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;cfile&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nx"&gt;nmap&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-_&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nb"&gt;d&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;cs&lt;/span&gt; &lt;span class="nb"&gt;find&lt;/span&gt; &lt;span class="nb"&gt;d&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;C&lt;/span&gt;&lt;span class="na"&gt;-R&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="nx"&gt;expand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot; Using &amp;#39;CTRL-spacebar&amp;#39; then a search type makes the vim window&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nb"&gt;split&lt;/span&gt; &lt;span class="nx"&gt;horizontally&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;search&lt;/span&gt; &lt;span class="nb"&gt;result&lt;/span&gt; &lt;span class="n"&gt;displayed&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot; the new window.&lt;/span&gt;
+
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;s :scs find s &amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cword&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;g :scs find g &amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cword&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;c :scs find c &amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cword&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;t :scs find t &amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cword&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;e :scs find e &amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cword&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;f :scs find f &amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cfile&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;i :scs find i ^&amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cfile&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;$&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;d :scs find d &amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cword&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;Hitting&lt;/span&gt; &lt;span class="nx"&gt;CTRL&lt;/span&gt;&lt;span class="na"&gt;-space&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;twice&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nx"&gt;before&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nb"&gt;search&lt;/span&gt; &lt;span class="k"&gt;type&lt;/span&gt; &lt;span class="nx"&gt;does&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;vertical&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot; split instead of a horizontal one&lt;/span&gt;
+
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;&amp;lt;C-Space&amp;gt;s&lt;/span&gt;
+&lt;span class="s2"&gt;    &lt;/span&gt;&lt;span class="se"&gt;\:vert scs find s &amp;lt;C-R&amp;gt;=expand(&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="se"&gt;nmap &amp;lt;C-Space&amp;gt;&amp;lt;C-Space&amp;gt;g&lt;/span&gt;
+&lt;span class="se"&gt;    \:&lt;/span&gt;&lt;span class="s2"&gt;vert scs find g &amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cword&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;&amp;lt;C-Space&amp;gt;c&lt;/span&gt;
+&lt;span class="s2"&gt;    &lt;/span&gt;&lt;span class="se"&gt;\:vert scs find c &amp;lt;C-R&amp;gt;=expand(&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="se"&gt;nmap &amp;lt;C-Space&amp;gt;&amp;lt;C-Space&amp;gt;t&lt;/span&gt;
+&lt;span class="se"&gt;    \:&lt;/span&gt;&lt;span class="s2"&gt;vert scs find t &amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cword&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;&amp;lt;C-Space&amp;gt;e&lt;/span&gt;
+&lt;span class="s2"&gt;    &lt;/span&gt;&lt;span class="se"&gt;\:vert scs find e &amp;lt;C-R&amp;gt;=expand(&amp;quot;&amp;lt;cword&amp;gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="se"&gt;nmap &amp;lt;C-Space&amp;gt;&amp;lt;C-Space&amp;gt;i&lt;/span&gt;
+&lt;span class="se"&gt;    \:&lt;/span&gt;&lt;span class="s2"&gt;vert scs find i ^&amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cfile&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;$&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;C-Space&amp;gt;&amp;lt;C-Space&amp;gt;d&lt;/span&gt;
+&lt;span class="s2"&gt;    \:vert scs find d &amp;lt;C-R&amp;gt;=expand(&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;cword&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&amp;lt;CR&amp;gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Taglist&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;Intro&lt;/h3&gt;
+&lt;p&gt;[Taglist 官网][taglist]&lt;/p&gt;
+&lt;p&gt;使用过 VS 的人都知道，在左侧有一个窗口专门显示当前代码文件中的宏、函数、变量定义，并且随着文件切换自动更新。我们这里介绍的 Taglist 完成的就是类似的功能，让我们可以高效地浏览代码。不过要使用 Taglist，首先要安装前面介绍的 Ctags。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The "Tag List" plugin is a source code browser plugin for Vim and provides an overview of the structure of source code files and allows 
+you to efficiently browse through source code files for different programming languages. &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Install&lt;/h3&gt;
+&lt;p&gt;与前面的 ctags、cscope 不同的是，taglist 是一款 Vim 插件。如果使用 Vundle 来管理、安装插件，在 .vimrc 中添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;taglist&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后打开 vi，然后输入命令 &lt;code&gt;:BundleInstall&lt;/code&gt; 即可。&lt;/p&gt;
+&lt;h3&gt;Config&lt;/h3&gt;
+&lt;p&gt;使用 &lt;code&gt;:help taglist&lt;/code&gt; 查看帮助。&lt;/p&gt;
+&lt;p&gt;使用 &lt;code&gt;:TlistToggle&lt;/code&gt; 切换是否显示 Taglist 窗口。&lt;/p&gt;
+&lt;p&gt;我们可以直接在 .vimrc 中添加以下设置：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;Tlist_Show_One_File&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;Tlist_Exit_OnlyWindow&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;Tlist_SHow_Menu&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;Tlist_File_Fold_Auto_Close&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Usage&lt;/h3&gt;
+&lt;p&gt;在 taglist 窗口，我们可以使用下面的一些快捷键：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;=&lt;/code&gt; 折叠所有 tag&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-&lt;/code&gt; 折叠单个 tag&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;+&lt;/code&gt; 打开一个折叠&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;x&lt;/code&gt; taglist 窗口放大/缩小，方便查看 tag&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;u&lt;/code&gt; 更新 taglist&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;sapce&lt;/code&gt; 显示光标处 tag 的原型定义&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;配合另外一个窗口管理插件 winmanager，我们可以将我们的 Vim 打造成一个伪 IDE :D&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://blog.csdn.net/alexdboy/article/details/3871707"&gt;ctags的使用及相关参数介绍&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/"&gt;Exuberant Ctags中文手册&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://easwy.com/blog/archives/advanced-vim-skills-use-ctags-tag-file/"&gt;vi/vim使用进阶: 使用标签(tag)文件&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://cscope.sourceforge.net/"&gt;cscope 官网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Cscope"&gt;cscope wiki&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.csdn.net/dengxiayehu/article/details/6330200"&gt;Cscope的使用（领略Vim + Cscope的强大魅力）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;[Taglist 官网][taglist]&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://easwy.com/blog/archives/advanced-vim-skills-taglist-plugin/"&gt;vi/vim使用进阶: 使用taglist插件&lt;/a&gt;&lt;/p&gt;</summary><category term="vim"></category><category term="ctags"></category><category term="cscope"></category><category term="taglist"></category></entry><entry><title>基于 Doxygen 的 C++ 注释风格</title><link href="http://guqian110.github.io/pages/2015/01/13/doxygen_cpp_comment_style.html" rel="alternate"></link><updated>2015-01-13T18:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-13:pages/2015/01/13/doxygen_cpp_comment_style.html</id><summary type="html">&lt;p&gt;本文内容参考自网上博客内容&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.csdn.net/czyt1988/article/details/8901191"&gt;C++标准注释原则 - 基于doxygen的C++注释&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.sina.com.cn/s/blog_6294abe701012pee.html"&gt;Doxygen C++注释规范及生成帮助文档配置步骤&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://ticktick.blog.51cto.com/823160/188674"&gt;Doxygen详细介绍（三）（Doxygen注释风格）&lt;/a&gt;&lt;/p&gt;
@@ -1561,12 +1911,12 @@ Do you want to continue? [Y/n/?] &lt;/p&gt;
 &lt;/ul&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;很多编辑器都有一个功能是以前打开过的文档会有记忆，再次打开时会直接跳转到上次编辑的地方，比如  &lt;a href="http://www.sublimetext.com/2"&gt;&lt;code&gt;Sublime Text 2&lt;/code&gt;&lt;/a&gt;，强大的 Vim 当然也有这个功能，&lt;strong&gt;我们的目标就是让 VIm 和其他 IDE 一样，可以记住上次的编辑状态 。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;很多编辑器都有一个功能是以前打开过的文档会有记忆，再次打开时会直接跳转到上次编辑的地方，比如  &lt;a href="http://www.sublimetext.com/2"&gt;&lt;code&gt;Sublime Text 2&lt;/code&gt;&lt;/a&gt;，强大的 Vim 当然也有这个功能，&lt;strong&gt;我们的目标就是让 Vim 和其他 IDE 一样，可以记住上次的编辑状态 。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Vim 要实现这个功能，涉及到两个地方的配置：&lt;code&gt;session&lt;/code&gt; &amp;amp; &lt;code&gt;viminfo&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Session&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;h3&gt;查看 session 介绍&lt;/h3&gt;
+&lt;h3&gt;Intro&lt;/h3&gt;
 &lt;p&gt;在 Vim 中输入&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;session&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -1582,7 +1932,7 @@ Do you want to continue? [Y/n/?] &lt;/p&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;就可以看到关于 session 的详细介绍 。&lt;/p&gt;
-&lt;h3&gt;配置 session&lt;/h3&gt;
+&lt;h3&gt;Config&lt;/h3&gt;
 &lt;p&gt;Session 保存的信息由 &lt;code&gt;sessionoptions&lt;/code&gt; 确定，详细用法可以查看 help&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;sessionoption&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -1607,7 +1957,7 @@ Do you want to continue? [Y/n/?] &lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
-&lt;h3&gt;保存 session 文件&lt;/h3&gt;
+&lt;h3&gt;Save&lt;/h3&gt;
 &lt;p&gt;详细的语法可以在 help 中查看&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;mksession&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -1627,7 +1977,7 @@ Do you want to continue? [Y/n/?] &lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
-&lt;h3&gt;载入 session 文件&lt;/h3&gt;
+&lt;h3&gt;Load&lt;/h3&gt;
 &lt;p&gt;然后退出 Vim，在别的目录下打开，干点别的事，这时候我们想起刚才的工程里面有个小 bug，想恢复过去，这时候就是只需要使用 &lt;code&gt;source&lt;/code&gt; 命令即可 。&lt;/p&gt;
 &lt;p&gt;使用 &lt;code&gt;source&lt;/code&gt; 命令&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="n"&gt;PATHto&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;
@@ -1649,7 +1999,7 @@ enter Vim and directly start working in your desired setup.&lt;/li&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Viminfo&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;h3&gt;查看 viminfo 介绍&lt;/h3&gt;
+&lt;h3&gt;Intro&lt;/h3&gt;
 &lt;p&gt;在 Vim 中输入&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;viminfo&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -1676,7 +2026,7 @@ enter Vim and directly start working in your desired setup.&lt;/li&gt;
 &lt;li&gt;The buffer list 缓冲区列表&lt;/li&gt;
 &lt;li&gt;Global variables 全局变量&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;保存 viminfo 文件&lt;/h3&gt;
+&lt;h3&gt;Save&lt;/h3&gt;
 &lt;p&gt;其实 Vim 每次退出时都会在 &lt;code&gt;～/&lt;/code&gt; 目录下保存一个 &lt;code&gt;.viminfo&lt;/code&gt; 的文件，但是每次打开关闭一个文件都会覆盖上次的记录，所以我们需要为工程手动保存一个 viminfo 文件，并且保存在工程目录下，防止被覆盖 。&lt;/p&gt;
 &lt;p&gt;保存命令 &lt;code&gt;:wviminfo&lt;/code&gt; 的帮助&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;wviminfo&lt;/span&gt;
@@ -2713,9 +3063,9 @@ enter Vim and directly start working in your desired setup.&lt;/li&gt;
 &lt;p&gt;&lt;a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html"&gt;数字签名是什么？&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html"&gt;What is a Digital Signature?&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html"&gt;SSH原理与运用（一）：远程登录&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.youdzone.com/signature.html"&gt;SSH原理与运用（二）：远程操作与端口转发&lt;/a&gt;&lt;/p&gt;</summary><category term="Linux"></category><category term="SSH"></category></entry><entry><title>学习 Vim 存活</title><link href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html" rel="alternate"></link><updated>2014-03-25T21:23:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-03-25:pages/2014/03/25/learning_vim_survival.html</id><summary type="html">&lt;p&gt;这个系列的博客是我学习 Vim 过程中的记录和总结，内容基本上来自网络上前辈们的博客，还有部分内容是我自己学习的心得。真心感谢前辈们的分享，我会尽量在后面的文章中标明内容出处。比如我学习 Vim 的路线就是按照这个博客&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.youdzone.com/signature.html"&gt;SSH原理与运用（二）：远程操作与端口转发&lt;/a&gt;&lt;/p&gt;</summary><category term="Linux"></category><category term="SSH"></category></entry><entry><title>学习 Vim 存活</title><link href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html" rel="alternate"></link><updated>2014-03-25T21:23:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-03-25:pages/2014/03/25/learning_vim_survival.html</id><summary type="html">&lt;p&gt;这个系列的博客是我学习 Vim 过程中的记录和总结，内容基本上来自网络上前辈们的博客，还有部分内容是我自己学习的心得。真心感谢前辈们的分享，我会尽量在后面的文章中标明内容出处，比如我学习 Vim 的路线就是按照这个博客&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://easwy.com/blog/archives/advanced-vim-skills-catalog/"&gt;vi/vim使用进阶: 目录&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;来学习的，其次希望我的学习历程可以帮助到和我一样的菜鸟，能更好地使用这款神器～&lt;/p&gt;
+&lt;p&gt;来学习的。希望我的学习历程可以帮助到和我一样的菜鸟，能更好地使用这款神器～&lt;/p&gt;
 &lt;p&gt;第一篇：入门/存活 Survival&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;br&gt;

@@ -128,12 +128,12 @@
 </ul>
 </blockquote>
 <p><br></p>
-<p>很多编辑器都有一个功能是以前打开过的文档会有记忆，再次打开时会直接跳转到上次编辑的地方，比如  <a href="http://www.sublimetext.com/2"><code>Sublime Text 2</code></a>，强大的 Vim 当然也有这个功能，<strong>我们的目标就是让 VIm 和其他 IDE 一样，可以记住上次的编辑状态 。</strong></p>
+<p>很多编辑器都有一个功能是以前打开过的文档会有记忆，再次打开时会直接跳转到上次编辑的地方，比如  <a href="http://www.sublimetext.com/2"><code>Sublime Text 2</code></a>，强大的 Vim 当然也有这个功能，<strong>我们的目标就是让 Vim 和其他 IDE 一样，可以记住上次的编辑状态 。</strong></p>
 <p>Vim 要实现这个功能，涉及到两个地方的配置：<code>session</code> &amp; <code>viminfo</code> 。</p>
 <p><br></p>
 <h2>Session</h2>
 <hr />
-<h3>查看 session 介绍</h3>
+<h3>Intro</h3>
 <p>在 Vim 中输入</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">session</span>
 </pre></div>
@@ -149,7 +149,7 @@
 </td></tr></table>
 
 <p>就可以看到关于 session 的详细介绍 。</p>
-<h3>配置 session</h3>
+<h3>Config</h3>
 <p>Session 保存的信息由 <code>sessionoptions</code> 确定，详细用法可以查看 help</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="err">&#39;</span><span class="n">sessionoption</span><span class="err">&#39;</span>
 </pre></div>
@@ -174,7 +174,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>保存 session 文件</h3>
+<h3>Save</h3>
 <p>详细的语法可以在 help 中查看</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">mksession</span>
 </pre></div>
@@ -194,7 +194,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>载入 session 文件</h3>
+<h3>Load</h3>
 <p>然后退出 Vim，在别的目录下打开，干点别的事，这时候我们想起刚才的工程里面有个小 bug，想恢复过去，这时候就是只需要使用 <code>source</code> 命令即可 。</p>
 <p>使用 <code>source</code> 命令</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">source</span> <span class="n">PATHto</span><span class="o">/</span><span class="n">project</span><span class="p">.</span><span class="n">vim</span>
@@ -216,7 +216,7 @@ enter Vim and directly start working in your desired setup.</li>
 <p><br></p>
 <h2>Viminfo</h2>
 <hr />
-<h3>查看 viminfo 介绍</h3>
+<h3>Intro</h3>
 <p>在 Vim 中输入</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">viminfo</span>
 </pre></div>
@@ -243,7 +243,7 @@ enter Vim and directly start working in your desired setup.</li>
 <li>The buffer list 缓冲区列表</li>
 <li>Global variables 全局变量</li>
 </ul>
-<h3>保存 viminfo 文件</h3>
+<h3>Save</h3>
 <p>其实 Vim 每次退出时都会在 <code>～/</code> 目录下保存一个 <code>.viminfo</code> 的文件，但是每次打开关闭一个文件都会覆盖上次的记录，所以我们需要为工程手动保存一个 viminfo 文件，并且保存在工程目录下，防止被覆盖 。</p>
 <p>保存命令 <code>:wviminfo</code> 的帮助</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="o">:</span><span class="n">wviminfo</span>
@@ -298,11 +298,11 @@ enter Vim and directly start working in your desired setup.</li>
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
         <li><a href="http://guqian110.github.io/pages/2015/01/12/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & ModelSim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2015/01/13/doxygen_cpp_comment_style.html">基于 Doxygen 的 C++ 注释风格</a></li>
     </ul>
 </section>
     <hr />
@@ -418,6 +418,16 @@ enter Vim and directly start working in your desired setup.</li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/comment-style.html">
                                 comment style
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/cscope.html">
+                                cscope
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ctags.html">
+                                ctags
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -566,6 +576,11 @@ enter Vim and directly start working in your desired setup.</li>
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/taglist.html">
+                                taglist
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/the-catcher-in-the-rye.html">
                                 The Catcher in The Rye
                             </a>
@@ -582,7 +597,7 @@ enter Vim and directly start working in your desired setup.</li>
                         </li>
                         <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/vim.html">
-                                Vim
+                                vim
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
