@@ -1,5 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-01-25T21:32:00+08:00</updated><entry><title>学习 Vim 之 Ctags/Cscope/Taglist</title><link href="http://guqian110.github.io/pages/2015/01/25/learning_vim_ctags_cscope_taglist.html" rel="alternate"></link><updated>2015-01-25T21:32:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-25:pages/2015/01/25/learning_vim_ctags_cscope_taglist.html</id><summary type="html">&lt;h2&gt;Background&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-02-01T13:46:00+08:00</updated><entry><title>在 Vim 中写 Markdown 文件</title><link href="http://guqian110.github.io/pages/2015/02/01/learning_vim_markdown.html" rel="alternate"></link><updated>2015-02-01T13:46:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-02-01:pages/2015/02/01/learning_vim_markdown.html</id><summary type="html">&lt;p&gt;&lt;code&gt;Vim&lt;/code&gt; 和 &lt;code&gt;Markdown&lt;/code&gt; 就不多罗嗦了，记录一下最近在 Vim 中摸索使用 Markdown 的经历。&lt;/p&gt;
+&lt;h2&gt;Syntax Hightlight&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;Vim 可以通过插件来提供对 Markdown 语法的支持，网上找到很多这类插件：&lt;/p&gt;
+&lt;p&gt;官网上的插件：&lt;a href="http://www.vim.org/scripts/script.php?script_id=2882"&gt;Markdown&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我找到的是下面这个：&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/plasticboy/vim-markdown"&gt;plasticboy/vim-markdown&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Install&lt;/h3&gt;
+&lt;p&gt;使用 Vundle 管理插件，只需要在 &lt;code&gt;.vimrc&lt;/code&gt; 文件中添加：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;godlygeek&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tabular&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;plasticboy&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;markdown&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后打开 Vim，输入命令：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleInstall&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;即可。&lt;/p&gt;
+&lt;h3&gt;File extension&lt;/h3&gt;
+&lt;p&gt;Markdown 文件的后缀名可以是 &lt;code&gt;.markdown&lt;/code&gt;，&lt;code&gt;mkd&lt;/code&gt;，&lt;code&gt;mkdn&lt;/code&gt;，&lt;code&gt;md&lt;/code&gt; 等，但是 plasticboy 的插件只识别 &lt;code&gt;mkd&lt;/code&gt; 和 &lt;code&gt;markdown&lt;/code&gt; 两种：&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://stackoverflow.com/questions/10964681/enabling-markdown-highlighting-in-vim"&gt;Enabling markdown highlighting in Vim&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;因为我们已经按照 .md 格式写了很多文本了，这时候更好选择当然是修改设置，让 vim 可以识别这种类型的文件，而不是修改文件后缀名。所以我们需要在 vimrc 中设置一下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;au&lt;/span&gt; &lt;span class="n"&gt;BufRead&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;BufNewFile&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md&lt;/span&gt; &lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;filetype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;markdown&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样，.md 文件就可以被识别了。&lt;/p&gt;
+&lt;p&gt;经过上面两步，此时再打开 markdown 文件就可以看到语法高亮了，plasticboy/vim-markdown 还支持一些高级的主题：比如支持 LaTeX 数学公式的高亮，ToC 等，从 github 上可以看到相关设置的介绍说明。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Preview&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;一些专门的 Markdown 软件、网页编辑器都是提供实时预览，Vim 虽然不提供预览窗口，但是配合浏览器，我们也可以实现实时预览的功能。当然还需要万能的插件。&lt;/p&gt;
+&lt;p&gt;我使用的是：&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/suan/vim-instant-markdown"&gt;suan/vim-instant-markdown&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Install&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;首先要保证已经安装了 node.js&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;npm&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果没有，安装 npm&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;npm&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装 &lt;code&gt;instant-markdown-d&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;npm&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;instant&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;markdown&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;确保系统安装了 &lt;code&gt;xdg-utils&lt;/code&gt;，否则 apt-get 安装&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 Vundle 管理插件&lt;/p&gt;
+&lt;p&gt;在 .vimrc 中添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;suan&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;instant&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;markdown&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;打开 vim，输入命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleInstall&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Config &amp;amp; Use&lt;/h3&gt;
+&lt;p&gt;如果机器比较老，插件占用的资源过多的话，可以设置&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;instant_markdown_slow&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;来降低资源利用。&lt;/p&gt;
+&lt;p&gt;默认情况下，当我们打开 markdown 文件时，插件会自动打开一个预览的浏览器标签页，如果不想，可以关闭自动打开功能：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;instant_markdown_autostart&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在需要时手动输入命令 &lt;code&gt;:InstantMarkdownPreview&lt;/code&gt; 来预览。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;存在的问题：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Vim 窗口重叠在浏览器窗口之上时，会遮住部分内容；当两个窗口并排时，浏览器窗口无法完全显示全部内容，这在小尺寸屏幕上尤其明显。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;打开的预览网页无法实时跟随内容滚动。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最后放一张截图：&lt;/p&gt;
+&lt;p&gt;&lt;a href="/images/learning-vim-markdown/screenshot.png"&gt;screenshot&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/plasticboy/vim-markdown"&gt;plasticboy/vim-markdown&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://stackoverflow.com/questions/10964681/enabling-markdown-highlighting-in-vim"&gt;Enabling markdown highlighting in Vim&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/suan/vim-instant-markdown"&gt;suan/vim-instant-markdown&lt;/a&gt;&lt;/p&gt;</summary><category term="vim"></category><category term="markdown"></category></entry><entry><title>学习 Vim 之 Ctags/Cscope/Taglist</title><link href="http://guqian110.github.io/pages/2015/01/25/learning_vim_ctags_cscope_taglist.html" rel="alternate"></link><updated>2015-01-25T21:32:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-01-25:pages/2015/01/25/learning_vim_ctags_cscope_taglist.html</id><summary type="html">&lt;h2&gt;Background&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;tags 文件是一种非常有用的文件，本文的内容都是基于 &lt;code&gt;tag&lt;/code&gt; 的，所以首先得了解什么是 tag？&lt;/p&gt;
 &lt;p&gt;Vim Manual 里面的简单介绍就足够我们进行下面的内容了。查看 Manual：&lt;/p&gt;
@@ -2957,7 +3060,7 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;h2&gt;Reference&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://snownow.cn/?p=1838"&gt;GTD | snow&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://picasaweb.google.com/gudaost/MindMapper#5073109143800914274"&gt;MindMapper&lt;/a&gt;&lt;/p&gt;</summary><category term="GTD"></category><category term="review"></category></entry><entry><title>时钟分频器</title><link href="http://guqian110.github.io/pages/2014/10/13/clock_dividers.html" rel="alternate"></link><updated>2014-10-13T22:26:00+08:00</updated><author><name>Chien Gu</name></author><id>tag:guqian110.github.io,2014-10-13:pages/2014/10/13/clock_dividers.html</id><summary type="html">&lt;p&gt;在 &lt;a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html"&gt;时钟设计&lt;/a&gt; 中提到过：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Guideline：&lt;/strong&gt;尽量避免使用分频时钟&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Guideline：&lt;/strong&gt; 尽量避免使用分频时钟&lt;/p&gt;
 &lt;p&gt;如果要进行分频，可以使用 PLL/DLL 来实现，但是对于时钟要求不高的基本设计，通过语言进行时钟的分频相移仍然非常流行，首先这种方法可以节省芯片内部的锁相环资源，再者，消耗不多的逻辑单元就可以达到对时钟操作的目的。另一方面，通过语言设计进行时钟分频，可以看出设计者对设计语言的理解程度。&lt;/p&gt;
 &lt;p&gt;如果一定要使用分频时钟：&lt;/p&gt;
 &lt;ol&gt;
