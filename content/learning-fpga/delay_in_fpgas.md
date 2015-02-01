@@ -156,6 +156,165 @@ chains can cause various design problems, including an increase in a design’s 
 
 <br>
 
+====================== Update 01/31/2015 ========================
+
+## Simulation
+* * *
+
+我们知道，仿真器使用 “ 事件” (`event`) 来模拟实际的电路行为，但是毕竟软件和硬件还是不同的，而 Verilog 语言又是很灵活的，如果不加注意，很可能不能对电路进行正确的建模。Clifford E. Cummings 大神写了一篇 paper 介绍了 Verilog HDL 中应该如何正确使用延时，才能保证建模的正确性：
+
+[Correct Methods For Adding Delays To Verilog Behavioral Models][paper]
+
+下面我的笔记，摘录一部分内容和结论：
+
+要讨论正确的延时的代码风格，首先要了解仿真器在对延时进行建模时，通常使用的两种不同类型的 Delay 模型：
+
+1. `Inertial delay` 模型 
+
+惯性时延，专门描述一些特殊信号传播到输出端口所耗费的时延，这部分信号特殊在于：输入信号必须保持稳定一段时间（等于或大于传播时延）。如果输入信号的变化时间间隔小于过程赋值延时 / 连续赋值延时 / 门延时（也就是说在计算出一个结果并且还没有来得及输出，输入信号又发生了变化），那么前一时刻值的旧事件会被新值的事件代替，重新触发计算，并输出。
+
+2. `Transport delay` 模型
+
+传播时延，用来描述当任何一个输入信号一旦发生变化后，所有信号到输出的延时。所有的输出变化值会按照顺序排队输出。
+
+*有了上面两个延时的概念之后，我们就可以分类讨论下面三种情况下应该如何添加延时了。*
+
+### Blocking assignment
+
+在阻塞赋值中，通常添加延时的方法有两种：
+
+1. left-hand-side
+
+        #!verilog
+        #5 y = ~a;
+
+2. right-hand-side
+
+        #!verilog
+        y = #5 ~a;
+
+但是这两种方法都有可能存在问题：
+
+以描述一个输出延迟为 12ns 的加法器，如果我们在左边添加延时，
+
+    #!verilog
+    always @(a or b or ci)
+        #12 {co, sum} = a + b + ci;
+
+在下图时序中可以看到，当 t = 15 时，a 发生变化，触发 always 块，模块计算新的求和结果。但是，在接下来的 t = 15 ~ 24 内，a、b、ci 分别发生了变化，所以当从触发开始，到 12ns 过后该输出结果时，计算结果的值使用的是当前最新的值（可以看到，ci 的变化和输出之间仅仅有 3ns < 12ns），而非触发时刻的值。
+
+![timing1](/images/delay-in-fpgas/timing1.png)
+
+事实上，在任何阻塞赋值的左边添加延时都会存在类似的问题。
+
+> **Modeling Guideline:** do not place delays on the LHS of blocking assignments to model combinational logic. This is a bad coding style.
+> 
+> **Testbench Guideline:** placing delays on the LHS of blocking assignments in a testbench is reasonable since the delay is just being used to time-space sequential input stimuls events.
+
+如果我们在右边添加延时，也会有同样的问题。
+
+    #!verilog
+    always @(a or b or ci)
+        {ci, sum} = #12 a + b + ci;
+
+假设在 t = 15 时刻，a 发生变化，触发 always 块，模块会对当前的值进行采样，并且在 12ns 之后将采样结果输出，而在这 12ns 期间，输入端的任何变化都会被忽略，这意味着错误的旧值会一直保持下去，直到有新的变化重新触发。
+
+> **Modeling Guideline:** do not place delays on the RHS of blocking assignments to model combinational logic. This is a bad coding style.
+>
+> **Testbench Guideline:** do not place delays on the RHS of blocking assignments in a testbench.
+>
+> **General Guideline:** placing a delay on the RHS of any blocking assignment is both confusing and a poor coding style. This Verilog coding practice should be avoided.
+
+### Non-blocking assignment
+
+在非阻塞赋值中，同样有两种方法来添加延时：
+
+1. left-hand-side
+
+        #!verilog
+        #5 y <= ~a;
+
+2. right-hand-side
+
+        #!verilog
+        y <= #5 ~a;
+
+仍然使用上面加法器的例子，如果我们在左边添加延时，会和阻塞赋值存在一样的问题：
+
+    #!verilog
+    always @(a or b or ci)
+        #12 {co, sum} <= a + b + ci;
+
+当 t = 15 时，触发 always 块，但是输出时结果时，使用的是最新时刻的值。
+
+事实上，在任何非阻塞赋值的左边添加延时都会存在类似的问题。
+
+> **Modeling Guideline:** do not place delays on the LHS of nonblocking assignments to model combinational logic. This is a bad coding style.
+> 
+> **Testbench Guideline:** nonblocking assignments are less efficient to simulate than blocking assignments; therefore, in general, placing delays on the LHS of nonblocking assignments for either modeling or testbench generation is discouraged.
+
+在非阻塞赋值的右边添加延时，会准确地描述前面介绍的 `transport delays`：
+
+    #!verilog
+    always @(a or b or ci)
+        {co, sum} <= #12 a + b + ci;
+
+当 t = 15 时刻，a 发生变化触发 always 块，此时会立刻对输入进行采样，然后等待 12ns 之后输出；在将这一时间存放在时间队列之后，always 块会被下一个变化时间重新触发，这意味着输出会随着输入的变化在 12ns 之后变化，如下图所示：
+
+![timing2](/images/delay-in-fpgas/timing2.png)
+
+> **Recommended Application:** Use this coding style to model behavioral delay-line logic.
+>
+> **Modeling Guideline:** place delays on the RHS of nonblocking assignments only when trying to model transport output-prapagation behavior. This coding style will accurately model delay lines and combinational logic with pure `transport delays`; however, this coding style generally causes slower simulations.
+>
+> **Testbench Guideline:** This coding style is ofen used in testbenches when stimulus must be scheduled on future clock edges or after a set delay, while not blocking the assignment of subsequent stimulus events in the same procedural blocks,
+>
+> **Modeling Guideline:** in general, do not place delays on the RHS of nonblocking assignments to model *combinational logic*. This coding style can be confusing and is not very simulation efficient. It is a common and sometimes useful practice to palce delays n the RHS of nonblocking assignments to model clock-to-output behavior on *sequential logic*.
+>
+> **Testbench Guideline:** there are some multi-clock design verification suites that benefit from using multiple nonblocking assignments with RHS delays; however, this coding style can be confusing, therefore placing delays on the RHS of nonblocking assignments in testbenches is not generally recommended.
+
+### Continuous assignment
+
+连续赋值语句中，只能在左侧添加延时，在右边添加延时是非法的：
+
+    #!verilog
+    assign #5 y = ~a;
+
+在连续赋值语句的左边添加延时，会准确描述惯性延时（`inertial delay`），一般推荐使用这种方式。
+
+以上面的加法器为例：
+
+    #!verilog
+    assign #12 {co, sum} = a + b + ci;
+
+如下图，在 t = 15 时刻，a 发生变化触发 assign 语句，应该在 t = 27 时刻输出结果，但是在 t = 17, 19, 21 时刻，a，b 分别发生了变化，这会导致有 3 个新的值，最终会只输出最后一个值（在 t = 21 + 12 = 33 时刻）。
+
+![timing3](/images/delay-in-fpgas/timing3.png)
+
+因为连续赋值语句不会排队输出这个概念，它只会跟踪输出结果，所以，连续赋值语句中的延时是对惯性延时（`inertial delay`）的建模。
+
+混合方式：无延时的 always 块 + 连续赋值语句
+
+    #!verilog
+    always @(a or b or ci)
+        tmp = a + b + c;
+
+    assign #12 {co, sum} = tmp;
+
+仍然会准确描述组合逻辑中的 inertial delay。在每个输入变化时，tmp 的值都会改变，在 tmp 改变的 12ns 之后，连续赋值的输出发生变化。tmp 一旦发生变化，assign 会重新赋值，重新延时，所以这种方式会准确描述组合逻辑的 inertial delay。
+
+> **Modeling Guide:** Use continuous assignments with delays to model simple combinational logic. This coding style will accurately model combinational logic with inertial delays.
+> 
+> **Modeling Guide:** Use always blocks with no delays to model complex combinational logic that are more easily rendered sing Verilog behavroral constructs such as "case-casez-casex", "if-else", etc. The outputs from the no-delay always blocks can be driven into continuous assignments to apply behavioral delays to the models. This coding style will accurately model complex combinational logic with inertial delays.
+>
+> **Testbench Guideline:** Continuous assignments can be used anywhere in a testbench to drive stimulus values onto input port and bi-directional port and bi-directional ports of instantiated models.
+
+### Conclusions
+
+always 块中的任何延时都无法准确对真实硬件的行为进行准确建模，应该避免这种延时建模。有一个例外：在非阻塞复制的右边添加延时，来描述 transport delay，但是这种方式是以仿真性能的下降为代价的。
+
+在 连续赋值语句 / 无延时的always + 连续赋值语句 中添加延时，这两种方式都会对 inertial delays 建模，推荐使用这种方式来对组合逻辑建模。
+
 ## Reference
 
 [Digital Design (Verilog): An Embedded Systems Approach Using Verilog][book1]
@@ -167,3 +326,5 @@ chains can cause various design problems, including an increase in a design’s 
 [Xilinx FPGA高级设计及应用][book4]
 
 [The Art of Hardware Architecture: Design Methods and Techniques for Digital Circuits][book3]
+
+[paper]:
