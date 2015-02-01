@@ -54,7 +54,7 @@ Markdown 文件的后缀名可以是 `.markdown`，`mkd`，`mkdn`，`md` 等，�
 ## Preview
 * * *
 
-一些专门的 Markdown 软件、网页编辑器都是提供实时预览，Vim 虽然不提供预览窗口，但是配合浏览器，我们也可以实现实时预览的功能。当然还需要万能的插件。
+一些专门的 Markdown 软件、网页编辑器都是提供实时预览，Vim 虽然不提供预览窗口，但是配合浏览器，我们也可以实现实时预览的功能，当然还是依靠万能的插件。
 
 我使用的是：
 
@@ -108,7 +108,7 @@ Markdown 文件的后缀名可以是 `.markdown`，`mkd`，`mkdn`，`md` 等，�
 
 最后放一张截图：
 
-[screenshot](/images/learning-vim-markdown/screenshot.png)
+![screenshot](/images/learning-vim-markdown/screenshot.png)
 
 [sv]: https://github.com/suan/vim-instant-markdown
 
