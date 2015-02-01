@@ -2128,17 +2128,19 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;h2&gt;Simulation&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;我们知道，仿真器使用 “ 事件” (&lt;code&gt;event&lt;/code&gt;) 来模拟实际的电路行为，但是毕竟软件和硬件还是不同的，而 Verilog 语言又是很灵活的，如果不加注意，很可能不能对电路进行正确的建模。Clifford E. Cummings 大神写了一篇 paper 介绍了 Verilog HDL 中应该如何正确使用延时，才能保证建模的正确性：&lt;/p&gt;
-&lt;p&gt;&lt;a href=""&gt;Correct Methods For Adding Delays To Verilog Behavioral Models&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.sunburst-design.com/papers/CummingsHDLCON1999_BehavioralDelays_Rev1_1.pdf"&gt;Correct Methods For Adding Delays To Verilog Behavioral Models&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;下面我的笔记，摘录一部分内容和结论：&lt;/p&gt;
 &lt;p&gt;要讨论正确的延时的代码风格，首先要了解仿真器在对延时进行建模时，通常使用的两种不同类型的 Delay 模型：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;code&gt;Inertial delay&lt;/code&gt; 模型 &lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;惯性时延，专门描述一些特殊信号传播到输出端口所耗费的时延，这部分信号特殊在于：输入信号必须保持稳定一段时间（等于或大于传播时延）。如果输入信号的变化时间间隔小于过程赋值延时 / 连续赋值延时 / 门延时（也就是说在计算出一个结果并且还没有来得及输出，输入信号又发生了变化），那么前一时刻值的旧事件会被新值的事件代替，重新触发计算，并输出。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;Transport delay&lt;/code&gt; 模型&lt;/li&gt;
-&lt;/ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Inertial delay&lt;/code&gt; 模型 
+    惯性时延，专门描述一些特殊信号传播到输出端口所耗费的时延，这部分信号特殊在于：输入信号必须保持稳定一段时间（等于或大于传播时延）。如果输入信号的变化时间间隔小于过程赋值延时 / 连续赋值延时 / 门延时（也就是说在计算出一个结果并且还没有来得及输出，输入信号又发生了变化），那么前一时刻值的旧事件会被新值的事件代替，重新触发计算，并输出。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Transport delay&lt;/code&gt; 模型&lt;/p&gt;
 &lt;p&gt;传播时延，用来描述当任何一个输入信号一旦发生变化后，所有信号到输出的延时。所有的输出变化值会按照顺序排队输出。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 &lt;p&gt;&lt;em&gt;有了上面两个延时的概念之后，我们就可以分类讨论下面三种情况下应该如何添加延时了。&lt;/em&gt;&lt;/p&gt;
 &lt;h3&gt;Blocking assignment&lt;/h3&gt;
 &lt;p&gt;在阻塞赋值中，通常添加延时的方法有两种：&lt;/p&gt;
@@ -2173,7 +2175,7 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;p&gt;&lt;strong&gt;Modeling Guideline:&lt;/strong&gt; do not place delays on the LHS of blocking assignments to model combinational logic. This is a bad coding style.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Testbench Guideline:&lt;/strong&gt; placing delays on the LHS of blocking assignments in a testbench is reasonable since the delay is just being used to time-space sequential input stimuls events.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;如果我们在右边添加延时，也会有同样的问题。&lt;/p&gt;
+&lt;p&gt;如果我们在右边添加延时，同样也会有问题。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="k"&gt;or&lt;/span&gt; &lt;span class="n"&gt;ci&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;ci&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="mh"&gt;12&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;ci&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;

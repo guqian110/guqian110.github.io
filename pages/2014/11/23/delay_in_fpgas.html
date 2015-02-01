@@ -258,17 +258,19 @@ chains can cause various design problems, including an increase in a design’s 
 <h2>Simulation</h2>
 <hr />
 <p>我们知道，仿真器使用 “ 事件” (<code>event</code>) 来模拟实际的电路行为，但是毕竟软件和硬件还是不同的，而 Verilog 语言又是很灵活的，如果不加注意，很可能不能对电路进行正确的建模。Clifford E. Cummings 大神写了一篇 paper 介绍了 Verilog HDL 中应该如何正确使用延时，才能保证建模的正确性：</p>
-<p><a href="">Correct Methods For Adding Delays To Verilog Behavioral Models</a></p>
+<p><a href="http://www.sunburst-design.com/papers/CummingsHDLCON1999_BehavioralDelays_Rev1_1.pdf">Correct Methods For Adding Delays To Verilog Behavioral Models</a></p>
 <p>下面我的笔记，摘录一部分内容和结论：</p>
 <p>要讨论正确的延时的代码风格，首先要了解仿真器在对延时进行建模时，通常使用的两种不同类型的 Delay 模型：</p>
 <ol>
-<li><code>Inertial delay</code> 模型 </li>
-</ol>
-<p>惯性时延，专门描述一些特殊信号传播到输出端口所耗费的时延，这部分信号特殊在于：输入信号必须保持稳定一段时间（等于或大于传播时延）。如果输入信号的变化时间间隔小于过程赋值延时 / 连续赋值延时 / 门延时（也就是说在计算出一个结果并且还没有来得及输出，输入信号又发生了变化），那么前一时刻值的旧事件会被新值的事件代替，重新触发计算，并输出。</p>
-<ol>
-<li><code>Transport delay</code> 模型</li>
-</ol>
+<li>
+<p><code>Inertial delay</code> 模型 
+    惯性时延，专门描述一些特殊信号传播到输出端口所耗费的时延，这部分信号特殊在于：输入信号必须保持稳定一段时间（等于或大于传播时延）。如果输入信号的变化时间间隔小于过程赋值延时 / 连续赋值延时 / 门延时（也就是说在计算出一个结果并且还没有来得及输出，输入信号又发生了变化），那么前一时刻值的旧事件会被新值的事件代替，重新触发计算，并输出。</p>
+</li>
+<li>
+<p><code>Transport delay</code> 模型</p>
 <p>传播时延，用来描述当任何一个输入信号一旦发生变化后，所有信号到输出的延时。所有的输出变化值会按照顺序排队输出。</p>
+</li>
+</ol>
 <p><em>有了上面两个延时的概念之后，我们就可以分类讨论下面三种情况下应该如何添加延时了。</em></p>
 <h3>Blocking assignment</h3>
 <p>在阻塞赋值中，通常添加延时的方法有两种：</p>
@@ -303,7 +305,7 @@ chains can cause various design problems, including an increase in a design’s 
 <p><strong>Modeling Guideline:</strong> do not place delays on the LHS of blocking assignments to model combinational logic. This is a bad coding style.</p>
 <p><strong>Testbench Guideline:</strong> placing delays on the LHS of blocking assignments in a testbench is reasonable since the delay is just being used to time-space sequential input stimuls events.</p>
 </blockquote>
-<p>如果我们在右边添加延时，也会有同样的问题。</p>
+<p>如果我们在右边添加延时，同样也会有问题。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">ci</span><span class="p">)</span>
     <span class="p">{</span><span class="n">ci</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="p">#</span><span class="mh">12</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
@@ -410,10 +412,10 @@ chains can cause various design problems, including an increase in a design’s 
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/04/04/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/08/pulse_edge_detection.html">脉冲边沿检测</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></li>
         <li><a href="http://guqian110.github.io/pages/2015/01/20/drawing_fsm_state_diagram_using_graphviz.html">利用 Graphviz 画 FSM 状态图</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/07/learning_fpga_how_to.html">(转载) 如何学习 FPGA</a></li>
     </ul>
 </section>
     <hr />
