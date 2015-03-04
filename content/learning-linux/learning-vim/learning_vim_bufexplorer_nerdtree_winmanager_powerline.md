@@ -95,6 +95,45 @@ NERDTree 是一款可以提供树形目录的 vim 插件，使用它我们可以
 
 <br>
 
+## Powerline
+* * *
+
+状态栏也是一个非常重要的窗口，可以为我们提供一些文档的基本信息，我们可以自己 DIY，在 .vimrc 文件中添加相关的设置
+
+    set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+
+也可以使用 [Powerline][powerline] 插件，一款可以提供非常漂亮的状态栏的插件。它会覆盖掉 .vimrc 中对状态的配置，删除插件后配置信息可以重新起作用。
+
+### Install
+
+使用 Vundle 安装：
+
+1. 在 .vimrc 中添加
+
+        Bundle 'Lokaltog/vim-powerline'
+
+2. 打开 vim，输入
+
+        :BundleInstall
+
+### Config
+
+为了保证状态栏始终显示，在 .vimrc 中添加
+
+    set laststatus=2
+
+设置之后，应该就可以看到漂亮的状态栏了。
+
+查看 help：
+
+    :help powerline
+
+我们还可以自定义一些选项，比如颜色主题等。
+
+[powerline]: https://github.com/Lokaltog/vim-powerline
+
+<br>
+
 ## WinManager
 * * *
 
@@ -135,50 +174,12 @@ NERDTree 是一款可以提供树形目录的 vim 插件，使用它我们可以
 这时候我们按下组合键 Ctrl-m 即可切换是否显示 winmanager 窗口布局。
 
 [winmanager]: http://www.vim.org/scripts/script.php?script_id=95
-<br>
-
-## Powerline
-* * *
-
-状态栏也是一个非常重要的窗口，可以为我们提供一些文档的基本信息，我们可以自己 DIY，在 .vimrc 文件中添加相关的设置
-
-    set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
-
-也可以使用 [Powerline][powerline] 插件，一款可以提供非常漂亮的状态栏的插件。它会覆盖掉 .vimrc 中对状态的配置，删除插件后配置信息可以重新起作用。
-
-### Install
-
-使用 Vundle 安装：
-
-1. 在 .vimrc 中添加
-
-        Bundle 'Lokaltog/vim-powerline'
-
-2. 打开 vim，输入
-
-        :BundleInstall
-
-### Config
-
-为了保证状态栏始终显示，在 .vimrc 中添加
-
-    set laststatus=2
-
-设置之后，应该就可以看到漂亮的状态栏了。
-
-查看 help：
-
-    :help powerline
-
-我们还可以自定义一些选项，比如颜色主题等。
-
-[powerline]: https://github.com/Lokaltog/vim-powerline
 
 <br>
 
 最后附上效果图一张：
 
-[image](/images/learning-vim-bufexplorer-nerdtree-winmanager-powerline/screenshot.png)
+![image](/images/learning-vim-bufexplorer-nerdtree-winmanager-powerline/screenshot.png)
 
 <br>
 

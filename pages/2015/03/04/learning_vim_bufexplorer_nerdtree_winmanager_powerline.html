@@ -214,6 +214,46 @@
 </li>
 </ul>
 <p><br></p>
+<h2>Powerline</h2>
+<hr />
+<p>状态栏也是一个非常重要的窗口，可以为我们提供一些文档的基本信息，我们可以自己 DIY，在 .vimrc 文件中添加相关的设置</p>
+<div class="highlight"><pre><span class="n">set</span> <span class="n">statusline</span><span class="o">=%</span><span class="n">F</span><span class="o">%</span><span class="n">m</span><span class="o">%</span><span class="n">r</span><span class="o">%</span><span class="n">h</span><span class="o">%</span><span class="n">w</span><span class="err">\</span> <span class="p">[</span><span class="n">FORMAT</span><span class="o">=%</span><span class="p">{</span><span class="o">&amp;</span><span class="n">ff</span><span class="p">}]</span><span class="err">\</span> <span class="p">[</span><span class="n">TYPE</span><span class="o">=%</span><span class="n">Y</span><span class="p">]</span><span class="err">\</span> <span class="p">[</span><span class="n">POS</span><span class="o">=%</span><span class="n">l</span><span class="p">,</span><span class="o">%</span><span class="n">v</span><span class="p">][</span><span class="o">%</span><span class="n">p</span><span class="o">%%</span><span class="p">]</span><span class="err">\</span> <span class="o">%</span><span class="p">{</span><span class="n">strftime</span><span class="p">(</span><span class="err">\</span><span class="s">&quot;%d/%m/%y\ -\ %H:%M</span><span class="se">\&quot;</span><span class="s">)}</span>
+</pre></div>
+
+
+<p>也可以使用 <a href="https://github.com/Lokaltog/vim-powerline">Powerline</a> 插件，一款可以提供非常漂亮的状态栏的插件。它会覆盖掉 .vimrc 中对状态的配置，删除插件后配置信息可以重新起作用。</p>
+<h3>Install</h3>
+<p>使用 Vundle 安装：</p>
+<ol>
+<li>
+<p>在 .vimrc 中添加</p>
+<div class="highlight"><pre><span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">Lokaltog</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">powerline</span><span class="err">&#39;</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>打开 vim，输入</p>
+<div class="highlight"><pre><span class="o">:</span><span class="n">BundleInstall</span>
+</pre></div>
+
+
+</li>
+</ol>
+<h3>Config</h3>
+<p>为了保证状态栏始终显示，在 .vimrc 中添加</p>
+<div class="highlight"><pre><span class="n">set</span> <span class="n">laststatus</span><span class="o">=</span><span class="mi">2</span>
+</pre></div>
+
+
+<p>设置之后，应该就可以看到漂亮的状态栏了。</p>
+<p>查看 help：</p>
+<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">powerline</span>
+</pre></div>
+
+
+<p>我们还可以自定义一些选项，比如颜色主题等。</p>
+<p><br></p>
 <h2>WinManager</h2>
 <hr />
 <p>我们已经安装很多插件，比如 Taglist，BufExlporer、NERDTree 等，这时候我们就需要一个窗口管理插件来将它们组合起来 —— <a href="http://www.vim.org/scripts/script.php?script_id=95">WinManager</a> </p>
@@ -257,48 +297,8 @@ endfunction
 
 <p>这时候我们按下组合键 Ctrl-m 即可切换是否显示 winmanager 窗口布局。</p>
 <p><br></p>
-<h2>Powerline</h2>
-<hr />
-<p>状态栏也是一个非常重要的窗口，可以为我们提供一些文档的基本信息，我们可以自己 DIY，在 .vimrc 文件中添加相关的设置</p>
-<div class="highlight"><pre><span class="n">set</span> <span class="n">statusline</span><span class="o">=%</span><span class="n">F</span><span class="o">%</span><span class="n">m</span><span class="o">%</span><span class="n">r</span><span class="o">%</span><span class="n">h</span><span class="o">%</span><span class="n">w</span><span class="err">\</span> <span class="p">[</span><span class="n">FORMAT</span><span class="o">=%</span><span class="p">{</span><span class="o">&amp;</span><span class="n">ff</span><span class="p">}]</span><span class="err">\</span> <span class="p">[</span><span class="n">TYPE</span><span class="o">=%</span><span class="n">Y</span><span class="p">]</span><span class="err">\</span> <span class="p">[</span><span class="n">POS</span><span class="o">=%</span><span class="n">l</span><span class="p">,</span><span class="o">%</span><span class="n">v</span><span class="p">][</span><span class="o">%</span><span class="n">p</span><span class="o">%%</span><span class="p">]</span><span class="err">\</span> <span class="o">%</span><span class="p">{</span><span class="n">strftime</span><span class="p">(</span><span class="err">\</span><span class="s">&quot;%d/%m/%y\ -\ %H:%M</span><span class="se">\&quot;</span><span class="s">)}</span>
-</pre></div>
-
-
-<p>也可以使用 <a href="https://github.com/Lokaltog/vim-powerline">Powerline</a> 插件，一款可以提供非常漂亮的状态栏的插件。它会覆盖掉 .vimrc 中对状态的配置，删除插件后配置信息可以重新起作用。</p>
-<h3>Install</h3>
-<p>使用 Vundle 安装：</p>
-<ol>
-<li>
-<p>在 .vimrc 中添加</p>
-<div class="highlight"><pre><span class="n">Bundle</span> <span class="err">&#39;</span><span class="n">Lokaltog</span><span class="o">/</span><span class="n">vim</span><span class="o">-</span><span class="n">powerline</span><span class="err">&#39;</span>
-</pre></div>
-
-
-</li>
-<li>
-<p>打开 vim，输入</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">BundleInstall</span>
-</pre></div>
-
-
-</li>
-</ol>
-<h3>Config</h3>
-<p>为了保证状态栏始终显示，在 .vimrc 中添加</p>
-<div class="highlight"><pre><span class="n">set</span> <span class="n">laststatus</span><span class="o">=</span><span class="mi">2</span>
-</pre></div>
-
-
-<p>设置之后，应该就可以看到漂亮的状态栏了。</p>
-<p>查看 help：</p>
-<div class="highlight"><pre><span class="o">:</span><span class="n">help</span> <span class="n">powerline</span>
-</pre></div>
-
-
-<p>我们还可以自定义一些选项，比如颜色主题等。</p>
-<p><br></p>
 <p>最后附上效果图一张：</p>
-<p><a href="/images/learning-vim-bufexplorer-nerdtree-winmanager-powerline/screenshot.png">image</a></p>
+<p><img alt="image" src="/images/learning-vim-bufexplorer-nerdtree-winmanager-powerline/screenshot.png" /></p>
 <p><br></p>
 <h2>Ref</h2>
 <p><a href="http://easwy.com/blog/archives/advanced-vim-skills-netrw-bufexplorer-winmanager-plugin/">vi/vim使用进阶: 文件浏览和缓冲区浏览</a></p>
@@ -309,11 +309,11 @@ endfunction
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
-        <li><a href="http://guqian110.github.io/pages/2015/01/12/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/03/25/learning_vim_survival.html">学习 Vim 存活</a></li>
         <li><a href="http://guqian110.github.io/pages/2015/02/01/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/04/16/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
+        <li><a href="http://guqian110.github.io/pages/2015/01/25/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
     </ul>
 </section>
     <hr />
