@@ -1,5 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-02-01T13:46:00+08:00</updated><entry><title>在 Vim 中写 Markdown 文件</title><link href="http://guqian110.github.io/pages/2015/02/01/learning_vim_markdown.html" rel="alternate"></link><updated>2015-02-01T13:46:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-02-01:pages/2015/02/01/learning_vim_markdown.html</id><summary type="html">&lt;p&gt;&lt;code&gt;Vim&lt;/code&gt; 和 &lt;code&gt;Markdown&lt;/code&gt; 就不多罗嗦了，记录一下最近在 Vim 中摸索使用 Markdown 的经历。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-03-04T22:40:00+08:00</updated><entry><title>学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件</title><link href="http://guqian110.github.io/pages/2015/03/04/learning_vim_bufexplorer_nerdtree_winmanager_powerline.html" rel="alternate"></link><updated>2015-03-04T22:40:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-03-04:pages/2015/03/04/learning_vim_bufexplorer_nerdtree_winmanager_powerline.html</id><summary type="html">&lt;h2&gt;BufExplorer&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;我们可以使用 &lt;code&gt;:ls&lt;/code&gt; 命令可以查看打开的 buffer，然后在不同的 buffer 之间切换：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;bn&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中 &lt;code&gt;n&lt;/code&gt; 是 buffer 的标号。&lt;/p&gt;
+&lt;p&gt;这种内置的方法效率比较低，尤其是当我们打开很多个 Buffer 之后，问题更加明显。所以就有了各种 buf 类的插件，最有名的就是：&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.vim.org/scripts/script.php?script_id=42"&gt;BufExplorer&lt;/a&gt; 和 &lt;a href="http://www.vim.org/scripts/script.php?script_id=159"&gt;MiniBufferExplorer&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;不同的人使用习惯不同，在 stackoverflow 上有专门讨论两者的优劣的问题：&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://stackoverflow.com/questions/1649187/vim-minibufexpl-versus-bufexplorer-plugins"&gt;ViM: minibufexpl versus bufexplorer plugins&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我个人觉得 BufExplorer 更好一些，主要原因在于 Mini 在打开很多 buffer时（&amp;gt;8个），切换 buffer 效率很低，而且 Mini 会占用几行宝贵的屏幕资源。&lt;/p&gt;
+&lt;p&gt;下面就主要说 BufExlplorer。&lt;/p&gt;
+&lt;h3&gt;Install&lt;/h3&gt;
+&lt;p&gt;使用 Vundle 安装：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在 .vimrc 中添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;bufexplorer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;zip&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;打开 vim，输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleInstall&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Config&lt;/h3&gt;
+&lt;p&gt;查看 help 文档，自定义配置，我的简单配置如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot; Config BufExplorer&lt;/span&gt;
+&lt;span class="s"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;bufExplorerDefaultHelp&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;       &lt;span class="s"&gt;&amp;quot; Do not show default help.&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;bufExplorerShowRelativePath&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;  &lt;span class="s"&gt;&amp;quot; Show relative paths.&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;bufExplorerSortBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;mru&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;        &lt;span class="s"&gt;&amp;quot; Sort by most recently used.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;NERDTree&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;NERDTree 是一款可以提供树形目录的 vim 插件，使用它我们可以在 vim 内以树形结构浏览文件目录。&lt;/p&gt;
+&lt;h3&gt;Install&lt;/h3&gt;
+&lt;p&gt;使用 Vundle 安装：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在 .vimrc 中添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;The&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;NERD&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;tree&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;打开 vim，输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleInstall&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Usage&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;输入 &lt;code&gt;:NERDTree&lt;/code&gt; 打开 NERDTree 窗口&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;常用快捷键：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;o 打开/关闭光标所在目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;t 在新 tab 中打开文件，并跳转到该 tab&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;T 在新 tab 中打开文件，并不跳转到该 tab&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;p 跳转到父节点&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;P 跳转到根节点&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;q 关闭 NERDTree 窗口&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;WinManager&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;我们已经安装很多插件，比如 Taglist，BufExlporer、NERDTree 等，这时候我们就需要一个窗口管理插件来将它们组合起来 —— &lt;a href="http://www.vim.org/scripts/script.php?script_id=95"&gt;WinManager&lt;/a&gt; &lt;/p&gt;
+&lt;h3&gt;Install&lt;/h3&gt;
+&lt;p&gt;使用 Vundle 安装：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在 .vimrc 中添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;winmanager&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;打开 vim，输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleInstall&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Config&lt;/h3&gt;
+&lt;p&gt;查看 help 文档，我们可以进行简单的设置：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot; Config Winmanager&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;let g:winManagerWindowLayout=&amp;quot;&lt;/span&gt;&lt;span class="nx"&gt;NERDTree&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nx"&gt;TagList&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;let g:NERDTree_title=&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;NERDTree&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&amp;quot;
+
+nmap &lt;span class="nt"&gt;&amp;lt;C&lt;/span&gt;&lt;span class="na"&gt;-m&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt; :WMToggle&lt;span class="nt"&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;
+
+function! NERDTree_Start()  
+    exec &amp;#39;NERDTree&amp;#39;  
+endfunction
+
+function! NERDTree_IsValid()  
+    return 1  
+endfunction
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这时候我们按下组合键 Ctrl-m 即可切换是否显示 winmanager 窗口布局。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Powerline&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;状态栏也是一个非常重要的窗口，可以为我们提供一些文档的基本信息，我们可以自己 DIY，在 .vimrc 文件中添加相关的设置&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;statusline&lt;/span&gt;&lt;span class="o"&gt;=%&lt;/span&gt;&lt;span class="n"&gt;F&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;w&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;FORMAT&lt;/span&gt;&lt;span class="o"&gt;=%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;ff&lt;/span&gt;&lt;span class="p"&gt;}]&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;TYPE&lt;/span&gt;&lt;span class="o"&gt;=%&lt;/span&gt;&lt;span class="n"&gt;Y&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;POS&lt;/span&gt;&lt;span class="o"&gt;=%&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;%%&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;strftime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%d/%m/%y\ -\ %H:%M&lt;/span&gt;&lt;span class="se"&gt;\&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;)}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;也可以使用 &lt;a href="https://github.com/Lokaltog/vim-powerline"&gt;Powerline&lt;/a&gt; 插件，一款可以提供非常漂亮的状态栏的插件。它会覆盖掉 .vimrc 中对状态的配置，删除插件后配置信息可以重新起作用。&lt;/p&gt;
+&lt;h3&gt;Install&lt;/h3&gt;
+&lt;p&gt;使用 Vundle 安装：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在 .vimrc 中添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;Lokaltog&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;powerline&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;打开 vim，输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleInstall&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Config&lt;/h3&gt;
+&lt;p&gt;为了保证状态栏始终显示，在 .vimrc 中添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;laststatus&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;设置之后，应该就可以看到漂亮的状态栏了。&lt;/p&gt;
+&lt;p&gt;查看 help：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt; &lt;span class="n"&gt;powerline&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我们还可以自定义一些选项，比如颜色主题等。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;最后附上效果图一张：&lt;/p&gt;
+&lt;p&gt;&lt;a href="/images/learning-vim-bufexplorer-nerdtree-winmanager-powerline/screenshot.png"&gt;image&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://easwy.com/blog/archives/advanced-vim-skills-netrw-bufexplorer-winmanager-plugin/"&gt;vi/vim使用进阶: 文件浏览和缓冲区浏览&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.csdn.net/bokee/article/details/6633193"&gt; 将Vim改造为强大的IDE—Vim集成Ctags/Taglist/Cscope/Winmanager/NERDTree/OmniCppComplete（有图有真相）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.cnblogs.com/chijianqiang/archive/2012/11/06/vim-3.html"&gt;谁说Vim不是IDE？（三）&lt;/a&gt;&lt;/p&gt;</summary><category term="vim"></category><category term="BufExplorer"></category><category term="NERDTree"></category><category term="WinManager"></category><category term="Powerline"></category></entry><entry><title>在 Vim 中写 Markdown 文件</title><link href="http://guqian110.github.io/pages/2015/02/01/learning_vim_markdown.html" rel="alternate"></link><updated>2015-02-01T13:46:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-02-01:pages/2015/02/01/learning_vim_markdown.html</id><summary type="html">&lt;p&gt;&lt;code&gt;Vim&lt;/code&gt; 和 &lt;code&gt;Markdown&lt;/code&gt; 就不多罗嗦了，记录一下最近在 Vim 中摸索使用 Markdown 的经历。&lt;/p&gt;
 &lt;h2&gt;Syntax Hightlight&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;Vim 可以通过插件来提供对 Markdown 语法的支持，网上找到很多这类插件：&lt;/p&gt;
