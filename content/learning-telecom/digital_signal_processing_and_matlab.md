@@ -1,7 +1,7 @@
 Title: 数字信号处理和相关matlab函数总结
 Date: 2014-09-03 23:16
-Category: Com
-Tags: Com, digital procesing, matlab
+Category: Telecom
+Tags: Telecom, digital procesing, matlab
 Slug: digital_signal_processing_and_matlab
 Author: Qian Gu
 Summary: 总结信号处理和matlab相关应用

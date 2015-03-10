@@ -1,6 +1,7 @@
 Title: LTE 咬尾卷积编码器的 Matlab 及 FPGA 实现
 Date: 2015-01-07
-Category: Com
+Category: Telecom
+Tags: Telecom, tail bitting convolution
 Slug: tail_bitting_convolutional_code_implementation_in_matlab_and_fpga
 Author: Qian Gu
 Summary: 总结咬尾卷积编码的 Matlab 及 FPGA 实现方法。
@@ -109,6 +110,37 @@ convenc 函数有几种方式来调用：
 数据的格式是将 3 位并行结果串行输出： d00, d01, d02, d10, d11, d12, ...
 
 <br>
+
+## C Implementation
+* * *
+
+C 的实现很简单:
+
+    void encode_signal(int *coded_bits, int *origin_bits, int origin_bits_len)
+    {
+        int *LSR = (int*)malloc(sizeof(int)*6);
+    
+        // initialize the LSR
+        for (int i = 0; i < 6; ++i)
+        {
+            LSR[i] = origin_bits[origin_bits_len-1-i];
+        }
+    
+        for (int i = 0; i < origin_bits_len; ++i)
+        {
+            coded_bits[i*3]   = origin_bits[i]^LSR[1]^LSR[2]^LSR[4]^LSR[5];
+            coded_bits[i*3+1] = origin_bits[i]^LSR[0]^LSR[1]^LSR[2]^LSR[5];
+            coded_bits[i*3+2] = origin_bits[i]^LSR[0]^LSR[1]^LSR[3]^LSR[5];
+            // shift the regs
+            for (int j = 5; j > 0; --j)
+            {
+                LSR[j] = LSR[j-1];
+            }
+            LSR[0] = origin_bits[i];
+        }
+        
+        free(LSR);
+    }
 
 ## Verlog Implementation
 * * *

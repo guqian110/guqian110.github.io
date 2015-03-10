@@ -18,7 +18,9 @@
             <meta property="og:url" content="http://guqian110.github.io/pages/2015/01/07/tail_bitting_convolutional_code_implementation_in_matlab_and_fpga.html"/>
             <meta property="og:description" content="总结咬尾卷积编码的 Matlab 及 FPGA 实现方法。"/>
             <meta property="article:published_time" content="2015-01-07" />
-            <meta property="article:section" content="Com" />
+            <meta property="article:section" content="Telecom" />
+            <meta property="article:tag" content="Telecom" />
+            <meta property="article:tag" content="tail bitting convolution" />
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -53,9 +55,6 @@
                         <li >
                             <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
                         </li>
-                        <li class="active">
-                            <a href="http://guqian110.github.io/category/com.html">Com</a>
-                        </li>
                         <li >
                             <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
                         </li>
@@ -64,6 +63,9 @@
                         </li>
                         <li >
                             <a href="http://guqian110.github.io/category/misc.html">Misc</a>
+                        </li>
+                        <li class="active">
+                            <a href="http://guqian110.github.io/category/telecom.html">Telecom</a>
                         </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -79,7 +81,7 @@
         <div class="col-sm-9">
             <ol class="breadcrumb">
                 <li><a href="http://guqian110.github.io" title="Geek Bunny's World"><i class="fa fa-home fa-lg"></i></a></li>
-                <li><a href="http://guqian110.github.io/category/com.html" title="Com">Com</a></li>
+                <li><a href="http://guqian110.github.io/category/telecom.html" title="Telecom">Telecom</a></li>
                 <li class="active">LTE 咬尾卷积编码器的 Matlab 及 FPGA 实现</li>
             </ol>
 
@@ -105,6 +107,10 @@
 
 
 
+<span class="label label-default">Tags</span>
+	<a href="http://guqian110.github.io/tag/telecom.html">Telecom</a>
+        /
+	<a href="http://guqian110.github.io/tag/tail-bitting-convolution.html">tail bitting convolution</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
@@ -224,6 +230,37 @@
 
 <p>数据的格式是将 3 位并行结果串行输出： d00, d01, d02, d10, d11, d12, ...</p>
 <p><br></p>
+<h2>C Implementation</h2>
+<hr />
+<p>C 的实现很简单:</p>
+<div class="highlight"><pre><span class="kt">void</span> <span class="nf">encode_signal</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">coded_bits</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">origin_bits</span><span class="p">,</span> <span class="kt">int</span> <span class="n">origin_bits_len</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">LSR</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="mi">6</span><span class="p">);</span>
+
+    <span class="c1">// initialize the LSR</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">LSR</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">origin_bits</span><span class="p">[</span><span class="n">origin_bits_len</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">origin_bits_len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">coded_bits</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="p">]</span>   <span class="o">=</span> <span class="n">origin_bits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+        <span class="n">coded_bits</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">origin_bits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+        <span class="n">coded_bits</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">origin_bits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">^</span><span class="n">LSR</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+        <span class="c1">// shift the regs</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">j</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">LSR</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">LSR</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="n">LSR</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">origin_bits</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="n">free</span><span class="p">(</span><span class="n">LSR</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
 <h2>Verlog Implementation</h2>
 <hr />
 <p>用 verilog 来实现编码器就相对简单直观的多，毕竟只有一组移位寄存器和一些抽头的异或运算。</p>
@@ -245,6 +282,16 @@
 <p><a href="http://book.douban.com/subject/24784764/">无线通信新协议与新算法</a></p>
             </div>
             <!-- /.entry-content -->
+<section class="well" id="related-posts">
+    <h4>Related Posts:</h4>
+    <ul>
+        <li><a href="http://guqian110.github.io/pages/2015/03/10/ifft_and_fft_in_ofdm.html">OFDM 中的 IFFT/FFT 注意事项</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/03/digital_signal_processing_and_matlab.html">数字信号处理和相关matlab函数总结</a></li>
+        <li><a href="http://guqian110.github.io/pages/2015/03/10/summary_of_snr_and_noise.html">信噪比小结</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/03/19/signed_number_representations.html">原码、反码、补码</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/05/13/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
+    </ul>
+</section>
     <hr />
     <section class="comments" id="comments">
         <h2>Comments</h2>
@@ -355,11 +402,6 @@
                                 coding style
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/com.html">
-                                Com
-                            </a>
-                        </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/comment-style.html">
                                 comment style
@@ -405,7 +447,7 @@
                                 DoxygenToolKit
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/fft.html">
                                 fft
                             </a>
@@ -446,6 +488,11 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ifft.html">
+                                ifft
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/intel-galileo.html">
                                 Intel Galileo
                             </a>
@@ -475,9 +522,9 @@
                                 NERDTree
                             </a>
                         </li>
-                        <li class="list-group-item tag-4">
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/ofdm.html">
-                                OFDM
+                                ofdm
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -521,6 +568,11 @@
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/snr.html">
+                                SNR
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ssh.html">
                                 SSH
                             </a>
@@ -543,6 +595,16 @@
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/taglist.html">
                                 taglist
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/tail-bitting-convolution.html">
+                                tail bitting convolution
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-2">
+                            <a href="http://guqian110.github.io/tag/telecom.html">
+                                Telecom
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
