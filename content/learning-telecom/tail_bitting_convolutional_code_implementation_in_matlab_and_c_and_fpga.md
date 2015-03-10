@@ -116,6 +116,7 @@ convenc 函数有几种方式来调用：
 
 C 的实现很简单:
 
+    #!c
     void encode_signal(int *coded_bits, int *origin_bits, int origin_bits_len)
     {
         int *LSR = (int*)malloc(sizeof(int)*6);
