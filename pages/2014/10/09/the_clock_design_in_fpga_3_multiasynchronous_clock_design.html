@@ -501,7 +501,7 @@ enable signal in order to load a data value into the register. If both the load 
 <p>而对应这个问题的解决方法就是使用 gray code。</p>
 <p>--------------end of update---------------------------------</p>
 <p><em>关于跨时钟域 <a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">papaer1</a> 中还有一些其他方面的技巧，可以帮助我们更好的实现设计。</em></p>
-<h3>Desing Partitioning</h3>
+<h3>Design Partitioning</h3>
 <p><strong>Guideline:</strong></p>
 <p>Only allow one clock per module.</p>
 <p><strong>Reason:</strong></p>
@@ -530,11 +530,10 @@ enable signal in order to load a data value into the register. If both the load 
 <p>dedicated clock module</p>
 <p><strong>guideline</strong>: 将全部的 gated clock 时钟放在一个专门的时钟模块中，并将其从功能模块中分离出来</p>
 <p><strong>reason</strong>: </p>
-<div class="highlight"><pre><span class="o">+</span> <span class="err">约束更加容易处理</span>
-<span class="o">+</span> <span class="n">FPGA</span> <span class="err">设计修改起来更容易（比如通过</span> <span class="err">#</span><span class="n">define</span> <span class="err">来选择编译</span> <span class="n">ASIC</span> <span class="err">还是</span> <span class="n">FPGA</span> <span class="err">设计，选择两者各自的实现代码）</span>
-</pre></div>
-
-
+<ul>
+<li>约束更加容易处理</li>
+<li>FPGA 设计修改起来更容易（比如通过 #define 来选择编译 ASIC 还是 FPGA 设计，选择两者各自的实现代码）</li>
+</ul>
 </li>
 <li>
 <p>gating removal</p>
@@ -657,10 +656,10 @@ enable signal in order to load a data value into the register. If both the load 
     <h4>Related Posts:</h4>
     <ul>
         <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/10/13/clock_dividers.html">时钟分频器</a></li>
-        <li><a href="http://guqian110.github.io/pages/2015/01/20/drawing_fsm_state_diagram_using_graphviz.html">利用 Graphviz 画 FSM 状态图</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
+        <li><a href="http://guqian110.github.io/pages/2015/01/20/drawing_fsm_state_diagram_using_graphviz.html">利用 Graphviz 画 FSM 状态图</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/09/02/xilinx_fft_core_notes.html">Xilinx FFT IP core 笔记</a></li>
     </ul>
 </section>
     <hr />

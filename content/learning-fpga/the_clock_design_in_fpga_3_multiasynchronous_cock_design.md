@@ -434,7 +434,7 @@ FIFO 的目的在于解决数据跨时钟域传输的问题，但是在实现FIF
 
 *关于跨时钟域 [papaer1][paper1] 中还有一些其他方面的技巧，可以帮助我们更好的实现设计。*
 
-### Desing Partitioning
+### Design Partitioning
 
 **Guideline:**
 
@@ -487,8 +487,8 @@ A naming convention helps all team members to identify the clock domain for ever
 
     **reason**: 
 
-        + 约束更加容易处理
-        + FPGA 设计修改起来更容易（比如通过 #define 来选择编译 ASIC 还是 FPGA 设计，选择两者各自的实现代码）
+    + 约束更加容易处理
+    + FPGA 设计修改起来更容易（比如通过 #define 来选择编译 ASIC 还是 FPGA 设计，选择两者各自的实现代码）
 
 2. gating removal
 

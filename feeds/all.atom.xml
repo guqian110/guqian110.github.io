@@ -3934,7 +3934,7 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;而对应这个问题的解决方法就是使用 gray code。&lt;/p&gt;
 &lt;p&gt;--------------end of update---------------------------------&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;关于跨时钟域 &lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf"&gt;papaer1&lt;/a&gt; 中还有一些其他方面的技巧，可以帮助我们更好的实现设计。&lt;/em&gt;&lt;/p&gt;
-&lt;h3&gt;Desing Partitioning&lt;/h3&gt;
+&lt;h3&gt;Design Partitioning&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Guideline:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Only allow one clock per module.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Reason:&lt;/strong&gt;&lt;/p&gt;
@@ -3963,11 +3963,10 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;dedicated clock module&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;guideline&lt;/strong&gt;: 将全部的 gated clock 时钟放在一个专门的时钟模块中，并将其从功能模块中分离出来&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;reason&lt;/strong&gt;: &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;约束更加容易处理&lt;/span&gt;
-&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;设计修改起来更容易（比如通过&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;define&lt;/span&gt; &lt;span class="err"&gt;来选择编译&lt;/span&gt; &lt;span class="n"&gt;ASIC&lt;/span&gt; &lt;span class="err"&gt;还是&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;设计，选择两者各自的实现代码）&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;ul&gt;
+&lt;li&gt;约束更加容易处理&lt;/li&gt;
+&lt;li&gt;FPGA 设计修改起来更容易（比如通过 #define 来选择编译 ASIC 还是 FPGA 设计，选择两者各自的实现代码）&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;gating removal&lt;/p&gt;
