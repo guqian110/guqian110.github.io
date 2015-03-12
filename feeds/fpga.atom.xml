@@ -1179,7 +1179,7 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;p&gt;&lt;a href="http://www.eetop.cn/blog/html/11/317611-13680.html"&gt;任意分频的verilog语言实现&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="clock dividers"></category></entry><entry><title>FPGA 时钟设计 3 —— 跨时钟域设计</title><link href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html" rel="alternate"></link><updated>2014-10-09T23:01:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-10-09:pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html</id><summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
 &lt;h2&gt;Problem&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;p&gt;在前面一篇总结 &lt;a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html"&gt;Latch V.S. Flip-flop&lt;/a&gt; 的博文中，已经解释了 flip-flop 的一些参数：建立时间 &lt;code&gt;setup time&lt;/code&gt;、保持时间 &lt;code&gt;hold time&lt;/code&gt;、回复时间 &lt;code&gt;recovery time&lt;/code&gt;、撤销时间 &lt;code&gt;removal time&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;在前面一篇总结 &lt;a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html"&gt;Latch V.S. Flip-flop&lt;/a&gt; 的博文中，已经解释了 flip-flop 的一些参数：建立时间 &lt;code&gt;setup time&lt;/code&gt;、保持时间 &lt;code&gt;hold time&lt;/code&gt;、恢复时间 &lt;code&gt;recovery time&lt;/code&gt;、撤销时间 &lt;code&gt;removal time&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;如果不满足这些参数的要求，则会发生所谓的 亚稳态 &lt;code&gt;Metastability&lt;/code&gt; 的问题。下面是 Altera 官方的一篇关于亚稳态的 white paper，详细介绍了亚稳态的产生原因、它是如何导致设计出现问题、以及描述它的参数 MTBF (Mean Time Between Failures) 如何计算。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.altera.com.hk/literature/wp/wp-01082-quartus-ii-metastability.pdf"&gt;Understanding Metastability in FPGAs&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;我们知道，一般只涉及单时钟域的设计并不多见，尤其是对于一些复杂的应用，FPGA 往往需要和多个时钟域的信号进行通信，而这些时钟之间的关系一般都是频率不同、相位也不同，也就是不同频不同相的多异步时钟域设计 &lt;code&gt;Mulit-Asynchronous Clock Design&lt;/code&gt;。&lt;/p&gt;
@@ -1192,7 +1192,7 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;p&gt;&lt;strong&gt;Illustation 1: &lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img alt="failure" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronization_failure.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Illustation 2: &lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;如果不加处理，亚稳态产生的错误值将会传播到设计的其他部分，到这更加严重的问题&lt;/p&gt;
+&lt;p&gt;如果不加处理，亚稳态产生的错误值将会传播到设计的其他部分，导致更加严重的问题&lt;/p&gt;
 &lt;p&gt;&lt;img alt="propagatetion" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/propagation.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Synchronous Design&lt;/h2&gt;
@@ -1204,19 +1204,20 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;p&gt;&lt;strong&gt;Synchronous Circuits&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;同步电路的核心逻辑是用 时序逻辑 &lt;code&gt;sequential logic&lt;/code&gt; 实现的。电路的主要信号、输出信号是由某个时钟沿驱动 flip-flop 产生的。&lt;em&gt;同步电路可以很好的避免毛刺。&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Synchronous V.S. Asynchronous&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG"&gt;FPGA高手设计实战真经100则&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;从 ASIC 设计的角度来看，大约需要 7 个门来实现一个 D 触发器，而一个门即可实现一个2输入与非门，所以一般来说，在 ASIC 设计中，同步时序电路比异步电路占用更大的面积。但是，由于 FPGA 是定制好的底层单元，对于 Xilinx 器件，一个底层可编程单元 Slice 包含两个触发器（FF）和一个查找表（LUT）。其中触发器用以实现同步电路，查找表用以实现组合电路。FPGA 最终使用率用 Slice 来衡量。所以对于某个选定器件，其可实现的同步电路和异步电路的资源数量和比例是固定的，这点造成了过度使用查找表会浪费触发器资源，反之亦然。因而对于 FPGA，同步时序设计不一定比异步设计多消耗资源。单从节约资源的角度考虑，应该按照芯片配置的资源比例实现设计，但是设计者还要时刻权衡同步设计没有毛刺、信号稳定等优点，&lt;strong&gt;所以对于 FPGA 设计推荐采用同步设计。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;无论是用离散逻辑、可编程逻辑，还是用全定制硅器件实现的任何数字逻辑，为了成功操作，可靠的时钟是非常关键的。&lt;/p&gt;
 &lt;p&gt;...&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;因为，FPGA 同步设计中最好的时钟解决方案是由专用全局时钟输入引脚驱动单个主时钟去控制设计项目中的每一个触发器。系统中各个功能模块使用同一同步复位信号。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;...&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;FPGA 同步设计中，时序电路应尽量采用同步电路，尽可能使用同步器件，尽量减小或不使用门控时钟（为了降低系统功耗以外）。设计中不用西哦他能够时钟经过逻辑运算得到控制信号，避免使用非时钟信号最为触发器的时钟输入。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;FPGA 同步设计中，时序电路应尽量采用同步电路，尽可能使用同步器件，尽量减小或不使用门控时钟（为了降低系统功耗以外）。设计中不用系统主时钟经过逻辑运算得到控制信号，避免使用非时钟信号作为触发器的时钟输入。&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;下面提到的所有方法，就是同步化思想的应用，其核心目的就是将本时钟域外的 &lt;strong&gt;异步信号同步化&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Solution&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;h3&gt;Synchronizer&lt;/h3&gt;
+&lt;h3&gt;Solution 1: Daul Rank Synchronizer&lt;/h3&gt;
 &lt;p&gt;通常使用 &lt;code&gt;MTBF (Mean Time Between Failures)&lt;/code&gt; 来描述 flip-flop 亚稳态指标，MTBF 越大，表示出现故障的间隔越大，表示设计越可靠。&lt;/p&gt;
 &lt;p&gt;以一个典型的 0.25 us 工艺的 ASIC 库中的 flip-flop 的参数计算可以得到 MTBF = 2.01 d，即两天就会出现一次亚稳态。显然这是不能接受的，但是如果将两个 flip-flop 级联在一起，计算结果则变成了 9.57×109 years，显然这个概率基本就可以忽略不计，可以看作是消除了亚稳态。&lt;/p&gt;
 &lt;p&gt;理论上，亚稳态是不可能完全消除的，一般级联多少个 flip-flop，由实际指标要求和设计者的强迫症习惯决定，对于普通的应用来说，2 级 flip-flop 级联已经足够了。&lt;/p&gt;
@@ -1452,7 +1453,7 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;p&gt;&lt;img alt="synchronizer sum" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronizer_sum.png" /&gt;&lt;/p&gt;
 &lt;p&gt;经过 synchronizer 的信号在两个时钟之后变为有效，一般延时为 1～2 新时钟周期，可以粗略估计延时为 2 个时钟周期，设计者需要仔细考虑同步延迟对于跨时钟域的信号时序造成的影响。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输，这时候通常采用其他的方法，比如握手协议和 FIFO 等。&lt;/em&gt;&lt;/p&gt;
-&lt;h3&gt;Handshaking&lt;/h3&gt;
+&lt;h3&gt;Solution 2: Handshaking&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Handshaking allows digital circuits to effectively communicate with each other when the response time of one or both circuits is unpredictable. For example, an arbitrated bus allows more than one circuit to request access to a single bus, such as PCI or AMBA (Advanced Microcontroller Bus Architecture), using arbitration to determine which circuit gains access to the bus. Each circuit signals a request, and the arbitration logic determines which request “wins.” This winning circuit receives an acknowledgment indicating that it has access to the bus. It then discontinues its request and begins the bus transaction.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1505,7 +1506,7 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;em&gt;这些握手协议针对的都是跨时钟域的单一信号，但当几组信号要跨越时钟域时，设计者就需要更加复杂的信号传递方法。&lt;/em&gt;&lt;/p&gt;
-&lt;h3&gt;Datapath Design&lt;/h3&gt;
+&lt;h3&gt;Solution 3: Datapath Design&lt;/h3&gt;
 &lt;p&gt;在进行信号同步时，有一个重要的原则：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;不应该在设计中的多个地方对同一信号进行同步，即禁止单个信号扇出至多个同步器。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;因为synchronizer要花 1~2 个时钟周期，设计者不能确切预测到每个信号何时跨越时钟域，此外，在新时钟域中一组经过同步后的信号其时序是不定的，因为synchronier的延迟可以是 1～2 个时钟周期，这种情况下各个同步信号间形成一种“竞争状况”，这种竞争状况在需要跨域时钟域传输的多组信号间也会发生，例如数据总线、地址总线、控制总线等。因此，&lt;strong&gt;不能对组中的每个信号单独使用synchronizer，也不能对数据/地址总线的每一位单独使用同步器&lt;/strong&gt;，因为在新的时钟域中，要求每个信号同时有效。&lt;/p&gt;
@@ -1542,7 +1543,7 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;&lt;img alt="datapath timing" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/datapath_timing.png" /&gt;&lt;/p&gt;
 &lt;p&gt;注意：&lt;/p&gt;
 &lt;p&gt;如果发送端的数据速率很快/无法控制发送端发送数据的速度，那么就有可能无法满足握手机制中要求数据保持稳定这一要求，这时候这种方法就不再适用，而应该采用其他的方法，比如 FIFO。&lt;/p&gt;
-&lt;h3&gt;Advanced Datapath Design&lt;/h3&gt;
+&lt;h3&gt;Solution 4: Advanced Datapath Design&lt;/h3&gt;
 &lt;p&gt;有时候，数据在跨时钟域时需要“堆积”起来，这时候只使用单个的寄存器就无法完成工作。比如某个传输电路突发式地发送数据，接收电路来不及采样，为了保持数据不丢失，就必须先把数据存储起来；还有一种情况是接收电路的采样速率比发送速度快，但是位宽却不够，仍然需要将没有采样的数据先暂存起来，这时候就需要使用 FIFO。&lt;/p&gt;
 &lt;p&gt;基本上，使用 FIFO 的目的有两个：&lt;/p&gt;
 &lt;ol&gt;
@@ -1556,6 +1557,11 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;FIFO 的实现可以直接使用 IP core，也可以自己写代码实现。&lt;/p&gt;
 &lt;p&gt;如果是自己写代码实现，那么异步信号的问题还是需要我们在实现 FIFO 是仔细考虑的；如果是采用 IP core 的方式，那么可以很大程度地缓解我们的压力，因为事实上我们是把异步信号的问题交给了设计 IP core 的人来处理...这些 IP core 在内部针对异步数据读写的问题作了非常严谨复杂的设计，对外提供了非常简单的接口。采用这种方式虽然轻松，但是相应的地也有缺点：耗费更多的资源。&lt;/p&gt;
 &lt;p&gt;在 &lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf"&gt;Synthesis and Scripting Techniques for Designing Multi-Asynchronous Clock Designs&lt;/a&gt; 和 &lt;a href="http://inst.eecs.berkeley.edu/~cs150/sp10/Collections/Papers/ClockCrossing.pdf"&gt;Crossing the abyss: asynchronous signals in a synchronous world&lt;/a&gt; 两篇 paper 和 &lt;a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960"&gt;The Art&lt;/a&gt; 中都有一些实现 FIFO 使用的相关技术的介绍，比如指针逻辑的处理，内部 gray code 计数器的实现等。这里就偷懒不细说了（以后再补） :P&lt;/p&gt;
+&lt;p&gt;----------------Update March/12/2015------------------------&lt;/p&gt;
+&lt;p&gt;FIFO 的目的在于解决数据跨时钟域传输的问题，但是在实现FIFO本身时，一些内部的握手信号也需要跨时钟域，这时候需要用到之前讨论过的dual rank synchronizer等技术。&lt;/p&gt;
+&lt;p&gt;比如FIFO内部的地址计数器，如果使用dual rank synchronizer来同步，计数器的不同的bit可能会在不同的时钟周期内传递过去，这时接收到的数据就是错误的，对导致致命性的问题。&lt;/p&gt;
+&lt;p&gt;而对应这个问题的解决方法就是使用 gray code。&lt;/p&gt;
+&lt;p&gt;--------------end of update---------------------------------&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;关于跨时钟域 &lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf"&gt;papaer1&lt;/a&gt; 中还有一些其他方面的技巧，可以帮助我们更好的实现设计。&lt;/em&gt;&lt;/p&gt;
 &lt;h3&gt;Desing Partitioning&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Guideline:&lt;/strong&gt;&lt;/p&gt;
@@ -1577,6 +1583,99 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;作者还举例说明了一个这样的例子：1995 年为 In Focus projectors 设计 video ASIC 时，他们就采用了这样的方法，对于 mircroprocessor 的时钟命名为 uClk，对于 video 的时钟则命名为 vClk。对应的时钟域中的信号的名字也添加了对应的前缀，比如udata，uwrite，uadder等。&lt;/p&gt;
 &lt;p&gt;使用了这样的策略后，整个设计团队的攻城狮们都可以很方便地确定某个信号是否为异步信号，如何处理。当时有个攻城狮没有按照这种策略，使用了自己的命名方式，在一次会议之后，大家墙裂建议他修改命名，结果也证明修改之后遇到的问题、出错的概率都小了很多。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;in ASIC&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;虽然 FPGA 可以用来为 ASIC 搭建原型，但是一些 ASIC 中的技术并不适用于 FPGA，比如 gated clock。一般也没有必要在 FPGA 中模拟 ASIC 的低功耗优化。事实上，由于 FPGA 时钟资源的的粗颗粒度性，并不是总能模拟成功。&lt;/p&gt;
+&lt;p&gt;下面简单讨论一下 ASIC 中 gated clock 的问题。（更详细的内容见 gated clock 文章，未写）&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;dedicated clock module&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;guideline&lt;/strong&gt;: 将全部的 gated clock 时钟放在一个专门的时钟模块中，并将其从功能模块中分离出来&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;reason&lt;/strong&gt;: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="err"&gt;约束更加容易处理&lt;/span&gt;
+&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;设计修改起来更容易（比如通过&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;define&lt;/span&gt; &lt;span class="err"&gt;来选择编译&lt;/span&gt; &lt;span class="n"&gt;ASIC&lt;/span&gt; &lt;span class="err"&gt;还是&lt;/span&gt; &lt;span class="n"&gt;FPGA&lt;/span&gt; &lt;span class="err"&gt;设计，选择两者各自的实现代码）&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;gating removal&lt;/p&gt;
+&lt;p&gt;在 FPGA 上建立模型时，有很多巧妙的方法去除 gated clock。比如下面这个例子就是最直观，但也是最繁琐的方法：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;`define FPGA&lt;/span&gt;
+&lt;span class="c1"&gt;// `define ASIC&lt;/span&gt;
+
+&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="n"&gt;clock_blocks&lt;/span&gt; &lt;span class="p"&gt;(...)&lt;/span&gt;
+
+    &lt;span class="no"&gt;`ifdef&lt;/span&gt; &lt;span class="no"&gt;ASIC&lt;/span&gt;
+        &lt;span class="k"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;clock_domain_1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;system_clock_1&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;clock_enable_1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="no"&gt;`else&lt;/span&gt;
+        &lt;span class="k"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;clock_domain_1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;system_clock_1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="no"&gt;`endif&lt;/span&gt;
+
+&lt;span class="p"&gt;...&lt;/span&gt;
+
+&lt;span class="k"&gt;endmodule&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;这种方法的缺点是当做出改动时，需要对 FPGA 和 ASIC 代码都作出修改。很多人对这种方式很不爽，因为他们必须写两种不同的 RTL 代码。&lt;/p&gt;
+&lt;p&gt;一种更加高级的方法是依靠工具，现代的很多综合工具都可以通过适当的约束，通过将条件并到数据通路，来自动消除 gated clock。&lt;/p&gt;
+&lt;p&gt;比如下面的这段代码：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="n"&gt;clockstest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;output&lt;/span&gt;  &lt;span class="kt"&gt;reg&lt;/span&gt;  &lt;span class="n"&gt;oDat&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="k"&gt;input&lt;/span&gt;        &lt;span class="n"&gt;iClk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="k"&gt;input&lt;/span&gt;        &lt;span class="n"&gt;iEnable&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="k"&gt;input&lt;/span&gt;        &lt;span class="n"&gt;iDat&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="kt"&gt;wire&lt;/span&gt;  &lt;span class="n"&gt;gated_clock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;iClk&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;iEnable&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;gated_clock&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;oDat&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;iDat&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;endmodule&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;如果不打开自动消除的开关，产生的 gated clock 电路如下：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="circuit1" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/circuit1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;如果打开自动消除的开关，产生的没有 gated clock 电路如下：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="circuit2" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/circuit2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;现在大多数器件都提供了一个时钟使能（clock enable）端口&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;如果器件提供了这种接口，那么就没有必要使用上述方法；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果器件没有提供这种端口，那么使用这种技术虽然可以消除 gated clock，但是付出的代价是增加了 data path 的 delay。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Summary&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;以上，就是一些在多时钟域设计中处理异步数据的常用方法，总结如下：&lt;/p&gt;
@@ -1591,13 +1690,16 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;总线上的数据要求同时到达新的时钟域，所以不要对总线上的信号分别进行同步，而要采用一个保持寄存器 + 握手信号的方式&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;还可以采用 FIFO 来处理异步数据的问题。&lt;/p&gt;
+&lt;p&gt;还可以采用 FIFO 来处理异步数据的问题&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;分块设计，尽可能保证一个模块只有一个时钟域，对于跨时钟域信号，写独立的同步模块，这样可以减轻时序验证的工作。&lt;/p&gt;
+&lt;p&gt;分块设计，尽可能保证一个模块只有一个时钟域，对于跨时钟域信号，写独立的同步模块，这样可以减轻时序验证的工作&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;采用良好的命名习惯，如前缀的方式，可以帮助设计。&lt;/p&gt;
+&lt;p&gt;采用良好的命名习惯，如前缀的方式，可以帮助设计&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;注意 ASIC 和 FPGA 中对时钟信号的不同处理方法&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -1609,7 +1711,8 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;&lt;a href="http://bbs.ednchina.com/BLOG_ARTICLE_174906.HTM"&gt;ASIC中的异步时序设计&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://bbs.ednchina.com/BLOG_ARTICLE_175526.HTM"&gt;跨越鸿沟：同步世界中的异步信号&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.altera.com.hk/literature/wp/wp-01082-quartus-ii-metastability.pdf"&gt;Understanding Metastability in FPGAs&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960"&gt;The Art of Hardware Architecture&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="clock design"></category></entry><entry><title>锁存器 Latch v.s. 触发器 Flip-Flop</title><link href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html" rel="alternate"></link><updated>2014-09-23T23:02:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-09-23:pages/2014/09/23/latch_versus_flip_flop.html</id><summary type="html">&lt;p&gt;根据 &lt;a href="http://en.wikipedia.org/wiki/Flip-flop_(electronics"&gt;Wiki: Flip-flop (electronics)&lt;/a&gt; 上的介绍&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960"&gt;The Art of Hardware Architecture&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://book.douban.com/subject/2878096/"&gt;Advanced FPGA Design: Architecture, Implementation, and Optimization&lt;/a&gt;&lt;/p&gt;</summary><category term="FPGA"></category><category term="clock design"></category></entry><entry><title>锁存器 Latch v.s. 触发器 Flip-Flop</title><link href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html" rel="alternate"></link><updated>2014-09-23T23:02:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-09-23:pages/2014/09/23/latch_versus_flip_flop.html</id><summary type="html">&lt;p&gt;根据 &lt;a href="http://en.wikipedia.org/wiki/Flip-flop_(electronics"&gt;Wiki: Flip-flop (electronics)&lt;/a&gt; 上的介绍&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;In electronics, a &lt;code&gt;flip-flop&lt;/code&gt; or &lt;code&gt;latch&lt;/code&gt; is a circuit that has two stable states and can be used to store state information. A flip-flop is a &lt;code&gt;bistable multivibrator&lt;/code&gt;. The circuit can be made to change state by signals applied to one or more control inputs and will have one or two outputs. It is the basic storage element in sequential logic. Flip-flops and latches are a fundamental building block of digital electronics systems used in computers, communications, and many other types of systems.&lt;/p&gt;
 &lt;/blockquote&gt;
