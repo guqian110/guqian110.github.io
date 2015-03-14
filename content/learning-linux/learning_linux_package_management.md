@@ -1,7 +1,7 @@
 Title: 学习 Linux 软件包依赖管理 
 Date: 2014-04-21 13:43
 Category: Linux
-Tags: Linux,Package Management
+Tags: Package Management
 Slug: learning_linux_package_management
 Author: Qian Gu
 Summary: 安装软件时遇到依赖库版本过高的问题，学习总结 Linux 软件包管理 。

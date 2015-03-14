@@ -1,7 +1,7 @@
 Title: Xilinx FFT IP core 笔记
 Date: 2014-09-02 23:12
 Category: FPGA
-Tags: FPGA, fft
+Tags: FFT, IP core
 Slug: xilinx_fft_core_notes
 Author: Qian Gu
 Summary: 使用 Xilinx FFT IP core (xfft v7.1) 的笔记

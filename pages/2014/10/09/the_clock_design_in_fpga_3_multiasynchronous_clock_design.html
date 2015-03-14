@@ -19,7 +19,6 @@
             <meta property="og:description" content="总结 FPGA 中跨时钟域的设计"/>
             <meta property="article:published_time" content="2014-10-09" />
             <meta property="article:section" content="FPGA" />
-            <meta property="article:tag" content="FPGA" />
             <meta property="article:tag" content="clock design" />
 
     <!-- Bootstrap -->
@@ -108,20 +107,17 @@
 
 
 <span class="label label-default">Tags</span>
-	<a href="http://guqian110.github.io/tag/fpga.html">FPGA</a>
-        /
 	<a href="http://guqian110.github.io/tag/clock-design.html">clock design</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>[TOC]</p>
-<h2>Problem</h2>
+                <h2>Problem</h2>
 <hr />
 <p>在前面一篇总结 <a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">Latch V.S. Flip-flop</a> 的博文中，已经解释了 flip-flop 的一些参数：建立时间 <code>setup time</code>、保持时间 <code>hold time</code>、恢复时间 <code>recovery time</code>、撤销时间 <code>removal time</code>。</p>
 <p>如果不满足这些参数的要求，则会发生所谓的 亚稳态 <code>Metastability</code> 的问题。下面是 Altera 官方的一篇关于亚稳态的 white paper，详细介绍了亚稳态的产生原因、它是如何导致设计出现问题、以及描述它的参数 MTBF (Mean Time Between Failures) 如何计算。</p>
 <p><a href="http://www.altera.com.hk/literature/wp/wp-01082-quartus-ii-metastability.pdf">Understanding Metastability in FPGAs</a></p>
 <p>我们知道，一般只涉及单时钟域的设计并不多见，尤其是对于一些复杂的应用，FPGA 往往需要和多个时钟域的信号进行通信，而这些时钟之间的关系一般都是频率不同、相位也不同，也就是不同频不同相的多异步时钟域设计 <code>Mulit-Asynchronous Clock Design</code>。</p>
-<p>因为这些时钟信号之间的关系一般既不同频也不同相，所以一个时钟域的信号对于另外一个时钟域来说是异步信号，那么就无法保证进入新时钟域的信号和新的时钟信号之间满足 setup/hold time 的要求，最然就会引起亚稳态的问题。</p>
+<p>因为这些时钟信号之间的关系一般既不同频也不同相，所以一个时钟域的信号对于另外一个时钟域来说是异步信号，那么就无法保证进入新时钟域的信号和新的时钟信号之间满足 setup/hold time 的要求，自然就会引起亚稳态的问题。</p>
 <p>在 Clifford E. Cummings 大神的 paper：<a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">Synthesis and Scripting Techniques for Designing Multi-Asynchronous Clock Designs</a> 里面就举例说明了这种现象：</p>
 <p><strong>Reason</strong></p>
 <blockquote>
@@ -390,7 +386,7 @@
 <p>总结 3 种同步器的特点，有下表：</p>
 <p><img alt="synchronizer sum" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronizer_sum.png" /></p>
 <p>经过 synchronizer 的信号在两个时钟之后变为有效，一般延时为 1～2 新时钟周期，可以粗略估计延时为 2 个时钟周期，设计者需要仔细考虑同步延迟对于跨时钟域的信号时序造成的影响。</p>
-<p><em>在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输，这时候通常采用其他的方法，比如握手协议和 FIFO 等。</em></p>
+<p><em>在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输，这时候就不再适合用 synchronizer 来同步这些信号了，通常采用其他的方法，比如握手协议和 FIFO 等。</em></p>
 <h3>Solution 2: Handshaking</h3>
 <blockquote>
 <p>Handshaking allows digital circuits to effectively communicate with each other when the response time of one or both circuits is unpredictable. For example, an arbitrated bus allows more than one circuit to request access to a single bus, such as PCI or AMBA (Advanced Microcontroller Bus Architecture), using arbitration to determine which circuit gains access to the bus. Each circuit signals a request, and the arbitration logic determines which request “wins.” This winning circuit receives an acknowledgment indicating that it has access to the bus. It then discontinues its request and begins the bus transaction.</p>
@@ -409,7 +405,7 @@
 <p><img alt="full" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/full.png" /></p>
 <p>如图所示，全握手协议中，双方电路在声明或中止各自的握手信号前都要等待对方的相应。首先，发送方电路A声明它的请求信号，然后接收方电路B检测到该请求有效后，声明它的效应信号；当电路A检测到响应信号有效之后，中止自己的请求信号；最后，当电路B检测到请求无效之后，中止自己的相应信号。这样，算是完成了一次通信。除非A检测到无效的响应信号，否则它不会再声明新的请求信号。这种机制要求请求电路A必须延迟它的下一个请求，直到它检测到无效的响应信号（意味着上次请求已完成）。</p>
 <p>这种类型的握手使用了 level synchronizer。可以根据两点来粗略估计这个协议的时序：信号跨域一个时钟域需要花费 2 个时钟周期，信号在跨域时钟域之前被电路寄存花费 1 个时钟周期。所以，发送端A需要 5 个周期，接收端B需要 6 个周期。</p>
-<p>全握手很强健，因为通过检测请求和响应信号，每个电路都清楚地知道对方的状态，这种方式的不足之处是完成整个过程要花费很多时钟周期。</p>
+<p>全握手鲁棒性很好，因为通过检测请求和响应信号，每个电路都清楚地知道对方的状态，这种方式的不足之处是完成整个过程要花费很多时钟周期。</p>
 <h4>partial handshaking</h4>
 <p>另一中类型是部分握手。部分握手的双方不用等对方的响应就中止各自的信号，并继续执行握手命令序列。</p>
 <p>部分握手比全握手在健壮性方面稍弱，因为握手信号并不指示各自电路的状态，每一电路都必须保存状态信息（在全握手里这个信息被送出去），但是，由于无需等待对方的响应，完整的时间序列花费较少的时间。</p>
@@ -655,11 +651,9 @@ enable signal in order to load a data value into the register. If both the load 
 <section class="well" id="related-posts">
     <h4>Related Posts:</h4>
     <ul>
+        <li><a href="http://guqian110.github.io/pages/2014/10/13/clock_dividers.html">时钟分频器</a></li>
+        <li><a href="http://guqian110.github.io/pages/2014/08/28/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
         <li><a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/07/07/fpga_digital_processing_basic_2.html">FPGA 数字处理基础 (2)</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/16/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
-        <li><a href="http://guqian110.github.io/pages/2015/01/20/drawing_fsm_state_diagram_using_graphviz.html">利用 Graphviz 画 FSM 状态图</a></li>
-        <li><a href="http://guqian110.github.io/pages/2014/09/02/xilinx_fft_core_notes.html">Xilinx FFT IP core 笔记</a></li>
     </ul>
 </section>
     <hr />
@@ -727,7 +721,7 @@ enable signal in order to load a data value into the register. If both the load 
 
                 <li class="list-group-item"><a href="http://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                     <ul class="list-group list-inline tagcloud" id="tags">
-                        <li class="list-group-item tag-2">
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/arduino.html">
                                 Arduino
                             </a>
@@ -742,12 +736,12 @@ enable signal in order to load a data value into the register. If both the load 
                                 Build Blog
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/c.html">
                                 C++
                             </a>
                         </li>
-                        <li class="list-group-item tag-3">
+                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/clock-design.html">
                                 clock design
                             </a>
@@ -778,6 +772,11 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/const.html">
+                                const
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/cscope.html">
                                 cscope
                             </a>
@@ -785,6 +784,11 @@ enable signal in order to load a data value into the register. If both the load 
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ctags.html">
                                 ctags
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/data-type.html">
+                                data type
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -819,7 +823,7 @@ enable signal in order to load a data value into the register. If both the load 
                         </li>
                         <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/fft.html">
-                                fft
+                                FFT
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -827,7 +831,7 @@ enable signal in order to load a data value into the register. If both the load 
                                 flip-flop
                             </a>
                         </li>
-                        <li class="list-group-item tag-1">
+                        <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/fpga.html">
                                 FPGA
                             </a>
@@ -835,6 +839,11 @@ enable signal in order to load a data value into the register. If both the load 
                         <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/fsm.html">
                                 fsm
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/glitch.html">
+                                glitch
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -853,13 +862,18 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/hazard.html">
+                                hazard
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/huo-zhao.html">
                                 活着
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/ifft.html">
-                                ifft
+                                IFFT
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -868,11 +882,21 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ip-core.html">
+                                IP core
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/ise.html">
+                                ISE
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/latch.html">
                                 latch
                             </a>
                         </li>
-                        <li class="list-group-item tag-1">
+                        <li class="list-group-item tag-2">
                             <a href="http://guqian110.github.io/tag/linux.html">
                                 Linux
                             </a>
@@ -888,13 +912,18 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/modelsim.html">
+                                Modelsim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/nerdtree.html">
                                 NERDTree
                             </a>
                         </li>
                         <li class="list-group-item tag-3">
                             <a href="http://guqian110.github.io/tag/ofdm.html">
-                                ofdm
+                                OFDM
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -923,11 +952,16 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/pulse-edge-detection.html">
+                                pulse edge detection
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/reset.html">
                                 reset
                             </a>
                         </li>
-                        <li class="list-group-item tag-2">
+                        <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/review.html">
                                 review
                             </a>
@@ -963,6 +997,11 @@ enable signal in order to load a data value into the register. If both the load 
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/synthesis.html">
+                                synthesis
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/taglist.html">
                                 taglist
                             </a>
@@ -970,11 +1009,6 @@ enable signal in order to load a data value into the register. If both the load 
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/tail-bitting-convolution.html">
                                 tail bitting convolution
-                            </a>
-                        </li>
-                        <li class="list-group-item tag-2">
-                            <a href="http://guqian110.github.io/tag/telecom.html">
-                                Telecom
                             </a>
                         </li>
                         <li class="list-group-item tag-4">
@@ -995,6 +1029,11 @@ enable signal in order to load a data value into the register. If both the load 
                         <li class="list-group-item tag-1">
                             <a href="http://guqian110.github.io/tag/vim.html">
                                 vim
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/vundle.html">
+                                vundle
                             </a>
                         </li>
                         <li class="list-group-item tag-4">

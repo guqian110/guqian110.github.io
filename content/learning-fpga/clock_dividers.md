@@ -1,7 +1,7 @@
 Title: 时钟分频器
 Date: 2014-10-13 22:26
 Category: FPGA
-Tags: FPGA,clock dividers
+Tags: clock design, clock dividers
 Slug: clock_dividers
 Author: Chien Gu
 Summary: 总结常用的时钟分频方法

@@ -1,7 +1,7 @@
 Title: VHDL 笔记 2 —— 系统设计
 Date: 2014-09-16 20:18
 Category: FPGA
-Tags: FPGA, VHDL, syntax
+Tags: VHDL, syntax
 Slug: vhdl_notes_2_system_design
 Author: Qian Gu
 Summary: VHDL 笔记，系统设计

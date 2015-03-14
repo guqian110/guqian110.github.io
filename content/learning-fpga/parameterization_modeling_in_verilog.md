@@ -1,7 +1,7 @@
 Title: Verilog 中的参数化建模
 Date: 2014-07-09 23:03
 Category: FPGA
-Tags: FPGA, parameterization
+Tags: parameterization
 Slug: parameterization_modeling_in_veriog
 Author: Qian Gu
 Summary: 总结 Verilog 模块化建模的技术

@@ -1,7 +1,7 @@
 Title: 学习 Vim 使用 Vundle 管理插件
 Date: 2014-04-16 17:06
 Category: Linux
-Tags: Linux,Vim
+Tags: Vim, vundle
 Slug: learning_vim_vundle
 Author: Qian Gu
 Summary: 学习 Vim，使用 Vundle 管理插件 。

@@ -1,7 +1,7 @@
 Title: 信噪比小结
 Date: 2015-03-10 19:31
 Category: Telecom
-Tags: Telecom, SNR
+Tags: SNR
 slug: summary_of_snr_and_noise
 Author: Qian Gu
 Summary: 学而时习之，总结一下信噪比相关的小知识

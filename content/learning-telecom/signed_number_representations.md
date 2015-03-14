@@ -1,7 +1,7 @@
 Title: 原码、反码、补码
 Date: 2014-03-19 14:31
 Category: Telecom
-Tags: Telecom, Code
+Tags: Code
 Slug: signed_number_representations
 Author: Qian Gu
 Summary: 最近找到一本好书——《编码: 隐匿在计算机软硬件背后的语言》 。作者是大名鼎鼎的 Charles Petzold 。看到用继电器搭建加法器、减法器，讨论二进制编码方式那章，想起一直不是很清楚的原码、反码、补码等，果断 Google、Wiki，于是总结出下文 。

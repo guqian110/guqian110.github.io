@@ -1,7 +1,7 @@
 Title: FPGA 时钟设计 1 —— 时钟资源总结
 Date: 2014-08-28 22:45
 Category: FPGA
-Tags: FPGA,clock resource
+Tags: clock design, clock resource
 Slug: the_clock_design_in_fpga_1_summary_of_clock_resource
 Author: Qian Gu
 Summary: 总结 Xilinx FPGA 中的时钟资源

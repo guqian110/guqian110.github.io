@@ -1,7 +1,7 @@
 Title: Sublime Text 2 和 Verilog HDL
 Date: 2014-07-04 23:31
 Category: FPGA
-Tags: FPGA, Sublime Text
+Tags: Sublime Text
 Slug: sublime_text_2_and_verilog
 Author: Qian Gu
 Summary: 介绍神器 Sublime Text 在 HDL 方面的简单应用

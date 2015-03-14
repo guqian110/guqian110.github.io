@@ -1,7 +1,7 @@
 Title: 利用 Graphviz 画 FSM 状态图
 Date: 2015-01-20 17:55
 Category: FPGA 
-Tags: FPGA, fsm, graphviz
+Tags: fsm, graphviz
 Slug: drawing_fsm_state_diagram_using_graphviz
 Author: Qian Gu
 Summary: 学习使用 Graphviz 画 FSM 的状态转移图

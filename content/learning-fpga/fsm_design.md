@@ -1,7 +1,7 @@
 Title: 有限状态机设计
 Date: 2014-06-05 17:55
 Category: FPGA
-Tags: FPGA, FSM, Verilog
+Tags: FSM, Verilog
 Slug: fsm_design
 Author: Qian Gu
 summary: 博客搬家，温故而知新。

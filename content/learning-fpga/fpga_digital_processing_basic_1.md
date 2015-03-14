@@ -1,7 +1,7 @@
 Title: FPGA 数字处理基础 (1)
 Date: 2014-05-14 23:25
 Category: FPGA
-Tags: FPGA, digital processing
+Tags: digital processing
 Slug: fpga_digital_processing_basic_1
 Author: Qian Gu
 Summary: 总结 FPGA 处理数字信号的基础知识 (1)

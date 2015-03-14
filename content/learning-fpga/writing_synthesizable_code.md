@@ -1,7 +1,7 @@
 Title: 编写可综合的 Verilog HDL 代码
 Date: 2014-04-04 01:35
 Category: FPGA
-Tags: FPGA,Verilog
+Tags: Verilog, synthesis
 Slug: writing_synthesizable_code
 Author: Qian Gu
 Summary: 总结可综合 Verilog HDL 代码，如何编写可综合的代码

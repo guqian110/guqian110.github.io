@@ -1,7 +1,7 @@
 Title: 学习 Arduino #2 初识 Intel Galileo 开发板
 Date: 2014-05-29 23:27
 Category: Arduino
-Tags: Arduino, Intel Galileo 
+Tags: Intel Galileo 
 Slug: learing_arduino_series_2_intel_galileo_development_board
 Author: Qian Gu
 summary: 学习 Arduino，#2 初识 Intel Galileo 开发板

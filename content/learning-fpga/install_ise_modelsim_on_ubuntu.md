@@ -1,7 +1,7 @@
-Title: Ubuntu 下安装 ISE & ModelSim
+Title: Ubuntu 下安装 ISE & Modelsim
 Date: 2014-03-27 20:52
 Category: FPGA
-Tags: FPGA,Linux
+Tags: Linux, ISE, Modelsim
 Slug: install_ise_modelsim_on_ubuntu
 Author: Qian Gu
 Summary: 从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来，总结一下 ISE 的安装配置过程。

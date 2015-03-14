@@ -1,7 +1,7 @@
 Title: 计数器设计小结
 Date: 2014-11-4 20:40
 Category: FPGA
-Tag: FPGA, counter design
+Tag: counter design
 Slug: counter_design_summary
 Author: Qian Gu
 Summary: 总结 FPGA 中的计数器设计

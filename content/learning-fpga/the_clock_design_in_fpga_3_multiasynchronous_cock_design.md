@@ -1,12 +1,11 @@
 Title: FPGA 时钟设计 3 —— 跨时钟域设计
 Date: 2014-10-09 23:01
 Category: FPGA
-Tags: FPGA,clock design
+Tags: clock design
 Slug: the_clock_design_in_fpga_3_multiasynchronous_clock_design
 Author: Qian Gu
 Summary: 总结 FPGA 中跨时钟域的设计
 
-[TOC]
 
 ## Problem
 * * *
@@ -19,7 +18,7 @@ Summary: 总结 FPGA 中跨时钟域的设计
 
 我们知道，一般只涉及单时钟域的设计并不多见，尤其是对于一些复杂的应用，FPGA 往往需要和多个时钟域的信号进行通信，而这些时钟之间的关系一般都是频率不同、相位也不同，也就是不同频不同相的多异步时钟域设计 `Mulit-Asynchronous Clock Design`。
 
-因为这些时钟信号之间的关系一般既不同频也不同相，所以一个时钟域的信号对于另外一个时钟域来说是异步信号，那么就无法保证进入新时钟域的信号和新的时钟信号之间满足 setup/hold time 的要求，最然就会引起亚稳态的问题。
+因为这些时钟信号之间的关系一般既不同频也不同相，所以一个时钟域的信号对于另外一个时钟域来说是异步信号，那么就无法保证进入新时钟域的信号和新的时钟信号之间满足 setup/hold time 的要求，自然就会引起亚稳态的问题。
 
 在 Clifford E. Cummings 大神的 paper：[Synthesis and Scripting Techniques for Designing Multi-Asynchronous Clock Designs][paper1] 里面就举例说明了这种现象：
 
@@ -271,7 +270,7 @@ edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较�
 经过 synchronizer 的信号在两个时钟之后变为有效，一般延时为 1～2 新时钟周期，可以粗略估计延时为 2 个时钟周期，设计者需要仔细考虑同步延迟对于跨时钟域的信号时序造成的影响。
 
 
-*在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输，这时候通常采用其他的方法，比如握手协议和 FIFO 等。*
+*在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输，这时候就不再适合用 synchronizer 来同步这些信号了，通常采用其他的方法，比如握手协议和 FIFO 等。*
 
 ### Solution 2: Handshaking
 
@@ -293,7 +292,7 @@ edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较�
 
 这种类型的握手使用了 level synchronizer。可以根据两点来粗略估计这个协议的时序：信号跨域一个时钟域需要花费 2 个时钟周期，信号在跨域时钟域之前被电路寄存花费 1 个时钟周期。所以，发送端A需要 5 个周期，接收端B需要 6 个周期。
 
-全握手很强健，因为通过检测请求和响应信号，每个电路都清楚地知道对方的状态，这种方式的不足之处是完成整个过程要花费很多时钟周期。
+全握手鲁棒性很好，因为通过检测请求和响应信号，每个电路都清楚地知道对方的状态，这种方式的不足之处是完成整个过程要花费很多时钟周期。
 
 #### partial handshaking
 

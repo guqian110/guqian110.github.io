@@ -1,7 +1,7 @@
 Title: 锁存器 Latch v.s. 触发器 Flip-Flop
 Date: 2014-09-23 23:02
 Category: FPGA
-Tags: FPGA, latch, flip-flop
+Tags: latch, flip-flop
 Slug: latch_versus_flip_flop
 Author: Qian Gu
 Summary: 总结 Latch 和 Flip-Flop

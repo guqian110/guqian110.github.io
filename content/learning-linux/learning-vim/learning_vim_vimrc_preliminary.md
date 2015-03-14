@@ -1,7 +1,7 @@
 Title: 学习 Vim 初步配置 Vim
 Date: 2014-04-16 12:44
 Category: Linux
-Tags: Linux,Vim
+Tags: Vim
 Slug: learning_vim_vimrc_preliminary
 Author: Qian Gu
 Summary: 总结初步配置 Vim，让 Vim 更顺手 。

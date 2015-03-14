@@ -1,7 +1,7 @@
 Title: 学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic 
 Date: 2014-05-13 23:16
 Category: Telecom
-Tags: Telecom, OFDM
+Tags: OFDM
 Slug: learning_ofdm_on_fpga_1_ofdm_basic
 Author: Qian Gu
 Summary: 基于 FPGA 实现 OFDM 系统。第一篇，OFDM 基础。

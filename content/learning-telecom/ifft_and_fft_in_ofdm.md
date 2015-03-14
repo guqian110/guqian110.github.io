@@ -1,7 +1,7 @@
 Title: OFDM 中的 IFFT/FFT 注意事项
 Date: 2015-03-10 19:40
 Category: Telecom
-Tags: Telecom, ifft, fft, ofdm
+Tags: IFFT, FFT, OFDM
 Slug: ifft_and_fft_in_ofdm
 Author: Qian Gu
 Summary: OFDM 中做 IFFT/FFT 时需要注意的一点细节

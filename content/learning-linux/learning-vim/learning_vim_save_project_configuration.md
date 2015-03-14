@@ -1,7 +1,7 @@
 Title: 学习 Vim 保存项目设置 
 Date: 2014-04-20 14:32
 Category: Linux
-Tags: Linux,Vim
+Tags: Vim
 Slug: learning_vim_save_project_configuration
 Author: Qian Gu
 Summary: 总结将 Vim 配置为 IDE 的过程之一，保存项目设置 。

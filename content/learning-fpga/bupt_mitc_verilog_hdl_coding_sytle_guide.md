@@ -1,7 +1,7 @@
 Title:BUPT MITC lab Verilog HDL coding style guide 
 Date: 2014-05-19 10:12
 Category: FPGA
-Tags: FPGA,Verilog,coding style 
+Tags: Verilog,coding style 
 Slug: bupt_mitc_lab_verilog_hdl_coding_style_guide
 Author: Qian Gu
 Summary: 和实验室的同学一起做项目，总结一份编码风格 。 

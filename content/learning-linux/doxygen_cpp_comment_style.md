@@ -1,7 +1,7 @@
 Title: 基于 Doxygen 的 C++ 注释风格
 Date: 2015-01-13 18:00
 Category: Linux
-Tags: Linux, C++, comment style
+Tags: C++, comment style
 Slug: doxygen_cpp_comment_style
 Author: Qian Gu
 Summary: 总结基于 Doxygen 的 C++ 注释规则

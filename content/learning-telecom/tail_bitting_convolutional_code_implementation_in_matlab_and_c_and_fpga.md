@@ -1,7 +1,7 @@
 Title: LTE 咬尾卷积编码器的 Matlab 、C 语言及 FPGA 实现
 Date: 2015-01-07
 Category: Telecom
-Tags: Telecom, tail bitting convolution
+Tags: tail bitting convolution
 Slug: tail_bitting_convolutional_code_implementation_in_matlab_and_c_and_fpga
 Author: Qian Gu
 Summary: 总结咬尾卷积编码的 Matlab 及 FPGA 实现方法。

@@ -1,7 +1,7 @@
 Title: VHDL 笔记 1 —— 电路设计
 Date: 2014-09-16 14:56
 Category: FPGA
-Tags: FPGA, VHDL, syntax
+Tags: VHDL, syntax
 Slug: vhdl_notes_1_circuit_design
 Author: Qian Gu
 Summary: VHDL 笔记, 电路设计

@@ -1,7 +1,7 @@
 Title: Yocto 从零单排 1 —— 入门
 Date: 2014-05-12 12:46
 Category: Linux
-Tags: Linux, Yocto
+Tags: Yocto
 Slug: learning_yocto_from_zero_1_getting_started
 Author: Qian Gu
 Summary: yocto 从零单排第一期，了解什么是 yocto

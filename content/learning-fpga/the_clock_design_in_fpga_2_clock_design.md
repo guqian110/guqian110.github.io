@@ -1,7 +1,7 @@
 Title: FPGA 时钟设计 2 —— 时钟设计
 Date: 2014-09-12 12:45
 Category: FPGA
-Tags: FPGA,clock design
+Tags: clock design
 Slug: the_clock_design_in_fpga_2_clock_design
 Author: Qian Gu
 Summary: 总结 FPGA 中的时钟设计方案

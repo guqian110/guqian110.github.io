@@ -1,7 +1,7 @@
 Title: C++ const 限定符
 Date: 2014-04-09 11:13
 Category: C/C++
-Tags: C,C++
+Tags: const
 Slug: cosnt_qualifier 
 Author: Qian Gu
 Summary: 总结 const 限定符的用法。
