@@ -189,7 +189,7 @@
 </pre></div>
 
 
-<p>因为两个长度为 N 的序列进行相关，可以知道最多有 2<em>N - 1 个非 0 的移位相乘结果，所以 xcorr 的返回结果就是长度为 2</em>N - 1 的向量。（如果其中一个序列的长度小于 N，则会先补零再计算相关）</p>
+<p>因为两个长度为 N 的序列进行相关，可以知道最多有 2N - 1 个非 0 的移位相乘结果，所以 xcorr 的返回结果就是长度为 2N - 1 的向量。（如果其中一个序列的长度小于 N，则会先补零再计算相关）</p>
 <p>用 <code>help xcorr</code> 来查看详细的函数说明。</p>
 <p>下面举个使用例子：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -198,10 +198,8 @@
 4
 5
 6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">x</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">x</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
 <span class="n">y</span> <span class="p">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">];</span>
-
 
 <span class="c">%correlation</span>
 <span class="n">c1</span> <span class="p">=</span> <span class="n">xcorr</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
