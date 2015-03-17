@@ -1,5 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/telecom.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-03-10T19:40:00+08:00</updated><entry><title>OFDM 中的 IFFT/FFT 注意事项</title><link href="http://guqian110.github.io/pages/2015/03/10/ifft_and_fft_in_ofdm.html" rel="alternate"></link><updated>2015-03-10T19:40:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-03-10:pages/2015/03/10/ifft_and_fft_in_ofdm.html</id><summary type="html">&lt;p&gt;在做 OFDM 项目时，发现一个容易犯错的地方：IFFT/FFT。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Geek Bunny's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/telecom.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-03-16T00:00:00+08:00</updated><entry><title>相关系数及Matlab函数</title><link href="http://guqian110.github.io/pages/2015/03/16/correlation_coefficient_and_matlab_function.html" rel="alternate"></link><updated>2015-03-16T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-03-16:pages/2015/03/16/correlation_coefficient_and_matlab_function.html</id><summary type="html">&lt;h2&gt;Correlation&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;首先总结一下基础背景知识：&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Correlation_and_dependence"&gt;相关 &lt;code&gt;Correlation&lt;/code&gt;&lt;/a&gt; 是概率论与统计学中用来刻画两个随机变量之间统计关系的强弱和方向的量。在广义的定义下，有很多种类的相关系数（&lt;code&gt;correlation coefficient&lt;/code&gt;），它们通常用字母 &lt;code&gt;ρ&lt;/code&gt; 或者 &lt;code&gt;r&lt;/code&gt; 来表示。&lt;/p&gt;
+&lt;p&gt;我们通常说的相关系数的学名是：&lt;a href="http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient"&gt;皮尔逊积差系数（Pearson's product moment coefficient）&lt;/a&gt;，这种相关系数只对两个变量的线性关系敏感。&lt;/p&gt;
+&lt;h3&gt;Pearson's product moment coefficient&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;在统计学中，基于总体的定义如下：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Pearson 相关系数使用两个变量的协方差（&lt;code&gt;covariance&lt;/code&gt;）和标准差（&lt;code&gt;standard deviations&lt;/code&gt;）来定义：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq1" src="http://upload.wikimedia.org/math/5/c/f/5cfbb6f9088ef5fbc8a84f59da872984.png" /&gt;&lt;/p&gt;
+&lt;p&gt;其中，cov 是协方差，sigma 是标准差。因为 cov 可以写作：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq2" src="http://upload.wikimedia.org/math/8/8/a/88a377faf813d502d6ab1f8193481223.png" /&gt;&lt;/p&gt;
+&lt;p&gt;所以 Person 相关系数的定义式可以写作：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq3" src="http://upload.wikimedia.org/math/e/2/6/e26e29b58777e55d79883c77edca4428.png" /&gt;&lt;/p&gt;
+&lt;p&gt;根据概率论知识可以得到如下的变形形式：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq4" src="http://upload.wikimedia.org/math/0/9/d/09d413641c8ba8f54b6113e5857c69f8.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;基于样本来估计协方差和标准差，可以得到定义如下：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq5" src="http://upload.wikimedia.org/math/e/3/c/e3c7ff025788887bba2f3dfca7df94b9.png" /&gt;&lt;/p&gt;
+&lt;p&gt;通过变形，可以得到下式：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq6" src="http://upload.wikimedia.org/math/8/0/5/8059a4dddb8b6c2c5e1eeefcb9630d93.png" /&gt;&lt;/p&gt;
+&lt;h3&gt;Properties&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://zh.wikipedia.org/wiki/%E7%9B%B8%E5%85%B3"&gt;wiki&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;当两个变量的标准差都不为零，相关系数才有定义。从柯西-施瓦茨不等式可知，相关系数的绝对值不超过1。当两个变量的线性关系增强时，相关系数趋于1或-1。当一个变量增加而另一变量也增加时，相关系数大于0。当一个变量的增加而另一变量减少时，相关系数小于0。当两个变量独立时，相关系数为0.但反之并不成立。这是因为相关系数仅仅反映了两个变量之间是否线性相关。比如说，X是区间［－1，1］上的一个均匀分布的随机变量。Y = X2.那么Y是完全由X确定。因此Y和X是不独立的。但是相关系数为0。或者说他们是不相关的。当Y和X服从联合正态分布时，其相互独立和不相关是等价的。&lt;/p&gt;
+&lt;p&gt;当一个或两个变量带有测量误差时，他们的相关性就受到削弱，这时，“反衰减”性（disattenuation）是一个更准确的系数。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="http://blog.sina.com.cn/s/blog_6ce23c390101c6zc.html"&gt;【总结】matlab求两个序列的相关性&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;相关系数只是一个比率，不是等单位量度，无什么单位名称，也不是相关的百分数，一般取小数点后两位来表示。相关系数的正负号只表示相关的方向，绝对值表示相关的程度。因为不是等单位的度量，因而不能说相关系数0.7是0.35两倍，只能说相关系数为0.7的二列变量相关程度比相关系数为0.35的二列变量相关程度更为密切和更高。也不能说相关系数从0.70到0.80与相关系数从0.30到0.40增加的程度一样大。&lt;/p&gt;
+&lt;p&gt;对于相关系数的大小所表示的意义目前在统计学界尚不一致，但通常按下是这样认为的：&lt;/p&gt;
+&lt;p&gt;相关系数      相关程度&lt;/p&gt;
+&lt;p&gt;0.00-±0.30    微相关&lt;/p&gt;
+&lt;p&gt;±0.30-±0.50   实相关&lt;/p&gt;
+&lt;p&gt;±0.50-±0.80   显著相关&lt;/p&gt;
+&lt;p&gt;±0.80-±1.00   高度相关&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;复习了基础知识，另外还有两个概念：&lt;/p&gt;
+&lt;h3&gt;Cross-correlation&lt;/h3&gt;
+&lt;p&gt;对于连续函数，有下面的定义：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq7" src="http://upload.wikimedia.org/math/3/a/a/3aa0f20ebd9e984d8a17642c11d43de2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;对于离散函数，有下面的定义：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq8" src="http://upload.wikimedia.org/math/d/f/6/df665b17d676571c9dc7a1800e1b186a.png" /&gt;&lt;/p&gt;
+&lt;p&gt;在信号处理中，用 互相关 &lt;a href="http://en.wikipedia.org/wiki/Cross-correlation"&gt;Cross-correlation&lt;/a&gt; 来&lt;strong&gt;衡量两个序列之间的相似程度&lt;/strong&gt;，通常可以用于在长序列中寻找一个特定的短序列（也就是通信系统的同步中）。&lt;/p&gt;
+&lt;p&gt;在数理统计中，互相关用来两个随机序列的相关性。&lt;/p&gt;
+&lt;p&gt;从定义式中可以看到，互相关函数和卷积运算类似，也是两个序列滑动相乘，但是区别在于：&lt;/p&gt;
+&lt;p&gt;互相关的两个序列都不翻转，直接滑动相乘，求和；卷积的其中一个序列需要先翻转，然后滑动相乘，求和。&lt;/p&gt;
+&lt;p&gt;所以，&lt;strong&gt;f(t) 和 g(t) 做相关 = f*(-t) 与 g(t) 做卷积&lt;/strong&gt;&lt;/p&gt;
+&lt;h3&gt;Autocorrelation&lt;/h3&gt;
+&lt;p&gt;自相关 &lt;a href="http://en.wikipedia.org/wiki/Autocorrelation"&gt;Autocorrelation&lt;/a&gt; 是互相关的一种特殊情况，就是一个序列和它本身做相关，而不是两个序列，它&lt;strong&gt;主要用来衡量一个序列在不同时刻取值的相似程度&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;在数理统计中，自相关的定义式如下：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq9" src="http://upload.wikimedia.org/math/3/7/c/37c9812eaf2deca258f5526ac9067aa2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;如果随机过程是一个宽平稳过程，那么均值和方差都不是时间的函数，所以，自相关定义式变为：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq10" src="http://upload.wikimedia.org/math/1/c/c/1cc9b1b80ab17d64568bca15bc7a5a9d.png" /&gt;&lt;/p&gt;
+&lt;p&gt;在某些学科中，会去掉归一化因子 σ2，使用 自协方差 来代替 自相关。但是归一化因子可以让自相关的取值在 [-1, +1] 之间，不会随着序列的绝对大小而变化。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;在信号处理中，&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;自相关的定义会去掉归一化，即不用减去均值，也不用除以方差。当除以方差时，一般叫做另外一个名字：自相关系数 &lt;code&gt;autocorrelation coefficient&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;对于连续函数，自相关的定义如下：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq11" src="http://upload.wikimedia.org/math/9/8/c/98cd888f0d13972a937f5d37d9f24623.png" /&gt;&lt;/p&gt;
+&lt;p&gt;对于离散函数，自相关的定义如下：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq12" src="http://upload.wikimedia.org/math/4/c/2/4c23ef05df69ee440a2bda5a0b1d83bc.png" /&gt;&lt;/p&gt;
+&lt;p&gt;自相关有很多性质，比如对称性、&lt;a href="http://en.wikipedia.org/wiki/Wiener%E2%80%93Khinchin_theorem"&gt;维纳-辛钦定理（Wiener–Khinchin theorem）&lt;/a&gt; 等，就不再重复了。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Matlab function&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;xcorr&lt;/h3&gt;
+&lt;p&gt;在 Matlab 中，计算自相关和互相关，可以使用同一个函数：&lt;code&gt;xcorr&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;自相关：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;xcorr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;互相关：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;xcorr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;因为两个长度为 N 的序列进行相关，可以知道最多有 2&lt;em&gt;N - 1 个非 0 的移位相乘结果，所以 xcorr 的返回结果就是长度为 2&lt;/em&gt;N - 1 的向量。（如果其中一个序列的长度小于 N，则会先补零再计算相关）&lt;/p&gt;
+&lt;p&gt;用 &lt;code&gt;help xcorr&lt;/code&gt; 来查看详细的函数说明。&lt;/p&gt;
+&lt;p&gt;下面举个使用例子：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+
+
+&lt;span class="c"&gt;%correlation&lt;/span&gt;
+&lt;span class="n"&gt;c1&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;xcorr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;c2&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;xcorr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;c3&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;xcorr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;对于序列 x = [1, 2, 3]，移位相乘、求和，可以得到结果：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;14&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;对于序列 y 类似。&lt;/p&gt;
+&lt;p&gt;对于 x、y 的互相关，当两个序列对齐的时候，相关性最高（归一化后为 1，意味着两个序列线性相关）&lt;/p&gt;
+&lt;p&gt;xcorr 默认的返回结果是没有经过归一化的，而通常的应用中都要求归一化以得到精确的估计。解决这一问题的方法就是使用 xcorr 函数提供的 &lt;code&gt;option&lt;/code&gt; 选项：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;'biased' 有偏估计&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;'unbiased' 无偏估计&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;'coeff' 归一化，返回到最大值（对齐时）为理想的 1.0（= xcorr(x)./max(xcorr(x)) ）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;'none' 未经归一化的原始数据，默认的返回结果&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;corrcoef&lt;/h3&gt;
+&lt;p&gt;可以用 &lt;code&gt;corrcoef&lt;/code&gt; 函数来求两个序列的相关系数，函数的返回值为一个 2×2 的矩阵，对角线上的值为两个序列的自相关系数，非对角线上的值为两个序列的互相关系数。&lt;/p&gt;
+&lt;p&gt;在上面的例子中加入下面两句：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;z&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="n"&gt;c4&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;corrcoef&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;返回结果为&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;因为 z 是 x 的线性函数，且系数为 -1，所以非对角线上的值为 -1。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Correlation_and_dependence"&gt;correlation wiki&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient"&gt;pearson wiki&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Cross-correlation"&gt;Cross-correlation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Autocorrelation"&gt;Autocorrelation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.sina.com.cn/s/blog_6ce23c390101c6zc.html"&gt;【总结】matlab求两个序列的相关性&lt;/a&gt;&lt;/p&gt;</summary><category term="correlation coefficient"></category><category term="matlab"></category></entry><entry><title>OFDM 中的 IFFT/FFT 注意事项</title><link href="http://guqian110.github.io/pages/2015/03/10/ifft_and_fft_in_ofdm.html" rel="alternate"></link><updated>2015-03-10T19:40:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-03-10:pages/2015/03/10/ifft_and_fft_in_ofdm.html</id><summary type="html">&lt;p&gt;在做 OFDM 项目时，发现一个容易犯错的地方：IFFT/FFT。&lt;/p&gt;
 &lt;p&gt;在很多介绍 OFDM 的书中，给出结论：在发射机，基带信号的复包络采用值正好是待发射序列的 IDFT，所以在 N 是 2 的指数时，可以采用 IFFT 来快速计算；在接收机，将接收的频带信号解调到基带，采样得到基带复包络，然后做 DFT (FFT) 即可得到原始的发射序列。&lt;/p&gt;
 &lt;p&gt;这个结论是正确的，但是需要注意的一点是：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;调制/解调所做的运算的形式和 IFFT/FFT 是相同的，但是有一个功率归一化的系数的差别。&lt;/strong&gt;&lt;/p&gt;
@@ -57,6 +197,9 @@
 &lt;p&gt;在数字系统中可以使用 SNR 表示噪声的等级，但是更常用的是 &lt;code&gt;Eb/N0 (energy per bit to noise power spectral density ratio)&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;Eb/N0 是一种归一化的 SNR，称为 “ SNR 每 bit ”，在比较不同的调制方案的 &lt;code&gt;误比特率（BER, bit error rate）&lt;/code&gt; 性能时，因为这种方法不考虑带宽的因素，所以很有效。&lt;/p&gt;
 &lt;p&gt;其中 Eb 是平均比特能量，它表示平均每个 bit 包含的能量。&lt;/p&gt;
+&lt;p&gt;信号的功率就等于符号中每个比特的功率 Eb × 每个符号所包含的比特数 fb（也就是比特速率）；噪声的能量可以用功率谱密度来计算，N0×B，代入信噪比的定义式，就有下面的换算公式：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="eq9" src="http://upload.wikimedia.org/math/3/5/3/353410b95506c2f45e069c58ff3d121b.png" /&gt;&lt;/p&gt;
+&lt;p&gt;P.S. 上面的公式左边使用的是载噪比 CNR，在抑制载波的调制方式中，等于信噪比 SNR。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;AWGN&lt;/h2&gt;
 &lt;hr /&gt;
