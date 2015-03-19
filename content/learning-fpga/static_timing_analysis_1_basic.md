@@ -1,8 +1,8 @@
 Title: 静态时序分析 STA 1 —— 基础知识
 Date: 2015-03-18
-Category: IC
+Category: FPGA
 Tags: STA
-Slug: static_timing_analysis_1_baisc
+Slug: static_timing_analysis_1_basic
 Author: Qian Gu
 Summary: 静态时序分析 STA 系列之 1，基础知识。
 
@@ -25,7 +25,7 @@ Summary: 静态时序分析 STA 系列之 1，基础知识。
 
 时钟信号要提供给整个电路的时序单元，所以时钟信号线非常长，并构成分布式的RC网路。它的延时与时钟线的长度、时序单元的负载电容、个数有关，由于时钟线长度及负载不同，会导致时钟信号到达相邻两个时序单元的时间不同，这个时间上的偏差就是 时钟偏移 `Skew`。如下图所示：
 
-![skew](/images/static-timing-analysis-1-baisc/skew.jpg)
+![skew](/images/static-timing-analysis-1-basic/skew.jpg)
 
 假设时钟信号达到两个 DFF 的延时分别为 Tc1 和 Tc2，用 Tskew 来表示它们之间的时钟偏移，则计算公式如下：
 
@@ -49,13 +49,13 @@ FPGA 在设计架构时，专门针对这种现象进行优化，采用全铜工
 
 理想的时钟信号是方波，但是实际中的时钟信号边沿不可能是瞬间变化的，是个斜坡，如下图所示：
 
-![clock](/images/static-timing-analysis-1-baisc/clock.jpg)
+![clock](/images/static-timing-analysis-1-basic/clock.jpg)
 
 时钟抖动 `Jitter` 的定义很多，最常见的有 3 种：
 
 + 周期抖动 `Period Jitter`
 
-    ![Period Jitter](/images/static-timing-analysis-1-baisc/period_jitter.jpg)
+    ![Period Jitter](/images/static-timing-analysis-1-basic/period_jitter.jpg)
 
     实际时钟信号周期与理想时钟周期的差值的变化。这是最早最直接的一种衡量抖动的方式，这个指标说明了时钟信号每个周期的变化。
 
@@ -63,7 +63,7 @@ FPGA 在设计架构时，专门针对这种现象进行优化，采用全铜工
 
 + 周期差抖动 `Cycle-to-cycle Jitter`
 
-    ![c2c_jitter](/images/static-timing-analysis-1-baisc/cycle_to_cycle_jitter.jpg)
+    ![c2c_jitter](/images/static-timing-analysis-1-basic/cycle_to_cycle_jitter.jpg)
 
     两个相邻时钟周期的差值的变化。根据定义可知，对周期抖动做一阶差分，就可以得到周期差抖动。
 
@@ -71,7 +71,7 @@ FPGA 在设计架构时，专门针对这种现象进行优化，采用全铜工
 
 + 相位抖动 `Phase Jitter`
 
-    ![phase_jitter](/images/static-timing-analysis-1-baisc/phase_jitter.jpg)
+    ![phase_jitter](/images/static-timing-analysis-1-basic/phase_jitter.jpg)
 
     一个时钟沿相对于基准对齐之后，经过一段时间后，与理想位置的偏差。这个指标说明了周期抖动在各个时期的累计效应。
 
@@ -83,7 +83,7 @@ FPGA 在设计架构时，专门针对这种现象进行优化，采用全铜工
 
 ### Duty Cycle Distortion
 
-![dcd](/images/static-timing-analysis-1-baisc/dcd.jpg)
+![dcd](/images/static-timing-analysis-1-basic/dcd.jpg)
 
 占空比失真，即时钟不对称，有脉冲的时间和无脉冲的时间发生了变化。DCD 会吞噬大量的时序裕量，造成数字信号的失真，使过零区间偏离理想的位置。DCD通常是由信号的上升沿和下降沿之间时序不同而造成的。
 

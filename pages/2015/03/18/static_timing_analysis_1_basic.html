@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>番茄工作法 总结 + 实践 - Qian's World</title>
+    <title>静态时序分析 STA 1 —— 基础知识 - Qian's World</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -14,11 +14,12 @@
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Qian's World" />
             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="番茄工作法 总结 + 实践"/>
-            <meta property="og:url" content="http://guqian110.github.io/pages/2014/11/02/the_pomodoro_technique_practices.html"/>
-            <meta property="og:description" content="总结 番茄工作法 的方法和实践。"/>
-            <meta property="article:published_time" content="2014-11-02" />
-            <meta property="article:section" content="Misc" />
+            <meta property="og:title" content="静态时序分析 STA 1 —— 基础知识"/>
+            <meta property="og:url" content="http://guqian110.github.io/pages/2015/03/18/static_timing_analysis_1_basic.html"/>
+            <meta property="og:description" content="静态时序分析 STA 系列之 1，基础知识。"/>
+            <meta property="article:published_time" content="2015-03-18" />
+            <meta property="article:section" content="FPGA" />
+            <meta property="article:tag" content="STA" />
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -53,13 +54,13 @@
                         <li >
                             <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
                         </li>
                         <li >
                             <a href="http://guqian110.github.io/category/linux.html">Linux</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="http://guqian110.github.io/category/misc.html">Misc</a>
                         </li>
                         <li >
@@ -79,18 +80,18 @@
         <div class="col-sm-9">
             <ol class="breadcrumb">
                 <li><a href="http://guqian110.github.io" title="Qian's World"><i class="fa fa-home fa-lg"></i></a></li>
-                <li><a href="http://guqian110.github.io/category/misc.html" title="Misc">Misc</a></li>
-                <li class="active">番茄工作法 总结 + 实践</li>
+                <li><a href="http://guqian110.github.io/category/fpga.html" title="FPGA">FPGA</a></li>
+                <li class="active">静态时序分析 STA 1 —— 基础知识</li>
             </ol>
 
     <section id="content">
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://guqian110.github.io/pages/2014/11/02/the_pomodoro_technique_practices.html"
+                    <a href="http://guqian110.github.io/pages/2015/03/18/static_timing_analysis_1_basic.html"
                        rel="bookmark"
-                       title="Permalink to 番茄工作法 总结 + 实践">
-                        番茄工作法 总结 + 实践
+                       title="Permalink to 静态时序分析 STA 1 —— 基础知识">
+                        静态时序分析 STA 1 —— 基础知识
                     </a>
                 </h1>
             </header>
@@ -100,118 +101,114 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-11-02T21:46:00"> Sun 02 November 2014</time>
+        <i class="fa fa-calendar"></i><time datetime="2015-03-18T00:00:00"> Wed 18 March 2015</time>
     </span>
 
 
 
+<span class="label label-default">Tags</span>
+	<a href="http://guqian110.github.io/tag/sta.html">STA</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>忙里偷闲，学习一下大名鼎鼎的 <strong>番茄工作法</strong>。</p>
-<h2>Intro</h2>
+                <p>静态时序分析（Static Timing）是数字 IC 设计中不可避免的话题，也是一个菜鸟成长必须掌握的技术。本文先总结 STA 中常见的定义、名词等。</p>
+<h2>Clock</h2>
 <hr />
-<p>番茄工作法 (<a href="http://en.wikipedia.org/wiki/Pomodoro_Technique">Pomodoro Technique</a>) 是由 Francesco Cirillo 创建的一种时间管理方法。他自己上大学时为了克服无法集中精力认真学习这个问题而发明了这种方法，后来他整理完成了一本书来介绍这种方法：</p>
-<p><a href="http://pomodorotechnique.com/book/">The Pomodoro Technique</a></p>
-<p>"Pomodoro Technique" 这个名字起源于一种厨房用的、番茄形状的计时器，其中 <code>Pomodoro</code> 是意大利语，意思是番茄。</p>
-<p>至于为什么是番茄工作法，而不是白菜工作法呢？这是因为 Francesco Cirillo 当时在厨房找到的那个计时器是番茄形状的 :P</p>
-<p>还有另外一本书，是另外一个人自己实践番茄工作法总结出来的经验，而且自己画了一些生动的插图和脑图在里面，很有帮助：</p>
-<p><a href="http://www.pomodoro-book.com/">Pomodoro Technique Illustrated</a></p>
+<p>时钟是数字电路的动力系统，可以说数字电路中最重要的信号就是时钟信号了。一般时钟信号的时序特性分为：</p>
+<ol>
+<li>
+<p>偏移 Skew</p>
+</li>
+<li>
+<p>抖动 Jitter</p>
+</li>
+<li>
+<p>占空比时钟 Duty Cycle Distortion</p>
+</li>
+</ol>
+<p>对于低速设计，基本不用考虑这些特征，但是对于高速设计，由于时钟本身造成的问题越来越普遍，因此有必要关注高速设计中的时序特性。</p>
+<h3>Skew</h3>
+<p>时钟信号要提供给整个电路的时序单元，所以时钟信号线非常长，并构成分布式的RC网路。它的延时与时钟线的长度、时序单元的负载电容、个数有关，由于时钟线长度及负载不同，会导致时钟信号到达相邻两个时序单元的时间不同，这个时间上的偏差就是 时钟偏移 <code>Skew</code>。如下图所示：</p>
+<p><img alt="skew" src="/images/static-timing-analysis-1-basic/skew.jpg" /></p>
+<p>假设时钟信号达到两个 DFF 的延时分别为 Tc1 和 Tc2，用 Tskew 来表示它们之间的时钟偏移，则计算公式如下：</p>
+<div class="highlight"><pre><span class="n">Tskew</span> <span class="o">=</span> <span class="n">Tc1</span> <span class="o">-</span> <span class="n">Tc2</span>
+</pre></div>
+
+
+<p>根据差值可以分为正偏移和负偏移：</p>
+<ul>
+<li>
+<p>当时钟到达 DFF1 的延时更大时，也就是 C1 &gt; C2 时，Tskew 为正</p>
+</li>
+<li>
+<p>当时钟到达 DFF2 的延时更大时，也就是 C1 &lt; C2 时，Tskew 为负</p>
+</li>
+</ul>
+<p>需要注意到是，时钟偏移永远存在，当其大到一定程度时，就会严重影响电路的时序。</p>
+<p>FPGA 在设计架构时，专门针对这种现象进行优化，采用全铜工艺和树状结构，并且设计了专用的时钟缓冲和驱动网络，这么做的目的就是尽量使时钟到达不同时序单元的路径一样长，从而使时钟偏移非常小，可以忽略不计。</p>
+<p>所以，<strong>Skew 问题的解决方法就是：设计中的主要信号应该走全局时钟网络。</strong></p>
+<p>即使采用了这样的设计，在实际电路中，时钟信号到达每个 DFF 的时间也不可能完全相等，Skew 是肯定存在的。所以 STA 仍然需要考虑该因素。在 PAR 之前，STA 只能根据设计的面积来粗略估计 Skew，在 PAR 之后，因为有了更具体的信息（线段长度、宽度、信号分布情况）STA 的估计值更加精确。</p>
+<h3>Jitter</h3>
+<p>理想的时钟信号是方波，但是实际中的时钟信号边沿不可能是瞬间变化的，是个斜坡，如下图所示：</p>
+<p><img alt="clock" src="/images/static-timing-analysis-1-basic/clock.jpg" /></p>
+<p>时钟抖动 <code>Jitter</code> 的定义很多，最常见的有 3 种：</p>
+<ul>
+<li>
+<p>周期抖动 <code>Period Jitter</code></p>
+<p><img alt="Period Jitter" src="/images/static-timing-analysis-1-basic/period_jitter.jpg" /></p>
+<p>实际时钟信号周期与理想时钟周期的差值的变化。这是最早最直接的一种衡量抖动的方式，这个指标说明了时钟信号每个周期的变化。</p>
+<p>因为这个差值是个随机变量，并且满足高斯分布，所以可以用期望和方差来描述。一般随机选择很多个周期，然后计算平均周期、标准差、峰峰值。标准差称为 “<code>RMS 抖动</code>”，峰峰值称为 “<code>Pk-Pk 周期抖动</code>”。知道 Pk-Pk 周期抖动，对于恰当配置系统和保持时间很有用。</p>
+</li>
+<li>
+<p>周期差抖动 <code>Cycle-to-cycle Jitter</code></p>
+<p><img alt="c2c_jitter" src="/images/static-timing-analysis-1-basic/cycle_to_cycle_jitter.jpg" /></p>
+<p>两个相邻时钟周期的差值的变化。根据定义可知，对周期抖动做一阶差分，就可以得到周期差抖动。</p>
+<p>这个差值也是一个服从高斯分布的随机变量。</p>
+</li>
+<li>
+<p>相位抖动 <code>Phase Jitter</code></p>
+<p><img alt="phase_jitter" src="/images/static-timing-analysis-1-basic/phase_jitter.jpg" /></p>
+<p>一个时钟沿相对于基准对齐之后，经过一段时间后，与理想位置的偏差。这个指标说明了周期抖动在各个时期的累计效应。</p>
+<p>因为需要累积一段时间，所以这个误差又称为 时间间隔误差（TIE, Timer Interval Error）。</p>
+</li>
+</ul>
+<p>由于 周期抖动 和 周期差抖动 是单个周期或者相邻周期的偏差，所以表征为短期抖动行为。而相位抖动需要累积一段时间，所以表征为长期抖动行为。</p>
+<p>时钟抖动的原因就是噪声。<strong>时钟抖动是永远存在的</strong>，当其大到可以和时钟周期相比拟的时候，会影响到设计，这样的抖动是不可接受的。</p>
+<h3>Duty Cycle Distortion</h3>
+<p><img alt="dcd" src="/images/static-timing-analysis-1-basic/dcd.jpg" /></p>
+<p>占空比失真，即时钟不对称，有脉冲的时间和无脉冲的时间发生了变化。DCD 会吞噬大量的时序裕量，造成数字信号的失真，使过零区间偏离理想的位置。DCD通常是由信号的上升沿和下降沿之间时序不同而造成的。</p>
 <p><br></p>
-<h2>Summary</h2>
-<p>首先，网上贴张别人总结好的 Mind Map (出处见水印)：</p>
-<p><img alt="mm" src="/images/the-pomodoro-technique-practices/mind_map.jpg" /></p>
-<p>番茄工作法非常简单，具有非常强的可操作性，这也是它能风靡世界的原因吧。</p>
-<p>番茄工作法一共包含 5 个步骤：</p>
-<p><img alt="five stage" src="/images/the-pomodoro-technique-practices/five_stages.png" /></p>
-<p>其中有一些必须遵守的法则：</p>
-<p><img alt="rules" src="/images/the-pomodoro-technique-practices/rules.png" /></p>
-<p>也可以用一张图总结出什么是番茄工作法：</p>
-<p><img alt="flow" src="/images/the-pomodoro-technique-practices/workflow.png" /></p>
-<p>综上，找一只笔和几张纸，列出要完成的工作，然后设定计时器，开始工作！就这么简单。</p>
-<p><br></p>
-<h2>My Practice</h2>
+<h2>Ohters</h2>
 <hr />
-<p>GTD 和 pomodoro 可以相互补充，达到最好的效果：</p>
-<p>GTD 侧重项目之间的管理，通过收集、处理、组织，使我们胸有成竹，做到 mind like water；Pomodoro 则侧重时间管理，每天到底应该如何提高效率，通过和自己约定的倒计时，把一个个行动落实，把握生命中的每一分钟，全力以赴我们心中的梦，不经历风雨怎么能见彩虹（不对...）</p>
-<h3>Tools</h3>
-<p><strong>番茄法的工具（5 个）：</strong></p>
-<ol>
-<li>A pen</li>
-<li>A Kitchen Timer</li>
-<li>Activity Inventory Sheet</li>
-<li>Todo Today Sheet</li>
-<li>Record</li>
-</ol>
-<p><strong>GTD 的工具：（6 个）：</strong></p>
-<ol>
-<li>Project List</li>
-<li>Next Action List</li>
-<li>Waiting For List</li>
-<li>Someday / Maybe List</li>
-<li>Calendar</li>
-<li>Reminder / Memo</li>
-</ol>
-<p>所以，综合一下两者的优势，就有了下面的组合：</p>
-<ol>
-<li>
-<p><strong>Project List</strong></p>
-<p>运用 GTD 的收集、整理的优势，把我们的长期目标放在这里。</p>
-</li>
-<li>
-<p><strong>Someday / Maybe List</strong></p>
-<p>这里放目前不紧急，将来某个时候会做的事。</p>
-</li>
-<li>
-<p><strong>Activity Inventory List</strong></p>
-<p>短期目标</p>
-</li>
-<li>
-<p><strong>Todo Today List</strong></p>
-<p>计划每天做的事，一定要尽力完成（因为这是我们作出的承诺）。</p>
-</li>
-<li>
-<p><strong>Calendar</strong></p>
-<p>有日历帮助，我们可以更好地计划、实现一件复杂的事。</p>
-</li>
-<li>
-<p><strong>Reminder / Memo</strong></p>
-<p>记录生活中的小事、杂事，某时的突发奇想。</p>
-</li>
-<li>
-<p><strong>A Pomodoro</strong></p>
-<p>设置一个番茄时间，开始做！</p>
-</li>
-</ol>
-<h3>Tips</h3>
-<ul>
-<li>
-<p>番茄的大小，根据我们自己的实际情况而定，不过一开始可以用默认的 25 mins，过一段时间后如果真的不适合自己再进行修改。</p>
-</li>
-<li>
-<p>Todo Today List 内容一定要实际可行，根据自己平时完成的番茄总量、预估计任务量来安排，尽最大努力完成清单，因为这是我们对自己的承诺。</p>
-</li>
-<li>
-<p>按时休息。有时候我们可能正在起劲的时候，番茄钟响了，这时候最好停下手头的工作（即使你正在编程的紧要关头，文思如泉涌，有个新想法正想试试），原因很简单，避免长时间的工作，现在的休息是为了之后更长时间、更有效率地工作。即使有个好点子，先把它写下来，等休息好了再来评估、实现这个想法。</p>
-</li>
-<li>
-<p>一定要严格遵守约定。类似 “破窗效应”，一旦我们有某次打破了番茄的规定，那么就很容易打破第二次、第三次。失去了约束力，这个方法也就没有作用了。</p>
-</li>
-<li>
-<p>考研的苦逼日子最大的收获就是学会了用 calendar + checklist 来规划自己的学习生活。计划好一个长期目标，精确到每天的任务，这样每天结束时，如果完成了心情真是不要太开心，如果没有完成则对第二天也是一个激励，要提高效率把前一天的补上。我的这个 “土” 方法现在看来就是 GTD + Pomodoro 的简化版，是时候好好改进一下了。</p>
-</li>
-</ul>
-<h3>TODO</h3>
-<ul>
-<li>
-<p>Self Observation 非常重要！每天坚持完，留一个番茄来回顾自己这一天的收获和效率情况，这样我们会对自己有个清楚的认识。</p>
-<ul>
-<li>回顾收获</li>
-<li>制定第二天的计划</li>
-<li>分析、提高自己的效率</li>
-</ul>
-</li>
-</ul>
+<p>除去时钟信号，还有一些其他的相关定义。</p>
+<h3>Fan-out/Fan-out</h3>
+<p><strong>Fan-out</strong></p>
+<p>在数字电路中，逻辑门相互连接，组成更加复杂的电路，所以大多数逻辑门的输出端都连接着多个别的单元的输入。所以需要一个术语来描述逻辑门的驱动能力的大小，也就是扇出 <code>Fan-out</code>。最大扇出数 <code>maximum fan-out</code> 定义为一个逻辑门可以驱动的同类逻辑门的最大数。</p>
+<blockquote>
+<p>大多数 TTL 逻辑门能够为 10 个其他数字门或驱动器提供信号。因而，一个典型的 TTL 逻辑门有 10 个扇出信号。</p>
+<p>在一些数字系统中，必须有一个单一的 TTL 逻辑门来驱动 10 个以上的其他门或驱动器。这种情况下，被称为缓冲器（buf）的驱动器可以用在 TTL 逻辑门与它必须驱动的多重驱动器之间。这种类型的缓冲器有 25 至 30 个扇出信号。逻辑反向器（非门）在大多数数字电路中能够辅助这一功能。</p>
+<p><strong>模块的扇出</strong> 是指模块的直属下层模块的个数。一般认为，设计得好的系统平均扇出是 3 或 4。一个模块的扇出数过大或过小都不理想，过大比过小更严重。一般认为扇出的上限不超过 7。扇出过大意味着管理模块过于复杂，需要控制和协调过多的下级。解决的办法是适当增加中间层次。一个模块的扇入是指有多少个上级模块调用它。扇入越大，表示该模块被更多的上级模块共享。这当然是我们所希望的。但是不能为了获得高扇入而不惜代价，例如把彼此无关的功能凑在一起构成一个模块，虽然扇入数高了，但这样的模块内聚程度必然低。这是我们应避免的。</p>
+<p>设计得好的系统，上层模块有较高的扇出，下层模块有较高的扇入。其结构图像清真寺的塔，上面尖，中间宽，下面小。</p>
+</blockquote>
+<p><strong>Fan-in</strong></p>
+<p>与扇出相对的概念是 扇入 <code>Fan-in</code>，它描述的是一个逻辑门能够处理的外部输入的能力。扇入大的逻辑门的速度要比扇入小的慢，原因是增加扇入相当于增加逻辑门的输入电容。我们可以用使用多级逻辑门来代替高扇入的设计。</p>
+<h3>Setup/Hold/Recovery/Removal Time</h3>
+<p>建立/保持时间是在同步设计中的概念：</p>
+<p>建立时间 <code>setup time</code> ：触发器在时钟信号上升沿到来以前，要求输入数据必须保持稳定不变一段时间，这段时间就是器件需要的建立时间。如不满足 setup time，这个数据就不能被这一时钟打入触发器。</p>
+<p>保持时间 <code>hold time</code> ：触发器在时钟信号上升沿到来以后，要求数据保持稳定不变一段时间，以便能够稳定读取，这段时间就是器件需要的保持时间。如果不满足 hold time，数据同样不能被打入触发器。</p>
+<p>恢复/撤销时间是在异步设计中的概念：</p>
+<p>恢复时间 <code>recovery time</code> : 对于异步信号（比如异步复位/置位），信号变无效的边沿和下一个时钟沿之间必须满足一个最小的间隔。其意义在于，如果保证不了这个最小时间，也就是异步信号无效边离时钟边沿太近了，异步信号解除（无效）之后，没有给 DFF 足够的时间来恢复（recovery）到正常状态，那么就不能保证在时钟沿到来时 DFF 可以正常工作。</p>
+<p>撤销时间 <code>removal time</code> : 对于异步信号（比如异步复位/置位），信号变有效的边沿和前一个时钟沿之间必须满足一个最小的间隔。其意义在于，如果保证不了这个最小时间，也就是异步信号的有效沿离时钟太近了，在时钟信号去除（无效）之前，异步信号提前有效了，可能会造成 DFF 处于不确定状态。</p>
+<p><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">更加详细的总结：锁存器 Latch v.s. 触发器 Flip-Flop</a>。</p>
+<p><br></p>
+<h2>Ref</h2>
+<p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发实用教程</a></p>
+<p><a href="http://www.ictest8.com/debug/rf_pcb.htm">RF类IC demo 板loadboard设计参考资料之时钟部分</a></p>
+<p><a href="http://www.ti.com.cn/cn/lit/an/zhca492/zhca492.pdf">正确理解时钟器件的抖动性能</a></p>
+<p><a href="http://m.ee.ofweek.com/2014-10/ART-11000-2813-28889698.html">技术解析：详解各种抖动技术规范</a></p>
+<p><a href="http://www.elecfans.com/article/85/126/2008/2008112718522.html">时间抖动(jitter)的概念及其分析方法</a></p>
+<p><a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">锁存器 Latch v.s. 触发器 Flip-Flop</a></p>
+<p><a href="http://blog.csdn.net/shanghaiqianlun/article/details/8685047">TimeQuest定时分析的基本概念</a></p>
             </div>
             <!-- /.entry-content -->
     <hr />
@@ -221,8 +218,8 @@
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
-            var disqus_identifier = 'the_pomodoro_technique_practices';
-            var disqus_url = 'http://guqian110.github.io/pages/2014/11/02/the_pomodoro_technique_practices.html';
+            var disqus_identifier = 'static_timing_analysis_1_basic';
+            var disqus_url = 'http://guqian110.github.io/pages/2015/03/18/static_timing_analysis_1_basic.html';
             var disqus_config = function () {
                 this.language = "zh";
             };

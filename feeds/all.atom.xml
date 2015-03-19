@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-03-18T00:00:00+08:00</updated><entry><title>静态时序分析 STA 1 —— 基础知识</title><link href="http://guqian110.github.io/pages/2015/03/18/static_timing_analysis_1_baisc.html" rel="alternate"></link><updated>2015-03-18T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-03-18:pages/2015/03/18/static_timing_analysis_1_baisc.html</id><summary type="html">&lt;p&gt;静态时序分析（Static Timing）是数字 IC 设计中不可避免的话题，也是一个菜鸟成长必须掌握的技术。本文先总结 STA 中常见的定义、名词等。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-03-18T00:00:00+08:00</updated><entry><title>静态时序分析 STA 1 —— 基础知识</title><link href="http://guqian110.github.io/pages/2015/03/18/static_timing_analysis_1_basic.html" rel="alternate"></link><updated>2015-03-18T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-03-18:pages/2015/03/18/static_timing_analysis_1_basic.html</id><summary type="html">&lt;p&gt;静态时序分析（Static Timing）是数字 IC 设计中不可避免的话题，也是一个菜鸟成长必须掌握的技术。本文先总结 STA 中常见的定义、名词等。&lt;/p&gt;
 &lt;h2&gt;Clock&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;时钟是数字电路的动力系统，可以说数字电路中最重要的信号就是时钟信号了。一般时钟信号的时序特性分为：&lt;/p&gt;
@@ -17,7 +17,7 @@
 &lt;p&gt;对于低速设计，基本不用考虑这些特征，但是对于高速设计，由于时钟本身造成的问题越来越普遍，因此有必要关注高速设计中的时序特性。&lt;/p&gt;
 &lt;h3&gt;Skew&lt;/h3&gt;
 &lt;p&gt;时钟信号要提供给整个电路的时序单元，所以时钟信号线非常长，并构成分布式的RC网路。它的延时与时钟线的长度、时序单元的负载电容、个数有关，由于时钟线长度及负载不同，会导致时钟信号到达相邻两个时序单元的时间不同，这个时间上的偏差就是 时钟偏移 &lt;code&gt;Skew&lt;/code&gt;。如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="skew" src="/images/static-timing-analysis-1-baisc/skew.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="skew" src="/images/static-timing-analysis-1-basic/skew.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;假设时钟信号达到两个 DFF 的延时分别为 Tc1 和 Tc2，用 Tskew 来表示它们之间的时钟偏移，则计算公式如下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Tskew&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Tc1&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;Tc2&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -38,24 +38,24 @@
 &lt;p&gt;即使采用了这样的设计，在实际电路中，时钟信号到达每个 DFF 的时间也不可能完全相等，Skew 是肯定存在的。所以 STA 仍然需要考虑该因素。在 PAR 之前，STA 只能根据设计的面积来粗略估计 Skew，在 PAR 之后，因为有了更具体的信息（线段长度、宽度、信号分布情况）STA 的估计值更加精确。&lt;/p&gt;
 &lt;h3&gt;Jitter&lt;/h3&gt;
 &lt;p&gt;理想的时钟信号是方波，但是实际中的时钟信号边沿不可能是瞬间变化的，是个斜坡，如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="clock" src="/images/static-timing-analysis-1-baisc/clock.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="clock" src="/images/static-timing-analysis-1-basic/clock.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;时钟抖动 &lt;code&gt;Jitter&lt;/code&gt; 的定义很多，最常见的有 3 种：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;周期抖动 &lt;code&gt;Period Jitter&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Period Jitter" src="/images/static-timing-analysis-1-baisc/period_jitter.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Period Jitter" src="/images/static-timing-analysis-1-basic/period_jitter.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;实际时钟信号周期与理想时钟周期的差值的变化。这是最早最直接的一种衡量抖动的方式，这个指标说明了时钟信号每个周期的变化。&lt;/p&gt;
 &lt;p&gt;因为这个差值是个随机变量，并且满足高斯分布，所以可以用期望和方差来描述。一般随机选择很多个周期，然后计算平均周期、标准差、峰峰值。标准差称为 “&lt;code&gt;RMS 抖动&lt;/code&gt;”，峰峰值称为 “&lt;code&gt;Pk-Pk 周期抖动&lt;/code&gt;”。知道 Pk-Pk 周期抖动，对于恰当配置系统和保持时间很有用。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;周期差抖动 &lt;code&gt;Cycle-to-cycle Jitter&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="c2c_jitter" src="/images/static-timing-analysis-1-baisc/cycle_to_cycle_jitter.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="c2c_jitter" src="/images/static-timing-analysis-1-basic/cycle_to_cycle_jitter.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;两个相邻时钟周期的差值的变化。根据定义可知，对周期抖动做一阶差分，就可以得到周期差抖动。&lt;/p&gt;
 &lt;p&gt;这个差值也是一个服从高斯分布的随机变量。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;相位抖动 &lt;code&gt;Phase Jitter&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="phase_jitter" src="/images/static-timing-analysis-1-baisc/phase_jitter.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="phase_jitter" src="/images/static-timing-analysis-1-basic/phase_jitter.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;一个时钟沿相对于基准对齐之后，经过一段时间后，与理想位置的偏差。这个指标说明了周期抖动在各个时期的累计效应。&lt;/p&gt;
 &lt;p&gt;因为需要累积一段时间，所以这个误差又称为 时间间隔误差（TIE, Timer Interval Error）。&lt;/p&gt;
 &lt;/li&gt;
@@ -63,7 +63,7 @@
 &lt;p&gt;由于 周期抖动 和 周期差抖动 是单个周期或者相邻周期的偏差，所以表征为短期抖动行为。而相位抖动需要累积一段时间，所以表征为长期抖动行为。&lt;/p&gt;
 &lt;p&gt;时钟抖动的原因就是噪声。&lt;strong&gt;时钟抖动是永远存在的&lt;/strong&gt;，当其大到可以和时钟周期相比拟的时候，会影响到设计，这样的抖动是不可接受的。&lt;/p&gt;
 &lt;h3&gt;Duty Cycle Distortion&lt;/h3&gt;
-&lt;p&gt;&lt;img alt="dcd" src="/images/static-timing-analysis-1-baisc/dcd.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dcd" src="/images/static-timing-analysis-1-basic/dcd.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;占空比失真，即时钟不对称，有脉冲的时间和无脉冲的时间发生了变化。DCD 会吞噬大量的时序裕量，造成数字信号的失真，使过零区间偏离理想的位置。DCD通常是由信号的上升沿和下降沿之间时序不同而造成的。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Ohters&lt;/h2&gt;

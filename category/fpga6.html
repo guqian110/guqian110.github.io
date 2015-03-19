@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>番茄工作法 总结 + 实践 - Qian's World</title>
+    <title>FPGA - Qian's World</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -13,12 +13,10 @@
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Qian's World" />
-            <meta property="og:type" content="article"/>
-            <meta property="og:title" content="番茄工作法 总结 + 实践"/>
-            <meta property="og:url" content="http://guqian110.github.io/pages/2014/11/02/the_pomodoro_technique_practices.html"/>
-            <meta property="og:description" content="总结 番茄工作法 的方法和实践。"/>
-            <meta property="article:published_time" content="2014-11-02" />
-            <meta property="article:section" content="Misc" />
+            <meta property="og:type" content="website"/>
+            <meta property="og:title" content="Qian's World"/>
+            <meta property="og:url" content="http://guqian110.github.io"/>
+            <meta property="og:description" content="Qian's World"/>
 
     <!-- Bootstrap -->
         <link rel="stylesheet" href="http://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
@@ -53,13 +51,13 @@
                         <li >
                             <a href="http://guqian110.github.io/category/cc.html">C/c++</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="http://guqian110.github.io/category/fpga.html">Fpga</a>
                         </li>
                         <li >
                             <a href="http://guqian110.github.io/category/linux.html">Linux</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="http://guqian110.github.io/category/misc.html">Misc</a>
                         </li>
                         <li >
@@ -77,173 +75,54 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-            <ol class="breadcrumb">
-                <li><a href="http://guqian110.github.io" title="Qian's World"><i class="fa fa-home fa-lg"></i></a></li>
-                <li><a href="http://guqian110.github.io/category/misc.html" title="Misc">Misc</a></li>
-                <li class="active">番茄工作法 总结 + 实践</li>
-            </ol>
+    <ol class="breadcrumb">
+        <li><a href="http://guqian110.github.io" title="Qian's World"><i class="fa fa-home fa-lg"></i></a></li>
+        <li><a href="http://guqian110.github.io/" title="Qian's World Categories">Categories</a></li>
+        <li class="active">FPGA</li>
+    </ol>
 
-    <section id="content">
-        <article>
-            <header class="page-header">
-                <h1>
-                    <a href="http://guqian110.github.io/pages/2014/11/02/the_pomodoro_technique_practices.html"
-                       rel="bookmark"
-                       title="Permalink to 番茄工作法 总结 + 实践">
-                        番茄工作法 总结 + 实践
-                    </a>
-                </h1>
-            </header>
-            <div class="entry-content">
-                <div class="panel">
-                    <div class="panel-body">
+            <article>
+                <h2><a href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & Modelsim</a></h2>
+                    <div class="well well-sm">
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-11-02T21:46:00"> Sun 02 November 2014</time>
+        <i class="fa fa-calendar"></i><time datetime="2014-03-27T20:52:00"> Thu 27 March 2014</time>
     </span>
 
 
 
+<span class="label label-default">Tags</span>
+	<a href="http://guqian110.github.io/tag/linux.html">Linux</a>
+        /
+	<a href="http://guqian110.github.io/tag/ise.html">ISE</a>
+        /
+	<a href="http://guqian110.github.io/tag/modelsim.html">Modelsim</a>
     
 </footer><!-- /.post-info -->                    </div>
+                <div class="summary"><p>从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来，总结一下 ISE 的安装配置过程。</p>
+                    <a class="btn btn-default btn-xs" href="http://guqian110.github.io/pages/2014/03/27/install_ise_modelsim_on_ubuntu.html">more ...</a>
                 </div>
-                <p>忙里偷闲，学习一下大名鼎鼎的 <strong>番茄工作法</strong>。</p>
-<h2>Intro</h2>
-<hr />
-<p>番茄工作法 (<a href="http://en.wikipedia.org/wiki/Pomodoro_Technique">Pomodoro Technique</a>) 是由 Francesco Cirillo 创建的一种时间管理方法。他自己上大学时为了克服无法集中精力认真学习这个问题而发明了这种方法，后来他整理完成了一本书来介绍这种方法：</p>
-<p><a href="http://pomodorotechnique.com/book/">The Pomodoro Technique</a></p>
-<p>"Pomodoro Technique" 这个名字起源于一种厨房用的、番茄形状的计时器，其中 <code>Pomodoro</code> 是意大利语，意思是番茄。</p>
-<p>至于为什么是番茄工作法，而不是白菜工作法呢？这是因为 Francesco Cirillo 当时在厨房找到的那个计时器是番茄形状的 :P</p>
-<p>还有另外一本书，是另外一个人自己实践番茄工作法总结出来的经验，而且自己画了一些生动的插图和脑图在里面，很有帮助：</p>
-<p><a href="http://www.pomodoro-book.com/">Pomodoro Technique Illustrated</a></p>
-<p><br></p>
-<h2>Summary</h2>
-<p>首先，网上贴张别人总结好的 Mind Map (出处见水印)：</p>
-<p><img alt="mm" src="/images/the-pomodoro-technique-practices/mind_map.jpg" /></p>
-<p>番茄工作法非常简单，具有非常强的可操作性，这也是它能风靡世界的原因吧。</p>
-<p>番茄工作法一共包含 5 个步骤：</p>
-<p><img alt="five stage" src="/images/the-pomodoro-technique-practices/five_stages.png" /></p>
-<p>其中有一些必须遵守的法则：</p>
-<p><img alt="rules" src="/images/the-pomodoro-technique-practices/rules.png" /></p>
-<p>也可以用一张图总结出什么是番茄工作法：</p>
-<p><img alt="flow" src="/images/the-pomodoro-technique-practices/workflow.png" /></p>
-<p>综上，找一只笔和几张纸，列出要完成的工作，然后设定计时器，开始工作！就这么简单。</p>
-<p><br></p>
-<h2>My Practice</h2>
-<hr />
-<p>GTD 和 pomodoro 可以相互补充，达到最好的效果：</p>
-<p>GTD 侧重项目之间的管理，通过收集、处理、组织，使我们胸有成竹，做到 mind like water；Pomodoro 则侧重时间管理，每天到底应该如何提高效率，通过和自己约定的倒计时，把一个个行动落实，把握生命中的每一分钟，全力以赴我们心中的梦，不经历风雨怎么能见彩虹（不对...）</p>
-<h3>Tools</h3>
-<p><strong>番茄法的工具（5 个）：</strong></p>
-<ol>
-<li>A pen</li>
-<li>A Kitchen Timer</li>
-<li>Activity Inventory Sheet</li>
-<li>Todo Today Sheet</li>
-<li>Record</li>
-</ol>
-<p><strong>GTD 的工具：（6 个）：</strong></p>
-<ol>
-<li>Project List</li>
-<li>Next Action List</li>
-<li>Waiting For List</li>
-<li>Someday / Maybe List</li>
-<li>Calendar</li>
-<li>Reminder / Memo</li>
-</ol>
-<p>所以，综合一下两者的优势，就有了下面的组合：</p>
-<ol>
-<li>
-<p><strong>Project List</strong></p>
-<p>运用 GTD 的收集、整理的优势，把我们的长期目标放在这里。</p>
-</li>
-<li>
-<p><strong>Someday / Maybe List</strong></p>
-<p>这里放目前不紧急，将来某个时候会做的事。</p>
-</li>
-<li>
-<p><strong>Activity Inventory List</strong></p>
-<p>短期目标</p>
-</li>
-<li>
-<p><strong>Todo Today List</strong></p>
-<p>计划每天做的事，一定要尽力完成（因为这是我们作出的承诺）。</p>
-</li>
-<li>
-<p><strong>Calendar</strong></p>
-<p>有日历帮助，我们可以更好地计划、实现一件复杂的事。</p>
-</li>
-<li>
-<p><strong>Reminder / Memo</strong></p>
-<p>记录生活中的小事、杂事，某时的突发奇想。</p>
-</li>
-<li>
-<p><strong>A Pomodoro</strong></p>
-<p>设置一个番茄时间，开始做！</p>
-</li>
-</ol>
-<h3>Tips</h3>
-<ul>
-<li>
-<p>番茄的大小，根据我们自己的实际情况而定，不过一开始可以用默认的 25 mins，过一段时间后如果真的不适合自己再进行修改。</p>
-</li>
-<li>
-<p>Todo Today List 内容一定要实际可行，根据自己平时完成的番茄总量、预估计任务量来安排，尽最大努力完成清单，因为这是我们对自己的承诺。</p>
-</li>
-<li>
-<p>按时休息。有时候我们可能正在起劲的时候，番茄钟响了，这时候最好停下手头的工作（即使你正在编程的紧要关头，文思如泉涌，有个新想法正想试试），原因很简单，避免长时间的工作，现在的休息是为了之后更长时间、更有效率地工作。即使有个好点子，先把它写下来，等休息好了再来评估、实现这个想法。</p>
-</li>
-<li>
-<p>一定要严格遵守约定。类似 “破窗效应”，一旦我们有某次打破了番茄的规定，那么就很容易打破第二次、第三次。失去了约束力，这个方法也就没有作用了。</p>
-</li>
-<li>
-<p>考研的苦逼日子最大的收获就是学会了用 calendar + checklist 来规划自己的学习生活。计划好一个长期目标，精确到每天的任务，这样每天结束时，如果完成了心情真是不要太开心，如果没有完成则对第二天也是一个激励，要提高效率把前一天的补上。我的这个 “土” 方法现在看来就是 GTD + Pomodoro 的简化版，是时候好好改进一下了。</p>
-</li>
-</ul>
-<h3>TODO</h3>
-<ul>
-<li>
-<p>Self Observation 非常重要！每天坚持完，留一个番茄来回顾自己这一天的收获和效率情况，这样我们会对自己有个清楚的认识。</p>
-<ul>
-<li>回顾收获</li>
-<li>制定第二天的计划</li>
-<li>分析、提高自己的效率</li>
-</ul>
-</li>
-</ul>
-            </div>
-            <!-- /.entry-content -->
-    <hr />
-    <section class="comments" id="comments">
-        <h2>Comments</h2>
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-            var disqus_shortname = 'chiengu'; // required: replace example with your forum shortname
-            var disqus_identifier = 'the_pomodoro_technique_practices';
-            var disqus_url = 'http://guqian110.github.io/pages/2014/11/02/the_pomodoro_technique_practices.html';
-            var disqus_config = function () {
-                this.language = "zh";
-            };
+            </article>
+            <hr/>
 
-            /* * * DON'T EDIT BELOW THIS LINE * * */
-            (function () {
-                var dsq = document.createElement('script');
-                dsq.type = 'text/javascript';
-                dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
-            Disqus.</a></noscript>
-        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-    </section>
-        </article>
-    </section>
-
+    <ul class="pagination">
+            <li class="prev"><a href="http://guqian110.github.io/category/fpga5.html">&laquo;</a>
+            </li>
+                <li class=""><a
+                        href="http://guqian110.github.io/category/fpga.html">1</a></li>
+                <li class=""><a
+                        href="http://guqian110.github.io/category/fpga2.html">2</a></li>
+                <li class=""><a
+                        href="http://guqian110.github.io/category/fpga3.html">3</a></li>
+                <li class=""><a
+                        href="http://guqian110.github.io/category/fpga4.html">4</a></li>
+                <li class=""><a
+                        href="http://guqian110.github.io/category/fpga5.html">5</a></li>
+                <li class="active"><a
+                        href="http://guqian110.github.io/category/fpga6.html">6</a></li>
+            <li class="next disabled"><a href="#">&raquo;</a></li>
+    </ul>
         </div>
         <div class="col-sm-3" id="aboutme">
 <p>
