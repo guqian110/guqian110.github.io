@@ -103,7 +103,7 @@ system synchronous SDR 应用示例如下图：
 
 所谓 Source Synchronous Inputs 其实就是指 “发送端重新生成一个时钟信号，并且将数据和时钟信号有着相似的布线，两者的延时基本相同，在接收数据的 FPGA 端，使用这个时钟来捕获这个数据”。布线延时和时钟倾斜不再是限制这种接口工作速度的因素，所以这种接口一般应用在双倍数据速率的 DDR 中。
 
-source synchronous SDR 应用示例如下图：
+source synchronous DDR 应用示例如下图：
 
 ![source synchronous SDR](/images/static-timing-analysis-2-xilinx-sta/source_synchronous_in_ddr.png)
 
@@ -330,7 +330,7 @@ OFFET OUT 定义了输出数据和将该数据发送到输出管脚的时钟之�
 
 **约束方法：**
 
-**1. 为输出时钟定义一个时钟名（TNM）来分组、，这个时钟组包含了所有被这个时钟触发的输出寄存器**
+**1. 为输出时钟定义一个时钟名（TNM）来分组，这个时钟组包含了所有被这个时钟触发的输出寄存器**
 
 **2. 定义接口的全局 OFFSET OUT 约束**
 
