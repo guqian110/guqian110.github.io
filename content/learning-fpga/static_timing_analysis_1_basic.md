@@ -132,6 +132,128 @@ FPGA 在设计架构时，专门针对这种现象进行优化，采用全铜工
 
 <br>
 
+## STA Intro
+* * *
+
+[STA 的 wiki][wiki] 已经说的很明白了，下面的内容基本就是引用和翻译：
+
+> Static timing analysis (STA) is a method of computing the expected timing of a digital circuit without requiring simulation.
+>
+> High-performance integrated circuits have traditionally been characterized by the clock frequency at which they operate. Gauging the ability of a circuit to operate at the specified speed requires an ability to measure, during the design process, its delay at numerous steps. Moreover, delay calculation must be incorporated into the inner loop of timing optimizers at various phases of design, such as logic synthesis, layout (placement and routing), and in in-place optimizations performed late in the design cycle. While such timing measurements can theoretically be performed using a rigorous circuit simulation, such an approach is liable to be too slow to be practical. Static timing analysis plays a vital role in facilitating the fast and reasonably accurate measurement of circuit timing. The speedup comes from the use of simplified timing models and by mostly ignoring logical interactions in circuits. It has become a mainstay of design over the last few decades.
+
+### Definitions
+
+STA 中的一些术语定义如下：
+
++ `timing path`
+
+    [FPGA STA(三) --- STA的基本概念][blog1] 中说的很明白：
+
+    > 在做 STA 时，首先要把电路分解为一条条的 timing path。实际上我们也可以把 timing path 称为 data path，其本质就是指信号传播的途径。每一条 timing path 都具有一个起始点和一个终点。起始点是指电路中信号被时钟沿锁存的点；而信号经过一系列的组合逻辑的通道或者走线后被另外一个时钟沿捕获，这个点被称为终点。信号从起始点到终点所经过的通道就被称为 timing path。
+    > 
+    > 起点有两种：
+    >
+    > + 时序器件的 时钟输入端
+    >
+    > + 电路的 输入端口
+    > 
+    > 终点也有两种：
+    > 
+    > + 时序器件的 数据输入端
+    > 
+    > + 电路的 输出端口
+    > 
+    > 输入和输出排列组合一共就有 4 种 path：
+    > 
+    > 1. 电路输入端口  ->  触发器的数据D端 (Pad-to-Setup)
+    > 
+    > 2. 触发器的clk端  ->  触发器的数据D端 (Clock-to-Setup)
+    > 
+    > 3. 触发器的clk端  ->  电路输出端口 (Clock-to-Pad)
+    > 
+    > 4. 电路输入端口  ->  电路输出端口 (Pad-to-Pad)
+    > 
+    > 如下图所示：
+    > 
+    > ![path](/images/static-timing-analysis-2-xilinx-sta/timing_path.jpg)
+
++ `critical path`
+
+    关键路径：从输入到输出，延时最大的那条路径称为 critical path。关键路径是系统中延时最大的路径，它决定了系统所能达到的最大时钟频率。
+
++ `arrival time`
+
+    到达时间：信号到达某个特定位置所消耗的时间。一般将时钟信号到达的时刻作为参考的 0 时刻，为了计算到达时间，需要对路径中的所有组件的延时都进行计算。
+
++ `required time`
+
+    需求时间：所能容忍的路径最大延时，也就是信号到达的最晚的时间。如果路径上的延时再大一些，则必须降低时钟频率，否则会产生 setup/hold time violation。
+
++ `slack`
+
+    时序裕量：`slack = required time - arrival time`。如果计算出某条路径的 slack 是正数，说明这条路径的时延是满足要求的；如果计算出某条路径的 slack 是负数，则表示路径上的延时太大了，必须做出修改（修改设计 or 修改约束 or 换芯片），否则包含它的电路不能以预期的频率工作。
+
+### Purpose
+
+在同步设计中，数据的流动是统一步伐的，即时钟信号每改变一次，数据跟随改变一次。这种运作方式是基于同步器件（DFF 或者 Latch）来实现的，这类器件以时钟信号作为指示，将其输入端的数据复制到输出端。在同步设计中只存在两种时序错误：
+
++ setup time violation
+
+    输入数据和时钟的关系不满足 setup time 的要求，即在时钟有效沿之前，输入数据没有保持稳定足够长的时间，数据将不能被这个时钟沿记录下来。
+
++ hold time violation
+
+    输入数据和时钟的关系不满足 hold time 的要求，即在时钟有效沿之后，输入数据没有保持稳定足够长的时间，数据将不能被时钟信号记录下来。
+
+导致数据和时钟不同步的原因很多，比如数据本身和时钟不同步、或者是电路进行了不同的操作，器件的温度、电压、制造工艺等因素也会产生影响。
+
+**静态时序分析 STA 的主要目的是在上述可能的电路偏移情况存在的情况下，验证所有信号能够准时到达，并保证电路的正常功能。**
+
+[Xilinx FPGA开发实用教程][book1]：
+
+> 工作频率对数字电路而言至关重要。提高工作频率意味着更强大的处理能力，但是也带来了时序瓶颈：时序冲突的概率变大，电路的稳定性降低。所以为了使电路的性能达到设计的预期目标，并满足电路工作环境的要求，必须对一个电路设计进行时序、面积、负载等多方面的约束，并自始至终使用这些约束来驱动EDA软件工作。
+> 
+> ISE 具有一定的自动优化能力，对于一般的低速设计（处理时钟不超过100MHz），基本上不需要时序方面的任何手动分析和处理；但是对于高速和大规模设计，需要设计人员自行添加时序方面的控制和处理，通过多次反复操作，根据反馈结果逐步调整设定，直到满足要求为止。
+>
+> 以前小规模FPGA设计，只需要做动态的门级时序仿真就课同时完成逻辑功能验证和时序验证；随着FPGA设计规模和速度的提升，有必要将逻辑功能验证和时序验证分开：首先，逻辑功能的正确性，可以通过RTL级或者门级的功能仿真来验证；其次，时序分析通过STA（Static Timing Analysis，静态时序分析）验证。
+> 
+> 时序分析的主要作用就是查看FPGA内部逻辑和布线的延迟，验证其是否满足设计者的约束。
+> 
+> + 确定芯片最高工作频率
+> 
+>   控制工程的综合、映射、布局布线等关键环节，减少逻辑和布线的延迟，从而尽可能提高工作频率。一般情况下，处理时钟高于100MHz的时候，必须添加合理的时序约束文件。
+> 
+> + 检查时序约束是否满足
+> 
+>   检查目标模块是否满足约束，若不满足，通过时序分析器定位程序中不满足的部分，并给出具体原因，然后设计人员修改程序，直到满足约束。
+> 
+> + 分析时钟质量
+> 
+>   当采用了全局时钟等优质资源后，仍然不满足目标约束，则需要降低所约束的时钟频率。
+> 
+> + 确定分配引脚的特性
+> 
+>   通过时序分析可以指定I/O引脚所支持的接口标准、接口速率和其他电气特性。
+>
+> **STA的目的就是要保证 DUT（Device Under Test）中所有的路径满足内部时序单位对 setup time 和 hold
+ time 的要求。信号可以及时的从任一时序路径的起点传递到终点，同时要求在电路正常工作所需的时间内保持恒定。**
+
+### Theory
+
+STA 是基于前面介绍的时序路径的，在分析时，计算时序路径上数据信号的到达时间和要求时间的差值，以判断是否存在违反设计规则的错误。
+
+    Slack = Trequired_time - Tarrival_time
+
+如果时序裕量 Slack 为正，表示满足时序，负值表示不满足时序。STA 按照上式分析设计中所有路径，如果 Slack为负值，则该路径为影响设计的关键路径，需要修改设计以达到时序要求。
+
+STA 是通过“穷举法”抽取整个设计电路的所有时序路径，按照约束条件分析电路中是否有违反设计规则的问题，并计算出设计的最高频率。
+
+[wiki]: http://en.wikipedia.org/wiki/Static_timing_analysis
+[book1]: http://book.douban.com/subject/11523088/
+[blog1]: http://blog.sina.cn/dpool/blog/s/blog_72c14a3d01013tpi.html?type=-1
+
+<br>
+
 ## Ref
 
 [Xilinx FPGA 开发实用教程](http://book.douban.com/subject/11523088/)
@@ -147,3 +269,9 @@ FPGA 在设计架构时，专门针对这种现象进行优化，采用全铜工
 [锁存器 Latch v.s. 触发器 Flip-Flop][blog1]
 
 [TimeQuest定时分析的基本概念](http://blog.csdn.net/shanghaiqianlun/article/details/8685047)
+
+[Static timing analysis][wiki]
+
+[Xilinx FPGA开发实用教程][book1]
+
+[FPGA STA(三) --- STA的基本概念][blog1]
