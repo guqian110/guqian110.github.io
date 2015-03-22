@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/fpga.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-03-22T00:00:00+08:00</updated><entry><title>静态时序分析 STA 2</title><link href="http://guqian110.github.io/pages/2015/03/22/static_timing_analysis_2_xilinx_sta.html" rel="alternate"></link><updated>2015-03-22T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-03-22:pages/2015/03/22/static_timing_analysis_2_xilinx_sta.html</id><summary type="html">&lt;p&gt;*&lt;em&gt;总结 Xilinx 时序约束的一些基本内容，基本上是 &lt;a href="http://www.xilinx.com/support/documentation/sw_manuals/xilinx14_2/ug612.pdf"&gt;UG612 Timing Closure User Guide&lt;/a&gt; 的翻译和概括。&lt;/em&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/fpga.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-03-22T00:00:00+08:00</updated><entry><title>静态时序分析 STA 2 —— Xilinx STA</title><link href="http://guqian110.github.io/pages/2015/03/22/static_timing_analysis_2_xilinx_sta.html" rel="alternate"></link><updated>2015-03-22T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-03-22:pages/2015/03/22/static_timing_analysis_2_xilinx_sta.html</id><summary type="html">&lt;p&gt;*&lt;em&gt;总结 Xilinx 时序约束的一些基本内容，基本上是 &lt;a href="http://www.xilinx.com/support/documentation/sw_manuals/xilinx14_2/ug612.pdf"&gt;UG612 Timing Closure User Guide&lt;/a&gt; 的翻译和概括。&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;P.S. 找到一篇 Xilinx 的文章，也很简洁实用：&lt;a href="http://china.xilinx.com/china/xcell/xl37/e10-14.pdf"&gt;赛灵思 FPGA 设计时序约束指南&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Xilinx STA&lt;/h2&gt;
 &lt;hr /&gt;
@@ -292,7 +292,7 @@
 &lt;p&gt;和输入路径类似，输出路径的时序要求也可以依据接口的类型（system/source synchronous）和数据速率（SDR/DDR）来分类讨论。&lt;/p&gt;
 &lt;h3&gt;System Synchronous Output&lt;/h3&gt;
 &lt;p&gt;在 system synchronous output 中，发送端和接收端使用同一个时钟，所以发送端的 FPGA 只需要发生数据部分就可以了。如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="system synchronous output" src="/iamges/static-timing-analysis-2-xilinx-sta/system_synchronous_out.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="system synchronous output" src="/images/static-timing-analysis-2-xilinx-sta/system_synchronous_out.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;对于 system synchronous output 接口，使用全局 OFFSET OUT 是最有效的方法。每个 OFFSET OUT 都约束了一个对应的输出时钟，并且所有使用这个时钟来触发的输出数据路径都被这个约束所覆盖。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;约束方法：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;1. 为输出时钟定义一个时钟名（TNM）来分组、，这个时钟组包含了所有被这个时钟触发的输出寄存器&lt;/strong&gt;&lt;/p&gt;
@@ -331,7 +331,7 @@
 &lt;/ul&gt;
 &lt;p&gt;举例：&lt;/p&gt;
 &lt;p&gt;例10. 下图是一个理想的 Source Synchronous DDR interface 时序图&lt;/p&gt;
-&lt;p&gt;&lt;img alt="example10" src="/iamges/static-timing-analysis-2-xilinx-sta/example10.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="example10" src="/images/static-timing-analysis-2-xilinx-sta/example10.png" /&gt;&lt;/p&gt;
 &lt;p&gt;时钟周期为 5 ns，并且占空比为 50%，数据保持有效的时间为 1/2 时钟周期。所以，这个示例的约束如下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;NET&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ClkIn&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;TNM_NET&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ClkIn&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="n"&gt;OFFSET&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;OUT&lt;/span&gt; &lt;span class="n"&gt;AFTER&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ClkIn&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;REFERENCE_PIN&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;ClkOut&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;RISING&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -375,7 +375,7 @@
 
 &lt;p&gt;举例：&lt;/p&gt;
 &lt;p&gt;例11. 假设下图中的两个寄存器之间的路径并不影响设计的时序，希望将这条路径从时序约束中移除&lt;/p&gt;
-&lt;p&gt;&lt;img alt="example11" src="/iamges/static-timing-analysis-2-xilinx-sta/example11.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="example11" src="/images/static-timing-analysis-2-xilinx-sta/example11.png" /&gt;&lt;/p&gt;
 &lt;p&gt;则本例的约束如下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;NET&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;CLK1&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;TNM_NET&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FFS&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;GRP_1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="n"&gt;NET&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;CLK2&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;TNM_NET&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FFS&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;GRP_2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;

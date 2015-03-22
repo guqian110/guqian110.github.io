@@ -3,7 +3,7 @@
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
 <head>
-    <title>静态时序分析 STA 2 - Qian's World</title>
+    <title>静态时序分析 STA 2 —— Xilinx STA - Qian's World</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -14,7 +14,7 @@
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Qian's World" />
             <meta property="og:type" content="article"/>
-            <meta property="og:title" content="静态时序分析 STA 2"/>
+            <meta property="og:title" content="静态时序分析 STA 2 —— Xilinx STA"/>
             <meta property="og:url" content="http://guqian110.github.io/pages/2015/03/22/static_timing_analysis_2_xilinx_sta.html"/>
             <meta property="og:description" content="总结 Xilinx 时序约束的一些基本内容"/>
             <meta property="article:published_time" content="2015-03-22" />
@@ -82,7 +82,7 @@
             <ol class="breadcrumb">
                 <li><a href="http://guqian110.github.io" title="Qian's World"><i class="fa fa-home fa-lg"></i></a></li>
                 <li><a href="http://guqian110.github.io/category/fpga.html" title="FPGA">FPGA</a></li>
-                <li class="active">静态时序分析 STA 2</li>
+                <li class="active">静态时序分析 STA 2 —— Xilinx STA</li>
             </ol>
 
     <section id="content">
@@ -91,8 +91,8 @@
                 <h1>
                     <a href="http://guqian110.github.io/pages/2015/03/22/static_timing_analysis_2_xilinx_sta.html"
                        rel="bookmark"
-                       title="Permalink to 静态时序分析 STA 2">
-                        静态时序分析 STA 2
+                       title="Permalink to 静态时序分析 STA 2 —— Xilinx STA">
+                        静态时序分析 STA 2 —— Xilinx STA
                     </a>
                 </h1>
             </header>
@@ -407,7 +407,7 @@
 <p>和输入路径类似，输出路径的时序要求也可以依据接口的类型（system/source synchronous）和数据速率（SDR/DDR）来分类讨论。</p>
 <h3>System Synchronous Output</h3>
 <p>在 system synchronous output 中，发送端和接收端使用同一个时钟，所以发送端的 FPGA 只需要发生数据部分就可以了。如下图所示：</p>
-<p><img alt="system synchronous output" src="/iamges/static-timing-analysis-2-xilinx-sta/system_synchronous_out.png" /></p>
+<p><img alt="system synchronous output" src="/images/static-timing-analysis-2-xilinx-sta/system_synchronous_out.png" /></p>
 <p><strong>对于 system synchronous output 接口，使用全局 OFFSET OUT 是最有效的方法。每个 OFFSET OUT 都约束了一个对应的输出时钟，并且所有使用这个时钟来触发的输出数据路径都被这个约束所覆盖。</strong></p>
 <p><strong>约束方法：</strong></p>
 <p><strong>1. 为输出时钟定义一个时钟名（TNM）来分组、，这个时钟组包含了所有被这个时钟触发的输出寄存器</strong></p>
@@ -446,7 +446,7 @@
 </ul>
 <p>举例：</p>
 <p>例10. 下图是一个理想的 Source Synchronous DDR interface 时序图</p>
-<p><img alt="example10" src="/iamges/static-timing-analysis-2-xilinx-sta/example10.png" /></p>
+<p><img alt="example10" src="/images/static-timing-analysis-2-xilinx-sta/example10.png" /></p>
 <p>时钟周期为 5 ns，并且占空比为 50%，数据保持有效的时间为 1/2 时钟周期。所以，这个示例的约束如下：</p>
 <div class="highlight"><pre><span class="n">NET</span> <span class="s">&quot;ClkIn&quot;</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="s">&quot;ClkIn&quot;</span><span class="p">;</span>
 <span class="n">OFFSET</span> <span class="o">=</span> <span class="n">OUT</span> <span class="n">AFTER</span> <span class="s">&quot;ClkIn&quot;</span> <span class="n">REFERENCE_PIN</span> <span class="s">&quot;ClkOut&quot;</span> <span class="n">RISING</span><span class="p">;</span>
@@ -490,7 +490,7 @@
 
 <p>举例：</p>
 <p>例11. 假设下图中的两个寄存器之间的路径并不影响设计的时序，希望将这条路径从时序约束中移除</p>
-<p><img alt="example11" src="/iamges/static-timing-analysis-2-xilinx-sta/example11.png" /></p>
+<p><img alt="example11" src="/images/static-timing-analysis-2-xilinx-sta/example11.png" /></p>
 <p>则本例的约束如下：</p>
 <div class="highlight"><pre><span class="n">NET</span> <span class="s">&quot;CLK1&quot;</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">FFS</span> <span class="s">&quot;GRP_1&quot;</span><span class="p">;</span>
 <span class="n">NET</span> <span class="s">&quot;CLK2&quot;</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">FFS</span> <span class="s">&quot;GRP_2&quot;</span><span class="p">;</span>

@@ -1,4 +1,4 @@
-Title: 静态时序分析 STA 2
+Title: 静态时序分析 STA 2 —— Xilinx STA
 Date: 2015-03-22
 Category: FPGA
 Tags: STA, Xilinx
@@ -324,7 +324,7 @@ OFFET OUT 定义了输出数据和将该数据发送到输出管脚的时钟之�
 
 在 system synchronous output 中，发送端和接收端使用同一个时钟，所以发送端的 FPGA 只需要发生数据部分就可以了。如下图所示：
 
-![system synchronous output](/iamges/static-timing-analysis-2-xilinx-sta/system_synchronous_out.png)
+![system synchronous output](/images/static-timing-analysis-2-xilinx-sta/system_synchronous_out.png)
 
 **对于 system synchronous output 接口，使用全局 OFFSET OUT 是最有效的方法。每个 OFFSET OUT 都约束了一个对应的输出时钟，并且所有使用这个时钟来触发的输出数据路径都被这个约束所覆盖。**
 
@@ -377,7 +377,7 @@ OFFET OUT 定义了输出数据和将该数据发送到输出管脚的时钟之�
 
 例10. 下图是一个理想的 Source Synchronous DDR interface 时序图
 
-![example10](/iamges/static-timing-analysis-2-xilinx-sta/example10.png)
+![example10](/images/static-timing-analysis-2-xilinx-sta/example10.png)
 
 时钟周期为 5 ns，并且占空比为 50%，数据保持有效的时间为 1/2 时钟周期。所以，这个示例的约束如下：
 
@@ -423,7 +423,7 @@ OFFET OUT 定义了输出数据和将该数据发送到输出管脚的时钟之�
 
 例11. 假设下图中的两个寄存器之间的路径并不影响设计的时序，希望将这条路径从时序约束中移除
 
-![example11](/iamges/static-timing-analysis-2-xilinx-sta/example11.png)
+![example11](/images/static-timing-analysis-2-xilinx-sta/example11.png)
 
 则本例的约束如下：
 
