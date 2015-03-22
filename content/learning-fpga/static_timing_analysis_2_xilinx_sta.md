@@ -95,7 +95,7 @@ system synchronous SDR 应用示例如下图：
 
 例2. 不是理想的 system synchronous SDR interface 中，假设时钟周期为 5 ns，并且占空比为 50%，数据在发送时钟上升沿之后的 500 ps 之后变有效，并且持续 4 ns。则时序约束应该如下：
 
-    NET “clock” TNM_NET = CLK; 
+    NET "clock" TNM_NET = CLK; 
     TIMESPEC TS_CLK = PERIOD CLK 5.0 ns HIGH 50%; 
     OFFSET = IN 4.5 ns VALID 4 ns BEFORE clock;
 
@@ -146,7 +146,7 @@ source synchronous SDR 应用示例如下图：
 
 对于上升沿，因为数据相对于捕获它的时钟沿后了 250 ps，并且有效时间持续了 2 ns；对于下降沿，数据也沿后了 250 ps， 并且有效时间持续了2 ns，所以时序约束如下：
 
-    NET “clock” TNM_NET = CLK; 
+    NET "clock" TNM_NET = CLK; 
     TIMESPEC TS_CLK = PERIOD CLK 5.0 ns HIGH 50%; 
     OFFSET = IN -250 ps VALID 2 ns BEFORE clock RISING; 
     OFFSET = IN -250 ps VALID 2 ns BEFORE clock FALLING
@@ -155,7 +155,7 @@ source synchronous SDR 应用示例如下图：
 
 对于上升沿，因为数据相对于捕获它的时钟提前了 1 ns，并且有效时间持续了 2 ns；对于下降沿，数据也提前了 1 ns，并且有效时间持续了 2 ns，所以时序约束如下：
 
-    NET “clock” TNM_NET = CLK; 
+    NET "clock" TNM_NET = CLK; 
     TIMESPEC TS_CLK = PERIOD CLK 5.0 ns HIGH 50%; 
     OFFSET = IN 1 ns VALID 2 ns BEFORE clock RISING; 
     OFFSET = IN 1 ns VALID 2 ns BEFORE clock FALLING;
@@ -223,8 +223,8 @@ period constraint
 
 输入时钟连接到 DCM 的输入端，因为输入时钟的时钟周期为 5 ns，并且占空比为 50%，所以添加的约束为：
 
-    NET “ClkIn” TNM_NET = “ClkIn”;
-    TIMESPEC “TS_ClkIn” = PERIOD “ClkIn” 5 ns HIGH 50%;
+    NET "ClkIn" TNM_NET = "ClkIn";
+    TIMESPEC "TS_ClkIn" = PERIOD "ClkIn" 5 ns HIGH 50%;
 
 在上面的例子中，我们给出上面的约束条件之后，DCM 会自动为它的两个输出添加约束，并且分析这两个时钟域
 
@@ -250,10 +250,10 @@ Xilinx 的约束系统可以通过在周期约束中加入频率和相位信息�
 
 **语法如下：**
 
-    NET “PrimaryClock” TNM_NET = “TNM_Primary”;
-    NET “RelatedClock” TNM_NET = “TNM_Related”;
-    TIMESPEC “TS_primary” = PERIOD “TNM_Primary” PeriodValue HIGH HighValue%;
-    TIMESPEC “TS_related” = PERIOD “TNM_Related” TS_Primary_relation PHASE value;
+    NET "PrimaryClock" TNM_NET = "TNM_Primary";
+    NET "RelatedClock" TNM_NET = "TNM_Related";
+    TIMESPEC "TS_primary" = PERIOD "TNM_Primary" PeriodValue HIGH HighValue%;
+    TIMESPEC "TS_related" = PERIOD "TNM_Related" TS_Primary_relation PHASE value;
 
 在 related PERIOD 的约束中，PERIOD 的值定义了相关时钟和主时钟之间的关系（以时钟周期为单位），这种关系用主时钟的 TIMESPEC 形式来定义；PHASE 的值定义了主时钟和相关时钟的上升沿之间的关系。
 
@@ -381,9 +381,9 @@ OFFET OUT 定义了输出数据和将该数据发送到输出管脚的时钟之�
 
 时钟周期为 5 ns，并且占空比为 50%，数据保持有效的时间为 1/2 时钟周期。所以，这个示例的约束如下：
 
-    NET “ClkIn” TNM_NET = “ClkIn”;
-    OFFSET = OUT AFTER “ClkIn” REFERENCE_PIN “ClkOut” RISING;
-    OFFSET = OUT AFTER “ClkIn” REFERENCE_PIN “ClkOut” FALLING
+    NET "ClkIn" TNM_NET = "ClkIn";
+    OFFSET = OUT AFTER "ClkIn" REFERENCE_PIN "ClkOut" RISING;
+    OFFSET = OUT AFTER "ClkIn" REFERENCE_PIN "ClkOut" FALLING
 
 <br>
 

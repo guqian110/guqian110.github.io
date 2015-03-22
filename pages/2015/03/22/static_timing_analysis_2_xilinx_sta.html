@@ -193,7 +193,7 @@
 
 <p>而且这个约束对于 data1 和 data2 共同有效。</p>
 <p>例2. 不是理想的 system synchronous SDR interface 中，假设时钟周期为 5 ns，并且占空比为 50%，数据在发送时钟上升沿之后的 500 ps 之后变有效，并且持续 4 ns。则时序约束应该如下：</p>
-<div class="highlight"><pre><span class="n">NET</span> <span class="err">“</span><span class="n">clock</span><span class="err">”</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">CLK</span><span class="p">;</span> 
+<div class="highlight"><pre><span class="n">NET</span> <span class="s">&quot;clock&quot;</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">CLK</span><span class="p">;</span> 
 <span class="n">TIMESPEC</span> <span class="n">TS_CLK</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="n">CLK</span> <span class="mf">5.0</span> <span class="n">ns</span> <span class="n">HIGH</span> <span class="mi">50</span><span class="o">%</span><span class="p">;</span> 
 <span class="n">OFFSET</span> <span class="o">=</span> <span class="n">IN</span> <span class="mf">4.5</span> <span class="n">ns</span> <span class="n">VALID</span> <span class="mi">4</span> <span class="n">ns</span> <span class="n">BEFORE</span> <span class="n">clock</span><span class="p">;</span>
 </pre></div>
@@ -237,7 +237,7 @@
 
 <p>例4. 不是理想的 source synchronous DDR（数据和时钟的边沿对齐），假设时钟周期为 5 ns，并且占空比为 50%，上升沿和下降沿的数据都保持有效 2ns，并且位于时钟波形的高低电平的中间位置，也就是说，在数据有效的前后各有 250 ps 的空白。</p>
 <p>对于上升沿，因为数据相对于捕获它的时钟沿后了 250 ps，并且有效时间持续了 2 ns；对于下降沿，数据也沿后了 250 ps， 并且有效时间持续了2 ns，所以时序约束如下：</p>
-<div class="highlight"><pre><span class="n">NET</span> <span class="err">“</span><span class="n">clock</span><span class="err">”</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">CLK</span><span class="p">;</span> 
+<div class="highlight"><pre><span class="n">NET</span> <span class="s">&quot;clock&quot;</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">CLK</span><span class="p">;</span> 
 <span class="n">TIMESPEC</span> <span class="n">TS_CLK</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="n">CLK</span> <span class="mf">5.0</span> <span class="n">ns</span> <span class="n">HIGH</span> <span class="mi">50</span><span class="o">%</span><span class="p">;</span> 
 <span class="n">OFFSET</span> <span class="o">=</span> <span class="n">IN</span> <span class="o">-</span><span class="mi">250</span> <span class="n">ps</span> <span class="n">VALID</span> <span class="mi">2</span> <span class="n">ns</span> <span class="n">BEFORE</span> <span class="n">clock</span> <span class="n">RISING</span><span class="p">;</span> 
 <span class="n">OFFSET</span> <span class="o">=</span> <span class="n">IN</span> <span class="o">-</span><span class="mi">250</span> <span class="n">ps</span> <span class="n">VALID</span> <span class="mi">2</span> <span class="n">ns</span> <span class="n">BEFORE</span> <span class="n">clock</span> <span class="n">FALLING</span>
@@ -246,7 +246,7 @@
 
 <p>例5. 不是理想的 source synchronous DDR（数据和时钟的中间位置对齐），假设时钟周期为 5 ns，并且占空比为 50%，上升沿和下降沿的数据都保持有效 2 ns，并且时钟沿对齐数据的中间位置，可以得出结论，在数据有效的前后各有 250 ps 的空白。</p>
 <p>对于上升沿，因为数据相对于捕获它的时钟提前了 1 ns，并且有效时间持续了 2 ns；对于下降沿，数据也提前了 1 ns，并且有效时间持续了 2 ns，所以时序约束如下：</p>
-<div class="highlight"><pre><span class="n">NET</span> <span class="err">“</span><span class="n">clock</span><span class="err">”</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">CLK</span><span class="p">;</span> 
+<div class="highlight"><pre><span class="n">NET</span> <span class="s">&quot;clock&quot;</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">CLK</span><span class="p">;</span> 
 <span class="n">TIMESPEC</span> <span class="n">TS_CLK</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="n">CLK</span> <span class="mf">5.0</span> <span class="n">ns</span> <span class="n">HIGH</span> <span class="mi">50</span><span class="o">%</span><span class="p">;</span> 
 <span class="n">OFFSET</span> <span class="o">=</span> <span class="n">IN</span> <span class="mi">1</span> <span class="n">ns</span> <span class="n">VALID</span> <span class="mi">2</span> <span class="n">ns</span> <span class="n">BEFORE</span> <span class="n">clock</span> <span class="n">RISING</span><span class="p">;</span> 
 <span class="n">OFFSET</span> <span class="o">=</span> <span class="n">IN</span> <span class="mi">1</span> <span class="n">ns</span> <span class="n">VALID</span> <span class="mi">2</span> <span class="n">ns</span> <span class="n">BEFORE</span> <span class="n">clock</span> <span class="n">FALLING</span><span class="p">;</span>
@@ -328,8 +328,8 @@
 <p>例6. 在下图的例子中</p>
 <p><img alt="example6" src="/images/static-timing-analysis-2-xilinx-sta/example6.png" /></p>
 <p>输入时钟连接到 DCM 的输入端，因为输入时钟的时钟周期为 5 ns，并且占空比为 50%，所以添加的约束为：</p>
-<div class="highlight"><pre><span class="n">NET</span> <span class="err">“</span><span class="n">ClkIn</span><span class="err">”</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="err">“</span><span class="n">ClkIn</span><span class="err">”</span><span class="p">;</span>
-<span class="n">TIMESPEC</span> <span class="err">“</span><span class="n">TS_ClkIn</span><span class="err">”</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="err">“</span><span class="n">ClkIn</span><span class="err">”</span> <span class="mi">5</span> <span class="n">ns</span> <span class="n">HIGH</span> <span class="mi">50</span><span class="o">%</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">NET</span> <span class="s">&quot;ClkIn&quot;</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="s">&quot;ClkIn&quot;</span><span class="p">;</span>
+<span class="n">TIMESPEC</span> <span class="s">&quot;TS_ClkIn&quot;</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="s">&quot;ClkIn&quot;</span> <span class="mi">5</span> <span class="n">ns</span> <span class="n">HIGH</span> <span class="mi">50</span><span class="o">%</span><span class="p">;</span>
 </pre></div>
 
 
@@ -345,10 +345,10 @@
 <p><strong>1. 为主时钟定义周期约束</strong></p>
 <p><strong>2. 以主时钟的约束为参考，为其他的相关时钟添加周期约束</strong></p>
 <p><strong>语法如下：</strong></p>
-<div class="highlight"><pre><span class="n">NET</span> <span class="err">“</span><span class="n">PrimaryClock</span><span class="err">”</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="err">“</span><span class="n">TNM_Primary</span><span class="err">”</span><span class="p">;</span>
-<span class="n">NET</span> <span class="err">“</span><span class="n">RelatedClock</span><span class="err">”</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="err">“</span><span class="n">TNM_Related</span><span class="err">”</span><span class="p">;</span>
-<span class="n">TIMESPEC</span> <span class="err">“</span><span class="n">TS_primary</span><span class="err">”</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="err">“</span><span class="n">TNM_Primary</span><span class="err">”</span> <span class="n">PeriodValue</span> <span class="n">HIGH</span> <span class="n">HighValue</span><span class="o">%</span><span class="p">;</span>
-<span class="n">TIMESPEC</span> <span class="err">“</span><span class="n">TS_related</span><span class="err">”</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="err">“</span><span class="n">TNM_Related</span><span class="err">”</span> <span class="n">TS_Primary_relation</span> <span class="n">PHASE</span> <span class="n">value</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">NET</span> <span class="s">&quot;PrimaryClock&quot;</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="s">&quot;TNM_Primary&quot;</span><span class="p">;</span>
+<span class="n">NET</span> <span class="s">&quot;RelatedClock&quot;</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="s">&quot;TNM_Related&quot;</span><span class="p">;</span>
+<span class="n">TIMESPEC</span> <span class="s">&quot;TS_primary&quot;</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="s">&quot;TNM_Primary&quot;</span> <span class="n">PeriodValue</span> <span class="n">HIGH</span> <span class="n">HighValue</span><span class="o">%</span><span class="p">;</span>
+<span class="n">TIMESPEC</span> <span class="s">&quot;TS_related&quot;</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="s">&quot;TNM_Related&quot;</span> <span class="n">TS_Primary_relation</span> <span class="n">PHASE</span> <span class="n">value</span><span class="p">;</span>
 </pre></div>
 
 
@@ -448,9 +448,9 @@
 <p>例10. 下图是一个理想的 Source Synchronous DDR interface 时序图</p>
 <p><img alt="example10" src="/iamges/static-timing-analysis-2-xilinx-sta/example10.png" /></p>
 <p>时钟周期为 5 ns，并且占空比为 50%，数据保持有效的时间为 1/2 时钟周期。所以，这个示例的约束如下：</p>
-<div class="highlight"><pre><span class="n">NET</span> <span class="err">“</span><span class="n">ClkIn</span><span class="err">”</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="err">“</span><span class="n">ClkIn</span><span class="err">”</span><span class="p">;</span>
-<span class="n">OFFSET</span> <span class="o">=</span> <span class="n">OUT</span> <span class="n">AFTER</span> <span class="err">“</span><span class="n">ClkIn</span><span class="err">”</span> <span class="n">REFERENCE_PIN</span> <span class="err">“</span><span class="n">ClkOut</span><span class="err">”</span> <span class="n">RISING</span><span class="p">;</span>
-<span class="n">OFFSET</span> <span class="o">=</span> <span class="n">OUT</span> <span class="n">AFTER</span> <span class="err">“</span><span class="n">ClkIn</span><span class="err">”</span> <span class="n">REFERENCE_PIN</span> <span class="err">“</span><span class="n">ClkOut</span><span class="err">”</span> <span class="n">FALLING</span>
+<div class="highlight"><pre><span class="n">NET</span> <span class="s">&quot;ClkIn&quot;</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="s">&quot;ClkIn&quot;</span><span class="p">;</span>
+<span class="n">OFFSET</span> <span class="o">=</span> <span class="n">OUT</span> <span class="n">AFTER</span> <span class="s">&quot;ClkIn&quot;</span> <span class="n">REFERENCE_PIN</span> <span class="s">&quot;ClkOut&quot;</span> <span class="n">RISING</span><span class="p">;</span>
+<span class="n">OFFSET</span> <span class="o">=</span> <span class="n">OUT</span> <span class="n">AFTER</span> <span class="s">&quot;ClkIn&quot;</span> <span class="n">REFERENCE_PIN</span> <span class="s">&quot;ClkOut&quot;</span> <span class="n">FALLING</span>
 </pre></div>
 
 

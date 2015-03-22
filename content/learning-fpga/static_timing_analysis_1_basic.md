@@ -175,7 +175,7 @@ STA 中的一些术语定义如下：
     > 
     > 如下图所示：
     > 
-    > ![path](/images/static-timing-analysis-2-xilinx-sta/timing_path.jpg)
+    > ![path](/images/static-timing-analysis-1-basic/timing_path.jpg)
 
 + `critical path`
 
