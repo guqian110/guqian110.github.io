@@ -150,6 +150,7 @@ STA 中的一些术语定义如下：
     [FPGA STA(三) --- STA的基本概念][blog1] 中说的很明白：
 
     > 在做 STA 时，首先要把电路分解为一条条的 timing path。实际上我们也可以把 timing path 称为 data path，其本质就是指信号传播的途径。每一条 timing path 都具有一个起始点和一个终点。起始点是指电路中信号被时钟沿锁存的点；而信号经过一系列的组合逻辑的通道或者走线后被另外一个时钟沿捕获，这个点被称为终点。信号从起始点到终点所经过的通道就被称为 timing path。
+
     > 
     > 起点有两种：
     >
@@ -172,10 +173,10 @@ STA 中的一些术语定义如下：
     > 3. 触发器的clk端  ->  电路输出端口 (Clock-to-Pad)
     > 
     > 4. 电路输入端口  ->  电路输出端口 (Pad-to-Pad)
-    > 
-    > 如下图所示：
-    > 
-    > ![path](/images/static-timing-analysis-1-basic/path.jpg)
+
+如下图所示：
+
+![path](/images/static-timing-analysis-1-basic/path.jpg)
 
 + `critical path`
 
