@@ -128,25 +128,40 @@
 <h2>(un)signed in Verilog</h2>
 <hr />
 <h3>Integer</h3>
-<p>在 Verilog 中表示一个整数可以有两种方法：</p>
+<p>标准格式：</p>
+<p><code>&lt;null|+|-&gt;&lt;size&gt;&lt;sign:s|S&gt;&lt;base:d|D|h|H|o|O|b|B&gt;&lt;0~9|0～f|0~7|0~1|x|z&gt;</code></p>
+<p>其中 size 和 base 可选。</p>
+<p>所以就有两个格式：</p>
 <ol>
 <li>
-<p>简单的数字</p>
-<p>即只有简单的数字，默认为有符号数。比如 8, -10</p>
+<p>一串 0～9 组成的数字，前面可能有 +/- 符号，默认解释为有符号数</p>
 </li>
 <li>
-<p>基数表示法 <code>&lt;size&gt;'&lt;s&gt;&lt;base&gt;&lt;value&gt;</code></p>
-<p>其中，size 指定需要多少位表示这个数字，有 s 表示这个数为有符号数，没有则表示这个数是无符号数，base 指定后面的 value 是使用哪种基数来描述，value 制定这个数字的大小。默认为无符号数，除非声明 s 字段。</p>
+<p><code>&lt;size&gt;'&lt;s&gt;&lt;base&gt;&lt;value&gt;</code>，默认是无符号数，除非明确使用 <code>s</code> 字段</p>
+<ul>
+<li>
+<p>第一个参数 size 表示用多少个 bit 来存储这个整数，这个参数的取值应该是一个非 0 的无符号十进制数。若没有给出，默认最小是 32 bit</p>
+</li>
+<li>
+<p>第二个参数 s 表示这个数是有符号数，这个字段只影响编译器如何解释这个数。若没有这个字段，则将这个数解释为无符号数</p>
+</li>
+<li>
+<p>第三个参数 base 表示使用什么进制来表示这个数，若没有给出，默认是十进制</p>
+</li>
+<li>
+<p>第四个参数 value 表示这个数的大小，取值应该是一个无符号的符合 base 的数</p>
+</li>
+</ul>
 </li>
 </ol>
 <p><strong>在 FPGA 也采用补码系统</strong>，即在综合时，综合工具会将有符号数翻译为补码，在硬件中存储起来。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="mh">4</span><span class="mi">&#39;d5</span>   <span class="c1">// 这个数为无符号数，理解为 5, 占用 8 bit，存储的值为 0101</span>
-<span class="mh">4</span><span class="p">&#39;</span><span class="n">sd5</span>  <span class="c1">// 这个数为有符号数，理解为 5, 占用 8 bit，存储的值为 0101</span>
-<span class="o">-</span><span class="mh">4</span><span class="mi">&#39;d5</span>  <span class="c1">// 这个数为无符号数，理解为 -5, 占用 8 bit，存储的值为 1011</span>
-<span class="o">-</span><span class="mh">4</span><span class="p">&#39;</span><span class="n">sd5</span> <span class="c1">// 这个数为有符号数，理解为 -5, 占用 8 bit，存储的值为 1011</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="mh">4</span><span class="mi">&#39;d5</span>   <span class="c1">// 占用 4 bit，存储的值为无符号数  5 的原码 0101，综合工具将其视为无符号数 5</span>
+<span class="mh">4</span><span class="p">&#39;</span><span class="n">sd5</span>  <span class="c1">// 占用 4 bit，存储的值为无符号数  5 的原码 0101，综合工具将其视为有符号数 +5</span>
+<span class="o">-</span><span class="mh">4</span><span class="mi">&#39;d5</span>  <span class="c1">// 占用 4 bit，存储的值为有符号数 -5 的补码 1011，综合工具将其视为无符号数 11</span>
+<span class="o">-</span><span class="mh">4</span><span class="p">&#39;</span><span class="n">sd5</span> <span class="c1">// 占用 4 bit，存储的值为 1011</span>
 </pre></div>
 </td></tr></table>
 
@@ -393,6 +408,11 @@ Help
                         <li class="list-group-item tag-4">
                             <a href="http://guqian110.github.io/tag/c.html">
                                 C++
+                            </a>
+                        </li>
+                        <li class="list-group-item tag-4">
+                            <a href="http://guqian110.github.io/tag/case.html">
+                                case
                             </a>
                         </li>
                         <li class="list-group-item tag-2">
