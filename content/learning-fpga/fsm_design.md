@@ -362,7 +362,7 @@ P.S. one-hot 和 reverse case 相结合，可以得到一种更加简洁的电�
 
     + NS 必须赋值为全 0：
 
-        NS = 8'b0;
+            NS = 8'b0;
 
     + 使用 synopsys 综合指令
 
