@@ -6498,19 +6498,17 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;li&gt;HDL 描述&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;分类：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;状态机的框图如下：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="diagram" src="/images/fsm-design/fsm.png" /&gt;&lt;/p&gt;
 &lt;p&gt;按照输出的产生方式，可以将状态机分为两类：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Moore_machine"&gt;Moore&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="moore diagram" src="/images/fsm-design/moore.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;(&lt;a href="http://homepages.ius.edu/JFDOYLE/c421/html/Chapter8.htm"&gt;图片来源&lt;/a&gt;，homepages.ius.edu)&lt;/p&gt;
-&lt;p&gt;一种状态机，它的输出只取决于当前状态，而与输入无关。Moore 状态机最重要的特点就是将输入与输出信号隔离开来，而且输出与时钟信号同步的。&lt;/p&gt;
+&lt;p&gt;它的输出只取决于当前状态，而与输入无关。Moore 状态机最重要的特点就是将输入与输出信号隔离开来，而且输出与时钟信号同步的。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Mealy_machine"&gt;Mealy&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="mealy diagram" src="/images/fsm-design/mealy.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;(&lt;a href="http://homepages.ius.edu/JFDOYLE/c421/html/Chapter8.htm"&gt;图片来源&lt;/a&gt;，homepages.ius.edu)&lt;/p&gt;
-&lt;p&gt;另外一种状态机，它的输出不仅和当前状态有关，而且和输入也有关。Mealy 有限状态机对输入的响应发生在当前时钟周期，比 Moore 有限状态机对输入信号的响应要早一个周期。因此，输入信号的噪声可能影响在输出的信号。&lt;/p&gt;
+&lt;p&gt;它的输出不仅和当前状态有关，而且和输入也有关。Mealy 有限状态机对输入的响应发生在当前时钟周期，比 Moore 有限状态机对输入信号的响应要早一个周期。因此，输入信号的噪声可能影响在输出的信号。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -6529,14 +6527,29 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;当设计好之后，就要使用 HDL 语言来实现这个 FSM 了。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;语言：&lt;/strong&gt; Verilog HDL&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;综合工具：&lt;/strong&gt; XST (Xilinx Synthesis Tools)&lt;/p&gt;
-&lt;p&gt;下面讨论了一些 FSM 实现时需要注意的问题&lt;/p&gt;
-&lt;h3&gt;Coding Style&lt;/h3&gt;
-&lt;p&gt;状态机一般有三种写法，他们在速度、面积、代码可维护性等各个方面互有优劣。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;一段式：&lt;/strong&gt;只有一个always block，把所有的逻辑（输入、输出、状态）都在一个always block中实现；这种写法 &lt;em&gt;看起来很简洁&lt;/em&gt;，但是 &lt;em&gt;不利于维护&lt;/em&gt;。如果状态复杂一些就很容易出错。不推荐这种方法，但是在简单的状态机可以使用。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;二段式：&lt;/strong&gt;有两个always block，把时序逻辑和组合逻辑分隔开来。时序逻辑里进行当前状态和下一状态的切换，组合逻辑实现各个输入、输出以及状态判断。这种写法 &lt;em&gt;不仅便于阅读、理解、维护，而且利于综合器优化代码，利于用户添加合适的时序约束条件，利于布局布线器实现设计。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;在两段式描述中，当前状态的输出用组合逻辑实现，可能存在竞争和冒险，产生毛刺。则要求对状态机的输出用寄存器打一拍，但很多情况不允许插入寄存器节拍，此时使用三段式描述。其优势在于能够根据状态转移规律，在上一状态根据输入条件判断出当前状态的输出，从而不需要额外插入时钟节拍。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;三段式：&lt;/strong&gt;有三个always block，一个时序逻辑采用同步时序的方式描述状态转移，一个采用组合逻辑的方式判断状态转移条件、描述状态转移规律，第三个模块使用同步时序的方式描述每个状态的输出。&lt;em&gt;代码容易维护，时序逻辑的输出解决了两段式组合逻辑的毛刺问题&lt;/em&gt;，但是从资源消耗的角度上看，&lt;em&gt;三段式的资源消耗多一些，且输出比另外两种会延时一个时钟周期。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;三段式代码模板&lt;/p&gt;
+&lt;h3&gt;Coding goals&lt;/h3&gt;
+&lt;p&gt;我们的代码需要达到的目的应该是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;The FSM coding style should be easily modified to change state encodings and FSM styles&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The coding style should be compact&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The coding style should be easy to code and understand&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The coding style should facilitate debugging&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The coding style should yield efficient synthesis results&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Template&lt;/h3&gt;
+&lt;p&gt;为了达到目的，总结出了下面的这个三段式的模板（使用 index one-hot + reverse case + synopsys FSM 语法）&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
  2
  3
@@ -6588,53 +6601,97 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 49
 50
 51
-52&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;7&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;7&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;parameter&lt;/span&gt;   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="c1"&gt;// synopsys enum code&lt;/span&gt;
+                     &lt;span class="no"&gt;IDLE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="mi"&gt;&amp;#39;d0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="no"&gt;S1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="mi"&gt;&amp;#39;d1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="no"&gt;S2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="mi"&gt;&amp;#39;d2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="no"&gt;S3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="mi"&gt;&amp;#39;d3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="no"&gt;ERROR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="mi"&gt;&amp;#39;d4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-&lt;span class="k"&gt;parameter&lt;/span&gt;   &lt;span class="no"&gt;IDLE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;8&amp;#39;b0000&lt;/span&gt;&lt;span class="n"&gt;_0001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-            &lt;span class="no"&gt;WAIT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;8&amp;#39;b0000&lt;/span&gt;&lt;span class="n"&gt;_0010&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-            &lt;span class="no"&gt;STRT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;8&amp;#39;b0000&lt;/span&gt;&lt;span class="n"&gt;_0100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-            &lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="c1"&gt;// synopsys state_vector state&lt;/span&gt;
+&lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="c1"&gt;// synopsys enum code&lt;/span&gt;
+                &lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-        &lt;span class="no"&gt;CS&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="no"&gt;CS&lt;/span&gt;       &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="mi"&gt;&amp;#39;d0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="k"&gt;end&lt;/span&gt;
     &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
         &lt;span class="no"&gt;CS&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
 
-&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;  &lt;span class="k"&gt;begin&lt;/span&gt;
-    &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;8&lt;/span&gt;&lt;span class="p"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;bx&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;               &lt;span class="c1"&gt;//初始化寄存器，避免生成latch&lt;/span&gt;
-    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="nl"&gt;IDLE:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="c1"&gt;// ...&lt;/span&gt;
+&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+    &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;1&amp;#39;b1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c1"&gt;// synopsys full_case parallel_case&lt;/span&gt;
+        &lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="k"&gt;end&lt;/span&gt;
-        &lt;span class="nl"&gt;S1:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="c1"&gt;// ...&lt;/span&gt;
+        &lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;S1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="k"&gt;end&lt;/span&gt;
-       &lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;      &lt;span class="c1"&gt;// 注意&lt;/span&gt;
-       &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;S2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;S3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;restart&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;    &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="k"&gt;endcase&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
 
 &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
         &lt;span class="c1"&gt;// reset&lt;/span&gt;
-        &lt;span class="c1"&gt;// ...&lt;/span&gt;
     &lt;span class="k"&gt;end&lt;/span&gt;
     &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-        &lt;span class="c1"&gt;// ...          //初始化一组值，避免latch&lt;/span&gt;
-        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;           &lt;span class="c1"&gt;//注意为NS&lt;/span&gt;
-            &lt;span class="nl"&gt;IDLE:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="c1"&gt;// default output&lt;/span&gt;
+        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;1&amp;#39;b1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
                 &lt;span class="c1"&gt;// ...&lt;/span&gt;
             &lt;span class="k"&gt;end&lt;/span&gt;
-            &lt;span class="nl"&gt;S1:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;S1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
                 &lt;span class="c1"&gt;// ...&lt;/span&gt;
             &lt;span class="k"&gt;end&lt;/span&gt;
-            &lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;S2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+            &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;S3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+            &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
                 &lt;span class="c1"&gt;// ...&lt;/span&gt;
             &lt;span class="k"&gt;end&lt;/span&gt;
         &lt;span class="k"&gt;endcase&lt;/span&gt;
@@ -6643,18 +6700,68 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
+&lt;p&gt;需要注意的是 synopsys FSM 的语法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;parameter 定义的两端都要定义位宽，不能省略&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;注释 &lt;code&gt;// synopsys ...&lt;/code&gt; 的位置不能随意改变&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;即使改用其他的综合工具，前面的 FSM 定义的综合指令不影响，需要修改的只有 case 综合指令（如 XST 改为 &lt;code&gt;// synthesis full_case parallel_case&lt;/code&gt;）。&lt;/p&gt;
+&lt;p&gt;下面逐个讨论为什么这么写，以及需要注意的问题。&lt;/p&gt;
+&lt;h3&gt;Always Block&lt;/h3&gt;
+&lt;p&gt;状态机一般有三种写法，他们在速度、面积、代码可维护性等各个方面互有优劣。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一段式：&lt;/strong&gt; 只有一个always block，把所有的逻辑（输入、输出、状态）都在一个always block中实现&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;优点：看起来很简洁&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;缺点：不利于维护，如果状态复杂一些就很容易出错。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;不推荐这种方法，但是在简单的状态机可以使用。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二段式：&lt;/strong&gt; 有两个always block，把时序逻辑和组合逻辑分隔开来。时序逻辑里进行当前状态和下一状态的切换，组合逻辑实现各个输入、输出以及状态判断。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;优点：便于阅读、理解、维护，而且利于综合器优化代码，利于用户添加合适的时序约束条件，利于布局布线器实现设计&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;缺点：输出是组合逻辑，可能含有毛刺&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;解决输出毛刺的问题，最简单的方法就是用寄存器打一拍，但很多情况不允许插入寄存器节拍，此时使用三段式描述。其优势在于能够根据状态转移规律，在上一状态根据输入条件判断出当前状态的输出，从而不需要额外插入时钟节拍。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;三段式：&lt;/strong&gt; 有三个always block，一个时序逻辑采用同步时序的方式描述状态转移，一个采用组合逻辑的方式判断状态转移条件、描述状态转移规律，第三个模块使用同步时序的方式描述每个状态的输出。这 3 个 always block 正好对应图示的 3 个子模块，更加容易理解。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;优点：代码容易维护，时序逻辑的输出解决了两段式组合逻辑的毛刺问题&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;缺点： 代码量大、资源消耗多一些&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;一段 or 三段？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;一般来说，三段式的效果更好，唯一的缺点是占用的资源稍微多一点(对于拥有丰富的触发器资源的 FPGA 来说，这个缺点可以忽略吧)。所以除非是非常简单的状态机用一段式实现，其他情况下三段式更简单。&lt;/p&gt;
-&lt;p&gt;对于上面的三段式模板，按代码顺序解释一下相关的注意事项&lt;/p&gt;
-&lt;h3&gt;参数使用 parameter&lt;/h3&gt;
-&lt;p&gt;尽量使用 &lt;code&gt;parameter&lt;/code&gt; 而不是 &lt;code&gt;define&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;这个原则不仅仅限于 FSM，其他模块也应该遵守。因为使用 &lt;code&gt;define&lt;/code&gt; 定义的参数是全局变量，而 &lt;code&gt;parameter&lt;/code&gt; 定义的是局部变量。如果设计中包含多个 FSM，包含多个同名的变量，显然使用 &lt;code&gt;parameter&lt;/code&gt; 是更好的选择。&lt;/p&gt;
-&lt;h3&gt;FSM 复位&lt;/h3&gt;
+&lt;h3&gt;localparam&lt;/h3&gt;
+&lt;p&gt;尽量使用 &lt;code&gt;localparam&lt;/code&gt; 而不是 &lt;code&gt;define&lt;/code&gt; 和 &lt;code&gt;parameter&lt;/code&gt;。这个原则不仅仅限于 FSM，其他模块也应该遵守。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Reason&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;不使用 &lt;code&gt;define&lt;/code&gt;：在设计中很可能有多个 FSM，而且它们很可能包含有相同的状态名，使用 &lt;code&gt;define&lt;/code&gt; 定义的状态名是全局可见的，那么这些 FSM 之间会相互影响（C++ 解决这个问题的方法是 namespace）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不使用 &lt;code&gt;parameter&lt;/code&gt;：虽然 &lt;code&gt;parameter&lt;/code&gt; 定义的参数是局部的，但是它可以被其他模块通过参数修改。FSM 中的状态定义应该是内部可见的，外部模块应该是不能修改的（类似于 C++ 中 class 的 private 成员）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;综上，使用 &lt;code&gt;localparam&lt;/code&gt; 是更好的选择。&lt;/p&gt;
+&lt;h3&gt;Reset&lt;/h3&gt;
 &lt;p&gt;FPGA 上电时，GSR(Global Set/Reset) 拉高，对所有 寄存器/RAM 进行复位，此时配置于 FPGA 的逻辑并未生效，所以不能保证 FSM 进入正确的初始化状态。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;解决方法：&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;一般，FSM 使用其他的复位(同步 or 异步)。&lt;/p&gt;
+&lt;p&gt;一般，FSM 使用用户定义的复位(同步 or 异步)。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
@@ -6680,33 +6787,51 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;还有一种方法，是将初始状态编码为全 0 (带 0 的 One-Hot 编码方式)，这样当 GSR 复位后，状态机自动进入初始状态。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3&gt;编码方式&lt;/h3&gt;
+&lt;h3&gt;State encode&lt;/h3&gt;
 &lt;p&gt;状态机的状态的编码，通常有 &lt;code&gt;Binary&lt;/code&gt;、&lt;code&gt;One-Hot&lt;/code&gt;、&lt;code&gt;Gray&lt;/code&gt; 码等几种。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Binary 码&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;采用最简单的递增的编码方式对状态进行编码，对于 n 个状态的状态机，共需要 log2(n) 个触发器表示所有的状态。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
 &lt;p&gt;优点：在状态很多的情况下，可以大大减少触发器的数量，对设计的面积有积极的作用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
 &lt;p&gt;缺点：但是在状态跳转过程中，很可能出现多位同时变化的情况，容易在 next state 的生成逻辑上产生毛刺。同时，输出也是所有状态位的译码，译码逻辑多数很复杂，往往成为整个设计的关键路径。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;Gray 码&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;类似 Binary，但是采用了格雷码的编码方式，每两个相邻的状态只有一位信号变化。&lt;/p&gt;
-&lt;p&gt;有点：避免了 next state 上毛刺的产生。同时两个相邻状态的输出译码变得简单了，避免了复杂组合逻辑的产生。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;优点：避免了 next state 上毛刺的产生。同时两个相邻状态的输出译码变得简单了，避免了复杂组合逻辑的产生。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
 &lt;p&gt;缺点；格雷码的这些优点都是建立在状态跳转是顺序执行的基础上的。如果状态机有很多随机跳转和分支，格雷码的实际效果和二进制码相差无几，优势荡然无存。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;One-Hot 码&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;当前设计中最常用的状态机编码方式。One-Hot 编码在一组 0 中只有一个 1，对一个 n 个状态的 FSM 设计，需要 n 个触发器。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
 &lt;p&gt;优点：在任意两个状态之间跳转都只有两位状态位变化，不会产生非常复杂的组合逻辑。各个状态之间的译码也相对简单。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
 &lt;p&gt;缺点：对状态编码需要的寄存器比其他方式多，不过这个缺点基本可以忽略吧 :-P&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;结论：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Binary、Gray 编码使用最少的触发器，较多的组合逻辑。而 One-Hot  编码反之。由于 CPLD 更多的提供组合逻辑资源，而 FPGA 更多的提供触发器资源，所以 CPLD 多使用 Gray，而 FPGA  多使用 One-Hot 编码。另一方面，对于小型设计使用 Gray 和 Binary 编码更有效，而大型状态机使用 One-Hot 更高效。&lt;/p&gt;
 &lt;p&gt;(XST 的选项 &lt;code&gt;FSM encoding algorithm&lt;/code&gt; 值默认为 &lt;code&gt;auto&lt;/code&gt;，编写程序测试发现，它会根据代码中状态的多少，FSM 的复杂度，自动选择合适的编码方式对状态进行编码。)&lt;/p&gt;
-&lt;h3&gt;安全的 FSM&lt;/h3&gt;
+&lt;p&gt;P.S. one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（如模板所示的 index one-hot），这种方式和传统的 one-hot 相比，它不再是对比整个状态向量的值，而是逐 bit 对比，从而简化了状态译码电路。&lt;/p&gt;
+&lt;h3&gt;Safe FSM&lt;/h3&gt;
 &lt;p&gt;所谓 “安全” 的状态机，就是说即使因为某些意外原因，状态机跑飞了，仍然可以自动回复到正常状态。&lt;/p&gt;
-&lt;p&gt;如果我们对状态向量的所有取值情况都显式地进行了说明，那么这个状态机就是安全的，否则就是不安全的。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;可能出现的不安全情况&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;比如，我们在 One-Hot 方式中，对于 8 个状态，总共使用了 8 bit 的寄存器，那么这个状态寄存器向量可以取到的值一共有 &lt;code&gt;2^8 = 256&lt;/code&gt; 种。如果我们只对需要的 8 种状态进行了说明，而忽略了剩余的 248 种，此时综合工具(Synplify、XST)会对设计进行 “优化”，将没有用到的状态去掉。但是，有时候这种 “优化” 反而不好，如果状态机进入未定义的全 0 状态，那么它就会卡在这个未定义的状态，无法自动回复正常工作状态。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例：可能出现的不安全情况&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;比如，我们采用 One-Hot 编码方式，对于 8 个状态，总共使用了 8 bit 的寄存器，那么这个状态寄存器向量可以取到的值一共有 &lt;code&gt;2^8 = 256&lt;/code&gt; 种。如果我们只对需要的 8 种状态进行了说明，而忽略了剩余的 248 种，此时综合工具(Synplify、XST)会对设计进行 “优化”，将没有用到的状态去掉。但是，有时候这种 “优化” 反而不好，如果状态机进入未定义的全 0 状态，那么它就会卡在这个未定义的状态，无法自动回复正常工作状态。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;解决方法&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;有两种方法：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;书写完备的 &lt;code&gt;case&lt;/code&gt; 语句。在代码中对每一种可能的取值对进行描述，对于不使用的状态编码，一定要有 &lt;code&gt;default&lt;/code&gt; 分支进行说明。&lt;/p&gt;
+&lt;p&gt;如果我们对状态向量的所有取值情况都显式地进行了说明，那么这个状态机就是安全的，否则就是不安全的。书写完备的 &lt;code&gt;case&lt;/code&gt; 语句。在代码中对每一种可能的取值对进行描述，对于不使用的状态编码，一定要有 &lt;code&gt;default&lt;/code&gt; 分支进行说明。&lt;/p&gt;
 &lt;p&gt;在第二段 &lt;code&gt;always&lt;/code&gt; 中，&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
@@ -6719,40 +6844,119 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;这里应该赋值 &lt;code&gt;8'bx&lt;/code&gt; 更合理，因为状态机上电时处于未知状态，所以应该赋值 &lt;code&gt;x&lt;/code&gt; 更符合实际，但是这样赋值必须有个条件，就是必须所有的状态编码都全部被使用了，不然就会出现锁死现象，FSM 无法返回工作状态。我们前面使用的是 One-Hot 编码方式，有大量无效状态，所以这里不能赋值为 &lt;code&gt;x&lt;/code&gt;。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;XST支持状态机编码的完备属性 —— &lt;code&gt;case implementation style&lt;/code&gt;，虽然可以打开这个设置，但是一般我们应该在代码中满足条件，而不是依靠综合工具。&lt;/p&gt;
+&lt;p&gt;XST支持状态机编码的完备属性 —— &lt;code&gt;case implementation style&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;但是这个设置可能会导致前后仿真不一致的问题，一般不使用。我们应该在代码中满足条件，而不是依靠综合工具。&lt;/p&gt;
+&lt;p&gt;XST 的选项 &lt;code&gt;safe implementation&lt;/code&gt; 值默认为 &lt;code&gt;None&lt;/code&gt;，如果应用环境要求 FSM 必须能恢复任何错误，比如航天、医疗、汽车等，这时我们可以打开这个设置，这时综合工具会添加额外的逻辑，保证 FSM 可以从无效状态恢复过来。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;即使使用第一种方法，似乎我们的状态机已经是 perfect 了，但是真的是这样么？考虑这种情况：一个状态机有 8 个状态，采用 One-Hot 编码方式，代码含有 &lt;code&gt;default&lt;/code&gt; 分支处理未定义的状态向量可能取到的值。现在把这个状态机放在卫星中，接受宇宙射线的辐射，导致状态向量的值发生了变化，进入了无效状态，然后状态机自动恢复到正常状态(Good Job)，但是！状态机的外围电路并没有随着状态机恢复，它还在等 FSM 输出某个信号呢。所以，仅仅是回到正常状态并不够，最好的设计应该有个错误状态专门来与外围电路通信，当 FSM 自动恢复时，它会通知外围电路 reset 。&lt;/p&gt;
-&lt;p&gt;(XST 的选项 &lt;code&gt;safe implementation&lt;/code&gt; 值默认为 &lt;code&gt;None&lt;/code&gt;，如果应用环境要求 FSM 必须能恢复任何错误，比如航天、医疗、汽车等，这时我们可以打开这个设置，这时综合工具会添加额外的逻辑，保证 FSM 可以从无效状态恢复过来。)&lt;/p&gt;
-&lt;h3&gt;检查状态完备性&lt;/h3&gt;
-&lt;p&gt;在第二个 &lt;code&gt;always block&lt;/code&gt; 中，第一句是&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;8&lt;/span&gt;&lt;span class="p"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;bx&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;p&gt;即使使用第一种方法，似乎我们的状态机已经是 perfect 了，但是真的是这样么？考虑这种情况：一个状态机有 8 个状态，采用 One-Hot 编码方式，代码含有 &lt;code&gt;default&lt;/code&gt; 分支处理未定义的状态向量可能取到的值。现在把这个状态机放在卫星中，接受宇宙射线的辐射，导致状态向量的值发生了变化，进入了无效状态，然后状态机自动恢复到正常状态(Good Job)，但是！状态机的外围电路并没有随着状态机恢复，它还在等 FSM 输出某个信号呢。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;所以，仅仅是回到正常状态并不够，最好的设计应该有个错误状态专门来与外围电路通信，当 FSM 进入错误状态时，外围电路会检测到这个错误状态，并采取合适的措施（如重启、复位 FSM）。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;结合上面讨论的 index one-hot 编码方式，就有了两种方案：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;显式地定义定义一个 ERROR state&lt;/p&gt;
+&lt;p&gt;如模板所示。&lt;/p&gt;
+&lt;p&gt;比如一个 FSM，有 4 个状态，分别是 IDLE、S1、S2、S3，那么额外定义一个 ERROR 状态机的框图如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;parameter&lt;/span&gt;   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;IDLE&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;S1&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;S2&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;S3&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;ERROR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+
+&lt;p&gt;在每个 case item 中，最后添加一个 else 分支且 &lt;code&gt;NS[ERROR] = 1'b1&lt;/code&gt;，并且多加一个 case item&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;restart&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;zero-idle&lt;/p&gt;
+&lt;p&gt;在状态定义时，不用显式地定义一个 ERROR 状态，而是用全 0 状态表示 ERROR 状态：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;parameter&lt;/span&gt;   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;IDLE&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;S1&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;S2&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;S3&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;d4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;多加一个 case item：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;~|&lt;/span&gt;&lt;span class="n"&gt;CS&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;restart&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;对比两种方式，我觉得第一种更能体现出设计意图，所以在模板中选择这种方式。&lt;/p&gt;
+&lt;h3&gt;case(CS)&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;使用 case 的原则：&lt;/strong&gt; 尽量不要使用综合指令 full_case 和 parallel_case，而是代码本身满足 full、parallel 的条件（因为综合指令可能导致前后仿真不一致的问题）&lt;/p&gt;
+&lt;p&gt;下面根据状态编码方案分类讨论：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;如果使用 “非 index one-hot + 非 reverse case” 的方法，那么在第二个 always block 中，在 case 前给 NS 一个默认值（如下）&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;bx&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;这是个很有用的小技巧，它可以帮助我们在综合前发现状态是否完备：如果状态完备，则在下面的 &lt;code&gt;case&lt;/code&gt; 中会给 &lt;code&gt;NS&lt;/code&gt; 合适的值；如果状态不完备，则状态机会进入错误状态，输出不定，仿真时可以很快的发现。而且，综合工具对于 &lt;code&gt;x&lt;/code&gt; 采取的态度是 &lt;code&gt;don't care&lt;/code&gt;，综合时会自动将其忽略，生成的电路最简洁。&lt;/p&gt;
-&lt;h3&gt;避免 Latch&lt;/h3&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果使用 index one-hot + reverse case 的方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;NS 必须赋值为全 0：&lt;/p&gt;
+&lt;p&gt;NS = 8'b0;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 synopsys 综合指令&lt;/p&gt;
+&lt;p&gt;一般的原则是尽量不要使用综合指令，这里是个特殊情况。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// synopsys full_case parallel_case&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;default 分支&lt;/p&gt;
+&lt;p&gt;使用了综合指令，则 default 分支在综合时就没有必要，但是仿真器并不能识别综合指令，所以在行为仿真的时候仍然需要 default 分支，所以可以用下面的方法：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// synopsys translate_off&lt;/span&gt;
+&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;$display&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;FSM is dead!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;// synopsys translate_on&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;采用 index one-hot + reverse case 的方式，这里违背了 case 语句本身满足 full_case、parallel_case 的原则，使用了综合指令、并且省掉了 default 分支，是唯一的例外情况，其他情况下都应该遵守这一原则！&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Ouput&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;避免 Latch&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;在第三个 &lt;code&gt;always&lt;/code&gt; 中，在 &lt;code&gt;case&lt;/code&gt; 前，所有的输出都有默认的值，这样做的好处是可以消除 &lt;code&gt;Latch&lt;/code&gt; 的出现，而且，可以减少在后面每种状态下重复相同的赋值，而且强调显示了 case 内哪个输出发生了变化。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;书写完备的 &lt;code&gt;if-else&lt;/code&gt; 和 &lt;code&gt;case&lt;/code&gt; 语句。&lt;/p&gt;
+&lt;p&gt;另外一种避免 latch 的方法：书写完备的 &lt;code&gt;if-else&lt;/code&gt; 和 &lt;code&gt;case&lt;/code&gt; 语句。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3&gt;消除输出毛刺&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;消除输出毛刺&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;对于三段式，因为输出是寄存器输出，所以解决了输出毛次。&lt;/p&gt;
 &lt;p&gt;讨论一下采用寄存器输出的方式对设计的影响&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;输出采用寄存器驱动可以优化 FSM 的时序性能&lt;/p&gt;
 &lt;p&gt;影响一个时序电路运行速度的主要因素是两个寄存器之间的组合逻辑路径的长度，越长的组合逻辑路径，其时序性能越差。一个电路中的最长组合逻辑路径决定了这个电路最高运行速率，该路径就是这个电路的关键路径（&lt;code&gt;critical path&lt;/code&gt;）。所以，切断最长的组合逻辑路径可以提高局部电路的运行速度，切断多个较长的组合逻辑路径可以提高整体电路的运行速度。切断组合逻辑路径的工具就是寄存器。所以，添加寄存器可以提高电路的性能，但是会增加资源的消耗，这也是速度（speed）和面积（area）互为矛盾的原因。&lt;/p&gt;
-&lt;p&gt;在考虑FSM的时序问题时，不能独立的考虑FSM本身，需要综合考虑FSM模块和下游模块构成的电路。在FSM不采用输出寄存时，在FSM模块和下游模块的接口处，是两部分组合逻辑直接相连。关键路径由两部分组合逻辑构成；在FSM采用输出寄存时，两个模块的组合逻辑被分隔成两部分，可能的关键路径被切断了。同步寄存器输出和组合逻辑输出就是采用资源优化还是速度优化的问题。组合逻辑表面上会提高电路的速度，看似节省了资源而且提高了速度，其实不然（对FPGA结构来说，节省寄存器不等于节省LE；对同步设计来说，异步输出速度上的优势是可以忽略的）。&lt;/p&gt;
+&lt;p&gt;在考虑 FSM 的时序问题时，不能独立的考虑 FSM 本身，需要综合考虑 FSM 模块和下游模块构成的电路。在 FSM 不采用输出寄存时，在 FSM 模块和下游模块的接口处，是两部分组合逻辑直接相连。关键路径由两部分组合逻辑构成；在 FSM 采用输出寄存时，两个模块的组合逻辑被分隔成两部分，可能的关键路径被切断了。同步寄存器输出和组合逻辑输出就是采用资源优化还是速度优化的问题。组合逻辑表面上会提高电路的速度，看似节省了资源而且提高了速度，其实不然（对 FPGA 结构来说，节省寄存器不等于节省 LE；对同步设计来说，异步输出速度上的优势是可以忽略的）。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;输出采用寄存器驱动会降低输出队输入信号变化的响应速度？&lt;/p&gt;
-&lt;p&gt;到底应不应该采用FSM输出寄存器？是否必须在时序性能和响应速度之间做出取舍？在同步设计中，答案是必须牺牲一定的响应速度以换取更佳的时序性能，只考虑响应速度会带来潜在的时序性能损失。&lt;/p&gt;
-&lt;p&gt;在考虑FSM的响应速度时，不能独立的考虑FSM本身，需要综合考虑FSM模块和上、下游模块构成的电路。采用输出寄存器的电路可以运行在更高的时钟频率下，所引入的响应时延与更高的运行频率相比是可以牺牲的。&lt;/p&gt;
+&lt;p&gt;到底应不应该采用 FSM 输出寄存器？是否必须在时序性能和响应速度之间做出取舍？在同步设计中，答案是必须牺牲一定的响应速度以换取更佳的时序性能，只考虑响应速度会带来潜在的时序性能损失。&lt;/p&gt;
+&lt;p&gt;在考虑 FSM 的响应速度时，不能独立的考虑 FSM 本身，需要综合考虑 FSM 模块和上、下游模块构成的电路。采用输出寄存器的电路可以运行在更高的时钟频率下，所引入的响应时延与更高的运行频率相比是可以牺牲的。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;case (NS) vs case (CS)&lt;/h3&gt;
@@ -6779,31 +6983,180 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;就可以提前判断下一状态的输出，节省了一个节拍，使输出和状态变化同步。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;example&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;设计一个简单的 FSM，测试使用 &lt;code&gt;case(CS)&lt;/code&gt; 和 &lt;code&gt;case(NS)&lt;/code&gt; 的结果：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;FSM 设计&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;一共有 4 个状态(IDLE、S1、S2、S3)，只有一个输入(&lt;code&gt;jump&lt;/code&gt; 信号)，两个输出(&lt;code&gt;dout_p&lt;/code&gt;、&lt;code&gt;dout_q&lt;/code&gt;)。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;跳转规律&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;状态机开始处于 IDLE 状态，当 jump 变高时，从 IDLE 跳转到 S1 状态，同时内部的一个 4 bit 计数器开始计数，当计数到 &lt;code&gt;4'b1111&lt;/code&gt; 时，跳转到 S2，当再次计数到 &lt;code&gt;4'b1111&lt;/code&gt; 时跳转到 S3，当再次计数到 &lt;code&gt;4'b1111&lt;/code&gt; 时，跳转到 IDLE，等待 jump 再次变高。状态转移图：&lt;/p&gt;
+&lt;p&gt;FSM 设计：一共有 4 个状态(IDLE、S1、S2、S3)，只有一个输入(&lt;code&gt;jump&lt;/code&gt; 信号)，两个输出(&lt;code&gt;dout_p&lt;/code&gt;、&lt;code&gt;dout_q&lt;/code&gt;)。&lt;/p&gt;
+&lt;p&gt;跳转规律：状态机开始处于 IDLE 状态，当 jump 变高时，从 IDLE 跳转到 S1 状态，同时内部的一个 4 bit 计数器开始计数，当计数到 &lt;code&gt;4'b1111&lt;/code&gt; 时，跳转到 S2，当再次计数到 &lt;code&gt;4'b1111&lt;/code&gt; 时跳转到 S3，当再次计数到 &lt;code&gt;4'b1111&lt;/code&gt; 时，跳转到 IDLE，等待 jump 再次变高。状态转移图：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="diagram" src="/images/fsm-design/diagram.png" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;程序&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;状态机源文件&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm.v"&gt;fsm.v&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;测试平台 testbench&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_fsm.v"&gt;tb_fsm.v&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;仿真结果&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;使用 &lt;code&gt;NS&lt;/code&gt; 判断，结果如下图，可以看到，当 &lt;code&gt;CS&lt;/code&gt; 发生变化时，输出同时改变。&lt;/p&gt;
+&lt;p&gt;程序：&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm.v"&gt;状态机源文件 fsm.v&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_fsm.v"&gt;测试平台 testbench tb_fsm.v&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;仿真结果：使用 &lt;code&gt;NS&lt;/code&gt; 判断，结果如下图，可以看到，当 &lt;code&gt;CS&lt;/code&gt; 发生变化时，输出同时改变。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="case ns" src="/images/fsm-design/case_ns.png" /&gt;&lt;/p&gt;
 &lt;p&gt;使用 &lt;code&gt;CS&lt;/code&gt; 判断，结果如下图，可以看到，当 &lt;code&gt;CS&lt;/code&gt; 发生变化时，输出变化相对于状态变化延时一个时钟周期。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="case ns" src="/images/fsm-design/case_cs.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;参考&lt;/h2&gt;
-&lt;p&gt;&lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG1998SJ_FSM.pdf"&gt;Clifford E. Cumming     State Machine Coding Styles for Synthesis&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.sunburst-design.com/papers/CummingsICU2002_FSMFundamentals.pdf"&gt;Clifford E. Cumming     The Fundamentals of Efficient Synthesizable Finite State Machine
+&lt;p&gt;========================分割线=============================&lt;/p&gt;
+&lt;p&gt;使用 XST 综合上面的 index one-hot + reverse case 风格的 FSM，结果并没有识别出 FSM，而 Synplify 我没有破解版本，只能作罢 =.=&lt;/p&gt;
+&lt;p&gt;补上普通的 one-hot + case 的模板，这个模板是可以被 XST 识别出来的：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;parameter&lt;/span&gt;   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="c1"&gt;// synopsys enum code&lt;/span&gt;
+                     &lt;span class="no"&gt;IDLE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b00001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="no"&gt;S1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b00010&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="no"&gt;S2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b00100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="no"&gt;S3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b01000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="no"&gt;ERROR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b10000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;// synopsys state_vector state&lt;/span&gt;
+&lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="c1"&gt;// synopsys enum code&lt;/span&gt;
+                &lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="no"&gt;CS&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="no"&gt;CS&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+    &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="p"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;bx&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c1"&gt;// synopsys full_case parallel_case&lt;/span&gt;
+        &lt;span class="nl"&gt;IDLE:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="nl"&gt;S1:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="nl"&gt;S2:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="nl"&gt;S3:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="nl"&gt;ERROR:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;restart&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;    &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;endcase&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="c1"&gt;// reset&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="c1"&gt;// default output&lt;/span&gt;
+        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="nl"&gt;IDLE:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+            &lt;span class="nl"&gt;S1:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+            &lt;span class="nl"&gt;S2:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+            &lt;span class="nl"&gt;S3:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+            &lt;span class="nl"&gt;ERROR:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="k"&gt;endcase&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;========================分割线=============================&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG1998SJ_FSM.pdf"&gt;Clifford E. Cumming State Machine Coding Styles for Synthesis&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.sunburst-design.com/papers/CummingsICU2002_FSMFundamentals.pdf"&gt;Clifford E. Cumming The Fundamentals of Efficient Synthesizable Finite State Machine
 Design using NC-Verilog and BuildGates&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.trilobyte.com/pdf/golson_snug94.pdf"&gt;Steve Golson                State machine design techniques for Verilog and VHDL&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.trilobyte.com/pdf/golson_snug94.pdf"&gt;Steve Golson State machine design techniques for Verilog and VHDL&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.cnblogs.com/freeny/archive/2012/04/14/2447612.html"&gt;Verilog HDL学习心得&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;foreveryoung 《状态机设计》&lt;/p&gt;
-&lt;p&gt;云创工作室     《Verilog HDL程序设计与实践》&lt;/p&gt;</summary><category term="FSM"></category><category term="Verilog"></category></entry><entry><title>BUPT MITC lab Verilog HDL coding style guide</title><link href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html" rel="alternate"></link><updated>2014-05-19T10:12:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-05-19:pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;Version&lt;/strong&gt; : 1.1&lt;/p&gt;
+&lt;p&gt;云创工作室《 Verilog HDL 程序设计与实践》&lt;/p&gt;</summary><category term="FSM"></category><category term="Verilog"></category></entry><entry><title>BUPT MITC lab Verilog HDL coding style guide</title><link href="http://guqian110.github.io/pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html" rel="alternate"></link><updated>2014-05-19T10:12:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-05-19:pages/2014/05/19/bupt_mitc_lab_verilog_hdl_coding_style_guide.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;Version&lt;/strong&gt; : 1.1&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Date&lt;/strong&gt; : 2014-5-24&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Author&lt;/strong&gt; : Qian Gu (guqian110@gmail.com)&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Summary&lt;/strong&gt; : This is a brief Verilog HDL coding style guide for BUPT MITC lab to design circuits on FPGA. This guide is only concerned about code format and dose not involve principles for writing synthesisable codes.&lt;/p&gt;
