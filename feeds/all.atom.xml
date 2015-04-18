@@ -1,5 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-04-15T15:50:00+08:00</updated><entry><title>Verilog 的 case 小结</title><link href="http://guqian110.github.io/pages/2015/04/15/summary_of_case_in_verilog.html" rel="alternate"></link><updated>2015-04-15T15:50:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-04-15:pages/2015/04/15/summary_of_case_in_verilog.html</id><summary type="html">&lt;p&gt;学习了 Cummings 大神 的 paper：&lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG1999Boston_FullParallelCase.pdf"&gt;"full_case parallel_case", the Evil Twins of Verilog Synthesis&lt;/a&gt; 和 &lt;a href="http://www.phei.com.cn/module/goods/wssd_content.jsp?bookid=38848"&gt;Verilog 编程艺术&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-04-17T00:00:00+08:00</updated><entry><title>可配置设计</title><link href="http://guqian110.github.io/pages/2015/04/17/configurable_design.html" rel="alternate"></link><updated>2015-04-17T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-04-17:pages/2015/04/17/configurable_design.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.amazon.cn/EDA%E7%B2%BE%E5%93%81%E6%99%BA%E6%B1%87%E9%A6%86-Verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF-%E9%AD%8F%E5%AE%B6%E6%98%8E/dp/B00HNVY3SY/ref=sr_1_1?ie=UTF8&amp;amp;qid=1429188978&amp;amp;sr=8-1&amp;amp;keywords=verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF"&gt;Verilog 编程艺术&lt;/a&gt; 的可配置设计一章 学习笔记。&lt;/p&gt;
+&lt;h2&gt;Configurable design&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我们做设计的时候，就要考虑做成可以灵活配置的设计，不管是小模块，还是大模块，这样便于以后维护和移植。可配置模块的设计方法如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;使用 parameter 和 `define&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 for 语句生成多条语句&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用 generate、for、if 等语句生成多条语句和多个实例化&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;通过工具或脚本生成配置参数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;通过工具或脚本直接生成 Verilog 代码&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;书里面总结了上面的这些方法，以前总结过另外一篇博客：&lt;a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html"&gt;Verilog 中的参数化建模&lt;/a&gt;，里面总结了 条件编译、`define、parameter、localparam 的用法和区别。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.amazon.com/Reuse-Methodology-Manual-System-Designs/dp/0387740988"&gt;Reuse Methodology Manual for System-on-a-Chip Designs&lt;/a&gt; 是一本很经典的书，里面有全面详细的可重用设计的方法，有时间了看了再补上。&lt;/p&gt;
+&lt;p&gt;下面是一些实际例子，展示如何设计可配置模块。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Gray-2-Binary&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;Binary 编码是最自然的、最符合平常的思维的，但是这种编码方式有时候存在一些问题：比如在 DAC 中，数字 3(011) 变为 数字 4(100) 时，每 1 bit 都发生了变化，电路中会产生很大的尖峰电流脉冲。&lt;/p&gt;
+&lt;p&gt;而 Gray 编码就没有这样的问题，Gray 码有很多优点，应用很广泛，就不再重复了。（比如在 FIFO 设计中，内部就有 Gray 和 Binary 的相互转换）&lt;/p&gt;
+&lt;p&gt;下面的例子，通过&lt;strong&gt;将端口位宽参数化&lt;/strong&gt;，实现了可配置的转换模块：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;example1:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#verilog&lt;/span&gt;
+&lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;gray2bin&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parameter&lt;/span&gt; &lt;span class="n"&gt;SIZE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;SIZE&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;    &lt;span class="n"&gt;gray&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+     &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;SIZE&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;    &lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="n"&gt;generate&lt;/span&gt;
+        &lt;span class="n"&gt;genvar&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;SIZE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="nl"&gt;begin:&lt;/span&gt;&lt;span class="n"&gt;bit&lt;/span&gt;
+            &lt;span class="n"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="n"&gt;gray&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;SIZE&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+        &lt;span class="n"&gt;end&lt;/span&gt;
+    &lt;span class="n"&gt;endgenerate&lt;/span&gt;
+
+&lt;span class="n"&gt;endmodule&lt;/span&gt;
+
+&lt;span class="cp"&gt;#verilog&lt;/span&gt;
+&lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;bin2gray&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parameter&lt;/span&gt; &lt;span class="n"&gt;SIZE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;SIZE&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;    &lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+     &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;SIZE&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;    &lt;span class="n"&gt;gray&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="n"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;gray&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bin&lt;/span&gt; &lt;span class="o"&gt;^&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;SIZE&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="n"&gt;endmodule&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;CRC&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;Cyclic Redundancy Check，循环冗余检测。不同的协议使用的 CRC 多项式不相同，在硬件上体现在 LSR 的宽度和抽头位置不同，我们可以写一个通用的 CRC 模块。&lt;/p&gt;
+&lt;p&gt;下面的例子，通过&lt;strong&gt;将端口位宽参数化&lt;/strong&gt;，实现了可配置的 CRC 模块。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;example2&lt;/strong&gt;&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="n"&gt;general_crc&lt;/span&gt;
+    &lt;span class="p"&gt;#(&lt;/span&gt;&lt;span class="k"&gt;parameter&lt;/span&gt;  &lt;span class="no"&gt;WIDTH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;WIDTH&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;  &lt;span class="no"&gt;INIT_VALUE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;WIDTH&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;  &lt;span class="no"&gt;CRC_EQUATION&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;input&lt;/span&gt;                          &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+     &lt;span class="k"&gt;input&lt;/span&gt;                          &lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+     &lt;span class="k"&gt;input&lt;/span&gt;                          &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;       &lt;span class="c1"&gt;// if init = 1, initialize crc_value &lt;/span&gt;
+                                                &lt;span class="c1"&gt;// with INIT_VALUE&lt;/span&gt;
+     &lt;span class="k"&gt;input&lt;/span&gt;                          &lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;     &lt;span class="c1"&gt;// if enbale = 1, calculate crc_value&lt;/span&gt;
+                                                &lt;span class="c1"&gt;// from din&lt;/span&gt;
+     &lt;span class="k"&gt;input&lt;/span&gt;                          &lt;span class="n"&gt;drain&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;      &lt;span class="c1"&gt;// if drain = 1, crc_value is  shifted&lt;/span&gt;
+                                                &lt;span class="c1"&gt;// out from dout&lt;/span&gt;
+     &lt;span class="k"&gt;input&lt;/span&gt;                          &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+     &lt;span class="k"&gt;output&lt;/span&gt;                         &lt;span class="n"&gt;dout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+     &lt;span class="k"&gt;output&lt;/span&gt;  &lt;span class="kt"&gt;reg&lt;/span&gt;    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;WIDTH&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;crc_value&lt;/span&gt;   &lt;span class="c1"&gt;// parallel out crc_value&lt;/span&gt;
+     &lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// implementation code&lt;/span&gt;
+
+&lt;span class="k"&gt;endmodule&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;在调用时，通过传递合适的参数即可实现不同的 CRC 模块。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;FIFO controller&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;略...&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;RAM wrapper&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;h3&gt;problem&lt;/h3&gt;
+&lt;p&gt;FPGA 中的 RAM/ROM 是用厂家的工具生成的，而 ASIC 中的 RAM/ROM 是用 ARM 公司的 Memory Compiler 生成的，两者的端口名不一样，有些控制信号的极性也不相同。&lt;/p&gt;
+&lt;p&gt;通常的做法是&lt;strong&gt;使用条件编译&lt;/strong&gt;，写如下的代码&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="no"&gt;`ifdef&lt;/span&gt;  &lt;span class="no"&gt;FPGA&lt;/span&gt;
+    &lt;span class="c1"&gt;// instantiate module for FPGA&lt;/span&gt;
+&lt;span class="no"&gt;`else&lt;/span&gt;
+    &lt;span class="c1"&gt;// instantiate module for ASIC&lt;/span&gt;
+&lt;span class="no"&gt;`endif&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;这种方法的缺点主要有：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;但内部有几十个到上百个 RAM/ROM 时，手动连接的工作量很大&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;做 ATPG 时，手工写代码很容易出错&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;做 BIST 测试时，需要添加额外的逻辑&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;另外一种更好的方法是 &lt;strong&gt;写 wrapper&lt;/strong&gt;&lt;/p&gt;
+&lt;h3&gt;wrapper&lt;/h3&gt;
+&lt;h4&gt;name&lt;/h4&gt;
+&lt;p&gt;命名规范：按照 ARM 公司的规范，&lt;/p&gt;
+&lt;p&gt;RAM/ROM type:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Type&lt;/th&gt;
+&lt;th&gt;little/large&lt;/th&gt;
+&lt;th&gt;Ports&lt;/th&gt;
+&lt;th&gt;Comments&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;RF1&lt;/td&gt;
+&lt;td&gt;little&lt;/td&gt;
+&lt;td&gt;single&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RA1&lt;/td&gt;
+&lt;td&gt;large&lt;/td&gt;
+&lt;td&gt;single&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RF2&lt;/td&gt;
+&lt;td&gt;little&lt;/td&gt;
+&lt;td&gt;dual&lt;/td&gt;
+&lt;td&gt;one read port &amp;amp; one write port&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RA2&lt;/td&gt;
+&lt;td&gt;large&lt;/td&gt;
+&lt;td&gt;dual&lt;/td&gt;
+&lt;td&gt;two read port &amp;amp; two write port&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ROM&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;single&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;RAM/ROM write enable (WEN) type:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Type&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;IW&lt;/td&gt;
+&lt;td&gt;bit-write-enable&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;BW&lt;/td&gt;
+&lt;td&gt;byte-write-enable&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;WW&lt;/td&gt;
+&lt;td&gt;word-write-enable&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;命名时按照 &lt;code&gt;&amp;lt;ram_type&amp;gt;_&amp;lt;wen_type&amp;gt;_&amp;lt;depth&amp;gt;x&amp;lt;width&amp;gt;&lt;/code&gt; 的规则，在 FPGA 上则加上前缀 &lt;code&gt;F_&lt;/code&gt;，即：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;F_&amp;lt;ram_type&amp;gt;_&amp;lt;wen_type&amp;gt;_&amp;lt;depth&amp;gt;x&amp;lt;width&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;举例：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;F_RA1_BW_2kx32：RA1 类型，支持 byte 写，4 个 WEN，深度为 2k，宽度为 32-bit&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;F_RF1_IW_128x8：RF1 类型，支持 bit 写，8 个 WEN，深度为 129，宽度为 8-bit&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;generate wrapper&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;提前写好的 Perl 脚本 和 参数化模块&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;根据实际需求，写配置文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;运行 Perl 脚本，读取配置文件，生成 wrapper&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;将生成的 wrapper 加入到 project 中&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;每个步骤的具体实现方法以后再补...&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;GPIO&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;运用模块化的设计思想，提取公共代码，设计子模块，通过子模块实现大模块的设计，虽然参数化以后 GPIO 看起来比较复杂，但是这个模块是很通用的，设计好之后只需要修改参数就可以重复使用了。这在设计期间，修改起来非常方便。&lt;/p&gt;
+&lt;p&gt;整个 GPIO 由 5  个模块组成：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;gpio&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;gpio&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+ &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;___gpio_params&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;parameters&lt;/span&gt; &lt;span class="n"&gt;define&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+ &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;___gpio_reg&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;gpio_reg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+ &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;___gpio_check&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;gpio_check&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+ &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;___gpio_sync&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;gpio_sync2_reg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;gpio_sync3_reg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;gpio_sync_pulse&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;具体代码略，直接看书&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;BusMatrix&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;...&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Andes Core N801&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;...&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;ARM926EJS&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;...&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;coreConsultant&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;...&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://www.amazon.cn/EDA%E7%B2%BE%E5%93%81%E6%99%BA%E6%B1%87%E9%A6%86-Verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF-%E9%AD%8F%E5%AE%B6%E6%98%8E/dp/B00HNVY3SY/ref=sr_1_1?ie=UTF8&amp;amp;qid=1429188978&amp;amp;sr=8-1&amp;amp;keywords=verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF"&gt;Verilog 编程艺术&lt;/a&gt;&lt;/p&gt;</summary><category term="configurable design"></category></entry><entry><title>Verilog 的 case 小结</title><link href="http://guqian110.github.io/pages/2015/04/15/summary_of_case_in_verilog.html" rel="alternate"></link><updated>2015-04-15T15:50:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-04-15:pages/2015/04/15/summary_of_case_in_verilog.html</id><summary type="html">&lt;p&gt;学习了 Cummings 大神 的 paper：&lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG1999Boston_FullParallelCase.pdf"&gt;"full_case parallel_case", the Evil Twins of Verilog Synthesis&lt;/a&gt; 和 &lt;a href="http://www.phei.com.cn/module/goods/wssd_content.jsp?bookid=38848"&gt;Verilog 编程艺术&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;总结一下笔记。&lt;/p&gt;
 &lt;h2&gt;Def&lt;/h2&gt;
 &lt;hr /&gt;
@@ -8544,7 +8817,7 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;例化（&lt;code&gt;instantiation&lt;/code&gt;）和 推译（&lt;code&gt;inference&lt;/code&gt;）是在 FPGA 设计中使用元件的两种不同方法。综合器是通过 HDL 代码 推译（&lt;code&gt;infer&lt;/code&gt;） 最终的电路，所以我们写的 RTL 代码风格会影响最终综合出来的 FF 类型。&lt;/p&gt;
 &lt;p&gt;如果代码的敏感列表中包含复位信号，那么就会综合出一个异步复位的 DFF，SR 端口将被配置为置位或者复位端口(FDPE &amp;amp; FDCE primitive)。当 SR 变高时，FF 的输出值立即变为代码中的复位时设定的值 SRVAL。&lt;/p&gt;
 &lt;p&gt;同理，如果代码的敏感列表中不包含复位信号，那么就会综合出一个同步复位的 DFF，SR 端口将被配置为置位/复位端口(FDSE &amp;amp; FDRE primitive)。当 SR 变高时，FF 的输出值在下一个时钟的上升沿变为 SRVAL。&lt;/p&gt;
-&lt;p&gt;虽然 FPGA 的 FF 可以配额为 preset/clear/set/reset，但是一个单独的 FF 每次只能配置为其中的一种，如果在代码中多于一个 preset/clear/set/reset，那么就会产生其他的逻辑，消耗 FPGA 资源。&lt;/p&gt;
+&lt;p&gt;虽然 FPGA 的 FF 可以配额为 preset/clear/set/reset 等不同的结构，但是在实现时，只能配置为其中的一种，如果在代码中多于一个 preset/clear/set/reset，那么就会产生其他的逻辑，消耗 FPGA 资源。&lt;/p&gt;
 &lt;p&gt;另外，基于 SRAM 的 FPGA 可以设定上电初始化的值：如果我们在定义 reg 变量时给它一个初始值，那么 FPGA 在上电配置(GSR 变高)时，载入这个值。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Active low  V.S.  Active high&lt;/h2&gt;
@@ -8582,8 +8855,10 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;hr /&gt;
 &lt;p&gt;因为 DFF 有两种复位端口，所以对应的有两种复位方式：同步复位 和 异步复位。两种复位方式各有特点，适用于不同的应用场景。下面先分别总结两种方案的优劣，最后总结当前流行的的主流复位方案。&lt;/p&gt;
 &lt;h3&gt;Synchronous Reset&lt;/h3&gt;
-&lt;p&gt;模块的 &lt;code&gt;sensitivity list&lt;/code&gt; 中不包含 &lt;code&gt;rst&lt;/code&gt; 信号。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;code:&lt;/strong&gt;&lt;/p&gt;
+&lt;h4&gt;Coding Style&lt;/h4&gt;
+&lt;p&gt;同步复位的假设前提：只有在时钟信号的有效沿，复位信号才能影响寄存器的状态。&lt;/p&gt;
+&lt;p&gt;通常把 reset 信号作为组合逻辑的一部分连接到寄存器输入端口 D，从而对寄存器起作用。因此同步复位的 coding style 应该是：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;模块的 &lt;code&gt;sensitivity list&lt;/code&gt; 中不包含 &lt;code&gt;rst&lt;/code&gt; 信号，并且 reset 信号应该在 if-else 的最前面（if 分支），以便于优先考虑，其他组合逻辑位于后面（else 分支）。&lt;/strong&gt;&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
@@ -8602,7 +8877,7 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
-&lt;p&gt;&lt;strong&gt;RTL Schematic:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对应的 RTL Schematic 如下：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="sync reset" src="/images/the-art-of-reset-design-in-fpga/sync_reset.png" /&gt;&lt;/p&gt;
 &lt;p&gt;其中 &lt;code&gt;fdr&lt;/code&gt; 是 Xilinx 的原语，表示 &lt;code&gt;Singal Data Rate D Flip-Flop with Synchronous Reset and Clock Enable (posedge clk)&lt;/code&gt;&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
@@ -8640,6 +8915,32 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;有时候，有些器件不带同步复位专用端口，那么综合器一般会将复位信号综合为输入信号的使能信号，这时候就需要额外的逻辑资源了。&lt;/p&gt;
+&lt;h4&gt;Problem&lt;/h4&gt;
+&lt;p&gt;如果没有遵守这样的 coding style，可能会引起下面的两个问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在一些基于逻辑表达式计算的仿真器上，一些逻辑可能会阻止复位信号作用到寄存器上&lt;/p&gt;
+&lt;p&gt;注意：只存在于仿真器的问题，硬件上没有问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;相对于时钟信号而言，因为复位树（reset tree）上有着非常高的扇出，所以复位信号可能是一个晚到底信号（late arriving signal）&lt;/p&gt;
+&lt;p&gt;明智之举是：即使在复位树上加入 buffer，一旦复位信号进入到局部逻辑区域（local logic），那么就要限制复位信号到达寄存器所经历的逻辑数量，以减少延迟。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;使用同步复位还有一个问题是：&lt;/p&gt;
+&lt;p&gt;综合工具无法很轻松地从其他逻辑信号中识别出复位信号。（这可能导致一些仿真的问题，注意只是仿真问题，实际电路会正常工作，正确复位）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;solution:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;synposys 提供了综合指令 &lt;code&gt;sync_set_reset&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// synposys sync_set_reset &amp;quot;rst&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这个指令的作用是告诉综合工具指定的信号是同步 set/reset，那么综合工具就会尽量把这个信号放在靠近寄存器的位置，以防前面说仿真问题。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;通常，只有在综合指令是不许的而且是紧要的时候，我们才使用它们。&lt;/strong&gt;我们应该遵守这一原则，因为综合指令的使用可能导致前后仿真的不一致。&lt;/p&gt;
+&lt;p&gt;但是 &lt;code&gt;sync_set_reset&lt;/code&gt; 是个例外情况，因为它不会影响逻辑行为，只影响设计的功能实现。&lt;/p&gt;
+&lt;p&gt;所以明智的设计者在项目开始的时候就把 &lt;code&gt;sync_set_reset&lt;/code&gt; 添加到 RTL 代码中，以避免以后的多次综合。由于每个模块对这条指令只要求使用一次（模块只有一个复位信号），所以推荐为每个模块添加这条指令。&lt;/p&gt;
+&lt;p&gt;如果觉得每个模块都添加这种方式太繁琐，还有另外一种方法：在读取 RTL 代码前，设置综合变量 &lt;code&gt;hdlin_ff_always_sync_set_reset&lt;/code&gt; 为 &lt;code&gt;true&lt;/code&gt;，可以达到同样的效果。&lt;/p&gt;
 &lt;h4&gt;Advantage&lt;/h4&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -8655,10 +8956,16 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;h4&gt;Disadvantage&lt;/h4&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;同步复位需要保证复位信号具有一定的脉冲宽度(脉冲延展器)，使其能被时钟沿采样到&lt;/p&gt;
+&lt;p&gt;并不是所有的 ASIC 库里面都有带同步复位端的寄存器，不过这个问题并不严重，因为同步复位信号只是另外一个数据输入信号，所以综合工具很容易把复位信号综合到寄存器外部的逻辑中。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;同步复位需要保证复位信号具有一定的脉冲宽度(pulse stretcher)，使其能被时钟沿采样到，尤其是多时钟域的设计中。这是需要重点考虑到，可以使用一个小岛计数器，以保证复位脉冲信号保持一定数量的时钟周期。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;在仿真过程中，同步复位信号可能被X态掩盖(?不懂...)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;同步复位信号需要时钟信号正常工作。在一些设计中这个条件可能不是问题，但是在一些设计中就比较让人恼火了。比如，为了节省功耗使用了门控时钟（gated clock），在复位信号有效时，时钟信号还处于禁止状态（disabled），而在时钟恢复时，复位信号已经被撤销了。这种情况就会导致电路无法复位（异步复位则无此问题）。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;如果设计中含有三态总线，为了防止三态总线的竞争，同步复位的芯片必须有一个上电异步复位&lt;/p&gt;
@@ -8672,7 +8979,8 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;Asynchronous&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;code:&lt;/strong&gt;&lt;/p&gt;
+&lt;h4&gt;Coding Style&lt;/h4&gt;
+&lt;p&gt;虽然异步复位信号是电平有效，但是敏感列表必须在异步复位信号的前沿激活：&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
@@ -8691,7 +8999,7 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
-&lt;p&gt;&lt;strong&gt;RTL Schematic:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对应的 RTL Schematic 如下：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="aync reset" src="/images/the-art-of-reset-design-in-fpga/async_reset.png" /&gt;&lt;/p&gt;
 &lt;p&gt;其中 &lt;code&gt;fdc&lt;/code&gt; 是 Xilinx 的原语，表示 &lt;code&gt;Single Data Rate D Flip-Flop with Asynchronous Clear and Clock Enable (posedge clk)&lt;/code&gt;&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
@@ -8728,20 +9036,32 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
-&lt;p&gt;异步复位的优缺点和同步复位是相对应的：&lt;/p&gt;
+&lt;h4&gt;Problem&lt;/h4&gt;
+&lt;p&gt;由于复位信号相对于时钟信号来说是异步的，所以可能导致两个问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;复位信号违反 recovery time&lt;/p&gt;
+&lt;p&gt;recovery time 是复位信号撤销的沿到时钟有效沿之间最小的时间间隔（类似于同步信号中的 setup time），如果违反 recovery time，寄存器的输出会出现亚稳态。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对于不同的寄存器，复位信号的撤销（removal）可能发生在不同的时钟周期内 &lt;/p&gt;
+&lt;p&gt;由于复位信号和时钟在传输延迟的轻微差别，导致有的寄存器的复位信号早于时钟信号，在时钟沿之前寄存器就被先复位；有些复位信号晚于时钟信号，在时钟沿之后寄存器才复位，从而有些寄存器先于其他寄存器退出复位状态。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;em&gt;异步复位和同步复位是互补，一个的优点（缺点）即使另外一个的缺点（优点）：&lt;/em&gt;&lt;/p&gt;
 &lt;h4&gt;Advantage&lt;/h4&gt;
 &lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;单元库中肯定是包含异步复位的寄存器的，所以异步复位最大的优点是不需要额外的逻辑，可以保持数据路径（data path）的干净。这在数据路径时序很紧张的情况下非常有用。&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;脉冲宽度没有限制，可以快速复位&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
+&lt;p&gt;没有时钟的时候也可以将电路复位 (使用 gated clock，同步复位无法工作，而异步复位是可以的)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
 &lt;p&gt;EDA 工具 route 起来更容易，对于大型设计，能显著减少编译时间&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;没有时钟的时候也可以将电路复位 (比如省电模式下，同步复位无法工作，而异步复位是可以的)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;无需额外的组合逻辑 (同上，具体分析)&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h4&gt;Disadvantage&lt;/h4&gt;
@@ -8750,10 +9070,10 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;不是同步电路，不利于时序分析，设计者要正确约束异步复位信号比同步复位复杂&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;复位信号容易收到毛刺的干扰&lt;/p&gt;
+&lt;p&gt;复位信号容易收到毛刺的干扰，板上或者系统复位上的噪声或者毛刺会导致假的复位&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;容易在复位信号撤销的时候(release)不满足 &lt;code&gt;removal time&lt;/code&gt; 时序要求，从而产生亚稳态 (关于亚稳态，网上有很多论文、博客都有详细说明)&lt;/p&gt;
+&lt;p&gt;异步复位最大的问题是容易在复位信号的起效（assert）和失效（deassert）是异步的，起效异步没有问题，但是失效异步可能导致亚稳态。(撤销的时候(release)不满足 &lt;code&gt;removal time&lt;/code&gt; 时序要求，从而产生亚稳态)&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;Reset Synchronizer&lt;/h3&gt;
@@ -8763,7 +9083,7 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;需要注意到是，上图的复位是传统的低电平有效方式，对于 Xilinx 器件，原理图稍有不同，其复位按钮接到了 FF 的置位端，第一级 FF 的输入也由 &lt;code&gt;Vcc&lt;/code&gt; 变为 &lt;code&gt;GND&lt;/code&gt;。 &lt;a href="http://www.eetimes.com/document.asp?doc_id=1278998"&gt;How do I reset my FPGA&lt;/a&gt; 介绍了对应的 RTL Schematic ：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="reset_synchronizer_xilinx" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer_xilinx.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;对于 Xilinx 器件，用代码具体实现&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;code:&lt;/strong&gt;&lt;/p&gt;
+&lt;h4&gt;Coding Style&lt;/h4&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
  2
  3
@@ -8832,14 +9152,20 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
-&lt;p&gt;&lt;strong&gt;RTL Schematic:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对应的 RTL Schematic 如下：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="reset synchronizer" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer_rtl.png" /&gt;&lt;/p&gt;
 &lt;p&gt;其中，&lt;code&gt;rst_pb&lt;/code&gt; 是系统的复位按钮，&lt;code&gt;sys_rst&lt;/code&gt; 是同步化的结果。可以看到综合结果和上图是一致的。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Simulation:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img alt="simulation" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer_simulation.png" /&gt;&lt;/p&gt;
 &lt;p&gt;所谓 “异步复位”，如上图(由于连接到了置位端，叫 “异步置位” 更合适)，一旦复位信号 &lt;code&gt;rst_pb&lt;/code&gt; 有效，那么输出端口 &lt;code&gt;sys_rst&lt;/code&gt; 立即被置为 &lt;code&gt;1&lt;/code&gt;，否则输出为 &lt;code&gt;0&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;所谓 “同步释放”。如上图，当复位信号 &lt;code&gt;rst_pb&lt;/code&gt; 释放时(从有效变为无效)，输出端口 &lt;code&gt;sys_rst&lt;/code&gt; 不是立即变化，而是被 FF 延迟了一个时钟输出，从而使其和时钟同步化。这个和时钟同步化的复位信号可以有效的驱动后面的逻辑，避免亚稳态。&lt;/p&gt;
-&lt;p&gt;可以看到，这种 “异步复位，同步释放” 的方法既解决了同步复位中脉冲宽度的要求，又解决了异步复位中亚稳态的问题。&lt;/p&gt;
+&lt;p&gt;所谓 “同步释放”。如上图，当复位信号 &lt;code&gt;rst_pb&lt;/code&gt; 释放时(从有效变为无效)，输出端口 &lt;code&gt;sys_rst&lt;/code&gt; 不是立即变化，而是被 FF 延迟了一个时钟输出，从而使其和时钟同步化。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;是否存在亚稳态？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;答案：不存在。&lt;/p&gt;
+&lt;p&gt;分析：第一个寄存器的输入和输出在复位变有效前后是不一致的，当复位信号很靠近时钟信号时，可能违反 recovery time，其输出可能存在亚稳态。但是到了第二个寄存器，因为它的输入和输出在复位信号有效前后是一致的，所以它的输出没有机会在两个电平之间抖动，所以不存在亚稳态。&lt;/p&gt;
+&lt;p&gt;可以看到，这种 “异步复位，同步释放” 的方法既解决了同步复位对脉冲宽度的要求，又解决了异步复位可能导致的亚稳态问题。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Guidelien:&lt;/strong&gt; Every ASIC using an asynchronous reset should include a reset synchronizer circuit!!&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3&gt;Conclusion&lt;/h3&gt;
 &lt;p&gt;知道了这点，选择复位信号的策略就很明显了：&lt;/p&gt;
 &lt;ol&gt;
@@ -8850,16 +9176,17 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;如果器件本身是带有同步复位端口的，那么在写代码时就直接使用同步复位就可以了(CummingsSNUG2002SJ 也说了如果如果生产商提供同步复位端口，那么使用异步复位是毫无优点的。Xilinx 就是个例子，它所有的芯片都带有同步/异步复位端口)&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;如果不带有同步复位端口，那么就需要使用这种异步复位同步化&lt;/p&gt;
+&lt;p&gt;如果不带有同步复位端口，那么就需要异步复位时，必须包含同步器&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;在详细讨论了复位的有效电平、复位方式之后，我们开始讨论稍微复杂一点的复位设计：包括系统的复位方案、多时钟域的复位方案、复位信号的去除毛刺等。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Think Local V.S. Think Global&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;我们使用复位信号的一个目的就是为了使电路可控，当上电时或者系统出错时，可以通过复位的方式回到正常状态。为了达到完全可控，传统的做法是对系统内的每个 FF 都连接复位信号，这样就造成了复位信号的高扇出，而高扇出会导致一系列的问题。&lt;/p&gt;
 &lt;p&gt;Xilinx 有个 White Paper，&lt;a href="http://www.xilinx.com/support/documentation/white_papers/wp272.pdf"&gt;Get Smart About Reset: Think Local, Not Global&lt;/a&gt;，提出一种新的复位思路： 能不用全局复位时，尽量不要使用，这样可以降低复位信号的扇出。&lt;/p&gt;
-&lt;p&gt;这个原则和我们平时的理解和习惯是相反的，不使用全局复位的原因主要有三个：&lt;/p&gt;
+&lt;p&gt;这个原则和我们平时的理解和习惯是相反的，它不使用全局复位的原因主要有三个：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;随着时钟速率的提高，GSR 逐渐变为时序关键路径&lt;/p&gt;
@@ -8906,7 +9233,7 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;而这个矛盾早就有人在 Xilinx Forum 上提问了 &lt;a href="http://forums.xilinx.com/t5/Virtex-Family-FPGAs/What-does-GSR-signal-really-mean-and-how-should-I-handle-the/td-p/35610"&gt;What does GSR signal really mean and how should I handle the reset signal properly&lt;/a&gt;，还有 &lt;a href="http://forums.xilinx.com/t5/Archived-ISE-issues/FPGA-Power-On-Reset/m-p/7027?query.id=134602#M2035"&gt;FPGA Power On Reset!&lt;/a&gt;。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt; Conclustion&lt;/strong&gt;&lt;/p&gt;
+&lt;h3&gt;Conclusion&lt;/h3&gt;
 &lt;p&gt;应该优先选择有全局复位的设计方案，并且这个全局复位信号是用户定义的，不要使用 GSR 。&lt;/p&gt;
 &lt;p&gt;P.S. 事实上没有一个通用的、适合所有器件的复位方案，我们应该首先了解所使用的器件和工具，针对它们的特点进行复位方案的设计。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -9049,7 +9376,7 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;h3&gt;in ASIC&lt;/h3&gt;
 &lt;p&gt;在 ASIC 设计中，两种 tree 的关系有以下两种方式：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;方案一：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;驱动 reset tree 最安全的方法就是使用 clock tree 的叶子结点的时钟信号来驱动，如下图所示。如果采用这种方法，时序分析是满足的，那么就没有问题。&lt;/p&gt;
+&lt;p&gt;驱动 reset tree 最安全的方法就是使用 clock tree 的叶子节点的时钟信号来驱动，如下图所示。如果采用这种方法且时序分析是满足的，那么就没有问题。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="reset tree driven delayed clock" src="/images/the-art-of-reset-design-in-fpga/reset_tree_delayed_clock.png" /&gt;&lt;/p&gt;
 &lt;p&gt;分析以下情况：clock tree 中的一路叶子时钟信号驱动 &lt;code&gt;reset synchroinzer&lt;/code&gt;，得到的复位信号 masterrst_n 穿过 reset tree，输入到 DFF 的复位端口；clock tree 的另外一路叶子时钟信号直接连接 DFF 的时钟端。&lt;/p&gt;
 &lt;ol&gt;
@@ -9074,15 +9401,17 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;&lt;img alt="reset tree driven delayed clock" src="/images/the-art-of-reset-design-in-fpga/reset_tree_parallel_clock.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;对于 synchronou/asynchronous 两种 tree，可以用两种技术来进行优化：&lt;/em&gt;&lt;/p&gt;
 &lt;h4&gt;synchronous reset distribution tree&lt;/h4&gt;
-&lt;p&gt;如下图所示，通过在 tree 中嵌入 DFF，这样 reset 信号就不必在一个时钟周期内到达每一个 DFF 的复位端口，从而可以把 reset 信号的时序要求降得很低。在每个模块中，输入的 reset 信号首先经过一个 DFF，然后把经过 DFF 延迟输出的复位信号用作复位信号来复位逻辑、驱动子模块。每个 module 里面都含有以下代码：&lt;/p&gt;
+&lt;p&gt;如下图所示，在 reset tree 中嵌入 DFF，在每个模块中，输入的 reset 信号首先经过一个 DFF，然后把经过 DFF 延迟输出的复位信号用作复位信号来复位逻辑、驱动子模块。这样 reset 信号就不必在一个时钟周期内到达每一个 DFF 的复位端口，从而可以把 reset 信号的时序要求降得很低。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="synchronous reset" src="/images/the-art-of-reset-design-in-fpga/synchronous_reset_distribution.png" /&gt;&lt;/p&gt;
+&lt;p&gt;通过这种技巧，复位信号就被当作了普通的数据信号，而且时序分析要简单的多（因为 reset tree 的每一部分 stage 都有合理的扇出）。&lt;/p&gt;
+&lt;p&gt;所以每个 module 里面都含有以下代码：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;code&lt;/strong&gt;&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
 4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;input&lt;/span&gt;    &lt;span class="n"&gt;reset_raw&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-&lt;span class="c1"&gt;// synchronous reset&lt;/span&gt;
+&lt;span class="c1"&gt;// synposys sync_set_reset &amp;quot;reset&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;reset&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;reset_raw&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
@@ -9119,7 +9448,7 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Multi-clock Reset&lt;/h2&gt;
 &lt;hr /&gt;
-&lt;p&gt;在一个系统中，往往有多个时钟，这时候有必要为每个时钟域分配一个复位信号。&lt;/p&gt;
+&lt;p&gt;在一个系统中，往往有多个时钟，每个时钟域都应该有独立的 synchronizer 和 reset tree，这么做的目的是为了保证每个时钟域的每个寄存器都能满足 removal time。&lt;/p&gt;
 &lt;p&gt;因为只有一个全局复位的话，它与系统的时钟都没有关系，是异步复位信号，要求这个信号满足所有时钟域的 recovery 和 removal 时序不是一件容易的事情，因此为每个时钟域分配复位是有必要的。&lt;/p&gt;
 &lt;p&gt;根据实际情况的不同，有两种方案可以采用：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Non-coordinated reset removal&lt;/strong&gt;&lt;/p&gt;
@@ -9163,7 +9492,7 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;如果器件本身是带有同步复位端口的，那么在写代码时就直接使用同步复位就可以了(CummingsSNUG2002SJ 也说了如果如果生产商提供同步复位端口，那么使用异步复位是毫无优点的。Xilinx 就是个例子，它所有的芯片都带有同步/异步复位端口)&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;如果不带有同步复位端口，那么就需要使用这种异步复位同步化&lt;/p&gt;
+&lt;p&gt;如果不带有同步复位端口，那么就需要使用异步复位同步化&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;应该优先选择有全局复位的设计方案，并且这个全局复位信号是用户定义的，不要使用 GSR 。&lt;/p&gt;
@@ -9175,6 +9504,7 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;每个时钟域都应该有一个同步器来同步复位信号。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;总而言之，一句话：我们想象中的，简单的，统一的复位方案是...不存在的 =.=&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Reference&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG2002SJ_Resets.pdf"&gt;Synchronous Resets? Asynchronous Resets? I am so confused! How will I ever know which to use?&lt;/a&gt;&lt;/p&gt;

@@ -6,7 +6,6 @@ Slug: the_art_of_reset_design_in_fpga
 Author: Qian Gu
 Summary: 总结 FPGA 中的复位设计
 
-
 复位信号在系统中的地位和时钟信号几乎同等重要，我们想尽量把系统设计为可控，那么最基本的控制信号就是复位信号了。
 
 复位信号的设计需要考虑的因素，各种书刊、论文、白皮书、网上论坛都有相关讨论，但是至今对于给定 FPGA 设计中使用哪种复位方案仍然没有明确答案。本文总结了一些大神的经典论文和网上的许多博客，尽可能用简单的图说明选择某种设计方案及其理由，涉及的更深入的原理请自行 Google :-P
@@ -26,7 +25,7 @@ Summary: 总结 FPGA 中的复位设计
 
 同理，如果代码的敏感列表中不包含复位信号，那么就会综合出一个同步复位的 DFF，SR 端口将被配置为置位/复位端口(FDSE & FDRE primitive)。当 SR 变高时，FF 的输出值在下一个时钟的上升沿变为 SRVAL。
 
-虽然 FPGA 的 FF 可以配额为 preset/clear/set/reset，但是一个单独的 FF 每次只能配置为其中的一种，如果在代码中多于一个 preset/clear/set/reset，那么就会产生其他的逻辑，消耗 FPGA 资源。
+虽然 FPGA 的 FF 可以配额为 preset/clear/set/reset 等不同的结构，但是在实现时，只能配置为其中的一种，如果在代码中多于一个 preset/clear/set/reset，那么就会产生其他的逻辑，消耗 FPGA 资源。
 
 另外，基于 SRAM 的 FPGA 可以设定上电初始化的值：如果我们在定义 reg 变量时给它一个初始值，那么 FPGA 在上电配置(GSR 变高)时，载入这个值。
 
@@ -71,9 +70,13 @@ Summary: 总结 FPGA 中的复位设计
 
 ### Synchronous Reset
 
-模块的 `sensitivity list` 中不包含 `rst` 信号。
+#### Coding Style
 
-**code:**
+同步复位的假设前提：只有在时钟信号的有效沿，复位信号才能影响寄存器的状态。
+
+通常把 reset 信号作为组合逻辑的一部分连接到寄存器输入端口 D，从而对寄存器起作用。因此同步复位的 coding style 应该是：
+
+**模块的 `sensitivity list` 中不包含 `rst` 信号，并且 reset 信号应该在 if-else 的最前面（if 分支），以便于优先考虑，其他组合逻辑位于后面（else 分支）。**
         
     #!verilog
     always @(posedge clk) begin
@@ -85,7 +88,7 @@ Summary: 总结 FPGA 中的复位设计
         end
     end
 
-**RTL Schematic:**
+对应的 RTL Schematic 如下：
 
 ![sync reset](/images/the-art-of-reset-design-in-fpga/sync_reset.png)
 
@@ -111,6 +114,40 @@ Summary: 总结 FPGA 中的复位设计
 
 有时候，有些器件不带同步复位专用端口，那么综合器一般会将复位信号综合为输入信号的使能信号，这时候就需要额外的逻辑资源了。
 
+#### Problem
+
+如果没有遵守这样的 coding style，可能会引起下面的两个问题：
+
+1. 在一些基于逻辑表达式计算的仿真器上，一些逻辑可能会阻止复位信号作用到寄存器上
+
+    注意：只存在于仿真器的问题，硬件上没有问题。
+
+2. 相对于时钟信号而言，因为复位树（reset tree）上有着非常高的扇出，所以复位信号可能是一个晚到底信号（late arriving signal）
+
+    明智之举是：即使在复位树上加入 buffer，一旦复位信号进入到局部逻辑区域（local logic），那么就要限制复位信号到达寄存器所经历的逻辑数量，以减少延迟。
+
+使用同步复位还有一个问题是：
+
+综合工具无法很轻松地从其他逻辑信号中识别出复位信号。（这可能导致一些仿真的问题，注意只是仿真问题，实际电路会正常工作，正确复位）
+
+**solution:**
+
+synposys 提供了综合指令 `sync_set_reset`
+
+    // synposys sync_set_reset "rst"
+
+这个指令的作用是告诉综合工具指定的信号是同步 set/reset，那么综合工具就会尽量把这个信号放在靠近寄存器的位置，以防前面说仿真问题。
+
+**P.S.**
+
+**通常，只有在综合指令是不许的而且是紧要的时候，我们才使用它们。**我们应该遵守这一原则，因为综合指令的使用可能导致前后仿真的不一致。
+
+但是 `sync_set_reset` 是个例外情况，因为它不会影响逻辑行为，只影响设计的功能实现。
+
+所以明智的设计者在项目开始的时候就把 `sync_set_reset` 添加到 RTL 代码中，以避免以后的多次综合。由于每个模块对这条指令只要求使用一次（模块只有一个复位信号），所以推荐为每个模块添加这条指令。
+
+如果觉得每个模块都添加这种方式太繁琐，还有另外一种方法：在读取 RTL 代码前，设置综合变量 `hdlin_ff_always_sync_set_reset` 为 `true`，可以达到同样的效果。
+
 #### Advantage
 
 1. 保证设计是 100% 同步，有利于时序分析，也利于仿真
@@ -121,13 +158,17 @@ Summary: 总结 FPGA 中的复位设计
 
 #### Disadvantage
 
-1. 同步复位需要保证复位信号具有一定的脉冲宽度(脉冲延展器)，使其能被时钟沿采样到
+1. 并不是所有的 ASIC 库里面都有带同步复位端的寄存器，不过这个问题并不严重，因为同步复位信号只是另外一个数据输入信号，所以综合工具很容易把复位信号综合到寄存器外部的逻辑中。
 
-2. 在仿真过程中，同步复位信号可能被X态掩盖(?不懂...)
+2. 同步复位需要保证复位信号具有一定的脉冲宽度(pulse stretcher)，使其能被时钟沿采样到，尤其是多时钟域的设计中。这是需要重点考虑到，可以使用一个小岛计数器，以保证复位脉冲信号保持一定数量的时钟周期。
 
-3. 如果设计中含有三态总线，为了防止三态总线的竞争，同步复位的芯片必须有一个上电异步复位
+3. 在仿真过程中，同步复位信号可能被X态掩盖(?不懂...)
 
-4. 如果逻辑器件的目标库内的 FF 只有异步复位端口，那么使用同步复位的话，综合器会将复位信号综合为输入信号的使能信号，这时候就需要额外的逻辑资源了。
+4. 同步复位信号需要时钟信号正常工作。在一些设计中这个条件可能不是问题，但是在一些设计中就比较让人恼火了。比如，为了节省功耗使用了门控时钟（gated clock），在复位信号有效时，时钟信号还处于禁止状态（disabled），而在时钟恢复时，复位信号已经被撤销了。这种情况就会导致电路无法复位（异步复位则无此问题）。
+
+5. 如果设计中含有三态总线，为了防止三态总线的竞争，同步复位的芯片必须有一个上电异步复位
+
+6. 如果逻辑器件的目标库内的 FF 只有异步复位端口，那么使用同步复位的话，综合器会将复位信号综合为输入信号的使能信号，这时候就需要额外的逻辑资源了。
 
     有很多教材和博客都直接说 “同步复位会产生额外的逻辑资源”，可能他们是基于 Altera 的 FPGA 这么做的，如下图所示：
     
@@ -139,7 +180,9 @@ Summary: 总结 FPGA 中的复位设计
     
 ### Asynchronous
 
-**code:**
+#### Coding Style
+
+虽然异步复位信号是电平有效，但是敏感列表必须在异步复位信号的前沿激活：
 
     #!verilog
     always @(posedge clk or posedge rst) begin
@@ -151,7 +194,7 @@ Summary: 总结 FPGA 中的复位设计
         end
     end
 
-**RTL Schematic:**
+对应的 RTL Schematic 如下：
 
 ![aync reset](/images/the-art-of-reset-design-in-fpga/async_reset.png)
 
@@ -175,25 +218,37 @@ Summary: 总结 FPGA 中的复位设计
     
     // End of FDCE_inst instantiation
 
-异步复位的优缺点和同步复位是相对应的：
+#### Problem
+
+由于复位信号相对于时钟信号来说是异步的，所以可能导致两个问题：
+
+1. 复位信号违反 recovery time
+
+    recovery time 是复位信号撤销的沿到时钟有效沿之间最小的时间间隔（类似于同步信号中的 setup time），如果违反 recovery time，寄存器的输出会出现亚稳态。
+
+2. 对于不同的寄存器，复位信号的撤销（removal）可能发生在不同的时钟周期内 
+
+    由于复位信号和时钟在传输延迟的轻微差别，导致有的寄存器的复位信号早于时钟信号，在时钟沿之前寄存器就被先复位；有些复位信号晚于时钟信号，在时钟沿之后寄存器才复位，从而有些寄存器先于其他寄存器退出复位状态。
+
+*异步复位和同步复位是互补，一个的优点（缺点）即使另外一个的缺点（优点）：*
 
 #### Advantage
 
-1. 脉冲宽度没有限制，可以快速复位
+1. 单元库中肯定是包含异步复位的寄存器的，所以异步复位最大的优点是不需要额外的逻辑，可以保持数据路径（data path）的干净。这在数据路径时序很紧张的情况下非常有用。
 
-2. EDA 工具 route 起来更容易，对于大型设计，能显著减少编译时间
+2. 脉冲宽度没有限制，可以快速复位
 
-3. 没有时钟的时候也可以将电路复位 (比如省电模式下，同步复位无法工作，而异步复位是可以的)
+3. 没有时钟的时候也可以将电路复位 (使用 gated clock，同步复位无法工作，而异步复位是可以的)
 
-4. 无需额外的组合逻辑 (同上，具体分析)
+4. EDA 工具 route 起来更容易，对于大型设计，能显著减少编译时间
 
 #### Disadvantage
 
 1. 不是同步电路，不利于时序分析，设计者要正确约束异步复位信号比同步复位复杂
 
-2. 复位信号容易收到毛刺的干扰
+2. 复位信号容易收到毛刺的干扰，板上或者系统复位上的噪声或者毛刺会导致假的复位
 
-3. 容易在复位信号撤销的时候(release)不满足 `removal time` 时序要求，从而产生亚稳态 (关于亚稳态，网上有很多论文、博客都有详细说明)
+3. 异步复位最大的问题是容易在复位信号的起效（assert）和失效（deassert）是异步的，起效异步没有问题，但是失效异步可能导致亚稳态。(撤销的时候(release)不满足 `removal time` 时序要求，从而产生亚稳态)
 
 ### Reset Synchronizer
 
@@ -209,7 +264,7 @@ Summary: 总结 FPGA 中的复位设计
 
 对于 Xilinx 器件，用代码具体实现
 
-**code:**
+#### Coding Style
 
     #!verilog
     module SYSRST(
@@ -246,7 +301,7 @@ Summary: 总结 FPGA 中的复位设计
 
     endmodule
 
-**RTL Schematic:**
+对应的 RTL Schematic 如下：
 
 ![reset synchronizer](/images/the-art-of-reset-design-in-fpga/reset_synchronizer_rtl.png)
 
@@ -258,9 +313,17 @@ Summary: 总结 FPGA 中的复位设计
 
 所谓 “异步复位”，如上图(由于连接到了置位端，叫 “异步置位” 更合适)，一旦复位信号 `rst_pb` 有效，那么输出端口 `sys_rst` 立即被置为 `1`，否则输出为 `0`。
 
-所谓 “同步释放”。如上图，当复位信号 `rst_pb` 释放时(从有效变为无效)，输出端口 `sys_rst` 不是立即变化，而是被 FF 延迟了一个时钟输出，从而使其和时钟同步化。这个和时钟同步化的复位信号可以有效的驱动后面的逻辑，避免亚稳态。
+所谓 “同步释放”。如上图，当复位信号 `rst_pb` 释放时(从有效变为无效)，输出端口 `sys_rst` 不是立即变化，而是被 FF 延迟了一个时钟输出，从而使其和时钟同步化。
 
-可以看到，这种 “异步复位，同步释放” 的方法既解决了同步复位中脉冲宽度的要求，又解决了异步复位中亚稳态的问题。
+**是否存在亚稳态？**
+
+答案：不存在。
+
+分析：第一个寄存器的输入和输出在复位变有效前后是不一致的，当复位信号很靠近时钟信号时，可能违反 recovery time，其输出可能存在亚稳态。但是到了第二个寄存器，因为它的输入和输出在复位信号有效前后是一致的，所以它的输出没有机会在两个电平之间抖动，所以不存在亚稳态。
+
+可以看到，这种 “异步复位，同步释放” 的方法既解决了同步复位对脉冲宽度的要求，又解决了异步复位可能导致的亚稳态问题。
+
+> **Guidelien:** Every ASIC using an asynchronous reset should include a reset synchronizer circuit!!
 
 ### Conclusion
 
@@ -270,11 +333,13 @@ Summary: 总结 FPGA 中的复位设计
 
 2. 如果器件本身是带有同步复位端口的，那么在写代码时就直接使用同步复位就可以了(CummingsSNUG2002SJ 也说了如果如果生产商提供同步复位端口，那么使用异步复位是毫无优点的。Xilinx 就是个例子，它所有的芯片都带有同步/异步复位端口)
 
-4. 如果不带有同步复位端口，那么就需要使用这种异步复位同步化
+3. 如果不带有同步复位端口，那么就需要异步复位时，必须包含同步器
 
 <br>
 
 *在详细讨论了复位的有效电平、复位方式之后，我们开始讨论稍微复杂一点的复位设计：包括系统的复位方案、多时钟域的复位方案、复位信号的去除毛刺等。*
+
+<br>
 
 ## Think Local V.S. Think Global
 * * *
@@ -283,7 +348,7 @@ Summary: 总结 FPGA 中的复位设计
 
 Xilinx 有个 White Paper，[Get Smart About Reset: Think Local, Not Global][wp272]，提出一种新的复位思路： 能不用全局复位时，尽量不要使用，这样可以降低复位信号的扇出。
 
-这个原则和我们平时的理解和习惯是相反的，不使用全局复位的原因主要有三个：
+这个原则和我们平时的理解和习惯是相反的，它不使用全局复位的原因主要有三个：
 
 1. 随着时钟速率的提高，GSR 逐渐变为时序关键路径
 
@@ -341,7 +406,7 @@ Xilinx 有个 White Paper，[Get Smart About Reset: Think Local, Not Global][wp2
     而这个矛盾早就有人在 Xilinx Forum 上提问了 [What does GSR signal really mean and how should I handle the reset signal properly][question1]，还有 [FPGA Power On Reset!][question2]。
 
 
-** Conclustion**
+### Conclusion
 
 应该优先选择有全局复位的设计方案，并且这个全局复位信号是用户定义的，不要使用 GSR 。
 
@@ -465,7 +530,7 @@ reset distribution tree 和 clock distribution tree 如下图所示：
 
 **方案一：**
 
-驱动 reset tree 最安全的方法就是使用 clock tree 的叶子结点的时钟信号来驱动，如下图所示。如果采用这种方法，时序分析是满足的，那么就没有问题。
+驱动 reset tree 最安全的方法就是使用 clock tree 的叶子节点的时钟信号来驱动，如下图所示。如果采用这种方法且时序分析是满足的，那么就没有问题。
 
 ![reset tree driven delayed clock](/images/the-art-of-reset-design-in-fpga/reset_tree_delayed_clock.png)
 
@@ -491,16 +556,20 @@ reset distribution tree 和 clock distribution tree 如下图所示：
 
 #### synchronous reset distribution tree
 
-如下图所示，通过在 tree 中嵌入 DFF，这样 reset 信号就不必在一个时钟周期内到达每一个 DFF 的复位端口，从而可以把 reset 信号的时序要求降得很低。在每个模块中，输入的 reset 信号首先经过一个 DFF，然后把经过 DFF 延迟输出的复位信号用作复位信号来复位逻辑、驱动子模块。每个 module 里面都含有以下代码：
+如下图所示，在 reset tree 中嵌入 DFF，在每个模块中，输入的 reset 信号首先经过一个 DFF，然后把经过 DFF 延迟输出的复位信号用作复位信号来复位逻辑、驱动子模块。这样 reset 信号就不必在一个时钟周期内到达每一个 DFF 的复位端口，从而可以把 reset 信号的时序要求降得很低。
 
 ![synchronous reset](/images/the-art-of-reset-design-in-fpga/synchronous_reset_distribution.png)
+
+通过这种技巧，复位信号就被当作了普通的数据信号，而且时序分析要简单的多（因为 reset tree 的每一部分 stage 都有合理的扇出）。
+
+所以每个 module 里面都含有以下代码：
 
 **code**
 
     #!verilog
     input    reset_raw;
 
-    // synchronous reset
+    // synposys sync_set_reset "reset"
     always @(posedge clk) reset <= reset_raw;
 
 reset_raw 是本模块的输入复位信号，reset 为经过 DFF 后的本地（local）复位信号，同时也连接子模块 reset_raw 的输入。
@@ -546,7 +615,7 @@ reset_raw 是本模块的输入复位信号，reset 为经过 DFF 后的本地�
 ## Multi-clock Reset
 * * *
 
-在一个系统中，往往有多个时钟，这时候有必要为每个时钟域分配一个复位信号。
+在一个系统中，往往有多个时钟，每个时钟域都应该有独立的 synchronizer 和 reset tree，这么做的目的是为了保证每个时钟域的每个寄存器都能满足 removal time。
 
 因为只有一个全局复位的话，它与系统的时钟都没有关系，是异步复位信号，要求这个信号满足所有时钟域的 recovery 和 removal 时序不是一件容易的事情，因此为每个时钟域分配复位是有必要的。
 
@@ -600,13 +669,15 @@ reset_raw 是本模块的输入复位信号，reset 为经过 DFF 后的本地�
 
 4. 如果器件本身是带有同步复位端口的，那么在写代码时就直接使用同步复位就可以了(CummingsSNUG2002SJ 也说了如果如果生产商提供同步复位端口，那么使用异步复位是毫无优点的。Xilinx 就是个例子，它所有的芯片都带有同步/异步复位端口)
 
-5. 如果不带有同步复位端口，那么就需要使用这种异步复位同步化
+5. 如果不带有同步复位端口，那么就需要使用异步复位同步化
 
 6. 应该优先选择有全局复位的设计方案，并且这个全局复位信号是用户定义的，不要使用 GSR 。
 
 7. 采用 synchronou/asynchronous reset distribution tree 可以降低 reset 信号的时序要求，减小扇出
 
 8. 每个时钟域都应该有一个同步器来同步复位信号。
+
+总而言之，一句话：我们想象中的，简单的，统一的复位方案是...不存在的 =.=
 
 <br>
 
