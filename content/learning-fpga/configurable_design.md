@@ -150,21 +150,21 @@ FPGA 中的 RAM/ROM 是用厂家的工具生成的，而 ASIC 中的 RAM/ROM 是
 
 RAM/ROM type:
 
-| Type |little/large| Ports  |         Comments               |
-|------|------------|--------|--------------------------------|
-| RF1  |   little   | single |                                |
-| RA1  |   large    | single |                                |
-| RF2  |   little   | dual   | one read port & one write port |
-| RA2  |   large    | dual   | two read port & two write port |
-| ROM  |            | single |                                |
+|Type||little/large||Ports||Comments|
+|------||------------||--------||--------------------------------|
+| RF1  ||   little   || single ||                                |
+| RA1  ||   large    || single ||                                |
+| RF2  ||   little   || dual   || one read port & one write port |
+| RA2  ||   large    || dual   || two read port & two write port |
+| ROM  ||            || single ||                                |
 
 RAM/ROM write enable (WEN) type:
 
-| Type |     Description    |
-|------|--------------------|
-|  IW  |  bit-write-enable  |
-|  BW  |  byte-write-enable |
-|  WW  |  word-write-enable |
+|Type||Description|
+|------||--------------------|
+|  IW  ||  bit-write-enable  |
+|  BW  ||  byte-write-enable |
+|  WW  ||  word-write-enable |
 
 命名时按照 `<ram_type>_<wen_type>_<depth>x<width>` 的规则，在 FPGA 上则加上前缀 `F_`，即：
 
