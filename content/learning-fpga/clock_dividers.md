@@ -31,11 +31,10 @@ Summary: 总结常用的时钟分频方法
 
 时钟分频一般都是通过计数器 counter 来实现的，计数器是分频的基础。
 
-计数器可以分为很多种，[Counter on wiki][wiki]，这里不再跑题展开了，关于计数器的讨论见：
-
-[Counter in FPGAs]()
+计数器可以分为很多种，[Counter on wiki][wiki]，这里不再跑题展开了，关于计数器的讨论见：[Counter in FPGAs][blog1]
 
 [wiki]: http://en.wikipedia.org/wiki/Counter
+[blog1]: http://guqian110.github.io/pages/2014/11/04/counter_design_summary.html
 
 <br>
 
@@ -104,11 +103,11 @@ Timing:
 
 Schematic:
 
-[1.5 sch](/images/clock-dividers/divide_1_5_sch.png)
+![1.5 sch](/images/clock-dividers/divide_1_5_sch.png)
 
 Timing:
 
-[1.5 timing](/images/clock-dividers/divide_1_5_timing.png)
+![1.5 timing](/images/clock-dividers/divide_1_5_timing.png)
 
 这种方法在仿真的时候是没有问题的，但是综合时可能会产生致命的问题：在切换时钟时，如果两路时钟信号的时延不相等，那么切换的时候就会产生毛刺。
 
@@ -152,7 +151,7 @@ Timing:
 
 **方法二：**
 
-参考一篇博文：[verilog 实现小数分频（小数分频器）][blog1]
+参考一篇博文：[verilog 实现小数分频（小数分频器）][blog2]
 
 通过可变分频和多次平均的方法，然后通过控制单位时间内两种分频比出现的不同次数来获得所需要的小数分频值。
 
@@ -178,7 +177,7 @@ Timing:
 
 ![example](/images/clock-dividers/example.png)
 
-[blog1]: http://blog.sina.com.cn/s/blog_6840802c0100izey.html
+[blog2]: http://blog.sina.com.cn/s/blog_6840802c0100izey.html
 
 <br>
 
@@ -197,6 +196,6 @@ Timing:
 
 [使用 VHDL 进行分频器设计](http://read.pudn.com/downloads126/sourcecode/embed/533229/VHDL%E5%88%86%E9%A2%91%E5%99%A8%E8%AE%BE%E8%AE%A1.pdf)
 
-[verilog 实现小数分频（小数分频器）][blog1]
+[verilog 实现小数分频（小数分频器）][blog2]
 
 [任意分频的verilog语言实现](http://www.eetop.cn/blog/html/11/317611-13680.html)

@@ -59,7 +59,7 @@ Summary: 总结 FPGA 中跨时钟域的设计
 
 **Synchronous V.S. Asynchronous**
 
-[FPGA高手设计实战真经100则](http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG)
+[Xilinx FPGA高级设计及应用](http://book.douban.com/subject/10593491/)
 
 > 从 ASIC 设计的角度来看，大约需要 7 个门来实现一个 D 触发器，而一个门即可实现一个2输入与非门，所以一般来说，在 ASIC 设计中，同步时序电路比异步电路占用更大的面积。但是，由于 FPGA 是定制好的底层单元，对于 Xilinx 器件，一个底层可编程单元 Slice 包含两个触发器（FF）和一个查找表（LUT）。其中触发器用以实现同步电路，查找表用以实现组合电路。FPGA 最终使用率用 Slice 来衡量。所以对于某个选定器件，其可实现的同步电路和异步电路的资源数量和比例是固定的，这点造成了过度使用查找表会浪费触发器资源，反之亦然。因而对于 FPGA，同步时序设计不一定比异步设计多消耗资源。单从节约资源的角度考虑，应该按照芯片配置的资源比例实现设计，但是设计者还要时刻权衡同步设计没有毛刺、信号稳定等优点，**所以对于 FPGA 设计推荐采用同步设计。**
 
@@ -118,43 +118,43 @@ synchronizer 有很多设计方法，因为一种方法不能满足所有的应�
 
     #!verilog
     module LVLSYNC(
-        rst, clk_i, din, clk_o, dout
+        input           clk_src, 
+        input           rst_src,
+        input           dat_src, 
+
+        input           clk_dst,
+        input           rst_dst, 
+        output  reg     dat_dst
         );
-        
-        // input
-        input       rst;
-        input       clk_i;
-        input       clk_o;
-        input       din;
-
-        // output
-        output      dout;
-
-        // output attribute
-        reg         dout;
-        
-        reg         din_q;
-        reg         dout_q;
-        
-        // reg the din using orign clock
-        always @(posedge clk_i) begin
-            if (rst) begin
-                din_q <= 1'b0;
+    
+        /////////////////////////////////////////////////////////////
+        // source time domain
+        /////////////////////////////////////////////////////////////
+        reg         dat;
+    
+        always @(posedge clk_src) begin
+            if (rst_src) begin
+                dat <= 1'b0;
             end
             else begin
-                din_q <= din;
+                dat <= dat_src;
             end
         end
-        
+    
+        ////////////////////////////////////////////////////////////
+        // destination time domain
+        ////////////////////////////////////////////////////////////
+        reg         dat_r;
+    
         // using two level DFF to synchronize the din_q
-        always @(posedge clk_o) begin
-            if (rst) begin
-                dout_q <= 1'b0;
-                dout <= 1'b0;
+        always @(posedge clk_dst) begin
+            if (rst_dst) begin
+                dat_r   <= 1'b0;
+                dat_dst <= 1'b0;
             end
             else begin
-                dout_q <= din_q;
-                dout <= dout_q;
+                dat_r   <= dat;
+                dat_dst <= dat_r;
             end
         end
     
@@ -166,11 +166,25 @@ synchronizer 有很多设计方法，因为一种方法不能满足所有的应�
 
 **Restriction:**
 
-使用 level synchronizer 的要求是：跨域时钟域的这个信号持续时间 >= 2 个新时钟域时钟周期。
+使用 level synchronizer 的要求是：
 
-之所以这样要求是因为：synchronizer 要花费两个时钟周期来同步这个异步信号，如果这个信号长度短于两个时钟周期，则不能正常工作。
+1. 源时钟域的信号应先通过源时钟域的一个 DFF 后输出，然后直接进入目的时钟域的 synchronizer 的第一级 DFF。这样做的
 
-level synchronizer 是其他两种同步器的核心。
+    这么做到原因是：synchronizer 的第一级 DFF 对组合逻辑产生的毛刺（glitch）非常敏感。如果一个足够长的毛刺刚好满足了 setup/hold time，那么 synchronizer 会将其放行，产生一个虚假的信号。
+
+2. 跨域时钟域的这个信号持续时间 >= 2 个新时钟域时钟周期。
+
+    虽然 [Crossing the abyss: asynchronous signals in a synchronous world][paper2] 中是这么写的，但是我觉得这个条件应该是保险条件，而不是最低条件。level synchronizer 的最低条件应该和 edge-detecting synchronizer 相同：
+
+    输入信号的宽度 >= 目标时钟域周期 + 第一个 flip-flop 的 hold time。
+
+    首先，待同步到信号宽度 > 源时钟周期，这样它才能被源时钟域的 DFF 采样到，然后输出；
+
+    其次，源时钟域采样输出端信号的宽度当然是源时钟周期的整数倍，它的宽度 > 目标时钟域周期 + 第一个 flip-flop 的 hold time，这样它才能被目的时钟域的时钟采样到，然后进行同步。
+
+    所以，保险一点的条件是：待同步到信号有效时间至少是目的时钟周期的 2 倍。
+
+*level synchronizer 是其他两种同步器的基础：*
 
 #### edge-detecting synchronizer
 
@@ -184,64 +198,71 @@ level synchronizer 是其他两种同步器的核心。
 
     #!verilog
     module EDGESYNC(
-        rst, clk_i, din, clk_o, dout
-        );
-
-        // input
-        input       rst;
-        input       clk_i;
-        input       clk_o;
-        input       din;
-
-        // output
-        output      dout;
-
-        reg     din_q;
-        reg     dout_q;
-        reg     dout_qr;
-        reg     dout_qrr;
-
-        // reg the din using orign clock
-        always @(posedge clk_i) begin
-            if (rst) begin
-                din_q <= 1'b0;
-            end
-            else begin
-                din_q <= din;
-            end
-        end
-
-        // using two level DFF to synchronize the din_q
-        always @(posedge clk_o) begin
-            if (rst) begin
-                dout_q <= 1'b0;
-                dout_qr <= 1'b0;
-                dout_qrr <= 1'b0;
-            end
-            else begin
-                dout_q <= din_q;
-                dout_qr <= dout_q;
-                dout_qrr <= dout_qr;
-            end
-        end
-
-        assign dout = dout_qrr && (~dout_qr);
+        input   clk_src,
+        input   rst_src, 
+        input   dat_src, 
     
+        input   clk_dst, 
+        input   rst_dst,
+        output  dat_dst
+        );
+    
+        /////////////////////////////////////////////////////////////
+        // source time domain
+        /////////////////////////////////////////////////////////////
+        reg     dat;
+    
+        always @(posedge clk_src) begin
+            if (rst_src) begin
+                dat <= 1'b0;
+            end
+            else begin
+                dat <= dat_src;
+            end
+        end
+    
+        ////////////////////////////////////////////////////////////
+        // destination time domain
+        ////////////////////////////////////////////////////////////
+        reg     [2:0]   sync_reg;
+    
+        always @(posedge clk_dst) begin
+            if (rst_dst) begin
+                sync_reg <= 3'b0;
+            end
+            else begin
+                sync_reg <= {sync_reg[1:0], dat};
+            end
+        end
+    
+        // AND to get the output
+        assign dat_dst = sync_reg[1] && (~sync_reg[2]);
+
     endmodule
     
 **RTL:**
 
-![edge rtl](/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/edge_rtl.png)
+...
 
 **Restriction:**
 
-使用 edge-detecting synchronizer 的要求是：输入信号的宽度 >= 同步时钟周期 + 第一个 flip-flop 的 hold time。最保险的脉冲宽度是同步周期的两倍。
+使用 edge-detecting synchronizer 的要求是：
 
-edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较快时钟域时可以正常工作，它会产生一个脉冲表示输入信号的上升沿或者下降沿。但是反过来，将一个快时钟域的信号同步到慢时钟域时，并不能正常工作，这时候需要使用 pusle synchronizer。
+1. 输入信号的宽度 >= 目标时钟域周期 + 第一个 flip-flop 的 hold time。最保险的脉冲宽度是同步周期的两倍。
+
+    实际上，因为在源时钟域，要先用 DFF 寄存一下再输出，所以源时钟域输出的信号的宽度是其时钟周期的整数倍，它肯定是 > 目标时钟周期的，因为 edge-detecting synchronizer 只能工作在慢时钟域到快时钟域的情况下。
+
+*edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较快时钟域时可以正常工作，它会产生一个脉冲表示输入信号的上升沿或者下降沿。但是反过来，将一个快时钟域的信号同步到慢时钟域时，并不能正常工作，这时候需要使用 pusle synchronizer。*
 
 #### pulse synchronizer
 
 脉冲同步器的基本功能是从某个时钟域中取出一个单时钟宽度的脉冲，然后在新的时钟域中建立另外一个单时钟宽度的脉冲。
+
+源时钟域的单时钟宽度的脉冲不是直接输出的，而是先经过一个源时钟域的翻转电路。这个翻转电路在每次输入一个脉冲时，它的输出会在高、低电平之间翻转。
+
+而在目的时钟域，翻转电路的输出先通过一个 level synchronizer，其输出到达异或门的一个输入端，而这个输出再经过一个 DFF，延时一个时钟周期后进入异或门的另外一个输入端。最后异或门的输出即最终的同步结果：
+
+源时钟域每有一个单时钟脉冲（源时钟），synchronizer 的输出端产生一个单时钟宽度（目的时钟）的脉冲。
 
 **Schematic:**
 
@@ -249,7 +270,50 @@ edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较�
 
 **Code:**
 
-...
+    module PULSESYNC(
+        input   clk_src,
+        input   rst_src,
+        input   pulse_src,
+    
+        input   clk_dst,
+        input   rst_dst,
+        output  pulse_dst
+        );
+    
+        ///////////////////////////////////////////////////
+        // source time domain
+        ///////////////////////////////////////////////////
+        reg toggle_reg;
+    
+        always @(posedge clk_src or posedge rst_src) begin
+            if (rst_src) begin
+                toggle_reg <= 1'b0;
+            end
+            else begin
+                if (pulse_src) begin
+                    toggle_reg <= ~toggle_reg;
+                end
+            end
+        end
+    
+        ///////////////////////////////////////////////////
+        // destination time domain
+        ///////////////////////////////////////////////////
+        reg     [2:0]   sync_reg;
+    
+        always @(posedge clk_dst) begin
+            if (rst_dst) begin
+                sync_reg <= 3'b0;
+            end
+            else begin
+                sync_reg <= {sync_reg[1:0], toggle_reg};
+            end
+        end
+    
+        // XOR to generate the pusle_dst
+        assign pulse_dst = sync_reg[1] ^ sync_reg[2];
+
+    endmodule
 
 **RTL:**
 
@@ -257,9 +321,17 @@ edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较�
 
 **Restriction:**
 
-使用 pusle synchronizer 的要求是：输入脉冲之间的最小间隔 >= 2 个同步时钟周期。
+使用 pusle synchronizer 的要求是：
 
-如果两个输入脉冲相互过近，则新时钟域的输出脉冲也会紧密相邻。
+1. 输入脉冲之间的最小间隔 >= 2 个同步时钟周期。如果两个输入脉冲相互过近，则新时钟域的输出脉冲也会紧密相邻，形成一个比单时钟周期宽的输出脉冲。
+
+    实际上，在一些情况下，少于 2 个时钟周期（> 1 个时钟周期）也是可以同步上的。只要 synchronizer 的两个 DFF 的值不一样即可同步上，也就是说异步信号在连续的两个目的时钟采样的值不同即可，由于异步信号和时钟的相位关系不确定，所以在没有对齐的情况下，大于 1 个时钟时也能满足两个采样值不同的条件。
+
+    一般为了保险起见，要求其保持至少两个时钟宽度。
+
+#### Timing
+
+synchronizer 需要花费 1～2 个时钟周期来完成同步，所以粗略的估计可以认为 synchronizer 会造成目的时钟域的 2 个周期的延迟，我们在设计时需要考虑 synchronizer 对时序产生的影响。
 
 #### Summary
 
@@ -267,14 +339,21 @@ edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较�
 
 ![synchronizer sum](/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronizer_sum.png)
 
-经过 synchronizer 的信号在两个时钟之后变为有效，一般延时为 1～2 新时钟周期，可以粗略估计延时为 2 个时钟周期，设计者需要仔细考虑同步延迟对于跨时钟域的信号时序造成的影响。
+虽然还有其他类型的 synchronizer，但是这 3 种基本上就可以解决设计中遇到的多数问题了。
 
+<br>
 
-*在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输，这时候就不再适合用 synchronizer 来同步这些信号了，通常采用其他的方法，比如握手协议和 FIFO 等。*
+*synchronizer 仅适用于简单的数据跨时钟域传输的同步，除了简单的信号之外，还有数据、地址、控制总线信号等也要跨时钟域。对于这些需求，可以使用其他的工具，比如握手协议、FIFO 等。*
+
+<br>
 
 ### Solution 2: Handshaking
 
 > Handshaking allows digital circuits to effectively communicate with each other when the response time of one or both circuits is unpredictable. For example, an arbitrated bus allows more than one circuit to request access to a single bus, such as PCI or AMBA (Advanced Microcontroller Bus Architecture), using arbitration to determine which circuit gains access to the bus. Each circuit signals a request, and the arbitration logic determines which request “wins.” This winning circuit receives an acknowledgment indicating that it has access to the bus. It then discontinues its request and begins the bus transaction.
+
+大意就是：对于（单边/双边）电路响应时间不确定的应用，握手协议可以有效地传输信号。比如（PCI、AMBA）总线仲裁电路，有多个电路申请访问总线时，每个电路都发出请求，由仲裁电路来决定哪个有访问权。“获胜” 的电路会收到确认信号，然后才可以访问总线。
+
+这种交互方式就是握手协议，简而言之就是双方首先要握手达成一致，然后才能传输数据。
 
 有两种基本握手协议：
 
@@ -335,7 +414,11 @@ edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较�
 
 + partial 和 full 的本质区别不在于synchronizer 的类型和握手信号的多少，而在于握手的方式。 partial 不用再等待对方的回答，就继续进行自己的下一步操作，而 full 必须等到对方的回复才进行下一步的操作，所以从某种意义上，full 方式才是真正的“握手”，而 partial 并不符合 “握手” 的意思，毕竟根本不管对方的反应，自顾自地挥手叫哪门子的握手 =.=
 
-*这些握手协议针对的都是跨时钟域的单一信号，但当几组信号要跨越时钟域时，设计者就需要更加复杂的信号传递方法。*
+<br>
+
+*在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输。因为 synchronizer 需要花费的时间是不确定的（1 or 2 个时钟周期），所以对于这些多 bit 的数据，synchronizer 无法完成同步功能，通常采用其他的方法，比如使用 FIFO。*
+
+<br>
 
 ### Solution 3: Datapath Design
 
@@ -343,7 +426,7 @@ edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较�
 
 **不应该在设计中的多个地方对同一信号进行同步，即禁止单个信号扇出至多个同步器。**
 
-因为synchronizer要花 1~2 个时钟周期，设计者不能确切预测到每个信号何时跨越时钟域，此外，在新时钟域中一组经过同步后的信号其时序是不定的，因为synchronier的延迟可以是 1～2 个时钟周期，这种情况下各个同步信号间形成一种“竞争状况”，这种竞争状况在需要跨域时钟域传输的多组信号间也会发生，例如数据总线、地址总线、控制总线等。因此，**不能对组中的每个信号单独使用synchronizer，也不能对数据/地址总线的每一位单独使用同步器**，因为在新的时钟域中，要求每个信号同时有效。
+因为 synchronizer 要花 1~2 个时钟周期，设计者不能确切预测到每个信号何时跨越时钟域，此外，在新时钟域中一组经过同步后的信号其时序是不定的，因为 synchronier 的延迟可以是 1～2 个时钟周期，这种情况下各个同步信号间形成一种“竞争状况”，这种竞争状况在需要跨域时钟域传输的多组信号间也会发生，例如数据总线、地址总线、控制总线等。因此，**不能对组中的每个信号单独使用 synchronizer，也不能对数据/地址总线的每一位单独使用同步器**，因为在新的时钟域中，要求每个信号同时有效。
 
 #### problem
 
@@ -397,11 +480,13 @@ enable signal in order to load a data value into the register. If both the load 
 
 ![datapath timing](/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/datapath_timing.png)
 
-注意：
+<br>
 
-如果发送端的数据速率很快/无法控制发送端发送数据的速度，那么就有可能无法满足握手机制中要求数据保持稳定这一要求，这时候这种方法就不再适用，而应该采用其他的方法，比如 FIFO。
+*如果发送端的数据速率很快/无法控制发送端发送数据的速度，那么就有可能无法满足握手机制中要求数据保持稳定这一要求，这时候这种方法就不再适用，而应该采用其他的方法，比如 FIFO。*
 
 [art]: http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960
+
+<br>
 
 ### Solution 4: Advanced Datapath Design
 
@@ -419,7 +504,7 @@ FIFO 的实现可以直接使用 IP core，也可以自己写代码实现。
 
 在 [Synthesis and Scripting Techniques for Designing Multi-Asynchronous Clock Designs][paper1] 和 [Crossing the abyss: asynchronous signals in a synchronous world][paper2] 两篇 paper 和 [The Art][art] 中都有一些实现 FIFO 使用的相关技术的介绍，比如指针逻辑的处理，内部 gray code 计数器的实现等。这里就偷懒不细说了（以后再补） :P
 
-----------------Update March/12/2015------------------------
+=============Update March/12/2015===========================
 
 FIFO 的目的在于解决数据跨时钟域传输的问题，但是在实现FIFO本身时，一些内部的握手信号也需要跨时钟域，这时候需要用到之前讨论过的dual rank synchronizer等技术。
 
@@ -427,29 +512,31 @@ FIFO 的目的在于解决数据跨时钟域传输的问题，但是在实现FIF
 
 而对应这个问题的解决方法就是使用 gray code。
 
---------------end of update---------------------------------
+==============end of update==================================
 
 [paper2]: http://inst.eecs.berkeley.edu/~cs150/sp10/Collections/Papers/ClockCrossing.pdf
 
 *关于跨时钟域 [papaer1][paper1] 中还有一些其他方面的技巧，可以帮助我们更好的实现设计。*
 
+<br>
+
 ### Design Partitioning
 
 **Guideline:**
 
-Only allow one clock per module.
+> Only allow one clock per module.
 
 **Reason:**
 
-Static timing analysis and creating synthesis scripts is more easily accomplished on single-clock modules or groups of single-clock modules.
+> Static timing analysis and creating synthesis scripts is more easily accomplished on single-clock modules or groups of single-clock modules.
 
 **guideline:**
 
-Create a synchronizer module for each set of signals that pass from just one clock domain into another clock domain.
+> Create a synchronizer module for each set of signals that pass from just one clock domain into another clock domain.
 
 **Reason:**
 
-It is given that any signal passing from one clock domain to another clock domain is going to have setup and hold time problems. No worst-case (max time) timing analysis is required for synchronizer modules. Only best case (min time) timing analysis is required between first and second stage flip-flops to ensure that all hold times are met. Also, gate-level simulations can more easily be configured to ignore setup and hold time violations on the first stage of each synchronizer.
+> It is given that any signal passing from one clock domain to another clock domain is going to have setup and hold time problems. No worst-case (max time) timing analysis is required for synchronizer modules. Only best case (min time) timing analysis is required between first and second stage flip-flops to ensure that all hold times are met. Also, gate-level simulations can more easily be configured to ignore setup and hold time violations on the first stage of each synchronizer.
 
 采用这种设计方式的原因如上所示，可以减少不必要的时序验证，而且脚本也更容易写，总之可以使时序验证工作更容易。
 
@@ -457,15 +544,17 @@ It is given that any signal passing from one clock domain to another clock domai
 
 ![partitioning](/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partitioning.png)
 
+<br>
+
 ### Clock Name Conventions
 
 **Guideline:**
 
-Use a clock naming convention to identify the clock source of every signal in a design.
+> Use a clock naming convention to identify the clock source of every signal in a design.
 
 **Reason:**
 
-A naming convention helps all team members to identify the clock domain for every signal in a design and also makes grouping of signals for timing analysis easier to do using regular expression "wild-carding" from within a synthesis script.
+> A naming convention helps all team members to identify the clock domain for every signal in a design and also makes grouping of signals for timing analysis easier to do using regular expression "wild-carding" from within a synthesis script.
 
 作者还举例说明了一个这样的例子：1995 年为 In Focus projectors 设计 video ASIC 时，他们就采用了这样的方法，对于 mircroprocessor 的时钟命名为 uClk，对于 video 的时钟则命名为 vClk。对应的时钟域中的信号的名字也添加了对应的前缀，比如udata，uwrite，uadder等。
 
@@ -473,7 +562,7 @@ A naming convention helps all team members to identify the clock domain for ever
 
 <br>
 
-## in ASIC
+## Gated Clock
 * * *
 
 虽然 FPGA 可以用来为 ASIC 搭建原型，但是一些 ASIC 中的技术并不适用于 FPGA，比如 gated clock。一般也没有必要在 FPGA 中模拟 ASIC 的低功耗优化。事实上，由于 FPGA 时钟资源的的粗颗粒度性，并不是总能模拟成功。
@@ -550,7 +639,7 @@ A naming convention helps all team members to identify the clock domain for ever
 
 以上，就是一些在多时钟域设计中处理异步数据的常用方法，总结如下：
 
-1. 对于普通的单比特的数据，根据实际情况选择对应的 synchronizer 即可
+1. 对于简单的单比特的数据，根据实际情况选择对应的 synchronizer 即可
 
 2. 对于其他的信号，比如数据总线、地址总线、控制总线等数据，可以使用握手协议
 

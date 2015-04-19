@@ -132,8 +132,7 @@
 <h2>Counter</h2>
 <hr />
 <p>时钟分频一般都是通过计数器 counter 来实现的，计数器是分频的基础。</p>
-<p>计数器可以分为很多种，<a href="http://en.wikipedia.org/wiki/Counter">Counter on wiki</a>，这里不再跑题展开了，关于计数器的讨论见：</p>
-<p><a href="">Counter in FPGAs</a></p>
+<p>计数器可以分为很多种，<a href="http://en.wikipedia.org/wiki/Counter">Counter on wiki</a>，这里不再跑题展开了，关于计数器的讨论见：<a href="http://guqian110.github.io/pages/2014/11/04/counter_design_summary.html">Counter in FPGAs</a></p>
 <p><br></p>
 <h2>Clock divider</h2>
 <hr />
@@ -197,9 +196,9 @@
 <h4>50% Duty Cycle</h4>
 <p>以 1.5 分频为例，</p>
 <p>Schematic:</p>
-<p><a href="/images/clock-dividers/divide_1_5_sch.png">1.5 sch</a></p>
+<p><img alt="1.5 sch" src="/images/clock-dividers/divide_1_5_sch.png" /></p>
 <p>Timing:</p>
-<p><a href="/images/clock-dividers/divide_1_5_timing.png">1.5 timing</a></p>
+<p><img alt="1.5 timing" src="/images/clock-dividers/divide_1_5_timing.png" /></p>
 <p>这种方法在仿真的时候是没有问题的，但是综合时可能会产生致命的问题：在切换时钟时，如果两路时钟信号的时延不相等，那么切换的时候就会产生毛刺。</p>
 <p>(Xilinx 提供的原语 <code>BUFGMUX</code> 有去除切换时钟时候的毛刺的功能，但是它只适用于全局时钟网络)</p>
 <h4>Non 50% Duty Cycle</h4>

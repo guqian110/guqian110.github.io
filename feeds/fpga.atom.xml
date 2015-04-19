@@ -2494,8 +2494,7 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;h2&gt;Counter&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;时钟分频一般都是通过计数器 counter 来实现的，计数器是分频的基础。&lt;/p&gt;
-&lt;p&gt;计数器可以分为很多种，&lt;a href="http://en.wikipedia.org/wiki/Counter"&gt;Counter on wiki&lt;/a&gt;，这里不再跑题展开了，关于计数器的讨论见：&lt;/p&gt;
-&lt;p&gt;&lt;a href=""&gt;Counter in FPGAs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;计数器可以分为很多种，&lt;a href="http://en.wikipedia.org/wiki/Counter"&gt;Counter on wiki&lt;/a&gt;，这里不再跑题展开了，关于计数器的讨论见：&lt;a href="http://guqian110.github.io/pages/2014/11/04/counter_design_summary.html"&gt;Counter in FPGAs&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Clock divider&lt;/h2&gt;
 &lt;hr /&gt;
@@ -2559,9 +2558,9 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;h4&gt;50% Duty Cycle&lt;/h4&gt;
 &lt;p&gt;以 1.5 分频为例，&lt;/p&gt;
 &lt;p&gt;Schematic:&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/clock-dividers/divide_1_5_sch.png"&gt;1.5 sch&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="1.5 sch" src="/images/clock-dividers/divide_1_5_sch.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Timing:&lt;/p&gt;
-&lt;p&gt;&lt;a href="/images/clock-dividers/divide_1_5_timing.png"&gt;1.5 timing&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="1.5 timing" src="/images/clock-dividers/divide_1_5_timing.png" /&gt;&lt;/p&gt;
 &lt;p&gt;这种方法在仿真的时候是没有问题的，但是综合时可能会产生致命的问题：在切换时钟时，如果两路时钟信号的时延不相等，那么切换的时候就会产生毛刺。&lt;/p&gt;
 &lt;p&gt;(Xilinx 提供的原语 &lt;code&gt;BUFGMUX&lt;/code&gt; 有去除切换时钟时候的毛刺的功能，但是它只适用于全局时钟网络)&lt;/p&gt;
 &lt;h4&gt;Non 50% Duty Cycle&lt;/h4&gt;
@@ -2651,7 +2650,7 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;p&gt;&lt;strong&gt;Synchronous Circuits&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;同步电路的核心逻辑是用 时序逻辑 &lt;code&gt;sequential logic&lt;/code&gt; 实现的。电路的主要信号、输出信号是由某个时钟沿驱动 flip-flop 产生的。&lt;em&gt;同步电路可以很好的避免毛刺。&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Synchronous V.S. Asynchronous&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG"&gt;FPGA高手设计实战真经100则&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://book.douban.com/subject/10593491/"&gt;Xilinx FPGA高级设计及应用&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;从 ASIC 设计的角度来看，大约需要 7 个门来实现一个 D 触发器，而一个门即可实现一个2输入与非门，所以一般来说，在 ASIC 设计中，同步时序电路比异步电路占用更大的面积。但是，由于 FPGA 是定制好的底层单元，对于 Xilinx 器件，一个底层可编程单元 Slice 包含两个触发器（FF）和一个查找表（LUT）。其中触发器用以实现同步电路，查找表用以实现组合电路。FPGA 最终使用率用 Slice 来衡量。所以对于某个选定器件，其可实现的同步电路和异步电路的资源数量和比例是固定的，这点造成了过度使用查找表会浪费触发器资源，反之亦然。因而对于 FPGA，同步时序设计不一定比异步设计多消耗资源。单从节约资源的角度考虑，应该按照芯片配置的资源比例实现设计，但是设计者还要时刻权衡同步设计没有毛刺、信号稳定等优点，&lt;strong&gt;所以对于 FPGA 设计推荐采用同步设计。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;无论是用离散逻辑、可编程逻辑，还是用全定制硅器件实现的任何数字逻辑，为了成功操作，可靠的时钟是非常关键的。&lt;/p&gt;
@@ -2732,43 +2731,43 @@ chains can cause various design problems, including an increase in a design’s 
 40
 41
 42&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="no"&gt;LVLSYNC&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;clk_i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;clk_o&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt;
+    &lt;span class="k"&gt;input&lt;/span&gt;           &lt;span class="n"&gt;clk_src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="k"&gt;input&lt;/span&gt;           &lt;span class="n"&gt;rst_src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="k"&gt;input&lt;/span&gt;           &lt;span class="n"&gt;dat_src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+
+    &lt;span class="k"&gt;input&lt;/span&gt;           &lt;span class="n"&gt;clk_dst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="k"&gt;input&lt;/span&gt;           &lt;span class="n"&gt;rst_dst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="k"&gt;output&lt;/span&gt;  &lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="n"&gt;dat_dst&lt;/span&gt;
     &lt;span class="p"&gt;);&lt;/span&gt;
 
-    &lt;span class="c1"&gt;// input&lt;/span&gt;
-    &lt;span class="k"&gt;input&lt;/span&gt;       &lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;input&lt;/span&gt;       &lt;span class="n"&gt;clk_i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;input&lt;/span&gt;       &lt;span class="n"&gt;clk_o&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;input&lt;/span&gt;       &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="c1"&gt;/////////////////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="c1"&gt;// source time domain&lt;/span&gt;
+    &lt;span class="c1"&gt;/////////////////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="kt"&gt;reg&lt;/span&gt;         &lt;span class="n"&gt;dat&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-    &lt;span class="c1"&gt;// output&lt;/span&gt;
-    &lt;span class="k"&gt;output&lt;/span&gt;      &lt;span class="n"&gt;dout&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="c1"&gt;// output attribute&lt;/span&gt;
-    &lt;span class="kt"&gt;reg&lt;/span&gt;         &lt;span class="n"&gt;dout&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="kt"&gt;reg&lt;/span&gt;         &lt;span class="n"&gt;din_q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kt"&gt;reg&lt;/span&gt;         &lt;span class="n"&gt;dout_q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="c1"&gt;// reg the din using orign clock&lt;/span&gt;
-    &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="n"&gt;din_q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_src&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst_src&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="n"&gt;dat&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="k"&gt;end&lt;/span&gt;
         &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="n"&gt;din_q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;dat&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;dat_src&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="k"&gt;end&lt;/span&gt;
     &lt;span class="k"&gt;end&lt;/span&gt;
 
+    &lt;span class="c1"&gt;////////////////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="c1"&gt;// destination time domain&lt;/span&gt;
+    &lt;span class="c1"&gt;////////////////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="kt"&gt;reg&lt;/span&gt;         &lt;span class="n"&gt;dat_r&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
     &lt;span class="c1"&gt;// using two level DFF to synchronize the din_q&lt;/span&gt;
-    &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_o&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="n"&gt;dout_q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_dst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst_dst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="n"&gt;dat_r&lt;/span&gt;   &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;dat_dst&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="k"&gt;end&lt;/span&gt;
         &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="n"&gt;dout_q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;din_q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;dout_q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;dat_r&lt;/span&gt;   &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;dat&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;dat_dst&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;dat_r&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="k"&gt;end&lt;/span&gt;
     &lt;span class="k"&gt;end&lt;/span&gt;
 
@@ -2779,9 +2778,22 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;p&gt;&lt;strong&gt;RTL:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img alt="level rtl" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/level_rtl.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Restriction:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;使用 level synchronizer 的要求是：跨域时钟域的这个信号持续时间 &amp;gt;= 2 个新时钟域时钟周期。&lt;/p&gt;
-&lt;p&gt;之所以这样要求是因为：synchronizer 要花费两个时钟周期来同步这个异步信号，如果这个信号长度短于两个时钟周期，则不能正常工作。&lt;/p&gt;
-&lt;p&gt;level synchronizer 是其他两种同步器的核心。&lt;/p&gt;
+&lt;p&gt;使用 level synchronizer 的要求是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;源时钟域的信号应先通过源时钟域的一个 DFF 后输出，然后直接进入目的时钟域的 synchronizer 的第一级 DFF。这样做的&lt;/p&gt;
+&lt;p&gt;这么做到原因是：synchronizer 的第一级 DFF 对组合逻辑产生的毛刺（glitch）非常敏感。如果一个足够长的毛刺刚好满足了 setup/hold time，那么 synchronizer 会将其放行，产生一个虚假的信号。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;跨域时钟域的这个信号持续时间 &amp;gt;= 2 个新时钟域时钟周期。&lt;/p&gt;
+&lt;p&gt;虽然 &lt;a href="http://inst.eecs.berkeley.edu/~cs150/sp10/Collections/Papers/ClockCrossing.pdf"&gt;Crossing the abyss: asynchronous signals in a synchronous world&lt;/a&gt; 中是这么写的，但是我觉得这个条件应该是保险条件，而不是最低条件。level synchronizer 的最低条件应该和 edge-detecting synchronizer 相同：&lt;/p&gt;
+&lt;p&gt;输入信号的宽度 &amp;gt;= 目标时钟域周期 + 第一个 flip-flop 的 hold time。&lt;/p&gt;
+&lt;p&gt;首先，待同步到信号宽度 &amp;gt; 源时钟周期，这样它才能被源时钟域的 DFF 采样到，然后输出；&lt;/p&gt;
+&lt;p&gt;其次，源时钟域采样输出端信号的宽度当然是源时钟周期的整数倍，它的宽度 &amp;gt; 目标时钟域周期 + 第一个 flip-flop 的 hold time，这样它才能被目的时钟域的时钟采样到，然后进行同步。&lt;/p&gt;
+&lt;p&gt;所以，保险一点的条件是：待同步到信号有效时间至少是目的时钟周期的 2 倍。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;em&gt;level synchronizer 是其他两种同步器的基础：&lt;/em&gt;&lt;/p&gt;
 &lt;h4&gt;edge-detecting synchronizer&lt;/h4&gt;
 &lt;p&gt;边沿检测同步器 是在 level synchronizer 的输出端增加了一个 flip-flop，如下图所示。这个电路的功能是实现上升沿检测，产生一个和时钟周期等宽，高电平有效的脉冲；如果将与门的两个输入端交换，则会完成下降沿检测。如果改为非门，则可以得到一个低电平脉冲有效的电路。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Schematic:&lt;/strong&gt;&lt;/p&gt;
@@ -2828,82 +2840,143 @@ chains can cause various design problems, including an increase in a design’s 
 39
 40
 41
-42
-43
-44
-45&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="no"&gt;EDGESYNC&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
-    &lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;clk_i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;clk_o&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt;
+42&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="no"&gt;EDGESYNC&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="k"&gt;input&lt;/span&gt;   &lt;span class="n"&gt;clk_src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="k"&gt;input&lt;/span&gt;   &lt;span class="n"&gt;rst_src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="k"&gt;input&lt;/span&gt;   &lt;span class="n"&gt;dat_src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+
+    &lt;span class="k"&gt;input&lt;/span&gt;   &lt;span class="n"&gt;clk_dst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+    &lt;span class="k"&gt;input&lt;/span&gt;   &lt;span class="n"&gt;rst_dst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="k"&gt;output&lt;/span&gt;  &lt;span class="n"&gt;dat_dst&lt;/span&gt;
     &lt;span class="p"&gt;);&lt;/span&gt;
 
-    &lt;span class="c1"&gt;// input&lt;/span&gt;
-    &lt;span class="k"&gt;input&lt;/span&gt;       &lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;input&lt;/span&gt;       &lt;span class="n"&gt;clk_i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;input&lt;/span&gt;       &lt;span class="n"&gt;clk_o&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;input&lt;/span&gt;       &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="c1"&gt;/////////////////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="c1"&gt;// source time domain&lt;/span&gt;
+    &lt;span class="c1"&gt;/////////////////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="n"&gt;dat&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-    &lt;span class="c1"&gt;// output&lt;/span&gt;
-    &lt;span class="k"&gt;output&lt;/span&gt;      &lt;span class="n"&gt;dout&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="n"&gt;din_q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="n"&gt;dout_q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="n"&gt;dout_qr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="n"&gt;dout_qrr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="c1"&gt;// reg the din using orign clock&lt;/span&gt;
-    &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="n"&gt;din_q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_src&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst_src&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="n"&gt;dat&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="k"&gt;end&lt;/span&gt;
         &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="n"&gt;din_q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;din&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;dat&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;dat_src&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="k"&gt;end&lt;/span&gt;
     &lt;span class="k"&gt;end&lt;/span&gt;
 
-    &lt;span class="c1"&gt;// using two level DFF to synchronize the din_q&lt;/span&gt;
-    &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_o&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="n"&gt;dout_q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;dout_qr&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;dout_qrr&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;1&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="c1"&gt;////////////////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="c1"&gt;// destination time domain&lt;/span&gt;
+    &lt;span class="c1"&gt;////////////////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;sync_reg&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_dst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst_dst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="n"&gt;sync_reg&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mh"&gt;3&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="k"&gt;end&lt;/span&gt;
         &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="n"&gt;dout_q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;din_q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;dout_qr&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;dout_q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;dout_qrr&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;dout_qr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;sync_reg&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;sync_reg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;dat&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
         &lt;span class="k"&gt;end&lt;/span&gt;
     &lt;span class="k"&gt;end&lt;/span&gt;
 
-    &lt;span class="k"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;dout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dout_qrr&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="n"&gt;dout_qr&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="c1"&gt;// AND to get the output&lt;/span&gt;
+    &lt;span class="k"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;dat_dst&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sync_reg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="n"&gt;sync_reg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;
 
 &lt;span class="k"&gt;endmodule&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;&lt;strong&gt;RTL:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt="edge rtl" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/edge_rtl.png" /&gt;&lt;/p&gt;
+&lt;p&gt;...&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Restriction:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;使用 edge-detecting synchronizer 的要求是：输入信号的宽度 &amp;gt;= 同步时钟周期 + 第一个 flip-flop 的 hold time。最保险的脉冲宽度是同步周期的两倍。&lt;/p&gt;
-&lt;p&gt;edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较快时钟域时可以正常工作，它会产生一个脉冲表示输入信号的上升沿或者下降沿。但是反过来，将一个快时钟域的信号同步到慢时钟域时，并不能正常工作，这时候需要使用 pusle synchronizer。&lt;/p&gt;
+&lt;p&gt;使用 edge-detecting synchronizer 的要求是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;输入信号的宽度 &amp;gt;= 目标时钟域周期 + 第一个 flip-flop 的 hold time。最保险的脉冲宽度是同步周期的两倍。&lt;/p&gt;
+&lt;p&gt;实际上，因为在源时钟域，要先用 DFF 寄存一下再输出，所以源时钟域输出的信号的宽度是其时钟周期的整数倍，它肯定是 &amp;gt; 目标时钟周期的，因为 edge-detecting synchronizer 只能工作在慢时钟域到快时钟域的情况下。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;em&gt;edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较快时钟域时可以正常工作，它会产生一个脉冲表示输入信号的上升沿或者下降沿。但是反过来，将一个快时钟域的信号同步到慢时钟域时，并不能正常工作，这时候需要使用 pusle synchronizer。&lt;/em&gt;&lt;/p&gt;
 &lt;h4&gt;pulse synchronizer&lt;/h4&gt;
 &lt;p&gt;脉冲同步器的基本功能是从某个时钟域中取出一个单时钟宽度的脉冲，然后在新的时钟域中建立另外一个单时钟宽度的脉冲。&lt;/p&gt;
+&lt;p&gt;源时钟域的单时钟宽度的脉冲不是直接输出的，而是先经过一个源时钟域的翻转电路。这个翻转电路在每次输入一个脉冲时，它的输出会在高、低电平之间翻转。&lt;/p&gt;
+&lt;p&gt;而在目的时钟域，翻转电路的输出先通过一个 level synchronizer，其输出到达异或门的一个输入端，而这个输出再经过一个 DFF，延时一个时钟周期后进入异或门的另外一个输入端。最后异或门的输出即最终的同步结果：&lt;/p&gt;
+&lt;p&gt;源时钟域每有一个单时钟脉冲（源时钟），synchronizer 的输出端产生一个单时钟宽度（目的时钟）的脉冲。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Schematic:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img alt="pusle" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/pulse.png" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Code:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;...&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="nf"&gt;PULSESYNC&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;input&lt;/span&gt;   &lt;span class="n"&gt;clk_src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;input&lt;/span&gt;   &lt;span class="n"&gt;rst_src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;input&lt;/span&gt;   &lt;span class="n"&gt;pulse_src&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+
+    &lt;span class="n"&gt;input&lt;/span&gt;   &lt;span class="n"&gt;clk_dst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;input&lt;/span&gt;   &lt;span class="n"&gt;rst_dst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;output&lt;/span&gt;  &lt;span class="n"&gt;pulse_dst&lt;/span&gt;
+    &lt;span class="p"&gt;);&lt;/span&gt;
+
+    &lt;span class="c1"&gt;///////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="c1"&gt;// source time domain&lt;/span&gt;
+    &lt;span class="c1"&gt;///////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="n"&gt;reg&lt;/span&gt; &lt;span class="n"&gt;toggle_reg&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_src&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;rst_src&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst_src&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+            &lt;span class="n"&gt;toggle_reg&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;end&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pulse_src&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+                &lt;span class="n"&gt;toggle_reg&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="n"&gt;toggle_reg&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;end&lt;/span&gt;
+        &lt;span class="n"&gt;end&lt;/span&gt;
+    &lt;span class="n"&gt;end&lt;/span&gt;
+
+    &lt;span class="c1"&gt;///////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="c1"&gt;// destination time domain&lt;/span&gt;
+    &lt;span class="c1"&gt;///////////////////////////////////////////////////&lt;/span&gt;
+    &lt;span class="n"&gt;reg&lt;/span&gt;     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;sync_reg&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;always&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk_dst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst_dst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+            &lt;span class="n"&gt;sync_reg&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;end&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;
+            &lt;span class="n"&gt;sync_reg&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;sync_reg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;toggle_reg&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+        &lt;span class="n"&gt;end&lt;/span&gt;
+    &lt;span class="n"&gt;end&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// XOR to generate the pusle_dst&lt;/span&gt;
+    &lt;span class="n"&gt;assign&lt;/span&gt; &lt;span class="n"&gt;pulse_dst&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sync_reg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;^&lt;/span&gt; &lt;span class="n"&gt;sync_reg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+
+&lt;span class="n"&gt;endmodule&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;&lt;strong&gt;RTL:&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;...&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Restriction:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;使用 pusle synchronizer 的要求是：输入脉冲之间的最小间隔 &amp;gt;= 2 个同步时钟周期。&lt;/p&gt;
-&lt;p&gt;如果两个输入脉冲相互过近，则新时钟域的输出脉冲也会紧密相邻。&lt;/p&gt;
+&lt;p&gt;使用 pusle synchronizer 的要求是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;输入脉冲之间的最小间隔 &amp;gt;= 2 个同步时钟周期。如果两个输入脉冲相互过近，则新时钟域的输出脉冲也会紧密相邻，形成一个比单时钟周期宽的输出脉冲。&lt;/p&gt;
+&lt;p&gt;实际上，在一些情况下，少于 2 个时钟周期（&amp;gt; 1 个时钟周期）也是可以同步上的。只要 synchronizer 的两个 DFF 的值不一样即可同步上，也就是说异步信号在连续的两个目的时钟采样的值不同即可，由于异步信号和时钟的相位关系不确定，所以在没有对齐的情况下，大于 1 个时钟时也能满足两个采样值不同的条件。&lt;/p&gt;
+&lt;p&gt;一般为了保险起见，要求其保持至少两个时钟宽度。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;Timing&lt;/h4&gt;
+&lt;p&gt;synchronizer 需要花费 1～2 个时钟周期来完成同步，所以粗略的估计可以认为 synchronizer 会造成目的时钟域的 2 个周期的延迟，我们在设计时需要考虑 synchronizer 对时序产生的影响。&lt;/p&gt;
 &lt;h4&gt;Summary&lt;/h4&gt;
 &lt;p&gt;总结 3 种同步器的特点，有下表：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="synchronizer sum" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronizer_sum.png" /&gt;&lt;/p&gt;
-&lt;p&gt;经过 synchronizer 的信号在两个时钟之后变为有效，一般延时为 1～2 新时钟周期，可以粗略估计延时为 2 个时钟周期，设计者需要仔细考虑同步延迟对于跨时钟域的信号时序造成的影响。&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输，这时候就不再适合用 synchronizer 来同步这些信号了，通常采用其他的方法，比如握手协议和 FIFO 等。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;虽然还有其他类型的 synchronizer，但是这 3 种基本上就可以解决设计中遇到的多数问题了。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;synchronizer 仅适用于简单的数据跨时钟域传输的同步，除了简单的信号之外，还有数据、地址、控制总线信号等也要跨时钟域。对于这些需求，可以使用其他的工具，比如握手协议、FIFO 等。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h3&gt;Solution 2: Handshaking&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Handshaking allows digital circuits to effectively communicate with each other when the response time of one or both circuits is unpredictable. For example, an arbitrated bus allows more than one circuit to request access to a single bus, such as PCI or AMBA (Advanced Microcontroller Bus Architecture), using arbitration to determine which circuit gains access to the bus. Each circuit signals a request, and the arbitration logic determines which request “wins.” This winning circuit receives an acknowledgment indicating that it has access to the bus. It then discontinues its request and begins the bus transaction.&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;大意就是：对于（单边/双边）电路响应时间不确定的应用，握手协议可以有效地传输信号。比如（PCI、AMBA）总线仲裁电路，有多个电路申请访问总线时，每个电路都发出请求，由仲裁电路来决定哪个有访问权。“获胜” 的电路会收到确认信号，然后才可以访问总线。&lt;/p&gt;
+&lt;p&gt;这种交互方式就是握手协议，简而言之就是双方首先要握手达成一致，然后才能传输数据。&lt;/p&gt;
 &lt;p&gt;有两种基本握手协议：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -2952,11 +3025,13 @@ chains can cause various design problems, including an increase in a design’s 
 &lt;p&gt;partial 和 full 的本质区别不在于synchronizer 的类型和握手信号的多少，而在于握手的方式。 partial 不用再等待对方的回答，就继续进行自己的下一步操作，而 full 必须等到对方的回复才进行下一步的操作，所以从某种意义上，full 方式才是真正的“握手”，而 partial 并不符合 “握手” 的意思，毕竟根本不管对方的反应，自顾自地挥手叫哪门子的握手 =.=&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;这些握手协议针对的都是跨时钟域的单一信号，但当几组信号要跨越时钟域时，设计者就需要更加复杂的信号传递方法。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输。因为 synchronizer 需要花费的时间是不确定的（1 or 2 个时钟周期），所以对于这些多 bit 的数据，synchronizer 无法完成同步功能，通常采用其他的方法，比如使用 FIFO。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h3&gt;Solution 3: Datapath Design&lt;/h3&gt;
 &lt;p&gt;在进行信号同步时，有一个重要的原则：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;不应该在设计中的多个地方对同一信号进行同步，即禁止单个信号扇出至多个同步器。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;因为synchronizer要花 1~2 个时钟周期，设计者不能确切预测到每个信号何时跨越时钟域，此外，在新时钟域中一组经过同步后的信号其时序是不定的，因为synchronier的延迟可以是 1～2 个时钟周期，这种情况下各个同步信号间形成一种“竞争状况”，这种竞争状况在需要跨域时钟域传输的多组信号间也会发生，例如数据总线、地址总线、控制总线等。因此，&lt;strong&gt;不能对组中的每个信号单独使用synchronizer，也不能对数据/地址总线的每一位单独使用同步器&lt;/strong&gt;，因为在新的时钟域中，要求每个信号同时有效。&lt;/p&gt;
+&lt;p&gt;因为 synchronizer 要花 1~2 个时钟周期，设计者不能确切预测到每个信号何时跨越时钟域，此外，在新时钟域中一组经过同步后的信号其时序是不定的，因为 synchronier 的延迟可以是 1～2 个时钟周期，这种情况下各个同步信号间形成一种“竞争状况”，这种竞争状况在需要跨域时钟域传输的多组信号间也会发生，例如数据总线、地址总线、控制总线等。因此，&lt;strong&gt;不能对组中的每个信号单独使用 synchronizer，也不能对数据/地址总线的每一位单独使用同步器&lt;/strong&gt;，因为在新的时钟域中，要求每个信号同时有效。&lt;/p&gt;
 &lt;h4&gt;problem&lt;/h4&gt;
 &lt;p&gt;Clifford E. Cummings 在他的文章中举例说明了几种常见的错误：&lt;/p&gt;
 &lt;blockquote&gt;
@@ -2988,8 +3063,9 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;这里的握手机制可以采用 full handshaking，也可以采用 partial handshaking，设计者应该根据实际需求来选择。&lt;/p&gt;
 &lt;p&gt;在 &lt;a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960"&gt;The Art of Hardware Architecture&lt;/a&gt; 这本书中，有详细的时序图来说明了一种握手机制下，这种机制采用了 full handshaking 中等待对方的方法，但是对握手信号进行了精简（partial II 类型）。如下图：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="datapath timing" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/datapath_timing.png" /&gt;&lt;/p&gt;
-&lt;p&gt;注意：&lt;/p&gt;
-&lt;p&gt;如果发送端的数据速率很快/无法控制发送端发送数据的速度，那么就有可能无法满足握手机制中要求数据保持稳定这一要求，这时候这种方法就不再适用，而应该采用其他的方法，比如 FIFO。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;如果发送端的数据速率很快/无法控制发送端发送数据的速度，那么就有可能无法满足握手机制中要求数据保持稳定这一要求，这时候这种方法就不再适用，而应该采用其他的方法，比如 FIFO。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h3&gt;Solution 4: Advanced Datapath Design&lt;/h3&gt;
 &lt;p&gt;有时候，数据在跨时钟域时需要“堆积”起来，这时候只使用单个的寄存器就无法完成工作。比如某个传输电路突发式地发送数据，接收电路来不及采样，为了保持数据不丢失，就必须先把数据存储起来；还有一种情况是接收电路的采样速率比发送速度快，但是位宽却不够，仍然需要将没有采样的数据先暂存起来，这时候就需要使用 FIFO。&lt;/p&gt;
 &lt;p&gt;基本上，使用 FIFO 的目的有两个：&lt;/p&gt;
@@ -3004,33 +3080,47 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;FIFO 的实现可以直接使用 IP core，也可以自己写代码实现。&lt;/p&gt;
 &lt;p&gt;如果是自己写代码实现，那么异步信号的问题还是需要我们在实现 FIFO 是仔细考虑的；如果是采用 IP core 的方式，那么可以很大程度地缓解我们的压力，因为事实上我们是把异步信号的问题交给了设计 IP core 的人来处理...这些 IP core 在内部针对异步数据读写的问题作了非常严谨复杂的设计，对外提供了非常简单的接口。采用这种方式虽然轻松，但是相应的地也有缺点：耗费更多的资源。&lt;/p&gt;
 &lt;p&gt;在 &lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf"&gt;Synthesis and Scripting Techniques for Designing Multi-Asynchronous Clock Designs&lt;/a&gt; 和 &lt;a href="http://inst.eecs.berkeley.edu/~cs150/sp10/Collections/Papers/ClockCrossing.pdf"&gt;Crossing the abyss: asynchronous signals in a synchronous world&lt;/a&gt; 两篇 paper 和 &lt;a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960"&gt;The Art&lt;/a&gt; 中都有一些实现 FIFO 使用的相关技术的介绍，比如指针逻辑的处理，内部 gray code 计数器的实现等。这里就偷懒不细说了（以后再补） :P&lt;/p&gt;
-&lt;p&gt;----------------Update March/12/2015------------------------&lt;/p&gt;
+&lt;p&gt;=============Update March/12/2015===========================&lt;/p&gt;
 &lt;p&gt;FIFO 的目的在于解决数据跨时钟域传输的问题，但是在实现FIFO本身时，一些内部的握手信号也需要跨时钟域，这时候需要用到之前讨论过的dual rank synchronizer等技术。&lt;/p&gt;
 &lt;p&gt;比如FIFO内部的地址计数器，如果使用dual rank synchronizer来同步，计数器的不同的bit可能会在不同的时钟周期内传递过去，这时接收到的数据就是错误的，对导致致命性的问题。&lt;/p&gt;
 &lt;p&gt;而对应这个问题的解决方法就是使用 gray code。&lt;/p&gt;
-&lt;p&gt;--------------end of update---------------------------------&lt;/p&gt;
+&lt;p&gt;==============end of update==================================&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;关于跨时钟域 &lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf"&gt;papaer1&lt;/a&gt; 中还有一些其他方面的技巧，可以帮助我们更好的实现设计。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h3&gt;Design Partitioning&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Guideline:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
 &lt;p&gt;Only allow one clock per module.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Reason:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
 &lt;p&gt;Static timing analysis and creating synthesis scripts is more easily accomplished on single-clock modules or groups of single-clock modules.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;guideline:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
 &lt;p&gt;Create a synchronizer module for each set of signals that pass from just one clock domain into another clock domain.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Reason:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
 &lt;p&gt;It is given that any signal passing from one clock domain to another clock domain is going to have setup and hold time problems. No worst-case (max time) timing analysis is required for synchronizer modules. Only best case (min time) timing analysis is required between first and second stage flip-flops to ensure that all hold times are met. Also, gate-level simulations can more easily be configured to ignore setup and hold time violations on the first stage of each synchronizer.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;采用这种设计方式的原因如上所示，可以减少不必要的时序验证，而且脚本也更容易写，总之可以使时序验证工作更容易。&lt;/p&gt;
 &lt;p&gt;举例如下图所示：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="partitioning" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partitioning.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h3&gt;Clock Name Conventions&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Guideline:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
 &lt;p&gt;Use a clock naming convention to identify the clock source of every signal in a design.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Reason:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
 &lt;p&gt;A naming convention helps all team members to identify the clock domain for every signal in a design and also makes grouping of signals for timing analysis easier to do using regular expression "wild-carding" from within a synthesis script.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;作者还举例说明了一个这样的例子：1995 年为 In Focus projectors 设计 video ASIC 时，他们就采用了这样的方法，对于 mircroprocessor 的时钟命名为 uClk，对于 video 的时钟则命名为 vClk。对应的时钟域中的信号的名字也添加了对应的前缀，比如udata，uwrite，uadder等。&lt;/p&gt;
 &lt;p&gt;使用了这样的策略后，整个设计团队的攻城狮们都可以很方便地确定某个信号是否为异步信号，如何处理。当时有个攻城狮没有按照这种策略，使用了自己的命名方式，在一次会议之后，大家墙裂建议他修改命名，结果也证明修改之后遇到的问题、出错的概率都小了很多。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;in ASIC&lt;/h2&gt;
+&lt;h2&gt;Gated Clock&lt;/h2&gt;
 &lt;hr /&gt;
 &lt;p&gt;虽然 FPGA 可以用来为 ASIC 搭建原型，但是一些 ASIC 中的技术并不适用于 FPGA，比如 gated clock。一般也没有必要在 FPGA 中模拟 ASIC 的低功耗优化。事实上，由于 FPGA 时钟资源的的粗颗粒度性，并不是总能模拟成功。&lt;/p&gt;
 &lt;p&gt;下面简单讨论一下 ASIC 中 gated clock 的问题。（更详细的内容见 gated clock 文章，未写）&lt;/p&gt;
@@ -3127,7 +3217,7 @@ enable signal in order to load a data value into the register. If both the load 
 &lt;p&gt;以上，就是一些在多时钟域设计中处理异步数据的常用方法，总结如下：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;对于普通的单比特的数据，根据实际情况选择对应的 synchronizer 即可&lt;/p&gt;
+&lt;p&gt;对于简单的单比特的数据，根据实际情况选择对应的 synchronizer 即可&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;对于其他的信号，比如数据总线、地址总线、控制总线等数据，可以使用握手协议&lt;/p&gt;
