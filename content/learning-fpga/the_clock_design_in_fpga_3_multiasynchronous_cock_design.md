@@ -162,7 +162,7 @@ synchronizer 有很多设计方法，因为一种方法不能满足所有的应�
 
 **RTL:**
 
-![level rtl](/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/level_rtl.png)
+![level rtl](/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/lvl_rtl.png)
 
 **Restriction:**
 

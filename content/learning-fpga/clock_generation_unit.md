@@ -6,7 +6,9 @@ Slug: clock_generate_unit
 Author: Qian Gu
 Summary: 总结时钟生成
 
-[Verilog 编程艺术][book1] 时钟生成 笔记，内容基本上都是书上的内容，还有我自己的总结，混合在一起，就不加引用符号了。
+*[Verilog 编程艺术][book1] 时钟生成 笔记，内容基本上都是书上的内容，还有我自己的总结，混合在一起，就不加引用符号了。*
+
+[book1]: http://www.amazon.cn/EDA%E7%B2%BE%E5%93%81%E6%99%BA%E6%B1%87%E9%A6%86-Verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF-%E9%AD%8F%E5%AE%B6%E6%98%8E/dp/B00HNVY3SY/ref=sr_1_1?ie=UTF8&qid=1429188978&sr=8-1&keywords=verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF 
 
 <br>
 
