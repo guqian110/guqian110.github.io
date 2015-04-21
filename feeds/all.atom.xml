@@ -9974,7 +9974,7 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;&lt;a href="https://communities.intel.com/thread/46335"&gt;Connecting to Galileo via Linux Console&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://communities.intel.com/docs/DOC-22293"&gt;Tutorial 3: Connecting to Linux through telnet&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://communities.intel.com/message/208564#208564"&gt;Using Galileo Linux over Ethernet(Telnet)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="(https://communities.intel.com/message/222211)"&gt;Poor man's telnet for Galileo&lt;/a&gt;&lt;/p&gt;</summary><category term="Arduino"></category><category term="Linux"></category></entry><entry><title>有限状态机设计</title><link href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html" rel="alternate"></link><updated>2014-06-05T17:55:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-06-05:pages/2014/06/05/fsm_design.html</id><summary type="html">&lt;p&gt;有限状态机是数字电路中经常出现、非常重要的电路，设计一个安全、高效的状态机有一套程序化的方法，我们在数字电路课中就学习过了。搬运以前写的博客，总结一下相关知识，温故而知新～&lt;/p&gt;
+&lt;p&gt;&lt;a href="(https://communities.intel.com/message/222211)"&gt;Poor man's telnet for Galileo&lt;/a&gt;&lt;/p&gt;</summary><category term="Arduino"></category><category term="Linux"></category></entry><entry><title>有限状态机 FSM 设计</title><link href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html" rel="alternate"></link><updated>2014-06-05T17:55:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-06-05:pages/2014/06/05/fsm_design.html</id><summary type="html">&lt;p&gt;有限状态机是数字电路中经常出现、非常重要的电路，设计一个安全、高效的状态机有一套程序化的方法，我们在数字电路课中就学习过了。搬运以前写的博客，总结一下相关知识，温故而知新～&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;写在前面的废话：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;这篇博客是在我以前在 CSDN 上写的两篇博客的基础上，参考了其他各位大神、博主的文章，写的总结。欢迎批评、讨论，毕竟写博客的意义就在于给自己一个总结知识的机会、并且在和别人讨论的过程中进步 :-D&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -10315,7 +10315,169 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;&lt;strong&gt;结论：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Binary、Gray 编码使用最少的触发器，较多的组合逻辑。而 One-Hot  编码反之。由于 CPLD 更多的提供组合逻辑资源，而 FPGA 更多的提供触发器资源，所以 CPLD 多使用 Gray，而 FPGA  多使用 One-Hot 编码。另一方面，对于小型设计使用 Gray 和 Binary 编码更有效，而大型状态机使用 One-Hot 更高效。&lt;/p&gt;
 &lt;p&gt;(XST 的选项 &lt;code&gt;FSM encoding algorithm&lt;/code&gt; 值默认为 &lt;code&gt;auto&lt;/code&gt;，编写程序测试发现，它会根据代码中状态的多少，FSM 的复杂度，自动选择合适的编码方式对状态进行编码。)&lt;/p&gt;
-&lt;p&gt;P.S. one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（如模板所示的 index one-hot），这种方式和传统的 one-hot 相比，它不再是对比整个状态向量的值，而是逐 bit 对比，从而简化了状态译码电路。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt;
+one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（如模板所示的 index one-hot），这种方式和传统的 one-hot 相比，它不再是对比整个状态向量的值，而是逐 bit 对比，从而简化了状态译码电路。&lt;/p&gt;
+&lt;p&gt;利用前面的模板和结尾附录的模板，对参考文章 &lt;a href="http://www.trilobyte.com/pdf/golson_snug94.pdf"&gt;Steve Golson State machine design techniques for Verilog and VHDL&lt;/a&gt; 中的状态机例子进行综合测试，实际结果证实了 index 方式要更加节省资源（如果状态机更加复杂一些的话，两者的差别应该更大）：&lt;/p&gt;
+&lt;p&gt;index one-hot style:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm_index.v"&gt;index.v&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="indx style" src="/images/fsm-design/index_summary.png" /&gt;&lt;/p&gt;
+&lt;p&gt;non-index one-hot style:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm_non_index.v"&gt;non-index.v&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="non-index" src="/images/fsm-design/non_index_summary.png" /&gt;&lt;/p&gt;
+&lt;p&gt;========================分割线=============================&lt;/p&gt;
+&lt;p&gt;使用 XST 综合上面的 index one-hot + reverse case 风格的 FSM，结果 XST 并没有识别出 FSM，而 Synplify 我没有破解版本，只能作罢 =.=&lt;/p&gt;
+&lt;p&gt;虽然 XST 没有识别出 non-index 的 FSM，但是 Modelsim 是可以识别出来的，可以在 Modelsim 中查看最终综合出来的 FSM 如下：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="diagram" src="/images/fsm-design/state_diagram.png" /&gt;&lt;/p&gt;
+&lt;p&gt;补上普通的 one-hot + case 的模板，这个模板是可以被 XST 识别出来的：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;parameter&lt;/span&gt;   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="c1"&gt;// synopsys enum code&lt;/span&gt;
+                     &lt;span class="no"&gt;IDLE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b00001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="no"&gt;S1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b00010&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="no"&gt;S2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b00100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="no"&gt;S3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b01000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="no"&gt;ERROR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b10000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;// synopsys state_vector state&lt;/span&gt;
+&lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="c1"&gt;// synopsys enum code&lt;/span&gt;
+                &lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="no"&gt;CS&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="no"&gt;CS&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+    &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="p"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;bx&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c1"&gt;// synopsys full_case parallel_case&lt;/span&gt;
+        &lt;span class="nl"&gt;IDLE:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="nl"&gt;S1:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="nl"&gt;S2:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="nl"&gt;S3:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="nl"&gt;ERROR:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;restart&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;    &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;endcase&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+
+&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="c1"&gt;// reset&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+        &lt;span class="c1"&gt;// default output&lt;/span&gt;
+        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="nl"&gt;IDLE:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+            &lt;span class="nl"&gt;S1:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+            &lt;span class="nl"&gt;S2:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+            &lt;span class="nl"&gt;S3:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+            &lt;span class="nl"&gt;ERROR:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
+                &lt;span class="c1"&gt;// ...&lt;/span&gt;
+            &lt;span class="k"&gt;end&lt;/span&gt;
+        &lt;span class="k"&gt;endcase&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;========================分割线=============================&lt;/p&gt;
 &lt;h3&gt;Safe FSM&lt;/h3&gt;
 &lt;p&gt;所谓 “安全” 的状态机，就是说即使因为某些意外原因，状态机跑飞了，仍然可以自动回复到正常状态。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;举例：可能出现的不安全情况&lt;/strong&gt;&lt;/p&gt;
@@ -10491,159 +10653,6 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;&lt;img alt="case ns" src="/images/fsm-design/case_ns.png" /&gt;&lt;/p&gt;
 &lt;p&gt;使用 &lt;code&gt;CS&lt;/code&gt; 判断，结果如下图，可以看到，当 &lt;code&gt;CS&lt;/code&gt; 发生变化时，输出变化相对于状态变化延时一个时钟周期。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="case ns" src="/images/fsm-design/case_cs.png" /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;========================分割线=============================&lt;/p&gt;
-&lt;p&gt;使用 XST 综合上面的 index one-hot + reverse case 风格的 FSM，结果并没有识别出 FSM，而 Synplify 我没有破解版本，只能作罢 =.=&lt;/p&gt;
-&lt;p&gt;补上普通的 one-hot + case 的模板，这个模板是可以被 XST 识别出来的：&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;parameter&lt;/span&gt;   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="c1"&gt;// synopsys enum code&lt;/span&gt;
-                     &lt;span class="no"&gt;IDLE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b00001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                       &lt;span class="no"&gt;S1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b00010&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                       &lt;span class="no"&gt;S2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b00100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                       &lt;span class="no"&gt;S3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b01000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                    &lt;span class="no"&gt;ERROR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&amp;#39;b10000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-&lt;span class="c1"&gt;// synopsys state_vector state&lt;/span&gt;
-&lt;span class="kt"&gt;reg&lt;/span&gt;     &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="c1"&gt;// synopsys enum code&lt;/span&gt;
-                &lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-        &lt;span class="no"&gt;CS&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;end&lt;/span&gt;
-    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-        &lt;span class="no"&gt;CS&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-    &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="p"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;bx&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;CS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c1"&gt;// synopsys full_case parallel_case&lt;/span&gt;
-        &lt;span class="nl"&gt;IDLE:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
-            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
-            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="k"&gt;end&lt;/span&gt;
-        &lt;span class="nl"&gt;S1:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
-            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
-            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="k"&gt;end&lt;/span&gt;
-        &lt;span class="nl"&gt;S2:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
-            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
-            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="k"&gt;end&lt;/span&gt;
-        &lt;span class="nl"&gt;S3:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;       &lt;span class="c1"&gt;//...&lt;/span&gt;
-            &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;//...&lt;/span&gt;
-            &lt;span class="k"&gt;else&lt;/span&gt;        &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;ERROR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="k"&gt;end&lt;/span&gt;
-        &lt;span class="nl"&gt;ERROR:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;restart&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;    &lt;span class="no"&gt;NS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="no"&gt;IDLE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;endcase&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-
-&lt;span class="k"&gt;always&lt;/span&gt; &lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt; &lt;span class="n"&gt;clk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rst&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-        &lt;span class="c1"&gt;// reset&lt;/span&gt;
-    &lt;span class="k"&gt;end&lt;/span&gt;
-    &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-        &lt;span class="c1"&gt;// default output&lt;/span&gt;
-        &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="no"&gt;NS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-            &lt;span class="nl"&gt;IDLE:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-                &lt;span class="c1"&gt;// ...&lt;/span&gt;
-            &lt;span class="k"&gt;end&lt;/span&gt;
-            &lt;span class="nl"&gt;S1:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-                &lt;span class="c1"&gt;// ...&lt;/span&gt;
-            &lt;span class="k"&gt;end&lt;/span&gt;
-            &lt;span class="nl"&gt;S2:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-                &lt;span class="c1"&gt;// ...&lt;/span&gt;
-            &lt;span class="k"&gt;end&lt;/span&gt;
-            &lt;span class="nl"&gt;S3:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-                &lt;span class="c1"&gt;// ...&lt;/span&gt;
-            &lt;span class="k"&gt;end&lt;/span&gt;
-            &lt;span class="nl"&gt;ERROR:&lt;/span&gt; &lt;span class="k"&gt;begin&lt;/span&gt;
-                &lt;span class="c1"&gt;// ...&lt;/span&gt;
-            &lt;span class="k"&gt;end&lt;/span&gt;
-        &lt;span class="k"&gt;endcase&lt;/span&gt;
-    &lt;span class="k"&gt;end&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
-&lt;p&gt;========================分割线=============================&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Ref&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG1998SJ_FSM.pdf"&gt;Clifford E. Cumming State Machine Coding Styles for Synthesis&lt;/a&gt;&lt;/p&gt;

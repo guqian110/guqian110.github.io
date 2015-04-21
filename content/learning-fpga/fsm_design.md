@@ -1,4 +1,4 @@
-Title: 有限状态机设计
+Title: 有限状态机 FSM 设计
 Date: 2014-06-05 17:55
 Category: FPGA
 Tags: FSM, Verilog
@@ -274,7 +274,109 @@ Binary、Gray 编码使用最少的触发器，较多的组合逻辑。而 One-H
 
 (XST 的选项 `FSM encoding algorithm` 值默认为 `auto`，编写程序测试发现，它会根据代码中状态的多少，FSM 的复杂度，自动选择合适的编码方式对状态进行编码。)
 
-P.S. one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（如模板所示的 index one-hot），这种方式和传统的 one-hot 相比，它不再是对比整个状态向量的值，而是逐 bit 对比，从而简化了状态译码电路。
+**P.S.**
+one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（如模板所示的 index one-hot），这种方式和传统的 one-hot 相比，它不再是对比整个状态向量的值，而是逐 bit 对比，从而简化了状态译码电路。
+
+利用前面的模板和结尾附录的模板，对参考文章 [Steve Golson State machine design techniques for Verilog and VHDL](http://www.trilobyte.com/pdf/golson_snug94.pdf) 中的状态机例子进行综合测试，实际结果证实了 index 方式要更加节省资源（如果状态机更加复杂一些的话，两者的差别应该更大）：
+
+index one-hot style:
+
+[index.v](https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm_index.v)
+
+![indx style](/images/fsm-design/index_summary.png)
+
+non-index one-hot style:
+
+[non-index.v](https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm_non_index.v)
+
+![non-index](/images/fsm-design/non_index_summary.png)
+
+========================分割线=============================
+
+使用 XST 综合上面的 index one-hot + reverse case 风格的 FSM，结果 XST 并没有识别出 FSM，而 Synplify 我没有破解版本，只能作罢 =.=
+
+虽然 XST 没有识别出 non-index 的 FSM，但是 Modelsim 是可以识别出来的，可以在 Modelsim 中查看最终综合出来的 FSM 如下：
+
+![diagram](/images/fsm-design/state_diagram.png)
+
+补上普通的 one-hot + case 的模板，这个模板是可以被 XST 识别出来的：
+
+    #!verilog
+    parameter   [4:0]   // synopsys enum code
+                         IDLE = 5'b00001,
+                           S1 = 5'b00010,
+                           S2 = 5'b00100,
+                           S3 = 5'b01000,
+                        ERROR = 5'b10000;
+
+    // synopsys state_vector state
+    reg     [4:0]   // synopsys enum code
+                    CS, NS;
+
+    always @(posedge clk) begin
+        if (rst) begin
+            CS <= IDLE;
+        end
+        else begin
+            CS <= NS;
+        end
+    end
+    
+    always @* begin
+        NS = 5'bx;
+        case (CS)     // synopsys full_case parallel_case
+            IDLE: begin
+                if ()       //...
+                else if ()  //...
+                else        NS = ERROR;
+            end
+            S1: begin
+                if ()       //...
+                else if ()  //...
+                else        NS = ERROR;
+            end
+            S2: begin
+                if ()       //...
+                else if ()  //...
+                else        NS = ERROR;
+            end
+            S3: begin
+                if ()       //...
+                else if ()  //...
+                else        NS = ERROR;
+            end
+            ERROR: begin
+                if (restart)    NS = IDLE;
+        endcase
+    end
+    
+    always @(posedge clk) begin
+        if (rst) begin
+            // reset
+        end
+        else begin
+            // default output
+            case (NS)
+                IDLE: begin
+                    // ...
+                end
+                S1: begin
+                    // ...
+                end
+                S2: begin
+                    // ...
+                end
+                S3: begin
+                    // ...
+                end
+                ERROR: begin
+                    // ...
+                end
+            endcase
+        end
+    end
+
+========================分割线=============================
 
 ### Safe FSM
 
@@ -448,91 +550,6 @@ FSM 设计：一共有 4 个状态(IDLE、S1、S2、S3)，只有一个输入(`ju
 使用 `CS` 判断，结果如下图，可以看到，当 `CS` 发生变化时，输出变化相对于状态变化延时一个时钟周期。
 
 ![case ns](/images/fsm-design/case_cs.png)
-
-<br>
-
-========================分割线=============================
-
-使用 XST 综合上面的 index one-hot + reverse case 风格的 FSM，结果并没有识别出 FSM，而 Synplify 我没有破解版本，只能作罢 =.=
-
-补上普通的 one-hot + case 的模板，这个模板是可以被 XST 识别出来的：
-
-    #!verilog
-    parameter   [4:0]   // synopsys enum code
-                         IDLE = 5'b00001,
-                           S1 = 5'b00010,
-                           S2 = 5'b00100,
-                           S3 = 5'b01000,
-                        ERROR = 5'b10000;
-
-    // synopsys state_vector state
-    reg     [4:0]   // synopsys enum code
-                    CS, NS;
-
-    always @(posedge clk) begin
-        if (rst) begin
-            CS <= IDLE;
-        end
-        else begin
-            CS <= NS;
-        end
-    end
-    
-    always @* begin
-        NS = 5'bx;
-        case (CS)     // synopsys full_case parallel_case
-            IDLE: begin
-                if ()       //...
-                else if ()  //...
-                else        NS = ERROR;
-            end
-            S1: begin
-                if ()       //...
-                else if ()  //...
-                else        NS = ERROR;
-            end
-            S2: begin
-                if ()       //...
-                else if ()  //...
-                else        NS = ERROR;
-            end
-            S3: begin
-                if ()       //...
-                else if ()  //...
-                else        NS = ERROR;
-            end
-            ERROR: begin
-                if (restart)    NS = IDLE;
-        endcase
-    end
-    
-    always @(posedge clk) begin
-        if (rst) begin
-            // reset
-        end
-        else begin
-            // default output
-            case (NS)
-                IDLE: begin
-                    // ...
-                end
-                S1: begin
-                    // ...
-                end
-                S2: begin
-                    // ...
-                end
-                S3: begin
-                    // ...
-                end
-                ERROR: begin
-                    // ...
-                end
-            endcase
-        end
-    end
-
-========================分割线=============================
 
 <br>
 
