@@ -1,5 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-04-27T00:00:00+08:00</updated><entry><title>Regular Expression 小结</title><link href="http://guqian110.github.io/pages/2015/04/27/summary_of_regular_expression.html" rel="alternate"></link><updated>2015-04-27T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-04-27:pages/2015/04/27/summary_of_regular_expression.html</id><summary type="html">&lt;p&gt;看完了 &lt;a href="http://book.douban.com/subject/6959486/"&gt;Introducing Regular Expressions&lt;/a&gt;，记录一下学习笔记。这本书是非常简单的入门书，一天时间就能看完。作者还推荐了基本进阶书：&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-05-03T00:00:00+08:00</updated><entry><title>学习 Vim 之 lookupfile 插件</title><link href="http://guqian110.github.io/pages/2015/05/03/learning_vim_lookupfile_plugin.html" rel="alternate"></link><updated>2015-05-03T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-05-03:pages/2015/05/03/learning_vim_lookupfile_plugin.html</id><summary type="html">&lt;p&gt;系统内置的 &lt;code&gt;:find&lt;/code&gt; 命令不够好：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;项目比较大，文件比较多时，查找速度慢&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;必须输入文件全名，而且不能使用正则表达式查找&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;而使用 NERDTree 的话，在一个小窗口内，按照目录浏览查找的效率也很低。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;lookupfile&lt;/code&gt; 这个插件可以实现类似 Sublime Text 中 Ctrl + P 的效果，只需要输入文件的部分名字即可匹配查找到文件。&lt;/p&gt;
+&lt;h2&gt;Install&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;lookupfile 需要 &lt;code&gt;genutils&lt;/code&gt; 插件的支持，使用 Vundle 安装两个插件：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;genutils&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;lookupfile&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Config&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;关于 lookupfile 的详细配置，查看 help 文档，下面是几个常用的配置选项：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;LookupFile_MinPatLength&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;LookupFile_PreserveLastPattern&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;LookupFile_PreservePatternHistory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;LookupFile_AlwaysAcceptFirst&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;LookupFile_AllowNewFiles&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;tags&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://easwy.com/blog/archives/advanced-vim-skills-lookupfile-plugin/"&gt;vi/vim使用进阶: lookupfile插件&lt;/a&gt; 中介绍到 lookupfile 可以使用 ctags 生成的 tags 文件来查找，不过其查找效率比较低，所以作者写了一个 shell 脚本来生成专用的 tags 文件：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class="c"&gt;# generate tag file for lookupfile plugin&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;!_TAG_FILE_SORTED\t2\t/2=foldcase/&amp;quot;&lt;/span&gt; &amp;gt; filenametags
+find . -not -regex &lt;span class="s1"&gt;&amp;#39;.*\.\(png\|gif\)&amp;#39;&lt;/span&gt; -type f -printf &lt;span class="s2"&gt;&amp;quot;%f\t%p\t1\n&amp;quot;&lt;/span&gt; | &lt;span class="se"&gt;\&lt;/span&gt;
+    sort -f &amp;gt;&amp;gt; filenametags
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;为了方便起见，把这个脚本保存为 &lt;code&gt;genfiletags&lt;/code&gt; 文件，然后将其移动到专门存放常用 shell 脚本的目录下，将这个目录添加到系统变量 &lt;code&gt;$PATH&lt;/code&gt; 中，这样在 vim 中直接运行 &lt;code&gt;:!genfiletags&lt;/code&gt; 就可以生成 tags 文件了。&lt;/p&gt;
+&lt;p&gt;生成好 tags 文件后，还要配置 vim，告诉它使用这个文件来查找：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;filereadable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;./filenametags&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;LookupFile_TagExpr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;./filenametags&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;endif&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;case sensitive&lt;/h3&gt;
+&lt;p&gt;lookupfile 插件是大小写敏感的，可以在查找到时候加上 &lt;code&gt;\c&lt;/code&gt; 就能忽略大小写，不过这样很麻烦，下面是更加简单的方法，在 .vimrc 中添加下面这段代码即可：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="nx"&gt;LookupFile_IgnoreCaseFunc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;pattern&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;_tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nx"&gt;tags&lt;/span&gt;
+    &lt;span class="k"&gt;try&lt;/span&gt;
+        &lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nx"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;eval&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;LookupFile_TagExpr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;newpattern&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;\c&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;pattern&lt;/span&gt;
+        &lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;taglist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;newpattern&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;catch&lt;/span&gt;
+        &lt;span class="nx"&gt;echohl&lt;/span&gt; &lt;span class="nx"&gt;ErrorMsg&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Exception: &amp;quot;&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="nx"&gt;v&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;exception&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="nx"&gt;echohl&lt;/span&gt; &lt;span class="nx"&gt;NONE&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;finally&lt;/span&gt;
+        &lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nx"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;_tags&lt;/span&gt;
+    &lt;span class="nx"&gt;endtry&lt;/span&gt;
+
+    &lt;span class="err"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;Show&lt;/span&gt; &lt;span class="nx"&gt;the&lt;/span&gt; &lt;span class="nx"&gt;matches&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;what&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="nx"&gt;typed&lt;/span&gt; &lt;span class="nx"&gt;so&lt;/span&gt; &lt;span class="nx"&gt;far&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+    &lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;tags&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;v:val&lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;filename&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;files&lt;/span&gt;
+&lt;span class="nx"&gt;endfunction&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt; &lt;span class="nx"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;LookupFile_LookupFunc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;LookupFile_IgnoreCaseFunc&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Summary&lt;/h3&gt;
+&lt;p&gt;综上，.vimrc 中的配置内容如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;Config&lt;/span&gt; &lt;span class="nx"&gt;lookupfile&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;let g:LookupFile_MinPatLength = 2&lt;/span&gt;
+&lt;span class="s2"&gt;let g:LookupFile_PreserveLastPattern = 0&lt;/span&gt;
+&lt;span class="s2"&gt;let g:LookupFile_PreservePatternHistory = 1&lt;/span&gt;
+&lt;span class="s2"&gt;let g:LookupFile_AlwaysAcceptFirst = 1&lt;/span&gt;
+&lt;span class="s2"&gt;let g:LookupFile_AllowNewFiles = 0&lt;/span&gt;
+&lt;span class="s2"&gt;if filereadable (&amp;quot;&lt;/span&gt;&lt;span class="nx"&gt;.&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;filenametags&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;)&lt;/span&gt;
+&lt;span class="s2"&gt;    let g:LookupFile_TagExpr = &amp;#39;&amp;quot;&lt;/span&gt;&lt;span class="nx"&gt;.&lt;/span&gt;&lt;span class="p"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;filenametags&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;#39;&lt;/span&gt;
+&lt;span class="s2"&gt;endif&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;silent&amp;gt;&amp;lt;leader&amp;gt;lk :LUTags&amp;lt;cr&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;silent&amp;gt;&amp;lt;leader&amp;gt;ll :LUBufs&amp;lt;cr&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;nmap &amp;lt;silent&amp;gt;&amp;lt;leader&amp;gt;lw :LUWalk&amp;lt;cr&amp;gt;&lt;/span&gt;
+&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;lookup&lt;/span&gt; &lt;span class="nb"&gt;file&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nx"&gt;ignore&lt;/span&gt; &lt;span class="k"&gt;case&lt;/span&gt;
+&lt;span class="nx"&gt;function&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="nx"&gt;LookupFile_IgnoreCaseFunc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;pattern&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;_tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nb"&gt;tags&lt;/span&gt;
+    &lt;span class="nx"&gt;try&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;eval&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;g&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;LookupFile_TagExpr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;newpattern&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;\c&amp;#39;&lt;/span&gt; &lt;span class="nx"&gt;.&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;pattern&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;taglist&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;newpattern&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nx"&gt;catch&lt;/span&gt;
+        &lt;span class="nx"&gt;echohl&lt;/span&gt; &lt;span class="nx"&gt;ErrorMsg&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="nx"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Exception: &amp;quot;&lt;/span&gt; &lt;span class="nx"&gt;.&lt;/span&gt; &lt;span class="nx"&gt;v&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;exception&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="nx"&gt;echohl&lt;/span&gt; &lt;span class="kc"&gt;NONE&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="nx"&gt;finally&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;_tags&lt;/span&gt;
+    &lt;span class="nx"&gt;endtry&lt;/span&gt;
+
+    &lt;span class="s2"&gt;&amp;quot; Show the matches for what is typed so far.&lt;/span&gt;
+&lt;span class="s2"&gt;    let files = map(tags, &amp;#39;v:val[&amp;quot;&lt;/span&gt;&lt;span class="nb"&gt;filename&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;]&amp;#39;)&lt;/span&gt;
+&lt;span class="s2"&gt;    return files&lt;/span&gt;
+&lt;span class="s2"&gt;endfunction&lt;/span&gt;
+&lt;span class="s2"&gt;let g:LookupFile_LookupFunc = &amp;#39;LookupFile_IgnoreCaseFunc&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Usage&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;lookupfile 可以查找文件夹、缓冲区、按照目录查找三种方法：&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;:LookupFile&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;按 F5 或者输入命令 &lt;code&gt;:LookupFile&lt;/code&gt; 来打开上部的 lookupfile 小窗口，输入文件名即可查找，可以使用 vim 的正则表达式查找，使用 Ctrl-N 和 Ctrl-P 来上下选择查找结果。&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;:LUBufs&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;虽然有 &lt;code&gt;BufExplorer&lt;/code&gt; 可以查看 buffers，但是当 buffer 很多时，使用 lookupfile 更加方便一点。&lt;/p&gt;
+&lt;p&gt;输入命令 &lt;code&gt;:LUBufs&lt;/code&gt; 查找缓冲区的文件。&lt;/p&gt;
+&lt;h3&gt;&lt;code&gt;:LUWalk&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;使用 &lt;code&gt;:LUWalk&lt;/code&gt; 来浏览目录。这个功能和 NERDTree 重复了，个人感觉 NERDTree 浏览目录更加方便一点，毕竟不用输入文件目录名，可以少翘几个字符...&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://easwy.com/blog/archives/advanced-vim-skills-lookupfile-plugin/"&gt;vi/vim使用进阶: lookupfile插件&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.163.com/lgh_2002/blog/static/44017526201061313442254/"&gt;lookupfile.vim插件详解【OK】&lt;/a&gt;&lt;/p&gt;</summary><category term="Vim"></category><category term="lookupfile"></category></entry><entry><title>Regular Expression 小结</title><link href="http://guqian110.github.io/pages/2015/04/27/summary_of_regular_expression.html" rel="alternate"></link><updated>2015-04-27T00:00:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-04-27:pages/2015/04/27/summary_of_regular_expression.html</id><summary type="html">&lt;p&gt;看完了 &lt;a href="http://book.douban.com/subject/6959486/"&gt;Introducing Regular Expressions&lt;/a&gt;，记录一下学习笔记。这本书是非常简单的入门书，一天时间就能看完。作者还推荐了基本进阶书：&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1872091/"&gt;Mastering Regular Expressions&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/3443904/"&gt;Regular Expressions Cookbook&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/2363803/"&gt;Regular Expression Pocket Reference&lt;/a&gt;&lt;/p&gt;
