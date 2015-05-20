@@ -255,6 +255,106 @@ STA 是通过“穷举法”抽取整个设计电路的所有时序路径，按�
 
 <br>
 
+========= Update 05/18/2015===========================
+
+很多笔试题里面都有考计算最大时钟频率的题，看到几篇文章:
+
+[Static Timing Analysis 101][article1]
+
+[Static Timing Analysis 102 : Setup Failures.][article2]
+
+[Static Timing Analysis 103 : Hold Failures.][article3]
+
+解释的很清楚，记一下笔记，顺便总结一下。
+
+首先，电路中的元件一般分为两类：
+
+1. 组合逻辑，比如与非门、或非门等组合逻辑
+
+2. 时序逻辑，受时钟驱动的元件，比如 flip-flop
+
+一般时序分析都是分析前面介绍的 Path2 的路径，如下图所示：
+
+![path2](images/static-timing-analysis-1-basic/path2.jpg)
+
+在这个图中，第一级的 DFF 的输出经过组合逻辑进入第二级 DFF，图中的时序是满足条件的，电路可以正常工作；但是如果违反 setup / hold time 的话，电路就无法正常工作，下面分别说明：
+
+### Setup Time Failure
+
+前面已经提到了，对于任何 DFF，都必须满足 setup time 的要求：**数据信号要在时钟信号之前到达 DFF，并保持稳定至少 setup time 时间，才能被成功打入 DFF**。
+
+分类讨论一下：
+
+1. 如果中间的组合逻辑较少，产生的时延很小，那么在下一个时钟沿到来之前，数据满足 setup time，没有问题。
+
+2. 如果中间的组合逻辑较多，产生的时延足够大，导致数据和时钟的关系不满足 setup time，则有问题。
+
+下图是一个 setup time failure 的具体例子：
+
+![setup failure](images/static-timing-analysis-1-basic/setup_fail.jpg))
+
+第一级的 DFF 在时钟的上升沿对输入数据 In 进行采样，并经过一段时间（Tco，clock to output delay）后输出为 FF1_out，输出数据经过中间的组合逻辑变为 FF2_in 输入到第二级 DFF，因为中间的组合逻辑的时延太大，FF2_in 违反了 setup time 的要求（图中橙色线条所示）。由于第二级 DFF 的输入不满足 setup time，所以这个 DFF 会进入亚稳态，它将花费 1
+个或多个时钟周期才能脱离亚稳态，在这期间它的输出都是不确定的，那么下游逻辑将会在这期间采样到错误数值，电路会发生错误。
+
+如果中间的组合逻辑过多，产生的时延过大，以至于 FF2_in 的变化落在了第二个时钟沿的后面，这时所然没有违反 setup time 的要求，第二个 DFF 不会进入亚稳态，但是它采样的数据是旧数据，这个数据可能是错误的，同样会导致下游逻辑发生错误。
+
+如果我们将时钟频率降到足够低，那么就可以避免 setup time failure 的问题。
+
+通过上面的分析，可以知道 setup time 限制了中间组合逻辑的最大时延，所以这个 setup time constraint 也叫做 max delay constraint。为了保证在最恶劣的情况下设计仍然能够满足要求，在计算 setup time 时中应该使用最大的数据时延路径。
+
+P.S. 上面的图中还包含了 clock skew，clk1 和 clk2 没有对齐，这加剧了 setup time failure 的机率。在实际中，时钟信号到达各个 DFF 的时间是不同的，设计者必须将这个因素考虑在内。
+
+### Hold Time Failure
+
+和 setup time 对应，对于任何时序器件（DFF)，都必须满足 hold time 的要求：**数据信号要在时钟信号达到之后保持稳定至少 hold time 的时间，否则输出是错误**。
+
+下图是一个 hold time failure 的具体例子：
+
+![hold failure](images/static-timing-analysis-1-basic/hold_fail.jpg)
+
+第一级 DFF 在时钟的上升沿对输入数据 In 进行采样，经过一段时间（Tco）后，输出为 FF1_out，输出数据经过中间的组合逻辑变为 FF2_in，输入到第二级 DFF。因为中间的组合逻辑时延非常小，而且由于 clock skew 的原因，导致第二级 DFF 在第一个时钟周期的 hold time 内输入的 FF2_in 发生了变化，违法了 hold time 要求，DFF2 进入亚稳态，它将花费 1 个或多个时钟周期才能退出亚稳态，在此期间输出的是错误数据。
+
+在现实中，导致这个问题的因素有可能是设计的问题（比如两个 DFF 邻接，中间没有其他逻辑），也有可能是器件的原因。
+
+因为传输时延太小，从而导致在第一个时钟沿信号就被 DFF2 采样了，而设计本意是在第二个时钟沿采样，看起来好像是信号跑（racing）的太快了，所以 hold time failure 也叫做 race。
+
+通过上面的分析，可以知道 hold time 限制了中间组合逻辑的最小时延，所以这个 hold time constraint 也叫做 min delay constraint。为了保证在最恶劣的情况下设计仍然能够满足要求，在计算 hold time 时中应该使用最小的数据时延路径。
+
+P.S. 上面的例子中 clock skew 加剧了 hold time failure 的机率，如果两个时钟是对齐的，那么就不会出现 hold time failure，输出也就不会出错。
+
+[article1]: http://www.vlsiinterviewquestions.org/2011/12/17/static-timing-analysis-101/
+
+[article2]: http://www.vlsiinterviewquestions.org/2011/12/17/static-timing-analysis-102-setup-failures/
+
+[article3]: http://www.vlsiinterviewquestions.org/2011/12/17/static-timing-analysis-103-hold-failures/
+
+### summary
+
+假设理想的时钟为 clk，它的周期为 T，它连接到 DFF1 和 DFF2 的时钟为 clk1 和 clk2，它们相对于理想时钟的时延分别为 Tc1 和 Tc2；DFF 的参数分别为 Tsu，Th 和 Tco，中间组合逻辑的时延为 Tcomb。
+
+数据的时延：Tc1 + Tco + Tcomb
+
+时钟的时延：Tc2 + T  
+
+要满足 setup time 的要求，则有 Tc2 + T - (Tc1 + Tco + Tcomb) >= Tsu，整理一下即：
+
+    T >= Tsu + Tco + Tcomb - Tskew     --Eq1
+
+所以可以确定出系统的最大工作频率：
+
+    Fmax <= 1 / (Tsu + Tco + Tcomb - Tskew)     -- Eq2
+
+因为 Tc1, Tc2, Tco, Tsu 都是固定值，所以一个系统的最大工作频率取决 Tcomb。
+
+而对于 hold time，则有不等式：Tc1 + Tco + Tcomb > Tc2 + Th，整理一下就有：
+
+    Tco + Tcomb - Tskew > Th        -- Eq3
+
+上一级 DFF 的输出数据不能传输太快，侵占了下一级 DFF 正在锁存的 hold time，也就是说限制了数据的传输速度的上限。
+
+有了前面的 3 个公式，就可以解决大部分问题了。比如华为某年的笔试题：
+
+
 ## Ref
 
 [Xilinx FPGA 开发实用教程](http://book.douban.com/subject/11523088/)
@@ -276,3 +376,9 @@ STA 是通过“穷举法”抽取整个设计电路的所有时序路径，按�
 [Xilinx FPGA开发实用教程][book1]
 
 [FPGA STA(三) --- STA的基本概念][blog1]
+
+[Static Timing Analysis 101][article1]
+
+[Static Timing Analysis 102 : Setup Failures.][article2]
+
+[Static Timing Analysis 103 : Hold Failures.][article3]
