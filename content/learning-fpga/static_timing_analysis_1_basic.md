@@ -29,7 +29,7 @@ Summary: 静态时序分析 STA 系列之 1，基础知识。
 
 假设时钟信号达到两个 DFF 的延时分别为 Tc1 和 Tc2，用 Tskew 来表示它们之间的时钟偏移，则计算公式如下：
 
-    Tskew = Tc1 - Tc2
+    Tskew = Tc2 - Tc1
 
 根据差值可以分为正偏移和负偏移：
 
@@ -291,7 +291,7 @@ STA 是通过“穷举法”抽取整个设计电路的所有时序路径，按�
 
 下图是一个 setup time failure 的具体例子：
 
-![setup failure](images/static-timing-analysis-1-basic/setup_fail.jpg))
+![setup failure](images/static-timing-analysis-1-basic/setup_fail.jpg)
 
 第一级的 DFF 在时钟的上升沿对输入数据 In 进行采样，并经过一段时间（Tco，clock to output delay）后输出为 FF1_out，输出数据经过中间的组合逻辑变为 FF2_in 输入到第二级 DFF，因为中间的组合逻辑的时延太大，FF2_in 违反了 setup time 的要求（图中橙色线条所示）。由于第二级 DFF 的输入不满足 setup time，所以这个 DFF 会进入亚稳态，它将花费 1
 个或多个时钟周期才能脱离亚稳态，在这期间它的输出都是不确定的，那么下游逻辑将会在这期间采样到错误数值，电路会发生错误。
