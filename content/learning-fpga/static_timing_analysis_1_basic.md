@@ -275,7 +275,7 @@ STA 是通过“穷举法”抽取整个设计电路的所有时序路径，按�
 
 一般时序分析都是分析前面介绍的 Path2 的路径，如下图所示：
 
-![path2](images/static-timing-analysis-1-basic/path2.jpg)
+![path2](/images/static-timing-analysis-1-basic/path2.jpg)
 
 在这个图中，第一级的 DFF 的输出经过组合逻辑进入第二级 DFF，图中的时序是满足条件的，电路可以正常工作；但是如果违反 setup / hold time 的话，电路就无法正常工作，下面分别说明：
 
@@ -291,7 +291,7 @@ STA 是通过“穷举法”抽取整个设计电路的所有时序路径，按�
 
 下图是一个 setup time failure 的具体例子：
 
-![setup failure](images/static-timing-analysis-1-basic/setup_fail.jpg)
+![setup failure](/images/static-timing-analysis-1-basic/setup_fail.jpg)
 
 第一级的 DFF 在时钟的上升沿对输入数据 In 进行采样，并经过一段时间（Tco，clock to output delay）后输出为 FF1_out，输出数据经过中间的组合逻辑变为 FF2_in 输入到第二级 DFF，因为中间的组合逻辑的时延太大，FF2_in 违反了 setup time 的要求（图中橙色线条所示）。由于第二级 DFF 的输入不满足 setup time，所以这个 DFF 会进入亚稳态，它将花费 1
 个或多个时钟周期才能脱离亚稳态，在这期间它的输出都是不确定的，那么下游逻辑将会在这期间采样到错误数值，电路会发生错误。
@@ -310,7 +310,7 @@ P.S. 上面的图中还包含了 clock skew，clk1 和 clk2 没有对齐，这�
 
 下图是一个 hold time failure 的具体例子：
 
-![hold failure](images/static-timing-analysis-1-basic/hold_fail.jpg)
+![hold failure](/images/static-timing-analysis-1-basic/hold_fail.jpg)
 
 第一级 DFF 在时钟的上升沿对输入数据 In 进行采样，经过一段时间（Tco）后，输出为 FF1_out，输出数据经过中间的组合逻辑变为 FF2_in，输入到第二级 DFF。因为中间的组合逻辑时延非常小，而且由于 clock skew 的原因，导致第二级 DFF 在第一个时钟周期的 hold time 内输入的 FF2_in 发生了变化，违法了 hold time 要求，DFF2 进入亚稳态，它将花费 1 个或多个时钟周期才能退出亚稳态，在此期间输出的是错误数据。
 

@@ -135,7 +135,7 @@
 <p>采用流水设计的方法就是：<strong>在较长的组合逻辑路径中插入 DFF，将其分割为几个小的组合逻辑，新的 Tcomb 显然小于原来的 Tcomb，所以系统的时钟频率就可以提高了。</strong></p>
 <p>举例来说明：设计一个电路完成 i = (a + b + c + d) + (e + f + g + h) 运算。</p>
 <p>下面是没有流水的设计：</p>
-<p><img alt="no_pipe" src="images/the-art-of-pipelining/no_pipeline.png" /></p>
+<p><img alt="no_pipe" src="/images/the-art-of-pipelining/no_pipeline.png" /></p>
 <p>可以计算出第一级 DFF 到第二级 DFF 之间数据路径的时延为 </p>
 <div class="highlight"><pre><span class="n">Tff</span> <span class="o">=</span> <span class="n">Tco</span> <span class="o">+</span> <span class="n">Tcomb</span>
     <span class="o">=</span> <span class="n">Tco</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">Tadder</span>
@@ -143,7 +143,7 @@
 
 
 <p>下面是插入两级流水的设计：</p>
-<p><img alt="piple" src="images/the-art-of-pipelining/pipeline.png" /></p>
+<p><img alt="piple" src="/images/the-art-of-pipelining/pipeline.png" /></p>
 <p>现在相邻的两级 DFF 之间的组合逻辑只有 1 级加法器，而不是原来的 3 级，这时数据路径的时延为</p>
 <div class="highlight"><pre><span class="n">Tff</span> <span class="o">=</span> <span class="n">Tco</span> <span class="o">+</span> <span class="n">Tcomb</span>
     <span class="o">=</span> <span class="n">Tco</span> <span class="o">+</span> <span class="n">Tadder</span>
@@ -165,7 +165,7 @@
 </li>
 </ul>
 <p>如下图所示，两个 DFF 之间存在着大规模的组合逻辑：</p>
-<p><img alt="before" src="images/the-art-of-pipelining/before.png" /></p>
+<p><img alt="before" src="/images/the-art-of-pipelining/before.png" /></p>
 <p>组合逻辑的时延决定了系统的最大工作频率（也即时钟周期 T 的最小值），此时</p>
 <div class="highlight"><pre><span class="n">latency</span> <span class="o">=</span> <span class="n">Tcomb</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span>               <span class="o">--</span> <span class="n">Eq1</span>
 <span class="n">Tbefore</span> <span class="o">=</span> <span class="n">latency</span> <span class="o">=</span> <span class="n">Tcomb</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span>     <span class="o">--</span> <span class="n">Eq2</span>
@@ -174,7 +174,7 @@
 
 <p>其中 Treg 表示 DFF 带来的时延，Tclk 表示时钟的 skew 和 jitter 带来的时延。</p>
 <p>在使用流水之后，如下图所示：</p>
-<p><img alt="after" src="images/the-art-of-pipelining/after.png" /></p>
+<p><img alt="after" src="/images/the-art-of-pipelining/after.png" /></p>
 <p>此时，每个 stage 的周期为</p>
 <div class="highlight"><pre><span class="n">Tstage</span> <span class="o">=</span> <span class="p">(</span><span class="n">Tcomb</span><span class="p">)</span><span class="n">stage</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span>
 </pre></div>
@@ -253,11 +253,11 @@
 <p>非流水的方式实现如下图：</p>
 <p><img alt="dxl nopipe" src="images/the-art-of-pipelining/dxl_nopipeline.png" /></p>
 <p>因为是非流水的方式，所以指令不能并行执行，必须等到前一条指令执行完之后才能开始执行下一条指令，如下图所示，假设每条指令需要 8 ns，那么执行 4 条指令总共需要 8*4 = 32 ns。</p>
-<p><img alt="dxl order1" src="images/the-art-of-pipelining/dxl_order1.png" /></p>
+<p><img alt="dxl order1" src="/images/the-art-of-pipelining/dxl_order1.png" /></p>
 <p>采用流水的方式，在 5 级操作中都加上一个流水阶段（即每个阶段加入一组 DFF），实现如下图：</p>
-<p><img alt="dxl pipeline" src="images/the-art-of-pipelining/dxl_pipeline.png" /></p>
+<p><img alt="dxl pipeline" src="/images/the-art-of-pipelining/dxl_pipeline.png" /></p>
 <p>因为是流水的方式，所以指令可以并行执行，如下图所示：</p>
-<p><img alt="dxl order2" src="images/the-art-of-pipelining/dxl_order2.png" /></p>
+<p><img alt="dxl order2" src="/images/the-art-of-pipelining/dxl_order2.png" /></p>
 <p>假设执行每条指令花费 10 ns，那么执行 5 条指令：</p>
 <p>非流水的方式总共花费 10 * 5 = 50 ns；流水的方式每条指令花费 5 个时钟周期，每个周期只有 2 ns，完成 5 条指令只需要 5 个时钟周期，总共花费 9 * 2 = 18 ns；性能是原来的 50/18 = 2.8 倍。</p>
 <p><br></p>
@@ -302,7 +302,7 @@
 
 
 <p>将这段软件代码翻译成 Verilog 代码，重复使用相同的寄存器和计算资源，得到的结果如下：</p>
-<p><img alt="iterative" src="image/the-art-of-pipelining/iterative.png" /></p>
+<p><img alt="iterative" src="/image/the-art-of-pipelining/iterative.png" /></p>
 <p>这种迭代的方法无法实现并行计算，其性能：</p>
 <div class="highlight"><pre><span class="n">Throughput</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">/</span><span class="mi">1</span><span class="p">,</span> <span class="n">or</span> <span class="mi">8</span> <span class="n">bits</span> <span class="o">/</span><span class="n">clock</span>
 <span class="n">Latency</span> <span class="o">=</span> <span class="mi">3</span> <span class="n">clocks</span>
@@ -334,7 +334,7 @@
 </td></tr></table>
 
 <p>得到的结果如下图：</p>
-<p><img alt="pipeline" src="image/the-art-of-pipelining/pipelined.png" /></p>
+<p><img alt="pipeline" src="/image/the-art-of-pipelining/pipelined.png" /></p>
 <p>可以并行计算，其性能：</p>
 <div class="highlight"><pre><span class="n">Throughput</span> <span class="o">=</span> <span class="mi">8</span> <span class="n">bits</span> <span class="o">/</span> <span class="n">clock</span> <span class="p">(</span><span class="n">assuming</span> <span class="n">one</span> <span class="n">new</span> <span class="n">input</span> <span class="n">per</span> <span class="n">clock</span><span class="p">)</span>
 <span class="n">Latency</span> <span class="o">=</span> <span class="n">Betw</span> <span class="n">een</span> <span class="n">one</span> <span class="n">and</span> <span class="n">two</span> <span class="n">multiplier</span> <span class="n">delays</span><span class="p">,</span> <span class="mi">0</span> <span class="n">clocks</span>

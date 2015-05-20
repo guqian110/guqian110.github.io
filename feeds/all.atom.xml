@@ -23,7 +23,7 @@
 &lt;p&gt;采用流水设计的方法就是：&lt;strong&gt;在较长的组合逻辑路径中插入 DFF，将其分割为几个小的组合逻辑，新的 Tcomb 显然小于原来的 Tcomb，所以系统的时钟频率就可以提高了。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;举例来说明：设计一个电路完成 i = (a + b + c + d) + (e + f + g + h) 运算。&lt;/p&gt;
 &lt;p&gt;下面是没有流水的设计：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="no_pipe" src="images/the-art-of-pipelining/no_pipeline.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="no_pipe" src="/images/the-art-of-pipelining/no_pipeline.png" /&gt;&lt;/p&gt;
 &lt;p&gt;可以计算出第一级 DFF 到第二级 DFF 之间数据路径的时延为 &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Tff&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Tco&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Tcomb&lt;/span&gt;
     &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Tco&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;Tadder&lt;/span&gt;
@@ -31,7 +31,7 @@
 
 
 &lt;p&gt;下面是插入两级流水的设计：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="piple" src="images/the-art-of-pipelining/pipeline.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="piple" src="/images/the-art-of-pipelining/pipeline.png" /&gt;&lt;/p&gt;
 &lt;p&gt;现在相邻的两级 DFF 之间的组合逻辑只有 1 级加法器，而不是原来的 3 级，这时数据路径的时延为&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Tff&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Tco&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Tcomb&lt;/span&gt;
     &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Tco&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Tadder&lt;/span&gt;
@@ -53,7 +53,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;如下图所示，两个 DFF 之间存在着大规模的组合逻辑：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="before" src="images/the-art-of-pipelining/before.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="before" src="/images/the-art-of-pipelining/before.png" /&gt;&lt;/p&gt;
 &lt;p&gt;组合逻辑的时延决定了系统的最大工作频率（也即时钟周期 T 的最小值），此时&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Tcomb&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Treg&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Tclk&lt;/span&gt;               &lt;span class="o"&gt;--&lt;/span&gt; &lt;span class="n"&gt;Eq1&lt;/span&gt;
 &lt;span class="n"&gt;Tbefore&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Tcomb&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Treg&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Tclk&lt;/span&gt;     &lt;span class="o"&gt;--&lt;/span&gt; &lt;span class="n"&gt;Eq2&lt;/span&gt;
@@ -62,7 +62,7 @@
 
 &lt;p&gt;其中 Treg 表示 DFF 带来的时延，Tclk 表示时钟的 skew 和 jitter 带来的时延。&lt;/p&gt;
 &lt;p&gt;在使用流水之后，如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="after" src="images/the-art-of-pipelining/after.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="after" src="/images/the-art-of-pipelining/after.png" /&gt;&lt;/p&gt;
 &lt;p&gt;此时，每个 stage 的周期为&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Tstage&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Tcomb&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;stage&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Treg&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Tclk&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -141,11 +141,11 @@
 &lt;p&gt;非流水的方式实现如下图：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="dxl nopipe" src="images/the-art-of-pipelining/dxl_nopipeline.png" /&gt;&lt;/p&gt;
 &lt;p&gt;因为是非流水的方式，所以指令不能并行执行，必须等到前一条指令执行完之后才能开始执行下一条指令，如下图所示，假设每条指令需要 8 ns，那么执行 4 条指令总共需要 8*4 = 32 ns。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dxl order1" src="images/the-art-of-pipelining/dxl_order1.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dxl order1" src="/images/the-art-of-pipelining/dxl_order1.png" /&gt;&lt;/p&gt;
 &lt;p&gt;采用流水的方式，在 5 级操作中都加上一个流水阶段（即每个阶段加入一组 DFF），实现如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dxl pipeline" src="images/the-art-of-pipelining/dxl_pipeline.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dxl pipeline" src="/images/the-art-of-pipelining/dxl_pipeline.png" /&gt;&lt;/p&gt;
 &lt;p&gt;因为是流水的方式，所以指令可以并行执行，如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dxl order2" src="images/the-art-of-pipelining/dxl_order2.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dxl order2" src="/images/the-art-of-pipelining/dxl_order2.png" /&gt;&lt;/p&gt;
 &lt;p&gt;假设执行每条指令花费 10 ns，那么执行 5 条指令：&lt;/p&gt;
 &lt;p&gt;非流水的方式总共花费 10 * 5 = 50 ns；流水的方式每条指令花费 5 个时钟周期，每个周期只有 2 ns，完成 5 条指令只需要 5 个时钟周期，总共花费 9 * 2 = 18 ns；性能是原来的 50/18 = 2.8 倍。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -190,7 +190,7 @@
 
 
 &lt;p&gt;将这段软件代码翻译成 Verilog 代码，重复使用相同的寄存器和计算资源，得到的结果如下：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="iterative" src="image/the-art-of-pipelining/iterative.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="iterative" src="/image/the-art-of-pipelining/iterative.png" /&gt;&lt;/p&gt;
 &lt;p&gt;这种迭代的方法无法实现并行计算，其性能：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Throughput&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;bits&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;clock&lt;/span&gt;
 &lt;span class="n"&gt;Latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="n"&gt;clocks&lt;/span&gt;
@@ -222,7 +222,7 @@
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;得到的结果如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="pipeline" src="image/the-art-of-pipelining/pipelined.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pipeline" src="/image/the-art-of-pipelining/pipelined.png" /&gt;&lt;/p&gt;
 &lt;p&gt;可以并行计算，其性能：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Throughput&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;bits&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;clock&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;assuming&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;per&lt;/span&gt; &lt;span class="n"&gt;clock&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;Latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Betw&lt;/span&gt; &lt;span class="n"&gt;een&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;two&lt;/span&gt; &lt;span class="n"&gt;multiplier&lt;/span&gt; &lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;clocks&lt;/span&gt;
@@ -3218,7 +3218,7 @@ statements.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;一般时序分析都是分析前面介绍的 Path2 的路径，如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="path2" src="images/static-timing-analysis-1-basic/path2.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="path2" src="/images/static-timing-analysis-1-basic/path2.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;在这个图中，第一级的 DFF 的输出经过组合逻辑进入第二级 DFF，图中的时序是满足条件的，电路可以正常工作；但是如果违反 setup / hold time 的话，电路就无法正常工作，下面分别说明：&lt;/p&gt;
 &lt;h3&gt;Setup Time Failure&lt;/h3&gt;
 &lt;p&gt;前面已经提到了，对于任何 DFF，都必须满足 setup time 的要求：&lt;strong&gt;数据信号要在时钟信号之前到达 DFF，并保持稳定至少 setup time 时间，才能被成功打入 DFF&lt;/strong&gt;。&lt;/p&gt;
@@ -3232,7 +3232,7 @@ statements.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;下图是一个 setup time failure 的具体例子：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="setup failure" src="images/static-timing-analysis-1-basic/setup_fail.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="setup failure" src="/images/static-timing-analysis-1-basic/setup_fail.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;第一级的 DFF 在时钟的上升沿对输入数据 In 进行采样，并经过一段时间（Tco，clock to output delay）后输出为 FF1_out，输出数据经过中间的组合逻辑变为 FF2_in 输入到第二级 DFF，因为中间的组合逻辑的时延太大，FF2_in 违反了 setup time 的要求（图中橙色线条所示）。由于第二级 DFF 的输入不满足 setup time，所以这个 DFF 会进入亚稳态，它将花费 1
 个或多个时钟周期才能脱离亚稳态，在这期间它的输出都是不确定的，那么下游逻辑将会在这期间采样到错误数值，电路会发生错误。&lt;/p&gt;
 &lt;p&gt;如果中间的组合逻辑过多，产生的时延过大，以至于 FF2_in 的变化落在了第二个时钟沿的后面，这时所然没有违反 setup time 的要求，第二个 DFF 不会进入亚稳态，但是它采样的数据是旧数据，这个数据可能是错误的，同样会导致下游逻辑发生错误。&lt;/p&gt;
@@ -3242,7 +3242,7 @@ statements.&lt;/p&gt;
 &lt;h3&gt;Hold Time Failure&lt;/h3&gt;
 &lt;p&gt;和 setup time 对应，对于任何时序器件（DFF)，都必须满足 hold time 的要求：&lt;strong&gt;数据信号要在时钟信号达到之后保持稳定至少 hold time 的时间，否则输出是错误&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;下图是一个 hold time failure 的具体例子：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="hold failure" src="images/static-timing-analysis-1-basic/hold_fail.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="hold failure" src="/images/static-timing-analysis-1-basic/hold_fail.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;第一级 DFF 在时钟的上升沿对输入数据 In 进行采样，经过一段时间（Tco）后，输出为 FF1_out，输出数据经过中间的组合逻辑变为 FF2_in，输入到第二级 DFF。因为中间的组合逻辑时延非常小，而且由于 clock skew 的原因，导致第二级 DFF 在第一个时钟周期的 hold time 内输入的 FF2_in 发生了变化，违法了 hold time 要求，DFF2 进入亚稳态，它将花费 1 个或多个时钟周期才能退出亚稳态，在此期间输出的是错误数据。&lt;/p&gt;
 &lt;p&gt;在现实中，导致这个问题的因素有可能是设计的问题（比如两个 DFF 邻接，中间没有其他逻辑），也有可能是器件的原因。&lt;/p&gt;
 &lt;p&gt;因为传输时延太小，从而导致在第一个时钟沿信号就被 DFF2 采样了，而设计本意是在第二个时钟沿采样，看起来好像是信号跑（racing）的太快了，所以 hold time failure 也叫做 race。&lt;/p&gt;

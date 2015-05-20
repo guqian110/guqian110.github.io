@@ -336,7 +336,7 @@
 </li>
 </ol>
 <p>一般时序分析都是分析前面介绍的 Path2 的路径，如下图所示：</p>
-<p><img alt="path2" src="images/static-timing-analysis-1-basic/path2.jpg" /></p>
+<p><img alt="path2" src="/images/static-timing-analysis-1-basic/path2.jpg" /></p>
 <p>在这个图中，第一级的 DFF 的输出经过组合逻辑进入第二级 DFF，图中的时序是满足条件的，电路可以正常工作；但是如果违反 setup / hold time 的话，电路就无法正常工作，下面分别说明：</p>
 <h3>Setup Time Failure</h3>
 <p>前面已经提到了，对于任何 DFF，都必须满足 setup time 的要求：<strong>数据信号要在时钟信号之前到达 DFF，并保持稳定至少 setup time 时间，才能被成功打入 DFF</strong>。</p>
@@ -350,7 +350,7 @@
 </li>
 </ol>
 <p>下图是一个 setup time failure 的具体例子：</p>
-<p><img alt="setup failure" src="images/static-timing-analysis-1-basic/setup_fail.jpg" /></p>
+<p><img alt="setup failure" src="/images/static-timing-analysis-1-basic/setup_fail.jpg" /></p>
 <p>第一级的 DFF 在时钟的上升沿对输入数据 In 进行采样，并经过一段时间（Tco，clock to output delay）后输出为 FF1_out，输出数据经过中间的组合逻辑变为 FF2_in 输入到第二级 DFF，因为中间的组合逻辑的时延太大，FF2_in 违反了 setup time 的要求（图中橙色线条所示）。由于第二级 DFF 的输入不满足 setup time，所以这个 DFF 会进入亚稳态，它将花费 1
 个或多个时钟周期才能脱离亚稳态，在这期间它的输出都是不确定的，那么下游逻辑将会在这期间采样到错误数值，电路会发生错误。</p>
 <p>如果中间的组合逻辑过多，产生的时延过大，以至于 FF2_in 的变化落在了第二个时钟沿的后面，这时所然没有违反 setup time 的要求，第二个 DFF 不会进入亚稳态，但是它采样的数据是旧数据，这个数据可能是错误的，同样会导致下游逻辑发生错误。</p>
@@ -360,7 +360,7 @@
 <h3>Hold Time Failure</h3>
 <p>和 setup time 对应，对于任何时序器件（DFF)，都必须满足 hold time 的要求：<strong>数据信号要在时钟信号达到之后保持稳定至少 hold time 的时间，否则输出是错误</strong>。</p>
 <p>下图是一个 hold time failure 的具体例子：</p>
-<p><img alt="hold failure" src="images/static-timing-analysis-1-basic/hold_fail.jpg" /></p>
+<p><img alt="hold failure" src="/images/static-timing-analysis-1-basic/hold_fail.jpg" /></p>
 <p>第一级 DFF 在时钟的上升沿对输入数据 In 进行采样，经过一段时间（Tco）后，输出为 FF1_out，输出数据经过中间的组合逻辑变为 FF2_in，输入到第二级 DFF。因为中间的组合逻辑时延非常小，而且由于 clock skew 的原因，导致第二级 DFF 在第一个时钟周期的 hold time 内输入的 FF2_in 发生了变化，违法了 hold time 要求，DFF2 进入亚稳态，它将花费 1 个或多个时钟周期才能退出亚稳态，在此期间输出的是错误数据。</p>
 <p>在现实中，导致这个问题的因素有可能是设计的问题（比如两个 DFF 邻接，中间没有其他逻辑），也有可能是器件的原因。</p>
 <p>因为传输时延太小，从而导致在第一个时钟沿信号就被 DFF2 采样了，而设计本意是在第二个时钟沿采样，看起来好像是信号跑（racing）的太快了，所以 hold time failure 也叫做 race。</p>
