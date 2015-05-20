@@ -136,7 +136,7 @@ PC 世界永恒不变的信条就是提高性能，其中一个方法就是提�
 
 最后比较面积：
 
-**conclusion**: 使用流水比不使用流水多使用了 n*m 个 DFF，还使用了更多的连线资源。
+**conclusion**: 使用流水比不使用流水多使用了 n * m 个 DFF，还使用了更多的连线资源。
 
 综上，可以看到，虽然流水可以提高系统的工作频率和吞吐率，但是它付出的代价是面积和功耗的增加，这也是**速度和面积之间相互转化**的体现。
 
@@ -161,9 +161,9 @@ DXL 指令是 32 位的 RISC 微处理器，每条指令最多由 5 个部分组
 
 非流水的方式实现如下图：
 
-![dxl nopipe](images/the-art-of-pipelining/dxl_nopipeline.png)
+![dxl nopipe](/images/the-art-of-pipelining/dxl_nopipeline.png)
 
-因为是非流水的方式，所以指令不能并行执行，必须等到前一条指令执行完之后才能开始执行下一条指令，如下图所示，假设每条指令需要 8 ns，那么执行 4 条指令总共需要 8*4 = 32 ns。
+因为是非流水的方式，所以指令不能并行执行，必须等到前一条指令执行完之后才能开始执行下一条指令，如下图所示，假设每条指令需要 8 ns，那么执行 4 条指令总共需要 8 * 4 = 32 ns。
 
 ![dxl order1](/images/the-art-of-pipelining/dxl_order1.png)
 
@@ -219,7 +219,7 @@ DXL 指令是 32 位的 RISC 微处理器，每条指令最多由 5 个部分组
 
 将这段软件代码翻译成 Verilog 代码，重复使用相同的寄存器和计算资源，得到的结果如下：
 
-![iterative](/image/the-art-of-pipelining/iterative.png)
+![iterative](/images/the-art-of-pipelining/iterative.png)
 
 这种迭代的方法无法实现并行计算，其性能：
 
@@ -244,7 +244,7 @@ DXL 指令是 32 位的 RISC 微处理器，每条指令最多由 5 个部分组
 
 得到的结果如下图：
 
-![pipeline](/image/the-art-of-pipelining/pipelined.png)
+![pipeline](/images/the-art-of-pipelining/pipelined.png)
 
 可以并行计算，其性能：
 

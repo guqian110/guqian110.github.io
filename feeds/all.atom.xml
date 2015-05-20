@@ -114,7 +114,7 @@
 &lt;p&gt;显然这个数 &amp;gt; 1，即&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;conclusion&lt;/strong&gt;: 系统的 latency 增加了（增加的很小，近似可以忽略）。&lt;/p&gt;
 &lt;p&gt;最后比较面积：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;conclusion&lt;/strong&gt;: 使用流水比不使用流水多使用了 n*m 个 DFF，还使用了更多的连线资源。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;conclusion&lt;/strong&gt;: 使用流水比不使用流水多使用了 n * m 个 DFF，还使用了更多的连线资源。&lt;/p&gt;
 &lt;p&gt;综上，可以看到，虽然流水可以提高系统的工作频率和吞吐率，但是它付出的代价是面积和功耗的增加，这也是&lt;strong&gt;速度和面积之间相互转化&lt;/strong&gt;的体现。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;DXL Instruction&lt;/h2&gt;
@@ -139,8 +139,8 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;非流水的方式实现如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="dxl nopipe" src="images/the-art-of-pipelining/dxl_nopipeline.png" /&gt;&lt;/p&gt;
-&lt;p&gt;因为是非流水的方式，所以指令不能并行执行，必须等到前一条指令执行完之后才能开始执行下一条指令，如下图所示，假设每条指令需要 8 ns，那么执行 4 条指令总共需要 8*4 = 32 ns。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="dxl nopipe" src="/images/the-art-of-pipelining/dxl_nopipeline.png" /&gt;&lt;/p&gt;
+&lt;p&gt;因为是非流水的方式，所以指令不能并行执行，必须等到前一条指令执行完之后才能开始执行下一条指令，如下图所示，假设每条指令需要 8 ns，那么执行 4 条指令总共需要 8 * 4 = 32 ns。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="dxl order1" src="/images/the-art-of-pipelining/dxl_order1.png" /&gt;&lt;/p&gt;
 &lt;p&gt;采用流水的方式，在 5 级操作中都加上一个流水阶段（即每个阶段加入一组 DFF），实现如下图：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="dxl pipeline" src="/images/the-art-of-pipelining/dxl_pipeline.png" /&gt;&lt;/p&gt;
@@ -190,7 +190,7 @@
 
 
 &lt;p&gt;将这段软件代码翻译成 Verilog 代码，重复使用相同的寄存器和计算资源，得到的结果如下：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="iterative" src="/image/the-art-of-pipelining/iterative.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="iterative" src="/images/the-art-of-pipelining/iterative.png" /&gt;&lt;/p&gt;
 &lt;p&gt;这种迭代的方法无法实现并行计算，其性能：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Throughput&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;bits&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;clock&lt;/span&gt;
 &lt;span class="n"&gt;Latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="n"&gt;clocks&lt;/span&gt;
@@ -222,7 +222,7 @@
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;得到的结果如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="pipeline" src="/image/the-art-of-pipelining/pipelined.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pipeline" src="/images/the-art-of-pipelining/pipelined.png" /&gt;&lt;/p&gt;
 &lt;p&gt;可以并行计算，其性能：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Throughput&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;bits&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;clock&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;assuming&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;per&lt;/span&gt; &lt;span class="n"&gt;clock&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;Latency&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Betw&lt;/span&gt; &lt;span class="n"&gt;een&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;two&lt;/span&gt; &lt;span class="n"&gt;multiplier&lt;/span&gt; &lt;span class="n"&gt;delays&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;clocks&lt;/span&gt;

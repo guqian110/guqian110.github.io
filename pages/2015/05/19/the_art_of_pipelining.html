@@ -226,7 +226,7 @@
 <p>显然这个数 &gt; 1，即</p>
 <p><strong>conclusion</strong>: 系统的 latency 增加了（增加的很小，近似可以忽略）。</p>
 <p>最后比较面积：</p>
-<p><strong>conclusion</strong>: 使用流水比不使用流水多使用了 n*m 个 DFF，还使用了更多的连线资源。</p>
+<p><strong>conclusion</strong>: 使用流水比不使用流水多使用了 n * m 个 DFF，还使用了更多的连线资源。</p>
 <p>综上，可以看到，虽然流水可以提高系统的工作频率和吞吐率，但是它付出的代价是面积和功耗的增加，这也是<strong>速度和面积之间相互转化</strong>的体现。</p>
 <p><br></p>
 <h2>DXL Instruction</h2>
@@ -251,8 +251,8 @@
 </li>
 </ol>
 <p>非流水的方式实现如下图：</p>
-<p><img alt="dxl nopipe" src="images/the-art-of-pipelining/dxl_nopipeline.png" /></p>
-<p>因为是非流水的方式，所以指令不能并行执行，必须等到前一条指令执行完之后才能开始执行下一条指令，如下图所示，假设每条指令需要 8 ns，那么执行 4 条指令总共需要 8*4 = 32 ns。</p>
+<p><img alt="dxl nopipe" src="/images/the-art-of-pipelining/dxl_nopipeline.png" /></p>
+<p>因为是非流水的方式，所以指令不能并行执行，必须等到前一条指令执行完之后才能开始执行下一条指令，如下图所示，假设每条指令需要 8 ns，那么执行 4 条指令总共需要 8 * 4 = 32 ns。</p>
 <p><img alt="dxl order1" src="/images/the-art-of-pipelining/dxl_order1.png" /></p>
 <p>采用流水的方式，在 5 级操作中都加上一个流水阶段（即每个阶段加入一组 DFF），实现如下图：</p>
 <p><img alt="dxl pipeline" src="/images/the-art-of-pipelining/dxl_pipeline.png" /></p>
@@ -302,7 +302,7 @@
 
 
 <p>将这段软件代码翻译成 Verilog 代码，重复使用相同的寄存器和计算资源，得到的结果如下：</p>
-<p><img alt="iterative" src="/image/the-art-of-pipelining/iterative.png" /></p>
+<p><img alt="iterative" src="/images/the-art-of-pipelining/iterative.png" /></p>
 <p>这种迭代的方法无法实现并行计算，其性能：</p>
 <div class="highlight"><pre><span class="n">Throughput</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">/</span><span class="mi">1</span><span class="p">,</span> <span class="n">or</span> <span class="mi">8</span> <span class="n">bits</span> <span class="o">/</span><span class="n">clock</span>
 <span class="n">Latency</span> <span class="o">=</span> <span class="mi">3</span> <span class="n">clocks</span>
@@ -334,7 +334,7 @@
 </td></tr></table>
 
 <p>得到的结果如下图：</p>
-<p><img alt="pipeline" src="/image/the-art-of-pipelining/pipelined.png" /></p>
+<p><img alt="pipeline" src="/images/the-art-of-pipelining/pipelined.png" /></p>
 <p>可以并行计算，其性能：</p>
 <div class="highlight"><pre><span class="n">Throughput</span> <span class="o">=</span> <span class="mi">8</span> <span class="n">bits</span> <span class="o">/</span> <span class="n">clock</span> <span class="p">(</span><span class="n">assuming</span> <span class="n">one</span> <span class="n">new</span> <span class="n">input</span> <span class="n">per</span> <span class="n">clock</span><span class="p">)</span>
 <span class="n">Latency</span> <span class="o">=</span> <span class="n">Betw</span> <span class="n">een</span> <span class="n">one</span> <span class="n">and</span> <span class="n">two</span> <span class="n">multiplier</span> <span class="n">delays</span><span class="p">,</span> <span class="mi">0</span> <span class="n">clocks</span>
