@@ -388,6 +388,21 @@
 
 <p>上一级 DFF 的输出数据不能传输太快，侵占了下一级 DFF 正在锁存的 hold time，也就是说限制了数据的传输速度的上限。</p>
 <p>有了前面的 3 个公式，就可以解决大部分问题了。比如华为某年的笔试题：</p>
+<p>下图中时钟周期为T,触发器D1的建立时间最大为T1max，最小为T1min。组合逻辑电路最大延迟为T2max,最小为T2min。问，触发器D2的建立时间T3和保持时间应满足什么条件?</p>
+<p><img alt="huawei" src="/images/static-timing-analysis-1-basic/huawei.png" /></p>
+<p>答：</p>
+<p>题目中 Tco = 0，Tskew = 0</p>
+<p>对于 setup time 的要求，将 Tco = 0，Tskew = 0 代入 Eq1 得：</p>
+<div class="highlight"><pre><span class="n">Tsu</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">T</span> <span class="o">-</span> <span class="n">Tcomb</span><span class="p">}</span><span class="n">min</span> <span class="o">=</span> <span class="n">T</span> <span class="o">-</span> <span class="n">T2max</span>
+</pre></div>
+
+
+<p>对于 hold time 的要求，将 Tco = 0，Tskew = 0 代入 Eq2 得：</p>
+<div class="highlight"><pre><span class="n">Th</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">Tcomb</span><span class="p">}</span><span class="n">min</span> <span class="o">=</span> <span class="n">T2min</span>
+</pre></div>
+
+
+<p><br></p>
 <h2>Ref</h2>
 <p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发实用教程</a></p>
 <p><a href="http://www.ictest8.com/debug/rf_pcb.htm">RF类IC demo 板loadboard设计参考资料之时钟部分</a></p>

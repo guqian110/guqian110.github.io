@@ -354,6 +354,23 @@ P.S. 上面的例子中 clock skew 加剧了 hold time failure 的机率，如�
 
 有了前面的 3 个公式，就可以解决大部分问题了。比如华为某年的笔试题：
 
+下图中时钟周期为T,触发器D1的建立时间最大为T1max，最小为T1min。组合逻辑电路最大延迟为T2max,最小为T2min。问，触发器D2的建立时间T3和保持时间应满足什么条件?
+
+![huawei](/images/static-timing-analysis-1-basic/huawei.png)
+
+答：
+
+题目中 Tco = 0，Tskew = 0
+
+对于 setup time 的要求，将 Tco = 0，Tskew = 0 代入 Eq1 得：
+
+    Tsu <= {T - Tcomb}min = T - T2max
+
+对于 hold time 的要求，将 Tco = 0，Tskew = 0 代入 Eq2 得：
+
+    Th <= {Tcomb}min = T2min
+
+<br>
 
 ## Ref
 

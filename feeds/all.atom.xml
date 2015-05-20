@@ -3270,6 +3270,21 @@ statements.&lt;/p&gt;
 
 &lt;p&gt;上一级 DFF 的输出数据不能传输太快，侵占了下一级 DFF 正在锁存的 hold time，也就是说限制了数据的传输速度的上限。&lt;/p&gt;
 &lt;p&gt;有了前面的 3 个公式，就可以解决大部分问题了。比如华为某年的笔试题：&lt;/p&gt;
+&lt;p&gt;下图中时钟周期为T,触发器D1的建立时间最大为T1max，最小为T1min。组合逻辑电路最大延迟为T2max,最小为T2min。问，触发器D2的建立时间T3和保持时间应满足什么条件?&lt;/p&gt;
+&lt;p&gt;&lt;img alt="huawei" src="/images/static-timing-analysis-1-basic/huawei.png" /&gt;&lt;/p&gt;
+&lt;p&gt;答：&lt;/p&gt;
+&lt;p&gt;题目中 Tco = 0，Tskew = 0&lt;/p&gt;
+&lt;p&gt;对于 setup time 的要求，将 Tco = 0，Tskew = 0 代入 Eq1 得：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Tsu&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;Tcomb&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="n"&gt;min&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;T2max&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;对于 hold time 的要求，将 Tco = 0，Tskew = 0 代入 Eq2 得：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Th&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;Tcomb&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="n"&gt;min&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;T2min&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Ref&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/11523088/"&gt;Xilinx FPGA 开发实用教程&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.ictest8.com/debug/rf_pcb.htm"&gt;RF类IC demo 板loadboard设计参考资料之时钟部分&lt;/a&gt;&lt;/p&gt;
