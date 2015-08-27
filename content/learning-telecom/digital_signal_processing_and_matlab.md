@@ -163,9 +163,15 @@ matlab 提供了函数 fft 和 fftshift 直接完成变换。
 
 1. N = 8，结果如图：
 
+    ![period](/images/digital_signal_processing_and_matlab/N_8.jpg)
+
 2. N = 8，补零到 64 点，结果如图：
 
+    ![period](/images/digital_signal_processing_and_matlab/padding.jpg)
+
 3. N = 64，结果如图：
+
+    ![period](/images/digital_signal_processing_and_matlab/N_64.jpg)
 
 直接给结论（上面的图也证明了这些结论）：
 
