@@ -123,6 +123,8 @@ matlab 提供了函数 fft 和 fftshift 直接完成变换。
 	
 	结果如下图：
 
+    ![rect](/images/digital_signal_processing_and_matlab/rect_window.jpg)
+
 2. 周期信号
 
 	假设信号为 x = 1 + 1/2*cos(2*pi*15*t) + 2*sin(2*pi*40*t)，包含一个直流分量和 f1 = 15, f2 = 40 Hz 的分量，fm = f2 = 40 Hz，若 8 倍采样，有 Fs = fm*8，若 fdelta < 0.1 hz，有 N = 4096，所以：
@@ -142,6 +144,8 @@ matlab 提供了函数 fft 和 fftshift 直接完成变换。
 		title('x = 1 + 1/2*cos(w1*n) + 2*sin(w2*n)');
 
 	结果如下：
+
+    ![period](/images/digital_signal_processing_and_matlab/period.jpg)
 
 <br>
 
