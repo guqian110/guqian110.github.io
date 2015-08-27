@@ -73,7 +73,7 @@ Summary: 总结信号处理中的各种角频率
 
 结果如下图：
 
-@todo
+![OMEGA](/images/summary-of-frequency-in-digital-signal-processing/OMEGA.jpg)
 
 <br>
 
@@ -104,7 +104,7 @@ Summary: 总结信号处理中的各种角频率
 
 结果如下图：
 
-@todo
+![f](/images/summary-of-frequency-in-digital-signal-processing/f.jpg)
 
 <br>
 
