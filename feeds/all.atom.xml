@@ -1,5 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-06-18T21:42:00+08:00</updated><entry><title>低功耗设计</title><link href="http://guqian110.github.io/pages/2015/06/18/low_power_design.html" rel="alternate"></link><updated>2015-06-18T21:42:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-06-18:pages/2015/06/18/low_power_design.html</id><summary type="html">&lt;p&gt;在一些情况下，是不需要考虑低功耗设计的，但是更多的情况下，低功耗是必须考虑的，总结一下 &lt;a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960"&gt;THE ART OF HARDWARE ARCHITECTURE&lt;/a&gt; 中介绍的低功耗设计的方法。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's World</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/all.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2015-08-27T22:06:00+08:00</updated><entry><title>数字信号处理中的各种频率</title><link href="http://guqian110.github.io/pages/2015/08/27/summary_of_frequency_in_digital_signal_processing.html" rel="alternate"></link><updated>2015-08-27T22:06:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-08-27:pages/2015/08/27/summary_of_frequency_in_digital_signal_processing.html</id><summary type="html">&lt;p&gt;最近实习的时候，发现自己的 DSP 基本功还是不够扎实，关于模拟/数字角频率，频率，采样速率等一些概念理解的都不太深刻，愧对老师和这么多年的学习，Google 到一些讲解的比较清楚的 blog，备忘（抄袭）过来，温故而知新。&lt;/p&gt;
+&lt;h2&gt;unit circle &amp;amp; sin(cos)&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;首先从最基本的三角函数的定义开始：&lt;/p&gt;
+&lt;p&gt;三角函数的定义方式有很多种，我觉得基于单位圆的定义是最形象，对之后理解各种角频率的物理/数学含义最有帮助。&lt;/p&gt;
+&lt;p&gt;我们应该是在初中的时候第一次接触到三角函数，那时候三角函数的定义是直接给个三角形，然后直接定义 sin(cos) 为哪条边比哪条边的值，然后给出 sin(cos)  的波形如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Sine_cosine_one_period.svg/600px-Sine_cosine_one_period.svg.png" /&gt;
+"Sine cosine one period" by Geek3 - Own work. Licensed under CC BY 3.0 via Commons - https://commons.wikimedia.org/wiki/File:Sine_cosine_one_period.svg#/media/File:Sine_cosine_one_period.svg&lt;/p&gt;
+&lt;p&gt;当我们将这个三角形和单位圆联系在一起的时候，sin(cos) 的几何意义就很明显了：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="enter image description here" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Circle-trig6.svg/338px-Circle-trig6.svg.png" /&gt;&lt;/p&gt;
+&lt;p&gt;"Circle-trig6" by This is a vector graphic version of Image:Circle-trig6.png by user:Tttrung which was licensed under the GFDL. Based on en:Image:Circle-trig6.png, which was donated to Wikipedia under GFDL by Steven G. Johnson. - This is a vector graphic version of Image:Circle-trig6.png by user:Tttrung which was licensed under the GFDL. ; Based on en:Image:Circle-trig6.png, which was donated to Wikipedia under GFDL by Steven G. Johnson.. Licensed under CC BY-SA 3.0 via Commons - https://commons.wikimedia.org/wiki/File:Circle-trig6.svg#/media/File:Circle-trig6.svg&lt;/p&gt;
+&lt;p&gt;图中红色的线段长度就是 sin 的值，蓝色的线段长度就是 cos 的值，如果我们假设坐标系的原点和单位圆重合，脑补一下下面的场景：有个小球（只能）沿着单位圆的圆周做运动。这时候，我们就会发现一个事实：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;sin(t) 是小球 t 时刻在 y 轴上的投影，cos(t) 是小球 t 时刻在 x 轴上的投影。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;进一步，当小球的运动速率是匀速率的时候，就有了上面提到的波形，更加形象的图如下：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="enter image description here" src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Circle_cos_sin.gif" /&gt;&lt;/p&gt;
+&lt;p&gt;"Circle cos sin" by LucasVB - Own work. Licensed under Public Domain via Commons - https://commons.wikimedia.org/wiki/File:Circle_cos_sin.gif#/media/File:Circle_cos_sin.gif&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt; 关于投影，wiki 上有个解释欧拉公式的图特别好：&lt;/p&gt;
+&lt;p&gt;"Sine and Cosine fundamental relationship to Circle (and Helix)" by Tdadamemd - Own work by uploader (.gif frames created in Powerpoint). Licensed under CC BY-SA 3.0 via Commons - https://commons.wikimedia.org/wiki/File:Sine_and_Cosine_fundamental_relationship_to_Circle_(and_Helix).gif#/media/File:Sine_and_Cosine_fundamental_relationship_to_Circle_(and_Helix).gif&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;有了上面简单的背景，就可以开始逐个讨论信号处理中的概念了。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ω&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;我们已经知道小球在圆周上做匀速率的圆周运动时，它在两个坐标轴上的投影就分别是 sin(cos)，如果我们想进一步描述小球的运动速率的快慢呢？&lt;/p&gt;
+&lt;p&gt;假设小球完整转一圈所花费的时间为 T，转动的角度为 2π，则我们可以定义&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;模拟角频率&lt;/strong&gt; &lt;code&gt;Ω = 2π/T&lt;/code&gt;，单位是 rad / s&lt;/p&gt;
+&lt;p&gt;来描述小球的转动速率的快慢。&lt;/p&gt;
+&lt;p&gt;当 t = 2π 时，y = sin(Ω*2π)，这时候可以看出 Ω 的物理含义：&lt;strong&gt;在 2π 的时间内，小球所完成的圈数。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;下面的 Matlab 小程序演示了 2π 时间内 Ω 和周期的对应关系：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;pi&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nb"&gt;pi&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;OMEGA&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;
+    &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;(:,&lt;/span&gt;&lt;span class="n"&gt;OMEGA&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;sin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;OMEGA&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;OMEGA&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;OMEGA=&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;num2str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;OMEGA&lt;/span&gt;&lt;span class="p"&gt;)];&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;t / s&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="n"&gt;ylabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;amp&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;y = sin(OMEGA*t)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;legend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;结果如下图：&lt;/p&gt;
+&lt;p&gt;@todo&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;f&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;小球在二维平面上的圆周运动投影到一维的坐标轴 x(y) 轴上看，则是左右（上下）振动。和 Ω 类似，我们也可以定义一个物理量来描述这种振动的快慢：&lt;/p&gt;
+&lt;p&gt;小球完成一次完整的圆周运动所花费的时间为 T，也就是完成一次振动花费了 T 时间，我们定义&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;频率&lt;/strong&gt; &lt;code&gt;f = 1 / T&lt;/code&gt;，单位是 Hz&lt;/p&gt;
+&lt;p&gt;来描述振动的快慢。由前面 Ω 的定义式可知，&lt;code&gt;Ω = 2π * f&lt;/code&gt;，有 y = sin(2π * f * t)。&lt;/p&gt;
+&lt;p&gt;当 t = 1s 时，y = sin(2π * f)，这时候可以看出 f 的物理意义：&lt;strong&gt;在 1s 的时间内，小球所完成的振动次数。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;下面的 Matlab 小程序演示了 1s 时间内 f 和振动周期的对应关系：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;
+    &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;(:,&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;sin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nb"&gt;pi&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;f=&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;num2str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)];&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="n"&gt;grid&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;xlabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;t / s&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="n"&gt;ylabel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;amp&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;y = sin(2*pi*f*t)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;legend&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;结果如下图：&lt;/p&gt;
+&lt;p&gt;@todo&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;w&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;计算机的世界是离散的，所以当连续信号经过采样、量化得到离散信号后：&lt;/p&gt;
+&lt;p&gt;y = sin(Ω&lt;em&gt;t) = sin(Ω&lt;/em&gt;n&lt;em&gt;Ts) = sin(Ω&lt;/em&gt;Ts&lt;em&gt;n) = sin(w&lt;/em&gt;n)&lt;/p&gt;
+&lt;p&gt;从数学上我们就可以得到：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;数字角频率&lt;/strong&gt; &lt;code&gt;w = Ω*Ts = Ω / Fs&lt;/code&gt;，单位是 rad&lt;/p&gt;
+&lt;p&gt;可以看到，w 是用采样频率 Fs 对 Ω 进行归一化得到的，所以 w 准确地应该叫做归一化数字角频率。&lt;/p&gt;
+&lt;p&gt;连接模拟和数字的桥梁就是采样频率 Fs，由计算过程可以知道，w 相同的两个信号，它们的 Ω 不一定相同。因为丢失了 Fs 信息，所以单独讨论 w 是没有意义的。&lt;/p&gt;
+&lt;p&gt;虽然单独讨论 w 是没有意义的，但是这不代表 w 没有物理意义，当小球的振动频率为 f 时，每秒在圆周上转过的角度为 Ω = 2π * f，而采样频率为 Fs 就是说每秒钟对小球进行 Fs 次采样（拍照），显然有 Fs 个样值（照片）。这些样值（照片）是均匀分布的，所以每两个样值点之间的弧度为 2π * f / Fs = w，这也就是 w 的物理含义：&lt;strong&gt;相邻两个样值点之间的弧度数。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;================================== summary ====================================&lt;/p&gt;
+&lt;p&gt;这几个频率之间是线性关系，可以得到下面的对应关系：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th align="right"&gt;Min&lt;/th&gt;
+&lt;th&gt;Mid&lt;/th&gt;
+&lt;th&gt;Max&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;n&lt;/td&gt;
+&lt;td align="right"&gt;0&lt;/td&gt;
+&lt;td&gt;(N-1)/2&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ω&lt;/td&gt;
+&lt;td align="right"&gt;0&lt;/td&gt;
+&lt;td&gt;Ωs/2&lt;/td&gt;
+&lt;td&gt;Ωs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;f&lt;/td&gt;
+&lt;td align="right"&gt;0&lt;/td&gt;
+&lt;td&gt;Fs/2&lt;/td&gt;
+&lt;td&gt;Fs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;w&lt;/td&gt;
+&lt;td align="right"&gt;0&lt;/td&gt;
+&lt;td&gt;π&lt;/td&gt;
+&lt;td&gt;2*π&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;由频谱的搬移过程可以知道，w 从 π 到 2π 是负频率搬移的结果，所以通常分析的时候 w 的范围为 [-π, π)，如下&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Item&lt;/th&gt;
+&lt;th align="right"&gt;Min&lt;/th&gt;
+&lt;th&gt;Mid&lt;/th&gt;
+&lt;th&gt;Max&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Ω&lt;/td&gt;
+&lt;td align="right"&gt;-Ωs/2&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;Ωs/2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;f&lt;/td&gt;
+&lt;td align="right"&gt;-Fs/2&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;Fs/2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;w&lt;/td&gt;
+&lt;td align="right"&gt;-π&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;π&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Trigonometric_functions"&gt;Trigonometric functions&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://anony3721.blog.163.com/blog/static/51197420111129503233/"&gt;阿英讲频率f，角频率Ω和数字频率w的物理含义--附MATLAB仿真&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://zhuanlan.zhihu.com/wille/19763358"&gt;傅里叶分析之掐死教程（完整版）更新于2014.06.06&lt;/a&gt;&lt;/p&gt;</summary><category term="digital procesing"></category><category term="frequency"></category></entry><entry><title>低功耗设计</title><link href="http://guqian110.github.io/pages/2015/06/18/low_power_design.html" rel="alternate"></link><updated>2015-06-18T21:42:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2015-06-18:pages/2015/06/18/low_power_design.html</id><summary type="html">&lt;p&gt;在一些情况下，是不需要考虑低功耗设计的，但是更多的情况下，低功耗是必须考虑的，总结一下 &lt;a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960"&gt;THE ART OF HARDWARE ARCHITECTURE&lt;/a&gt; 中介绍的低功耗设计的方法。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Sources of Power Consumption&lt;/h2&gt;
 &lt;hr /&gt;
