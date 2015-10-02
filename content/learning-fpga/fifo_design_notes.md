@@ -131,11 +131,11 @@ gray code 与 binary code 的相互想换见另[外一篇 blog]()。
 
     仔细观察 gray code 的对称性，就可以知道，当 full 时（wr_ptr 将 rd_ptr 套圈时），MSB 不同，wr_ptr 的 2nd MSB 要先翻转，才和 rd_ptr 相同。所以，当下面 3 个条件都满足时，FIFO full：
 
-        1. wr_ptr 和 rd_ptr 的 MSB 不相等
+    1. wr_ptr 和 rd_ptr 的 MSB 不相等
 
-        2. wr_ptr 的 2nd MSB 翻转后和 rd_ptr 的 2nd MSB 相等
+    2. wr_ptr 的 2nd MSB 翻转后和 rd_ptr 的 2nd MSB 相等
 
-        3. 剩余 bits 全部相等
+    3. 剩余 bits 全部相等
 
 <br>
 

@@ -95,14 +95,17 @@
 &lt;p&gt;FIFO full&lt;/p&gt;
 &lt;p&gt;如上图，FIFO 初始状态为 empty，然后连续写入 8 个数据，再读出 8 个数据，此时 wr_ptr = rd_ptr = 7，FIFO 又变为 empty。此时如果再写入一个数据，wr_ptr = 8，rd_ptr = 7，如果仍然使用前面介绍的方法（MSB不同，剩余位相同)，则会得出 FIFO full 的错误结论，实际上 FIFO 并没有满。&lt;/p&gt;
 &lt;p&gt;仔细观察 gray code 的对称性，就可以知道，当 full 时（wr_ptr 将 rd_ptr 套圈时），MSB 不同，wr_ptr 的 2nd MSB 要先翻转，才和 rd_ptr 相同。所以，当下面 3 个条件都满足时，FIFO full：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="mf"&gt;1.&lt;/span&gt; &lt;span class="n"&gt;wr_ptr&lt;/span&gt; &lt;span class="err"&gt;和&lt;/span&gt; &lt;span class="n"&gt;rd_ptr&lt;/span&gt; &lt;span class="err"&gt;的&lt;/span&gt; &lt;span class="n"&gt;MSB&lt;/span&gt; &lt;span class="err"&gt;不相等&lt;/span&gt;
-
-&lt;span class="mf"&gt;2.&lt;/span&gt; &lt;span class="n"&gt;wr_ptr&lt;/span&gt; &lt;span class="err"&gt;的&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="n"&gt;nd&lt;/span&gt; &lt;span class="n"&gt;MSB&lt;/span&gt; &lt;span class="err"&gt;翻转后和&lt;/span&gt; &lt;span class="n"&gt;rd_ptr&lt;/span&gt; &lt;span class="err"&gt;的&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="n"&gt;nd&lt;/span&gt; &lt;span class="n"&gt;MSB&lt;/span&gt; &lt;span class="err"&gt;相等&lt;/span&gt;
-
-&lt;span class="mf"&gt;3.&lt;/span&gt; &lt;span class="err"&gt;剩余&lt;/span&gt; &lt;span class="n"&gt;bits&lt;/span&gt; &lt;span class="err"&gt;全部相等&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;wr_ptr 和 rd_ptr 的 MSB 不相等&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;wr_ptr 的 2nd MSB 翻转后和 rd_ptr 的 2nd MSB 相等&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;剩余 bits 全部相等&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
