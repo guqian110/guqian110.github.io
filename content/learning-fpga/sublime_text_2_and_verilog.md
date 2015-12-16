@@ -1,7 +1,7 @@
 Title: Sublime Text 2 和 Verilog HDL
 Date: 2014-07-04 23:31
 Category: FPGA
-Tags: Sublime Text
+Tags: Sublime Text, Vivado
 Slug: sublime_text_2_and_verilog
 Author: Qian Gu
 Summary: 介绍神器 Sublime Text 在 HDL 方面的简单应用
@@ -282,6 +282,23 @@ ST 2 的 Package 都存放在 `/home/.config/sublime-text-2/Packages` 目录下�
 修改后的效果如下：
 
 ![case](/images/sublime-text-2-and-verilog/case.gif)
+
+<br>
+
+## SublimeText in Vivado
+* * *
+
+代码编辑器之于程序员就像武器之于战士，其重要性不需赘述，本文记录一下设置 SublimeText 为 Vivado 的代码编辑器的过程。
+
+Ref: [How to setup an external text editor in Xilinx ISE & EDK][setup ref]
+
+是讲 ISE 和 EDK 的设置，同理可以将其推广到 Vivado 中，其实 Vivado 已经将常见的编辑器列出来了，其中就包含 Sublime，但是因为我没有将 Sublime 包含在系统路径中，所以需要选择 custom editor 选项：
+
+    D:/Sublime_Text_3/sublime_text.exe [file name]:[line number]
+
+即可。
+
+[setup ref]: http://steamforge.net/wiki/index.php/How_to_setup_an_external_text_editor_in_Xilinx_ISE_%26_EDK
 
 <br>
 

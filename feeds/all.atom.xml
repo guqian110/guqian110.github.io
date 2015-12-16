@@ -11356,7 +11356,18 @@ endcase&lt;span class="nt"&gt;&amp;lt;/string&amp;gt;&lt;/span&gt;
 &lt;p&gt;修改后的效果如下：&lt;/p&gt;
 &lt;p&gt;&lt;img alt="case" src="/images/sublime-text-2-and-verilog/case.gif" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;上面仅仅说了非常基本的几个设置，和我在写 Verilog 时自己添加的几个 snippet，其他的 ST 的使用技巧官方和非官方的 ref 有非常详细的介绍，另外其他人也有很多文章介绍～&lt;/p&gt;</summary><category term="Sublime Text"></category></entry><entry><title>FPGA 中的复位设计</title><link href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html" rel="alternate"></link><updated>2014-06-20T00:22:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-06-20:pages/2014/06/20/the_art_of_reset_design_in_fpga.html</id><summary type="html">&lt;p&gt;复位信号在系统中的地位和时钟信号几乎同等重要，我们想尽量把系统设计为可控，那么最基本的控制信号就是复位信号了。&lt;/p&gt;
+&lt;h2&gt;SublimeText in Vivado&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;p&gt;代码编辑器之于程序员就像武器之于战士，其重要性不需赘述，本文记录一下设置 SublimeText 为 Vivado 的代码编辑器的过程。&lt;/p&gt;
+&lt;p&gt;Ref: &lt;a href="http://steamforge.net/wiki/index.php/How_to_setup_an_external_text_editor_in_Xilinx_ISE_%26_EDK"&gt;How to setup an external text editor in Xilinx ISE &amp;amp; EDK&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;是讲 ISE 和 EDK 的设置，同理可以将其推广到 Vivado 中，其实 Vivado 已经将常见的编辑器列出来了，其中就包含 Sublime，但是因为我没有将 Sublime 包含在系统路径中，所以需要选择 custom editor 选项：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nl"&gt;D:&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Sublime_Text_3&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sublime_text&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exe&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="n"&gt;number&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;即可。&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;上面仅仅说了非常基本的几个设置，和我在写 Verilog 时自己添加的几个 snippet，其他的 ST 的使用技巧官方和非官方的 ref 有非常详细的介绍，另外其他人也有很多文章介绍～&lt;/p&gt;</summary><category term="Sublime Text"></category><category term="Vivado"></category></entry><entry><title>FPGA 中的复位设计</title><link href="http://guqian110.github.io/pages/2014/06/20/the_art_of_reset_design_in_fpga.html" rel="alternate"></link><updated>2014-06-20T00:22:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-06-20:pages/2014/06/20/the_art_of_reset_design_in_fpga.html</id><summary type="html">&lt;p&gt;复位信号在系统中的地位和时钟信号几乎同等重要，我们想尽量把系统设计为可控，那么最基本的控制信号就是复位信号了。&lt;/p&gt;
 &lt;p&gt;复位信号的设计需要考虑的因素，各种书刊、论文、白皮书、网上论坛都有相关讨论，但是至今对于给定 FPGA 设计中使用哪种复位方案仍然没有明确答案。本文总结了一些大神的经典论文和网上的许多博客，尽可能用简单的图说明选择某种设计方案及其理由，涉及的更深入的原理请自行 Google :-P&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;h2&gt;Understanding the flip-flop reset behavior&lt;/h2&gt;
