@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>可配置设计 - Qian's Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="https://guqian110.github.io/images/favicon.png" rel="icon">
+
+<link rel="canonical" href="https://guqian110.github.io/output/posts/ic/configurable_design.html">
+
+        <meta name="author" content="Qian Gu" />
+        <meta name="keywords" content="configurable design" />
+        <meta name="description" content="总结可配置设计" />
+
+        <meta property="og:site_name" content="Qian's Blog" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="可配置设计"/>
+        <meta property="og:url" content="https://guqian110.github.io/output/posts/ic/configurable_design.html"/>
+        <meta property="og:description" content="总结可配置设计"/>
+        <meta property="article:published_time" content="2015-04-17" />
+            <meta property="article:section" content="IC" />
+            <meta property="article:tag" content="configurable design" />
+            <meta property="article:author" content="Qian Gu" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="https://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://guqian110.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="https://guqian110.github.io/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://guqian110.github.io/" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="https://guqian110.github.io/images/logo.png" width=""/> Qian's Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="https://guqian110.github.io/category/arduino.html">Arduino</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li class="active">
+                            <a href="https://guqian110.github.io/category/ic.html">Ic</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/misc.html">Misc</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/telecom.html">Telecom</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="https://guqian110.github.io" title="Qian's Blog"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="https://guqian110.github.io/category/ic.html" title="IC">IC</a></li>
+                <li class="active">可配置设计</li>
+            </ol>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://guqian110.github.io/output/posts/ic/configurable_design.html"
+                       rel="bookmark"
+                       title="Permalink to 可配置设计">
+                        可配置设计
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-04-17T00:00:00+08:00"> 2015-04-17 00:00</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="https://guqian110.github.io/author/qian-gu.html"><i class="fa fa-user"></i> Qian Gu</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://guqian110.github.io/tag/configurable-design.html">configurable design</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p><a href="http://www.amazon.cn/EDA%E7%B2%BE%E5%93%81%E6%99%BA%E6%B1%87%E9%A6%86-Verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF-%E9%AD%8F%E5%AE%B6%E6%98%8E/dp/B00HNVY3SY/ref=sr_1_1?ie=UTF8&amp;qid=1429188978&amp;sr=8-1&amp;keywords=verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF">Verilog 编程艺术</a> 的可配置设计一章 学习笔记。</p>
+<h2>Configurable design</h2>
+<hr>
+<blockquote>
+<p>我们做设计的时候，就要考虑做成可以灵活配置的设计，不管是小模块，还是大模块，这样便于以后维护和移植。可配置模块的设计方法如下：</p>
+<ol>
+<li>
+<p>使用 parameter 和 `define</p>
+</li>
+<li>
+<p>使用 for 语句生成多条语句</p>
+</li>
+<li>
+<p>使用 generate、for、if 等语句生成多条语句和多个实例化</p>
+</li>
+<li>
+<p>通过工具或脚本生成配置参数</p>
+</li>
+<li>
+<p>通过工具或脚本直接生成 Verilog 代码</p>
+</li>
+</ol>
+</blockquote>
+<p>书里面总结了上面的这些方法，以前总结过另外一篇博客：<a href="http://guqian110.github.io/pages/2014/07/09/parameterization_modeling_in_veriog.html">Verilog 中的参数化建模</a>，里面总结了 条件编译、`define、parameter、localparam 的用法和区别。</p>
+<p><a href="http://www.amazon.com/Reuse-Methodology-Manual-System-Designs/dp/0387740988">Reuse Methodology Manual for System-on-a-Chip Designs</a> 是一本很经典的书，里面有全面详细的可重用设计的方法，有时间了看了再补上。</p>
+<p>下面是一些实际例子，展示如何设计可配置模块。</p>
+<p><br></p>
+<h2>Gray-2-Binary</h2>
+<hr>
+<p>Binary 编码是最自然的、最符合平常的思维的，但是这种编码方式有时候存在一些问题：比如在 DAC 中，数字 3(011) 变为 数字 4(100) 时，每 1 bit 都发生了变化，电路中会产生很大的尖峰电流脉冲。</p>
+<p>而 Gray 编码就没有这样的问题，Gray 码有很多优点，应用很广泛，就不再重复了。（比如在 FIFO 设计中，内部就有 Gray 和 Binary 的相互转换）</p>
+<p>下面的例子，通过<strong>将端口位宽参数化</strong>，实现了可配置的转换模块：</p>
+<p><strong>example1:</strong></p>
+<div class="highlight"><pre><span></span>#<span class="nv">verilog</span>
+<span class="nv">module</span> <span class="nv">gray2bin</span> #<span class="ss">(</span><span class="nv">parameter</span> <span class="nv">SIZE</span> <span class="o">=</span> <span class="mi">8</span><span class="ss">)</span>
+    <span class="ss">(</span><span class="nv">input</span>  [<span class="nv">SIZE</span><span class="o">-</span><span class="mi">1</span> : <span class="mi">0</span>]    <span class="nv">gray</span>,
+     <span class="nv">output</span> [<span class="nv">SIZE</span><span class="o">-</span><span class="mi">1</span> : <span class="mi">0</span>]    <span class="nv">bin</span><span class="ss">)</span><span class="c1">;</span>
+
+    <span class="nv">generate</span>
+        <span class="nv">genvar</span> <span class="nv">i</span><span class="c1">;</span>
+        <span class="k">for</span> <span class="ss">(</span><span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">; i &lt; SIZE; i = i + 1)</span>
+        <span class="nv">begin</span>:<span class="nv">bit</span>
+            <span class="nv">assign</span> <span class="nv">bin</span>[<span class="nv">i</span>] <span class="o">=</span> <span class="o">^</span><span class="nv">gray</span>[<span class="nv">SIZE</span><span class="o">-</span><span class="mi">1</span> : <span class="nv">i</span>]<span class="c1">;</span>
+        <span class="k">end</span>
+    <span class="nv">endgenerate</span>
+
+<span class="nv">endmodule</span>
+
+#<span class="nv">verilog</span>
+<span class="nv">module</span> <span class="nv">bin2gray</span> #<span class="ss">(</span><span class="nv">parameter</span> <span class="nv">SIZE</span> <span class="o">=</span> <span class="mi">8</span><span class="ss">)</span>
+    <span class="ss">(</span><span class="nv">input</span>  [<span class="nv">SIZE</span><span class="o">-</span><span class="mi">1</span> : <span class="mi">0</span>]    <span class="nv">bin</span>,
+     <span class="nv">output</span> [<span class="nv">SIZE</span><span class="o">-</span><span class="mi">1</span> : <span class="mi">0</span>]    <span class="nv">gray</span><span class="ss">)</span><span class="c1">;</span>
+
+    <span class="nv">assign</span> <span class="nv">gray</span> <span class="o">=</span> <span class="nv">bin</span> <span class="o">^</span> {<span class="mi">1</span><span class="s1">&#39;</span><span class="s">b0, bin[SIZE-1 : 1] };</span>
+
+<span class="nv">endmodule</span>
+</pre></div>
+
+
+<p><br></p>
+<h2>CRC</h2>
+<hr>
+<p>Cyclic Redundancy Check，循环冗余检测。不同的协议使用的 CRC 多项式不相同，在硬件上体现在 LSR 的宽度和抽头位置不同，我们可以写一个通用的 CRC 模块。</p>
+<p>下面的例子，通过<strong>将端口位宽参数化</strong>，实现了可配置的 CRC 模块。</p>
+<p><strong>example2</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">general_crc</span>
+    <span class="p">#(</span><span class="k">parameter</span>  <span class="no">WIDTH</span> <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+                 <span class="p">[</span><span class="no">WIDTH</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="no">INIT_VALUE</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span>
+                 <span class="p">[</span><span class="no">WIDTH</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="no">CRC_EQUATION</span> <span class="o">=</span> <span class="mh">0</span><span class="p">)</span>
+
+    <span class="p">(</span><span class="k">input</span>                          <span class="n">clk</span><span class="p">,</span>
+     <span class="k">input</span>                          <span class="n">rst</span><span class="p">,</span>
+     <span class="k">input</span>                          <span class="n">init</span><span class="p">,</span>       <span class="c1">// if init = 1, initialize crc_value </span>
+                                                <span class="c1">// with INIT_VALUE</span>
+     <span class="k">input</span>                          <span class="n">enable</span><span class="p">,</span>     <span class="c1">// if enbale = 1, calculate crc_value</span>
+                                                <span class="c1">// from din</span>
+     <span class="k">input</span>                          <span class="n">drain</span><span class="p">,</span>      <span class="c1">// if drain = 1, crc_value is  shifted</span>
+                                                <span class="c1">// out from dout</span>
+     <span class="k">input</span>                          <span class="n">din</span><span class="p">,</span>
+     <span class="k">output</span>                         <span class="n">dout</span><span class="p">,</span>
+     <span class="k">output</span>  <span class="kt">reg</span>    <span class="p">[</span><span class="no">WIDTH</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>   <span class="n">crc_value</span>   <span class="c1">// parallel out crc_value</span>
+     <span class="p">);</span>
+
+    <span class="c1">// implementation code</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</td></tr></table>
+
+<p>在调用时，通过传递合适的参数即可实现不同的 CRC 模块。</p>
+<p><br></p>
+<h2>FIFO controller</h2>
+<hr>
+<p>略...</p>
+<p><br></p>
+<h2>RAM wrapper</h2>
+<hr>
+<h3>problem</h3>
+<p>FPGA 中的 RAM/ROM 是用厂家的工具生成的，而 ASIC 中的 RAM/ROM 是用 ARM 公司的 Memory Compiler 生成的，两者的端口名不一样，有些控制信号的极性也不相同。</p>
+<p>通常的做法是<strong>使用条件编译</strong>，写如下的代码</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="no">`ifdef</span>  <span class="no">FPGA</span>
+    <span class="c1">// instantiate module for FPGA</span>
+<span class="no">`else</span>
+    <span class="c1">// instantiate module for ASIC</span>
+<span class="no">`endif</span>
+</pre></div>
+</td></tr></table>
+
+<p>这种方法的缺点主要有：</p>
+<ol>
+<li>
+<p>但内部有几十个到上百个 RAM/ROM 时，手动连接的工作量很大</p>
+</li>
+<li>
+<p>做 ATPG 时，手工写代码很容易出错</p>
+</li>
+<li>
+<p>做 BIST 测试时，需要添加额外的逻辑</p>
+</li>
+</ol>
+<p>另外一种更好的方法是 <strong>写 wrapper</strong></p>
+<h3>wrapper</h3>
+<h4>name</h4>
+<p>命名规范：按照 ARM 公司的规范，</p>
+<p>RAM/ROM type:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th></th>
+<th>little/large</th>
+<th></th>
+<th>Ports</th>
+<th></th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RF1</td>
+<td></td>
+<td>little</td>
+<td></td>
+<td>single</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>RA1</td>
+<td></td>
+<td>large</td>
+<td></td>
+<td>single</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>RF2</td>
+<td></td>
+<td>little</td>
+<td></td>
+<td>dual</td>
+<td></td>
+<td>one read port &amp; one write port</td>
+</tr>
+<tr>
+<td>RA2</td>
+<td></td>
+<td>large</td>
+<td></td>
+<td>dual</td>
+<td></td>
+<td>two read port &amp; two write port</td>
+</tr>
+<tr>
+<td>ROM</td>
+<td></td>
+<td></td>
+<td></td>
+<td>single</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>RAM/ROM write enable (WEN) type:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th></th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IW</td>
+<td></td>
+<td>bit-write-enable</td>
+</tr>
+<tr>
+<td>BW</td>
+<td></td>
+<td>byte-write-enable</td>
+</tr>
+<tr>
+<td>WW</td>
+<td></td>
+<td>word-write-enable</td>
+</tr>
+</tbody>
+</table>
+<p>命名时按照 <code>&lt;ram_type&gt;_&lt;wen_type&gt;_&lt;depth&gt;x&lt;width&gt;</code> 的规则，在 FPGA 上则加上前缀 <code>F_</code>，即：</p>
+<p><code>F_&lt;ram_type&gt;_&lt;wen_type&gt;_&lt;depth&gt;x&lt;width&gt;</code></p>
+<p>举例：</p>
+<ul>
+<li>
+<p>F_RA1_BW_2kx32：RA1 类型，支持 byte 写，4 个 WEN，深度为 2k，宽度为 32-bit</p>
+</li>
+<li>
+<p>F_RF1_IW_128x8：RF1 类型，支持 bit 写，8 个 WEN，深度为 129，宽度为 8-bit</p>
+</li>
+</ul>
+<h4>generate wrapper</h4>
+<ol>
+<li>
+<p>提前写好的 Perl 脚本 和 参数化模块</p>
+</li>
+<li>
+<p>根据实际需求，写配置文件</p>
+</li>
+<li>
+<p>运行 Perl 脚本，读取配置文件，生成 wrapper</p>
+</li>
+<li>
+<p>将生成的 wrapper 加入到 project 中</p>
+</li>
+</ol>
+<p>每个步骤的具体实现方法以后再补...</p>
+<p><br></p>
+<h2>GPIO</h2>
+<hr>
+<p>运用模块化的设计思想，提取公共代码，设计子模块，通过子模块实现大模块的设计，虽然参数化以后 GPIO 看起来比较复杂，但是这个模块是很通用的，设计好之后只需要修改参数就可以重复使用了。这在设计期间，修改起来非常方便。</p>
+<p>整个 GPIO 由 5  个模块组成：</p>
+<div class="highlight"><pre><span></span><span class="n">gpio</span><span class="p">.</span><span class="n">v</span> <span class="p">(</span><span class="n">module</span> <span class="n">gpio</span><span class="p">)</span>
+ <span class="o">|</span><span class="n">___gpio_params</span><span class="p">.</span><span class="n">v</span> <span class="p">(</span><span class="k">parameters</span> <span class="n">define</span><span class="p">)</span>
+ <span class="o">|</span><span class="n">___gpio_reg</span><span class="p">.</span><span class="n">v</span>    <span class="p">(</span><span class="n">module</span> <span class="n">gpio_reg</span><span class="p">)</span>
+ <span class="o">|</span><span class="n">___gpio_check</span><span class="p">.</span><span class="n">v</span>  <span class="p">(</span><span class="n">module</span> <span class="n">gpio_check</span><span class="p">)</span>
+ <span class="o">|</span><span class="n">___gpio_sync</span><span class="p">.</span><span class="n">v</span>   <span class="p">(</span><span class="n">module</span> <span class="n">gpio_sync2_reg</span><span class="o">/</span><span class="n">gpio_sync3_reg</span><span class="o">/</span><span class="n">gpio_sync_pulse</span><span class="p">)</span>
+</pre></div>
+
+
+<p>具体代码略，直接看书</p>
+<p><br></p>
+<h2>BusMatrix</h2>
+<hr>
+<p>...</p>
+<p><br></p>
+<h2>Andes Core N801</h2>
+<hr>
+<p>...</p>
+<p><br></p>
+<h2>ARM926EJS</h2>
+<hr>
+<p>...</p>
+<p><br></p>
+<h2>coreConsultant</h2>
+<hr>
+<p>...</p>
+<p><br></p>
+<h2>Ref</h2>
+<p><a href="http://www.amazon.cn/EDA%E7%B2%BE%E5%93%81%E6%99%BA%E6%B1%87%E9%A6%86-Verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF-%E9%AD%8F%E5%AE%B6%E6%98%8E/dp/B00HNVY3SY/ref=sr_1_1?ie=UTF8&amp;qid=1429188978&amp;sr=8-1&amp;keywords=verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF">Verilog 编程艺术</a></p>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<div id="aboutme">
+        <p>
+            <img width="100%" class="img-thumbnail" src="https://guqian110.github.io/images/logo.png"/>
+        </p>
+    <p>
+      <strong>About Qian Gu</strong><br/>
+        Icer + BYR
+    </p>
+</div><!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="i"><i class="fa fa-t-square fa-lg"></i> g</a></li>
+    <li class="list-group-item"><a href="t"><i class="fa fa-t-square fa-lg"></i> h</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="https://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group list-inline tagcloud" id="tags">
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/arduino.html">Arduino</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/bufexplorer.html">BufExplorer</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/build-blog.html">Build Blog</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/c.html">C++</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/case.html">case</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/clock-design.html">clock design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-dividers.html">clock dividers</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-generate-unit.html">clock generate unit</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-resource.html">clock resource</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/code.html">code</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/coding-style.html">coding style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/comment-style.html">comment style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/configurable-design.html">configurable design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/const.html">const</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/correlation-coefficient.html">correlation coefficient</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/cscope.html">cscope</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ctags.html">ctags</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/data-type.html">data type</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/delay.html">delay</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-procesing.html">digital procesing</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-processing.html">digital processing</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxverilog.html">doxverilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/doxygen.html">doxygen</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxygentoolkit.html">DoxygenToolKit</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fft.html">FFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/fifo.html">FIFO</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/flip-flop.html">flip-flop</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fpga.html">FPGA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/frequency.html">frequency</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fsm.html">fsm</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/glitch.html">glitch</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/gmail.html">Gmail</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/graphviz.html">graphviz</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/gtd.html">GTD</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/hazard.html">hazard</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/huo-zhao.html">活着</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ifft.html">IFFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/intel-galileo.html">Intel Galileo</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ip-core.html">IP core</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ise.html">ISE</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/latch.html">latch</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/linux.html">Linux</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/lookupfile.html">lookupfile</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/markdown.html">markdown</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/matlab.html">matlab</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/modelsim.html">Modelsim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/nerdtree.html">NERDTree</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/ofdm.html">OFDM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/on-top-of-tides.html">On Top of Tides</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/open-source-hardware.html">Open-source Hardware</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/package-management.html">Package Management</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/parameterization.html">parameterization</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pipeline.html">pipeline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pkm.html">PKM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/powerline.html">Powerline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/project-setting.html">project setting</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pulse-edge-detection.html">pulse edge detection</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/regular-expression.html">regular expression</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/reset.html">reset</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/review.html">review</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/shi-jian-guan-li.html">时间管理</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/snr.html">SNR</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ssh.html">SSH</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/sta.html">STA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/steve-jobs.html">Steve Jobs</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/sublime-text.html">Sublime Text</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/syntax.html">syntax</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/synthesis.html">synthesis</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/taglist.html">taglist</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/tail-bitting-convolution.html">tail bitting convolution</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/the-catcher-in-the-rye.html">The Catcher in The Rye</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/verilog.html">Verilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/vhdl.html">VHDL</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/vim.html">Vim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vim_signature.html">vim_signature</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vivado.html">Vivado</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vundle.html">vundle</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/warcraft.html">WarCraft</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/wine.html">Wine</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/winmanager.html">WinManager</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/xilinx.html">Xilinx</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yocto.html">Yocto</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yu-hua.html">余华</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+
+<!-- Sidebar/Github -->
+<li class="list-group-item">
+  <h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+  <div id="gh_repos">
+    <p class="list-group-item">Status updating...</p>
+  </div>
+</li>
+<!-- End Sidebar/Github -->
+
+<!-- Sidebar/Links -->
+<li class="list-group-item">
+  <h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+  <ul class="list-group" id="links">
+    <li class="list-group-item">
+      <a href="http://getpelican.com/" target="_blank">Pelican</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://python.org/" target="_blank">Python.org</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Links -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Qian Gu
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://guqian110.github.io/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://guqian110.github.io/theme/js/respond.min.js"></script>
+
+
+
+<!-- GitHub JS Code -->
+<script type="text/javascript">
+$(document).ready(function () {
+  if (!window.jXHR) {
+    var jxhr = document.createElement('script');
+    jxhr.type = 'text/javascript';
+    jxhr.src = 'https://guqian110.github.io/theme/js/jXHR.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(jxhr, s);
+  }
+
+  github.showRepos({
+    user: 'guqian110',
+    count: 5,
+    skip_forks: false,
+    target: '#gh_repos'
+  });
+});
+</script>
+<script src="https://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+<!-- End GitHub JS Code -->
+
+
+</body>
+</html>
