@@ -32,6 +32,7 @@ SOCIAL = (('github', 'http://github.com/guqian110'))
 
 DEFAULT_PAGINATION = 5
 
+BOOTSTRAP_FLUID = True
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 
@@ -51,20 +52,39 @@ DIRECT_TEMPLATES = {'index', 'categories', 'authors', 'archives', 'search'}
 THEME = '../pelican-themes/pelican-bootstrap3'
 JINJA_ENVIRONMENT = {'extensions': ['jinja2.ext.i18n']}
 PLUGIN_PATHS = ['../pelican-plugins']
-PLUGINS = ['i18n_subsites', 'tag_cloud', 'related_posts', 'series', 'tipue_search', 'liquid_tags']
+PLUGINS = ['i18n_subsites', 'tag_cloud', 'related_posts', 'series', 'tipue_search', 'liquid_tags', 'sitemap']
 SHOW_ARTICLE_AUTHOR = True
 SHOW_ARTICLE_CATEORY = True
 SHOW_DATE_MODIFIED = True
 PYGEMNTS_STYLE = 'monokai'
 SITELOGO = 'images/logo.png'
 FAVICON = 'images/favicon.png'
-SITELOG_SIZE = 20
+SITELOGO_SIZE = 32
 DISPLAY_BREADCRUMBS = True
 DISPLAY_CATEGORY_IN_BREADCRUMBS = True
 DISPLAY_ARTICLE_INFO_ON_INDEX = True
-DISPLAY_ARCHIVE_IN_BREADCRUMBS = True
+DISPLAY_ARCHIVES_IN_BREADCRUMBS = True
 TAG_CLOUD_MAX_ITEMs = 20
 CC_LICENSE = 'CC-BY-NC'
 ABOUT_ME = 'Icer + BYR'
 AVATAR = 'images/logo.png'
 ###################### bootstrap3 cfg ###########################
+DISQUS_DISPLAY_COUNTS = True
+DISQUS_ID_PREFIX_SLUG = True
+DISQUS_SITENAME = 'guqian110'
+
+SITEMAP = {
+    "format": "xml",
+    "priorities": {
+        "articles": 0.7,
+        "indexes": 0.5,
+        "pages": 0.3,
+    },
+    "changefreqs": {
+        "articles": "monthly",
+        "indexes": "daily",
+        "pages": "monthly",
+    }
+}
+
+DISPLAY_PAGES_ON_MENU = True
