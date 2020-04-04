@@ -7,7 +7,6 @@ SITENAME = u"Qian's Blog"
 SITEURL = 'https://guqian110.github.io'
 
 PATH = 'content'
-OUTPUT_PATH = './'
 
 TIMEZONE = 'Asia/Shanghai'
 DATE_FORMATS = {'zh':'%Y-%m-%d %H:%M'}
@@ -28,11 +27,11 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
          
 
 # Social widget
-SOCIAL = (('github', 'http://github.com/guqian110'))
+SOCIAL = (('twitter', 'http://twitter.com/guqian110'),
+          ('github', 'http://github.com/guqian110'))
 
 DEFAULT_PAGINATION = 5
 
-BOOTSTRAP_FLUID = True
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 
@@ -52,7 +51,7 @@ DIRECT_TEMPLATES = {'index', 'categories', 'authors', 'archives', 'search'}
 THEME = '../pelican-themes/pelican-bootstrap3'
 JINJA_ENVIRONMENT = {'extensions': ['jinja2.ext.i18n']}
 PLUGIN_PATHS = ['../pelican-plugins']
-PLUGINS = ['i18n_subsites', 'tag_cloud', 'related_posts', 'series', 'tipue_search', 'liquid_tags', 'sitemap']
+PLUGINS = ['i18n_subsites', 'tag_cloud', 'related_posts', 'series', 'tipue_search', 'liquid_tags', 'sitemap', ]
 SHOW_ARTICLE_AUTHOR = True
 SHOW_ARTICLE_CATEORY = True
 SHOW_DATE_MODIFIED = True
