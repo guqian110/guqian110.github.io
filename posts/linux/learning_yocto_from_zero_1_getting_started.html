@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Yocto 从零单排 1 —— 入门 - Qian's Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="https://guqian110.github.io/images/favicon.png" rel="icon">
+
+<link rel="canonical" href="https://guqian110.github.io/posts/linux/learning_yocto_from_zero_1_getting_started.html">
+
+        <meta name="author" content="Qian Gu" />
+        <meta name="keywords" content="Yocto" />
+        <meta name="description" content="yocto 从零单排第一期，了解什么是 yocto" />
+
+        <meta property="og:site_name" content="Qian's Blog" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Yocto 从零单排 1 —— 入门"/>
+        <meta property="og:url" content="https://guqian110.github.io/posts/linux/learning_yocto_from_zero_1_getting_started.html"/>
+        <meta property="og:description" content="yocto 从零单排第一期，了解什么是 yocto"/>
+        <meta property="article:published_time" content="2014-05-12" />
+            <meta property="article:section" content="Linux" />
+            <meta property="article:tag" content="Yocto" />
+            <meta property="article:author" content="Qian Gu" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="https://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://guqian110.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="https://guqian110.github.io/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://guqian110.github.io/" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="https://guqian110.github.io/images/logo.png" width=""/> Qian's Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="https://guqian110.github.io/category/arduino.html">Arduino</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/ic.html">Ic</a>
+                        </li>
+                        <li class="active">
+                            <a href="https://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/misc.html">Misc</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/telecom.html">Telecom</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="https://guqian110.github.io" title="Qian's Blog"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="https://guqian110.github.io/category/linux.html" title="Linux">Linux</a></li>
+                <li class="active">Yocto 从零单排 1 —— 入门</li>
+            </ol>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://guqian110.github.io/posts/linux/learning_yocto_from_zero_1_getting_started.html"
+                       rel="bookmark"
+                       title="Permalink to Yocto 从零单排 1 —— 入门">
+                        Yocto 从零单排 1 —— 入门
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-05-12T12:46:00+08:00"> 2014-05-12 12:46</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="https://guqian110.github.io/author/qian-gu.html"><i class="fa fa-user"></i> Qian Gu</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://guqian110.github.io/tag/yocto.html">Yocto</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>最近做嵌入式，开始学习 Yocto 项目相关的知识。网上关于 Yocto 的介绍、博客不少，但是大多数都是英文的。中文博客也有，不过都是一些大牛写的笔记，对于新手来说，并不是很容易懂,于是，就有了我的 “Yocto 从零单排” ^_^</p>
+<p><strong>Yocto 从零单排第 1 期 —— 入门，了解什么是 Yocto</strong></p>
+<p>学习一个新事物，当然是官网的东西最权威最简洁明了，不易出错（避免二次理解），以下内容来自 <a href="(https://www.yoctoproject.org/)">Yocto 官网</a> 和对其的翻译，本文只是我的学习笔记，详细内容见官网：</p>
+<p><strong><a href="(https://www.yoctoproject.org/)">Yocto Project 官网</a></strong></p>
+<p><br></p>
+<h2>What &amp; Why Yocto</h2>
+<hr>
+<h3>What is Yocto</h3>
+<p>官网上的介绍：</p>
+<blockquote>
+<p><strong>The Yocto Project is an open source collaboration project that provides templates, tools and methods to help you create custom Linux-based systems for embedded products regardless of the hardware architecture. </strong></p>
+</blockquote>
+<p>也就是说 <em>“Yocto 是一个开源协作项目，它通过提供模板、工具和方法来帮助开发者为嵌入式产品订制基于 LInux 的系统，而不用关注硬件结构。”</em> 这样，它就可以极大地简化开发过程，因为你不用再从头裁剪一个完整的Linux发布版本，后者通常包括许多你并不需要的软件。</p>
+<p>它由许多硬件制造商、开源操作系统提供商和电子器件公司一起合作于 2010 年建立，目的是为了使混乱的嵌入式 Linux 开发更简单有序。</p>
+<p><strong>P.S.</strong> Yocto 项目有时也被称为 "Umbrella" 项目</p>
+<p><strong>P.P.S.</strong> yocto 的名字是委员会决定的，这个词本来是国际单位中的最小的单位，表示 10^-24，也就是千万亿分之一，在此寓意 “基本的粒子” —— 贯穿嵌入式 Linux 开发过程的工具。</p>
+<h3>Why using Yocto</h3>
+<p>它是一个完整的嵌入式 Linux 开发环境，包含工具(tools)、元数据(metadata)和文档(documentation)——你需要的一切。这些免费工具(包含仿真环境emulation environments、调试器debuggers、应用程序开发工具Application Toolkit Generator)很容易上手，功能强大，并且它们可以让系统开发以最优化的方式不断前进，而不用担心在系统原形阶段的投资损失。</p>
+<p><br></p>
+<h2>Yocto Project Charter</h2>
+<hr>
+<p>Yocto 作为一个开源项目，其本质就是欢迎大大小小的参与者。</p>
+<p>Yocto 的目标：</p>
+<ul>
+<li>为进一步的开发、定制 LInux 平台，基于 Linux 系统的开发提供一个写作平台</li>
+<li>鼓励 Linux 平台开发的标准化和组建的重利用</li>
+<li>专注于创造一个构建系统的基础设施和技术，能够满足所有用户的需求，并增加了缺失的功能——来自于 OpenEmbedded 架构</li>
+<li>文档化可以用到的工具和方法，使开发人员更容易使用它们</li>
+<li>尽可能地保证这些开发工具和系统架构无关</li>
+<li>...</li>
+</ul>
+<p><br></p>
+<h2>Governance &amp;  Administration</h2>
+<hr>
+<p>Yocto 是一个开源项目，它由维护者和 <a href="(https://www.yoctoproject.org/about/governance/advisory-board)">Yocto Project Advisory Board</a> 领导。</p>
+<h3>Technical Leadership</h3>
+<p>Yocto 项目的 <a href="(https://www.yoctoproject.org/about/governance/technical-leadership)">technical leadership</a> 和 Linux Kernel 的类似，是一个分级的、任人唯贤的，由一个 “仁慈的独裁者”(benevolent dictator) 领导的组织。组织的上层负责决策，同时也是下层子系统的领导者，下层维护者负责处理细节问题，比如bug 和补丁。</p>
+<p>Yocto 项目架构师：Richard Purdie</p>
+<p>子系统/ BSP 层维护者：...</p>
+<h3>The Yocto Project Community</h3>
+<p>Yocto 是由社区的专家和志愿者共同协助设计、开发的，他们统称为贡献者(contributors)，贡献者包括任何可能对 Yocto 有贡献的人，比如代码开发人员、文档编写者、兴趣小组、管理小组、维护者和技术领导小组等。</p>
+<p>下图简明说明了 Yocto 项目社区的各个成员之间的相互影响的关系：</p>
+<p><img alt="yocto-community" src="https://www.yoctoproject.org/sites/yoctoproject.org/files/page/os63yoctodev.org-diagramv11.png"></p>
+<p><br></p>
+<h2>Linux Foundation</h2>
+<hr>
+<p><a href="(http://www.linuxfoundation.org/)">Linux Foundation</a> 是一个致力于促进 Linux 发展的非盈利组织，关于它的主要事实：</p>
+<ul>
+<li>赞助 Linux 的创造者 Linus Torvalds 的工作</li>
+<li>持有 Linux 商标</li>
+<li>经营着 Linux.com，每个月拥有活跃的 2000,000 的 Linux 开发人员和用户 </li>
+<li>主持着多个推进或标准化 Linux 的工作小组</li>
+<li>举行世界上顶尖的 Linux 会议，包括 LinuxCon</li>
+</ul>
+<h3>The Linux Foundation and the Yocto Project</h3>
+<p>Linux Foundation 是业界最大的非盈利组织，作为 Linux 的维护者和 Linux 创造者 Linus Torvalds 的雇主，没有比它更适合 Yocto 项目生存的了。Linux Foundation 主持 Yocto 项目作为一个开源项目，它提供了一个厂商中立的协作环境。</p>
+<p><br></p>
+<h2>Yocto Project 简介</h2>
+<hr>
+<p>Yocto 项目中有很多独立的子项目，这些子项目在嵌入式 Linux 开发中扮演着重要的角色，Yocto 项目则整合它们使它们可以相互协同工作。</p>
+<h3>Openembedded Core</h3>
+<p><strong>Metadata Set</strong></p>
+<p>元数据集(Metadata Set) 按 "层" 进行排列，这样一来每一层都可以为下面的层提供单独的功能。基层是 OpenEmbedded-Core 或 oe-core，提供了所有构建项目所必需的常见配方(recipes)、类和相关功能。</p>
+<p>Openembedded Core 包含了 核心方法(recipes)的基础层、类(classes) 和 相关文档，它们是各种嵌入式 Linux 系统(包含 Yocto 在内)的共同基础。Openembedded Core 由 Yocto Project 和 OpenEmbedded 项目共同维护，将 Yocto 和 Openembedded 分开的层是 meta-yocto 层，该层提供了 Pocky 发行版配置和一组核心的参考BSP。</p>
+<p>Openembedded 项目本身是一个ie独立的开源项目，具有可与 Yocto 项目交换的配方(recipes)，但两者具有不同的治理和范围。</p>
+<h3>Swabber</h3>
+<p>Swabber 可以提供一种检测主机系统的机制，一旦检测到问题，你就可以分析这是否真的是个问题。</p>
+<h3>Application Development Toolkit (ADT)</h3>
+<p>Application Development Toolkit (ADT) 能够让系统开发人员为他们使用 Yocto Project 工具创建的发行版提供软件开发工具包 (SDK)，为应用程序开发人员提供了一种针对系统开发人员提供的软件栈进行开发的方法。ADT 包含一个交叉编译工具链、调试和分析工具，以及 QEMU 仿真和支持脚本。ADT 还为那些喜欢使用集成开发环境 (IDE) 的人提供了一个 Eclipse 插件。</p>
+<h3>AutoBuilder</h3>
+<p>AutoBuilder 是一款能够不断自动构建 Yocto 的工具，它启用自动化的 Quality Assurance(QA) 活动。</p>
+<h3>BitBake</h3>
+<p>BitBake 是一个构建引擎。它读取配方(recipes)并按照配方来获取、构建程序包，并将结果导入可启动的系统映像中。BitBake 是 Yocto 项目的核心组件。</p>
+<h3>Build Appliance</h3>
+<p>Build Applicance 是一台运行 Hob 的虚拟机，它可以让你在非 Linux 环境下构建启动一个基于 Yocto 的嵌入式系统镜像。并不建议在日常开发中使用 Build Applicance，应该将其用在测试和体验 Yocto 项目上。</p>
+<h3>Cross-Prelink</h3>
+<p>Cross-Prelink 为交叉编译开发环境提供预链接，这样可以在应用程序启动时提高其性能表现。</p>
+<h3>Eclipse IDE Plug-in</h3>
+<p>Eclipse IDE Plug-in 把 Yocto ADT 和工具链集成到 Eclipse IDE 中。</p>
+<h3>EGLIBC</h3>
+<p>Embedded GLIBC (EGLIBC) 是 GNU C Library (GLIBC) 的一个变体，旨在能够在嵌入式系统上运行。EGLIBC 的目标包括减少内存占用、让组件可配置、更好地支持交叉编译和交叉测试。EGLIBC 是 Yocto Project 的一部分，但在它自己的治理结构内加以维护。</p>
+<h3>Hob</h3>
+<p>Hob 是 BitBake 的图形前端，它的主要目的是使常用命令更加方便使用。</p>
+<h3>Matchbox</h3>
+<p>Matchbox 是 一个基于 X Window 系统的开源环境，主要用于非桌面系统、屏幕大小、输入方式或系统资源有限的嵌入式设备中，比如手持设备、机顶盒、电话亭等。</p>
+<h3>Poky</h3>
+<p>Poky 是 Yocto Project 的一个参考构建系统。它包含 BitBake、OpenEmbedded-Core、一个板卡支持包 (BSP) 以及整合到构建过程中的其他任何程序包或层。Poky 这一名称也指使用参考构建系统得到的默认 Linux 发行版，它可能极其小 (core-image-minimal)，也可能是带有 GUI 的整个 Linux 系统 (core-image-sato)。</p>
+<p>你可以将 Poky 构建系统看作是整个项目的一个参考系统，即运行中进程的一个工作示例。在下载 Yocto Project 时，实际上也下载了可用于构建默认系统的这些工具、实用程序、库、工具链和元数据的实例。这一参考系统以及它创建的参考发行版都被命名为 Poky。你还可以将此作为一个起点来创建您自己的发行版，当然，你可以对此发行版随意命名。</p>
+<p>构建一个系统必须有工具链(toolchain)：一个编译器(compiler)、汇编器(assembler)、链接器(linker)以及为给定架构创建二进制可执行文件所需的其他二进制实用程序(other binary utilities)。Poky 使用了 GNU Compiler Collection (GCC)，不过你也可以指定其他工具链。Poky 使用了一种名为交叉编译(cross-compilation) 的技术：在一个架构上使用工具链为另一个架构构建二进制可执行文件（例如，在基于 x86 的系统上构建 ARM
+发行版）。开发人员常常在嵌入式系统开发中使用交叉编译来利用主机系统的高性能。</p>
+<h3>Pseudo</h3>
+<p>构建一个系统时，有时候有必要把自己模拟为系统管理员进行一些操作，比如定义某个文件的归属权和权限配置等。Pseudo 是一个可以模拟 root 的程序，使普通用户也可以具有 root 权限。</p>
+<h3>Toaster</h3>
+<p>Toaster 是一个 API，它基于 web 界面来使用 BitBake，你可以通过浏览器来查阅 Toaster 收集到的你的系统的相关信息。</p>
+<p><br></p>
+<h2>参考</h2>
+<p><a href="(https://www.yoctoproject.org/)">Yocto Project 官网</a></p>
+<p><a href="http://www.ibm.com/developerworks/linux/library/l-yocto-linux/index.html?ca=dat">Build custom embedded Linux distributions with the Yocto Projec</a></p>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<div id="aboutme">
+        <p>
+            <img width="100%" class="img-thumbnail" src="https://guqian110.github.io/images/logo.png"/>
+        </p>
+    <p>
+      <strong>About Qian Gu</strong><br/>
+        Icer + BYR
+    </p>
+</div><!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="i"><i class="fa fa-t-square fa-lg"></i> g</a></li>
+    <li class="list-group-item"><a href="t"><i class="fa fa-t-square fa-lg"></i> h</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="https://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group list-inline tagcloud" id="tags">
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/arduino.html">Arduino</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/bufexplorer.html">BufExplorer</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/build-blog.html">Build Blog</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/c.html">C++</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/case.html">case</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/clock-design.html">clock design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-dividers.html">clock dividers</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-generate-unit.html">clock generate unit</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-resource.html">clock resource</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/code.html">code</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/coding-style.html">coding style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/comment-style.html">comment style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/configurable-design.html">configurable design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/const.html">const</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/correlation-coefficient.html">correlation coefficient</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/cscope.html">cscope</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ctags.html">ctags</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/data-type.html">data type</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/delay.html">delay</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-procesing.html">digital procesing</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-processing.html">digital processing</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxverilog.html">doxverilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/doxygen.html">doxygen</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxygentoolkit.html">DoxygenToolKit</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fft.html">FFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/fifo.html">FIFO</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/flip-flop.html">flip-flop</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fpga.html">FPGA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/frequency.html">frequency</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fsm.html">fsm</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/glitch.html">glitch</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/gmail.html">Gmail</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/graphviz.html">graphviz</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/gtd.html">GTD</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/hazard.html">hazard</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/huo-zhao.html">活着</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ifft.html">IFFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/intel-galileo.html">Intel Galileo</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ip-core.html">IP core</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ise.html">ISE</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/latch.html">latch</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/linux.html">Linux</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/lookupfile.html">lookupfile</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/markdown.html">markdown</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/matlab.html">matlab</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/modelsim.html">Modelsim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/nerdtree.html">NERDTree</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/ofdm.html">OFDM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/on-top-of-tides.html">On Top of Tides</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/open-source-hardware.html">Open-source Hardware</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/package-management.html">Package Management</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/parameterization.html">parameterization</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pipeline.html">pipeline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pkm.html">PKM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/powerline.html">Powerline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/project-setting.html">project setting</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pulse-edge-detection.html">pulse edge detection</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/regular-expression.html">regular expression</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/reset.html">reset</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/review.html">review</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/shi-jian-guan-li.html">时间管理</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/snr.html">SNR</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ssh.html">SSH</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/sta.html">STA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/steve-jobs.html">Steve Jobs</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/sublime-text.html">Sublime Text</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/syntax.html">syntax</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/synthesis.html">synthesis</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/taglist.html">taglist</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/tail-bitting-convolution.html">tail bitting convolution</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/the-catcher-in-the-rye.html">The Catcher in The Rye</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/verilog.html">Verilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/vhdl.html">VHDL</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/vim.html">Vim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vim_signature.html">vim_signature</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vivado.html">Vivado</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vundle.html">vundle</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/warcraft.html">WarCraft</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/wine.html">Wine</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/winmanager.html">WinManager</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/xilinx.html">Xilinx</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yocto.html">Yocto</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yu-hua.html">余华</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+
+<!-- Sidebar/Github -->
+<li class="list-group-item">
+  <h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+  <div id="gh_repos">
+    <p class="list-group-item">Status updating...</p>
+  </div>
+</li>
+<!-- End Sidebar/Github -->
+
+<!-- Sidebar/Links -->
+<li class="list-group-item">
+  <h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+  <ul class="list-group" id="links">
+    <li class="list-group-item">
+      <a href="http://getpelican.com/" target="_blank">Pelican</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://python.org/" target="_blank">Python.org</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Links -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Qian Gu
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://guqian110.github.io/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://guqian110.github.io/theme/js/respond.min.js"></script>
+
+
+
+<!-- GitHub JS Code -->
+<script type="text/javascript">
+$(document).ready(function () {
+  if (!window.jXHR) {
+    var jxhr = document.createElement('script');
+    jxhr.type = 'text/javascript';
+    jxhr.src = 'https://guqian110.github.io/theme/js/jXHR.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(jxhr, s);
+  }
+
+  github.showRepos({
+    user: 'guqian110',
+    count: 5,
+    skip_forks: false,
+    target: '#gh_repos'
+  });
+});
+</script>
+<script src="https://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+<!-- End GitHub JS Code -->
+
+
+</body>
+</html>

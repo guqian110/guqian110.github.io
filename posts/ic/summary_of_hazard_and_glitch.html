@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>关于冒险和毛刺 - Qian's Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="https://guqian110.github.io/images/favicon.png" rel="icon">
+
+<link rel="canonical" href="https://guqian110.github.io/posts/ic/summary_of_hazard_and_glitch.html">
+
+        <meta name="author" content="Qian Gu" />
+        <meta name="keywords" content="hazard,glitch" />
+        <meta name="description" content="总结电路设计中的冒险现象和毛刺，及解决方法。" />
+
+        <meta property="og:site_name" content="Qian's Blog" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="关于冒险和毛刺"/>
+        <meta property="og:url" content="https://guqian110.github.io/posts/ic/summary_of_hazard_and_glitch.html"/>
+        <meta property="og:description" content="总结电路设计中的冒险现象和毛刺，及解决方法。"/>
+        <meta property="article:published_time" content="2015-03-13" />
+            <meta property="article:section" content="IC" />
+            <meta property="article:tag" content="hazard" />
+            <meta property="article:tag" content="glitch" />
+            <meta property="article:author" content="Qian Gu" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="https://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://guqian110.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="https://guqian110.github.io/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://guqian110.github.io/" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="https://guqian110.github.io/images/logo.png" width=""/> Qian's Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="https://guqian110.github.io/category/arduino.html">Arduino</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li class="active">
+                            <a href="https://guqian110.github.io/category/ic.html">Ic</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/misc.html">Misc</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/telecom.html">Telecom</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="https://guqian110.github.io" title="Qian's Blog"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="https://guqian110.github.io/category/ic.html" title="IC">IC</a></li>
+                <li class="active">关于冒险和毛刺</li>
+            </ol>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://guqian110.github.io/posts/ic/summary_of_hazard_and_glitch.html"
+                       rel="bookmark"
+                       title="Permalink to 关于冒险和毛刺">
+                        关于冒险和毛刺
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-03-13T21:44:00+08:00"> 2015-03-13 21:44</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="https://guqian110.github.io/author/qian-gu.html"><i class="fa fa-user"></i> Qian Gu</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://guqian110.github.io/tag/hazard.html">hazard</a>
+        /
+	<a href="https://guqian110.github.io/tag/glitch.html">glitch</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <h2>Hazards &amp; Glitch</h2>
+<hr>
+<p>所谓 “冒险” <code>Hazard</code>，是指一种数字电路中由于设计或者是外部因素，造成的数字信号错误的现象，而这个错误的信号就叫做毛刺 <code>Glitch</code>。</p>
+<p><a href="http://en.wikipedia.org/wiki/Hazard_(logic)">Hazard on wiki</a>:</p>
+<blockquote>
+<p>In digital logic, a hazard in a system is an undesirable effect caused by either a deficiency in the system or external influences. Logic hazards are manifestations of a problem in which changes in the input variables do not change the output correctly due to some form of delay caused by logic elements (NOT, AND, OR gates, etc.) This results in the logic not performing its function properly. The three different most common kinds of hazards are usually referred to as static, dynamic and function hazards.</p>
+</blockquote>
+<p>根据导致冒险的原因，一般将冒险分类如下：</p>
+<ol>
+<li>
+<p>静态冒险 <code>Static hazards</code></p>
+<p>静态冒险，是指输入信号发生变化前后，输出信号保持不变，但是在输入信号变化时，输出信号可能产生瞬间错误输出。</p>
+<p>根据发生的错误的值，可以将静态冒险分为两种：</p>
+<ul>
+<li>
+<p>Static-1 Hazard: 输入变化前后，输出应该保持 1，但是在输入变化瞬间输出发生错误，变为 0</p>
+</li>
+<li>
+<p>Static-0 Hazard: 输入变化前后，输出应该保持 0，但是在输入变化瞬间输出发生错误，变为 1</p>
+</li>
+</ul>
+<p>根据导致冒险的原因分类，可以将静态冒险分为以下两种类型：</p>
+<ul>
+<li>
+<p>逻辑冒险 <code>logic hazard</code></p>
+<p>只有 1 个输入发生变化，导致的静态冒险。</p>
+<p>经分析可知产生逻辑冒险的原因是门的延迟。（参考<a href="http://book.douban.com/subject/3575520/">数字电路与逻辑设计</a>）</p>
+</li>
+<li>
+<p>功能冒险 <code>function hazard</code></p>
+<p>2 个或者 2 个以上的输入发生变化，导致的静态冒险。</p>
+<p>经分析可知产生功能冒险的原因是两个或两个以上的输入不可能同时发生变化，它们的变化总有先有后。参考<a href="http://book.douban.com/subject/3575520/">数字电路与逻辑设计</a>）</p>
+</li>
+</ul>
+</li>
+<li>
+<p>动态冒险 <code>Dynamic hazards</code></p>
+<p>动态冒险，是指输入信号变化前后，输入信号发生变化，而且在输入信号发生变化时，输出信号会变化 3 次以上</p>
+</li>
+</ol>
+<p><br></p>
+<h2>Solution</h2>
+<hr>
+<p>首先我们应该尽可能避免存在冒险的设计，这样就不存在解决毛刺的问题。</p>
+<p>比如在数字电路设计中，常常采用格雷码计数器取代普通的二进制计数器，这是因为格雷码计数器的输出每次只有一位跳变，消除了竞争冒险的发生条件，避免了毛刺的产生。</p>
+<p>再比如遵循同步设计原则，即使有毛刺，一般也不会对系统造成危害。（因为同步电路信号的变化都发生在时钟沿，只要毛刺不出现在时钟的沿口并且不满足数据的建立和保持时间，就不会对系统造成危害。一般毛刺很短，多为几纳秒，基本上都不可能满足数据的建立和保持时间）</p>
+<p>设计无冒险的电路，会导致电路变复杂，成本上升。对于简单电路中的冒险，我们可以采用以下的方法来解决。</p>
+<h3>Static hazards</h3>
+<p>首先判断输入信号是否会同时发生变化，可以分为两种类型：</p>
+<ul>
+<li>
+<p>只有一个输入变化，对应的就是 logic hazards</p>
+<ol>
+<li>
+<p>判断是否存在冒险（<strong>代数法</strong> or <strong>卡诺图法</strong>）</p>
+<p>代数法比较繁琐，但是适用范围广，对两级以上的电路均适用。注意函数表达式不能化简，否则对应的逻辑电路改变，由电路延迟造成的冒险也随之改变。</p>
+<p>卡诺图法方便直观，但是只适用于两级电路。</p>
+<p>函数表达式中的积项或和项是和卡诺图中的合并圈一一对应的，由此可知，<strong>函数的最简不一定是最佳的，必要的冗余反而可增加电路工作的可靠性。</strong></p>
+</li>
+<li>
+<p>解决冒险（<strong>增加冗余项/冗余圈</strong>）</p>
+</li>
+</ol>
+</li>
+<li>
+<p>至少有 2 个输入同时变化，对应的就是 function hazards</p>
+<ol>
+<li>
+<p>判断是否存在冒险</p>
+<p>产生功能冒险的充要条件（同时满足以下 3 个条件）：</p>
+<ul>
+<li>
+<p>必须有 P （P &gt;= 2) 个变量同时发生变化</p>
+</li>
+<li>
+<p>输入变量变化前后函数值相同</p>
+</li>
+<li>
+<p>由变化的 P 个变量组合所构成的 2^P 个格，既有 1 又有 0</p>
+</li>
+</ul>
+</li>
+<li>
+<p>解决冒险（<strong>选通脉冲</strong> or <strong>滤波电路</strong>）</p>
+<p>只要输入信号不是按照循环码的方式变化，就会产生功能冒险。功能冒险是函数的逻辑功能决定的，所以不能在设计中消除，需要加额外的选通脉冲。</p>
+<p>选通脉冲的思路：一般说来，冒险出现在信号发生电平转换的时刻，也就是说在输出信号的建立时间内会发生冒险，而在输出信号的保持时间内是不会有毛刺信号出现的。如果在输出信号的保持时间内对其进行"采样"，就可以消除毛刺信号的影响。</p>
+<p>需要注意的是必须对选通脉冲的宽度及产生时间有严格的要求。加上选通脉冲之后，电路的输出就不再是电平信号，而是变为脉冲信号。</p>
+<p>还有另外一种方法：在对输出波形要求不高的时候，可以在输出端接一个滤波电容来消除冒险，但是这种方法会破坏波形的边沿，所以只适用于低速电路。</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>比较 3 种消除冒险的方法：</p>
+<p>增加冗余只能消除 logic hazards，而不能消除 function hazards；</p>
+<p>增加滤波电路虽然简单，但是会破坏波形；</p>
+<p>加选通脉冲的方法则对两种类型的冒险都有效。</p>
+<p>目前很多中规模集成电路（Medium Scale Integrated, MSI）中都设有使能端，其作用之一就是作为选通脉冲的输入端，待电路稳定之后才使输出有效。</p>
+<h3>Dynamic hazards</h3>
+<p>要解决动态冒险，首先就得知道动态冒险产生的原因：</p>
+<p>产生动态冒险的原因是输入可以有多条变化路径到达输出，而这些路径的时延都各不相同，显然这就会导致输出变化多次，比如一个输出应该从 1 变为 0，但是实际中却先从 1 变为 0，然后又从 0 变回 1，最终返回到正确值 0。</p>
+<p>动态的解决相对比较复杂，但是 <strong>只要消除了静态冒险，那么就不会存在动态冒险。</strong></p>
+<p><br></p>
+<h2>in FPGA Design</h2>
+<hr>
+<p>本部分来自：<a href="http://www.fpga.com.cn/advance/glitch/giltch.htm">关于毛刺问题的探讨</a> 和 <a href="http://book.douban.com/subject/3522845/">Verilog HDL程序设计与实践</a></p>
+<p>信号在 FPGA 器件内部通过连线和逻辑单元时，都有一定的延时。延时的大小与连线的长短和逻辑单元的数目有关，同时还受器件的制造工艺、工作电压、温度等条件的影响。信号的高低电平转换也需要一定的过渡时间。由于存在这两方面因素，多路信号的电平值发生变化时，在信号变化的瞬间，组合逻辑的输出有先后顺序，并不是同时变化,往往会出现一些不正确的尖峰信号，即毛刺信号。与分立元件不同，由于PLD内部不存在寄生电容电感，这些毛刺将被完整的保留并向下一级传递，因此毛刺现象在PLD、FPGA设计中尤为突出。</p>
+<p>可以概括的讲，<strong>只要输入信号同时变化，（经过内部走线）组合逻辑必将产生毛刺。将它们的输出直接连接到时钟输入端、清零或置位端口的设计方法是错误的，这可能会导致严重的后果。所以我们必须检查设计中所有时钟、清零和置位等对毛刺敏感的输入端口，确保输入不会含有任何毛刺。</strong></p>
+<p>如前所述，优秀的设计方案，如采用格雷码计数器，同步电路等，可以大大减少毛刺，但它并不能完全消除毛刺。 毛刺并不是对所有输入都有危害，例如 D 触发器的 D 输入端，只要毛刺不出现在时钟的上升沿并且满足数据的建立和保持时间，就不会对系统造成危害。因此我们可以说 D 触发器的 D 输入端对毛刺不敏感。但对于 D 触发器的时钟端，置位端，清零端，则都是对毛刺敏感的输入端，任何一点毛刺就会使系统出错，但只要认真处理，我们可以把危害降到最低直至消除。下面我们就对几种具体的信号进行探讨。</p>
+<h3>clock</h3>
+<p>时钟信号是系统中非常关键的信号，参见其他<a href="http://guqian110.github.io/tag/clock-design.html">几篇博客</a>。</p>
+<h3>set/clear</h3>
+<p>清除和置位信号要求象对待时钟那样小心地考虑它们，因为这些信号对毛刺也是非常敏感的。正如使用时钟那样，最好的清除和置位是从器件的引脚单直接地驱动。有一个主复位Reset引脚是常用的最好方法，主复位引脚给设计项目中每个触发器馈送清除或置位信号。几乎所有PLD器件都有专门的全局清零脚和全局置位。如果必须从器件内产生清除或置位信号，则要按照“门控时钟”的设计原则去建立这些信号，确保输入无毛刺。 </p>
+<h3>combinational output</h3>
+<p>当PLD输出引脚给出系统内其它部分的边沿敏感信号或电平敏感信号时，这些出信号必须象内部时钟、清除和置位信号一样小心地对待。只要可能就应在PLD输出端寄存那些对险象敏感的组合输出。如果你不能寄存险象敏感的输出，则应符合“门控时钟”中讨论的门控时钟的条件。决不能用多级逻辑驱动毛刺敏感的输出。</p>
+<h3>asynchronous input</h3>
+<p>对于异步输入信号导致的毛刺，解决思想就是 同步化。参见<a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">这篇博客</a>。</p>
+<p><br></p>
+<h2>Ref</h2>
+<p><a href="http://en.wikipedia.org/wiki/Hazard_(logic)">Hazard on wiki</a></p>
+<p><a href="http://book.douban.com/subject/3575520/">数字电路与逻辑设计</a></p>
+<p><a href="http://book.douban.com/subject/2883561/">Digital Design (4th Edition)</a></p>
+<p><a href="http://book.douban.com/subject/3522845/">Verilog HDL程序设计与实践</a></p>
+<p><a href="http://www.fpga.com.cn/advance/glitch/giltch.htm">关于毛刺问题的探讨</a></p>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<div id="aboutme">
+        <p>
+            <img width="100%" class="img-thumbnail" src="https://guqian110.github.io/images/logo.png"/>
+        </p>
+    <p>
+      <strong>About Qian Gu</strong><br/>
+        Icer + BYR
+    </p>
+</div><!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="i"><i class="fa fa-t-square fa-lg"></i> g</a></li>
+    <li class="list-group-item"><a href="t"><i class="fa fa-t-square fa-lg"></i> h</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="https://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group list-inline tagcloud" id="tags">
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/arduino.html">Arduino</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/bufexplorer.html">BufExplorer</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/build-blog.html">Build Blog</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/c.html">C++</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/case.html">case</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/clock-design.html">clock design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-dividers.html">clock dividers</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-generate-unit.html">clock generate unit</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-resource.html">clock resource</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/code.html">code</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/coding-style.html">coding style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/comment-style.html">comment style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/configurable-design.html">configurable design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/const.html">const</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/correlation-coefficient.html">correlation coefficient</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/cscope.html">cscope</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ctags.html">ctags</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/data-type.html">data type</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/delay.html">delay</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-procesing.html">digital procesing</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-processing.html">digital processing</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxverilog.html">doxverilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/doxygen.html">doxygen</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxygentoolkit.html">DoxygenToolKit</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fft.html">FFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/fifo.html">FIFO</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/flip-flop.html">flip-flop</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fpga.html">FPGA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/frequency.html">frequency</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fsm.html">fsm</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/glitch.html">glitch</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/gmail.html">Gmail</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/graphviz.html">graphviz</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/gtd.html">GTD</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/hazard.html">hazard</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/huo-zhao.html">活着</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ifft.html">IFFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/intel-galileo.html">Intel Galileo</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ip-core.html">IP core</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ise.html">ISE</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/latch.html">latch</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/linux.html">Linux</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/lookupfile.html">lookupfile</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/markdown.html">markdown</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/matlab.html">matlab</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/modelsim.html">Modelsim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/nerdtree.html">NERDTree</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/ofdm.html">OFDM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/on-top-of-tides.html">On Top of Tides</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/open-source-hardware.html">Open-source Hardware</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/package-management.html">Package Management</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/parameterization.html">parameterization</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pipeline.html">pipeline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pkm.html">PKM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/powerline.html">Powerline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/project-setting.html">project setting</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pulse-edge-detection.html">pulse edge detection</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/regular-expression.html">regular expression</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/reset.html">reset</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/review.html">review</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/shi-jian-guan-li.html">时间管理</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/snr.html">SNR</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ssh.html">SSH</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/sta.html">STA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/steve-jobs.html">Steve Jobs</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/sublime-text.html">Sublime Text</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/syntax.html">syntax</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/synthesis.html">synthesis</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/taglist.html">taglist</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/tail-bitting-convolution.html">tail bitting convolution</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/the-catcher-in-the-rye.html">The Catcher in The Rye</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/verilog.html">Verilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/vhdl.html">VHDL</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/vim.html">Vim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vim_signature.html">vim_signature</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vivado.html">Vivado</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vundle.html">vundle</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/warcraft.html">WarCraft</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/wine.html">Wine</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/winmanager.html">WinManager</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/xilinx.html">Xilinx</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yocto.html">Yocto</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yu-hua.html">余华</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+
+<!-- Sidebar/Github -->
+<li class="list-group-item">
+  <h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+  <div id="gh_repos">
+    <p class="list-group-item">Status updating...</p>
+  </div>
+</li>
+<!-- End Sidebar/Github -->
+
+<!-- Sidebar/Links -->
+<li class="list-group-item">
+  <h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+  <ul class="list-group" id="links">
+    <li class="list-group-item">
+      <a href="http://getpelican.com/" target="_blank">Pelican</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://python.org/" target="_blank">Python.org</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Links -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Qian Gu
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://guqian110.github.io/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://guqian110.github.io/theme/js/respond.min.js"></script>
+
+
+
+<!-- GitHub JS Code -->
+<script type="text/javascript">
+$(document).ready(function () {
+  if (!window.jXHR) {
+    var jxhr = document.createElement('script');
+    jxhr.type = 'text/javascript';
+    jxhr.src = 'https://guqian110.github.io/theme/js/jXHR.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(jxhr, s);
+  }
+
+  github.showRepos({
+    user: 'guqian110',
+    count: 5,
+    skip_forks: false,
+    target: '#gh_repos'
+  });
+});
+</script>
+<script src="https://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+<!-- End GitHub JS Code -->
+
+
+</body>
+</html>

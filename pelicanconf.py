@@ -7,6 +7,7 @@ SITENAME = u"Qian's Blog"
 SITEURL = 'https://guqian110.github.io'
 
 PATH = 'content'
+OUTPUT_PATH = './'
 
 TIMEZONE = 'Asia/Shanghai'
 DATE_FORMATS = {'zh':'%Y-%m-%d %H:%M'}
@@ -34,9 +35,9 @@ DEFAULT_PAGINATION = 5
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
 
-ARTICLE_URL = 'output/posts/{category}/{slug}.html'
+ARTICLE_URL = 'posts/{category}/{slug}.html'
 ARTICLE_SAVE_AS = 'posts/{category}/{slug}.html'
-PAGE_URL = 'output/pages/{slug}.html'
+PAGE_URL = 'pages/{slug}.html'
 PAGE_SAVE_AS = 'pages/{slug}.html'
 
 GITHUB_URL = 'https://github.com/guqian110'

@@ -3,7 +3,7 @@ Date: 2014-10-13 22:26
 Category: IC
 Tags: clock design, clock dividers
 Slug: clock_dividers
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结常用的时钟分频方法
 
 在 [时钟设计][clock design] 中提到过：

@@ -3,7 +3,7 @@ Date: 2014-04-08 18:33
 Category: IC
 Tags: pulse edge detection
 Slug: pulse_edge_detection
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结 FPGA 中的脉冲边沿检测方法
 
 脉冲边沿检测是 FPGA 设计中经常用到的方法，本文总结一下其原理和实现代码，可以将其加入我们自己的代码库中，以备以后使用 。

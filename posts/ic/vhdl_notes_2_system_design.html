@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>VHDL 笔记 2 —— 系统设计 - Qian's Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="https://guqian110.github.io/images/favicon.png" rel="icon">
+
+<link rel="canonical" href="https://guqian110.github.io/posts/ic/vhdl_notes_2_system_design.html">
+
+        <meta name="author" content="Qian Gu" />
+        <meta name="keywords" content="VHDL,syntax" />
+        <meta name="description" content="VHDL 笔记，系统设计" />
+
+        <meta property="og:site_name" content="Qian's Blog" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="VHDL 笔记 2 —— 系统设计"/>
+        <meta property="og:url" content="https://guqian110.github.io/posts/ic/vhdl_notes_2_system_design.html"/>
+        <meta property="og:description" content="VHDL 笔记，系统设计"/>
+        <meta property="article:published_time" content="2014-09-16" />
+            <meta property="article:section" content="IC" />
+            <meta property="article:tag" content="VHDL" />
+            <meta property="article:tag" content="syntax" />
+            <meta property="article:author" content="Qian Gu" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="https://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://guqian110.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="https://guqian110.github.io/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://guqian110.github.io/" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="https://guqian110.github.io/images/logo.png" width=""/> Qian's Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="https://guqian110.github.io/category/arduino.html">Arduino</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li class="active">
+                            <a href="https://guqian110.github.io/category/ic.html">Ic</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/misc.html">Misc</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/telecom.html">Telecom</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="https://guqian110.github.io" title="Qian's Blog"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="https://guqian110.github.io/category/ic.html" title="IC">IC</a></li>
+                <li class="active">VHDL 笔记 2 —— 系统设计</li>
+            </ol>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://guqian110.github.io/posts/ic/vhdl_notes_2_system_design.html"
+                       rel="bookmark"
+                       title="Permalink to VHDL 笔记 2 —— 系统设计">
+                        VHDL 笔记 2 —— 系统设计
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-09-16T20:18:00+08:00"> 2014-09-16 20:18</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="https://guqian110.github.io/author/qian-gu.html"><i class="fa fa-user"></i> Qian Gu</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://guqian110.github.io/tag/vhdl.html">VHDL</a>
+        /
+	<a href="https://guqian110.github.io/tag/syntax.html">syntax</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>总结 <code>packege</code>, <code>component</code>, <code>function</code>, <code>procedure</code> 的相关知识。</p>
+<p>这些组成部分添加到代码主体部分，目的是为了实现常用代码共享。通常这些代码被放在 <code>library</code> 中，我们可以将自己设计的一些常用代码添加到 <code>library</code> 中，这有利于使一个复杂设计具有更清晰的结构。</p>
+<p>总之，经常使用的代码可以以 <code>component</code>, <code>function</code>, <code>procedure</code> 的形式放到 <code>package</code> 中，然后被编译到目标 <code>library</code> 中。</p>
+<p><br></p>
+<h2>Packages and Components</h2>
+<hr>
+<h3>Package</h3>
+<p>除了 <code>component</code>, <code>function</code>, <code>procedure</code> 之外，package 中还可以包含 <code>TYPE</code>, <code>CONSTANT</code> 的定义。</p>
+<p><strong>syntax</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">PACKAGE</span> <span class="n">package_name</span> <span class="k">IS</span>
+    <span class="p">(</span><span class="n">declarations</span><span class="p">)</span>
+<span class="k">END</span> <span class="nc">package_name</span><span class="p">;</span>
+
+<span class="p">[</span><span class="k">PACKAGE</span> <span class="k">BODY</span> <span class="n">package_name</span> <span class="k">IS</span>
+    <span class="p">(</span><span class="k">FUNCTION</span> <span class="k">and</span> <span class="k">PROCEDURE</span> <span class="n">descriptions</span><span class="p">)</span>
+<span class="k">END</span> <span class="nc">package_name</span><span class="p">;</span> <span class="p">]</span>
+</pre></div>
+</td></tr></table>
+
+<p>可以看到，语法包括两部分，<code>PACKAGE</code> 和 <code>PACKAGE BODY</code>。</p>
+<ul>
+<li>
+<p><code>PACKAGE</code> 是必需的，包括所有的声明语句</p>
+</li>
+<li>
+<p><code>PACKAGE BODY</code>：可选，当第一部分包含一个/多个  FUNCTION，PROCEDURE 声明时，这部分必须包含相应的描述代码。</p>
+</li>
+</ul>
+<p><strong>example</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">--------- package define-------------</span>
+<span class="n">LIRRARY</span> <span class="nn">IEEE</span><span class="p">;</span>
+<span class="k">USE</span> <span class="nn">IDEE.STD_LOGIC_1164.</span><span class="k">ALL</span><span class="p">;</span>
+
+<span class="k">PACKAGE</span> <span class="n">my_package</span> <span class="k">IS</span>
+    <span class="k">TYPE</span> <span class="n">state</span> <span class="k">IS</span> <span class="p">(</span><span class="n">st1</span><span class="p">,</span> <span class="n">st2</span><span class="p">,</span> <span class="n">st3</span><span class="p">,</span> <span class="n">st4</span><span class="p">);</span>
+    <span class="k">CONSTANT</span> <span class="n">vec</span> <span class="o">:</span> <span class="kt">STD_LOGIC_VECTOR</span> <span class="p">(</span><span class="mi">7</span> <span class="k">DOWNTO</span> <span class="mi">0</span><span class="p">)</span> <span class="o">:=</span> <span class="s">&quot;11111111&quot;</span><span class="p">;</span>
+<span class="k">END</span> <span class="nc">my_package</span><span class="p">;</span>
+
+<span class="c1">--------- main code ------------------</span>
+
+<span class="k">LIBRARY</span> <span class="nn">IEEE</span><span class="p">;</span>
+<span class="k">USE</span> <span class="nn">IEEE.STD_LOGIC_1164.</span><span class="k">ALL</span><span class="p">;</span>
+<span class="k">USE</span> <span class="nn">work.my_package.</span><span class="k">all</span><span class="p">;</span>   <span class="c1">-- declaration</span>
+
+<span class="k">ENTITY</span> <span class="p">...</span>
+<span class="p">...</span>
+
+<span class="k">ARCHITECTURE</span> <span class="p">...</span>
+<span class="p">...</span>
+
+<span class="c1">--------------------------------------</span>
+</pre></div>
+</td></tr></table>
+
+<h3>Componet</h3>
+<p>VHDL 中的 <code>component</code> 和 Verilog HDL 中的 <code>module</code> 类似：</p>
+<p>一个 component 是一段完整的代码（包括 library, entity, architecture 这些组成部分），如果将这些代码声明为一个 component，那么就可以被其他电路调用，从而使代码具有了层次化的结构。</p>
+<p>使用 component 必须先声明这个元件，然后再例化这个元件（类似 C++，变量先声明，在定义）。声明和例化都必须在 architecture 中进行。</p>
+<p><strong>declaration syntax</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">COMPONENT</span> <span class="nc">component_name</span> <span class="k">IS</span>
+    <span class="k">PORT</span> <span class="p">(</span>
+        <span class="n">port_name</span><span class="o">:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
+        <span class="n">port_name</span><span class="o">:</span> <span class="n">signal_mode</span> <span class="n">signal_type</span><span class="p">;</span>
+        <span class="p">...);</span>
+<span class="k">END</span> <span class="k">COMPONENT</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p><strong>instantiation syntax</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="k">PORT</span> <span class="k">MAP</span> <span class="p">(</span><span class="n">port_list</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>可以看到：</p>
+<ul>
+<li>
+<p>声明时，component 和 entity 相似，必须声明端口的模式和类型</p>
+</li>
+<li>
+<p>例化时，必须添加一个标号，就像 Verilog HDL 中例化 module 必须给个名字一样</p>
+</li>
+</ul>
+<p>声明元件时，可以有两种方法：</p>
+<ul>
+<li>
+<p>上面的方法，先声明再例化</p>
+</li>
+<li>
+<p>使用 package 进行声明，将 component 的声明放在 package 中，则可以避免每次元件例化都要重复声明</p>
+</li>
+</ul>
+<p>这两种方法的区别类似于使用 C++ 中的 namespace 时的不同方法</p>
+<ul>
+<li>
+<p>方法一：每次使用 STL 都添加作用域</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;hello world!&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>方法二：声明一次作用域</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+</ul>
+<h3>port map</h3>
+<p>同 Verilog HDL 一样，两种端口映射的方法：位置映射、名字映射。</p>
+<p>位置映射书写简单，但是容易出错；名字映射书写繁琐，但是不易出错，端口连接也更清晰，未连接的端口要使用关键词 <code>open</code>。</p>
+<p><strong>example</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">-- positional</span>
+<span class="n">U1</span><span class="o">:</span> <span class="n">inverter</span> <span class="k">PORT</span> <span class="k">MAP</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+
+<span class="c1">-- nominal</span>
+<span class="n">U1</span><span class="o">:</span> <span class="n">inverter</span> <span class="k">PORT</span> <span class="k">MAP</span> <span class="p">(</span><span class="n">x</span><span class="o">=&gt;</span><span class="n">a</span><span class="p">,</span> <span class="n">y</span><span class="o">=&gt;</span><span class="n">b</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<h3>generic map</h3>
+<p>generic 功能类似于 Veriog HDL 中的 parameter，所以在例化时 component 时，可以重载参数，使设计更方便灵活。</p>
+<p><strong>syntax</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="k">GENERIC</span> <span class="k">MAP</span> <span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="n">list</span><span class="p">)</span> <span class="k">PORT</span> <span class="k">MAP</span> <span class="p">(</span><span class="k">port</span> <span class="n">list</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>也就是说，在例化时，添加一段 <code>GENERIC MAP (param.list)</code> 就可以了。</p>
+<p><br></p>
+<h2>Functions and Procedure</h2>
+<hr>
+<p>function 和 procedure 统称为 子程序，它们和 process 相似，内部包含的都是顺序描述的代码，通常使用相同的顺序描述语句。但是，function 和 procedure 的存在主要是为了建库，以达到代码重用和共享的目的，当然它们也可以直接建立在主代码中。</p>
+<h3>Function</h3>
+<p>一个 function 就是一段顺序描述的代码。</p>
+<p>在写代码的过程中，我们通常会遇到一些有共性的问题，我们希望实现这些功能的代码可以被共享和重用，从而使代码变得简洁，易于理解，function 的建立和使用就能达到这个目睹。
+function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> 等语句，但是不能有 <code>signal</code> 和 <code>component</code>。</p>
+<p>function 的使用方法：先创建函数体本身，再调用函数。</p>
+<p><strong>Function Body</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">FUNCTION</span> <span class="n">function_name</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span><span class="p">]</span> <span class="k">RETURN</span> <span class="n">data_type</span> <span class="k">IS</span>
+    <span class="p">[</span><span class="n">declarations</span><span class="p">]</span>
+<span class="k">BEGIN</span>
+    <span class="p">(</span><span class="n">sequential</span> <span class="n">statements</span><span class="p">)</span>
+<span class="k">END</span> <span class="nc">function_name</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>其中，<parameter list> 指函数的输入参数：</p>
+<div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="k">parameter</span><span class="w"> </span><span class="n">list</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="n">CONSTANT</span><span class="o">]</span><span class="w"> </span><span class="n">constant_name</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="n">constant_type</span><span class="p">;</span><span class="w"></span>
+<span class="o">&lt;</span><span class="k">parameter</span><span class="w"> </span><span class="n">list</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SIGNAL</span><span class="w"> </span><span class="n">signal_name</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="n">signal_type</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+
+<p>参数可以是 constant, signal，但是不能是 variable；参数的个数可以是任意个，类型也任意。</p>
+<p><strong>Function Call</strong></p>
+<p>函数可以单独构成表达式，也可以作为表达式的一部分。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">--example</span>
+<span class="n">x</span> <span class="o">&lt;=</span> <span class="n">conv_integer</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">maximum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="p">...</span>
+</pre></div>
+</td></tr></table>
+
+<p><strong>Function Location</strong></p>
+<p>函数可以存放在两个地方：</p>
+<ul>
+<li>
+<p>Package 中，这时候，函数声明在 package 中，函数定义在 package body 中</p>
+</li>
+<li>
+<p>Main Code 中，既可以在 entity 中，也可以在 architecture 中</p>
+</li>
+</ul>
+<h3>Procedure</h3>
+<p>procedure 和 function 类似，目的也相同，不同之处在于 procedure 可以有多个返回值。</p>
+<p>与 function 类似，procedure 也需要定义和调用两个过程。</p>
+<p><strong>Procedure Body</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">PROCEDURE</span> <span class="n">procedure_name</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span><span class="p">]</span> <span class="k">IS</span>
+    <span class="p">[</span><span class="n">declarations</span><span class="p">]</span>
+<span class="k">BEGIN</span>
+    <span class="p">(</span><span class="n">sequential</span> <span class="n">statements</span><span class="p">)</span>
+<span class="k">END</span> <span class="nc">procedure_name</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>其中，<parameter list> 指出了 procedure 的输入输出参数：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[</span><span class="k">CONSTANT</span><span class="p">]</span> <span class="n">constant_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="k">type</span><span class="p">;</span>
+<span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">SIGNAL</span> <span class="n">signal_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="k">type</span><span class="p">;</span>
+<span class="o">&lt;</span><span class="n">parameter</span> <span class="n">list</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">VARIABLE</span> <span class="n">variable_name</span> <span class="o">:</span> <span class="n">mode</span> <span class="k">type</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+<p>参数可以有任意多个，可以是 in, out, inout 模式的 signal, variable, constant。</p>
+<p>和 function 一样，procedure 内部的 wait 语句，signal 声明，component 调用都是不可综合的。</p>
+<p><strong>Procedure Call</strong></p>
+<p>procedure 的调用就是它自己。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">--example</span>
+<span class="n">compute_min_max</span> <span class="p">(</span><span class="n">in1</span><span class="p">,</span> <span class="n">in2</span><span class="p">,</span> <span class="n">in3</span><span class="p">,</span> <span class="n">out1</span><span class="p">,</span> <span class="n">out2</span><span class="p">);</span>
+<span class="n">divide</span> <span class="p">(</span><span class="n">dividend</span><span class="p">,</span> <span class="n">divisor</span><span class="p">,</span> <span class="n">quotient</span><span class="p">,</span> <span class="n">remainder</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p><strong>Procedure Location</strong></p>
+<p>procedure 的存放和 function 类似，通常放在 package 中，当然也可以放在主代码中。</p>
+<h3>FUNCTION versus PROCEDURE Summary</h3>
+<ul>
+<li>
+<p>function 有任意个输入参数和一个返回值，输入参数只能是 constant, signal</p>
+</li>
+<li>
+<p>procedure 有任意个输入/输出/双向参数，可以是 signal, variable, constant</p>
+</li>
+<li>
+<p>function 可以作为表达式的一部分，procedure 直接调用</p>
+</li>
+<li>
+<p>function 和 procedure 内部，wait 和 component 都不可综合</p>
+</li>
+<li>
+<p>function 和 procedure 的存放位置相同，经常位于 package 中，也可以在主代码中</p>
+</li>
+</ul>
+<p><br></p>
+<h2>Reference</h2>
+<p><a href="http://www.amazon.com/Circuit-Design-VHDL-Volnei-Pedroni/dp/0262162245">Circuit Design with VHDL</a></p>
+            </div>
+            <!-- /.entry-content -->
+<section class="well" id="related-posts">
+    <h4>Related Posts:</h4>
+    <ul>
+        <li><a href="https://guqian110.github.io/posts/ic/vhdl_notes_1_circuit_design.html">VHDL 笔记 1 —— 电路设计</a></li>
+    </ul>
+</section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<div id="aboutme">
+        <p>
+            <img width="100%" class="img-thumbnail" src="https://guqian110.github.io/images/logo.png"/>
+        </p>
+    <p>
+      <strong>About Qian Gu</strong><br/>
+        Icer + BYR
+    </p>
+</div><!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="i"><i class="fa fa-t-square fa-lg"></i> g</a></li>
+    <li class="list-group-item"><a href="t"><i class="fa fa-t-square fa-lg"></i> h</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="https://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group list-inline tagcloud" id="tags">
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/arduino.html">Arduino</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/bufexplorer.html">BufExplorer</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/build-blog.html">Build Blog</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/c.html">C++</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/case.html">case</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/clock-design.html">clock design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-dividers.html">clock dividers</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-generate-unit.html">clock generate unit</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-resource.html">clock resource</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/code.html">code</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/coding-style.html">coding style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/comment-style.html">comment style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/configurable-design.html">configurable design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/const.html">const</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/correlation-coefficient.html">correlation coefficient</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/cscope.html">cscope</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ctags.html">ctags</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/data-type.html">data type</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/delay.html">delay</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-procesing.html">digital procesing</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-processing.html">digital processing</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxverilog.html">doxverilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/doxygen.html">doxygen</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxygentoolkit.html">DoxygenToolKit</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fft.html">FFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/fifo.html">FIFO</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/flip-flop.html">flip-flop</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fpga.html">FPGA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/frequency.html">frequency</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fsm.html">fsm</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/glitch.html">glitch</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/gmail.html">Gmail</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/graphviz.html">graphviz</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/gtd.html">GTD</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/hazard.html">hazard</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/huo-zhao.html">活着</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ifft.html">IFFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/intel-galileo.html">Intel Galileo</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ip-core.html">IP core</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ise.html">ISE</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/latch.html">latch</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/linux.html">Linux</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/lookupfile.html">lookupfile</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/markdown.html">markdown</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/matlab.html">matlab</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/modelsim.html">Modelsim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/nerdtree.html">NERDTree</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/ofdm.html">OFDM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/on-top-of-tides.html">On Top of Tides</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/open-source-hardware.html">Open-source Hardware</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/package-management.html">Package Management</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/parameterization.html">parameterization</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pipeline.html">pipeline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pkm.html">PKM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/powerline.html">Powerline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/project-setting.html">project setting</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pulse-edge-detection.html">pulse edge detection</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/regular-expression.html">regular expression</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/reset.html">reset</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/review.html">review</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/shi-jian-guan-li.html">时间管理</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/snr.html">SNR</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ssh.html">SSH</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/sta.html">STA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/steve-jobs.html">Steve Jobs</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/sublime-text.html">Sublime Text</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/syntax.html">syntax</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/synthesis.html">synthesis</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/taglist.html">taglist</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/tail-bitting-convolution.html">tail bitting convolution</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/the-catcher-in-the-rye.html">The Catcher in The Rye</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/verilog.html">Verilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/vhdl.html">VHDL</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/vim.html">Vim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vim_signature.html">vim_signature</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vivado.html">Vivado</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vundle.html">vundle</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/warcraft.html">WarCraft</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/wine.html">Wine</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/winmanager.html">WinManager</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/xilinx.html">Xilinx</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yocto.html">Yocto</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yu-hua.html">余华</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+
+<!-- Sidebar/Github -->
+<li class="list-group-item">
+  <h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+  <div id="gh_repos">
+    <p class="list-group-item">Status updating...</p>
+  </div>
+</li>
+<!-- End Sidebar/Github -->
+
+<!-- Sidebar/Links -->
+<li class="list-group-item">
+  <h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+  <ul class="list-group" id="links">
+    <li class="list-group-item">
+      <a href="http://getpelican.com/" target="_blank">Pelican</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://python.org/" target="_blank">Python.org</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Links -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Qian Gu
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://guqian110.github.io/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://guqian110.github.io/theme/js/respond.min.js"></script>
+
+
+
+<!-- GitHub JS Code -->
+<script type="text/javascript">
+$(document).ready(function () {
+  if (!window.jXHR) {
+    var jxhr = document.createElement('script');
+    jxhr.type = 'text/javascript';
+    jxhr.src = 'https://guqian110.github.io/theme/js/jXHR.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(jxhr, s);
+  }
+
+  github.showRepos({
+    user: 'guqian110',
+    count: 5,
+    skip_forks: false,
+    target: '#gh_repos'
+  });
+});
+</script>
+<script src="https://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+<!-- End GitHub JS Code -->
+
+
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>FIFO 设计笔记 - Qian's Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="https://guqian110.github.io/images/favicon.png" rel="icon">
+
+<link rel="canonical" href="https://guqian110.github.io/posts/ic/fifo_design_notes.html">
+
+        <meta name="author" content="Qian Gu" />
+        <meta name="keywords" content="FIFO" />
+        <meta name="description" content="总结 FIFO 的注意事项" />
+
+        <meta property="og:site_name" content="Qian's Blog" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="FIFO 设计笔记"/>
+        <meta property="og:url" content="https://guqian110.github.io/posts/ic/fifo_design_notes.html"/>
+        <meta property="og:description" content="总结 FIFO 的注意事项"/>
+        <meta property="article:published_time" content="2015-10-02" />
+            <meta property="article:section" content="IC" />
+            <meta property="article:tag" content="FIFO" />
+            <meta property="article:author" content="Qian Gu" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="https://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://guqian110.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="https://guqian110.github.io/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://guqian110.github.io/" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="https://guqian110.github.io/images/logo.png" width=""/> Qian's Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="https://guqian110.github.io/category/arduino.html">Arduino</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li class="active">
+                            <a href="https://guqian110.github.io/category/ic.html">Ic</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/misc.html">Misc</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/telecom.html">Telecom</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="https://guqian110.github.io" title="Qian's Blog"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="https://guqian110.github.io/category/ic.html" title="IC">IC</a></li>
+                <li class="active">FIFO 设计笔记</li>
+            </ol>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://guqian110.github.io/posts/ic/fifo_design_notes.html"
+                       rel="bookmark"
+                       title="Permalink to FIFO 设计笔记">
+                        FIFO 设计笔记
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-10-02T22:13:00+08:00"> 2015-10-02 22:13</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="https://guqian110.github.io/author/qian-gu.html"><i class="fa fa-user"></i> Qian Gu</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://guqian110.github.io/tag/fifo.html">FIFO</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>FIFO 的重要性就不用再重复了，在笔试面试的时候也常常被问到，总结一下设计 FIFO 需要注意的问题。</p>
+<p>FIFO 可以分为两类：</p>
+<ul>
+<li>
+<p>Sync FIFO: write 和 read 使用同一个时钟</p>
+</li>
+<li>
+<p>Async FIFO: write 和 read 分别使用两个时钟</p>
+</li>
+</ul>
+<p>设计 FIFO 的时候，通常需要考虑的问题有：</p>
+<ol>
+<li>
+<p>FIFO 的大小</p>
+</li>
+<li>
+<p>FIFO 空满的判断</p>
+</li>
+</ol>
+<h2>Sync FIFO</h2>
+<hr>
+<p>Sync FIFO 的框图如下所示：</p>
+<p><img alt="sync fifo" src="/images/fifo-design-notes/sync_fifo.png"></p>
+<p>因为同步 FIFO 的读写速率是相同的，所以 FIFO 的大小设置不必考虑读写速率差这个因素，要简单很多。</p>
+<p>在 FIFO 内部，一般使用 dual port RAM 存储数据。双端口 RAM 有两套独立的读写地址，读地址和写地址分别由读指针和写指针来产生：写指针指向下一个数据被写入的地址，读指针指向下一个被读出的数据的地址，通过判断读写指针的相对大小，就可以得到 FIFO 的状态（full / empty）。</p>
+<p>还有另外一种方法来产生 full / empty 信号：FIFO 内部维护一个计数器，每次写入一个数据 cnt++，每次读出一个数据 cnt--。这种方法产生 full / empty 很简单：当 cnt == 0，表示 FIFO empty；当 cnt == max，表示 FIFO full。虽然这种方法产生 full / empty 很简单，但是需要额外的计数器，而且计数器的位宽随着 FIFO 的深度增加，不仅占用的资源更多，而且会降低 FIFO 最终可以达到的速度。</p>
+<p><br></p>
+<h2>Async FIFO</h2>
+<hr>
+<p>一般异步 FIFO 的读写速率不同，如果写速度 &gt; 读速度，则当数据量超过一定长度时，会出现溢出的情况，为了防止这种情况，可以采用两种措施：</p>
+<ol>
+<li>
+<p>预先知道写速率和模式（burst / nonburst），最小的读速率，根据这些条件设置 FIFO 的深度</p>
+<p>通常发送端的数据都是突发的形式，FIFO 的深度至少要大于等于突发数据的最大长度。</p>
+</li>
+<li>
+<p>握手机制（full / empty）</p>
+<p>很多情况下，突发数据的长度和分布是预先不知道的，此时则无法确保 FIFO 的深度足够大，因此需要握手机制来告诉发送端已经没有多余的空地址保存数据 or 告诉接收端已经内部已经没有剩余的可以读取的数据。通常使用如下的 FSM 来实现：</p>
+<p>发送端，写数据：</p>
+<p><img alt="wr fsm" src="/images/fifo-design-notes/wr_fsm.png"></p>
+<p>接收端，读数据：</p>
+<p><img alt="rd fsm" src="/images/fifo-design-notes/rd_fsm.png"></p>
+</li>
+</ol>
+<h3>Gray Code</h3>
+<p>在异步 FIFO 中，因为一些内部的信号要从写/读时钟域传递到读/写时钟域，所以必须要解决异步信号同步的问题，而且有的信号不止 1 bit，如果使用“同步桥”，则因为各个 bit 的同步时延不一定（1~2T），所以不能用同步桥。</p>
+<p>这个问题可以使用 gray code 解决：gray code 是循环码，每次只有 1 bit 变化，这样就避免了多 bits 变化的数据同步问题。如下图：</p>
+<p><img alt="sync" src="/images/fifo-design-notes/sync.png"></p>
+<p>gray code 与 binary code 的相互想换见另<a href="">外一篇 blog</a>。</p>
+<h3>wr_ptr / rd_ptr Sync Lag</h3>
+<p>异步 FIFO 还有个问题是：地址信号跨时钟域时，可能会有 1T 的时延，这个多余的时延并不会导致 full /empty 错误置位，引起错误的 overf：</p>
+<ul>
+<li>
+<p>如果地址信号传递到读时钟域时延时了 1T，此时接收端并不知道数据已经写入了 FIFO，仍然认为 FIFO 是空的，这种情况只会对 FIFO 的吞吐率 throughput 有影响，但是不会导致 underflow；</p>
+<p>如下图，先写满 FIFO，然后开始读：在 t6 时 FIFO 读空，empty = 1，在 t7 时，写入了一个新数据，此时 FIFO 内已经有有效数据了，但是 wr_ptr 同步到读时钟域要花费 2T，所以在 t9 时 empty = 0。有两个时钟周期（t7, t8） rd 被阻塞了，但是并不影响 FIFO 正常工作。</p>
+<p><img alt="empty" src="/images/fifo-design-notes/empty.png"></p>
+<p>时序图：</p>
+<p><img alt="empty timing" src="/images/fifo-design-notes/empty_timing.png"></p>
+</li>
+<li>
+<p>如果地址信号传递到写时钟域时延是了 1T，此时发送端并不知道 FIFO 已经有空余地址了，仍然认为 FIFO 是满的，这种情况也是只会对 FIFO 的吞吐率 throughput 有影响，但是不会导致 overfl；</p>
+<p>如下图，先写满 FIFO，然后开始读：在 t5 时，full = 1，在 t6 时，读出了一个数据，此时 FIFO 已经有空余地址了，但是 rd_ptr 同步到写时钟域要花费 2T，所以在 t8 时 full = 0。有两个时钟周期（t6, t7） wr 被阻塞了，但是并不影响 FIFO 正常工作。</p>
+<p><img alt="full" src="/images/fifo-design-notes/full.png"></p>
+<p>时序图：</p>
+<p><img alt="full timing" src="/images/fifo-design-notes/full_timing.png"></p>
+</li>
+</ul>
+<h3>Full / Empty Generation</h3>
+<p>因为 wr_ptr 和 rd_ptr 相同时，FIFO 既可能是 full，也有可能是 empt，所以需要额外的 1 bit 来区别这两种情况：</p>
+<p>假设 FIFO 的深度是 8，则地址为 3 bits，初始时 wr_ptr 和 rd_ptr 都是 <code>0000</code>，FIFO 此时是 empty：</p>
+<ol>
+<li>
+<p>当连续 8 个数据写入到 FIFO full，wr_ptr = <code>1000</code>，而 rd_ptr = <code>0000</code>，<strong>MSB 不同，剩余位相同</strong></p>
+</li>
+<li>
+<p>当连续 8 次读取数据 FIFO empty，rd_ptr = wr_ptr = <code>1000</code>，<strong>所有 bits 都相等</strong></p>
+</li>
+</ol>
+<p>借助这多余的 1 bit，可以区分出是 wr_ptr 太快，将 rd_ptr 套圈了（wr_ptr = <code>1000</code>，rd_ptr = <code>0000</code>， 即 full），还是 rd_ptr 更快，追上了 wr_ptr（rd_ptr = wr_ptr = <code>1000</code>）。</p>
+<p>框图如下：</p>
+<p><img alt="full empty gen" src="/images/fifo-design-notes/full_empty_gen.png"></p>
+<p>这种 wr_ptr / rd_ptr 用 gray code 保存，比较/+1 用 binary 保存的方式，使得 design / debug 变得很简单，但是需要的资源比较多。如果全部使用 gray code，虽然可以降低资源占用，但是需要其他逻辑。</p>
+<h3>Dual Clock FIFO Design</h3>
+<p>下图是使用 Dual port RAM 的异步 FIFO 框图，其中 wr_ptr 和 rd_ptr 直接使用 gray code，节省了 gray code 和 binary code 之间的转换逻辑。</p>
+<p><img alt="dual clock fifo" src="/images/fifo-design-notes/dual_port_fifo.png"></p>
+<p>和前面的逻辑类似，使用多 1 bit 来辅助区分 full / empt，不过因为改成用 gray code 来比较，所以稍有不同，下图显示了 FIFO 从 empty 到 full 再到 empty 的过程：</p>
+<p><img alt="full empty condition" src="/images/fifo-design-notes/full_empty_condition.png"></p>
+<ol>
+<li>
+<p>FIFO empty</p>
+<p>当 wr_ptr = rd_ptr 时 FIFO empty</p>
+</li>
+<li>
+<p>FIFO full</p>
+<p>如上图，FIFO 初始状态为 empty，然后连续写入 8 个数据，再读出 8 个数据，此时 wr_ptr = rd_ptr = 7，FIFO 又变为 empty。此时如果再写入一个数据，wr_ptr = 8，rd_ptr = 7，如果仍然使用前面介绍的方法（MSB不同，剩余位相同)，则会得出 FIFO full 的错误结论，实际上 FIFO 并没有满。</p>
+<p>仔细观察 gray code 的对称性，就可以知道，当 full 时（wr_ptr 将 rd_ptr 套圈时），MSB 不同，wr_ptr 的 2nd MSB 要先翻转，才和 rd_ptr 相同。所以，当下面 3 个条件都满足时，FIFO full：</p>
+<ol>
+<li>
+<p>wr_ptr 和 rd_ptr 的 MSB 不相等</p>
+</li>
+<li>
+<p>wr_ptr 的 2nd MSB 翻转后和 rd_ptr 的 2nd MSB 相等</p>
+</li>
+<li>
+<p>剩余 bits 全部相等</p>
+</li>
+</ol>
+</li>
+</ol>
+<p><br></p>
+<h2>Summary</h2>
+<hr>
+<p>总结 FIFO 的设计，只要注意 FIFO 通过 wr_ptr 和 rd_ptr 得到 full / empty，而且使用 gray code 来跨时钟域，基本上就没问题了 :-D</p>
+<p><br></p>
+<h2>Ref</h2>
+<p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art of Hardware Architecture: Design Methods and Techniques for Digital Circuits</a></p>
+<p><a href="http://www.amazon.com/Advanced-FPGA-Design-Architecture-Implementation/dp/0470054379/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1432020884&amp;sr=1-1&amp;keywords=advanced+fpga+design">Advanced FPGA Design: Architecture, Implementation, and Optimization</a></p>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<div id="aboutme">
+        <p>
+            <img width="100%" class="img-thumbnail" src="https://guqian110.github.io/images/logo.png"/>
+        </p>
+    <p>
+      <strong>About Qian Gu</strong><br/>
+        Icer + BYR
+    </p>
+</div><!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="i"><i class="fa fa-t-square fa-lg"></i> g</a></li>
+    <li class="list-group-item"><a href="t"><i class="fa fa-t-square fa-lg"></i> h</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="https://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group list-inline tagcloud" id="tags">
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/arduino.html">Arduino</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/bufexplorer.html">BufExplorer</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/build-blog.html">Build Blog</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/c.html">C++</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/case.html">case</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/clock-design.html">clock design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-dividers.html">clock dividers</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-generate-unit.html">clock generate unit</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-resource.html">clock resource</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/code.html">code</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/coding-style.html">coding style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/comment-style.html">comment style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/configurable-design.html">configurable design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/const.html">const</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/correlation-coefficient.html">correlation coefficient</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/cscope.html">cscope</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ctags.html">ctags</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/data-type.html">data type</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/delay.html">delay</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-procesing.html">digital procesing</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-processing.html">digital processing</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxverilog.html">doxverilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/doxygen.html">doxygen</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxygentoolkit.html">DoxygenToolKit</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fft.html">FFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/fifo.html">FIFO</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/flip-flop.html">flip-flop</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fpga.html">FPGA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/frequency.html">frequency</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fsm.html">fsm</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/glitch.html">glitch</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/gmail.html">Gmail</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/graphviz.html">graphviz</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/gtd.html">GTD</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/hazard.html">hazard</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/huo-zhao.html">活着</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ifft.html">IFFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/intel-galileo.html">Intel Galileo</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ip-core.html">IP core</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ise.html">ISE</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/latch.html">latch</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/linux.html">Linux</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/lookupfile.html">lookupfile</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/markdown.html">markdown</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/matlab.html">matlab</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/modelsim.html">Modelsim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/nerdtree.html">NERDTree</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/ofdm.html">OFDM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/on-top-of-tides.html">On Top of Tides</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/open-source-hardware.html">Open-source Hardware</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/package-management.html">Package Management</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/parameterization.html">parameterization</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pipeline.html">pipeline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pkm.html">PKM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/powerline.html">Powerline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/project-setting.html">project setting</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pulse-edge-detection.html">pulse edge detection</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/regular-expression.html">regular expression</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/reset.html">reset</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/review.html">review</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/shi-jian-guan-li.html">时间管理</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/snr.html">SNR</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ssh.html">SSH</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/sta.html">STA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/steve-jobs.html">Steve Jobs</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/sublime-text.html">Sublime Text</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/syntax.html">syntax</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/synthesis.html">synthesis</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/taglist.html">taglist</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/tail-bitting-convolution.html">tail bitting convolution</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/the-catcher-in-the-rye.html">The Catcher in The Rye</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/verilog.html">Verilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/vhdl.html">VHDL</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/vim.html">Vim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vim_signature.html">vim_signature</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vivado.html">Vivado</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vundle.html">vundle</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/warcraft.html">WarCraft</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/wine.html">Wine</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/winmanager.html">WinManager</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/xilinx.html">Xilinx</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yocto.html">Yocto</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yu-hua.html">余华</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+
+<!-- Sidebar/Github -->
+<li class="list-group-item">
+  <h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+  <div id="gh_repos">
+    <p class="list-group-item">Status updating...</p>
+  </div>
+</li>
+<!-- End Sidebar/Github -->
+
+<!-- Sidebar/Links -->
+<li class="list-group-item">
+  <h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+  <ul class="list-group" id="links">
+    <li class="list-group-item">
+      <a href="http://getpelican.com/" target="_blank">Pelican</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://python.org/" target="_blank">Python.org</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Links -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Qian Gu
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://guqian110.github.io/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://guqian110.github.io/theme/js/respond.min.js"></script>
+
+
+
+<!-- GitHub JS Code -->
+<script type="text/javascript">
+$(document).ready(function () {
+  if (!window.jXHR) {
+    var jxhr = document.createElement('script');
+    jxhr.type = 'text/javascript';
+    jxhr.src = 'https://guqian110.github.io/theme/js/jXHR.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(jxhr, s);
+  }
+
+  github.showRepos({
+    user: 'guqian110',
+    count: 5,
+    skip_forks: false,
+    target: '#gh_repos'
+  });
+});
+</script>
+<script src="https://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+<!-- End GitHub JS Code -->
+
+
+</body>
+</html>

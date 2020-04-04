@@ -3,7 +3,7 @@ Date: 2014-04-11 23:33
 Category: Misc
 Tags: Gmail 
 Slug: how_to_use_gmail_gracefully
-Author: Chien Gu
+Author: Qian Gu
 Summary: 使用 Gmail 已经快 5 年了，但是最近才发现自己的使用方法根本不对，摸索了 2 天，总结一下使用心得～
 
 Gmail 是 Google 提供的邮箱，细数使用 Gmail 已经快 5 年了，但是最近才发现自己的使用方法根本不对，摸索了 2 天，总结一下使用心得～

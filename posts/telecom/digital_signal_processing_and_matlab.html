@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>数字信号处理和相关matlab函数总结 - Qian's Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="https://guqian110.github.io/images/favicon.png" rel="icon">
+
+<link rel="canonical" href="https://guqian110.github.io/posts/telecom/digital_signal_processing_and_matlab.html">
+
+        <meta name="author" content="Qian Gu" />
+        <meta name="keywords" content="digital procesing,matlab" />
+        <meta name="description" content="总结信号处理和matlab相关应用" />
+
+        <meta property="og:site_name" content="Qian's Blog" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="数字信号处理和相关matlab函数总结"/>
+        <meta property="og:url" content="https://guqian110.github.io/posts/telecom/digital_signal_processing_and_matlab.html"/>
+        <meta property="og:description" content="总结信号处理和matlab相关应用"/>
+        <meta property="article:published_time" content="2014-09-03" />
+            <meta property="article:section" content="Telecom" />
+            <meta property="article:tag" content="digital procesing" />
+            <meta property="article:tag" content="matlab" />
+            <meta property="article:author" content="Qian Gu" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="https://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://guqian110.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="https://guqian110.github.io/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://guqian110.github.io/" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="https://guqian110.github.io/images/logo.png" width=""/> Qian's Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="https://guqian110.github.io/category/arduino.html">Arduino</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/ic.html">Ic</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/misc.html">Misc</a>
+                        </li>
+                        <li class="active">
+                            <a href="https://guqian110.github.io/category/telecom.html">Telecom</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="https://guqian110.github.io" title="Qian's Blog"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="https://guqian110.github.io/category/telecom.html" title="Telecom">Telecom</a></li>
+                <li class="active">数字信号处理和相关matlab函数总结</li>
+            </ol>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://guqian110.github.io/posts/telecom/digital_signal_processing_and_matlab.html"
+                       rel="bookmark"
+                       title="Permalink to 数字信号处理和相关matlab函数总结">
+                        数字信号处理和相关matlab函数总结
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-09-03T23:16:00+08:00"> 2014-09-03 23:16</time>
+    </span>
+
+
+            <span class="label label-default">By</span>
+            <a href="https://guqian110.github.io/author/qian-gu.html"><i class="fa fa-user"></i> Qian Gu</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://guqian110.github.io/tag/digital-procesing.html">digital procesing</a>
+        /
+	<a href="https://guqian110.github.io/tag/matlab.html">matlab</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>学了这么多年的通信，却还是对信号处理的知识一知半解，应付考试还可以，但在实际应用中还是感到力不从心，很多知识都忘了。翻了一下午的 《信号与系统》、《数字信号处理》，简单总结一下。</p>
+<p>《信号与系统》算是通信专业最基础的专业课了。</p>
+<p>信号部分主要介绍信号的相关定义、分类、常用信号和三大变换：傅立叶变换、拉普拉斯变换和z 变换。</p>
+<p>系统部分主要从时域和频域使用不同的方法分析线性时不变系统（LTI）的性质。</p>
+<p>《数字信号处理》算是前一门课的深入，现在利用计算机处理信号，首先就是要将模拟信号数字化，然后进行处理。这门课也就是讲相关的知识。</p>
+<p>一般教材就讲两大部分：第一部分首先承接《信号与系统》，时域的连续信号要在计算机中处理就必须采样，变为时域离散信号，这部分就讲离散时间信号的处理，比如 z 变换 和离散傅立叶变换。第二部分讲数字滤波器的设计，包括 FIR 和 IIR 两种。</p>
+<p><br></p>
+<h2>Signal Processing</h2>
+<hr>
+<p><em>这部分是我串联的这两本书中很小的一部分知识，算是一个备忘的笔记吧，作为一名学渣，一个月不看也会忘记不少 =.=</em></p>
+<p><em>从 《信号与系统》 中我们可以知道：</em></p>
+<p><strong>周期信号 （连续）傅立叶级数 （CFS）</strong></p>
+<p>首先，由高数知识可以知道：只要满足 Dirichlet 条件，周期信号就可以进行傅立叶级数分解，可以得到幅度频谱和相位频谱。</p>
+<p>时域信号是周期的、连续的，频域信号是离散的。</p>
+<p><strong>非周期信号 （连续）傅立叶变换 （CFT)</strong></p>
+<p>周期信号的周期无限增大，就可以将周期信号转化为非周期信号，从而得到非周期信号的傅立叶变换。</p>
+<p>得到的频率域的结果为连续信号，计算结果为时域信号的频谱密度函数，简称频谱函数。</p>
+<p><strong>周期信号 （连续）傅立叶变换 （CFT)</strong></p>
+<p>对于周期信号，因为它不满足绝对可积的条件，所以从非周期信号无法直接推广。但是借助 <em>奇异函数</em>（如冲激函数）的概念，可以使许多不满足绝对可积的信号（如周期信号）存在傅立叶变换。</p>
+<p>周期信号的傅立叶变换结果由一些冲激函数组成，冲激函数的强度是对应的傅立叶级数的 2pi 倍，频谱是离散的。</p>
+<p>这样，周期信号和非周期信号的傅立叶分析得到了统一。</p>
+<p><em>接下来，就要进入《数字信号处理》部分了：</em></p>
+<p><strong>离散时间信号傅立叶变换 （DTFT)</strong></p>
+<p>时域连续信号经过采样，得到离散时间信号，对于离散时间信号，可以从 z 变换中引出 DTFT 的定义。</p>
+<p>DTFT 是一种特殊的傅立叶变换（FT），它满足所有的傅立叶变换的性质。</p>
+<p><strong>离散傅立叶变换 （DFT）</strong></p>
+<p>虽然 DTFT 解决了信号在时域的连续问题，但是变换结果仍然是连续信号，也就是说在频域仍然是连续的，这样计算机仍然是无法处理的。所以，就引出了离散傅立叶级数（DFS)和离散傅立叶变换（DFT）。</p>
+<p>时域信号的周期性对应着频域的离散化，而且时域信号的离散化对应着频域的周期性。由这两点，可以知道周期的离散信号具有离散的、周期的频谱，也就是离散傅立叶级数（DFS）。</p>
+<p>把时域和频域的数据长度都限定在主周期，那么就得到了标准的离散傅立叶变换（DFT）。</p>
+<p>经过分析，可以知道，DFT 是 z 变换的取样，也是 DTFT 的取样结果。</p>
+<p>DFT 因为是离散的，长度有限，所以很适合计算机计算，而且人们发明了高效地计算 DFT 的方法 —— FFT 。</p>
+<p>知乎上还有一篇专栏的文章，得到了非常多人的赞同，可以进一步参考。</p>
+<p><a href="http://zhuanlan.zhihu.com/wille/19763358">傅里叶分析之掐死教程（完整版）更新于2014.06.06</a></p>
+<p><br></p>
+<h2>Matlab</h2>
+<hr>
+<h3>basic</h3>
+<p>分析各种变化，可以得到以下的关系：</p>
+<p>N 点的 DFT（FFT），其结果对应的</p>
+<p>数字角频率 w 为 [0, 2pi)</p>
+<p>模拟角频率 Ω 为 [0, Ωs)</p>
+<p>模拟频率 f 为 [0, fs)</p>
+<p>所以对于 N 点 FFT 的结果，对应的横坐标频率的范围为 [0, fs)。</p>
+<p>matlab 提供了函数 fft 和 fftshift 直接完成变换。</p>
+<h3>adv</h3>
+<p>我们在对一个信号进行采样分析时，首先需要确定两个参数：参数有采样频率 <code>Fs</code>，采样点数 <code>N</code>，这两个因素决定了之后可以得到的时频域效果。</p>
+<p>假设我们的采样频率为 Fs （采样周期为 T = 1/Fs），一共采了 N 个点，那么相当于对信号进行了截断，截断长度为 L = N * T 秒。这 3 个参数就决定了我们的最终结果。</p>
+<p>在信号处理中存在下面的 3 个问题：</p>
+<ul>
+<li>
+<p>频谱混叠。如果信号不是带限的，那么为了减小频谱混叠的影响，我们应该<strong>尽可能提高采样频率 Fs</strong>，而且 Fs 越大，时频域分辨率也越高。</p>
+</li>
+<li>
+<p>频率分辨率和栅栏效应。因为 DFT 是 DTFT 的等间隔采样，那么 N 越大，采样点数越多，栅栏就越小。为了提高频率分辨率 <code>f0 = Fs/N</code>，我们应该<strong>尽可能增大 N</strong>，而且为了提高计算效率，N 等于 2 的 M 次方）。</p>
+</li>
+<li>
+<p>截断效应和频谱泄漏。如果信号是无限长的，那么必须把它截断到长度 <code>L = N*T = N/Fs</code>。截断会带来吉布斯效应，并且引入窗函数的频谱，造成频谱泄漏。应该<strong>使得 L 包含信号的绝大部分</strong>。</p>
+</li>
+</ul>
+<p>下面举例说明非周期信号和周期信号的分析：</p>
+<ol>
+<li>
+<p>非周期信号</p>
+<p>假设我们要分析 tau = 1 的矩形窗函数，我们知道它的频谱，且取第一零点 1/tau = 1 为最高频，假设 8 倍采样，即 Fs = 8 Hz，假设频谱分辨率小于 0.1 Hz 即达到需求，则可以得到 N = 128，此时验证 L = 16 满足条件。由 tau 和 Fs 得到采样点包含 8 个 1 和 120 个0，所以：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Fs</span> <span class="p">=</span> <span class="mi">8</span><span class="p">;</span>
+<span class="n">N</span> <span class="p">=</span> <span class="mi">128</span><span class="p">;</span>
+<span class="n">x</span> <span class="p">=</span> <span class="p">[</span><span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">zeors</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">120</span><span class="p">)];</span>
+<span class="n">X</span> <span class="p">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">fftshift</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">x</span><span class="p">)));</span>
+<span class="n">f</span> <span class="p">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">Fs</span><span class="o">/</span><span class="n">N</span> <span class="o">-</span> <span class="n">Fs</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">X</span><span class="p">);</span> <span class="n">grid</span> <span class="n">on</span><span class="p">;</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;f / Hz&#39;</span><span class="p">);</span> <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Amplitude Response&#39;</span><span class="p">);</span>
+<span class="n">title</span><span class="p">(</span><span class="s">&#39;tau = 1 rectangle window&#39;</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>结果如下图：</p>
+<p><img alt="rect" src="/images/digital_signal_processing_and_matlab/rect_window.jpg"></p>
+</li>
+<li>
+<p>周期信号</p>
+<p>假设信号为 x = 1 + 1/2<em>cos(2</em>pi<em>15</em>t) + 2<em>sin(2</em>pi<em>40</em>t)，包含一个直流分量和 f1 = 15, f2 = 40 Hz 的分量，fm = f2 = 40 Hz，若 8 倍采样，有 Fs = fm*8，若 fdelta &lt; 0.1 hz，有 N = 4096，所以：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">f1</span> <span class="p">=</span> <span class="mi">15</span><span class="p">;</span>
+<span class="n">f2</span> <span class="p">=</span> <span class="mi">40</span><span class="p">;</span>
+<span class="n">Fs</span> <span class="p">=</span> <span class="n">f2</span><span class="o">*</span><span class="mi">8</span><span class="p">;</span>
+<span class="n">w1</span> <span class="p">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="n">f1</span><span class="o">/</span><span class="n">Fs</span><span class="p">;</span>
+<span class="n">w2</span> <span class="p">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="n">f2</span><span class="o">/</span><span class="n">Fs</span><span class="p">;</span>
+<span class="n">n</span> <span class="p">=</span> <span class="mi">0</span> <span class="p">:</span> <span class="n">N</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="n">x</span> <span class="p">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="nb">cos</span><span class="p">(</span><span class="n">w1</span><span class="o">*</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">w2</span><span class="o">*</span><span class="n">n</span><span class="p">);</span>
+<span class="n">X</span> <span class="p">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">fftshift</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">x</span><span class="p">)));</span>
+<span class="n">f</span> <span class="p">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">Fs</span><span class="o">/</span><span class="n">N</span> <span class="o">-</span> <span class="n">Fs</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">X</span><span class="p">);</span> <span class="n">grid</span> <span class="n">on</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;f / Hz&#39;</span><span class="p">);</span> <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Amplitude Response&#39;</span><span class="p">);</span>
+<span class="n">title</span><span class="p">(</span><span class="s">&#39;x = 1 + 1/2*cos(w1*n) + 2*sin(w2*n)&#39;</span><span class="p">);</span>
+</pre></div>
+</td></tr></table>
+
+<p>结果如下：</p>
+<p><img alt="period" src="/images/digital_signal_processing_and_matlab/period.jpg"></p>
+</li>
+</ol>
+<p><br></p>
+<p>综上，我们就有分析一个信号的<strong>通用步骤</strong>：</p>
+<ol>
+<li>
+<p><strong>首先确定Fs</strong>：信号的频率信息对于我们是未知的，我们最多只知道信号的带宽，根据信号带宽，我们就可以确定一个采样率 Fs，比如 8 倍采样</p>
+</li>
+<li>
+<p>确定了 Fs，实际上的 w 就已经确定了，只是我们是不知道它的具体值（因为不知道fm）</p>
+</li>
+<li>
+<p><strong>下一步应该确定 N</strong>：由公式1和公式2可以推出 <code>N = Fs/fm*k</code>。当Fs最小为奈奎斯特采样速率，k = 1 时，N 取到最小值 2，这种情况下虽然没有混叠，但是 fdelta 太大了，不利于观察频谱，应该由 <code>fdelta = Fs/N</code> 决定 N 的最小值</p>
+</li>
+</ol>
+<p>====================================== 补充一下 FFT 补零 ========================================</p>
+<p>验证程序：假设一个 sin 信号，f = 125， 8 倍采样有 Fs = 1000，</p>
+<ol>
+<li>
+<p>N = 8，结果如图：</p>
+<p><img alt="period" src="/images/digital_signal_processing_and_matlab/N_8.jpg"></p>
+</li>
+<li>
+<p>N = 8，补零到 64 点，结果如图：</p>
+<p><img alt="period" src="/images/digital_signal_processing_and_matlab/padding.jpg"></p>
+</li>
+<li>
+<p>N = 64，结果如图：</p>
+<p><img alt="period" src="/images/digital_signal_processing_and_matlab/N_64.jpg"></p>
+</li>
+</ol>
+<p>直接给结论（上面的图也证明了这些结论）：</p>
+<ol>
+<li>
+<p>在时域的采样序列后面添加后缀 0 ，等效在频域内插。频域内插只能从已有的样点推算，因为采样点数不够丢失的原始信号的信息无法通过内插来补偿。</p>
+</li>
+<li>
+<p>时域补零实际上改变了采样序列的，所以频域结果和原始信号不同，</p>
+</li>
+<li>
+<p>补零无法提高频率分辨率，内插出的新分量不是真正物理意义上的频率，是 “假频”，真正的频率分辨率并没有提高。频率分辨率只能由提高采样点数来提高。</p>
+</li>
+</ol>
+<p><br></p>
+<h2>Reference</h2>
+<p><a href="http://book.douban.com/subject/3712794/">信号与系统引论</a></p>
+<p><a href="http://book.douban.com/subject/4025528/">数字信号处理</a></p>
+<p><a href="http://book.douban.com/subject/24868505/">数字信号处理教程——MATLAB释义与实现</a></p>
+            </div>
+            <!-- /.entry-content -->
+<section class="well" id="related-posts">
+    <h4>Related Posts:</h4>
+    <ul>
+        <li><a href="https://guqian110.github.io/posts/telecom/summary_of_frequency_in_digital_signal_processing.html">数字信号处理中的各种频率</a></li>
+        <li><a href="https://guqian110.github.io/posts/telecom/correlation_coefficient_and_matlab_function.html">相关系数及Matlab函数</a></li>
+    </ul>
+</section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<div id="aboutme">
+        <p>
+            <img width="100%" class="img-thumbnail" src="https://guqian110.github.io/images/logo.png"/>
+        </p>
+    <p>
+      <strong>About Qian Gu</strong><br/>
+        Icer + BYR
+    </p>
+</div><!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="i"><i class="fa fa-t-square fa-lg"></i> g</a></li>
+    <li class="list-group-item"><a href="t"><i class="fa fa-t-square fa-lg"></i> h</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="https://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group list-inline tagcloud" id="tags">
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/arduino.html">Arduino</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/bufexplorer.html">BufExplorer</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/build-blog.html">Build Blog</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/c.html">C++</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/case.html">case</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/clock-design.html">clock design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-dividers.html">clock dividers</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-generate-unit.html">clock generate unit</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-resource.html">clock resource</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/code.html">code</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/coding-style.html">coding style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/comment-style.html">comment style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/configurable-design.html">configurable design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/const.html">const</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/correlation-coefficient.html">correlation coefficient</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/cscope.html">cscope</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ctags.html">ctags</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/data-type.html">data type</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/delay.html">delay</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-procesing.html">digital procesing</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-processing.html">digital processing</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxverilog.html">doxverilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/doxygen.html">doxygen</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxygentoolkit.html">DoxygenToolKit</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fft.html">FFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/fifo.html">FIFO</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/flip-flop.html">flip-flop</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fpga.html">FPGA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/frequency.html">frequency</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fsm.html">fsm</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/glitch.html">glitch</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/gmail.html">Gmail</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/graphviz.html">graphviz</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/gtd.html">GTD</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/hazard.html">hazard</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/huo-zhao.html">活着</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ifft.html">IFFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/intel-galileo.html">Intel Galileo</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ip-core.html">IP core</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ise.html">ISE</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/latch.html">latch</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/linux.html">Linux</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/lookupfile.html">lookupfile</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/markdown.html">markdown</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/matlab.html">matlab</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/modelsim.html">Modelsim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/nerdtree.html">NERDTree</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/ofdm.html">OFDM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/on-top-of-tides.html">On Top of Tides</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/open-source-hardware.html">Open-source Hardware</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/package-management.html">Package Management</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/parameterization.html">parameterization</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pipeline.html">pipeline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pkm.html">PKM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/powerline.html">Powerline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/project-setting.html">project setting</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pulse-edge-detection.html">pulse edge detection</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/regular-expression.html">regular expression</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/reset.html">reset</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/review.html">review</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/shi-jian-guan-li.html">时间管理</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/snr.html">SNR</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ssh.html">SSH</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/sta.html">STA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/steve-jobs.html">Steve Jobs</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/sublime-text.html">Sublime Text</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/syntax.html">syntax</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/synthesis.html">synthesis</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/taglist.html">taglist</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/tail-bitting-convolution.html">tail bitting convolution</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/the-catcher-in-the-rye.html">The Catcher in The Rye</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/verilog.html">Verilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/vhdl.html">VHDL</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/vim.html">Vim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vim_signature.html">vim_signature</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vivado.html">Vivado</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vundle.html">vundle</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/warcraft.html">WarCraft</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/wine.html">Wine</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/winmanager.html">WinManager</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/xilinx.html">Xilinx</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yocto.html">Yocto</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yu-hua.html">余华</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+
+<!-- Sidebar/Github -->
+<li class="list-group-item">
+  <h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+  <div id="gh_repos">
+    <p class="list-group-item">Status updating...</p>
+  </div>
+</li>
+<!-- End Sidebar/Github -->
+
+<!-- Sidebar/Links -->
+<li class="list-group-item">
+  <h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+  <ul class="list-group" id="links">
+    <li class="list-group-item">
+      <a href="http://getpelican.com/" target="_blank">Pelican</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://python.org/" target="_blank">Python.org</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Links -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Qian Gu
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://guqian110.github.io/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://guqian110.github.io/theme/js/respond.min.js"></script>
+
+
+
+<!-- GitHub JS Code -->
+<script type="text/javascript">
+$(document).ready(function () {
+  if (!window.jXHR) {
+    var jxhr = document.createElement('script');
+    jxhr.type = 'text/javascript';
+    jxhr.src = 'https://guqian110.github.io/theme/js/jXHR.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(jxhr, s);
+  }
+
+  github.showRepos({
+    user: 'guqian110',
+    count: 5,
+    skip_forks: false,
+    target: '#gh_repos'
+  });
+});
+</script>
+<script src="https://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+<!-- End GitHub JS Code -->
+
+
+</body>
+</html>

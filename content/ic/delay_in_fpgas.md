@@ -3,7 +3,7 @@ Date: 2014-11-23 14:03
 Category: IC
 Tags: delay
 Slug: delay_in_fpgas
-Author: Chien Gu
+Author: Qian Gu
 Summary: 总结电路中的时延及其 FPGA 中的实现
 
 ## Delay in circuits
