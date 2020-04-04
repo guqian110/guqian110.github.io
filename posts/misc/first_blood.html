@@ -119,7 +119,7 @@
     </span>
           <span class="label label-default">Modified</span>
             <span class="modified">
-                <i class="fa fa-calendar"></i><time datetime="2020-04-04T18:03:00+08:00"> 2020-04-04 18:03</time>
+                <i class="fa fa-calendar"></i><time datetime="2020-04-05T00:12:00+08:00"> 2020-04-05 00:12</time>
             </span>
 
 
@@ -135,10 +135,12 @@
                 </div>
                 <h2>update</h2>
 <hr>
-<p>换电脑更新整个博客，折腾了一天记录一下：
-1. 之前 github 没有上传 <code>pelicanconf.py</code>，所以重新执行 <code>pelican-quickstart</code>
-2. 大部分工作都是在设置主题相关的配置
-3. 因为 github 上不仅包含生成的网站，还有原始文件及其他配置文件，所以将 Makefile 中的 <code>OUTPUT_PATH</code> 设置为跟目录，且为了防止手误删除整个目录，注释掉 <code>make clean</code> 功能</p>
+<p>换电脑更新整个博客，折腾了一天记录一下：</p>
+<ol>
+<li>将源文件和 pelican 设置挪到新的 repo: <code>blog_generator</code> 下</li>
+<li>将生成的 output 目录复制到 blog repo: <code>guqian110.github.io</code> 下</li>
+<li>每次更新，首先在 <code>blog_generator</code> 下 <code>make html</code>，然后手动 copy 到 <code>guqian110.github.io</code>，然后 commit, push</li>
+</ol>
 <h2>为什么要搭建自己的博客</h2>
 <hr>
 <p>首先，来看看各类门户博客的优缺点。</p>
