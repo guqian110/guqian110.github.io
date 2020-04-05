@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>如何优雅地使用 Gmail - Qian's Blog</title>
+    <title>PEP 翻译计划系列 —— PEP0 - Qian's Blog</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,20 +10,20 @@
 
     <link href="https://guqian110.github.io/images/favicon.png" rel="icon">
 
-<link rel="canonical" href="https://guqian110.github.io/posts/misc/how_to_use_gmail_gracefully.html">
+<link rel="canonical" href="https://guqian110.github.io/posts/python/peps_translate_project_pep0.html">
 
         <meta name="author" content="Qian Gu" />
-        <meta name="keywords" content="Gmail" />
-        <meta name="description" content="使用 Gmail 已经快 5 年了，但是最近才发现自己的使用方法根本不对，摸索了 2 天，总结一下使用心得～" />
+        <meta name="keywords" content="PEP" />
+        <meta name="description" content="PEPs 个人翻译系列 PEP0" />
 
         <meta property="og:site_name" content="Qian's Blog" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="如何优雅地使用 Gmail"/>
-        <meta property="og:url" content="https://guqian110.github.io/posts/misc/how_to_use_gmail_gracefully.html"/>
-        <meta property="og:description" content="使用 Gmail 已经快 5 年了，但是最近才发现自己的使用方法根本不对，摸索了 2 天，总结一下使用心得～"/>
-        <meta property="article:published_time" content="2014-04-11" />
-            <meta property="article:section" content="Misc" />
-            <meta property="article:tag" content="Gmail" />
+        <meta property="og:title" content="PEP 翻译计划系列 —— PEP0"/>
+        <meta property="og:url" content="https://guqian110.github.io/posts/python/peps_translate_project_pep0.html"/>
+        <meta property="og:description" content="PEPs 个人翻译系列 PEP0"/>
+        <meta property="article:published_time" content="2020-04-05" />
+            <meta property="article:section" content="Python" />
+            <meta property="article:tag" content="PEP" />
             <meta property="article:author" content="Qian Gu" />
 
 
@@ -67,8 +67,11 @@
                         <li >
                             <a href="https://guqian110.github.io/category/linux.html">Linux</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="https://guqian110.github.io/category/misc.html">Misc</a>
+                        </li>
+                        <li class="active">
+                            <a href="https://guqian110.github.io/category/python.html">Python</a>
                         </li>
                         <li >
                             <a href="https://guqian110.github.io/category/telecom.html">Telecom</a>
@@ -95,17 +98,17 @@
         <div class="col-sm-9">
             <ol class="breadcrumb">
                 <li><a href="https://guqian110.github.io" title="Qian's Blog"><i class="fa fa-home fa-lg"></i></a></li>
-                <li><a href="https://guqian110.github.io/category/misc.html" title="Misc">Misc</a></li>
-                <li class="active">如何优雅地使用 Gmail</li>
+                <li><a href="https://guqian110.github.io/category/python.html" title="Python">Python</a></li>
+                <li class="active">PEP 翻译计划系列 —— PEP0</li>
             </ol>
     <section id="content">
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://guqian110.github.io/posts/misc/how_to_use_gmail_gracefully.html"
+                    <a href="https://guqian110.github.io/posts/python/peps_translate_project_pep0.html"
                        rel="bookmark"
-                       title="Permalink to 如何优雅地使用 Gmail">
-                        如何优雅地使用 Gmail
+                       title="Permalink to PEP 翻译计划系列 —— PEP0">
+                        PEP 翻译计划系列 —— PEP0
                     </a>
                 </h1>
             </header>
@@ -115,7 +118,7 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-04-11T23:33:00+08:00"> 2014-04-11 23:33</time>
+        <i class="fa fa-calendar"></i><time datetime="2020-04-05T23:56:00+08:00"> 2020-04-05 23:56</time>
     </span>
 
 
@@ -125,117 +128,65 @@
 
 
 <span class="label label-default">Tags</span>
-	<a href="https://guqian110.github.io/tag/gmail.html">Gmail</a>
+	<a href="https://guqian110.github.io/tag/pep.html">PEP</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>Gmail 是 Google 提供的邮箱，细数使用 Gmail 已经快 5 年了，但是最近才发现自己的使用方法根本不对，摸索了 2 天，总结一下使用心得～</p>
-<p><br></p>
-<h2>为何使用 Gmail</h2>
+                <h2>PEP 简介</h2>
 <hr>
-<p>关于 QQ mail 和 Gmail 谁好谁坏的问题，知乎上有一堆</p>
-<p><a href="http://www.zhihu.com/question/20010081">为什么这么多人说 Gmail 好用？Gmail 和 QQmail 相比到底好在哪里？</a></p>
-<p><a href="http://www.zhihu.com/question/19606703">为什么现在这么多受过高等教育的人喜欢用 Gmail，国内的邮箱如何？</a></p>
-<p><a href="http://www.zhihu.com/question/19724238">不喜欢 Gmail 而喜欢 QQ 邮箱的人，为什么会产生这样的偏好？</a></p>
-<p>我选择 Gmail 的理由：</p>
-<ol>
-<li>
-<p>Gmail 账户是 Google 所有服务的入口，除了可以使用 Gmail 外和其他所有 Google 产品都有无缝的整合 。</p>
-</li>
-<li>
-<p>强大的功能，比如我最喜欢的 <em>邮件对话功能</em> 和 <em>label 功能</em>，还有 <em>过滤器</em>，Chrome + Gmail，给你最简洁强大的体验 。</p>
-</li>
-<li>
-<p>安全，邮件不会受到某些机器&amp;人工的监视，免受 GFW 的干扰</p>
-<p>这恰恰是一些人不使用 Gmail 的原因，因为 Gmail 不稳定，但是关于这个问题，引用 <a href="http://www.zhihu.com/people/hecaitou">和菜头</a> 在知乎上的一句话 <a href="http://www.zhihu.com/question/19580396">“因为Gmail总有访问正常的一天，只要Google不死。对未来没有信心做人和一条咸鱼又有什么区别？”</a>，况且，在 Geek 面前这都不是问题 。）</p>
-<p>关于 Google 和百度、天朝的恩怨，一个有独立判断能力的人都明白为什么 Google 退出中国 。</p>
-</li>
-<li>
-<p>我是 G 粉，Gmail 代表了自由 :-D</p>
-</li>
-<li>
-<p>Gmail 可以代收发邮件，测试了一下 QQ mail 和 163 是可以用的，所以，只需要 一个 Gmail 就可以管理 3 个邮箱了。</p>
-<p>对于中国人来说，邮箱貌似是一个很边缘化的东西，而对于西方国家来说，邮箱交流是一件再普通的事了。听说微软 和 Google 公司即使一个办公室内的同事，上下级都是用邮件交流的（国内互联网公司貌似也有，但是没有达到那么频繁的程度），全世界的邮件流量超过 80% 在欧美 。所以，QQ mail 上到处是贺卡、问候、漂流瓶，这也是为什么用 QQ mail 发一份简历时为什么显得不正式的原因 。</p>
-</li>
-</ol>
-<p><br></p>
-<h2>如何优雅地使用 Gmail</h2>
-<hr>
-<p>擅自使用知乎风格来命名这个子标题，其实只是我个人的一些使用心得 :-D</p>
-<p>完整的攻略当然是官方的<a href="https://support.google.com/mail/?hl=zh-Hans#topic=3394144">帮助</a></p>
-<h3>代收其他邮箱</h3>
-<p>官方帮助文档，导入<a href="https://support.google.com/mail/answer/21289?hl=zh-Hans&amp;ref_topic=3394220">邮箱账户</a></p>
-<p><img alt="import" src="/images/how-to-use-gmail-gracefully/import.png"></p>
-<p>Gmail 最多可以导入 5 个邮箱账户的邮件，对于普通人来说，远远足够了 。</p>
-<h3>Inbox /Archive</h3>
-<p>这是我最喜欢 Gmail 的地方，也是我以前一直没有正确使用的功能 。以前，我的 inbox 里面有大概 800+  份邮件，包括已读/未读，私人邮件、工作邮件、广告、各个网站注册激活链接、社交网络消息提醒等，全部混在一起 。</p>
-<p>从知乎上找到一个改变我对邮箱 Inbox/Archive 的认识的回答，问题是 <a href="http://www.zhihu.com/question/20042480">如何有效地使用 Gmail 的 Archive（归档）功能？</a> ，回答者是<a href="http://www.zhihu.com/people/unogzx">钢盅郭子</a> 。</p>
-<p>精髓就是</p>
+<p><a href="https://www.python.org/dev/peps/">PEPs</a> 是 Python Enhancement Proposals 的缩写，它源自于 Python 核心开发者的邮件列表所讨论的问题、提议，最终汇总成了正式文档，为众多 Python 用户提供指导。</p>
+<p><a href="https://www.python.org/dev/peps/">PEP0</a> 是所有 PEP 的目录，<a href="https://www.python.org/dev/peps/pep-0001/">PEP1</a> 说明了 PEP 的目的以及 Guidelines，这里不再赘述。</p>
+<p>从 <a href="https://www.python.org/dev/peps/">PEP0</a> 中可以知道，PEP 一共分为 3 类：</p>
 <blockquote>
-<ul>
-<li>
-<p>Inbox = 待/未处理</p>
-</li>
-<li>
-<p>Archive = 已/不处理</p>
-</li>
-</ul>
-<p>阅读完邮件（已读），却无法立刻做出响应（回复或开展相关工作）的可能性是很高的，此时可以将邮件留在收件箱内留待日后处理。</p>
-<p>而将邮件存档，则说明已经不再对此邮件感兴趣了，即便它始终未读，我们也可以通过其他信息（标题、收件人不是自己）确定这是一封不需要关注的邮件。</p>
-<p>有人认为 Inbox 可以覆盖 Archive 的功能。我觉得可以理解，毕竟，喜欢把所有工作都堆放在办公桌台面上的也是大有人在。但即使我们有许多的文件夹或标签可用来分类、标识，抽屉总还是办公桌的默认配置吧。</p>
+<ol>
+<li>I - Informational PEP</li>
+<li>P - Process PEP</li>
+<li>S - Standards Track PEP</li>
+</ol>
 </blockquote>
-<p>像我以前一样，读完的文件仍然保留在 Inbox 中，就像每次都在办公桌面上读完文件都不收拾，越摆越多，只是这个虚拟的办公桌不会堆不下文件 。</p>
-<p>正确的使用方法应该是把 Inbox 视为一个 tmp，在阅读完邮件后，该删除的删除、该归档的归档、该打标签的打标签，就像保持桌面整洁一样 。</p>
-<p><strong>P.S.</strong> 事实上，Inbox 只是一个标签，所谓 归档（Archive） 就是删除这个标签，一份处理完的邮件不再应该打上 Inbox 的标签，所以我们要进行归档 。</p>
-<h3>标签 &amp; 文件夹</h3>
-<p>Gmail 使用了标签代替文件夹，真是一个革命性的创举 。</p>
-<p>帮助里面[列举][lable]了 标签 相比于 文件夹 的优势</p>
+<p>PEP 根据状态可以分为下面几种：</p>
+<blockquote>
+<ol>
+<li>A - Accepted(Standards Track only) or Active proposal</li>
+<li>D - Deferred proposal</li>
+<li>F - Final proposal</li>
+<li>P - Provisional proposal</li>
+<li>R - Rejected proposal</li>
+<li>S - Superseded proposal</li>
+<li>W - Withdrawn proposal</li>
+</ol>
+</blockquote>
+<p><br></p>
+<h2>个人翻译计划</h2>
+<hr>
+<p>网上已经有很多人都翻译过了经典 PEP 章节，为了督促自己有计划地完成 PEP，也是为了以后可以温故而知新，在这里又自己重新翻译一遍。从 PEP0 中可以知道，各种各类的 PEP 加起来目前一共有 8101 篇，参考网上其他介绍，翻译计划中暂时选择了下面几篇，以后再持续更新。</p>
 <ul>
-<li>
-<p>一个会话可以拥有一个以上的标签，而一封邮件只能放在一个文件夹中</p>
-</li>
-<li>
-<p>会话可以同时存在于多个位置（收件箱、所有邮件、已发邮件等等），便于日后查找 。而在文件夹中，您必须记住邮件的存档位置，才能找到它 。</p>
-</li>
-<li>
-<p>您可以利用标签对会话进行搜索，而您不可能总是在文件夹内进行搜索 。</p>
-</li>
+<li>PEP 0 -- Index of Python Enhancement Proposals</li>
+<li>PEP 8 -- Style Guide for Python Code</li>
+<li>PEP 20 -- The Zen of Python</li>
+<li>PEP 202 -- List Comprehensions</li>
+<li>PEP 274 -- Dict Comprehensions</li>
+<li>PEP 234 -- Iterators</li>
+<li>PEP 257 -- Docstring Conventions</li>
+<li>PEP 279 -- The enumerate() built-in function</li>
+<li>PEP 282 -- A Logging System</li>
+<li>PEP 285 -- Adding a bool type</li>
+<li>PEP 289 -- Generator Expressions</li>
+<li>PEP 318 -- Decorators for Functions and Methods</li>
+<li>PEP 343 -- The "with" Statement</li>
+<li>PEP 380 -- Syntax for Delegating to a Subgenerator</li>
+<li>PEP 405 -- Python Virtual Environments</li>
+<li>PEP 484 -- Type Hints</li>
+<li>PEP 3115 -- Metaclasses in Python 3000</li>
+<li>PEP 3120 -- Using UTF-8 as the default source encoding</li>
 </ul>
-<p>所以，我们需要做的就是阅读邮件，然后按照邮件的属性，给它打上标签（label），比如私人邮件、工作邮件、学习邮件、注册验证邮件、社交邮件等等 。每种表情可以自定义颜色，按照邮件在我们心目中的重要程度，给每种标签赋予不同的颜色，一眼看上去，简洁明了，而且很好看 。</p>
-<p><a href="https://support.google.com/mail/answer/118708?rd=1">了解如何创建、修改、删除和搜索标签</a></p>
-<h3>星标邮件 &amp; 重要邮件</h3>
-<p>Gmail 提供了自动识别邮件重要性的功能，它可以根据算法，用户使用习惯等自动识别，标记一个邮件是否是 “重要的”，除此之外，我们可以自己给邮件打星标，来标记邮件的重要程度 。</p>
-<p>根据我的使用习惯，感觉超过 5 个标签，就有点让人迷惑了，所以，我使用的星标一共有 4 个：</p>
-<ul>
-<li>黄色星星   表示一般重要文件</li>
-<li>红色叹号 表示非常重要邮件</li>
-<li>紫色问号   表示未处理完，将来还需要处理</li>
-<li>绿色对号   表示已经处理完，暂时一段时间都不需要处理的邮件，除非我手动搜索<div class="highlight"><pre><span></span><span class="n">has</span><span class="o">:</span><span class="n">green</span><span class="o">-</span><span class="n">check</span>
-</pre></div>
-
-
-</li>
-</ul>
-<h3>过滤器</h3>
-<p>使用强大的过滤器，我们可以让 Gmail 实现自动对邮件进行分类</p>
-<p>比如，邮件里包含 “注册”、“激活”、“Active”、“Registration”、“Verify” 等单词，就可以自动打上 “注册验证”标签 。</p>
-<p>再比如，为转发邮箱 QQ mail 或者 163 邮箱设置自动打标签，标记为已读，自动存档、转发、删除等 。</p>
-<h3>实验室功能</h3>
-<p>Gmail 实验室有一些很好玩的功能，比如在邮件中看 Google Map，查看 Google Calendar，取消发送等 。至于 Google 目前主推的 Google+ 和 Google Drive 已经整合进 Gmail 了 。</p>
-<p>强大的 Gmail 真是让人越用越不释手 :-D</p>
 <p><br></p>
 <h2>参考</h2>
-<p><a href="http://xuyazhou.com/archives/248">收发Gmail 必学12招，善用邮件分类、前端管理当Gmail 达人</a></p>
-<p><a href="http://blog.acgtyrant.com/how-to-use-gmail-and-mailinglist-correctly.html">如何優雅地使用 Gmail &amp; Mailing List</a></p>
-<p><a href="http://www.zhihu.com/topic/19550519/top-answers?page=1">知乎 Gmail 精华问题</a></p>
+<p><a href="https://www.python.org/dev/peps/">PEP0</a></p>
+<p><a href="https://www.python.org/dev/peps/pep-0001/">PEP1</a></p>
+<p><a href="https://www.cnblogs.com/abella/p/10056875.html">python中的PEP是什么？怎么理解？（转）</a></p>
             </div>
             <!-- /.entry-content -->
-<section class="well" id="related-posts">
-    <h4>Related Posts:</h4>
-    <ul>
-        <li><a href="https://guqian110.github.io/posts/misc/how_to_use_gmail_elegantly.html">如何优雅地使用 Gmail</a></li>
-    </ul>
-</section>
     <hr/>
     <section class="comments" id="comments">
         <h2>Comments</h2>
@@ -248,8 +199,8 @@
             var disqus_config = function () {
                 this.language = "zh";
 
-                        this.page.identifier = '2014-04-11-how_to_use_gmail_gracefully';
-                        this.page.url = 'https://guqian110.github.io/posts/misc/how_to_use_gmail_gracefully.html';
+                        this.page.identifier = '2020-04-05-peps_translate_project_pep0';
+                        this.page.url = 'https://guqian110.github.io/posts/python/peps_translate_project_pep0.html';
             };
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
@@ -391,7 +342,7 @@
     <li class="list-group-item tag-4">
       <a href="https://guqian110.github.io/tag/glitch.html">glitch</a>
     </li>
-    <li class="list-group-item tag-3">
+    <li class="list-group-item tag-4">
       <a href="https://guqian110.github.io/tag/gmail.html">Gmail</a>
     </li>
     <li class="list-group-item tag-4">
@@ -453,6 +404,9 @@
     </li>
     <li class="list-group-item tag-4">
       <a href="https://guqian110.github.io/tag/parameterization.html">parameterization</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pep.html">PEP</a>
     </li>
     <li class="list-group-item tag-4">
       <a href="https://guqian110.github.io/tag/pipeline.html">pipeline</a>
@@ -588,7 +542,7 @@
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2015 Qian Gu
+         <div class="col-xs-10">&copy; 2020 Qian Gu
             &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
