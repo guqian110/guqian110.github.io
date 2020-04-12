@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>学习 Arduino #2 初识 Intel Galileo 开发板 - Qian's Blog</title>
+    <title>学习 Arduino #3 Intel Galileo Linux - Qian's Blog</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,20 +10,21 @@
 
     <link href="https://guqian110.github.io/images/favicon.png" rel="icon">
 
-<link rel="canonical" href="https://guqian110.github.io/posts/arduino/arduino_series_2_intel_galileo_development_board.html">
+<link rel="canonical" href="https://guqian110.github.io/posts/linux/learn_arduino_series_3_intel_galileo_linux.html">
 
         <meta name="author" content="Qian Gu" />
-        <meta name="keywords" content="Intel Galileo" />
-        <meta name="description" content="学习 Arduino，#2 初识 Intel Galileo 开发板" />
+        <meta name="keywords" content="Arduino,Linux" />
+        <meta name="description" content="学习 Arduino，#3 通过 Ethernet &amp; Serial Port 登录到 Galileo 上的 Linux 系统" />
 
         <meta property="og:site_name" content="Qian's Blog" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="学习 Arduino #2 初识 Intel Galileo 开发板"/>
-        <meta property="og:url" content="https://guqian110.github.io/posts/arduino/arduino_series_2_intel_galileo_development_board.html"/>
-        <meta property="og:description" content="学习 Arduino，#2 初识 Intel Galileo 开发板"/>
-        <meta property="article:published_time" content="2014-05-29" />
-            <meta property="article:section" content="Arduino" />
-            <meta property="article:tag" content="Intel Galileo" />
+        <meta property="og:title" content="学习 Arduino #3 Intel Galileo Linux"/>
+        <meta property="og:url" content="https://guqian110.github.io/posts/linux/learn_arduino_series_3_intel_galileo_linux.html"/>
+        <meta property="og:description" content="学习 Arduino，#3 通过 Ethernet &amp; Serial Port 登录到 Galileo 上的 Linux 系统"/>
+        <meta property="article:published_time" content="2014-06-13" />
+            <meta property="article:section" content="Linux" />
+            <meta property="article:tag" content="Arduino" />
+            <meta property="article:tag" content="Linux" />
             <meta property="article:author" content="Qian Gu" />
 
 
@@ -55,16 +56,13 @@
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                        <li class="active">
-                            <a href="https://guqian110.github.io/category/arduino.html">Arduino</a>
-                        </li>
                         <li >
                             <a href="https://guqian110.github.io/category/cc.html">C/c++</a>
                         </li>
                         <li >
                             <a href="https://guqian110.github.io/category/ic.html">Ic</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="https://guqian110.github.io/category/linux.html">Linux</a>
                         </li>
                         <li >
@@ -98,17 +96,17 @@
         <div class="col-sm-9">
             <ol class="breadcrumb">
                 <li><a href="https://guqian110.github.io" title="Qian's Blog"><i class="fa fa-home fa-lg"></i></a></li>
-                <li><a href="https://guqian110.github.io/category/arduino.html" title="Arduino">Arduino</a></li>
-                <li class="active">学习 Arduino #2 初识 Intel Galileo 开发板</li>
+                <li><a href="https://guqian110.github.io/category/linux.html" title="Linux">Linux</a></li>
+                <li class="active">学习 Arduino #3 Intel Galileo Linux</li>
             </ol>
     <section id="content">
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="https://guqian110.github.io/posts/arduino/arduino_series_2_intel_galileo_development_board.html"
+                    <a href="https://guqian110.github.io/posts/linux/learn_arduino_series_3_intel_galileo_linux.html"
                        rel="bookmark"
-                       title="Permalink to 学习 Arduino #2 初识 Intel Galileo 开发板">
-                        学习 Arduino #2 初识 Intel Galileo 开发板
+                       title="Permalink to 学习 Arduino #3 Intel Galileo Linux">
+                        学习 Arduino #3 Intel Galileo Linux
                     </a>
                 </h1>
             </header>
@@ -118,9 +116,11 @@
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-05-29T23:27:00+08:00"> 2014-05-29 23:27</time>
+        <i class="fa fa-calendar"></i><time datetime="2014-06-13T20:31:00+08:00"> 五 13 六月 2014</time>
     </span>
 
+            <span class="label label-default">Series</span>
+            Part 3 of Learn Arduino
 
             <span class="label label-default">By</span>
             <a href="https://guqian110.github.io/author/qian-gu.html"><i class="fa fa-user"></i> Qian Gu</a>
@@ -128,96 +128,295 @@
 
 
 <span class="label label-default">Tags</span>
-	<a href="https://guqian110.github.io/tag/intel-galileo.html">Intel Galileo</a>
+	<a href="https://guqian110.github.io/tag/arduino.html">Arduino</a>
+        /
+	<a href="https://guqian110.github.io/tag/linux.html">Linux</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h2>Preface</h2>
+                <h2>Linux on Galileo Board</h2>
 <hr>
-<p>Arduino 有很多开发板，分别针对不同的应用环境含有不同的模块。学习一款 Intel 推出的开发板 —— <em>Intel Galileo Development Board</em> 。</p>
-<p>Intel Gailileo Development Board 是 Intel 进入 Arduino 领域的试水产品，它含有一颗 Quark Soc X1000 CPU，这是一款 32 位、x86 构架、低功耗的 SoC 芯片，它的主频可以达到 400 MHz，内部有 512 KB 的 SRAM，同时 Galileo 有丰富的接口(USB, JTag, RS232, Ethernet, mPCIE...)，支持很多外围设备。</p>
-<p>Galileo 试图达到的目标是融合 Arduino 对硬件操作的便利和 Linux 系统对硬件操作完整支持。所以，Galileo 也兼容 Arduino 接口，你可以很方便的把 Arduino 项目移植到 Galileo 上运行，使用常用的一些 Arduino 库(Ethernet, Wi-Fi, SD, EEPROM...)也可以获得内部 Linux 系统的完整功能(Python, SSH, Telnet， OpenCV...)。</p>
-<p>总结一下我学习这块板子的知识，不仅仅为 Arduino 开发做准备，也为后面的一个竞赛(基于Yocto 项目)开发积累知识～</p>
+<p>Galileo 不是简单的 Arduino 板子，实际上它运行着一个 Linux 操作系统。把它看作是 “兼容 Arduibo 接口的板子” 或许更合适一些。</p>
+<p>Galileo 板子上容量为 8 MB 的 SPI Flash 中已经烧写了一个精简版的 Linux 系统，因为容量的限制，这个系统去掉了一些不常用的模块，比如 wi-fi 驱动，python 支持等。</p>
+<p>Galileo 也支持从 SD 卡启动系统，并且 Intel 提供了一个基于 Yocto 项目，已经制作好的完整版 Linux 系统。当精简版系统不能满足我们的要求时（添加外设等），我们可以下载这个完整版系统镜像，烧录到 SD 卡中，并从 SD 卡中启动即可。（也可以自己基于 Yocto 项目按照自己的需求制作系统镜像）</p>
 <p><br></p>
-<h2>Official Arduino Boards</h2>
+<p><em>我们并不仅仅满足于通过 Arduino IDE 对 Galileo 进行操作，放着一个操作系统，为什么不去使用呢：-P 那么怎么才能登录到这个 Linux 系统中呢？</em></p>
+<p><br></p>
+<h2>Using Ethernet</h2>
 <hr>
-<p>Arduino 官网上列出所有了官方开发板，其中也包含了官方认证过的开发板(Intel Galileo)，和一些推荐的第三方产品</p>
-<p><a href="http://arduino.cc/en/Main/Products">Arduino Products</a></p>
-<p>还详细列出了这些开发板上的微控制器的区别</p>
-<p><a href="http://arduino.cc/en/Products.Compare">Compare boards specs</a></p>
-<p><br></p>
-<p><em>官方的开发板的核心都是 Atmel 的微控制器，基于市场战略的需求，看到数莓派、Arduino发展的热火朝天，Intel 也坐不住了(瞎猜的 =.=)，推出了新的基于 Intel 架构(x86)、可以和 Arduino 兼容的开发板。Galileo 是这个家族中的第一款，目前 Intel 又推出了一款新的开发板，取名叫 Edison。(Intel 这是要把所有科学家的名字都取个遍么)</em></p>
-<p><br></p>
-<h2>Intel Galileo Board</h2>
-<hr>
-<h3>Arduinco.cc</h3>
-<p>在 Arduino 官网上有一篇简单介绍 Galileo 的网页</p>
-<p><a href="http://arduino.cc/en/ArduinoCertified/IntelGalileo">Intel Galileo on arduino.cc</a></p>
-<h3>Intel Official Introduction</h3>
-<p>Arduino 官网上的介绍只是非常简单的介绍，Intel 自己的官网上有关于 Galileo 全部的详细资料</p>
-<p><a href="http://www.intel.cn/content/www/cn/zh/do-it-yourself/galileo-maker-quark-board.html">Galileo Maker Quark Board</a></p>
-<p>关于 Galileo 的全部文档，包括 Datasheet、Schematic、Quick Start、User Guide 等：</p>
-<p><a href="https://communities.intel.com/community/makers/documentation/galileodocuments">Intel Galileo Development Board Documents</a></p>
-<h3>Other Introductions</h3>
-<p><strong>首先</strong> 送上一篇非常好的介绍文章（来自 Ifanr.com），介绍了在 Maker 眼中，这个板子到底可以 hack 到什么程度～</p>
-<p><a href="http://www.ifanr.com/388835">x86 版的 Arduino 来了，Intel Galileo 开发板的体验、分析和应用【超长文多图】</a></p>
-<p><strong>再</strong> 附上一篇完爆我的总结的教程～</p>
-<p><a href="https://learn.sparkfun.com/tutorials/galileo-getting-started-guide">Galileo Getting Started Guide</a></p>
-<p>这篇教程基本就是按照 Intel 官方的 Getting Started 流程写的，总结一下我遇到的问题 (Windows 7 &amp; Linux Ubuntu)。</p>
-<p>Arduino 官方的 IDE 中 <code>Board</code> 选项中没有 Galileo，所以我们应该从 Intel 下载定制过的 IDE。</p>
+<p>Intel 论坛的一个帖子列举了几种登录到 Galileo Linux 的方法</p>
+<p><a href="https://communities.intel.com/thread/46335">Connecting to Galileo via Linux Console</a></p>
+<ul>
+<li>Use the UART connector</li>
+<li>Use the LAN connection direct to your PC</li>
+<li>Use the LAN connection and connect to your local network </li>
+<li>You can also connect using WiFi</li>
+</ul>
+<p>考虑到我们目前有的材料</p>
+<ul>
+<li>Galileo 开发板</li>
+<li>Galileo 电源</li>
+<li>micro USB 线</li>
+<li>5 类网线</li>
+<li>运行着 Linux (Ubuntu) 的 PC</li>
+</ul>
+<p>因为没有串口线，所以我们采用第 2 种方案，即直接连接 PC 和 Galileo，通过 Ethernet 登录。</p>
+<h3>Summary</h3>
+<p>Galileo 默认是不开启 <code>Lan</code> 的，也不开启 <code>Telnet</code> 服务，所以我们需要做的事就是写一个 <code>sketch</code>，启动 Lan 连接服务和 Telnet 服务，然后分别给 PC 和 Galileo 一个属于同一子网的静态 IP 地址，这样就可以使用 PC 通过 Telnet 协议登录到 Galileo 上的 Linux 系统中。</p>
+<h3>Setp 1: Write sketch</h3>
+<p>代码需要完成的功能一共有 3 个：</p>
 <ol>
 <li>
-<p>Windows IDE 闪退</p>
-<p>这个 IDE 在部分 Windows 下有闪退的现象。</p>
-<p>原因 是 Intel 的 IDE 版本采用的是未发布的 1.5.3, 它会检测系统的语言设置，当系统不是 En/US 时，就会退出。</p>
-<p>解决方法 更改系统语言设置 或者 使用一款名为 Locale Emulator 的软件。</p>
-</li>
-<li>
-<p>IDE 解压路径</p>
-<p>Windows 下的解压路径 <em>必须是顶层目录</em>，比如 <code>D:\arduino-1.5.3</code>，否则在 <code>Verify</code> 时会提示找不到特定的文件/目录。Linux 下无此问题。</p>
-</li>
-<li>
-<p>Linux 连接板子和 PC</p>
-<p>在 Windows 下第一次连接系统自动安装驱动肯定会失败的，需要我们手动指定驱动文件的路径。</p>
-<p>在 Linux 终端下，必须以 <code>sudo</code> 权限运行 IDE，否则即使板子已经连接了 PC，在 IDE 下的 <code>Tools\Serial Port</code> 是 disable 的，不能选择端口</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ sudo ./arduino <span class="p">&amp;</span>
+<p>开启 telnet 服务</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>system<span class="o">(</span><span class="s2">&quot;telnetd -l /bin/sh&quot;</span><span class="o">)</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
 
 </li>
 <li>
-<p>Linux 下 disable modem manager</p>
-<p>前面的教程中提到，在大多数 Linux 发行版下，都需要 disable modem manager 才能 <code>Upload</code> 成功，不过我在 Ubuntu 下没有遇到这个问题...</p>
+<p>设置 IP 地址</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>system<span class="o">(</span><span class="s2">&quot;ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up&quot;</span><span class="o">)</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>将板子的以太网配置状态显示在 serial monitor 中</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>system<span class="o">(</span><span class="s2">&quot;ifconfig eth0 &gt; /dev/ttyACM0&quot;</span><span class="o">)</span>
+</pre></div>
+</td></tr></table>
+
 </li>
 </ol>
-<p><strong>然后</strong> 扯几句</p>
+<p>全部代码如下</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kr">void</span> <span class="nb">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// put your setup code here, to run once:</span>
+  <span class="c1">// Initial serial prot</span>
+  <span class="nf">Serial</span><span class="p">.</span><span class="nf">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+  <span class="c1">// Start telnet service on board</span>
+  <span class="n">system</span><span class="p">(</span><span class="s">&quot;telnetd -l /bin/sh&quot;</span><span class="p">);</span>
+  <span class="c1">// Assign the IP address &#39;169.254.1.1&#39; to it</span>
+  <span class="n">system</span><span class="p">(</span><span class="s">&quot;ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up&quot;</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+<span class="kr">void</span> <span class="nb">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// put your main code here, to run repeatedly: </span>
+  <span class="c1">// Show the IP detial in the serial monitor of IDE</span>
+  <span class="n">system</span><span class="p">(</span><span class="s">&quot;ifconfig eth0 &amp;&gt; /dev/ttyGS0 &amp;&quot;</span><span class="p">);</span>
+
+  <span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<h3>Step 2: Connect，Upload</h3>
 <ol>
 <li>
-<p>硬件配置</p>
-<p>从 Board Guide 中找到的截图如下</p>
-<p><img alt="key_componets_1" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_1.png"></p>
-<p><img alt="key_componets_2" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_2.png"></p>
-<p>从它的配置中可以看到，Galileo 并不是一款简单的 Arduino 开发板，它的硬件系统其实是按照 PC 来设计的，如果我们只是简单的把它当作 Arduino 开发板来应用，有点大材小用了，这样子完全没有体现出 Galileo 的优势，只是一个速度更快的 Arduino 罢了。</p>
-<p>事实上，如果功能上没有比传统的 Arduino 更强大的功能，估计 Intel 也不会推出这个产品了～Galileo 的真正强大的地方在于：</p>
-<blockquote>
-<p>背后基于 UEFI/Linux 的软件平台以及 Galileo 自身的硬件配置。为此，Intel 提供了丰富的开发文档、软件代码支持，方便开发人员真正的发挥出 Galileo 的所有潜力。</p>
-</blockquote>
+<p>网线直连 PC 和 Galileo，设置 PC 的 IP 地址为 <code>link-local only</code></p>
+<p><img alt="pc_ethernet_config" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_config.png"> </p>
 </li>
 <li>
-<p>软件构架</p>
-<p>Galileo 不仅仅是硬件上按照 PC 设计的，事实上，它的软件构架也和 PC 一样。和普通的单片机不同，它并不是简单的运行用户开发的程序那么简单。它实际上运行着一个操作系统 —— 包含 UEFI(BIOS 的替代者)、Grub、嵌入式 Linux 系统，用户编写的 <code>Sketch</code> 只是一个在 Linux 上面运行的应用而已。</p>
-<p>Galileo 启动时可以从 ISP Flash 中启动一个微型的 Linux 系统，也可以从 MicroSD 卡中启动一个完整版的 Linux 系统。我们 <code>Upload</code> 时，Arduino IDE 将程序编译链接成一个标准的 Linux ELF 文件，并且下载到 Arduino 板子上运行，如图所示</p>
-<p><img alt="target_software" src="/images/learning-arduino-series-2-intel-galileo-development-board/target_software.png"></p>
+<p>给 Galileo 供电</p>
 </li>
 <li>
-<p>开发嵌入式 Linux 设备</p>
-<p>或许这才是 Galileo 的 "正经" 用途吧...基于 Yocto Project，我们可以开发属于自己的 Linux 系统。</p>
+<p>连接 USB</p>
+</li>
+<li>
+<p>打开 Arduino IDE，<code>Upload</code> 上面的 sketch</p>
 </li>
 </ol>
-<p>最后，送上一个别人的 Galileo 开箱视频</p>
-<p><embed src="http://player.youku.com/player.php/sid/XNjQ0NTMzMjYw/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed></p>
+<h3>Step 3: Login</h3>
+<ol>
+<li>
+<p>打开 IDE 的 serial monitor，可以看到 Galileo 的 ethernet 配置信息</p>
+<p><img alt="galileo_ethernet_quary" src="/images/learning-arduino-series-3-intel-galileo-linux/galileo_ethernet_quary.png"></p>
+</li>
+<li>
+<p>查看 PC 的网络配置</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ifconfig eth0
+</pre></div>
+</td></tr></table>
+
+<p>查询结果</p>
+<p><img alt="pc_ethernet_quary" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_quary.png"></p>
+</li>
+<li>
+<p>打开 PC 的终端 Terminal，使用 telnet 登录</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>telnet <span class="m">169</span>.254.1.1
+</pre></div>
+</td></tr></table>
+
+<p>登录结果，如图</p>
+<p><img alt="pc_ethernet_login" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_telnet_login.png"></p>
+<p>可以看到，这个精简版的 Linux 系统是不支持 Python 的。</p>
+</li>
+</ol>
+<p><br></p>
+<h2>Using UART</h2>
+<hr>
+<h3>About serial port</h3>
+<p>如果有串口线的话，我们也可以通过串口来登录，包括 SPI 和 SD 卡上的系统。</p>
+<p>关于串口线，说明一下。估计是为了节省板子的面积，Intel 在板子上设置的是音频接口(AV jack)，所以，这里需要额外的一个将音频接口转接为串口的器件。有两种方法：</p>
+<ol>
+<li>
+<p>上网买一个</p>
+</li>
+<li>
+<p>自己 DIY 一个</p>
+</li>
+</ol>
+<p>如果上网买的话，注意 Galileo 用的是 RS232 电平，不要买错成 TTL 电平的。如果是自己 DIY 的话，Intel Galileo Get Started 里面有介绍串口线的接法，他们的论坛上也有相关的讨论：</p>
+<p><a href="https://communities.intel.com/message/208448#208448">UART cable pin-out</a></p>
+<p><a href="http://pinouts.ru/SerialPorts/Serial9_pinout.shtml">RS 232 DE-9 port</a></p>
+<h3>Linux Platform</h3>
+<p>我在 Ubuntu 下使用的终端软件是 <code>gtkterm</code>。</p>
+<h4>Step 1: Burn the full-linux sytem</h4>
+<ol>
+<li>
+<p>Intel 官网提供的完整版 Linux 镜像是基于 <code>Yocto</code> 项目裁剪出来的，取名叫 <code>Claton</code>，目前(2014-6-13)的版本号为 <code>1.0.0</code>，但是这个版本在我的SD卡中是无法启动的，浪费了大量时间，最后终于发现 <code>0.7.5</code> 版本可以...</p>
+</li>
+<li>
+<p>还有就是 Get Started 中推荐不要使用 PC 操作系统提供的格式化功能，更好的选择应该是专业格式化软件，比如 <code>SDFormatter</code>。但是我实际使用时，发现反而是 <code>SDFormatter</code> 制作的不能启动...</p>
+</li>
+</ol>
+<h4>Step 2: Connect</h4>
+<ol>
+<li>
+<p>插入 SD 卡</p>
+</li>
+<li>
+<p>配置串口</p>
+<p>选择正确的端口（因为我使用的串口线是 <code>AV-RS232-USB</code>，所以下面选择的端口是 <code>ttyUSB0</code>）；<code>Baud Rate = 115200</code>，<code>Bits =8</code>，<code>Stopbits = 1</code>，<code>Parity = none</code>，<code>Flow control = none</code></p>
+</li>
+<li>
+<p>先不要接 USB 下载线，给板子上电</p>
+</li>
+</ol>
+<h4>Step 3: Login</h4>
+<ol>
+<li>
+<p>这时候我们应该就可以从串口看到板子上电后 <code>grub</code> 程序和系统启动的相关信息了。</p>
+<p>上电后，<code>grub</code> 引导启动哪个系统</p>
+<p><img alt="gtkterm boot information" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_boot_information.png"></p>
+<p><img alt="gtkterm grub" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_grub.png"></p>
+</li>
+<li>
+<p>登录到 SPI Flash 中的 Linux 中</p>
+<p>如图，这个精简版的系统不支持 <code>python</code></p>
+<p><img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_login_spi.png"></p>
+</li>
+<li>
+<p>登录到 mirco-SD card 中的 Linux 中</p>
+<p>如图，SD 卡中的系统是支持 <code>python</code> 的</p>
+<p><img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_login_sd_card.png"></p>
+</li>
+</ol>
+<h3>Windows Platform</h3>
+<p>我在 Windows 下使用的终端软件是 <code>Putty</code>。</p>
+<h4>Step 1: Burn the full-linux system</h4>
+<p>与 Linux 平台下相同。</p>
+<h4>Step 2: Connect</h4>
+<ol>
+<li>
+<p>插入 SD 卡</p>
+</li>
+<li>
+<p>配置串口</p>
+<p>同样，选择正确的端口和波特率。</p>
+</li>
+<li>
+<p>先不要接 USB 下载线，给板子上电</p>
+</li>
+</ol>
+<h4>Step 3: Login</h4>
+<ol>
+<li>
+<p>这时候我们应该就可以从串口看到板子上电后 <code>grub</code> 程序和系统启动的相关信息了。</p>
+<p>上电后，<code>grub</code> 引导启动哪个系统</p>
+<p><img alt="gtkterm boot information" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_boot_information.png"></p>
+<p><img alt="gtkterm grub" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_grub.png"></p>
+</li>
+<li>
+<p>登录到 SPI Flash 中的 Linux 中</p>
+<p>如图，这个精简版的系统不支持 <code>python</code></p>
+<p><img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_login_spi.png"></p>
+</li>
+<li>
+<p>登录到 mirco-SD card 中的 Linux 中</p>
+<p>如图，SD 卡中的系统是支持 <code>python</code> 的</p>
+<p><img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_login_sd_card.png"></p>
+</li>
+</ol>
+<p><br></p>
+<h2>Another method</h2>
+<hr>
+<p>如果你觉得插网线、配置 IP 地址太麻烦，甚至懒得自己 DIY 串口线，也没有钱去买一个，别担心，因为 “天空飘来五个字，这都不是事～” 因为你可以借鉴下面这位大神的方法，只需要像下载普通 sketch 一样，将他提供的 sketch 下载到 Galileo 中就可以了，然后通过 IDE 的 serial monitor 就可以登录到 Linux 系统中：</p>
+<p><a href="(https://communities.intel.com/message/222211)">Poor man's telnet for Galileo</a></p>
+<p>他的 sketch 的原理就是使用 <code>system()</code> 函数将我们在 serial monitor 中的命令传到到 Linux shell 中 ，并将命令的结果返回到 serial monitor 中 。</p>
+<p>不过这种方法的缺点是每个命令传递到 Galileo 后会开辟一个新的进程，当命令执行完返回结果时，这个进程自动结束，所以会产生一些 “问题”：当我们 <code>cd</code> 到某个子目录后，返回结果之后，我们又回到的之前的目录，举例</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> home
+$ <span class="nb">pwd</span>
+
+// result is root dirctory
+</pre></div>
+</td></tr></table>
+
+<p>解决方法就是将命令写在一行</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> home<span class="p">;</span> <span class="nb">pwd</span>
+
+// result is home directory
+</pre></div>
+</td></tr></table>
+
+<p><br></p>
+<h2>Reference</h2>
+<p><a href="https://communities.intel.com/thread/46335">Connecting to Galileo via Linux Console</a></p>
+<p><a href="https://communities.intel.com/docs/DOC-22293">Tutorial 3: Connecting to Linux through telnet</a></p>
+<p><a href="https://communities.intel.com/message/208564#208564">Using Galileo Linux over Ethernet(Telnet)</a></p>
+<p><a href="(https://communities.intel.com/message/222211)">Poor man's telnet for Galileo</a></p>
             </div>
             <!-- /.entry-content -->
+<section class="well" id="related-posts">
+    <h4>Related Posts:</h4>
+    <ul>
+        <li><a href="https://guqian110.github.io/posts/linux/learn_arduino_series_1_getting_started.html">学习 Arduino #1 Arduino 入门</a></li>
+        <li><a href="https://guqian110.github.io/posts/ic/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & Modelsim</a></li>
+        <li><a href="https://guqian110.github.io/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+        <li><a href="https://guqian110.github.io/posts/linux/learn_arduino_series_2_intel_galileo_development_board.html">学习 Arduino #2 初识 Intel Galileo 开发板</a></li>
+        <li><a href="https://guqian110.github.io/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
+    </ul>
+</section>
+<section class="well" id="related-posts">
+    <h4>Part 3 of the Learn Arduino series</h4>
+       <h5>Previous articles</h5>
+       <ul>
+           <li><a href="https://guqian110.github.io/posts/linux/learn_arduino_series_1_getting_started.html">学习 Arduino #1 Arduino 入门</a></li>
+           <li><a href="https://guqian110.github.io/posts/linux/learn_arduino_series_2_intel_galileo_development_board.html">学习 Arduino #2 初识 Intel Galileo 开发板</a></li>
+       </ul>
+</section>
     <hr/>
     <section class="comments" id="comments">
         <h2>Comments</h2>
@@ -228,10 +427,10 @@
             var disqus_shortname = 'guqian110'; // required: replace example with your forum shortname
 
             var disqus_config = function () {
-                this.language = "zh";
+                this.language = "en";
 
-                        this.page.identifier = '2014-05-29-arduino_series_2_intel_galileo_development_board';
-                        this.page.url = 'https://guqian110.github.io/posts/arduino/arduino_series_2_intel_galileo_development_board.html';
+                        this.page.identifier = '2014-06-13-learn_arduino_series_3_intel_galileo_linux';
+                        this.page.url = 'https://guqian110.github.io/posts/linux/learn_arduino_series_3_intel_galileo_linux.html';
             };
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
@@ -280,7 +479,7 @@
 <li class="list-group-item">
   <a href="https://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
   <ul class="list-group list-inline tagcloud" id="tags">
-    <li class="list-group-item tag-4">
+    <li class="list-group-item tag-2">
       <a href="https://guqian110.github.io/tag/arduino.html">Arduino</a>
     </li>
     <li class="list-group-item tag-4">
@@ -436,7 +635,7 @@
     <li class="list-group-item tag-4">
       <a href="https://guqian110.github.io/tag/parameterization.html">parameterization</a>
     </li>
-    <li class="list-group-item tag-4">
+    <li class="list-group-item tag-3">
       <a href="https://guqian110.github.io/tag/pep.html">PEP</a>
     </li>
     <li class="list-group-item tag-4">
@@ -453,6 +652,9 @@
     </li>
     <li class="list-group-item tag-4">
       <a href="https://guqian110.github.io/tag/pulse-edge-detection.html">pulse edge detection</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/python.html">python</a>
     </li>
     <li class="list-group-item tag-4">
       <a href="https://guqian110.github.io/tag/regular-expression.html">regular expression</a>
@@ -576,9 +778,9 @@
          <div class="col-xs-10">&copy; 2020 Qian Gu
             &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
-            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.en"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
     Content
-  licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
+  licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.en">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
 </small></p>
          </div>
          <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>

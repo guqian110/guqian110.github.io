@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>PEP 翻译计划系列 —— PEP8 - Qian's Blog</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="https://guqian110.github.io/images/favicon.png" rel="icon">
+
+<link rel="canonical" href="https://guqian110.github.io/posts/python/peps_translate_project_pep8.html">
+
+        <meta name="author" content="Qian Gu" />
+        <meta name="keywords" content="PEP,python" />
+        <meta name="description" content="PEPs 翻译系列 PEP8" />
+
+        <meta property="og:site_name" content="Qian's Blog" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="PEP 翻译计划系列 —— PEP8"/>
+        <meta property="og:url" content="https://guqian110.github.io/posts/python/peps_translate_project_pep8.html"/>
+        <meta property="og:description" content="PEPs 翻译系列 PEP8"/>
+        <meta property="article:published_time" content="2020-04-12" />
+            <meta property="article:section" content="Python" />
+            <meta property="article:tag" content="PEP" />
+            <meta property="article:tag" content="python" />
+            <meta property="article:author" content="Qian Gu" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://guqian110.github.io/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="https://guqian110.github.io/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="https://guqian110.github.io/theme/css/pygments/native.css" rel="stylesheet">
+    <link href="https://guqian110.github.io/theme/tipuesearch/tipuesearch.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://guqian110.github.io/theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="https://guqian110.github.io/" class="navbar-brand">
+<img class="img-responsive pull-left gap-right" src="https://guqian110.github.io/images/logo.png" width="32"/> Qian's Blog            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="https://guqian110.github.io/category/cc.html">C/c++</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/ic.html">Ic</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/linux.html">Linux</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/misc.html">Misc</a>
+                        </li>
+                        <li class="active">
+                            <a href="https://guqian110.github.io/category/python.html">Python</a>
+                        </li>
+                        <li >
+                            <a href="https://guqian110.github.io/category/telecom.html">Telecom</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><span>
+                <form class="navbar-search" action="/search.html">
+                  <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input" required>
+                </form></span>
+              </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="https://guqian110.github.io" title="Qian's Blog"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="https://guqian110.github.io/category/python.html" title="Python">Python</a></li>
+                <li class="active">PEP 翻译计划系列 —— PEP8</li>
+            </ol>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="https://guqian110.github.io/posts/python/peps_translate_project_pep8.html"
+                       rel="bookmark"
+                       title="Permalink to PEP 翻译计划系列 —— PEP8">
+                        PEP 翻译计划系列 —— PEP8
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2020-04-12T13:55:00+08:00"> 日 12 四月 2020</time>
+    </span>
+
+            <span class="label label-default">Series</span>
+            Part 2 of PEP translate project
+
+            <span class="label label-default">By</span>
+            <a href="https://guqian110.github.io/author/qian-gu.html"><i class="fa fa-user"></i> Qian Gu</a>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="https://guqian110.github.io/tag/pep.html">PEP</a>
+        /
+	<a href="https://guqian110.github.io/tag/python.html">python</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p><a href="https://www.python.org/dev/peps/pep-0008/">PEP 8 -- Style Guide for Python Code 原文链接</a></p>
+<table>
+<thead>
+<tr>
+<th>item</th>
+<th>detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PEP</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>Style Guide for Python Code</td>
+</tr>
+<tr>
+<td>Author</td>
+<td>Guido van Rossum<guido at python.org>, Barry Warsaw<barry at python.org>, Nick Coghlan<ncoghlan at gmail.com></td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>Process</td>
+</tr>
+<tr>
+<td>Created</td>
+<td>05-Jul-2001</td>
+</tr>
+<tr>
+<td>Post-History</td>
+<td>05-Jul-2001, 01-Aug-2013</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h2>介绍</h2>
+<hr>
+<p>本文介绍 Python 主要发布版本中标准库的 code style，对于 CPython 中的 C 代码的 style guide 请查看相关文档 <a href="https://www.python.org/dev/peps/pep-0007/">PEP7</a>。</p>
+<p>本文和 <a href="https://www.python.org/dev/peps/pep-0257/">PEP257(docstring 规范)</a> 来源于 Guido 写的原始文章：《python code style》，部分来自于 Barry 的 <a href="http://barry.warsaw.us/software/STYLEGUIDE.txt">GNU Mailman style guide</a>。</p>
+<p>本文随着语言本身的变化不断进化，舍弃了部分规则的同时新加了一些规则。</p>
+<p>许多项目都有自己的 coding style guide，如果和本文有任何冲突，应该以该项目自己的 guide 为准。</p>
+<p><br></p>
+<h2>尽信书，不如无书</h2>
+<hr>
+<p>Guido 的一个重要见解是：代码更多是用来读而不是写。本文提供的 guideline 的目的是提高代码的可读性，使得广泛的 python 代码保持一致性。正如 <a href="https://www.python.org/dev/peps/pep-0020/">PEP20</a> 所述，“可读性非常重要”。</p>
+<p>一篇 style guide 主要内容是一致性。虽然本文的一致性很重要，但是一个项目内的一致性更重要，最重要的是一个 module 或者 function 内部的一致性。</p>
+<p>但最重要的是，要知道什么时候不保持一致性，在实际应用时候有些 guide 并不适用，如果有疑问，根据自己的最佳判断，看看其他代码例子然后决定怎么写代码看起来最好。不要羞于发问。</p>
+<p>特别注意：不要为了遵守本文而破坏向后的兼容性！</p>
+<p>两种可以忽略本 guideline 的情况：</p>
+<ol>
+<li>遵守本 guideline 会导致代码的可读性下降，即使对于那些习惯于遵守本文来阅读代码的人来说</li>
+<li>（可能出于历史原因）为了保持和周边代码的一致性可以忽略本 guideline，虽然这是个清理其他人垃圾的好机会（实现真正的极限编程 Extreme Programming）</li>
+<li>代码出现在本规范之前，并且没有其他理由去修改它</li>
+<li>代码需要和不支持本规范的旧版本 Python 代码保持一致</li>
+</ol>
+<p><br></p>
+<h2>代码布局</h2>
+<hr>
+<h3>缩进</h3>
+<p>每级缩进为 4 个空格。</p>
+<p>连续行应该按照包围的元素对齐，要么使用 python 圆括号、方括号、花括号的隐式行连接在垂直方向对齐，要么使用 <code>hanging indent</code>。使用 hanging indent 的时候应该注意，第一行不应该有任何参数，后续行多一级缩进以便和其他行能清晰地区分开。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+
+<span class="c1"># Aligned with opening delimiter.</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span><span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
+                         <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
+
+<span class="c1"># Add 4 spaces (an extra level of indentation) to distinguish arguments from the rest.</span>
+<span class="k">def</span> <span class="nf">long_function_name</span><span class="p">(</span>
+        <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span> <span class="n">var_three</span><span class="p">,</span>
+        <span class="n">var_four</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">var_one</span><span class="p">)</span>
+
+<span class="c1"># Hanging indents should add a level.</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span>
+    <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
+    <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+
+<span class="c1"># Arguments on first line forbidden when not using vertical alignment.</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span><span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
+    <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
+
+<span class="c1"># Further indentation required as indentation is not distinguishable.</span>
+<span class="k">def</span> <span class="nf">long_function_name</span><span class="p">(</span>
+    <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span> <span class="n">var_three</span><span class="p">,</span>
+    <span class="n">var_four</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">var_one</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>对于后续的行，4 个 space 的规则是可选的，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Hanging indents *may* be indented to other than 4 spaces.</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span>
+  <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
+  <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>如果 if 语句的条件部分太长以至于要写成多行的形式，要注意，一个双字符的关键字（比如 if）加上一个空格，再加上右括号，会天然形成一个 4 sapce 的缩进。这会导致条件语句和 if 内部的嵌套语句（本身也是 4 space 缩进）产生视觉冲突。本文没有明确规定如何（是否需要）进一步在视觉上区分条件语句和内嵌语句，可选但是不限于下面几种方式：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># No extra indentation.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">this_is_one_thing</span> <span class="ow">and</span>
+    <span class="n">that_is_another_thing</span><span class="p">):</span>
+    <span class="n">do_something</span><span class="p">()</span>
+
+<span class="c1"># Add a comment, which will provide some distinction in editors</span>
+<span class="c1"># supporting syntax highlighting.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">this_is_one_thing</span> <span class="ow">and</span>
+    <span class="n">that_is_another_thing</span><span class="p">):</span>
+    <span class="c1"># Since both conditions are true, we can frobnicate.</span>
+    <span class="n">do_something</span><span class="p">()</span>
+
+<span class="c1"># Add some extra indentation on the conditional continuation line.</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">this_is_one_thing</span>
+        <span class="ow">and</span> <span class="n">that_is_another_thing</span><span class="p">):</span>
+    <span class="n">do_something</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+<p>（也可参考下面关于二元操作符前后断行的讨论）</p>
+<p>右括号可以和最后一行第一个非空格字符对齐，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">some_function_that_takes_arguments</span><span class="p">(</span>
+    <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>也可以和第一行的第一个字符对齐，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">some_function_that_takes_arguments</span><span class="p">(</span>
+    <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<blockquote>
+<p>注：<code>hanging indentation</code> 是指除了首行之外，其他行都缩进的打印风格。在 python 中，这个术语指的是一个带括号的语句，左括号是该行的最后一个字符，除了右括号，剩余行都会加上缩进</p>
+</blockquote>
+<h3>Tabs 还是 Spaces？</h3>
+<p>首选空格 space 作为缩进方式。</p>
+<p>只有为了和已有代码中的 tab 一致才能继续使用 tab。</p>
+<p>python 3 不允许 tab 和 space 混合使用，python 2 中的 tab 和 space 混合使用时，应该先统一转换成 space。</p>
+<p>如果 python 2 的命令行解释器带了 <code>-t</code> 选项，如果有 tab 和 space 混合使用的情况，它会报告 warning，如果带了 <code>-tt</code> 选项，则会报告 error。强烈推荐使用这些选项。</p>
+<h3>最大行长度</h3>
+<p>所有行的最大行长是 79 个字符。</p>
+<p>对于基本没有结构化约束的长的文本（docstring和注释），其长度不能超过 72 个字符。</p>
+<p>限制编辑器的宽度的好处是可以并列打开多个文件，在 code review 的时候比较两个版本的代码时很方便。</p>
+<p>许多工具的默认 warp 功能会破坏代码的视觉结构，使得代码难以理解。选择这些限制的目的就是为了防止 warp 功能设置为 80 个字符的编辑器自动 warp，即使有些编辑器在最后一列放了一个标记来提醒。一些基于 web 的工具甚至都不提供 warp 功能。</p>
+<p>一些团队强烈希望更长的行长，如果代码由一个可以达成一致的团队维护，那么可以把限制放宽到 99 个字符，但是注释和 docstring 仍然不超过 72 个字符。</p>
+<p>Python 标准库是保守主义，所以要求行长不超过 79（docstring和注释不超过 72）。</p>
+<p>对于很长的行，优先选择的方式应该是使用括号隐式的断行，而不是使用 <code>\</code> 来断行。</p>
+<p>反斜线 <code>\</code> 有时候还是有用的，比如较长的 <code>with</code> 语句不能使用括号的方式，所以只能选择反斜线。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/some/file/you/want/to/read&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_1</span><span class="p">,</span> \
+     <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/some/file/being/written&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_2</span><span class="p">:</span>
+    <span class="n">file_2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_1</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</td></tr></table>
+
+<p>（对于这种 with 语句，可以参考前面讨论 if 语句的处理方式）</p>
+<p>这种情况的另外一个例子是 <code>assert</code> 语句。</p>
+<p>确保在后续的行中适当地缩进。</p>
+<h3>应该在二元操作符的前还是后断行？</h3>
+<p>几十年以来，我们一直推荐的是在二元操作符之后断行，但是这样可能会伤害到代码的可读性，原因有两个：运算符一般分布在不同列，并且每个运算符和它的操作数被分开了，放到了操作数的前一行。下面的例子说明了需要读者的眼睛额外做一些工作来分辨那些变量是相加，哪些变量是相减，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="c1"># operators sit far away from their operands</span>
+<span class="n">income</span> <span class="o">=</span> <span class="p">(</span><span class="n">gross_wages</span> <span class="o">+</span>
+          <span class="n">taxable_interest</span> <span class="o">+</span>
+          <span class="p">(</span><span class="n">dividends</span> <span class="o">-</span> <span class="n">qualified_dividends</span><span class="p">)</span> <span class="o">-</span>
+          <span class="n">ira_deduction</span> <span class="o">-</span>
+          <span class="n">student_loan_interest</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>为了解决这个可读性的问题，数学家和出版商遵循了相反的约定。Donald Knuth 在他的 <em><code>Computer and Typesetting</code></em> 系列中解释了传统的规则：“虽然段落中的公式总是在二元操作符、关系操作符的后面断开，但是单独显示出来的公式却总是在二元操作符的前面断开。”</p>
+<p>遵循数学家的传统通常可以得到可读性更好的代码：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="c1"># easy to match operators with operands</span>
+<span class="n">income</span> <span class="o">=</span> <span class="p">(</span><span class="n">gross_wages</span>
+          <span class="o">+</span> <span class="n">taxable_interest</span>
+          <span class="o">+</span> <span class="p">(</span><span class="n">dividends</span> <span class="o">-</span> <span class="n">qualified_dividends</span><span class="p">)</span>
+          <span class="o">-</span> <span class="n">ira_deduction</span>
+          <span class="o">-</span> <span class="n">student_loan_interest</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>在 python 代码中，在二元符号之前或之后都可以断行，只要在本地保持一致即可。对于新写的代码，推荐使用 Knuth 的风格。</p>
+<h3>空行</h3>
+<p>顶层的 <code>function</code> 和 <code>class</code> 定义前后需要两个空行。</p>
+<p>class 内部的 <code>method</code> 定义前后需要一个空行。</p>
+<p>一组功能相关的 function 可以通过额外的一个空行来区分（谨慎使用）。一组相关的单行代码之间的空行可以省掉（比如一组 dummy implementation）。</p>
+<p>在 function 内部（谨慎）使用空行区分逻辑段。</p>
+<p>python 接受 <code>control-L</code> 作为空格，许多工具把这些字符当作页面分割符，所以你可以用它们来区分文件中的相关段落。注意，一些编辑器和基于 web 的阅读器可能无法识别 control-L，会在其位置显示一个其他符号。</p>
+<h3>源文件的编码格式</h3>
+<p>python 核心发布版本中的代码总是使用 UTF-8 来编码（python 2 中用 ASCII）。</p>
+<p>python 2 中使用 ASCII 的文件和 python 3 中使用 UTF-8 的代码不应该有编码申明。</p>
+<p>在标准库中，只有以测试目的或者注释、docstring 中需要提及包含非 ASCII 字符的作者名时，才能使用非默认编码方式；其他情况下，在字符串中优先使用 <code>\x</code>，<code>\u</code>，<code>\U</code>，<code>\N</code> 来转义非 ASCII 字符。</p>
+<p>对于 python 3.0 和更高版本来说，标准库使用了下面的政策（见 <a href="https://www.python.org/dev/peps/pep-3131">PEP3131</a>）：标准库中所有标识符 <strong>必须</strong> 使用 ASCII 标识符，并在尽可能使用英语单词（在很多情况下，缩写和术语是非英语）。除此之外，string literals 和注释必须也使用 ASCII。只有两个例外，</p>
+<ol>
+<li>测试非 ASCII 的测试用例</li>
+<li>作者的名字</li>
+</ol>
+<p>如果作者的名字不是基于拉丁字符，<strong>必须</strong> 提供一个拉丁字母音译。</p>
+<p>鼓励具有全球受众的开源项目采取类似的策略。</p>
+<h3>Imports</h3>
+<ul>
+<li>
+<p><code>import</code> 通常应该分开每行一个，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># Wrong:</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+</pre></div>
+</td></tr></table>
+
+<p>但是这么写也是 ok 的，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>import 必须放在文件的顶部，位于 module 注释和 docstring 的后面，在模块的全局变量/常量的前面。</p>
+<p>import 应该按照下面的顺序分组：</p>
+<ol>
+<li>标准库 import</li>
+<li>相关的第三方库 import</li>
+<li>本地应用/库的特定 import</li>
+</ol>
+<p>在每组之间插入一个空行。</p>
+</li>
+<li>
+<p>推荐使用绝对路径导入，因为当 import 系统配置不正确时（比如 package 内的一个目录以 <code>sys.path</code> 结尾），这么做的可读性更好，性能也更好（至少 error 信息更加清晰）。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mypkg.sibling</span>
+<span class="kn">from</span> <span class="nn">mypkg</span> <span class="kn">import</span> <span class="n">sibling</span>
+<span class="kn">from</span> <span class="nn">mypkg.sibling</span> <span class="kn">import</span> <span class="n">example</span>
+</pre></div>
+</td></tr></table>
+
+<p>然而，显式的相对路径也是一种可接受的方案，特别是使用绝对路径会导致不必要的复杂 package 布局的情况。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sibling</span>
+<span class="kn">from</span> <span class="nn">.sibling</span> <span class="kn">import</span> <span class="n">example</span>
+</pre></div>
+</td></tr></table>
+
+<p>标准库中的代码应该避免复杂的 package 布局，并且永远使用绝对路径 import。</p>
+<p>隐式的相对路径 import 永远都不应该使用，在 python 3 中已经删除了它。</p>
+</li>
+<li>
+<p>当从一个包含 class 的 module 中 import 一个 class 时，一般可以这么写，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myclass</span> <span class="kn">import</span> <span class="n">MyClass</span>
+<span class="kn">from</span> <span class="nn">foo.bar.yourclass</span> <span class="kn">import</span> <span class="n">YourClass</span>
+</pre></div>
+</td></tr></table>
+
+<p>如果这种拼写方式导致名字冲突，那么可以这么写，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">myclass</span>
+<span class="kn">import</span> <span class="nn">foo.bar.yourclass</span>
+</pre></div>
+</td></tr></table>
+
+<p>然后在代码中使用 <code>myclass.Myclass</code> 和 <code>foo.bar.yourcalss.YourClass</code>。</p>
+</li>
+<li>
+<p>应该避免使用通配符 <code>*</code>（<code>from &lt;module&gt; import *</code>），因为这样会使得命名空间中的名字变得不清晰，使很多读者和许多自动化工具产生混淆。有一种情况下可以使用 <code>*</code> ，即将内部的接口作为 public API 的一部分重新发布出来。（比如，有一个可选的加速模块，它有某个提前无法知道是否会被重写的端口，使用纯 Python 将其实现的情况）</p>
+<p>当使用这种重新发布名称时，以下关于 public 和 内部接口的规则仍然适用。</p>
+</li>
+</ul>
+<h3>模块级别的 dunber name</h3>
+<p>模块级别的 <code>dunber</code>（即使那些使用双下划线 <code>__</code> 包围的名字），比如 <code>__all__</code>，<code>__author__</code>，<code>__version__</code> 等等，应该放在 module 的 docstring 的后面，任何 <code>import</code> 语句之前（<code>form __future__</code> 除外）。python 要求 future-import 必须位于除过 docstring 之外的任何代码之前。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;This is the example module.</span>
+
+<span class="sd">This module does stuff.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">barry_as_FLUFL</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.1&#39;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Cardinal Biggles&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+</pre></div>
+</td></tr></table>
+
+<p>注：</p>
+<p><code>dunber</code> 指的是 <code>Double</code> + <code>Underscore</code> 的合体，指那些带双下划线的 method 或 attribute，如 <code>__init__</code>、<code>__main__</code>、<code>__verison__</code> 等。</p>
+<p>https://wiki.python.org/moin/DunderAlias</p>
+<blockquote>
+<p>An awkward thing about programming in Python: there are lots of double underscores. [snip] My problem with the double underscore is that it's hard to say. How do you pronounce <strong>init</strong>? "underscore underscore init underscore underscore"? "under under init under under"? Just plain "init" seems to leave out something important. I have a solution: double underscore should be pronounced "dunder". So <strong>init</strong> is "dunder init dunder", or just "dunder init".</p>
+</blockquote>
+<p><br></p>
+<h2>string 引用</h2>
+<hr>
+<p>在 python 中，单引号和双引号字符串是一样的，本文关于这个不会给出建议。选择一个规则并且坚持下去即可。当一个 string 包含单引号或者是双引号时，在内部使用另外一种引号，这样可以避免在代码内部使用反斜线 <code>\</code>，提高代码的可读性。</p>
+<p>根据 <a href="https://www.python.org/dev/peps/pep-0257/">PEP257</a>，对于三引号 string，永远使用双引号。</p>
+<p><br></p>
+<h2>表达式和语句中的空格</h2>
+<hr>
+<h3>一些小问题</h3>
+<p>避免下面情况中出现的无关空格，</p>
+<ul>
+<li>
+<p>紧跟在括号之后</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">spam</span><span class="p">(</span><span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">{</span><span class="n">eggs</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+
+<span class="c1"># Wrong:</span>
+<span class="n">spam</span><span class="p">(</span> <span class="n">ham</span><span class="p">[</span> <span class="mi">1</span> <span class="p">],</span> <span class="p">{</span> <span class="n">eggs</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>在 trailing 逗号和右括号之间</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span>
+
+<span class="c1"># Wrong:</span>
+<span class="n">bar</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>紧贴在逗号，分号，冒号之前</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span> <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span>
+
+<span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">4</span> <span class="p">:</span> <span class="k">print</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span> <span class="p">;</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="p">,</span> <span class="n">x</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>然而，<code>slice</code> 内部的冒号就像是个二元操作符（把它当作是优先级最低的操作符），所以两边应该有相同数量的空格。在一个扩展 slice 中，所有的冒号必须有相同的间距。例外情况：slice 的一个参数被忽略了，它附带的空格也就被忽略了</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">ham</span><span class="p">[:</span><span class="mi">9</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">:]</span>
+<span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="p">:</span><span class="n">upper</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="p">:</span><span class="n">upper</span><span class="p">:],</span> <span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="p">::</span><span class="n">step</span><span class="p">]</span>
+<span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="o">+</span><span class="n">offset</span> <span class="p">:</span> <span class="n">upper</span><span class="o">+</span><span class="n">offset</span><span class="p">]</span>
+<span class="n">ham</span><span class="p">[:</span> <span class="n">upper_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">:</span> <span class="n">step_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">ham</span><span class="p">[::</span> <span class="n">step_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+<span class="n">ham</span><span class="p">[</span><span class="n">lower</span> <span class="o">+</span> <span class="n">offset</span> <span class="p">:</span> <span class="n">upper</span> <span class="o">+</span> <span class="n">offset</span><span class="p">]</span>
+
+<span class="c1"># Wrong:</span>
+<span class="n">ham</span><span class="p">[</span><span class="n">lower</span> <span class="o">+</span> <span class="n">offset</span><span class="p">:</span><span class="n">upper</span> <span class="o">+</span> <span class="n">offset</span><span class="p">]</span>
+<span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span> <span class="mi">9</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span> <span class="p">:</span><span class="mi">9</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">ham</span><span class="p">[</span><span class="n">lower</span> <span class="p">:</span> <span class="p">:</span> <span class="n">upper</span><span class="p">]</span>
+<span class="n">ham</span><span class="p">[</span> <span class="p">:</span> <span class="n">upper</span><span class="p">]</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>紧跟在（函数调用参数列表）的左括号之后</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">spam</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Wrong:</span>
+<span class="n">spam</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>紧跟在 index 或者是 slice 的左括号之前</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">dct</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+<span class="c1"># Wrong:</span>
+<span class="n">dct</span> <span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span> <span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>为了和其他赋值语句对齐，在赋值语句周围使用多于 1 个空格</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">long_variable</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># Wrong:</span>
+<span class="n">x</span>             <span class="o">=</span> <span class="mi">1</span>
+<span class="n">y</span>             <span class="o">=</span> <span class="mi">2</span>
+<span class="n">long_variable</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+</ul>
+<h3>别的建议</h3>
+<ul>
+<li>避免尾部空格。因为一般它都是不可见的，这可能会导致困惑：比如，反斜线后面跟着一个空格和一个换行符时，并不算做是一个有效的续行标记。一些编辑器不会保留尾部空格，并且很多项目（比如 CPython 自身）在 commit 之前会有相关检查来滤掉它。</li>
+<li>永远在二元操作符两边加上单个空格，比如赋值 <code>=</code>，增量赋值 <code>+=</code>，<code>-=</code>，比较 <code>==</code>，<code>&lt;</code>，<code>&gt;</code>，<code>！=</code>，<code>&lt;&gt;</code>，<code>&lt;=</code>，<code>&gt;=</code>，<code>in</code>，<code>not</code>，<code>is</code>，<code>not</code>，布尔运算符 <code>and</code>，<code>or</code>，<code>not</code>。</li>
+<li>
+<p>如果使用了具有不同优先级的运算符，考虑在低优先级的运算符周围加上额外的空格。使用自己的判断，但是空格数量不要超过 1 个，并且在二元运算符周围使用相同数量的空格。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">submitted</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">hypot2</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span>
+
+<span class="c1"># Wrong:</span>
+<span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+<span class="n">submitted</span> <span class="o">+=</span><span class="mi">1</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">hypot2</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>function 的注释应该使用正常的冒号规则，如果有 <code>-&gt;</code>，要在其周围加上空格（参考下文函数注释部分的更多信息）</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="p">):</span> <span class="o">...</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">PosInt</span><span class="p">:</span> <span class="o">...</span>
+
+<span class="c1"># Wrong:</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span><span class="n">AnyStr</span><span class="p">):</span> <span class="o">...</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">PosInt</span><span class="p">:</span> <span class="o">...</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p><code>=</code> 用来标记关键字参数或者是参数默认值时，不要使用空格</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">def</span> <span class="nf">complex</span><span class="p">(</span><span class="n">real</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">magic</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">real</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">imag</span><span class="p">)</span>
+
+<span class="c1"># Wrong:</span>
+<span class="k">def</span> <span class="nf">complex</span><span class="p">(</span><span class="n">real</span><span class="p">,</span> <span class="n">imag</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">magic</span><span class="p">(</span><span class="n">r</span> <span class="o">=</span> <span class="n">real</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">imag</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>当参数有类型注释且有默认值时，要在 <code>=</code> 周围加上空格</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="n">sep</span><span class="p">:</span> <span class="n">AnyStr</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span> <span class="o">...</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">AnyStr</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span> <span class="o">...</span>
+
+<span class="c1"># Wrong:</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span> <span class="o">...</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span> <span class="o">...</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>复合语句（单行有多个语句）一般是不允许的</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;blah&#39;</span><span class="p">:</span>
+    <span class="n">do_blah_thing</span><span class="p">()</span>
+<span class="n">do_one</span><span class="p">()</span>
+<span class="n">do_two</span><span class="p">()</span>
+<span class="n">do_three</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+<p>最好不要这样，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;blah&#39;</span><span class="p">:</span> <span class="n">do_blah_thing</span><span class="p">()</span>
+<span class="n">do_one</span><span class="p">();</span> <span class="n">do_two</span><span class="p">();</span> <span class="n">do_three</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>有时候 <code>if</code>/<code>for</code>/<code>while</code> 可以和一小块代码放在同一行，但是多行语句时不要这样做，同时避免行长太长导致折叠！</p>
+<p>最好不要这样，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;blah&#39;</span><span class="p">:</span> <span class="n">do_blah_thing</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span> <span class="n">total</span> <span class="o">+=</span> <span class="n">x</span>
+<span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">delay</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+<p>绝对不要这样，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;blah&#39;</span><span class="p">:</span> <span class="n">do_blah_thing</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span> <span class="n">do_non_blah_thing</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span> <span class="n">something</span><span class="p">()</span>
+<span class="k">finally</span><span class="p">:</span> <span class="n">cleanup</span><span class="p">()</span>
+
+<span class="n">do_one</span><span class="p">();</span> <span class="n">do_two</span><span class="p">();</span> <span class="n">do_three</span><span class="p">(</span><span class="nb">long</span><span class="p">,</span> <span class="n">argument</span><span class="p">,</span>
+                             <span class="nb">list</span><span class="p">,</span> <span class="n">like</span><span class="p">,</span> <span class="n">this</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;blah&#39;</span><span class="p">:</span> <span class="n">one</span><span class="p">();</span> <span class="n">two</span><span class="p">();</span> <span class="n">three</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+</ul>
+<p><br></p>
+<h2>什么时候使用尾部逗号</h2>
+<hr>
+<p>尾部逗号一般是可选的，除非是在构造单元素的 <code>tuple</code> 时它是强制性必须存在的，在 python2 的 <code>print</code> 中逗号是语法的一部分。为了清晰起见，推荐用（冗余的）圆括号包围起来：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">FILES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;setup.cfg&#39;</span><span class="p">,)</span>
+</pre></div>
+</td></tr></table>
+
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">FILES</span> <span class="o">=</span> <span class="s1">&#39;setup.cfg&#39;</span><span class="p">,</span>
+</pre></div>
+</td></tr></table>
+
+<p>使用版本控制系统时冗余的尾部逗号通常非常有用，比如随着时间发展，由值或者是参数组成的 <code>list</code>，<code>import</code> 的内容不断增多的时候，在最后加上尾部逗号非常有用。一般的写法是每个值一行，然后在最后添加一个元素后面加上尾部逗号，最后在下面的另外一行加上右括号。但是如果元素都在同一行，那么就没有理由加尾部逗号（除非是上面提到的单元素 tuple）：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="n">FILES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;setup.cfg&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;tox.ini&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="n">initialize</span><span class="p">(</span><span class="n">FILES</span><span class="p">,</span>
+           <span class="n">error</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+           <span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="n">FILES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;setup.cfg&#39;</span><span class="p">,</span> <span class="s1">&#39;tox.ini&#39;</span><span class="p">,]</span>
+<span class="n">initialize</span><span class="p">(</span><span class="n">FILES</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="bp">True</span><span class="p">,)</span>
+</pre></div>
+</td></tr></table>
+
+<p><br></p>
+<h2>注释</h2>
+<hr>
+<p>和代码相冲突的注释比没有注释更糟糕，在代码改变之后永远第一时间更新相关注释。</p>
+<p>注释应该是完整的句子，除非是用标识符开头的语句（永远不要改变标识符的大小写！），其他情况下第一个单词的首字母应该大写。</p>
+<p>块注释一般由一段或者是多段的完整句子组成，并且每句都带一个句号。</p>
+<p>在多语句的注释中，每句结束后面应该有两个空格，除非是最后一句。</p>
+<p>用英语写注释时，遵循 <a href="https://book.douban.com/subject/3296585/"><code>Strunk and White</code></a> 风格</p>
+<p>如果你是非英语 python 码农，请使用英语写注释，除非你 120% 确保代码永远不会被不说你母语的人读到。</p>
+<h3>块注释</h3>
+<p>块注释一般放在代码前面，和代码的缩进同级，块注释中的每一行都以 <code>#</code> + 一个空格开头（除非是注释内部的缩进）。</p>
+<p>块注释内部的段落用一个以 <code>#</code> 开头的空行隔开。</p>
+<h3>行内注释</h3>
+<p>谨慎地使用行内注释。</p>
+<p>行内注释指的是和代码在同一行的注释，行内注释和代码应该用至少 2 个空格隔开，且以一个 <code>#</code> + 一个空格开始。</p>
+<p>行内注释一般没有必要，事实上还会分散注意力。不要写类似下面的注释，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>                 <span class="c1"># Increment x</span>
+</pre></div>
+</td></tr></table>
+
+<p>但是有时候，这样写是很有用的，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>                 <span class="c1"># Compensate for border</span>
+</pre></div>
+</td></tr></table>
+
+<h3>docstring</h3>
+<p>docstirng 的规则总结在 <a href="https://www.python.org/dev/peps/pep-0257/">PEP257</a> 内，其内容永远都不会改变。</p>
+<ul>
+<li>为所有的 public <code>module</code>, <code>function</code>, <code>class</code>, <code>method</code> 写 docstirng。对非 public method 没有必要写 docstirng，但是你应该写个注释描述该 method 的作用。这个注释应该出现在 <code>def</code> 行的下面。</li>
+<li>
+<p><a href="https://www.python.org/dev/peps/pep-0257/">PEP257</a> 描述了良好的 docstirng 惯例，要特别注意的是，多行的 docstirng 的结尾 <code>"""</code> 应该单独放一行。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Return a foobang</span>
+
+<span class="sd">Optional plotz says to frobnicate the bizbaz first.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>对于单行的 docstring，把结尾的 <code>"""</code> 放在该行内</p>
+</li>
+</ul>
+<p><br></p>
+<h2>命名规范</h2>
+<hr>
+<p>python 库的命名规则有点混乱，我们一直没有完全统一，然而，这里列了一些当前推荐的命名标准。新写的 <code>module</code> 和 <code>package</code>（包括第三方的 framework）应该遵守下面的标注，但是如果一个已经存在的库有其他的 style，只要内部保持一致性即可。</p>
+<h3>最重要的规则</h3>
+<p>API 中那些对用户可见的公共接口的名字，应该遵循反映用法而不是内部实现的原则。</p>
+<h3>描述性的：命名风格</h3>
+<p>有许多不同的命名 style，下面这些可以帮助我们识别出正在使用什么样的 style，而和他们用来做什么没有关系。</p>
+<p>下面是一些常见的方式：</p>
+<ul>
+<li><code>b</code>（单个小写字母）</li>
+<li><code>B</code>（单个大写字母）</li>
+<li><code>lowercase</code> 小写</li>
+<li><code>lower_case_with_underscores</code> 小写带下划线</li>
+<li><code>UPPERCASE</code> 大写</li>
+<li><code>UPPER_CASE_WITH_UNDERSCORES</code> 大写带下划线</li>
+<li>
+<p><code>CapitalizedWords</code>（或者叫 CapWords，CamelCase —— 驼峰命名法），有时也叫做 StudlyCaps</p>
+<p>注意：在驼峰中使用首字母缩写时，所有字母都要大写，所以 <code>HTTPServerError</code> 比 <code>HttpServerError</code> 要好</p>
+</li>
+<li>
+<p><code>mixedCase</code>（和驼峰不同之处在于第一个字母小写</p>
+</li>
+<li><code>capitalized_Words_With_Underscores</code>（丑陋！）</li>
+</ul>
+<p>还有一种使用短缩写前缀来使一组相关的名字形成一个 group，Pyhton 中这种场景并不多见，这里只是为了全面而提一下。比如，<code>os.stat()</code> 函数返回了一个 <code>tuple</code>，内部的变量是 <code>st_mode</code>, <code>st_size</code>, <code>st_mtime</code> 之类的名字。（这么做的目的是为了强调和 <code>POSIX</code> 系统调用的相关性，以帮助程序员熟悉它）</p>
+<p>X11 库里面所有的 public 函数都加了 <code>X</code> 前缀，在 python 里，这种风格通常是没有必要的，因为 <code>attribute</code> 和 <code>method</code> 调用的时候前面一般都会带上 object 前缀，而函数名前面会带上 module 的名字。</p>
+<p>除此之外，下面的这种带前缀或后缀下划线 <code>_</code> 的格式是可以的（通常和一些惯例结合在一起使用）：</p>
+<ul>
+<li><code>_single_leading_underscore_</code>，弱“内部使用”标志。比如，<code>from M import *</code> 不会导入类似以 <code>_</code> 开头的对象</li>
+<li>
+<p><code>single_trailing_underscore_</code>，用来避免和 python 内部的关键字相冲突</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Tkinter</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">(</span><span class="n">master</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">&#39;ClassName&#39;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p><code>__double_leading_underscore</code>，用来给 class 的 attribute 命名，调用它时会被矫正（在 class FooBar 中，<code>__boo</code> 会变成 <code>_FooBar_boo</code>）</p>
+</li>
+<li><code>__double_leading_and_trailing_underscore__</code>，“magic” 对象/attribute，存在于用户控制的 <code>namespcae</code>，比如，<code>__init__</code>，<code>__import__</code>，或者 <code>__file__</code>。仅仅像文档说明的这样用，永远不要自己发明这种名字。</li>
+</ul>
+<h3>规范性的：命名惯例</h3>
+<h4>避免使用的名字</h4>
+<p>永远都不要使用小写字母 <code>l</code>，大写字母 <code>O</code>，大写字母 <code>I</code> 作为单字母变量名。</p>
+<p>在某些字体中，这些字符会和数字 0/1 混淆不清，如果要使用小写字母 <code>l</code>，使用 <code>L</code> 代替。</p>
+<h4>兼容 ASCII</h4>
+<p>如 <a href="https://www.python.org/dev/peps/pep-3131">PEP3131</a> 中所述，标准库中的标识符必须是 ASCII 兼容的。</p>
+<h4>package 和 module 的名字</h4>
+<p><code>module</code> 必须使用简短，全小写的名字。如果使用下划线能提高代码的可读性，那么就可以使用。 虽然不鼓励使用下划线，但是 <code>package</code> 也必须也用简短、全小写的名字。</p>
+<p>如果一个模块的底层实现使用的是 C/C++，并且有个用 python 模块来提供更高层次接口（比如，面向对象），那么这个 C/C++ module 名字必须要有下划线前缀（比如，<code>_socket</code>）。 </p>
+<h4>class 的名字</h4>
+<p>class 的名字一般应该使用 <code>CapWords</code> 的惯例。</p>
+<p>如果 interface 被文档化了并且主要作为被调用的场景，那么可以换成 function 的命名惯例。</p>
+<p>注意，对于内置的名字有个单独的惯例：大部分内置名字一般是单个单词（或者是两个单词连在一起），<code>CapWords</code> 之用于 exception 和内置常量。</p>
+<h4>类型变量的名字</h4>
+<p>在 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 中的类型变量名字，相比于短名字，如 <code>T</code>, <code>AnyStr</code>，<code>Num</code>，一般优先使用 <code>CapWords</code>。推荐给变量加上后缀 <code>_co</code> 或者是 <code>_contra</code> 来声明相关的协变量或者是逆变量。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
+
+<span class="n">VT_co</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;VT_co&#39;</span><span class="p">,</span> <span class="n">covariant</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">KT_contra</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;KT_contra&#39;</span><span class="p">,</span> <span class="n">contravariant</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<h4>Exception 的名字</h4>
+<p>因为 exception 应该是个 class，所以使用 class 的规则即可。但是，如果某个 exception 确实是个 error，则应该给它加上 <code>Error</code> 后缀。</p>
+<h4>全局变量名</h4>
+<p>希望这些变量只会在单个 module 内使用。它的命名规则和 function 一样。</p>
+<p>通过 <code>from M import *</code> 来使用的 module，应该使用 <code>__all__</code> 机制来防止暴露 global 变量，或者使用以前加前缀的规则，比如给这些 global 变量加上单个下划线（表明你想暗示这些变量是 module 内，非 publicc 的）。</p>
+<h4>Function 和 变量 名</h4>
+<p>function 名应该小写，如果有必要，使用下划线将单词分隔开以提高可读性。</p>
+<p>变量名和函数的规则一样。</p>
+<p>只有在为了和旧代码（比如 <code>threading.py</code>）保持兼容性时，才允许使用 <code>mixedCase</code> 风格的名字。</p>
+<h4>Function 和 Method 的参数</h4>
+<p>永远要把 <code>self</code> 作为例化 mehod 的第一个参数。</p>
+<p>永远使用 <code>cls</code> 作为例化 class 的第一个参数。</p>
+<p>如果一个 function 的参数名和关键字相冲突，一般最好在尾部加一个后缀的单下划线，而不是使用缩写或是故意拼写错误。所以 <code>class_</code> 比 <code>clss</code> 要更好（也许最好的方式是使用一个同义词来避免这种情况）。</p>
+<h4>Mehtod 和 Instance 的名字</h4>
+<p>使用和 function 一样的命名规则：用下划线把小写单词分隔开以提高可读性。</p>
+<p>只有非 public 的 method 和 instance variables 才可以加上前缀下划线。</p>
+<p>为了避免和类名相冲突，使用两个前缀下划线来触发 python 的命名矫正规则。</p>
+<p>python 会使用 class 的名字来矫正这些名字：如果 class <code>Foo</code> 有一个名字为 <code>__a</code> 的 attribute，则无法通过 <code>Foo.__a</code> 来访问它（用户可以通过 <code>Foo._Foo__a</code> 的方式来访问）。一般来说，双下划线前缀只应该用来避免和子类中的名字相冲突的情况。</p>
+<h4>常量</h4>
+<p>常量定义一般和 module 同级别，并且全部大写，用下划线隔开单词。比如 <code>MAX_OVERFLOW</code> 和 <code>TOTAL</code>。</p>
+<h4>继承的设计</h4>
+<p>始终要考虑一个 class 的 method 和 instance variables（统称为：<code>attribute</code>）应该是 public 还是 non-public。如果有疑问，那么就选择做成 non-public；因为之后将其再改为 public 要比反过来做更容易。</p>
+<p>public attribute 是那些你希望和你的 class 不相关的用户可以使用的 attribute，并且你应该保证以后修改时不会发生向后不兼容的情况。non-public attribute 是那些不打算给第三方使用的 attribute，你没必要保证 non-public attribute 以后不会改变或甚至是被删除。</p>
+<p>我们不使用术语 <code>private</code>，是因为 python 里面的 attribute 并不是真正的 private（为了避免大量不必要的工作）。</p>
+<p>基类中还有另外一类 attribute，它们会作为 subclass API 中一部分（通常在别的语言里面叫作 <code>protected</code>）。有些 class 被特意设计成被继承形式，一般是为了扩展或者修改原来 class 的行为。当设计这种 class 时，要小心决定哪些 attribute 是 public 的，哪些 attribute 是 subclass 的 API，哪些是真正只有 base class 才会使用的。</p>
+<p>遵守以上的思想，这里有一些 pythonic guideline：</p>
+<ul>
+<li>public attrbute 不应该有前缀下划线</li>
+<li>
+<p>如果你的 public attribute 的名字和保留的关键字冲突了，在属性的最后缀上一个下划线。优先选择这种方法而不是采用缩写或者是错误拼写（但是尽管有这样的规则，对于 class method 作为第一个参数的情况，优先选择用 'cls' 表示 class 类型的变量/参数）</p>
+<p>注意1：对于 class 的 method 的参数命令参考前面的讨论。</p>
+</li>
+<li>
+<p>对于简单的 public data attribute，最好直接暴露它的名字，而不是再写一个复杂的 accessor/mutator method。如果一个 data attribute 需要增加功能，python 提供了一个方便的途径。这种情况下，使用 property 来隐藏简单的数据访问背后的 功能实现。</p>
+<p>注意1：property 应该只在 new-style 的 class 中实现。</p>
+<p>注意2：虽然有些副作用（比如caching）是可以接受的，但是要尽量尝试让 function 的行为没有副作用</p>
+<p>注意3：property 会让调用者认为访问开销相对较小，所以尽量避免使用 property 来做大开销的计算</p>
+</li>
+<li>
+<p>如果你的 class 可能会被扩展出 subclass，并且你不希望 subclass 使用一些 attribute，那么考虑用两个下划线前缀、没有下划线后缀的方式给这些 property 命名。这样会触发 python 的命名矫正算法，这个 attribute 的名字前会加上 class 的名字。这样可以避免 subclass 意外使用相同名字时的冲突。</p>
+<p>注意1：只有 class 的名字才会合入到 attribute 名字中，所以如果 subclass 的名字和其 attribute 的名字和父类名字相同，那么还是会有冲突</p>
+<p>注意2：命名矫正在某些情况下很不方便，比如 debug 或者是 <code>__getattr__()</code>。但是命名矫正算法的文档很完善，使用起来也很方便。</p>
+<p>注意3：并不是每个人都喜欢命名矫正，尽量避免和潜在的高级调用者产生命名冲突。</p>
+</li>
+</ul>
+<h3>public 和 internal 接口</h3>
+<p>任何的向后兼容只适用于 public 接口，因此，让用户能清晰地区分出 public 和 内部接口非常重要。</p>
+<p>文档化的接口可以认为是 public 接口，除非文档中明确说明该接口是拥有向后兼容豁免权的临时/内部接口。所有没有文档化的接口都应该视为内部接口。</p>
+<p>为了更好地支持 introspection，module 应该用 <code>__all__</code> 明确声明 public API 的名字。如果没有 public API，那么就把 <code>__all__</code> 设置为空 list。</p>
+<p>即使合理地设置了 <code>__all__</code>，内部接口（package、module、class、function、attribute 或其他名字）还是应该加上单下划线前缀。</p>
+<p>如果 namespace（package、module、class）被认为是内部的，那么包含在内的接口也会被认为是内部的。</p>
+<p>import 的名字应该永远被认为是实现细节。除非是 module API 的一部分，否则别的 module 不能间接访问这些名字。比如，<code>os.path</code> 或者是一个 package 的 <code>__init__</code> module。</p>
+<h2>编程建议</h2>
+<hr>
+<ul>
+<li>
+<p>代码不能伤害其他 python 的实现（比如 PyPy、Jython、IronPython、Cython、Psyco 等等）</p>
+<p>比如，字符串连接时不要依赖于 CPython 中的高效实现形式 <code>a += b</code> 或者是 <code>a = a + b</code> 。即使在 Cpython 中这种优化也是很脆弱的（只适用于部分类型），而且如果不使用 <code>refcouting</code> 那么就完全不会产生这种优化。库中对性能敏感的部分，应该使用 <code>''.join()</code> 的方式。这样可以保证在各种实现中，字符串连接的时间开销是线性的。</p>
+</li>
+<li>
+<p>和类似 <code>None</code> 这样的单例对象的比较，应该永远使用 <code>is</code> 或者是 <code>is not</code>，永远不要使用等号操作符。</p>
+<p>此外，如果你的目的是 <code>if x is not None</code> 那么要小心别写成 <code>if x</code>。举例：判断一个默认值是 None 的变量/参数是否被设置成其他值，这个值（比如容器）的类型在 boolean 表达式中可能会是 false！</p>
+</li>
+<li>
+<p>使用 <code>is not</code> 而不是 <code>not ... is</code>。虽然两个表达式的功能相同，但是前一种写法的可读性更强：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">foo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+
+<span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">foo</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>当使用丰富的比较实现排序时，最好实现所有的比较符（六个：<code>__eq__</code>, <code>__ne__</code>, <code>__lt__</code>, <code>__le__</code>, <code>__gt__</code>, <code>__ge__</code>），而不是依赖于其他（只在特定比较上验证过的）代码</p>
+<p>为了最小化开销，装饰器 <code>functools.total_ordering()</code> 可以提供一个工具来生成缺少的比较操作。</p>
+<p><a href="https://www.python.org/dev/peps/pep-0207">PEP207</a> 指出 python 实现了反射机制，所以，解析器可能会把 <code>y &gt; x</code> 转换成 <code>x &lt; y</code>，把 <code>y &gt;= x</code> 转换成 <code>x &lt;= y</code>，把 <code>x == y</code> 转换成 <code>x != y</code>。<code>sort()</code> 和 <code>min()</code> 可以确保使用 <code>&lt;</code> 操作符，<code>max()</code> 使用 <code>&gt;</code> 操作符。但是，最好实现这六个操作符，这样在其他地方就不会有困惑。</p>
+</li>
+<li>
+<p>始终使用 <code>def</code> 而不是赋值语句来把一个 lambda 表达式绑定到一个标识符上</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+
+<span class="c1"># Wrong:</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+</pre></div>
+</td></tr></table>
+
+<p>前一种形式意味着生成的 function 对象是 <code>f</code> 而不是通用的 <code>&lt;lambda&gt;</code>。这在回溯和 stirng 显示的时候更加有用。赋值语句会消除 lambda 表达式优于显式使用 def 语句的唯一优势。（即 lambda 表达式可以内嵌在一个更大的表达式中）</p>
+</li>
+<li>
+<p>从 <code>Exception</code> 而不是 <code>BaseException</code> 中继承 exception，直接从 <code>BaseException</code> 中继承得到的 exception 是保留的，捕捉这些异常是大部分情况下一件错误的事情。</p>
+<p>基于需要捕捉 exception 的代码，而不是抛出 exception 的位置代码来设计 exception hierarchies。以编程的角度回答“发生了什么错误?”这个问题，而不是只是说“发生了错误”（内置 exception hierarchies 的例子见 <a href="https://www.python.org/dev/peps/pep-3151">PEP3151</a>） </p>
+<p>应该遵守 class 的命名规则，除非你的 exception 本身就是一个 error，那么就给这个 exception class 名字加上 <code>Error</code> 后缀。用于非本地控制或其他形式的非 error exception 不需要特殊的后缀。</p>
+</li>
+<li>
+<p>适当地使用 exception 链，在 python 3 中，为了不丢失原始的回溯信息，应该使用 <code>raise X from Y</code> 来表示明确的替换。</p>
+<p>当故意替换内部 exception 时（在 python 2 中用 <code>raise X</code>，在 python 3 中用 <code>raise X from None</code>），确保相关的细节被转移到了新的 exception 中（比如把 <code>KeyError</code> 转换成 <code>AttributeError</code> 时保留属性名，或在新的 exception 中嵌入原始 exception 的文本内容）</p>
+</li>
+<li>
+<p>在 python 2 中抛出一个 exception 时，使用 <code>raise ValueError('message')</code> 而不是以前的形式 <code>raise ValueError, message</code>。</p>
+<p>后面这种格式在 python 3 中是非法的。</p>
+<p>使用括号的格式意味着如果 exception 的参数特别长或者包含格式化字符串时不必使用换行符号。</p>
+</li>
+<li>
+<p>当捕获 exception 时，如果可以尽量加上明确的 exception 名字，而不是写一个光秃秃的 <code>except:</code> 块：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Yes</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">platform_specific_module</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">platform_specific_module</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+</td></tr></table>
+
+<p>一个光秃秃的 <code>except:</code> 块会捕捉到 <code>SystemExit</code> 和 <code>KeyboardInterrupt</code>，导致很难通过 <code>Control-C</code> 的方式中断一个程序，而且会掩盖其他问题。如果你想捕获程序的所有异常，使用 <code>except Exception:</code>（光秃秃的 <code>except</code> 相当于 <code>except BaseException:</code>）。</p>
+<p>允许使用使用光秃秃的 except 的两种情况：</p>
+<ol>
+<li>exception 处理代码会打印或者记录 log，这样用户至少知道发生了错误</li>
+<li>代码需要做一些清理工作，这种情况下最好使用 <code>raise.try...finally</code> 使 exception 可以继续向上传递</li>
+</ol>
+</li>
+<li>
+<p>当把一个 exception 绑定到一个名字时，优先使用 python2.6 中新加的显式名字绑定：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">process_data</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">DataProcessingFailedError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">))</span>
+</pre></div>
+</td></tr></table>
+
+<p>这个语法只有 python3 才支持，它可以避免和原来基于逗号的语法之间的歧义。</p>
+</li>
+<li>
+<p>当捕捉到操作系统的错误时，优先使用 python3.3 中的 explicit exception hierarchy 而不是 <code>errno</code> 值。</p>
+</li>
+<li>
+<p>此外，对于所有的 <code>try</code>/<code>except</code> 块，<code>try</code> 语句中只使用必要的最小化代码，这样可以避免 bug 被掩盖掉：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">key_not_found</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">handle_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="c1"># Wrong:</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Too broad!</span>
+    <span class="k">return</span> <span class="n">handle_value</span><span class="p">(</span><span class="n">collection</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="c1"># Will also catch KeyError raised by handle_value()</span>
+    <span class="k">return</span> <span class="n">key_not_found</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>特定代码的局部资源，使用 <code>with</code> 语句来确保这个资源使用完成后被清理干净，下次还能继续使用。也可以用 <code>try</code>/<code>finally</code> 语句。</p>
+</li>
+<li>
+<p>除了获取/释放资源，其他时候都应该通过独立的 function 或 method 来调用上下文管理器</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">begin_transaction</span><span class="p">():</span>
+    <span class="n">do_stuff_in_transaction</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+
+<span class="c1"># Wrong:</span>
+<span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="n">do_stuff_in_transaction</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>后面这个例子没有提供任何信息来指示 <code>__enter__</code> 和 <code>__exit__</code> 两个 method 除了在 tansaction 之后关闭连接之外做的其他事情，。在这种情况下，明确指明很重要。</p>
+</li>
+<li>
+<p>返回语句要保持一致性。要么所有 function 的返回语句都返回一个表达式，要么都不返回。如果有返回语句返回的是表达式，那么不返回值的返回语句应该明确声明 <code>return None</code>，并且位于 function 的最后一句
+（如果能跑到这一句的话）。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Wrong:</span>
+
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>使用 string method 而不是 stirng module。</p>
+<p>string mothod 总是速度更快，而且和 unicode string 共享相同的 API，如果要求兼容 python2.0 以前的版本则可以忽略这条规则。</p>
+</li>
+<li>
+<p>使用 <code>''.startswith()</code> 和 <code>''.endswith()</code> 而不是 string 切片来检查前缀/后缀。</p>
+<p><code>startwith()</code> 和 <code>endswith()</code> 更加清晰，而且不易出错：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">foo</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">):</span>
+
+<span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">foo</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;bar&#39;</span><span class="p">:</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>对象类型的比较应该使用 <code>isinstance()</code> 而不是直接比较类型：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+
+<span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+</pre></div>
+</td></tr></table>
+
+<p>如果检查一个对象是否为 string，记得它有可能是个 unicode string！在 python 2 中，<code>str</code> 和 <code>unicode</code> 有相同的基类 <code>basestring</code>，所以你可以这么做：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
+</pre></div>
+</td></tr></table>
+
+<p>注意在 python 3 里面，<code>unicode</code> 和 <code>basestring</code> 都不再存在了（只有 <code>str</code>），并且 bytes 对象不再是 string 的一种，它是整数序列。</p>
+</li>
+<li>
+<p>对于序列（stirngs，list，tupels）来说，空序列的值是 false：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">seq</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">seq</span><span class="p">:</span>
+
+<span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>写 string 时不要依赖结尾的空格，这种空格在视觉上难以区分，而且一些编辑器（比如reindent.py）会删掉他们。</p>
+</li>
+<li>
+<p>不要使用 <code>==</code> 来比较 boolean 值和 <code>True</code>/<code>False</code>：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">greeting</span><span class="p">:</span>
+
+<span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">greeting</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+</pre></div>
+</td></tr></table>
+
+<p>更糟糕的情况：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">greeting</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>在 <code>try...finally</code> 的最后一个分支中使用流程控制语句 <code>return</code>/<code>break</code>/<code>continue</code>，而且这个语句会跳转到外面，不鼓励这种方式。因为这种语句会隐式地取消所有的正在通过最后一个分支传播的 exception：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">42</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+</ul>
+<h3>函数注释</h3>
+<p>随着 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 的引入，下面的函数注释规则有些变化：</p>
+<ul>
+<li>为了前向兼容，python 3 中的函数注释应该优先使用 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 的语法（在之前的章节中有一些注释的推荐规则）</li>
+<li>不再鼓励使用本文以前推荐的实验性注释风格</li>
+<li>但是，除了标准库，鼓励使用 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 中的实验性规则。比如，使用 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 中的 style 为一个大型第三方库/应用添加注释，检查添加这些注释的容易程度，观察这些注释的出现是否提高了可读性。</li>
+<li>python 的标准库应该保守地使用这些注释，但是新代码和大型的重构可以使用这种注释。</li>
+<li>
+<p>如果代码想用另外一种方式使用函数注释，推荐在文件顶部添加这样一条注释：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">type</span><span class="p">:</span> <span class="k">ignore</span>
+</pre></div>
+</td></tr></table>
+
+<p>这会告诉 type checker 忽略所有的注释（在 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 中可以找到更加详细的关于细颗粒度的关闭 type checker 的报错）</p>
+</li>
+<li>
+<p>和 linter 类似，type checker 是独立可选的工具，python 解释器默认不会报出任何 type checker 的内容，而且不会基于注释改变它们的行为。</p>
+</li>
+<li>用户不想使用 type checker 时可以忽略它们。但是，第三方库的用户可能希望在这些库上运行 type checker，为此，<a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 推荐使用 <code>stub</code> 文件：相比于 .py 文件，type checker 优先读取 .pyi 文件。stub 文件可以和库一起发布，也可以通过单独的 typeshed repo 发布（通过库的作者许可）</li>
+<li>对于需要向后兼容的代码，可以以注释的方式添加类型注释，相关内容见 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a>。</li>
+</ul>
+<h3>变量注释</h3>
+<p><a href="https://www.python.org/dev/peps/pep-0526/">PEP526</a> 介绍了变量注释，对于变量的注释风格和前面描述的函数注释类似：</p>
+<ul>
+<li>对于 module 级别的变量，class 和 instance variables，局部变量，应该在冒号后面加个空格</li>
+<li>冒号前面不应该有空格</li>
+<li>
+<p>如果赋值语句有右侧内容，那么等号两边的空格数应该相等</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+
+<span class="n">code</span><span class="p">:</span> <span class="nb">int</span>
+
+<span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="n">coords</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+    <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&lt;unknown&gt;&#39;</span>
+
+<span class="c1"># Wrong:</span>
+
+<span class="n">code</span><span class="p">:</span><span class="nb">int</span>  <span class="c1"># No space after colon</span>
+<span class="n">code</span> <span class="p">:</span> <span class="nb">int</span>  <span class="c1"># Space before colon</span>
+
+<span class="k">class</span> <span class="nc">Test</span><span class="p">:</span>
+    <span class="n">result</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">0</span>  <span class="c1"># No spaces around equality sign</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>虽然 python 3 可以使用 <a href="https://www.python.org/dev/peps/pep-0526/">PEP526</a>，但是对于所有版本的 python，对于变量注释，stub 文件的方式是首选的。（细节见 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a>） </p>
+</li>
+</ul>
+<p><br></p>
+<h2>参考</h2>
+<hr>
+<p><a href="https://www.python.org/dev/peps/pep-0008/">PEP8</a></p>
+<p><a href="https://blog.csdn.net/ratsniper/article/details/78954852">Python PEP8 编码规范中文版</a></p>
+            </div>
+            <!-- /.entry-content -->
+<section class="well" id="related-posts">
+    <h4>Related Posts:</h4>
+    <ul>
+        <li><a href="https://guqian110.github.io/posts/python/peps_translate_project_pep0.html">PEP 翻译计划系列 —— PEP0</a></li>
+    </ul>
+</section>
+<section class="well" id="related-posts">
+    <h4>Part 2 of the PEP translate project series</h4>
+       <h5>Previous articles</h5>
+       <ul>
+           <li><a href="https://guqian110.github.io/posts/python/peps_translate_project_pep0.html">PEP 翻译计划系列 —— PEP0</a></li>
+       </ul>
+</section>
+    <hr/>
+    <section class="comments" id="comments">
+        <h2>Comments</h2>
+
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'guqian110'; // required: replace example with your forum shortname
+
+            var disqus_config = function () {
+                this.language = "en";
+
+                        this.page.identifier = '2020-04-12-peps_translate_project_pep8';
+                        this.page.url = 'https://guqian110.github.io/posts/python/peps_translate_project_pep8.html';
+            };
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    </section>
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<div id="aboutme">
+        <p>
+            <img width="100%" class="img-thumbnail" src="https://guqian110.github.io/images/logo.png"/>
+        </p>
+    <p>
+      <strong>About Qian Gu</strong><br/>
+        Icer + BYR
+    </p>
+</div><!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="mailto:guqian110@163.com"><i class="fa fa-envelope fa-lg"></i> Email</a></li>
+    <li class="list-group-item"><a href="http://github.com/guqian110"><i class="fa fa-github-square fa-lg"></i> Github</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+
+<!-- Sidebar/Tag Cloud -->
+<li class="list-group-item">
+  <a href="https://guqian110.github.io/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+  <ul class="list-group list-inline tagcloud" id="tags">
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/arduino.html">Arduino</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/bufexplorer.html">BufExplorer</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/build-blog.html">Build Blog</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/c.html">C++</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/case.html">case</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/clock-design.html">clock design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-dividers.html">clock dividers</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-generate-unit.html">clock generate unit</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/clock-resource.html">clock resource</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/code.html">code</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/coding-style.html">coding style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/comment-style.html">comment style</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/configurable-design.html">configurable design</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/const.html">const</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/correlation-coefficient.html">correlation coefficient</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/cscope.html">cscope</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ctags.html">ctags</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/data-type.html">data type</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/delay.html">delay</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-procesing.html">digital procesing</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/digital-processing.html">digital processing</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxverilog.html">doxverilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/doxygen.html">doxygen</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/doxygentoolkit.html">DoxygenToolKit</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fft.html">FFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/fifo.html">FIFO</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/flip-flop.html">flip-flop</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fpga.html">FPGA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/frequency.html">frequency</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/fsm.html">fsm</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/glitch.html">glitch</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/gmail.html">Gmail</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/graphviz.html">graphviz</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/gtd.html">GTD</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/hazard.html">hazard</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/huo-zhao.html">活着</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ifft.html">IFFT</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/intel-galileo.html">Intel Galileo</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ip-core.html">IP core</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ise.html">ISE</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/latch.html">latch</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/linux.html">Linux</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/lookupfile.html">lookupfile</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/markdown.html">markdown</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/matlab.html">matlab</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/modelsim.html">Modelsim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/nerdtree.html">NERDTree</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/ofdm.html">OFDM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/on-top-of-tides.html">On Top of Tides</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/open-source-hardware.html">Open-source Hardware</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/package-management.html">Package Management</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/parameterization.html">parameterization</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/pep.html">PEP</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pipeline.html">pipeline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pkm.html">PKM</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/powerline.html">Powerline</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/project-setting.html">project setting</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/pulse-edge-detection.html">pulse edge detection</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/python.html">python</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/regular-expression.html">regular expression</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/reset.html">reset</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/review.html">review</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/shi-jian-guan-li.html">时间管理</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/snr.html">SNR</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/ssh.html">SSH</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/sta.html">STA</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/steve-jobs.html">Steve Jobs</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/sublime-text.html">Sublime Text</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/syntax.html">syntax</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/synthesis.html">synthesis</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/taglist.html">taglist</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/tail-bitting-convolution.html">tail bitting convolution</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/the-catcher-in-the-rye.html">The Catcher in The Rye</a>
+    </li>
+    <li class="list-group-item tag-2">
+      <a href="https://guqian110.github.io/tag/verilog.html">Verilog</a>
+    </li>
+    <li class="list-group-item tag-3">
+      <a href="https://guqian110.github.io/tag/vhdl.html">VHDL</a>
+    </li>
+    <li class="list-group-item tag-1">
+      <a href="https://guqian110.github.io/tag/vim.html">Vim</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vim_signature.html">vim_signature</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vivado.html">Vivado</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/vundle.html">vundle</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/warcraft.html">WarCraft</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/wine.html">Wine</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/winmanager.html">WinManager</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/xilinx.html">Xilinx</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yocto.html">Yocto</a>
+    </li>
+    <li class="list-group-item tag-4">
+      <a href="https://guqian110.github.io/tag/yu-hua.html">余华</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Tag Cloud -->
+
+<!-- Sidebar/Github -->
+<li class="list-group-item">
+  <h4><i class="fa fa-github fa-lg"></i><span class="icon-label">GitHub Repos</span></h4>
+  <div id="gh_repos">
+    <p class="list-group-item">Status updating...</p>
+  </div>
+</li>
+<!-- End Sidebar/Github -->
+
+<!-- Sidebar/Links -->
+<li class="list-group-item">
+  <h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+  <ul class="list-group" id="links">
+    <li class="list-group-item">
+      <a href="http://getpelican.com/" target="_blank">Pelican</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://python.org/" target="_blank">Python.org</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Links -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2020 Qian Gu
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>                <p><small>  <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.en"><img alt="Creative Commons License" style="border-width:0" src="//i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.en">Creative Commons Attribution-NonCommercial 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="https://guqian110.github.io/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://guqian110.github.io/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="https://guqian110.github.io/theme/js/respond.min.js"></script>
+
+
+
+<!-- GitHub JS Code -->
+<script type="text/javascript">
+$(document).ready(function () {
+  if (!window.jXHR) {
+    var jxhr = document.createElement('script');
+    jxhr.type = 'text/javascript';
+    jxhr.src = 'https://guqian110.github.io/theme/js/jXHR.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(jxhr, s);
+  }
+
+  github.showRepos({
+    user: 'guqian110',
+    count: 5,
+    skip_forks: false,
+    target: '#gh_repos'
+  });
+});
+</script>
+<script src="https://guqian110.github.io/theme/js/github.js" type="text/javascript"></script>
+<!-- End GitHub JS Code -->
+    <!-- Disqus -->
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'guqian110'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+    </script>
+    <!-- End Disqus Code -->
+
+
+</body>
+</html>
