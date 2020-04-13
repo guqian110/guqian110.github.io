@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结流水线设计" />
 <meta name="keywords" content="pipeline">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="流水线 pipeline 的艺术"/>
 <meta property="og:description" content="总结流水线设计"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="pipeline"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 流水线 pipeline 的艺术</title>
+  <title>Qian's Blog &ndash; 流水线 pipeline 的艺术</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,6 +95,7 @@
     <p>
       Posted on 2015-05-19 00:00 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 2 min read
     </p>
   </header>
 
@@ -104,7 +105,7 @@
 <p>在另外一篇 blog <a href="http://guqian110.github.io/pages/2015/03/18/static_timing_analysis_1_basic.html">静态时序分析 STA</a> 中已经总结过了，限制系统最大工作频率的因素有很多，设计者能够控制的是 DFF 之间的组合逻辑的时延 Tcomb，降低最大时延路径（关键路径，critical path）的时延 Tcomb，就可以提高系统的工作频率。</p>
 <p>如何降低呢？方法就是流水线（pipeline）。</p>
 <p><br></p>
-<h2>Pipeline Intro</h2>
+<h2>1. Pipeline Intro</h2>
 <hr>
 <p>所谓流水线（pipeline）设计，应该是从汽车工业中的 流水生产线 借鉴过来的说法吧。</p>
 <p>在汽车生产的时候，假设分为 5 个阶段，每个阶段都需要 1 个工人花费 1 小时完成，因为后续的阶段必须等前面阶段完成后才能进行，所以总共需要 5 个小时才能完成一辆汽车。但是采用流水线方式，在进行后续阶段时，前面的阶段可以进行新的工作，那么每个小时都可以生产出一辆汽车了，生产效率提高了 5 倍。</p>
@@ -119,7 +120,7 @@
 </li>
 </ul>
 <p><br></p>
-<h2>A Simple Example</h2>
+<h2>2. A Simple Example</h2>
 <hr>
 <p>采用流水设计的方法就是：<strong>在较长的组合逻辑路径中插入 DFF，将其分割为几个小的组合逻辑，新的 Tcomb 显然小于原来的 Tcomb，所以系统的时钟频率就可以提高了。</strong></p>
 <p>举例来说明：设计一个电路完成 i = (a + b + c + d) + (e + f + g + h) 运算。</p>
@@ -141,7 +142,7 @@
 
 <p>显然，采用流水后 Tff 更小，系统能够达到的工作时钟频率也就更高。</p>
 <p><br></p>
-<h2>Performance Increase from Pipelining</h2>
+<h2>3. Performance Increase from Pipelining</h2>
 <hr>
 <p>下面更加详细地分析一下流水带来的速度性能的提升。</p>
 <p>首先说明，可以使用系统的流量 throughout 和系统的时滞 latency 来衡量速度性能。</p>
@@ -218,7 +219,7 @@
 <p><strong>conclusion</strong>: 使用流水比不使用流水多使用了 n * m 个 DFF，还使用了更多的连线资源。</p>
 <p>综上，可以看到，虽然流水可以提高系统的工作频率和吞吐率，但是它付出的代价是面积和功耗的增加，这也是<strong>速度和面积之间相互转化</strong>的体现。</p>
 <p><br></p>
-<h2>DXL Instruction</h2>
+<h2>4. DXL Instruction</h2>
 <hr>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">THE ART OF HARDWARE ARCHITECTURE</a> 中还介绍了 DXL 指令集的实现，简单记录一下笔记，详细过程还是看书吧。</p>
 <p>DXL 指令是 32 位的 RISC 微处理器，每条指令最多由 5 个部分组成：</p>
@@ -250,7 +251,7 @@
 <p>假设执行每条指令花费 10 ns，那么执行 5 条指令：</p>
 <p>非流水的方式总共花费 10 * 5 = 50 ns；流水的方式每条指令花费 5 个时钟周期，每个周期只有 2 ns，完成 5 条指令只需要 5 个时钟周期，总共花费 9 * 2 = 18 ns；性能是原来的 50/18 = 2.8 倍。</p>
 <p><br></p>
-<h2>Pipelining Principles</h2>
+<h2>5. Pipelining Principles</h2>
 <hr>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">THE ART OF HARDWARE ARCHITECTURE</a> 还总结了流水需要注意的问题：</p>
 <ol>
@@ -280,7 +281,7 @@
 </li>
 </ol>
 <p><br></p>
-<h2>Another Example</h2>
+<h2>6. Another Example</h2>
 <hr>
 <p>将前面总结的 “在组合逻辑路径中插入 DFF，形成流水” 的思路进一步扩展，可以得到更加上层的流水思想。<a href="http://www.amazon.com/Advanced-FPGA-Design-Architecture-Implementation/dp/0470054379/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1432020884&amp;sr=1-1&amp;keywords=advanced+fpga+design">Advanced FPGA Design: Architecture, Implementation, and Optimization</a> 中介绍了一个算法中使用流水的例子，其关键在于 “拆开环路”：</p>
 <p>假设要计算 x^3 这个值，下面这段软件的代码</p>
@@ -333,7 +334,7 @@
 
 <p>可以看到，throughout 的提升是以面积为代价的。</p>
 <p><br></p>
-<h2>Ref</h2>
+<h2>7. Ref</h2>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">THE ART OF HARDWARE ARCHITECTURE</a></p>
 <p><a href="http://www.amazon.com/Advanced-FPGA-Design-Architecture-Implementation/dp/0470054379/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1432020884&amp;sr=1-1&amp;keywords=advanced+fpga+design">Advanced FPGA Design: Architecture, Implementation, and Optimization</a></p>
   </div>
@@ -382,7 +383,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

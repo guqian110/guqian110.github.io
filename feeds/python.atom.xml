@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian Gu - Python</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/python.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2020-04-12T13:55:00+08:00</updated><subtitle>Stay hungry. Stay foolish.</subtitle><entry><title>PEP 翻译计划系列 —— PEP8</title><link href="http://guqian110.github.io/posts/python/peps_translate_project_pep8.html" rel="alternate"></link><published>2020-04-12T13:55:00+08:00</published><updated>2020-04-12T13:55:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2020-04-12:/posts/python/peps_translate_project_pep8.html</id><summary type="html">&lt;p&gt;PEPs 翻译系列 PEP8&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0008/"&gt;PEP 8 -- Style Guide for Python Code 原文链接&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog - Python</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/python.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2020-04-12T13:55:00+08:00</updated><subtitle>Stay hungry. Stay foolish.</subtitle><entry><title>PEP 翻译计划系列 —— PEP8</title><link href="http://guqian110.github.io/posts/python/peps_translate_project_pep8.html" rel="alternate"></link><published>2020-04-12T13:55:00+08:00</published><updated>2020-04-12T13:55:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2020-04-12:/posts/python/peps_translate_project_pep8.html</id><summary type="html">&lt;p&gt;PEPs 翻译系列 PEP8&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0008/"&gt;PEP 8 -- Style Guide for Python Code 原文链接&lt;/a&gt;&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -39,30 +39,38 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;介绍&lt;/h2&gt;
+&lt;h2&gt;1. 介绍&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;本文介绍 Python 主要发布版本中标准库的 code style，对于 CPython 中的 C 代码的 style guide 请查看相关文档 &lt;a href="https://www.python.org/dev/peps/pep-0007/"&gt;PEP7&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;本文和 &lt;a href="https://www.python.org/dev/peps/pep-0257/"&gt;PEP257(docstring 规范)&lt;/a&gt; 来源于 Guido 写的原始文章：《python code style》，部分来自于 Barry 的 &lt;a href="http://barry.warsaw.us/software/STYLEGUIDE.txt"&gt;GNU Mailman style guide&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;本文随着语言本身的变化不断进化，舍弃了部分规则的同时新加了一些规则。&lt;/p&gt;
 &lt;p&gt;许多项目都有自己的 coding style guide，如果和本文有任何冲突，应该以该项目自己的 guide 为准。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;尽信书，不如无书&lt;/h2&gt;
+&lt;h2&gt;2. 尽信书，不如无书&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;Guido 的一个重要见解是：代码更多是用来读而不是写。本文提供的 guideline 的目的是提高代码的可读性，使得广泛的 python 代码保持一致性。正如 &lt;a href="https://www.python.org/dev/peps/pep-0020/"&gt;PEP20&lt;/a&gt; 所述，“可读性非常重要”。&lt;/p&gt;
 &lt;p&gt;一篇 style guide 主要内容是一致性。虽然本文的一致性很重要，但是一个项目内的一致性更重要，最重要的是一个 module 或者 function 内部的一致性。&lt;/p&gt;
 &lt;p&gt;但最重要的是，要知道什么时候不保持一致性，在实际应用时候有些 guide 并不适用，如果有疑问，根据自己的最佳判断，看看其他代码例子然后决定怎么写代码看起来最好。不要羞于发问。&lt;/p&gt;
 &lt;p&gt;特别注意：不要为了遵守本文而破坏向后的兼容性！&lt;/p&gt;
-&lt;p&gt;两种可以忽略本 guideline 的情况：&lt;/p&gt;
+&lt;p&gt;一些可以忽略本 guideline 的情况：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;遵守本 guideline 会导致代码的可读性下降，即使对于那些习惯于遵守本文来阅读代码的人来说&lt;/li&gt;
-&lt;li&gt;（可能出于历史原因）为了保持和周边代码的一致性可以忽略本 guideline，虽然这是个清理其他人垃圾的好机会（实现真正的极限编程 Extreme Programming）&lt;/li&gt;
-&lt;li&gt;代码出现在本规范之前，并且没有其他理由去修改它&lt;/li&gt;
-&lt;li&gt;代码需要和不支持本规范的旧版本 Python 代码保持一致&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;遵守本 guideline 会导致代码的可读性下降，即使对于那些习惯于遵守本文来阅读代码的人来说&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;（可能出于历史原因）为了保持和周边代码的一致性可以忽略本 guideline，虽然这是个清理其他人垃圾的好机会（实现真正的极限编程 Extreme Programming）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;代码出现在本规范之前，并且没有其他理由去修改它&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;代码需要和不支持本规范的旧版本 Python 代码保持一致&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;代码布局&lt;/h2&gt;
+&lt;h2&gt;3. 代码布局&lt;/h2&gt;
 &lt;hr&gt;
-&lt;h3&gt;缩进&lt;/h3&gt;
+&lt;h3&gt;3.1. 缩进&lt;/h3&gt;
 &lt;p&gt;每级缩进为 4 个空格。&lt;/p&gt;
 &lt;p&gt;连续行应该按照包围的元素对齐，要么使用 python 圆括号、方括号、花括号的隐式行连接在垂直方向对齐，要么使用 &lt;code&gt;hanging indent&lt;/code&gt;。使用 hanging indent 的时候应该注意，第一行不应该有任何参数，后续行多一级缩进以便和其他行能清晰地区分开。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
@@ -134,7 +142,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
-&lt;p&gt;如果 if 语句的条件部分太长以至于要写成多行的形式，要注意，一个双字符的关键字（比如 if）加上一个空格，再加上右括号，会天然形成一个 4 sapce 的缩进。这会导致条件语句和 if 内部的嵌套语句（本身也是 4 space 缩进）产生视觉冲突。本文没有明确规定如何（是否需要）进一步在视觉上区分条件语句和内嵌语句，可选但是不限于下面几种方式：&lt;/p&gt;
+&lt;p&gt;如果 if 语句的条件部分太长以至于要写成多行的形式，要注意，一个双字符的关键字（比如 if）加上一个空格，再加上右括号，会天然形成一个 4 space 的缩进。这会导致条件语句和 if 内部的嵌套语句（本身也是 4 space 缩进）产生视觉冲突。本文没有明确规定如何（是否需要）进一步在视觉上区分条件语句和内嵌语句，可选但是不限于下面几种方式：&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
  2
  3
@@ -211,12 +219,12 @@
 &lt;blockquote&gt;
 &lt;p&gt;注：&lt;code&gt;hanging indentation&lt;/code&gt; 是指除了首行之外，其他行都缩进的打印风格。在 python 中，这个术语指的是一个带括号的语句，左括号是该行的最后一个字符，除了右括号，剩余行都会加上缩进&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h3&gt;Tabs 还是 Spaces？&lt;/h3&gt;
+&lt;h3&gt;3.2. Tabs 还是 Spaces？&lt;/h3&gt;
 &lt;p&gt;首选空格 space 作为缩进方式。&lt;/p&gt;
-&lt;p&gt;只有为了和已有代码中的 tab 一致才能继续使用 tab。&lt;/p&gt;
+&lt;p&gt;只有为了和已有代码中的 tab 保持一致才能继续使用 tab。&lt;/p&gt;
 &lt;p&gt;python 3 不允许 tab 和 space 混合使用，python 2 中的 tab 和 space 混合使用时，应该先统一转换成 space。&lt;/p&gt;
 &lt;p&gt;如果 python 2 的命令行解释器带了 &lt;code&gt;-t&lt;/code&gt; 选项，如果有 tab 和 space 混合使用的情况，它会报告 warning，如果带了 &lt;code&gt;-tt&lt;/code&gt; 选项，则会报告 error。强烈推荐使用这些选项。&lt;/p&gt;
-&lt;h3&gt;最大行长度&lt;/h3&gt;
+&lt;h3&gt;3.3. 最大行长度&lt;/h3&gt;
 &lt;p&gt;所有行的最大行长是 79 个字符。&lt;/p&gt;
 &lt;p&gt;对于基本没有结构化约束的长的文本（docstring和注释），其长度不能超过 72 个字符。&lt;/p&gt;
 &lt;p&gt;限制编辑器的宽度的好处是可以并列打开多个文件，在 code review 的时候比较两个版本的代码时很方便。&lt;/p&gt;
@@ -236,7 +244,7 @@
 &lt;p&gt;（对于这种 with 语句，可以参考前面讨论 if 语句的处理方式）&lt;/p&gt;
 &lt;p&gt;这种情况的另外一个例子是 &lt;code&gt;assert&lt;/code&gt; 语句。&lt;/p&gt;
 &lt;p&gt;确保在后续的行中适当地缩进。&lt;/p&gt;
-&lt;h3&gt;应该在二元操作符的前还是后断行？&lt;/h3&gt;
+&lt;h3&gt;3.4. 应该在二元操作符的前还是后断行？&lt;/h3&gt;
 &lt;p&gt;几十年以来，我们一直推荐的是在二元操作符之后断行，但是这样可能会伤害到代码的可读性，原因有两个：运算符一般分布在不同列，并且每个运算符和它的操作数被分开了，放到了操作数的前一行。下面的例子说明了需要读者的眼睛额外做一些工作来分辨那些变量是相加，哪些变量是相减，&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
@@ -273,24 +281,28 @@
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;在 python 代码中，在二元符号之前或之后都可以断行，只要在本地保持一致即可。对于新写的代码，推荐使用 Knuth 的风格。&lt;/p&gt;
-&lt;h3&gt;空行&lt;/h3&gt;
+&lt;h3&gt;3.5. 空行&lt;/h3&gt;
 &lt;p&gt;顶层的 &lt;code&gt;function&lt;/code&gt; 和 &lt;code&gt;class&lt;/code&gt; 定义前后需要两个空行。&lt;/p&gt;
 &lt;p&gt;class 内部的 &lt;code&gt;method&lt;/code&gt; 定义前后需要一个空行。&lt;/p&gt;
 &lt;p&gt;一组功能相关的 function 可以通过额外的一个空行来区分（谨慎使用）。一组相关的单行代码之间的空行可以省掉（比如一组 dummy implementation）。&lt;/p&gt;
 &lt;p&gt;在 function 内部（谨慎）使用空行区分逻辑段。&lt;/p&gt;
 &lt;p&gt;python 接受 &lt;code&gt;control-L&lt;/code&gt; 作为空格，许多工具把这些字符当作页面分割符，所以你可以用它们来区分文件中的相关段落。注意，一些编辑器和基于 web 的阅读器可能无法识别 control-L，会在其位置显示一个其他符号。&lt;/p&gt;
-&lt;h3&gt;源文件的编码格式&lt;/h3&gt;
+&lt;h3&gt;3.6. 源文件的编码格式&lt;/h3&gt;
 &lt;p&gt;python 核心发布版本中的代码总是使用 UTF-8 来编码（python 2 中用 ASCII）。&lt;/p&gt;
 &lt;p&gt;python 2 中使用 ASCII 的文件和 python 3 中使用 UTF-8 的代码不应该有编码申明。&lt;/p&gt;
 &lt;p&gt;在标准库中，只有以测试目的或者注释、docstring 中需要提及包含非 ASCII 字符的作者名时，才能使用非默认编码方式；其他情况下，在字符串中优先使用 &lt;code&gt;\x&lt;/code&gt;，&lt;code&gt;\u&lt;/code&gt;，&lt;code&gt;\U&lt;/code&gt;，&lt;code&gt;\N&lt;/code&gt; 来转义非 ASCII 字符。&lt;/p&gt;
 &lt;p&gt;对于 python 3.0 和更高版本来说，标准库使用了下面的政策（见 &lt;a href="https://www.python.org/dev/peps/pep-3131"&gt;PEP3131&lt;/a&gt;）：标准库中所有标识符 &lt;strong&gt;必须&lt;/strong&gt; 使用 ASCII 标识符，并在尽可能使用英语单词（在很多情况下，缩写和术语是非英语）。除此之外，string literals 和注释必须也使用 ASCII。只有两个例外，&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;测试非 ASCII 的测试用例&lt;/li&gt;
-&lt;li&gt;作者的名字&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;测试非 ASCII 的测试用例&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;作者的名字&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;如果作者的名字不是基于拉丁字符，&lt;strong&gt;必须&lt;/strong&gt; 提供一个拉丁字母音译。&lt;/p&gt;
 &lt;p&gt;鼓励具有全球受众的开源项目采取类似的策略。&lt;/p&gt;
-&lt;h3&gt;Imports&lt;/h3&gt;
+&lt;h3&gt;3.7. Imports&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;code&gt;import&lt;/code&gt; 通常应该分开每行一个，&lt;/p&gt;
@@ -320,9 +332,15 @@
 &lt;p&gt;import 必须放在文件的顶部，位于 module 注释和 docstring 的后面，在模块的全局变量/常量的前面。&lt;/p&gt;
 &lt;p&gt;import 应该按照下面的顺序分组：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;标准库 import&lt;/li&gt;
-&lt;li&gt;相关的第三方库 import&lt;/li&gt;
-&lt;li&gt;本地应用/库的特定 import&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;标准库 import&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;相关的第三方库 import&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;本地应用/库的特定 import&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;在每组之间插入一个空行。&lt;/p&gt;
 &lt;/li&gt;
@@ -368,7 +386,7 @@
 &lt;p&gt;当使用这种重新发布名称时，以下关于 public 和 内部接口的规则仍然适用。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;模块级别的 dunber name&lt;/h3&gt;
+&lt;h3&gt;3.8. 模块级别的 dunber name&lt;/h3&gt;
 &lt;p&gt;模块级别的 &lt;code&gt;dunber&lt;/code&gt;（即使那些使用双下划线 &lt;code&gt;__&lt;/code&gt; 包围的名字），比如 &lt;code&gt;__all__&lt;/code&gt;，&lt;code&gt;__author__&lt;/code&gt;，&lt;code&gt;__version__&lt;/code&gt; 等等，应该放在 module 的 docstring 的后面，任何 &lt;code&gt;import&lt;/code&gt; 语句之前（&lt;code&gt;form __future__&lt;/code&gt; 除外）。python 要求 future-import 必须位于除过 docstring 之外的任何代码之前。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
  2
@@ -405,14 +423,14 @@
 &lt;p&gt;An awkward thing about programming in Python: there are lots of double underscores. [snip] My problem with the double underscore is that it's hard to say. How do you pronounce &lt;strong&gt;init&lt;/strong&gt;? "underscore underscore init underscore underscore"? "under under init under under"? Just plain "init" seems to leave out something important. I have a solution: double underscore should be pronounced "dunder". So &lt;strong&gt;init&lt;/strong&gt; is "dunder init dunder", or just "dunder init".&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;string 引用&lt;/h2&gt;
+&lt;h2&gt;4. string 引用&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;在 python 中，单引号和双引号字符串是一样的，本文关于这个不会给出建议。选择一个规则并且坚持下去即可。当一个 string 包含单引号或者是双引号时，在内部使用另外一种引号，这样可以避免在代码内部使用反斜线 &lt;code&gt;\&lt;/code&gt;，提高代码的可读性。&lt;/p&gt;
 &lt;p&gt;根据 &lt;a href="https://www.python.org/dev/peps/pep-0257/"&gt;PEP257&lt;/a&gt;，对于三引号 string，永远使用双引号。&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;表达式和语句中的空格&lt;/h2&gt;
+&lt;h2&gt;5. 表达式和语句中的空格&lt;/h2&gt;
 &lt;hr&gt;
-&lt;h3&gt;一些小问题&lt;/h3&gt;
+&lt;h3&gt;5.1. 一些小问题&lt;/h3&gt;
 &lt;p&gt;避免下面情况中出现的无关空格，&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -543,10 +561,14 @@
 
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;别的建议&lt;/h3&gt;
+&lt;h3&gt;5.2. 别的建议&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;避免尾部空格。因为一般它都是不可见的，这可能会导致困惑：比如，反斜线后面跟着一个空格和一个换行符时，并不算做是一个有效的续行标记。一些编辑器不会保留尾部空格，并且很多项目（比如 CPython 自身）在 commit 之前会有相关检查来滤掉它。&lt;/li&gt;
-&lt;li&gt;永远在二元操作符两边加上单个空格，比如赋值 &lt;code&gt;=&lt;/code&gt;，增量赋值 &lt;code&gt;+=&lt;/code&gt;，&lt;code&gt;-=&lt;/code&gt;，比较 &lt;code&gt;==&lt;/code&gt;，&lt;code&gt;&amp;lt;&lt;/code&gt;，&lt;code&gt;&amp;gt;&lt;/code&gt;，&lt;code&gt;！=&lt;/code&gt;，&lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;=&lt;/code&gt;，&lt;code&gt;&amp;gt;=&lt;/code&gt;，&lt;code&gt;in&lt;/code&gt;，&lt;code&gt;not&lt;/code&gt;，&lt;code&gt;is&lt;/code&gt;，&lt;code&gt;not&lt;/code&gt;，布尔运算符 &lt;code&gt;and&lt;/code&gt;，&lt;code&gt;or&lt;/code&gt;，&lt;code&gt;not&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;避免尾部空格。因为一般它都是不可见的，这可能会导致困惑：比如，反斜线后面跟着一个空格和一个换行符时，并不算做是一个有效的续行标记。一些编辑器不会保留尾部空格，并且很多项目（比如 CPython 自身）在 commit 之前会有相关检查来滤掉它。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;永远在二元操作符两边加上单个空格，比如赋值 &lt;code&gt;=&lt;/code&gt;，增量赋值 &lt;code&gt;+=&lt;/code&gt;，&lt;code&gt;-=&lt;/code&gt;，比较 &lt;code&gt;==&lt;/code&gt;，&lt;code&gt;&amp;lt;&lt;/code&gt;，&lt;code&gt;&amp;gt;&lt;/code&gt;，&lt;code&gt;！=&lt;/code&gt;，&lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt;，&lt;code&gt;&amp;lt;=&lt;/code&gt;，&lt;code&gt;&amp;gt;=&lt;/code&gt;，&lt;code&gt;in&lt;/code&gt;，&lt;code&gt;not&lt;/code&gt;，&lt;code&gt;is&lt;/code&gt;，&lt;code&gt;not&lt;/code&gt;，布尔运算符 &lt;code&gt;and&lt;/code&gt;，&lt;code&gt;or&lt;/code&gt;，&lt;code&gt;not&lt;/code&gt;。&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;如果使用了具有不同优先级的运算符，考虑在低优先级的运算符周围加上额外的空格。使用自己的判断，但是空格数量不要超过 1 个，并且在二元运算符周围使用相同数量的空格。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
@@ -579,7 +601,7 @@
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;function 的注释应该使用正常的冒号规则，如果有 &lt;code&gt;-&amp;gt;&lt;/code&gt;，要在其周围加上空格（参考下文函数注释部分的更多信息）&lt;/p&gt;
+&lt;p&gt;函数注解应该使用正常的冒号规则，如果有 &lt;code&gt;-&amp;gt;&lt;/code&gt;，要在其周围加上空格（参考下文函数注解部分的更多信息）&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
@@ -700,7 +722,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;什么时候使用尾部逗号&lt;/h2&gt;
+&lt;h2&gt;6. 什么时候使用尾部逗号&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;尾部逗号一般是可选的，除非是在构造单元素的 &lt;code&gt;tuple&lt;/code&gt; 时它是强制性必须存在的，在 python2 的 &lt;code&gt;print&lt;/code&gt; 中逗号是语法的一部分。为了清晰起见，推荐用（冗余的）圆括号包围起来：&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
@@ -743,7 +765,7 @@
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;注释&lt;/h2&gt;
+&lt;h2&gt;7. 注释&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;和代码相冲突的注释比没有注释更糟糕，在代码改变之后永远第一时间更新相关注释。&lt;/p&gt;
 &lt;p&gt;注释应该是完整的句子，除非是用标识符开头的语句（永远不要改变标识符的大小写！），其他情况下第一个单词的首字母应该大写。&lt;/p&gt;
@@ -751,10 +773,10 @@
 &lt;p&gt;在多语句的注释中，每句结束后面应该有两个空格，除非是最后一句。&lt;/p&gt;
 &lt;p&gt;用英语写注释时，遵循 &lt;a href="https://book.douban.com/subject/3296585/"&gt;&lt;code&gt;Strunk and White&lt;/code&gt;&lt;/a&gt; 风格&lt;/p&gt;
 &lt;p&gt;如果你是非英语 python 码农，请使用英语写注释，除非你 120% 确保代码永远不会被不说你母语的人读到。&lt;/p&gt;
-&lt;h3&gt;块注释&lt;/h3&gt;
+&lt;h3&gt;7.1. 块注释&lt;/h3&gt;
 &lt;p&gt;块注释一般放在代码前面，和代码的缩进同级，块注释中的每一行都以 &lt;code&gt;#&lt;/code&gt; + 一个空格开头（除非是注释内部的缩进）。&lt;/p&gt;
 &lt;p&gt;块注释内部的段落用一个以 &lt;code&gt;#&lt;/code&gt; 开头的空行隔开。&lt;/p&gt;
-&lt;h3&gt;行内注释&lt;/h3&gt;
+&lt;h3&gt;7.2. 行内注释&lt;/h3&gt;
 &lt;p&gt;谨慎地使用行内注释。&lt;/p&gt;
 &lt;p&gt;行内注释指的是和代码在同一行的注释，行内注释和代码应该用至少 2 个空格隔开，且以一个 &lt;code&gt;#&lt;/code&gt; + 一个空格开始。&lt;/p&gt;
 &lt;p&gt;行内注释一般没有必要，事实上还会分散注意力。不要写类似下面的注释，&lt;/p&gt;
@@ -767,10 +789,12 @@
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
-&lt;h3&gt;docstring&lt;/h3&gt;
+&lt;h3&gt;7.3. docstring&lt;/h3&gt;
 &lt;p&gt;docstirng 的规则总结在 &lt;a href="https://www.python.org/dev/peps/pep-0257/"&gt;PEP257&lt;/a&gt; 内，其内容永远都不会改变。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;为所有的 public &lt;code&gt;module&lt;/code&gt;, &lt;code&gt;function&lt;/code&gt;, &lt;code&gt;class&lt;/code&gt;, &lt;code&gt;method&lt;/code&gt; 写 docstirng。对非 public method 没有必要写 docstirng，但是你应该写个注释描述该 method 的作用。这个注释应该出现在 &lt;code&gt;def&lt;/code&gt; 行的下面。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;为所有的 public &lt;code&gt;module&lt;/code&gt;, &lt;code&gt;function&lt;/code&gt;, &lt;code&gt;class&lt;/code&gt;, &lt;code&gt;method&lt;/code&gt; 写 docstirng。对非 public method 没有必要写 docstirng，但是你应该写个注释描述该 method 的作用。这个注释应该出现在 &lt;code&gt;def&lt;/code&gt; 行的下面。&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0257/"&gt;PEP257&lt;/a&gt; 描述了良好的 docstirng 惯例，要特别注意的是，多行的 docstirng 的结尾 &lt;code&gt;"""&lt;/code&gt; 应该单独放一行。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
@@ -789,35 +813,51 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;命名规范&lt;/h2&gt;
+&lt;h2&gt;8. 命名规范&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;python 库的命名规则有点混乱，我们一直没有完全统一，然而，这里列了一些当前推荐的命名标准。新写的 &lt;code&gt;module&lt;/code&gt; 和 &lt;code&gt;package&lt;/code&gt;（包括第三方的 framework）应该遵守下面的标注，但是如果一个已经存在的库有其他的 style，只要内部保持一致性即可。&lt;/p&gt;
-&lt;h3&gt;最重要的规则&lt;/h3&gt;
+&lt;h3&gt;8.1. 最重要的规则&lt;/h3&gt;
 &lt;p&gt;API 中那些对用户可见的公共接口的名字，应该遵循反映用法而不是内部实现的原则。&lt;/p&gt;
-&lt;h3&gt;描述性的：命名风格&lt;/h3&gt;
+&lt;h3&gt;8.2. 描述性的：命名风格&lt;/h3&gt;
 &lt;p&gt;有许多不同的命名 style，下面这些可以帮助我们识别出正在使用什么样的 style，而和他们用来做什么没有关系。&lt;/p&gt;
 &lt;p&gt;下面是一些常见的方式：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;b&lt;/code&gt;（单个小写字母）&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;B&lt;/code&gt;（单个大写字母）&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;lowercase&lt;/code&gt; 小写&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;lower_case_with_underscores&lt;/code&gt; 小写带下划线&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;UPPERCASE&lt;/code&gt; 大写&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;UPPER_CASE_WITH_UNDERSCORES&lt;/code&gt; 大写带下划线&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;b&lt;/code&gt;（单个小写字母）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;B&lt;/code&gt;（单个大写字母）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;lowercase&lt;/code&gt; 小写&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;lower_case_with_underscores&lt;/code&gt; 小写带下划线&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;UPPERCASE&lt;/code&gt; 大写&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;UPPER_CASE_WITH_UNDERSCORES&lt;/code&gt; 大写带下划线&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;code&gt;CapitalizedWords&lt;/code&gt;（或者叫 CapWords，CamelCase —— 驼峰命名法），有时也叫做 StudlyCaps&lt;/p&gt;
 &lt;p&gt;注意：在驼峰中使用首字母缩写时，所有字母都要大写，所以 &lt;code&gt;HTTPServerError&lt;/code&gt; 比 &lt;code&gt;HttpServerError&lt;/code&gt; 要好&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;mixedCase&lt;/code&gt;（和驼峰不同之处在于第一个字母小写&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;mixedCase&lt;/code&gt;（和驼峰不同之处在于第一个字母小写）&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;code&gt;capitalized_Words_With_Underscores&lt;/code&gt;（丑陋！）&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;capitalized_Words_With_Underscores&lt;/code&gt;（丑陋！）&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;还有一种使用短缩写前缀来使一组相关的名字形成一个 group，Pyhton 中这种场景并不多见，这里只是为了全面而提一下。比如，&lt;code&gt;os.stat()&lt;/code&gt; 函数返回了一个 &lt;code&gt;tuple&lt;/code&gt;，内部的变量是 &lt;code&gt;st_mode&lt;/code&gt;, &lt;code&gt;st_size&lt;/code&gt;, &lt;code&gt;st_mtime&lt;/code&gt; 之类的名字。（这么做的目的是为了强调和 &lt;code&gt;POSIX&lt;/code&gt; 系统调用的相关性，以帮助程序员熟悉它）&lt;/p&gt;
 &lt;p&gt;X11 库里面所有的 public 函数都加了 &lt;code&gt;X&lt;/code&gt; 前缀，在 python 里，这种风格通常是没有必要的，因为 &lt;code&gt;attribute&lt;/code&gt; 和 &lt;code&gt;method&lt;/code&gt; 调用的时候前面一般都会带上 object 前缀，而函数名前面会带上 module 的名字。&lt;/p&gt;
 &lt;p&gt;除此之外，下面的这种带前缀或后缀下划线 &lt;code&gt;_&lt;/code&gt; 的格式是可以的（通常和一些惯例结合在一起使用）：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;_single_leading_underscore_&lt;/code&gt;，弱“内部使用”标志。比如，&lt;code&gt;from M import *&lt;/code&gt; 不会导入类似以 &lt;code&gt;_&lt;/code&gt; 开头的对象&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;_single_leading_underscore_&lt;/code&gt;，弱“内部使用”标志。比如，&lt;code&gt;from M import *&lt;/code&gt; 不会导入类似以 &lt;code&gt;_&lt;/code&gt; 开头的对象&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;code&gt;single_trailing_underscore_&lt;/code&gt;，用来避免和 python 内部的关键字相冲突&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Tkinter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Toplevel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;master&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;class_&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ClassName&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -828,22 +868,24 @@
 &lt;li&gt;
 &lt;p&gt;&lt;code&gt;__double_leading_underscore&lt;/code&gt;，用来给 class 的 attribute 命名，调用它时会被矫正（在 class FooBar 中，&lt;code&gt;__boo&lt;/code&gt; 会变成 &lt;code&gt;_FooBar_boo&lt;/code&gt;）&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;code&gt;__double_leading_and_trailing_underscore__&lt;/code&gt;，“magic” 对象/attribute，存在于用户控制的 &lt;code&gt;namespcae&lt;/code&gt;，比如，&lt;code&gt;__init__&lt;/code&gt;，&lt;code&gt;__import__&lt;/code&gt;，或者 &lt;code&gt;__file__&lt;/code&gt;。仅仅像文档说明的这样用，永远不要自己发明这种名字。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;__double_leading_and_trailing_underscore__&lt;/code&gt;，“magic” 对象/attribute，存在于用户控制的 &lt;code&gt;namespcae&lt;/code&gt;，比如，&lt;code&gt;__init__&lt;/code&gt;，&lt;code&gt;__import__&lt;/code&gt;，或者 &lt;code&gt;__file__&lt;/code&gt;。仅仅像文档说明的这样用，永远不要自己发明这种名字。&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;规范性的：命名惯例&lt;/h3&gt;
-&lt;h4&gt;避免使用的名字&lt;/h4&gt;
+&lt;h3&gt;8.3. 规范性的：命名惯例&lt;/h3&gt;
+&lt;h4&gt;8.3.1. 避免使用的名字&lt;/h4&gt;
 &lt;p&gt;永远都不要使用小写字母 &lt;code&gt;l&lt;/code&gt;，大写字母 &lt;code&gt;O&lt;/code&gt;，大写字母 &lt;code&gt;I&lt;/code&gt; 作为单字母变量名。&lt;/p&gt;
 &lt;p&gt;在某些字体中，这些字符会和数字 0/1 混淆不清，如果要使用小写字母 &lt;code&gt;l&lt;/code&gt;，使用 &lt;code&gt;L&lt;/code&gt; 代替。&lt;/p&gt;
-&lt;h4&gt;兼容 ASCII&lt;/h4&gt;
+&lt;h4&gt;8.3.2. 兼容 ASCII&lt;/h4&gt;
 &lt;p&gt;如 &lt;a href="https://www.python.org/dev/peps/pep-3131"&gt;PEP3131&lt;/a&gt; 中所述，标准库中的标识符必须是 ASCII 兼容的。&lt;/p&gt;
-&lt;h4&gt;package 和 module 的名字&lt;/h4&gt;
+&lt;h4&gt;8.3.3. package 和 module 的名字&lt;/h4&gt;
 &lt;p&gt;&lt;code&gt;module&lt;/code&gt; 必须使用简短，全小写的名字。如果使用下划线能提高代码的可读性，那么就可以使用。 虽然不鼓励使用下划线，但是 &lt;code&gt;package&lt;/code&gt; 也必须也用简短、全小写的名字。&lt;/p&gt;
 &lt;p&gt;如果一个模块的底层实现使用的是 C/C++，并且有个用 python 模块来提供更高层次接口（比如，面向对象），那么这个 C/C++ module 名字必须要有下划线前缀（比如，&lt;code&gt;_socket&lt;/code&gt;）。 &lt;/p&gt;
-&lt;h4&gt;class 的名字&lt;/h4&gt;
+&lt;h4&gt;8.3.4. class 的名字&lt;/h4&gt;
 &lt;p&gt;class 的名字一般应该使用 &lt;code&gt;CapWords&lt;/code&gt; 的惯例。&lt;/p&gt;
 &lt;p&gt;如果 interface 被文档化了并且主要作为被调用的场景，那么可以换成 function 的命名惯例。&lt;/p&gt;
 &lt;p&gt;注意，对于内置的名字有个单独的惯例：大部分内置名字一般是单个单词（或者是两个单词连在一起），&lt;code&gt;CapWords&lt;/code&gt; 之用于 exception 和内置常量。&lt;/p&gt;
-&lt;h4&gt;类型变量的名字&lt;/h4&gt;
+&lt;h4&gt;8.3.5. 类型变量的名字&lt;/h4&gt;
 &lt;p&gt;在 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 中的类型变量名字，相比于短名字，如 &lt;code&gt;T&lt;/code&gt;, &lt;code&gt;AnyStr&lt;/code&gt;，&lt;code&gt;Num&lt;/code&gt;，一般优先使用 &lt;code&gt;CapWords&lt;/code&gt;。推荐给变量加上后缀 &lt;code&gt;_co&lt;/code&gt; 或者是 &lt;code&gt;_contra&lt;/code&gt; 来声明相关的协变量或者是逆变量。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
@@ -855,27 +897,27 @@
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
-&lt;h4&gt;Exception 的名字&lt;/h4&gt;
+&lt;h4&gt;8.3.6. Exception 的名字&lt;/h4&gt;
 &lt;p&gt;因为 exception 应该是个 class，所以使用 class 的规则即可。但是，如果某个 exception 确实是个 error，则应该给它加上 &lt;code&gt;Error&lt;/code&gt; 后缀。&lt;/p&gt;
-&lt;h4&gt;全局变量名&lt;/h4&gt;
+&lt;h4&gt;8.3.7. 全局变量名&lt;/h4&gt;
 &lt;p&gt;希望这些变量只会在单个 module 内使用。它的命名规则和 function 一样。&lt;/p&gt;
 &lt;p&gt;通过 &lt;code&gt;from M import *&lt;/code&gt; 来使用的 module，应该使用 &lt;code&gt;__all__&lt;/code&gt; 机制来防止暴露 global 变量，或者使用以前加前缀的规则，比如给这些 global 变量加上单个下划线（表明你想暗示这些变量是 module 内，非 publicc 的）。&lt;/p&gt;
-&lt;h4&gt;Function 和 变量 名&lt;/h4&gt;
+&lt;h4&gt;8.3.8. Function 和 变量 名&lt;/h4&gt;
 &lt;p&gt;function 名应该小写，如果有必要，使用下划线将单词分隔开以提高可读性。&lt;/p&gt;
 &lt;p&gt;变量名和函数的规则一样。&lt;/p&gt;
 &lt;p&gt;只有在为了和旧代码（比如 &lt;code&gt;threading.py&lt;/code&gt;）保持兼容性时，才允许使用 &lt;code&gt;mixedCase&lt;/code&gt; 风格的名字。&lt;/p&gt;
-&lt;h4&gt;Function 和 Method 的参数&lt;/h4&gt;
+&lt;h4&gt;8.3.9. Function 和 Method 的参数&lt;/h4&gt;
 &lt;p&gt;永远要把 &lt;code&gt;self&lt;/code&gt; 作为例化 mehod 的第一个参数。&lt;/p&gt;
 &lt;p&gt;永远使用 &lt;code&gt;cls&lt;/code&gt; 作为例化 class 的第一个参数。&lt;/p&gt;
 &lt;p&gt;如果一个 function 的参数名和关键字相冲突，一般最好在尾部加一个后缀的单下划线，而不是使用缩写或是故意拼写错误。所以 &lt;code&gt;class_&lt;/code&gt; 比 &lt;code&gt;clss&lt;/code&gt; 要更好（也许最好的方式是使用一个同义词来避免这种情况）。&lt;/p&gt;
-&lt;h4&gt;Mehtod 和 Instance 的名字&lt;/h4&gt;
+&lt;h4&gt;8.3.10. Mehtod 和 Instance 的名字&lt;/h4&gt;
 &lt;p&gt;使用和 function 一样的命名规则：用下划线把小写单词分隔开以提高可读性。&lt;/p&gt;
 &lt;p&gt;只有非 public 的 method 和 instance variables 才可以加上前缀下划线。&lt;/p&gt;
 &lt;p&gt;为了避免和类名相冲突，使用两个前缀下划线来触发 python 的命名矫正规则。&lt;/p&gt;
 &lt;p&gt;python 会使用 class 的名字来矫正这些名字：如果 class &lt;code&gt;Foo&lt;/code&gt; 有一个名字为 &lt;code&gt;__a&lt;/code&gt; 的 attribute，则无法通过 &lt;code&gt;Foo.__a&lt;/code&gt; 来访问它（用户可以通过 &lt;code&gt;Foo._Foo__a&lt;/code&gt; 的方式来访问）。一般来说，双下划线前缀只应该用来避免和子类中的名字相冲突的情况。&lt;/p&gt;
-&lt;h4&gt;常量&lt;/h4&gt;
+&lt;h4&gt;8.3.11. 常量&lt;/h4&gt;
 &lt;p&gt;常量定义一般和 module 同级别，并且全部大写，用下划线隔开单词。比如 &lt;code&gt;MAX_OVERFLOW&lt;/code&gt; 和 &lt;code&gt;TOTAL&lt;/code&gt;。&lt;/p&gt;
-&lt;h4&gt;继承的设计&lt;/h4&gt;
+&lt;h4&gt;8.3.12. 继承的设计&lt;/h4&gt;
 &lt;p&gt;始终要考虑一个 class 的 method 和 instance variables（统称为：&lt;code&gt;attribute&lt;/code&gt;）应该是 public 还是 non-public。如果有疑问，那么就选择做成 non-public；因为之后将其再改为 public 要比反过来做更容易。&lt;/p&gt;
 &lt;p&gt;public attribute 是那些你希望和你的 class 不相关的用户可以使用的 attribute，并且你应该保证以后修改时不会发生向后不兼容的情况。non-public attribute 是那些不打算给第三方使用的 attribute，你没必要保证 non-public attribute 以后不会改变或甚至是被删除。&lt;/p&gt;
 &lt;p&gt;我们不使用术语 &lt;code&gt;private&lt;/code&gt;，是因为 python 里面的 attribute 并不是真正的 private（为了避免大量不必要的工作）。&lt;/p&gt;
@@ -900,14 +942,14 @@
 &lt;p&gt;注意3：并不是每个人都喜欢命名矫正，尽量避免和潜在的高级调用者产生命名冲突。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;public 和 internal 接口&lt;/h3&gt;
+&lt;h3&gt;8.4. public 和 internal 接口&lt;/h3&gt;
 &lt;p&gt;任何的向后兼容只适用于 public 接口，因此，让用户能清晰地区分出 public 和 内部接口非常重要。&lt;/p&gt;
 &lt;p&gt;文档化的接口可以认为是 public 接口，除非文档中明确说明该接口是拥有向后兼容豁免权的临时/内部接口。所有没有文档化的接口都应该视为内部接口。&lt;/p&gt;
 &lt;p&gt;为了更好地支持 introspection，module 应该用 &lt;code&gt;__all__&lt;/code&gt; 明确声明 public API 的名字。如果没有 public API，那么就把 &lt;code&gt;__all__&lt;/code&gt; 设置为空 list。&lt;/p&gt;
 &lt;p&gt;即使合理地设置了 &lt;code&gt;__all__&lt;/code&gt;，内部接口（package、module、class、function、attribute 或其他名字）还是应该加上单下划线前缀。&lt;/p&gt;
 &lt;p&gt;如果 namespace（package、module、class）被认为是内部的，那么包含在内的接口也会被认为是内部的。&lt;/p&gt;
 &lt;p&gt;import 的名字应该永远被认为是实现细节。除非是 module API 的一部分，否则别的 module 不能间接访问这些名字。比如，&lt;code&gt;os.path&lt;/code&gt; 或者是一个 package 的 &lt;code&gt;__init__&lt;/code&gt; module。&lt;/p&gt;
-&lt;h2&gt;编程建议&lt;/h2&gt;
+&lt;h2&gt;9. 编程建议&lt;/h2&gt;
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -985,8 +1027,12 @@
 &lt;p&gt;一个光秃秃的 &lt;code&gt;except:&lt;/code&gt; 块会捕捉到 &lt;code&gt;SystemExit&lt;/code&gt; 和 &lt;code&gt;KeyboardInterrupt&lt;/code&gt;，导致很难通过 &lt;code&gt;Control-C&lt;/code&gt; 的方式中断一个程序，而且会掩盖其他问题。如果你想捕获程序的所有异常，使用 &lt;code&gt;except Exception:&lt;/code&gt;（光秃秃的 &lt;code&gt;except&lt;/code&gt; 相当于 &lt;code&gt;except BaseException:&lt;/code&gt;）。&lt;/p&gt;
 &lt;p&gt;允许使用使用光秃秃的 except 的两种情况：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;exception 处理代码会打印或者记录 log，这样用户至少知道发生了错误&lt;/li&gt;
-&lt;li&gt;代码需要做一些清理工作，这种情况下最好使用 &lt;code&gt;raise.try...finally&lt;/code&gt; 使 exception 可以继续向上传递&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;exception 处理代码会打印或者记录 log，这样用户至少知道发生了错误&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;代码需要做一些清理工作，这种情况下最好使用 &lt;code&gt;raise.try...finally&lt;/code&gt; 使 exception 可以继续向上传递&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -1219,32 +1265,48 @@
 
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;函数注释&lt;/h3&gt;
-&lt;p&gt;随着 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 的引入，下面的函数注释规则有些变化：&lt;/p&gt;
+&lt;h3&gt;9.1. 函数注解&lt;/h3&gt;
+&lt;p&gt;随着 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 的引入，下面的函数注解规则有些变化：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;为了前向兼容，python 3 中的函数注释应该优先使用 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 的语法（在之前的章节中有一些注释的推荐规则）&lt;/li&gt;
-&lt;li&gt;不再鼓励使用本文以前推荐的实验性注释风格&lt;/li&gt;
-&lt;li&gt;但是，除了标准库，鼓励使用 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 中的实验性规则。比如，使用 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 中的 style 为一个大型第三方库/应用添加注释，检查添加这些注释的容易程度，观察这些注释的出现是否提高了可读性。&lt;/li&gt;
-&lt;li&gt;python 的标准库应该保守地使用这些注释，但是新代码和大型的重构可以使用这种注释。&lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;如果代码想用另外一种方式使用函数注释，推荐在文件顶部添加这样一条注释：&lt;/p&gt;
+&lt;p&gt;为了前向兼容，python 3 中的函数注解应该优先使用 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 的语法（在之前的章节中有一些注解的推荐规则）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不再鼓励使用本文以前推荐的实验性注释风格&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;但是，除了标准库，鼓励使用 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 中的实验性规则。比如，使用 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 中的 style 为一个大型第三方库/应用添加注解，检查添加这些注解的容易程度，观察这些注解的出现是否提高了可读性。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;python 的标准库应该保守地使用这些注解，但是新代码和大型的重构可以使用这种注解。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果代码想用另外一种方式使用函数注解，推荐在文件顶部添加这样一条注释：&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="k"&gt;type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="k"&gt;ignore&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
-&lt;p&gt;这会告诉 type checker 忽略所有的注释（在 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 中可以找到更加详细的关于细颗粒度的关闭 type checker 的报错）&lt;/p&gt;
+&lt;p&gt;这会告诉 type checker 忽略所有的注解（在 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 中可以找到更加详细的关于细颗粒度的关闭 type checker 的报错）&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;和 linter 类似，type checker 是独立可选的工具，python 解释器默认不会报出任何 type checker 的内容，而且不会基于注释改变它们的行为。&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;用户不想使用 type checker 时可以忽略它们。但是，第三方库的用户可能希望在这些库上运行 type checker，为此，&lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 推荐使用 &lt;code&gt;stub&lt;/code&gt; 文件：相比于 .py 文件，type checker 优先读取 .pyi 文件。stub 文件可以和库一起发布，也可以通过单独的 typeshed repo 发布（通过库的作者许可）&lt;/li&gt;
-&lt;li&gt;对于需要向后兼容的代码，可以以注释的方式添加类型注释，相关内容见 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;用户不想使用 type checker 时可以忽略它们。但是，第三方库的用户可能希望在这些库上运行 type checker，为此，&lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 推荐使用 &lt;code&gt;stub&lt;/code&gt; 文件：相比于 .py 文件，type checker 优先读取 .pyi 文件。stub 文件可以和库一起发布，也可以通过单独的 typeshed repo 发布（通过库的作者许可）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对于需要向后兼容的代码，可以以注释的方式添加类型注解，相关内容见 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt;。&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;变量注释&lt;/h3&gt;
-&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0526/"&gt;PEP526&lt;/a&gt; 介绍了变量注释，对于变量的注释风格和前面描述的函数注释类似：&lt;/p&gt;
+&lt;h3&gt;9.2. 变量注解&lt;/h3&gt;
+&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0526/"&gt;PEP526&lt;/a&gt; 介绍了变量注解，对于变量的注解风格和前面描述的函数注解类似：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;对于 module 级别的变量，class 和 instance variables，局部变量，应该在冒号后面加个空格&lt;/li&gt;
-&lt;li&gt;冒号前面不应该有空格&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对于 module 级别的变量，class 和 instance variables，局部变量，应该在冒号后面加个空格&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;冒号前面不应该有空格&lt;/p&gt;
+&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;如果赋值语句有右侧内容，那么等号两边的空格数应该相等&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
@@ -1281,14 +1343,14 @@
 
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;虽然 python 3 可以使用 &lt;a href="https://www.python.org/dev/peps/pep-0526/"&gt;PEP526&lt;/a&gt;，但是对于所有版本的 python，对于变量注释，stub 文件的方式是首选的。（细节见 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt;） &lt;/p&gt;
+&lt;p&gt;虽然 python 3 可以使用 &lt;a href="https://www.python.org/dev/peps/pep-0526/"&gt;PEP526&lt;/a&gt;，但是对于所有版本的 python，首先以 stub 文件的语法优先选择变量注解。（细节见 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt;） &lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;参考&lt;/h2&gt;
+&lt;h2&gt;10. 参考&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0008/"&gt;PEP8&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://blog.csdn.net/ratsniper/article/details/78954852"&gt;Python PEP8 编码规范中文版&lt;/a&gt;&lt;/p&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP 翻译计划系列 —— PEP0</title><link href="http://guqian110.github.io/posts/python/peps_translate_project_pep0.html" rel="alternate"></link><published>2020-04-05T23:56:00+08:00</published><updated>2020-04-05T23:56:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2020-04-05:/posts/python/peps_translate_project_pep0.html</id><summary type="html">&lt;p&gt;PEPs 翻译系列 PEP0&lt;/p&gt;</summary><content type="html">&lt;h2&gt;PEP 简介&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://blog.csdn.net/ratsniper/article/details/78954852"&gt;Python PEP8 编码规范中文版&lt;/a&gt;&lt;/p&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP 翻译计划系列 —— PEP0</title><link href="http://guqian110.github.io/posts/python/peps_translate_project_pep0.html" rel="alternate"></link><published>2020-04-05T23:56:00+08:00</published><updated>2020-04-05T23:56:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2020-04-05:/posts/python/peps_translate_project_pep0.html</id><summary type="html">&lt;p&gt;PEPs 翻译系列 PEP0&lt;/p&gt;</summary><content type="html">&lt;h2&gt;1. PEP 简介&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/"&gt;PEPs&lt;/a&gt; 是 Python Enhancement Proposals 的缩写，它源自于 Python 核心开发者的邮件列表所讨论的问题、提议，最终汇总成了正式文档，为众多 Python 用户提供指导。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/"&gt;PEP0&lt;/a&gt; 是所有 PEP 的目录，&lt;a href="https://www.python.org/dev/peps/pep-0001/"&gt;PEP1&lt;/a&gt; 说明了 PEP 的目的以及 Guidelines，这里不再赘述。&lt;/p&gt;
@@ -1313,7 +1375,7 @@
 &lt;/ol&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;翻译计划&lt;/h2&gt;
+&lt;h2&gt;2. 翻译计划&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;网上已经有很多人都翻译过了经典 PEP 章节，为了督促自己有计划地完成 PEP 的学习，也是为了以后可以温故而知新，在这里又自己重新翻译一遍。从 PEP0 中可以知道，各种各类的 PEP 加起来目前一共有几百篇，参考网上其他介绍，翻译计划中暂时选择了下面几篇，以后再持续更新。&lt;/p&gt;
 &lt;ul&gt;
@@ -1337,7 +1399,7 @@
 &lt;li&gt;PEP 3120 -- Using UTF-8 as the default source encoding&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;参考&lt;/h2&gt;
+&lt;h2&gt;3. 参考&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/"&gt;PEP0&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0001/"&gt;PEP1&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.cnblogs.com/abella/p/10056875.html"&gt;python中的PEP是什么？怎么理解？（转）&lt;/a&gt;&lt;/p&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry></feed>

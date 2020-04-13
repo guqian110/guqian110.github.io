@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="使用 Xilinx FFT IP core (xfft v7.1) 的笔记" />
 <meta name="keywords" content="FFT, IP core">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="Xilinx FFT IP core 笔记"/>
 <meta property="og:description" content="使用 Xilinx FFT IP core (xfft v7.1) 的笔记"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -53,16 +53,16 @@
 <meta property="article:tag" content="IP core"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; Xilinx FFT IP core 笔记</title>
+  <title>Qian's Blog &ndash; Xilinx FFT IP core 笔记</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -96,6 +96,7 @@
     <p>
       Posted on 2014-09-02 23:12 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 3 min read
     </p>
   </header>
 
@@ -105,9 +106,9 @@
 <p>IP 核的接口示意图：</p>
 <p><img alt="schematic symbol" src="/images/xilinx_fft_core_notes/symbol.png"></p>
 <p><br></p>
-<h2>Timing</h2>
+<h2>1. Timing</h2>
 <hr>
-<h3><code>START / RFD</code> port</h3>
+<h3>1.1. <code>START / RFD</code> port</h3>
 <p>datasheet 中没有专门描述 <code>start</code> 信号和其他信号的时序关系，只是简单介绍：</p>
 <blockquote>
 <p>FFT start signal (Active High): START is asserted to begin the data loading and transform calculation (for the Burst I/O architectures). For Streaming I/O, START begins data loading, which proceeds directly to transform calculation and then data unloading.</p>
@@ -165,7 +166,7 @@
 </td></tr></table>
 
 <p>这样子程序就可以正常运行了。</p>
-<h3><code>RFD / DV</code> port</h3>
+<h3>1.2. <code>RFD / DV</code> port</h3>
 <p>在 datasheet 中给出的时序图如下所示（Burst I/O Solutions with Natural Order Output）</p>
 <p><img alt="Burst I/O Solution" src="/images/xilinx_fft_core_notes/burst_io_solution.png"></p>
 <p>实际仿真图：</p>
@@ -175,12 +176,12 @@
 <p>从仿真结果来看，unload 阶段和下一帧的 load 阶段有部分是重叠的，这样实际上的周期是少于 3N 个时钟的。</p>
 <p><strong>虽然功能上是不影响下一帧的数据的，毕竟和预期的时序不同，不知道是否会影响时序设计，有待继续观察。</strong></p>
 <p><br></p>
-<h2>Port</h2>
+<h2>2. Port</h2>
 <hr>
-<h3><code>NFFT</code> port</h3>
+<h3>2.1. <code>NFFT</code> port</h3>
 <p>这个 FFT core 是可以设置为 动态重配置的，可以在运行时改变做运算的点数，非常方便，不过有一点需要注意到是重配置的点数是有范围限制的，比如我测试时设置的最大点数为 4096 点，那么运行重配置时，最小的点数为 64。可以选择 64 ~ 4096 之间的任何一个 2 的指数。</p>
 <p>由于我一开始忽略了这一点，重配置为 16 点，迷糊了半天，重新打开 IP core 设置时才发现是自己看文档不够仔细 =.=</p>
-<h3><code>CP</code> port</h3>
+<h3>2.2. <code>CP</code> port</h3>
 <p>这个 FFT core 专门提供了一个端口可以设置循环前缀的长度，循环前缀 (cyclic prefix) 在通信中（尤其是 OFDM）是很有用的。</p>
 <p>在向导中设置了 cyclic prefix insertion，并且在程序重配置时设置了 CP length = 10，但是仿真结果却没有出现 CP，和 CP = 0 时的结果相同。</p>
 <p><strong>仔细看了两遍程序和 datasheet，没有发现问题...待解决！</strong></p>
@@ -196,7 +197,7 @@
 
 <p>这时候，如下图所示，结果与预期相符。</p>
 <p><img alt="cp" src="/images/xilinx_fft_core_notes/cp.png"></p>
-<h3>FFT/ IFFT</h3>
+<h3>2.3. FFT/ IFFT</h3>
 <p>在 FFT 的测试程序中，一切都正常工作，但是切换为 IFFT 模式，却出现了问题。</p>
 <p>datasheet 中介绍，控制正反变换的信号一共有两个：<code>fwd_inv</code> 和 <code>fwd_inv_we</code>。前者取 1 时为 FFT，取 0 为 IFFT；后者是前者的写使能信号。</p>
 <p>因为 FFT 的程序可以正常工作，说明程序逻辑是没有问题的。但是只配置这两个端口，就是有问题。自己研究无果，只能 Google，还真的找到以前有人也遇到同样的问题，并且给出了解决方法（不得不说，还是 Google 好，某度搜出来的结果都是广告和没有用的链接）</p>
@@ -224,9 +225,9 @@
 <p>但是却没有提到这个额外的 1/N 需要用户自己手动设置，应该算是 Xilinx 的坑。修正这个倍数关系以后，结果就与预期相符了～</p>
 <p>（其实如果仔细分析对比 FPGA 和 Matlab 的结果，就能发现两者的差别就是这个 1/N 的倍数关系，只是自己对数字不敏感，又懒得仔细观察 =.=）</p>
 <p><br></p>
-<h2>P.S. Test program</h2>
+<h2>3. P.S. Test program</h2>
 <hr>
-<h3>FFT IP core</h3>
+<h3>3.1. FFT IP core</h3>
 <p><strong>设置</strong></p>
 <p>page1: </p>
 <ul>
@@ -278,7 +279,7 @@
 </ul>
 <p><strong>运行时重配置</strong></p>
 <p>变换长度为 64 点，cp 长度为 10</p>
-<h3>Matlab</h3>
+<h3>3.2. Matlab</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -293,7 +294,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>Conclusion</h3>
+<h3>3.3. Conclusion</h3>
 <p>FFT IP core 仿真结果：</p>
 <p><img alt="fft core sim" src="/images/xilinx_fft_core_notes/fft_core_sim.png"></p>
 <p>对比 Matlab 中的结果，可以看到 IP core 的计算结果是正确的（除了 CP 的问题）。</p>
@@ -350,7 +351,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

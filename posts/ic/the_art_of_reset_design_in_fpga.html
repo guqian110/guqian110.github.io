@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结 FPGA 中的复位设计" />
 <meta name="keywords" content="reset">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="FPGA 中的复位设计"/>
 <meta property="og:description" content="总结 FPGA 中的复位设计"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="reset"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; FPGA 中的复位设计</title>
+  <title>Qian's Blog &ndash; FPGA 中的复位设计</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,6 +95,7 @@
     <p>
       Posted on 2014-06-20 00:22 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 7 min read
     </p>
   </header>
 
@@ -103,7 +104,7 @@
     <p>复位信号在系统中的地位和时钟信号几乎同等重要，我们想尽量把系统设计为可控，那么最基本的控制信号就是复位信号了。</p>
 <p>复位信号的设计需要考虑的因素，各种书刊、论文、白皮书、网上论坛都有相关讨论，但是至今对于给定 FPGA 设计中使用哪种复位方案仍然没有明确答案。本文总结了一些大神的经典论文和网上的许多博客，尽可能用简单的图说明选择某种设计方案及其理由，涉及的更深入的原理请自行 Google :-P</p>
 <p><br></p>
-<h2>Understanding the flip-flop reset behavior</h2>
+<h2>1. Understanding the flip-flop reset behavior</h2>
 <hr>
 <p>在开始详细讨论之前，首先得理解 FPGA 的基本单元 Slice 中的 FF 的复位方式。Xilinx 的 Virtex 5 系列的芯片中的 FF 的类型都是 DFF (D-type flip flop)，这些 DFF 的控制端口包括一个时钟 CLK，一个高有效的使能 CE，一个高有效的置位/复位 SR。这个 SR 端口可以配置为同步的置位/复位，也可以配置为异步方式的置位/复位。如下图所示</p>
 <p><img alt="dff" src="/images/the-art-of-reset-design-in-fpga/dff.jpg"></p>
@@ -113,7 +114,7 @@
 <p>虽然 FPGA 的 FF 可以配额为 preset/clear/set/reset 等不同的结构，但是在实现时，只能配置为其中的一种，如果在代码中多于一个 preset/clear/set/reset，那么就会产生其他的逻辑，消耗 FPGA 资源。</p>
 <p>另外，基于 SRAM 的 FPGA 可以设定上电初始化的值：如果我们在定义 reg 变量时给它一个初始值，那么 FPGA 在上电配置(GSR 变高)时，载入这个值。</p>
 <p><br></p>
-<h2>Active low  V.S.  Active high</h2>
+<h2>2. Active low  V.S.  Active high</h2>
 <hr>
 <p>大多数书籍和博客都推荐使用 “低电平有效” 的复位方案，却没有明确说明为什么使用 “低电平有效”。</p>
 <p>目前大多数书籍中都使用 低电平复位，网上给出的理由是</p>
@@ -134,7 +135,7 @@
 </blockquote>
 <p>也就是说目前推荐的 “低电平有效” 更多的是 IC 设计的传统，然而根据我查到资料来看，对于 Xilinx FPGA 这条传统并不适用。Xilinx 的器件全部是高电平复位端口，他们的 white paper 中的例子也都是高电平复位方式。而且，从综合结果来看，如果非要使用低电平复位，那么就会额外添加一个反相器，然后将反向得到的高电平连接到 FF 的复位端口，从而导致复位信号的传输时延增加，芯片的利用率下降，同时会影响到时序和功耗。</p>
 <p><a href="http://www.eetimes.com/document.asp?doc_id=1278998">How do I reset my FPGA</a> 中也证实了这一点，文中提到对于 Xilinx 器件，尽可能使用高有效复位，如果实在没有办法控制系统的复位极性，那么最好在系统的顶层模块中将输入的低有效复位翻转极性，这样做的好处是反向器将被吸收到 IO logic 中，不会消耗 FPGA 内的逻辑和布线资源。</p>
-<h3>Conclusion</h3>
+<h3>2.1. Conclusion</h3>
 <ol>
 <li>
 <p>应该参考器件决定使用那种方式</p>
@@ -144,11 +145,11 @@
 </li>
 </ol>
 <p><br></p>
-<h2>Synchronous V.S. Asynchronous</h2>
+<h2>3. Synchronous V.S. Asynchronous</h2>
 <hr>
 <p>因为 DFF 有两种复位端口，所以对应的有两种复位方式：同步复位 和 异步复位。两种复位方式各有特点，适用于不同的应用场景。下面先分别总结两种方案的优劣，最后总结当前流行的的主流复位方案。</p>
-<h3>Synchronous Reset</h3>
-<h4>Coding Style</h4>
+<h3>3.1. Synchronous Reset</h3>
+<h4>3.1.1. Coding Style</h4>
 <p>同步复位的假设前提：只有在时钟信号的有效沿，复位信号才能影响寄存器的状态。</p>
 <p>通常把 reset 信号作为组合逻辑的一部分连接到寄存器输入端口 D，从而对寄存器起作用。因此同步复位的 coding style 应该是：</p>
 <p><strong>模块的 <code>sensitivity list</code> 中不包含 <code>rst</code> 信号，并且 reset 信号应该在 if-else 的最前面（if 分支），以便于优先考虑，其他组合逻辑位于后面（else 分支）。</strong></p>
@@ -208,7 +209,7 @@
 </td></tr></table>
 
 <p>有时候，有些器件不带同步复位专用端口，那么综合器一般会将复位信号综合为输入信号的使能信号，这时候就需要额外的逻辑资源了。</p>
-<h4>Problem</h4>
+<h4>3.1.2. Problem</h4>
 <p>如果没有遵守这样的 coding style，可能会引起下面的两个问题：</p>
 <ol>
 <li>
@@ -234,7 +235,7 @@
 <p>但是 <code>sync_set_reset</code> 是个例外情况，因为它不会影响逻辑行为，只影响设计的功能实现。</p>
 <p>所以明智的设计者在项目开始的时候就把 <code>sync_set_reset</code> 添加到 RTL 代码中，以避免以后的多次综合。由于每个模块对这条指令只要求使用一次（模块只有一个复位信号），所以推荐为每个模块添加这条指令。</p>
 <p>如果觉得每个模块都添加这种方式太繁琐，还有另外一种方法：在读取 RTL 代码前，设置综合变量 <code>hdlin_ff_always_sync_set_reset</code> 为 <code>true</code>，可以达到同样的效果。</p>
-<h4>Advantage</h4>
+<h4>3.1.3. Advantage</h4>
 <ol>
 <li>
 <p>保证设计是 100% 同步，有利于时序分析，也利于仿真</p>
@@ -246,7 +247,7 @@
 <p>在某些设计中，复位信号是由内部逻辑产生的，推荐使用同步复位，因为这样可以避免逻辑产生的毛刺</p>
 </li>
 </ol>
-<h4>Disadvantage</h4>
+<h4>3.1.4. Disadvantage</h4>
 <ol>
 <li>
 <p>并不是所有的 ASIC 库里面都有带同步复位端的寄存器，不过这个问题并不严重，因为同步复位信号只是另外一个数据输入信号，所以综合工具很容易把复位信号综合到寄存器外部的逻辑中。</p>
@@ -271,8 +272,8 @@
 <p>所以，是否占用多余的资源，还得针对具体的芯片分析。</p>
 </li>
 </ol>
-<h3>Asynchronous</h3>
-<h4>Coding Style</h4>
+<h3>3.2. Asynchronous</h3>
+<h4>3.2.1. Coding Style</h4>
 <p>虽然异步复位信号是电平有效，但是敏感列表必须在异步复位信号的前沿激活：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -329,7 +330,7 @@
 </pre></div>
 </td></tr></table>
 
-<h4>Problem</h4>
+<h4>3.2.2. Problem</h4>
 <p>由于复位信号相对于时钟信号来说是异步的，所以可能导致两个问题：</p>
 <ol>
 <li>
@@ -342,7 +343,7 @@
 </li>
 </ol>
 <p><em>异步复位和同步复位是互补，一个的优点（缺点）即使另外一个的缺点（优点）：</em></p>
-<h4>Advantage</h4>
+<h4>3.2.3. Advantage</h4>
 <ol>
 <li>
 <p>单元库中肯定是包含异步复位的寄存器的，所以异步复位最大的优点是不需要额外的逻辑，可以保持数据路径（data path）的干净。这在数据路径时序很紧张的情况下非常有用。</p>
@@ -357,7 +358,7 @@
 <p>EDA 工具 route 起来更容易，对于大型设计，能显著减少编译时间</p>
 </li>
 </ol>
-<h4>Disadvantage</h4>
+<h4>3.2.4. Disadvantage</h4>
 <ol>
 <li>
 <p>不是同步电路，不利于时序分析，设计者要正确约束异步复位信号比同步复位复杂</p>
@@ -369,14 +370,14 @@
 <p>异步复位最大的问题是容易在复位信号的起效（assert）和失效（deassert）是异步的，起效异步没有问题，但是失效异步可能导致亚稳态。(撤销的时候(release)不满足 <code>removal time</code> 时序要求，从而产生亚稳态)</p>
 </li>
 </ol>
-<h3>Reset Synchronizer</h3>
+<h3>3.3. Reset Synchronizer</h3>
 <p>两种复位方式各有优缺点，设计者应该根据实际情况选择合适的复位方法。目前，很多文献书籍中都推荐一种 “异步复位，同步释放” 的方法。这种方法可以将两者结合起来，取长补短。</p>
 <p>它的原理如下图所示</p>
 <p><img alt="reset synchronizer" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer.png"></p>
 <p>需要注意到是，上图的复位是传统的低电平有效方式，对于 Xilinx 器件，原理图稍有不同，其复位按钮接到了 FF 的置位端，第一级 FF 的输入也由 <code>Vcc</code> 变为 <code>GND</code>。 <a href="http://www.eetimes.com/document.asp?doc_id=1278998">How do I reset my FPGA</a> 介绍了对应的 RTL Schematic ：</p>
 <p><img alt="reset_synchronizer_xilinx" src="/images/the-art-of-reset-design-in-fpga/reset_synchronizer_xilinx.jpg"></p>
 <p>对于 Xilinx 器件，用代码具体实现</p>
-<h4>Coding Style</h4>
+<h4>3.3.1. Coding Style</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -459,7 +460,7 @@
 <blockquote>
 <p><strong>Guidelien:</strong> Every ASIC using an asynchronous reset should include a reset synchronizer circuit!!</p>
 </blockquote>
-<h3>Conclusion</h3>
+<h3>3.4. Conclusion</h3>
 <p>知道了这点，选择复位信号的策略就很明显了：</p>
 <ol>
 <li>
@@ -475,7 +476,7 @@
 <p><br></p>
 <p><em>在详细讨论了复位的有效电平、复位方式之后，我们开始讨论稍微复杂一点的复位设计：包括系统的复位方案、多时钟域的复位方案、复位信号的去除毛刺等。</em></p>
 <p><br></p>
-<h2>Think Local V.S. Think Global</h2>
+<h2>4. Think Local V.S. Think Global</h2>
 <hr>
 <p>我们使用复位信号的一个目的就是为了使电路可控，当上电时或者系统出错时，可以通过复位的方式回到正常状态。为了达到完全可控，传统的做法是对系统内的每个 FF 都连接复位信号，这样就造成了复位信号的高扇出，而高扇出会导致一系列的问题。</p>
 <p>Xilinx 有个 White Paper，<a href="http://www.xilinx.com/support/documentation/white_papers/wp272.pdf">Get Smart About Reset: Think Local, Not Global</a>，提出一种新的复位思路： 能不用全局复位时，尽量不要使用，这样可以降低复位信号的扇出。</p>
@@ -509,7 +510,7 @@
 <p>答案当然是否定的。由于 GSR 的释放是异步方式，所以，如果我们只使用 GSR 作为系统的唯一复位机制，那么可能导致系统不可靠。所以还是需要显式地使用同步复位信号来复位状态机、计数器等能自动改变状态的逻辑。</p>
 <p>所以，应该使用 <strong>GSR + explict reset</strong> 的解决方案：</p>
 <p>给系统中的 reg 赋初值，对于没有环路的电路节省 reset，利用 GSR 实现复位的功能；对于有环路的电路，使用显示的复位信号。</p>
-<h3>Upate: 07/01/2014</h3>
+<h3>4.1. Upate: 07/01/2014</h3>
 <ol>
 <li>
 <p>关于 initialize 代替 reset</p>
@@ -526,11 +527,11 @@
 <p>而这个矛盾早就有人在 Xilinx Forum 上提问了 <a href="http://forums.xilinx.com/t5/Virtex-Family-FPGAs/What-does-GSR-signal-really-mean-and-how-should-I-handle-the/td-p/35610">What does GSR signal really mean and how should I handle the reset signal properly</a>，还有 <a href="http://forums.xilinx.com/t5/Archived-ISE-issues/FPGA-Power-On-Reset/m-p/7027?query.id=134602#M2035">FPGA Power On Reset!</a>。</p>
 </li>
 </ol>
-<h3>Conclusion</h3>
+<h3>4.2. Conclusion</h3>
 <p>应该优先选择有全局复位的设计方案，并且这个全局复位信号是用户定义的，不要使用 GSR 。</p>
 <p>P.S. 事实上没有一个通用的、适合所有器件的复位方案，我们应该首先了解所使用的器件和工具，针对它们的特点进行复位方案的设计。</p>
 <p><br></p>
-<h3>Shift Register Reset</h3>
+<h3>4.3. Shift Register Reset</h3>
 <p>并不是每一个设计，器件中的每一个寄存器都需要复位的。最好的做法是只将复位连接到那些需要复位的寄存器。一个典型特例就是移位寄存器的复位。</p>
 <p>如果一个模块内部含有一组触发器(移位寄存器)，这些寄存器可以分为两类：</p>
 <ol>
@@ -660,13 +661,13 @@
 <p>如下图，复位信号 <code>rst</code> 对于两个 ff 来说，都是复位信号，不需要额外的逻辑，这样的设计是比较好的。</p>
 <p><img alt="good style" src="/images/the-art-of-reset-design-in-fpga/good_style.png"></p>
 <p><br></p>
-<h2>Reset Distribution Tree</h2>
+<h2>5. Reset Distribution Tree</h2>
 <hr>
 <p>复位信号的 <code>reset distribution tree</code> 和 时钟信号的 <code>clock distribution tree</code> 差不多同等重要，因为在设计中，几乎每个器件都有时钟端口和复位端口(同步/异步)。</p>
 <p>reset distribution tree 和 clock distribution tree 如下图所示：</p>
 <p><img alt="reset tree" src="/images/the-art-of-reset-design-in-fpga/reset_tree.png"></p>
 <p>系统中的主复位信号经过 reset distribution tree 达到每个元件，实现复位。<code>reset distribution tree</code> 和 <code>clock distribution tree</code> 最大的区别就是它们对 <code>skew</code> 的要求不同。由上面的讨论可知，复位信号和时钟的关系最好是“同步释放”，不像时钟信号的要求那么严格，复位信号之间的 skew 不需要那么严格，只要复位信号的延迟足够小，满足能在一个时钟周期内到达所有的复位负载端，并且满足各个 reg 和 flip-flop 的 <code>recovery time</code> 即可。</p>
-<h3>in ASIC</h3>
+<h3>5.1. in ASIC</h3>
 <p>在 ASIC 设计中，两种 tree 的关系有以下两种方式：</p>
 <p><strong>方案一：</strong></p>
 <p>驱动 reset tree 最安全的方法就是使用 clock tree 的叶子节点的时钟信号来驱动，如下图所示。如果采用这种方法且时序分析是满足的，那么就没有问题。</p>
@@ -693,7 +694,7 @@
 <p>一般来说，只有最后完成布局布线之后，才能根据具体情况进行分析调整 clock tree 和 reset tree。</p>
 <p><img alt="reset tree driven delayed clock" src="/images/the-art-of-reset-design-in-fpga/reset_tree_parallel_clock.png"></p>
 <p><em>对于 synchronou/asynchronous 两种 tree，可以用两种技术来进行优化：</em></p>
-<h4>synchronous reset distribution tree</h4>
+<h4>5.1.1. synchronous reset distribution tree</h4>
 <p>如下图所示，在 reset tree 中嵌入 DFF，在每个模块中，输入的 reset 信号首先经过一个 DFF，然后把经过 DFF 延迟输出的复位信号用作复位信号来复位逻辑、驱动子模块。这样 reset 信号就不必在一个时钟周期内到达每一个 DFF 的复位端口，从而可以把 reset 信号的时序要求降得很低。</p>
 <p><img alt="synchronous reset" src="/images/the-art-of-reset-design-in-fpga/synchronous_reset_distribution.png"></p>
 <p>通过这种技巧，复位信号就被当作了普通的数据信号，而且时序分析要简单的多（因为 reset tree 的每一部分 stage 都有合理的扇出）。</p>
@@ -726,20 +727,20 @@
 <ol>
 <li>需要多个时钟周期才能复位</li>
 </ol>
-<h4>asynchronous reset distribution tree</h4>
+<h4>5.1.2. asynchronous reset distribution tree</h4>
 <p>和同步复位类似，异步复位也可以采用相同的策略，如下图所示：</p>
 <p><img alt="asynchronous reset" src="/images/the-art-of-reset-design-in-fpga/asynchronous_reset_distribution.png"></p>
 <p>利用前面讨论过的 reset synchronizer 将异步复位信号同步到每个子模块当中。</p>
 <p>和 synchronous reset 一样，在 reset tree 中加入 synchronizer 之后，复位功能需要多个时钟周期才能完成。</p>
-<h4>Problem</h4>
+<h4>5.1.3. Problem</h4>
 <p>因为不同的子模块深度不同，所以不同模块可能不是同时复位的（同一个时钟周期）。这种情况是否会引起问题，依应用情况而定，大多数设计都没有问题，但是如果要求一定要在同一时钟周期复位，那么就要平衡不同子模块内的 synchronizer 数量，无论是 synchronous 还是 asynchronous 都是一样的。</p>
-<h4>Advantage</h4>
+<h4>5.1.4. Advantage</h4>
 <p>前面讨论的 reset tree 和 clock tree 主要问题就是两者是异步的，一定要保证 reset 的释放满足 recovery time，在 P&amp;R 之后，时序分析如果不满足的话，设计者需要手动调整时序，然后重新 P&amp;R，时序分析直到满足为止。</p>
 <p>作为对比，如果采用这里插入 synchronizer 的方法，则免去了手动调整的工作，让综合工具完成时序分析和调整工作。经过调整之后，全局（global）复位信号就变为本地（local）复位信号了。（synchronous 也一样，变为 local reset）</p>
-<h3>in FPGA</h3>
+<h3>5.2. in FPGA</h3>
 <p>对于 FPGA，因为系统的 clock tree 是预先布线好的，而全局主复位信号一般也使用时钟布线资源，所以不存在两棵 tree 之间关系的调整问题，所以只需要采用上面的 synchronou/asynchronous reset distribution tree 即可。</p>
 <p><br></p>
-<h2>Multi-clock Reset</h2>
+<h2>6. Multi-clock Reset</h2>
 <hr>
 <p>在一个系统中，往往有多个时钟，每个时钟域都应该有独立的 synchronizer 和 reset tree，这么做的目的是为了保证每个时钟域的每个寄存器都能满足 removal time。</p>
 <p>因为只有一个全局复位的话，它与系统的时钟都没有关系，是异步复位信号，要求这个信号满足所有时钟域的 recovery 和 removal 时序不是一件容易的事情，因此为每个时钟域分配复位是有必要的。</p>
@@ -753,7 +754,7 @@
 <p><a href="http://www.eetimes.com/document.asp?doc_id=1278998">How do I reset my FPGA</a> 在文中提供了一张图来说明典型的系统复位方案，图中 <code>MMCM</code> 的 <code>lock</code> 和外部输入的复位信号相与，目的是为了保证提供给后面的同步器的时钟信号是稳定的；每个时钟域都有一个同步器来同步复位信号。</p>
 <p><img alt="typical reset implementation in FPGA" src="/images/the-art-of-reset-design-in-fpga/typical_reset.jpg"></p>
 <p><br></p>
-<h2>Reset Glitch Filtering</h2>
+<h2>7. Reset Glitch Filtering</h2>
 <hr>
 <p>最后讨论一下复位信号毛刺的问题。</p>
 <p>使用异步复位信号时，考虑到异步复位信号对毛次比较敏感，所以在一些系统中需要处理毛次，下图显示了一种简单但是比较丑陋的方法(时延不是固定的，会随温度、电压变化)</p>
@@ -768,7 +769,7 @@
 </li>
 </ol>
 <p><br></p>
-<h2>Summary</h2>
+<h2>8. Summary</h2>
 <hr>
 <p>本文是读书笔记，总结了参考资料中的复位信号的设计方法和需要注意的问题，包含了底层的 DFF 复位方式、高/低电平有效、同步/异步复位、和系统级的复位方案选择、设计。</p>
 <ol>
@@ -799,7 +800,7 @@
 </ol>
 <p>总而言之，一句话：我们想象中的，简单的，统一的复位方案是...不存在的 =.=</p>
 <p><br></p>
-<h2>Reference</h2>
+<h2>9. Reference</h2>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2002SJ_Resets.pdf">Synchronous Resets? Asynchronous Resets? I am so confused! How will I ever know which to use?</a></p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2003Boston_Resets.pdf">Asynchronous &amp; Synchronous Reset Design Techniques - Part Deux</a></p>
 <p><a href="http://www.xilinx.com/support/documentation/white_papers/wp272.pdf">Get Smart About Reset: Think Local, Not Global</a></p>
@@ -854,7 +855,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

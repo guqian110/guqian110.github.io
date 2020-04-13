@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="博客搬家，温故而知新。" />
 <meta name="keywords" content="FSM, Verilog">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="有限状态机 FSM 设计"/>
 <meta property="og:description" content="博客搬家，温故而知新。"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -53,16 +53,16 @@
 <meta property="article:tag" content="Verilog"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 有限状态机 FSM 设计</title>
+  <title>Qian's Blog &ndash; 有限状态机 FSM 设计</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -96,6 +96,7 @@
     <p>
       Posted on 2014-06-05 17:55 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 5 min read
     </p>
   </header>
 
@@ -105,7 +106,7 @@
 <p><strong>写在前面的废话：</strong></p>
 <p>这篇博客是在我以前在 CSDN 上写的两篇博客的基础上，参考了其他各位大神、博主的文章，写的总结。欢迎批评、讨论，毕竟写博客的意义就在于给自己一个总结知识的机会、并且在和别人讨论的过程中进步 :-D</p>
 <p><br></p>
-<h2>What is FSM</h2>
+<h2>1. What is FSM</h2>
 <hr>
 <p><a href="http://en.wikipedia.org/wiki/Finite-state_machine">FSM on wiki</a></p>
 <p><strong>有限状态机 (Finite State Machine, FSM)</strong> 有时候也简称为<strong>状态机 (state machine)</strong>，它是一种数学模型，通常用来设计电脑程序或者时序电路。它被构思设计为一个抽象的机器，并且某个时刻只能处于一个有限数字代表的状态之下。</p>
@@ -132,7 +133,7 @@
 </li>
 </ul>
 <p><br></p>
-<h2>How to Design a FSM</h2>
+<h2>2. How to Design a FSM</h2>
 <hr>
 <p>关于如何设计一个状态机，这在数字电路和逻辑设计的书里有详细介绍。简单地总结一下步骤：</p>
 <ol>
@@ -142,12 +143,12 @@
 <li>画逻辑图，检查能否自启动，得到了最终的状态机模型</li>
 </ol>
 <p><br></p>
-<h2>How to implement a FSM</h2>
+<h2>3. How to implement a FSM</h2>
 <hr>
 <p>当设计好之后，就要使用 HDL 语言来实现这个 FSM 了。</p>
 <p><strong>语言：</strong> Verilog HDL</p>
 <p><strong>综合工具：</strong> XST (Xilinx Synthesis Tools)</p>
-<h3>Coding goals</h3>
+<h3>3.1. Coding goals</h3>
 <p>我们的代码需要达到的目的应该是：</p>
 <blockquote>
 <ol>
@@ -168,7 +169,7 @@
 </li>
 </ol>
 </blockquote>
-<h3>Template</h3>
+<h3>3.2. Template</h3>
 <p>为了达到目的，总结出了下面的这个三段式的模板（使用 index one-hot + reverse case + synopsys FSM 语法）</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -331,7 +332,7 @@
 </ul>
 <p>即使改用其他的综合工具，前面的 FSM 定义的综合指令不影响，需要修改的只有 case 综合指令（如 XST 改为 <code>// synthesis full_case parallel_case</code>）。</p>
 <p>下面逐个讨论为什么这么写，以及需要注意的问题。</p>
-<h3>Always Block</h3>
+<h3>3.3. Always Block</h3>
 <p>状态机一般有三种写法，他们在速度、面积、代码可维护性等各个方面互有优劣。</p>
 <p><strong>一段式：</strong> 只有一个always block，把所有的逻辑（输入、输出、状态）都在一个always block中实现</p>
 <ul>
@@ -364,7 +365,7 @@
 </ul>
 <p><strong>一段 or 三段？</strong></p>
 <p>一般来说，三段式的效果更好，唯一的缺点是占用的资源稍微多一点(对于拥有丰富的触发器资源的 FPGA 来说，这个缺点可以忽略吧)。所以除非是非常简单的状态机用一段式实现，其他情况下三段式更简单。</p>
-<h3>localparam</h3>
+<h3>3.4. localparam</h3>
 <p>尽量使用 <code>localparam</code> 而不是 <code>define</code> 和 <code>parameter</code>。这个原则不仅仅限于 FSM，其他模块也应该遵守。</p>
 <p><strong>Reason</strong></p>
 <ul>
@@ -376,7 +377,7 @@
 </li>
 </ul>
 <p>综上，使用 <code>localparam</code> 是更好的选择。</p>
-<h3>Reset</h3>
+<h3>3.5. Reset</h3>
 <p>FPGA 上电时，GSR(Global Set/Reset) 拉高，对所有 寄存器/RAM 进行复位，此时配置于 FPGA 的逻辑并未生效，所以不能保证 FSM 进入正确的初始化状态。</p>
 <p><strong>解决方法：</strong></p>
 <ol>
@@ -407,7 +408,7 @@
 <p>还有一种方法，是将初始状态编码为全 0 (带 0 的 One-Hot 编码方式)，这样当 GSR 复位后，状态机自动进入初始状态。</p>
 </li>
 </ol>
-<h3>State encode</h3>
+<h3>3.6. State encode</h3>
 <p>状态机的状态的编码，通常有 <code>Binary</code>、<code>One-Hot</code>、<code>Gray</code> 码等几种。</p>
 <p><strong>Binary 码</strong></p>
 <p>采用最简单的递增的编码方式对状态进行编码，对于 n 个状态的状态机，共需要 log2(n) 个触发器表示所有的状态。</p>
@@ -605,7 +606,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 </td></tr></table>
 
 <p>========================分割线=============================</p>
-<h3>Safe FSM</h3>
+<h3>3.7. Safe FSM</h3>
 <p>所谓 “安全” 的状态机，就是说即使因为某些意外原因，状态机跑飞了，仍然可以自动回复到正常状态。</p>
 <p><strong>举例：可能出现的不安全情况</strong></p>
 <p>比如，我们采用 One-Hot 编码方式，对于 8 个状态，总共使用了 8 bit 的寄存器，那么这个状态寄存器向量可以取到的值一共有 <code>2^8 = 256</code> 种。如果我们只对需要的 8 种状态进行了说明，而忽略了剩余的 248 种，此时综合工具(Synplify、XST)会对设计进行 “优化”，将没有用到的状态去掉。但是，有时候这种 “优化” 反而不好，如果状态机进入未定义的全 0 状态，那么它就会卡在这个未定义的状态，无法自动回复正常工作状态。</p>
@@ -675,7 +676,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 </li>
 </ol>
 <p>对比两种方式，我觉得第一种更能体现出设计意图，所以在模板中选择这种方式。</p>
-<h3>case(CS)</h3>
+<h3>3.8. case(CS)</h3>
 <p><strong>使用 case 的原则：</strong> 尽量不要使用综合指令 full_case 和 parallel_case，而是代码本身满足 full、parallel 的条件（因为综合指令可能导致前后仿真不一致的问题）</p>
 <p>下面根据状态编码方案分类讨论：</p>
 <ol>
@@ -719,7 +720,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>采用 index one-hot + reverse case 的方式，这里违背了 case 语句本身满足 full_case、parallel_case 的原则，使用了综合指令、并且省掉了 default 分支，是唯一的例外情况，其他情况下都应该遵守这一原则！</p>
 </li>
 </ol>
-<h3>Ouput</h3>
+<h3>3.9. Ouput</h3>
 <p><strong>避免 Latch</strong></p>
 <ol>
 <li>
@@ -744,7 +745,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>在考虑 FSM 的响应速度时，不能独立的考虑 FSM 本身，需要综合考虑 FSM 模块和上、下游模块构成的电路。采用输出寄存器的电路可以运行在更高的时钟频率下，所引入的响应时延与更高的运行频率相比是可以牺牲的。</p>
 </li>
 </ol>
-<h3>case (NS) vs case (CS)</h3>
+<h3>3.10. case (NS) vs case (CS)</h3>
 <p>采用二段式实现状态机，它的输出是组合逻辑，可能存在竞争和冒险，产生毛刺，要消除毛刺就要对输出用寄存器打一拍，但是很多时候，是不允许插入寄存器节拍的。</p>
 <p>这时候可以采用三段式实现，三段式的输出是寄存器输出，所以消除了毛次；同时，如果三段式的第三段判断输出采用</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -781,7 +782,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>使用 <code>CS</code> 判断，结果如下图，可以看到，当 <code>CS</code> 发生变化时，输出变化相对于状态变化延时一个时钟周期。</p>
 <p><img alt="case ns" src="/images/fsm-design/case_cs.png"></p>
 <p><br></p>
-<h2>Ref</h2>
+<h2>4. Ref</h2>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG1998SJ_FSM.pdf">Clifford E. Cumming State Machine Coding Styles for Synthesis</a></p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsICU2002_FSMFundamentals.pdf">Clifford E. Cumming The Fundamentals of Efficient Synthesizable Finite State Machine
 Design using NC-Verilog and BuildGates</a></p>
@@ -810,9 +811,9 @@ Design using NC-Verilog and BuildGates</a></p>
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="http://guqian110.github.io/posts/ic/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/drawing_fsm_state_diagram_using_graphviz.html">利用 Graphviz 画 FSM 状态图</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/doxygen_for_verilog.html">针对 Verilog 的 Doxygen</a></li>
+      <li><a href="http://guqian110.github.io/posts/ic/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/verilog_hdl_coding_style_guide.html">Verilog HDL coding style</a></li>
     </ul>
   </div>
@@ -845,7 +846,7 @@ Design using NC-Verilog and BuildGates</a></p>
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

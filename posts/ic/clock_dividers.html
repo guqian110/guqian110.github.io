@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结常用的时钟分频方法" />
 <meta name="keywords" content="clock design, clock dividers">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="时钟分频器"/>
 <meta property="og:description" content="总结常用的时钟分频方法"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -53,16 +53,16 @@
 <meta property="article:tag" content="clock dividers"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 时钟分频器</title>
+  <title>Qian's Blog &ndash; 时钟分频器</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -96,6 +96,7 @@
     <p>
       Posted on 2014-10-13 22:26 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 2 min read
     </p>
   </header>
 
@@ -116,14 +117,14 @@
 </li>
 </ol>
 <p><br></p>
-<h2>Counter</h2>
+<h2>1. Counter</h2>
 <hr>
 <p>时钟分频一般都是通过计数器 counter 来实现的，计数器是分频的基础。</p>
 <p>计数器可以分为很多种，<a href="http://en.wikipedia.org/wiki/Counter">Counter on wiki</a>，这里不再跑题展开了，关于计数器的讨论见：<a href="http://guqian110.github.io/pages/2014/11/04/counter_design_summary.html">Counter in FPGAs</a></p>
 <p><br></p>
-<h2>Clock divider</h2>
+<h2>2. Clock divider</h2>
 <hr>
-<h3>even clock divider</h3>
+<h3>2.1. even clock divider</h3>
 <p>偶数分频是最简单的情况，使用计数器就可以完成。比如，产生一个分频系数为 N（偶数）的 50% 占空比的分频器一般有两种方法：</p>
 <ol>
 <li>
@@ -134,7 +135,7 @@
 </li>
 </ol>
 <p>方案一只能实现固定的 50% 占空比，方案二则可以实现可以有限调整占空比。</p>
-<h3>odd clock divider</h3>
+<h3>2.2. odd clock divider</h3>
 <p>如果对占空比没有要求，那么使用和偶数分频类似的方法，一个计数器就可以解决；如果要求占空比是 50%，则可以使用以下的方法：</p>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art of Hardware Architecture</a>:</p>
 <blockquote>
@@ -177,10 +178,10 @@
 <p><img alt="schematic" src="/images/clock-dividers/divide_3_sch.png"></p>
 <p>Timing:</p>
 <p><img alt="timing" src="/images/clock-dividers/divide_3_timing.png"></p>
-<h3>half integer clock divider</h3>
+<h3>2.3. half integer clock divider</h3>
 <p>这种分频系数为 (N+1/2)，应该归类到小数分频中，但是因为它的小数部分是特殊的 1/2，所以可以在前面的讨论的基础上得到。</p>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art</a> 中分类讨论了半整数分频：</p>
-<h4>50% Duty Cycle</h4>
+<h4>2.3.1. 50% Duty Cycle</h4>
 <p>以 1.5 分频为例，</p>
 <p>Schematic:</p>
 <p><img alt="1.5 sch" src="/images/clock-dividers/divide_1_5_sch.png"></p>
@@ -188,7 +189,7 @@
 <p><img alt="1.5 timing" src="/images/clock-dividers/divide_1_5_timing.png"></p>
 <p>这种方法在仿真的时候是没有问题的，但是综合时可能会产生致命的问题：在切换时钟时，如果两路时钟信号的时延不相等，那么切换的时候就会产生毛刺。</p>
 <p>(Xilinx 提供的原语 <code>BUFGMUX</code> 有去除切换时钟时候的毛刺的功能，但是它只适用于全局时钟网络)</p>
-<h4>Non 50% Duty Cycle</h4>
+<h4>2.3.2. Non 50% Duty Cycle</h4>
 <p>如果占空比不是 50%，则可以通过以下的方法得到：</p>
 <p>从</p>
 <div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
@@ -201,7 +202,7 @@
 <p>Timing:</p>
 <p><img alt="4.5 timing" src="/images/clock-dividers/divide_4_5_timing.png"></p>
 <p>从图中可以看到，当选择了两个连续的寄存器 (A, B)相或作为第一个脉冲输出之后，再选取相隔 N 的两个连续的寄存器 (C, D)，把它们移动半个时钟周期后，和原始的 D 相或，作为第二个脉冲输出，容易分析，它们是等间隔的。</p>
-<h3>fraction divider</h3>
+<h3>2.4. fraction divider</h3>
 <p>大概有两种方法吧：</p>
 <ol>
 <li>
@@ -239,11 +240,11 @@
 <p>所以可以用 3 次 8 分频 + 7 次 9 分频得到 8.7 分频。因为 <code>10 -7 = 3</code>，前 3 次累积之和都小于 10，所以前 3 次进行 9 分频，第四次累积值为 12，去除进位后余 2，待下次继续累积，第四次结果 12 &gt; 10，所以进行 8 分频。分频方案如下图所示：</p>
 <p><img alt="example" src="/images/clock-dividers/example.png"></p>
 <p><br></p>
-<h2>Summary</h2>
+<h2>3. Summary</h2>
 <hr>
 <p>本文总结了一些常用的时钟分频技术，虽然不推荐使用逻辑来对时钟信号进行分频，但是在一些要求比较的的情况下，使用逻辑分频不仅可以满足要求，还能降低资源消耗，不失为一种好方法。而且时钟分频也可以训练我们的设计能力。</p>
 <p><br></p>
-<h2>Reference</h2>
+<h2>4. Reference</h2>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art of Hardware Architecture</a></p>
 <p><a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG">FPGA高手设计实战真经100则</a></p>
 <p><a href="http://read.pudn.com/downloads126/sourcecode/embed/533229/VHDL%E5%88%86%E9%A2%91%E5%99%A8%E8%AE%BE%E8%AE%A1.pdf">使用 VHDL 进行分频器设计</a></p>
@@ -270,9 +271,9 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="http://guqian110.github.io/posts/ic/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
+      <li><a href="http://guqian110.github.io/posts/ic/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
     </ul>
   </div>
 
@@ -304,7 +305,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

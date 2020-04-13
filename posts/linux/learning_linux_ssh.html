@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="学习 SSH、SCP 命令，建立两台电脑相互访问 。" />
 <meta name="keywords" content="SSH">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="学习 Linux SSH"/>
 <meta property="og:description" content="学习 SSH、SCP 命令，建立两台电脑相互访问 。"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="SSH"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 学习 Linux SSH</title>
+  <title>Qian's Blog &ndash; 学习 Linux SSH</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,6 +95,7 @@
     <p>
       Posted on 2014-04-04 17:00 in <a href="http://guqian110.github.io/category/linux.html">Linux</a>
 
+        &#8226; 2 min read
     </p>
   </header>
 
@@ -109,16 +110,16 @@
 <p>解决方案 2 相比于方案 1 的优势是：不是必须要连接到互联网，在局域网内也可以同步文件 。一般局域网内传输文件的速度要比连外界的服务器快很多 。</p>
 <p>考虑到校园网的环境，明显方案 2 更加好 。</p>
 <p><br></p>
-<h2>什么是 SSH</h2>
+<h2>1. 什么是 SSH</h2>
 <hr>
 <p>最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑 。<a href="http://en.wikipedia.org/wiki/Secure_Shell">SSH</a> 协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为 Linux 系统的标准配置 。</p>
 <p>最初的 SSH 协议是由芬兰的一家公司的研究员 Tatu Ylönen 于 1995 年设计开发的，但是因为受版权和加密算法等等的限制，现在很多人都转而使用 OpenSSH 。OpenSSH 是 SSH 的替代软件包，而且是开放源代码和免费的 。—— Wikipedia</p>
 <p>关于 SSH 的原理，找到了一系列 <a href="http://www.ruanyifeng.com/blog/">阮一峰</a>的文章，很简洁明了:</p>
-<h3>SSH</h3>
+<h3>1.1. SSH</h3>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">SSH原理与运用（一）：远程登录</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html">SSH原理与运用（二）：远程操作与端口转发</a></p>
 <p><br></p>
-<h2>SSH 的用法</h2>
+<h2>2. SSH 的用法</h2>
 <hr>
 <p>最简单明了的教程就是 man page 了</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>man ssh
@@ -151,7 +152,7 @@ SYNOPSIS
 <p>进阶的书籍有：<a href="http://docstore.mik.ua/orelly/networking_2ndEd/ssh/index.htm">SSH, The Secure Shell: The Definitive Guide</a>, O'reilly</p>
 <p>目前已经有两台安装了 Ubuntu 的电脑，实验室的一台 name 是 <em>lab</em> ，宿舍的一台 name 是 <em>dom</em> ，两台电脑上都有一个用户名为 <em>chien</em> 。</p>
 <p><strong>我们的目的是使两台电脑可以相互之间通过 SSH 访问。</strong> 下面就是整个过程：</p>
-<h3>安装 SSH server</h3>
+<h3>2.1. 安装 SSH server</h3>
 <p>SSH 只是一种协议，在 Ubuntu 下，具体实现使用的是 <a href="http://www.openssh.com/">OpenSSH</a> 。Ubuntu 默认是安装了 SSH 客户端 <code>openssh-client</code>，而没有安装 SSH 服务程序 <code>openssh-server</code>。</p>
 <p>检测本机是否已经安装了 SSH server</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ssh localhost
@@ -169,7 +170,7 @@ SYNOPSIS
 </pre></div>
 </td></tr></table>
 
-<h3>启动 SSH 服务</h3>
+<h3>2.2. 启动 SSH 服务</h3>
 <p>启动 SSH server</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo /etc/init.d/ssh start
 </pre></div>
@@ -189,7 +190,7 @@ SYNOPSIS
 
 <p>则说明服务已经正确启动 。</p>
 <p><em>因为两台电脑要相互访问，所以它们的角色即使 server，又是 client，所以需要在两台电脑上都执行上面两步 。</em></p>
-<h3>远程访问</h3>
+<h3>2.3. 远程访问</h3>
 <p>首先，查询本机 IP 地址</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ifconfig
 </pre></div>
@@ -212,7 +213,7 @@ SYNOPSIS
 <p>实际结果如下图</p>
 <p><img alt="login2" src="/images/learning-linux-ssh/login2.png"></p>
 <p>在执行命令前，提示符显示目前的用户是在 lab 这台机器上的用户 chien，本机 home 目录下有 <code>lab</code> 文件，但是没有 <code>dom</code> 文件 。执行了登录命令以后，就会切换到以 chien 身份登录到 dom 机器，远程机器 home 目录下有有 <code>dom</code> 文件，但是没有 <code>lab</code> 文件 。</p>
-<h3>省去 IP 地址</h3>
+<h3>2.4. 省去 IP 地址</h3>
 <p>每次登录都需要记忆、手动输入 IP 地址，其实只需要改 <code>/etc/hosts</code> 文件，就能省去手动输入 IP 地址的烦恼。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>vim /etc/hosts
 </pre></div>
@@ -242,7 +243,7 @@ ssh dom
 </td></tr></table>
 
 <p>就可以登录了。</p>
-<h3>公钥登录</h3>
+<h3>2.5. 公钥登录</h3>
 <p>上一步解决了 IP 地址的问题，但是还是需要手动输入密码 。我们可以用公钥登录的方法，免去输密码的烦恼。</p>
 <p><strong>首先，什么是数字签名 Digital Signature</strong></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html">数字签名是什么？</a></p>
@@ -281,7 +282,7 @@ ssh dom
 </td></tr></table>
 
 <p><br></p>
-<h2>使用 SCP 传输文件</h2>
+<h2>3. 使用 SCP 传输文件</h2>
 <hr>
 <p>SSH 提供了一些命令和 shell 用来登录远程服务器 。在默认情况下它不允许你拷贝文件,但是还是提供了一个 "scp" 命令 。scp 命令是 SSH 中最方便有用的命令了，试想，在两台服务器之间直接传送文件。仅仅用 scp 一个命令就完全解决了 。</p>
 <p>man page</p>
@@ -307,12 +308,12 @@ SYNOPSIS
 </td></tr></table>
 
 <p>scp 可以实现把 [[user@]host1:]file1 复制到 [[user@]host2:]file2 的功能。所以</p>
-<h3>上传 dom 本地文件至服务器 lab</h3>
+<h3>3.1. 上传 dom 本地文件至服务器 lab</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>scp ~/dom chien@lab:~/
 </pre></div>
 </td></tr></table>
 
-<h3>下载 lab 服务器文件至本地 dom</h3>
+<h3>3.2. 下载 lab 服务器文件至本地 dom</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>scp chien@lab:lab ~/
 </pre></div>
 </td></tr></table>
@@ -325,7 +326,7 @@ SYNOPSIS
 <p><br></p>
 <p>至此，就实现了两台电脑的之间相互远程访问的功能 。</p>
 <p><br></p>
-<h2>Reference</h2>
+<h2>4. Reference</h2>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">数字签名是什么？</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html">What is a Digital Signature?</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html">SSH原理与运用（一）：远程登录</a></p>
@@ -376,7 +377,7 @@ SYNOPSIS
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

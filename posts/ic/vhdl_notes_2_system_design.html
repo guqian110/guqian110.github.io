@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="VHDL 笔记，系统设计" />
 <meta name="keywords" content="VHDL, syntax">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="VHDL 笔记 2 —— 系统设计"/>
 <meta property="og:description" content="VHDL 笔记，系统设计"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -53,16 +53,16 @@
 <meta property="article:tag" content="syntax"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; VHDL 笔记 2 —— 系统设计</title>
+  <title>Qian's Blog &ndash; VHDL 笔记 2 —— 系统设计</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -96,6 +96,7 @@
     <p>
       Posted on 2014-09-16 20:18 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 2 min read
     </p>
   </header>
 
@@ -105,9 +106,9 @@
 <p>这些组成部分添加到代码主体部分，目的是为了实现常用代码共享。通常这些代码被放在 <code>library</code> 中，我们可以将自己设计的一些常用代码添加到 <code>library</code> 中，这有利于使一个复杂设计具有更清晰的结构。</p>
 <p>总之，经常使用的代码可以以 <code>component</code>, <code>function</code>, <code>procedure</code> 的形式放到 <code>package</code> 中，然后被编译到目标 <code>library</code> 中。</p>
 <p><br></p>
-<h2>Packages and Components</h2>
+<h2>1. Packages and Components</h2>
 <hr>
-<h3>Package</h3>
+<h3>1.1. Package</h3>
 <p>除了 <code>component</code>, <code>function</code>, <code>procedure</code> 之外，package 中还可以包含 <code>TYPE</code>, <code>CONSTANT</code> 的定义。</p>
 <p><strong>syntax</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -182,7 +183,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>Componet</h3>
+<h3>1.2. Componet</h3>
 <p>VHDL 中的 <code>component</code> 和 Verilog HDL 中的 <code>module</code> 类似：</p>
 <p>一个 component 是一段完整的代码（包括 library, entity, architecture 这些组成部分），如果将这些代码声明为一个 component，那么就可以被其他电路调用，从而使代码具有了层次化的结构。</p>
 <p>使用 component 必须先声明这个元件，然后再例化这个元件（类似 C++，变量先声明，在定义）。声明和例化都必须在 architecture 中进行。</p>
@@ -241,7 +242,7 @@
 
 </li>
 </ul>
-<h3>port map</h3>
+<h3>1.3. port map</h3>
 <p>同 Verilog HDL 一样，两种端口映射的方法：位置映射、名字映射。</p>
 <p>位置映射书写简单，但是容易出错；名字映射书写繁琐，但是不易出错，端口连接也更清晰，未连接的端口要使用关键词 <code>open</code>。</p>
 <p><strong>example</strong></p>
@@ -257,7 +258,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>generic map</h3>
+<h3>1.4. generic map</h3>
 <p>generic 功能类似于 Veriog HDL 中的 parameter，所以在例化时 component 时，可以重载参数，使设计更方便灵活。</p>
 <p><strong>syntax</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="k">GENERIC</span> <span class="k">MAP</span> <span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="n">list</span><span class="p">)</span> <span class="k">PORT</span> <span class="k">MAP</span> <span class="p">(</span><span class="k">port</span> <span class="n">list</span><span class="p">);</span>
@@ -266,10 +267,10 @@
 
 <p>也就是说，在例化时，添加一段 <code>GENERIC MAP (param.list)</code> 就可以了。</p>
 <p><br></p>
-<h2>Functions and Procedure</h2>
+<h2>2. Functions and Procedure</h2>
 <hr>
 <p>function 和 procedure 统称为 子程序，它们和 process 相似，内部包含的都是顺序描述的代码，通常使用相同的顺序描述语句。但是，function 和 procedure 的存在主要是为了建库，以达到代码重用和共享的目的，当然它们也可以直接建立在主代码中。</p>
-<h3>Function</h3>
+<h3>2.1. Function</h3>
 <p>一个 function 就是一段顺序描述的代码。</p>
 <p>在写代码的过程中，我们通常会遇到一些有共性的问题，我们希望实现这些功能的代码可以被共享和重用，从而使代码变得简洁，易于理解，function 的建立和使用就能达到这个目睹。
 function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> 等语句，但是不能有 <code>signal</code> 和 <code>component</code>。</p>
@@ -314,7 +315,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 <p>Main Code 中，既可以在 entity 中，也可以在 architecture 中</p>
 </li>
 </ul>
-<h3>Procedure</h3>
+<h3>2.2. Procedure</h3>
 <p>procedure 和 function 类似，目的也相同，不同之处在于 procedure 可以有多个返回值。</p>
 <p>与 function 类似，procedure 也需要定义和调用两个过程。</p>
 <p><strong>Procedure Body</strong></p>
@@ -353,7 +354,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 
 <p><strong>Procedure Location</strong></p>
 <p>procedure 的存放和 function 类似，通常放在 package 中，当然也可以放在主代码中。</p>
-<h3>FUNCTION versus PROCEDURE Summary</h3>
+<h3>2.3. FUNCTION versus PROCEDURE Summary</h3>
 <ul>
 <li>
 <p>function 有任意个输入参数和一个返回值，输入参数只能是 constant, signal</p>
@@ -372,7 +373,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 </li>
 </ul>
 <p><br></p>
-<h2>Reference</h2>
+<h2>3. Reference</h2>
 <p><a href="http://www.amazon.com/Circuit-Design-VHDL-Volnei-Pedroni/dp/0262162245">Circuit Design with VHDL</a></p>
   </div>
   <div class="tag-cloud">
@@ -427,7 +428,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

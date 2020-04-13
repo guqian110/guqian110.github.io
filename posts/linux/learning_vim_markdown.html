@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="在 Vim 中使用 Markdown 语法写文本。" />
 <meta name="keywords" content="vim, markdown">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="在 Vim 中写 Markdown 文件"/>
 <meta property="og:description" content="在 Vim 中使用 Markdown 语法写文本。"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -53,16 +53,16 @@
 <meta property="article:tag" content="markdown"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 在 Vim 中写 Markdown 文件</title>
+  <title>Qian's Blog &ndash; 在 Vim 中写 Markdown 文件</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -96,19 +96,20 @@
     <p>
       Posted on 2015-02-01 13:46 in <a href="http://guqian110.github.io/category/linux.html">Linux</a>
 
+        &#8226; 1 min read
     </p>
   </header>
 
 
   <div>
     <p><code>Vim</code> 和 <code>Markdown</code> 就不多罗嗦了，记录一下最近在 Vim 中摸索使用 Markdown 的经历。</p>
-<h2>Syntax Hightlight</h2>
+<h2>1. Syntax Hightlight</h2>
 <hr>
 <p>Vim 可以通过插件来提供对 Markdown 语法的支持，网上找到很多这类插件：</p>
 <p>官网上的插件：<a href="http://www.vim.org/scripts/script.php?script_id=2882">Markdown</a></p>
 <p>我找到的是下面这个：</p>
 <p><a href="https://github.com/plasticboy/vim-markdown">plasticboy/vim-markdown</a></p>
-<h3>Install</h3>
+<h3>1.1. Install</h3>
 <p>使用 Vundle 管理插件，只需要在 <code>.vimrc</code> 文件中添加：</p>
 <div class="highlight"><pre><span></span><span class="n">Bundle</span> <span class="s1">&#39;godlygeek/tabular&#39;</span>
 <span class="n">Bundle</span> <span class="s1">&#39;plasticboy/vim-markdown&#39;</span>
@@ -121,7 +122,7 @@
 
 
 <p>即可。</p>
-<h3>File extension</h3>
+<h3>1.2. File extension</h3>
 <p>Markdown 文件的后缀名可以是 <code>.markdown</code>，<code>mkd</code>，<code>mkdn</code>，<code>md</code> 等，但是 plasticboy 的插件只识别 <code>mkd</code> 和 <code>markdown</code> 两种：</p>
 <p><a href="http://stackoverflow.com/questions/10964681/enabling-markdown-highlighting-in-vim">Enabling markdown highlighting in Vim</a></p>
 <p>因为我们已经按照 .md 格式写了很多文本了，这时候更好选择当然是修改设置，让 vim 可以识别这种类型的文件，而不是修改文件后缀名。所以我们需要在 vimrc 中设置一下：</p>
@@ -132,12 +133,12 @@
 <p>这样，.md 文件就可以被识别了。</p>
 <p>经过上面两步，此时再打开 markdown 文件就可以看到语法高亮了，plasticboy/vim-markdown 还支持一些高级的主题：比如支持 LaTeX 数学公式的高亮，ToC 等，从 github 上可以看到相关设置的介绍说明。</p>
 <p><br></p>
-<h2>Preview</h2>
+<h2>2. Preview</h2>
 <hr>
 <p>一些专门的 Markdown 软件、网页编辑器都是提供实时预览，Vim 虽然不提供预览窗口，但是配合浏览器，我们也可以实现实时预览的功能，当然还是依靠万能的插件。</p>
 <p>我使用的是：</p>
 <p><a href="https://github.com/suan/vim-instant-markdown">suan/vim-instant-markdown</a></p>
-<h3>Install</h3>
+<h3>2.1. Install</h3>
 <ol>
 <li>
 <p>首先要保证已经安装了 node.js</p>
@@ -177,7 +178,7 @@
 
 </li>
 </ol>
-<h3>Config &amp; Use</h3>
+<h3>2.2. Config &amp; Use</h3>
 <p>如果机器比较老，插件占用的资源过多的话，可以设置</p>
 <div class="highlight"><pre><span></span><span class="n">let</span> <span class="k">g</span><span class="p">:</span><span class="n">instant_markdown_slow</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
@@ -201,7 +202,7 @@
 </ol>
 <p>最后放一张截图：</p>
 <p><img alt="screenshot" src="/images/learning-vim-markdown/screenshot.png"></p>
-<h2>Ref</h2>
+<h2>3. Ref</h2>
 <p><a href="https://github.com/plasticboy/vim-markdown">plasticboy/vim-markdown</a></p>
 <p><a href="http://stackoverflow.com/questions/10964681/enabling-markdown-highlighting-in-vim">Enabling markdown highlighting in Vim</a></p>
 <p><a href="https://github.com/suan/vim-instant-markdown">suan/vim-instant-markdown</a></p>
@@ -226,11 +227,11 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
     </ul>
   </div>
 
@@ -262,7 +263,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

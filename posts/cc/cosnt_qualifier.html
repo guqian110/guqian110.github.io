@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结 const 限定符的用法。" />
 <meta name="keywords" content="const">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="C++ const 限定符"/>
 <meta property="og:description" content="总结 const 限定符的用法。"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="const"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; C++ const 限定符</title>
+  <title>Qian's Blog &ndash; C++ const 限定符</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,14 +95,15 @@
     <p>
       Posted on 2014-04-09 11:13 in <a href="http://guqian110.github.io/category/cc.html">C/C++</a>
 
+        &#8226; 4 min read
     </p>
   </header>
 
 
   <div>
-    <h2>为什么要使用 const 限定符</h2>
+    <h2>1. 为什么要使用 const 限定符</h2>
 <hr>
-<h3>一个需要使用 const 的简单例子</h3>
+<h3>1.1. 一个需要使用 const 的简单例子</h3>
 <p><a href="http://book.douban.com/subject/1767741/"><em>C++ Primer</em></a> 中的例子</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -137,7 +138,7 @@
 
 <p>定义 <code>buf_size</code> 为 <strong>常量（constant）</strong>，并且初始化为 512 .<strong>变量（variable）</strong> <code>buf_size</code> 仍然是一个左值，但是这个左值现在是不能被修改的。（因为 const 把变量转化为常量，所以在定义的时候必须初始化！）</p>
 <p><br></p>
-<h2>如何使用 const 限定符</h2>
+<h2>2. 如何使用 const 限定符</h2>
 <hr>
 <p>C++ Primer 中有这么一句话</p>
 <blockquote>
@@ -148,7 +149,7 @@
 <p>The variable bufSize is still an lvalue</p>
 </blockquote>
 <p>这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性“</p>
-<h3>文件的局部变量</h3>
+<h3>2.1. 文件的局部变量</h3>
 <p>const 限定符修同时也改变了变量的作用范围 。普通非 const 变量的默认是具有 <em>外部连接（external linkage）</em>的，在全局作用域内定义非 const 变量时，它在整个程序中都可以被访问 。比如</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -181,7 +182,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>使用 const 的方法</h3>
+<h3>2.2. 使用 const 的方法</h3>
 <ul>
 <li>
 <p>定义在头文件中 inlcude</p>
@@ -285,7 +286,7 @@ distinguishes a declaration from a definition (in C it’s always a definition, 
 necessary).</em> With an external constdeclaration, the compiler cannot do constant folding
 because it doesn’t know the value.</p>
 </blockquote>
-<h3>const 引用 &amp; const 对象</h3>
+<h3>2.3. const 引用 &amp; const 对象</h3>
 <p>在引用的定义中声明 const，此 const 约束的是引用，而不是引用的对象 。比如</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref</span> <span class="o">=</span> <span class="n">ival</span>
 </pre></div>
@@ -298,10 +299,10 @@ because it doesn’t know the value.</p>
 <p>当对象是 const 类型时，隐含的含义是该对象不能被修改，所以只能定义 const 类型的引用指向它；nonconst 类型的引用隐含的意思是可以通过引用修改对象值，这对于 const 类型的对象来说是不允许的 。</p>
 <p>当对象是 nonconst 类型时，隐含的含义是该对象可以通过引用来修改，此时，const 引用和 nonconst 引用都可以指向该对象 。当使用 nonconst 引用时，可以通过引用修改对象的值；当使用 const 引用时，虽然对象的值是可以改变的，但是不能通过该引用修改，因为引用的类型是 const，定义以后，不能再修改 。 </p>
 <p><br></p>
-<h2>何时应该使用 const</h2>
+<h2>3. 何时应该使用 const</h2>
 <hr>
 <p>Scott Meyers 大神的经典著作 <a href="http://book.douban.com/subject/1842426/">Effective C++</a> 里面提到的关于 const 的使用 。</p>
-<h3>Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</h3>
+<h3>3.1. Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</h3>
 <p>使用const 代替 #define，事实上 <code>const</code> 的最初动机就是取代预处理器 <code>#define</code> 来进行值替代 。因为 #define 不被视为语言的一部分，这就是它的问题所在 。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#define ASPECT_RATIO 1.653;</span>
 </pre></div>
@@ -313,9 +314,9 @@ because it doesn’t know the value.</p>
 </pre></div>
 </td></tr></table>
 
-<h3>Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</h3>
+<h3>3.2. Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</h3>
 <p><br></p>
-<h2>参考</h2>
+<h2>4. 参考</h2>
 <p><a href="http://book.douban.com/subject/1767741/">C++ Primer</a></p>
 <p><a href="http://book.douban.com/subject/1459728/">Thinking in C++</a></p>
 <p><a href="http://book.douban.com/subject/1842426/">Effective C++</a></p>
@@ -365,7 +366,7 @@ because it doesn’t know the value.</p>
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="OFDM 中做 IFFT/FFT 时需要注意的一点细节" />
 <meta name="keywords" content="IFFT, FFT, OFDM">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="OFDM 中的 IFFT/FFT 注意事项"/>
 <meta property="og:description" content="OFDM 中做 IFFT/FFT 时需要注意的一点细节"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -54,16 +54,16 @@
 <meta property="article:tag" content="OFDM"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; OFDM 中的 IFFT/FFT 注意事项</title>
+  <title>Qian's Blog &ndash; OFDM 中的 IFFT/FFT 注意事项</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -97,25 +97,27 @@
     <p>
       Posted on 2015-03-10 19:40 in <a href="http://guqian110.github.io/category/telecom.html">Telecom</a>
 
+        &#8226; 1 min read
     </p>
   </header>
 
 
   <div>
-    <p>在做 OFDM 项目时，发现一个容易犯错的地方：IFFT/FFT。</p>
+    <h2>1. Intro</h2>
+<p>在做 OFDM 项目时，发现一个容易犯错的地方：<code>IFFT</code>/<code>FFT</code>。</p>
 <p>在很多介绍 OFDM 的书中，给出结论：在发射机，基带信号的复包络采用值正好是待发射序列的 IDFT，所以在 N 是 2 的指数时，可以采用 IFFT 来快速计算；在接收机，将接收的频带信号解调到基带，采样得到基带复包络，然后做 DFT (FFT) 即可得到原始的发射序列。</p>
 <p>这个结论是正确的，但是需要注意的一点是：</p>
 <p><strong>调制/解调所做的运算的形式和 IFFT/FFT 是相同的，但是有一个功率归一化的系数的差别。</strong></p>
 <p>很多书（<a href="http://book.douban.com/subject/1446684/">通信原理</a>）都给出了公式推导，然而这些公式并不严谨，这些公式只是为了说明做的变换形式是 IFFT/FFT。</p>
 <p>有的书（<a href="http://book.douban.com/subject/1140934/">宽带无线通信OFDM技术</a>）则给出了更加详细，严谨的公式推导。</p>
-<h3>IFFT / FFT</h3>
+<h2>2. IFFT / FFT</h2>
 <p><img alt="fft/ifft" src="http://guqian110.github.io/images/xilinx_fft_core_notes/theory.png"></p>
-<h3>IFFT /FFT in OFDM</h3>
+<h2>3. IFFT /FFT in OFDM</h2>
 <p>OFDM 中 <strong>功率归一化因子</strong> 为 1/sqr(N)，而标准的 IFFT 中的系数为 1/N，所以在调用标准 IFFT 函数之后，需要额外乘以一个 sqr(N) ：</p>
 <p><code>1/N × sqr(N) = 1/sqr(N)</code></p>
 <p>而在接收端，也要先除以一个 sqr(N)，然后再进行 FFT 。</p>
 <p><br></p>
-<h2>Ref</h2>
+<h2>4. Ref</h2>
 <p><a href="http://book.douban.com/subject/1446684/">通信原理</a></p>
 <p><a href="http://book.douban.com/subject/1140934/">宽带无线通信OFDM技术</a></p>
   </div>
@@ -173,7 +175,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

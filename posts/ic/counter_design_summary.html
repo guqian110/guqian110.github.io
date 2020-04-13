@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结 FPGA 中的计数器设计" />
 <meta name="keywords" content="">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="计数器设计小结"/>
 <meta property="og:description" content="总结 FPGA 中的计数器设计"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -51,16 +51,16 @@
 <meta property="article:section" content="IC"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 计数器设计小结</title>
+  <title>Qian's Blog &ndash; 计数器设计小结</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -94,18 +94,19 @@
     <p>
       Posted on 2014-11-04 20:40 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 4 min read
     </p>
   </header>
 
 
   <div>
-    <h2>Introduction</h2>
+    <h2>1. Introduction</h2>
 <hr>
 <p>计数器 在数字电路设计 和 计算机程序设计 中都应用非常广泛，其功能顾名思义，就是用来计数。这里只讨论数字电路设计中的计数器。</p>
 <p>通常，将包含触发器 flip-flop 的电路（即使含有组合电路部分）认为是时序电路。时序电路通常不以电路命名，而是以功能进行分类，分别是 <strong>寄存器</strong> 和 <strong>计数器</strong>。</p>
 <p>计数器 <a href="http://en.wikipedia.org/wiki/Counter">counter</a> 从本质上来说也是寄存器，不过它是在预先设定好的状态序列中转移，尽管计数器是寄存器的一种特殊形式，通常还是以不同的名称来加以区分。</p>
 <p><br></p>
-<h2>Type</h2>
+<h2>2. Type</h2>
 <p>按照不同的标准来划分，计数器可以有不同的划分方法：</p>
 <ol>
 <li>
@@ -138,9 +139,9 @@
 </ol>
 <p>计数器在数字电路中的用途非常广，可以作为定时器、实用计数器、状态机等。在具体实现时，有前面总结的不同的计数器类型可供选择，每种计数器由其特点决定了适用场合，我们要做到就是在不同计数器类型和配置之间进行权衡，选择正确的设计，以节省大量逻辑资源，并提高性能。</p>
 <p>下面分别讨论各种计数器的特点和 HDL 实现。</p>
-<h2>Implement</h2>
+<h2>3. Implement</h2>
 <hr>
-<h3>Binary Counter</h3>
+<h3>3.1. Binary Counter</h3>
 <p>最简单、最基本的计数器就是 二进制计数器 Binary Counter。它的计数方式就是从 0 开始每个脉冲进行 “+1” 操作，直到最大值，然后重新从 0 开始。</p>
 <p><a href="http://www.amazon.com/FPGA-Prototyping-Verilog-Examples-Spartan-3/dp/0470185325">FPGA Prototyping By Verilog Examples: Xilinx Spartan-3 Version</a> 里面有个例子，这里稍作修改就可以当作通用模块，供其他模块调用了。</p>
 <p><strong>Code</strong></p>
@@ -222,7 +223,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>BCD Counter (mod-m counter)</h3>
+<h3>3.2. BCD Counter (mod-m counter)</h3>
 <p>人类更习惯使用十进制进行计数，十进制一共有 10 个符号，我们只需要从 4 bit 的二进制计数器中选取 10 个数字，只使用这 10 个数字进行计数即可，通常去掉 1010 ~ 1111 这 6 个数字，即使用 8421BCD码 来对十进制数进行编码、计数，即 BCD Counter。</p>
 <p>将十进制进行推广，我们就可以写出任意的 模 m 的计数器，在下面的例子中，M 表示计数器的模值（默认为 10），N 表示计数器需要的位数（默认为 4）。在例化时如果要修改，则需要手动计算这两个参数进行赋值。</p>
 <p><strong>Code</strong></p>
@@ -314,7 +315,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>Ring Counter</h3>
+<h3>3.3. Ring Counter</h3>
 <p>基于线性移位寄存器 <a href="http://en.wikipedia.org/wiki/Linear_feedback_shift_register"><code>LFSR</code> (Linear feedback shift register) </a> 可以衍生出两种计数器：<a href="http://en.wikipedia.org/wiki/Ring_counter">环形计数器 (ring counter)</a> 和 扭环计数器（约翰逊计数器）。</p>
 <p>将 LFSR 中存储的数字设置为独热码的形式，即只有一位为 1，其他位为 0。然后把最后一级的输出直接反馈到第一级的输入，这样，输入和输出组成了一个环形，所以称为 环形计数器。4 bit 的环形计数器电路图如下：</p>
 <p><img alt="ring counter" src="/images/counter-design-summary/ring_counter.png"></p>
@@ -412,7 +413,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>Johnson Counter</h3>
+<h3>3.4. Johnson Counter</h3>
 <p>在 ring counter 的反馈链路中加入一个反相器，就好象把一个环扭了一下，所以称为 扭环计数器 (Johnson Counter)</p>
 <p>4 bit 的 Johnson Counter 如下图所示：</p>
 <p><img alt="johnson counter" src="http://upload.wikimedia.org/wikipedia/commons/e/e8/JohnsonCounter2.png"></p>
@@ -441,7 +442,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>Ripple Counter</h3>
+<h3>3.5. Ripple Counter</h3>
 <p>前面总结的这些计数器都是同步计数器，组成它们的 flip-flop 是由同一个脉冲信号触发的。还有一种计数器是异步计数器，它内部的 flip-flop 不是由同一个脉冲信号触发的。由于 FPGA 特殊的结构原因，在 FPGA 中应该使用同步设计，所以一般 FPGA 不会使用这种计数器。</p>
 <p>ripple counter 的每个 flip-flop 使用前一级的 flip-flop 的输出信号作为触发信号，所以后一级的触发器必须等到前一级的触发器输出之后才能工作，所以对于一个长度为 N 的触发器链，从输入时间开始，要等 N 个触发器依次工作完之后才能输出有效结果。</p>
 <p>示意图：</p>
@@ -463,7 +464,7 @@
 <p>代码在</p>
 <p><a href="http://www.amazon.com/Hdl-Chip-Design-Synthesizing-Simulating/dp/0965193438">Hdl Chip Design: A Practical Guide for Designing, Synthesizing &amp; Simulating Asics &amp; Fpgas Using Vhdl or Verilog</a></p>
 <p>里面有介绍。</p>
-<h3>Gray Code Counter</h3>
+<h3>3.6. Gray Code Counter</h3>
 <p>Gray 码和普通的二进制编码相比，优势就是它相邻数字之间只有一位不同，这样在计数时，就避免的多位不是同时变化导致的毛刺。</p>
 <p><a href="http://en.wikipedia.org/wiki/Gray_code">Gray Code wiki</a>:</p>
 <blockquote>
@@ -475,7 +476,7 @@
 <p><img alt="gray code counter" src="/images/counter-design-summary/gray_code_counter.png"></p>
 <p>代码略...</p>
 <p><br></p>
-<h2>Reference</h2>
+<h2>4. Reference</h2>
 <p><a href="http://www.amazon.com/FPGA-Prototyping-Verilog-Examples-Spartan-3/dp/0470185325">FPGA Prototyping By Verilog Examples: Xilinx Spartan-3 Version</a></p>
 <p><a href="http://www.amazon.com/Hdl-Chip-Design-Synthesizing-Simulating/dp/0965193438">Hdl Chip Design: A Practical Guide for Designing, Synthesizing &amp; Simulating Asics &amp; Fpgas Using Vhdl or Verilog</a></p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">synthesis and scripting techniques for designing multi-asynchronous clock designs</a></p>
@@ -525,7 +526,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

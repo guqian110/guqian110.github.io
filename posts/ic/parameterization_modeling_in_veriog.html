@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结 Verilog 模块化建模的技术" />
 <meta name="keywords" content="parameterization">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="Verilog 中的参数化建模"/>
 <meta property="og:description" content="总结 Verilog 模块化建模的技术"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="parameterization"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; Verilog 中的参数化建模</title>
+  <title>Qian's Blog &ndash; Verilog 中的参数化建模</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,6 +95,7 @@
     <p>
       Posted on 2014-07-09 23:03 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 3 min read
     </p>
   </header>
 
@@ -121,7 +122,7 @@
 </ol>
 <p>下面详细说明</p>
 <p><br></p>
-<h2>Define Macro Substitution</h2>
+<h2>1. Define Macro Substitution</h2>
 <hr>
 <p><code>`define</code> 是编译器指令，功能是全局宏定义的文本代替。它类似于 C 语言中的 <code>#define</code>，用法如下：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -169,7 +170,7 @@
 
 </li>
 </ol>
-<h3>Guideline</h3>
+<h3>1.1. Guideline</h3>
 <ol>
 <li>
 <p>只有那些要求有全局作用域、并且在其他地方不会被修改的常量才用 define 来定义</p>
@@ -184,9 +185,9 @@
 <p>不要使用 <code>`undef</code> </p>
 </li>
 </ol>
-<h2>Parameter</h2>
+<h2>2. Parameter</h2>
 <hr>
-<h3>Parameter</h3>
+<h3>2.1. Parameter</h3>
 <p>应该避免硬编码设计 <code>hard literal</code>，使用参数 <code>parameter</code> 来代替。举个例子</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -206,7 +207,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>Localparam</h3>
+<h3>2.2. Localparam</h3>
 <p>Verilog-2001 中添加了一个新的关键字 <code>localparam</code>，用来定义模块内部的、不能被其他模块修改的局部常量，概念类似于 C++ 中 class 的 protect 成员。</p>
 <p>虽然 localparam 不能被外部模块修改，但是它可以用 parameter 来初始化。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -215,14 +216,14 @@
 </pre></div>
 </td></tr></table>
 
-<h3>Parameter Redefinition</h3>
+<h3>2.3. Parameter Redefinition</h3>
 <p>在 Verilog-2001 出现之前，Verilog-1995 中只有两种方法实现参数重定义：</p>
 <ol>
 <li>使用 # 符号，顺序列表重定义</li>
 <li>使用 defparam</li>
 </ol>
 <p>逐个讨论</p>
-<h4>1. Uisng <code>#</code></h4>
+<h4>2.3.1. 1. Uisng <code>#</code></h4>
 <p><strong>Syntax</strong></p>
 <p>举个栗子，模块 myreg</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -258,7 +259,7 @@
 <p>虽然每次例化都要说明所有的参数值，但是比第二种方法好</p>
 <p><strong>Con</strong></p>
 <p>每次例化都要说明所有的参数值。</p>
-<h4>2. Using <code>defparam</code></h4>
+<h4>2.3.2. 2. Using <code>defparam</code></h4>
 <p><strong>Syntax</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">defparam</span> <span class="n">path</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
 </pre></div>
@@ -295,7 +296,7 @@ Defparam statements can be replaced with named parameter redefinition as define 
 the IEEE Verilog-2001 standard."</p>
 </blockquote>
 <p><em>总结一下，可以发现 Verilog-1995 中的两种方法都不怎么好，显然 VSG 也发现了这个问题，所以在 Verilog-2001 中，出现了第三种方法，并且墙裂推荐使用这种新方法。</em></p>
-<h4>3. Using named parameter redefinition</h4>
+<h4>2.3.3. 3. Using named parameter redefinition</h4>
 <p><strong>Syntax</strong></p>
 <p>类似于模块例化时端口连接的方式，比如上例中只想改变 SIZE 的值</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">myreg</span>   <span class="p">#(.</span><span class="no">SIZE</span><span class="p">(</span><span class="mh">8</span><span class="p">))</span> <span class="n">r1</span><span class="p">(.</span><span class="n">q</span><span class="p">(</span><span class="n">q</span><span class="p">),</span> <span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span> <span class="p">.</span><span class="n">rst</span><span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="p">);</span>
@@ -306,11 +307,11 @@ the IEEE Verilog-2001 standard."</p>
 <p>结合了前两种方法的有点，既显示说明了哪个参数值改变了，也将参数传递放在了实例化的语句中。这种方法是最干净的 (cleanest) 方法，不依赖于任何综合工具。</p>
 <p><strong>Con</strong></p>
 <p>貌似没有～</p>
-<h3>Guideline</h3>
+<h3>2.4. Guideline</h3>
 <ol>
 <li>不要使用 defparam，应该使用 named parameter redefinition。</li>
 </ol>
-<h3>Example</h3>
+<h3>2.5. Example</h3>
 <ol>
 <li>
 <p>clock cycle definition</p>
@@ -322,7 +323,7 @@ the IEEE Verilog-2001 standard."</p>
 </li>
 </ol>
 <p><br></p>
-<h2>Conditional Compilation</h2>
+<h2>3. Conditional Compilation</h2>
 <hr>
 <p>Verilog 的条件编译和 C 也十分类似。前面介绍 define 时，已经用到了条件编译中的 <code>`ifdef</code>。条件编译一共有 5 个关键字，分别是：</p>
 <div class="highlight"><pre><span></span>`<span class="nv">ifdef</span>  `<span class="k">else</span>   `<span class="nv">elsif</span>  `<span class="k">endif</span>  `<span class="nv">ifndef</span>
@@ -421,7 +422,7 @@ the IEEE Verilog-2001 standard."</p>
 <p>这样，我们只需要选择是否注释第一行的宏定义就可快速在 debug 和 release 之间切换。</p>
 <p>再比如在 Verilog 的模块中，针对不同的应用环境，我们要实现不同的模块，这时候也可以使用条件编译选择具体综合哪段代码。</p>
 <p><br></p>
-<h2>Summary</h2>
+<h2>4. Summary</h2>
 <hr>
 <p>总结一下，就是一下几点</p>
 <p><strong>Guideline</strong></p>
@@ -446,7 +447,7 @@ the IEEE Verilog-2001 standard."</p>
 </li>
 </ol>
 <p><br></p>
-<h2>Reference</h2>
+<h2>5. Reference</h2>
 <p>IEEE Std 1364-1995</p>
 <p>IEEE Std 1364-2001</p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsHDLCON2002_Parameters_rev1_2.pdf">New Verilog-2001 Techniques for Creating Parameterized Models</a></p>
@@ -499,7 +500,7 @@ the IEEE Verilog-2001 standard."</p>
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

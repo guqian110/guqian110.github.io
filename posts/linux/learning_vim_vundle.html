@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="学习 Vim，使用 Vundle 管理插件 。" />
 <meta name="keywords" content="Vim, vundle">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="学习 Vim 使用 Vundle 管理插件"/>
 <meta property="og:description" content="学习 Vim，使用 Vundle 管理插件 。"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -53,16 +53,16 @@
 <meta property="article:tag" content="vundle"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 学习 Vim 使用 Vundle 管理插件</title>
+  <title>Qian's Blog &ndash; 学习 Vim 使用 Vundle 管理插件</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -96,6 +96,7 @@
     <p>
       Posted on 2014-04-16 17:06 in <a href="http://guqian110.github.io/category/linux.html">Linux</a>
 
+        &#8226; 2 min read
     </p>
   </header>
 
@@ -103,14 +104,14 @@
   <div>
     <p>学习 Vim，使用 Vundle 管理插件 。</p>
 <p><br></p>
-<h2>Vim 插件</h2>
+<h2>1. Vim 插件</h2>
 <hr>
 <p>Vim 的强大之处在于它的可扩展性，你可以把它当作一个简单的文本编辑器，也可以安装各种功能强大的插件，把它武装成一个 IDE 。</p>
 <p>我们可以从以下几个地方找到 Vim 插件，一般比较常用的插件从官网上都可以找到，还有一些插件是大神们自己写的，托管在 GitHub 上 。</p>
 <p><a href="http://www.vim.org/scripts/script_search_results.php">Vim 官网</a></p>
 <p><a href="https://github.com/">GitHub</a></p>
 <p><br></p>
-<h2>什么是 Vundle</h2>
+<h2>2. 什么是 Vundle</h2>
 <hr>
 <p>Vim 的插件虽然强大，但是因为 Vim 根本就没有插件管理这个概念，所有插件的文件都散布在~/.vim下的几个文件夹中，配置 vim 的过程, 就是在网上不停的搜插件，拷贝到 <code>~/.vim</code> 下，发现更新，要重新下载重新拷贝，想要删除某个不需要插件，更是要小心翼翼的不要删错。配置出顺手的 Vim, 需要极大的耐心和运气，而且如果换一台电脑，就要重复一次这样的痛苦经历 。</p>
 <p>自然地，因为管理插件的需求，最早出现了一些管理插件的脚本，但是写脚本需要一定的 shell 知识，直接 copy 别人的自己并不一定适用 。后来，出现了一些插件，比如 pathogen，muzuiget，vim-flavor，Vundle 等 。</p>
@@ -140,16 +141,16 @@
 </li>
 </ul>
 <p><br></p>
-<h2>如何使用 Vundle 管理插件</h2>
+<h2>3. 如何使用 Vundle 管理插件</h2>
 <hr>
-<h3>安装 Vundle</h3>
+<h3>3.1. 安装 Vundle</h3>
 <p>Vundle 的安装需要 <a href="http://git-scm.com/">Git</a> 。</p>
 <p>从 GitHub 上 clone 下来就可以了</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 </pre></div>
 </td></tr></table>
 
-<h3>配置 Vundle</h3>
+<h3>3.2. 配置 Vundle</h3>
 <p>将下列内容加入到 <code>.vimrc</code> 文件中</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -256,7 +257,7 @@ filetype plugin indent on     <span class="s2">&quot; required</span>
 <p>不是 GitHub 上的脚本，需要写出插件的详细路径</p>
 </li>
 </ol>
-<h3>运行 Vundle</h3>
+<h3>3.3. 运行 Vundle</h3>
 <p>修改好 <code>.vimrc</code> 文件后，打开 Vim，使用以下命令管理插件</p>
 <ul>
 <li>
@@ -348,7 +349,7 @@ Bundle <span class="s1">&#39;godlygeek/tabular&#39;</span>
 </td></tr></table>
 
 <p><br></p>
-<h2>参考</h2>
+<h2>4. 参考</h2>
 <p><a href="http://zuyunfei.com/2013/04/12/killer-plugin-of-vim-vundle/">vim中的杀手级插件: vundle</a></p>
 <p><a href="http://www.zfanw.com/blog/vundle-vim-plugin-management.html">Vundle 管理 Vim 插件</a></p>
   </div>
@@ -372,11 +373,11 @@ Bundle <span class="s1">&#39;godlygeek/tabular&#39;</span>
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
     </ul>
   </div>
 
@@ -408,7 +409,7 @@ Bundle <span class="s1">&#39;godlygeek/tabular&#39;</span>
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

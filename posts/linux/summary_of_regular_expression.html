@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="regular expression 学习笔记" />
 <meta name="keywords" content="regular expression">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="Regular Expression 小结"/>
 <meta property="og:description" content="regular expression 学习笔记"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="regular expression"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; Regular Expression 小结</title>
+  <title>Qian's Blog &ndash; Regular Expression 小结</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,6 +95,7 @@
     <p>
       Posted on 2015-04-27 00:00 in <a href="http://guqian110.github.io/category/linux.html">Linux</a>
 
+        &#8226; 3 min read
     </p>
   </header>
 
@@ -106,7 +107,7 @@
 <p><a href="http://book.douban.com/subject/2363803/">Regular Expression Pocket Reference</a></p>
 <p><em>看完这本书，基本上已经满足项目中简单的 RE 需求，以后需要深入的话，再补这几本书。</em></p>
 <p><br></p>
-<h2>What Is a RE?</h2>
+<h2>1. What Is a RE?</h2>
 <hr>
 <p>引用 Ken Thompson 的话：</p>
 <blockquote>
@@ -114,7 +115,7 @@
 to match certain strings.</p>
 </blockquote>
 <p><br></p>
-<h2>Basic</h2>
+<h2>2. Basic</h2>
 <hr>
 <ul>
 <li>
@@ -153,7 +154,7 @@ to match certain strings.</p>
 
 </li>
 </ul>
-<h2>Simple Match Patterns</h2>
+<h2>3. Simple Match Patterns</h2>
 <hr>
 <p>几个常见的模式匹配：</p>
 <ul>
@@ -215,7 +216,7 @@ to match certain strings.</p>
 </li>
 </ul>
 <p><br></p>
-<h2>Boundaries</h2>
+<h2>4. Boundaries</h2>
 <hr>
 <ul>
 <li>
@@ -244,7 +245,7 @@ to match certain strings.</p>
 </li>
 </ul>
 <p><br></p>
-<h2>Alternation, Groups, and Backreferences</h2>
+<h2>5. Alternation, Groups, and Backreferences</h2>
 <hr>
 <ul>
 <li>
@@ -284,7 +285,7 @@ to match certain strings.</p>
 </li>
 </ul>
 <p><br></p>
-<h2>Character Classes</h2>
+<h2>6. Character Classes</h2>
 <hr>
 <ul>
 <li>
@@ -342,7 +343,7 @@ to match certain strings.</p>
 </li>
 </ul>
 <p><br></p>
-<h2>Matching Unicode and Other Characters</h2>
+<h2>7. Matching Unicode and Other Characters</h2>
 <hr>
 <ul>
 <li>
@@ -374,9 +375,9 @@ to match certain strings.</p>
 </li>
 </ul>
 <p><br></p>
-<h2>Quantifiers</h2>
+<h2>8. Quantifiers</h2>
 <hr>
-<h3>Greedy, Lazy, and Possessive</h3>
+<h3>8.1. Greedy, Lazy, and Possessive</h3>
 <p>量词的属性有 贪婪，懒惰，占有。</p>
 <ul>
 <li>
@@ -405,7 +406,7 @@ to match certain strings.</p>
 </blockquote>
 </li>
 </ul>
-<h3>Basic Quantifiers</h3>
+<h3>8.2. Basic Quantifiers</h3>
 <ul>
 <li><code>?</code>    匹配 0 或 1 次</li>
 <li><code>+</code>    匹配 1 或 多次</li>
@@ -413,7 +414,7 @@ to match certain strings.</p>
 </ul>
 <p>这些量词默认是贪心的，也就是说第一次尝试时会尽可能多地匹配字符。</p>
 <p><code>.*</code> 叫做 <code>Kleene star</code>，以纪念 RE 的发明人Stephen Kleene。</p>
-<h3>Range Syntax</h3>
+<h3>8.3. Range Syntax</h3>
 <ul>
 <li><code>{n}</code>   精确匹配 n 次</li>
 <li><code>{n,}</code>  匹配 n 次 或 多次</li>
@@ -422,7 +423,7 @@ to match certain strings.</p>
 <li><code>{1,0}</code> 与 <code>+</code> 相同（1 或 多次）</li>
 <li><code>{0,}</code>  与 <code>*</code> 相同（0 或 多次）</li>
 </ul>
-<h3>Lazy Quantifiers</h3>
+<h3>8.4. Lazy Quantifiers</h3>
 <p>懒惰的意思就是匹配尽可能少的字符，它就是个懒虫！它总会找到匹配下限。比如 5*?，它不会匹配任何内容，因为 * 的下限是 0 次；再比如 5+?，它只会匹配 1 个5，因为 + 的下限是 1 次；再比如 5{2,5}?，它只会匹配 2 个 5，因为下限是 2。</p>
 <ul>
 <li>?? </li>
@@ -433,7 +434,7 @@ to match certain strings.</p>
 <li>{m,n}?</li>
 </ul>
 <p>上面这些加了 ? 的 RE 表示懒惰匹配，也就是 <em>找下限</em>。</p>
-<h3>Possessive Quantifiers</h3>
+<h3>8.5. Possessive Quantifiers</h3>
 <p>占有式量词就是贪婪式量词的弱化版，只在第一次进行匹配，如果失败就停止，而不是继续回溯下去。它会将自己的输入</p>
 <ul>
 <li>?+</li>
@@ -445,7 +446,7 @@ to match certain strings.</p>
 </ul>
 <p>这些量词后面加了 + 的 RE 表示占有匹配，也就是只检查第一次尝试。</p>
 <p><br></p>
-<h2>Lookarounds</h2>
+<h2>9. Lookarounds</h2>
 <hr>
 <p>环视 是一种非捕获分组，它的作用是检查模式的前/后的内容来匹配，也成为 零宽度断言 <code>zero-width
 assertions</code>。</p>
@@ -509,7 +510,7 @@ assertions</code>。</p>
 <p><br></p>
 <p>了解了这些基础知识，基本上就可以读懂、书写 RE 了，还需要的就是平时多加思考练习，然后看更加高阶的书了。</p>
 <p><br></p>
-<h2>Ref</h2>
+<h2>10. Ref</h2>
 <p><a href="http://book.douban.com/subject/6959486/">Introducing Regular Expressions</a></p>
   </div>
   <div class="tag-cloud">
@@ -557,7 +558,7 @@ assertions</code>。</p>
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

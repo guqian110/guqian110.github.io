@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结时钟生成" />
 <meta name="keywords" content="clock generate unit">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="时钟生成"/>
 <meta property="og:description" content="总结时钟生成"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="clock generate unit"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 时钟生成</title>
+  <title>Qian's Blog &ndash; 时钟生成</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,6 +95,7 @@
     <p>
       Posted on 2015-04-19 00:00 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 1 min read
     </p>
   </header>
 
@@ -127,7 +128,7 @@
 <p>代码如何编写才能方便后端做时钟树综合？后端如何做时钟树综合？</p>
 </li>
 </ol>
-<h2>Clock</h2>
+<h2>1. Clock</h2>
 <hr>
 <p>我们都知道，电路设计可以分为 <strong>同步设计</strong> 和 <strong>异步设计</strong> 两种，两者的优缺点就不再赘述。由于同步设计的一些优点，一般推荐使用同步设计，即使有异步信号，也将其转化为同步信号，来避免异步信号导致的问题。</p>
 <p>虽然同步电路有很多优点，但是它也有一些缺点：</p>
@@ -145,7 +146,7 @@
 </li>
 </ol>
 <p><br></p>
-<h2>Design Principle</h2>
+<h2>2. Design Principle</h2>
 <hr>
 <p>下面是设计时钟生成模块（CGM）时要遵守的一些原则：</p>
 <ol>
@@ -163,12 +164,12 @@
 </li>
 </ol>
 <p><br></p>
-<h2>Clock Divider</h2>
+<h2>3. Clock Divider</h2>
 <hr>
 <p>在一个系统中，各个模块可能需要不同的工作频率，这就需要通过 PLL 把时钟源的频率提高到高频，然后通过不同的分频器为每个模块分出不同的工作频率。</p>
 <p>以前总结一篇关于 <a href="http://guqian110.github.io/pages/2014/10/13/clock_dividers.html">时钟分频器</a> 的博客。</p>
 <p><br></p>
-<h2>Clock Switch</h2>
+<h2>4. Clock Switch</h2>
 <hr>
 <p>有时候，我们需要在模块运行的过程中切换时钟，切换时钟最简单的方法就是使用 MUX。但是这种方法会造成毛刺（glitch）。如下：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -181,11 +182,11 @@
 
 <p>书上提供了一个通用的没有 glitch 的时钟切换模块，支持多个时钟的切换，其中 select 信号必须使用 one-hot 编码。（代码略...）</p>
 <p><br></p>
-<h2>Clock Generation</h2>
+<h2>5. Clock Generation</h2>
 <hr>
 <p>有了上面的基础，就可以设计时钟生成模块了。书里面以一个 时钟切换 + 时钟分频 的组合来说明如何设计。</p>
 <p>书后面一章还提供了一个实际项目中的 CGM 的设计文档，以供参考。</p>
-<h2>Ref</h2>
+<h2>6. Ref</h2>
 <p><a href="http://www.amazon.cn/EDA%E7%B2%BE%E5%93%81%E6%99%BA%E6%B1%87%E9%A6%86-Verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF-%E9%AD%8F%E5%AE%B6%E6%98%8E/dp/B00HNVY3SY/ref=sr_1_1?ie=UTF8&amp;qid=1429188978&amp;sr=8-1&amp;keywords=verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF">Verilog 编程艺术</a></p>
   </div>
   <div class="tag-cloud">
@@ -233,7 +234,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

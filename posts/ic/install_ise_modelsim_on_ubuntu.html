@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来，总结一下 ISE 的安装配置过程。" />
 <meta name="keywords" content="Linux, ISE, Modelsim">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="Ubuntu 下安装 ISE &amp; Modelsim"/>
 <meta property="og:description" content="从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来，总结一下 ISE 的安装配置过程。"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -54,16 +54,16 @@
 <meta property="article:tag" content="Modelsim"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; Ubuntu 下安装 ISE &amp; Modelsim</title>
+  <title>Qian's Blog &ndash; Ubuntu 下安装 ISE &amp; Modelsim</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -97,6 +97,7 @@
     <p>
       Posted on 2014-03-27 20:52 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 2 min read
     </p>
   </header>
 
@@ -108,18 +109,18 @@
 <p>ISE 14.7 for Linux</p>
 <p>ModelSim 6.5b for Linux</p>
 <p><br></p>
-<h2>下载</h2>
+<h2>1. 下载</h2>
 <hr>
-<h3>ISE Design Suit for Linux</h3>
+<h3>1.1. ISE Design Suit for Linux</h3>
 <p>Xilinx 官方网站上有<a href="https://secure.xilinx.com/webreg/register.do?group=dlc&amp;htmlfile=&amp;emailFile=&amp;cancellink=&amp;eFrom=&amp;eSubject=&amp;version=14.7&amp;akdm=1&amp;filename=Xilinx_ISE_DS_Lin_14.7_1015_1.tar">下载链接</a>，但是在校园网内下载速度实在是蛋疼，还好有校内 bt 资源。</p>
 <p>我下载下来的 ISE 版本为 <strong>14.7</strong>，tar 包大小为 6.5 G 。</p>
-<h3>ModelSim for Linux</h3>
+<h3>1.2. ModelSim for Linux</h3>
 <p>网上的教程（2011 年前）都说是 <a href="http://www.mentor.com/products/fpga/model">ModelSim 官方网站</a> 上提供 ftp 下载链接，但是好像现在官网上不再提供下载链接了，我只找到 ModelSim PE Student Edition，而且还是 Windows 平台的...</p>
 <p>花费了一下午的时间，不停地在各个论坛注册下载附件，终于把 ModelSim_6.5b for Linux 下载下来了,结果安装时提示找不到 <code>libxp.so.6</code> 库，于是 <code>apt-get</code> 到一些 <code>libxp</code> 的库，安装后仍然提示找不到，无奈放弃了，准备老老实实用 <code>ism</code> 了（以后有时间了再慢慢折腾 T_T）</p>
 <p><br></p>
-<h2>安装</h2>
+<h2>2. 安装</h2>
 <hr>
-<h3>ISE DS 14.7</h3>
+<h3>2.1. ISE DS 14.7</h3>
 <p>首先解压</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>tar -xvf Xilinx_ISE_DS_Lin_14.7_1015_1.tar
 </pre></div>
@@ -203,12 +204,12 @@ sudo make
 
 <p>这时候，写个小测试的程序，<code>Systhesize</code> -&gt; <code>Implement</code> -&gt; <code>Generate Programming File</code>，打开 <code>iMPACT</code>, 如图所示，可以看到已经识别出 JTAG 链上的芯片</p>
 <p><img alt="jtag" src="/images/install-ise-modelsim/jtag.png"></p>
-<h3>ModelSim</h3>
+<h3>2.2. ModelSim</h3>
 <p>待续...</p>
 <p><br></p>
-<h2>配置 ISE &amp; ModelSim</h2>
+<h2>3. 配置 ISE &amp; ModelSim</h2>
 <hr>
-<h3>ISE</h3>
+<h3>3.1. ISE</h3>
 <p>其实也没有特殊配置的地方，主要是自定义代码编辑器，目前我的主要使用的是 <code>sublime text 2</code>，正在向 <code>vim</code> 过度ing</p>
 <p>具体步骤 Edit -&gt; Preferences -&gt; Editors，选择 <code>custom</code>，在右侧的 “Command line syntax” 中写自定义编辑器的执行路径</p>
 <p>配置自定义编辑器为 vim</p>
@@ -216,11 +217,11 @@ sudo make
 </pre></div>
 </td></tr></table>
 
-<h3>ModelSim</h3>
+<h3>3.2. ModelSim</h3>
 <p>ModelSim 编译 Xilinx库，ISE 关联 ModelSim</p>
 <p>待续...</p>
 <p><br></p>
-<h2>参考</h2>
+<h2>4. 参考</h2>
 <p><a href="http://rmdir.de/~michael/xilinx/">XILINX JTAG tools on Linux without proprietary kernel modules</a></p>
 <p><a href="http://www.george-smart.co.uk/wiki/Xilinx_JTAG_Linux">Xilinx JTAG Linux</a></p>
 <p><a href="http://blog.csdn.net/yunz1994/article/details/12350071">【Linux软件安装】Ubuntu12.04: Xilinx ISE 14.6</a></p>
@@ -246,9 +247,9 @@ sudo make
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
+      <li><a href="http://guqian110.github.io/posts/linux/learn_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
-      <li><a href="http://guqian110.github.io/posts/linux/learn_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
     </ul>
   </div>
 
@@ -280,7 +281,7 @@ sudo make
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

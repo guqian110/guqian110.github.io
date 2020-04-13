@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结咬尾卷积编码的 Matlab 及 FPGA 实现方法。" />
 <meta name="keywords" content="tail bitting convolution">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="LTE 咬尾卷积编码器的 Matlab 、C 语言及 FPGA 实现"/>
 <meta property="og:description" content="总结咬尾卷积编码的 Matlab 及 FPGA 实现方法。"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="tail bitting convolution"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; LTE 咬尾卷积编码器的 Matlab 、C 语言及 FPGA 实现</title>
+  <title>Qian's Blog &ndash; LTE 咬尾卷积编码器的 Matlab 、C 语言及 FPGA 实现</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,12 +95,13 @@
     <p>
       Posted on 2015-01-07 00:00 in <a href="http://guqian110.github.io/category/telecom.html">Telecom</a>
 
+        &#8226; 2 min read
     </p>
   </header>
 
 
   <div>
-    <h2>Tail Bitting</h2>
+    <h2>1. Tail Bitting</h2>
 <hr>
 <p>咬尾卷积编码是一种特殊的卷积编码，它通过将编码器的移位寄存器的初始值设置为输入流的尾比特值，使得移位寄存器的初始和最终状态相同。和普通的卷积编码相比，咬尾的方案最大的优点是克服了编码时的码率损失，并且适合迭代译码，不过付出的代价是译码复杂度的增加。在 LTE 的标准中，咬尾卷积编码是一种备选的信道编码方案。</p>
 <p>通常以 (n, k, K) 来描述卷积编码，其中：</p>
@@ -138,7 +139,7 @@
 </ul>
 <p>以上的内容已经提供了足够的信息供我们实现，关于更多的卷积编码、LTE 标准等请查阅 wiki 和专业书籍。</p>
 <p><br></p>
-<h2>Matlab Implementation</h2>
+<h2>2. Matlab Implementation</h2>
 <hr>
 <p>Matlab 的 <code>Communications System Toolbox</code> 中提供了大量的常用函数，其中就有卷积编码函数 <code>convenc</code>。我们就是基于这个函数实现LTE中的咬尾卷积编码。</p>
 <p>通过</p>
@@ -216,7 +217,7 @@
 
 <p>数据的格式是将 3 位并行结果串行输出： d00, d01, d02, d10, d11, d12, ...</p>
 <p><br></p>
-<h2>C Implementation</h2>
+<h2>3. C Implementation</h2>
 <hr>
 <p>C 的实现很简单:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -271,23 +272,23 @@
 </pre></div>
 </td></tr></table>
 
-<h2>Verlog Implementation</h2>
+<h2>4. Verlog Implementation</h2>
 <hr>
 <p>用 verilog 来实现编码器就相对简单直观的多，毕竟只有一组移位寄存器和一些抽头的异或运算。</p>
-<h3>module &amp; testbench</h3>
+<h3>4.1. module &amp; testbench</h3>
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tbce.v">module</a></p>
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_tbce.v">testbench</a></p>
-<h3>simulation</h3>
+<h3>4.2. simulation</h3>
 <p>如下图所示</p>
 <p><img alt="sim1" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim1.png"></p>
 <p><img alt="sim2" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim2.png"></p>
 <p>和 matlab 中结果对比，结果是一致的。</p>
-<h2>Summary</h2>
+<h2>5. Summary</h2>
 <hr>
 <p>一个简单的咬尾卷积编码花费了一上午的时间才搞定，最大的收获就是：心态很重要，欲速则不达。没有认真看 help 就写程序，本来想节省时间，结果却相反 =.=</p>
 <p>戒骄戒躁！！！</p>
 <p><br></p>
-<h2>Reference</h2>
+<h2>6. Reference</h2>
 <p><a href="http://book.douban.com/subject/1446684/">通信原理</a></p>
 <p><a href="http://book.douban.com/subject/24784764/">无线通信新协议与新算法</a></p>
   </div>
@@ -336,7 +337,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

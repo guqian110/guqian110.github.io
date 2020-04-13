@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结 FPGA 处理数字信号的基础知识 (1)" />
 <meta name="keywords" content="digital processing">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="FPGA 数字处理基础 (1)"/>
 <meta property="og:description" content="总结 FPGA 处理数字信号的基础知识 (1)"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="digital processing"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; FPGA 数字处理基础 (1)</title>
+  <title>Qian's Blog &ndash; FPGA 数字处理基础 (1)</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,12 +95,13 @@
     <p>
       Posted on 2014-05-14 23:25 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 2 min read
     </p>
   </header>
 
 
   <div>
-    <h2>数字处理基础</h2>
+    <h2>1. 数字处理基础</h2>
 <hr>
 <p><strong>数字处理基础</strong>主要包括两个方面：</p>
 <ul>
@@ -109,10 +110,10 @@
 </ul>
 <p>下面分别讨论</p>
 <p><br></p>
-<h2>数的表示</h2>
+<h2>2. 数的表示</h2>
 <hr>
 <p>这部分讨论对于计算机(PC)、数字信号处理器件(DSP)、数字芯片(包括 FPGA) 都是成立的。</p>
-<h3>人类如何计数</h3>
+<h3>2.1. 人类如何计数</h3>
 <p>最早我们的祖先采用的是结绳计数，经过几千年的发展，现在我们使用的 10 进制位置计数法 。那么我们为什么偏偏选择 10 这个数字呢？</p>
 <p>大名鼎鼎的 <a href="http://en.wikipedia.org/wiki/Charles_Petzold">Charles Petzold</a> 在他的著作 <a href="http://book.douban.com/subject/4822685/">code</a> 中分析了我们的计数进制现象 。原因其实很简单，10 这个数字对于我们如此特别只是因为我们有 10 个手指(脚趾)，于是我们采用了 10 进制，并且逐渐习惯了它 。他在书中模拟了一下进制系统的演化过程，让我们逐渐从人类的 10 进制思维逐渐转化到计算机的 2 进制系统中：</p>
 <p>假设我们是卡通动画中的人物，比如米老鼠 Mickey，仔细观察它就会发现，他的每个手只有 4 个手指，理所当然，他采用 8 进制来计数。如果更进一步，假设我们是龙虾，那么我们的每一只钳子上有两个 “手指”，一共有 4 个手指，所以，我们会采取 4 进制计数系统。最后，假设我们是海豚，那么我们只有两个鳍来计数了，这时候的计数系统就是 2 进制数字系统了。</p>
@@ -123,7 +124,7 @@
 <p><strong>10 进制 to r 进制</strong></p>
 <p>整数部分：基数连除，逆序取余</p>
 <p>小数部分：基数连乘，顺序取余</p>
-<h3>计算机如何计数</h3>
+<h3>2.2. 计算机如何计数</h3>
 <p><strong>正数 &amp; 负数</strong></p>
 <p>人类和计算机的计数原理是完全不同的，所以采用的方法也是完全不同的。对于人来说，区分正负数只需要在数字绝对值前添加一个符号 <code>+</code> 或者 <code>-</code> 即可，但是计算机只有 <code>0</code> 和 <code>1</code> 这两个符号可以使用；对于人来说，减法借位很容易，但是对于计算机硬件电路来说这是一件很麻烦的事。</p>
 <p>常用的表示方法有 3 种：<strong>原码</strong>、<strong>反码</strong>、<strong>补码</strong> 。对于计算机而言，硬件上最容易实现的是补码，这也是大多数计算机采用补码系统的原因 。</p>
@@ -151,9 +152,9 @@
 </li>
 </ol>
 <p><br></p>
-<h2>常用算术运算的 FPGA 实现</h2>
+<h2>3. 常用算术运算的 FPGA 实现</h2>
 <hr>
-<h3>加法</h3>
+<h3>3.1. 加法</h3>
 <p>在 Verilog HDL 中，直接使用运算符 <code>+</code>，其本质上是一种并行加法器，应该保证两边的数位宽是一致的。举个栗子</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -177,14 +178,14 @@
 </pre></div>
 </td></tr></table>
 
-<h3>乘法</h3>
+<h3>3.2. 乘法</h3>
 <p>第一种方法，最简单，直接使用运算符 <code>*</code>，如下所示 。但是这种方法写出来的代码效率很低，甚至有时候是不可综合的，实际应用中基本不会采用这种方法。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">p</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
 
 <p>第二种方法是自己写代码实现乘法运算，或者是使用 IP COre。一般 FPGA 中都集成了硬核的乘法器，所以可以有两种方案来实现乘法器，DSP48 硬核 或者是 Slice 搭建 。</p>
-<h3>除法</h3>
+<h3>3.3. 除法</h3>
 <p>除法是四则基本运算中最复杂的，也是最难实现的。除法可以看作是乘法的逆运算，但除法要复杂的多，最大的区别是乘法中的一些操作可以并行支持，通过流水线提高计算速度，但是除法必须顺序执行，运算最耗时间。</p>
 <p>Verilog 提供了除法运算符 <code>/</code>，如下所示。但是只有在除数为 2 或者 2 的整幂次时才是可综合的，其余情况都不可综合 。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">;</span>
@@ -192,12 +193,12 @@
 </td></tr></table>
 
 <p>常用的方法是采用 IP Core，可以完成定点数和浮点数两类算法。</p>
-<h3>Cordic 算法</h3>
+<h3>3.4. Cordic 算法</h3>
 <p><a href="http://en.wikipedia.org/wiki/CORDIC">Cordic 算法</a> 算法即坐标旋转数字计算方法，是J.D.Volder1于1959年首次提出，主要用于三角函数、双曲线、指数、对数的计算。该算法通过基本的加和移位运算代替乘法运算，使得矢量的旋转和定向的计算不再需要三角函数、乘法、开方、反三角、指数等函数。</p>
 <p>它通常应用在没有硬件乘法器的应用中，比如微控制器、FPGA 中，进行的所有操作只有加法、移位和查表 。</p>
 <p>Coridc 算法可以自己编写代码实现，也可以使用 IP Core 。(事实上，所有的 IP 软核理论上都可以自己写，因为这些软核实际上就是别人写好的代码和文档，类似于C语言中的库函数)</p>
 <p><br></p>
-<h2>参考</h2>
+<h2>4. 参考</h2>
 <p><a href="http://book.douban.com/subject/3795386/">《无线通信的 Matlab 和 FPGA 实现》</a></p>
 <p><a href="http://book.douban.com/subject/4822685/">code</a></p>
   </div>
@@ -252,7 +253,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

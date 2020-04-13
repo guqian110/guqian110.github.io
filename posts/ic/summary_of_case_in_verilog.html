@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结 case 的用法和需要注意的细节" />
 <meta name="keywords" content="case">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="Verilog 的 case 小结"/>
 <meta property="og:description" content="总结 case 的用法和需要注意的细节"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="case"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; Verilog 的 case 小结</title>
+  <title>Qian's Blog &ndash; Verilog 的 case 小结</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,6 +95,7 @@
     <p>
       Posted on 2015-04-15 15:50 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 6 min read
     </p>
   </header>
 
@@ -102,9 +103,9 @@
   <div>
     <p>学习了 Cummings 大神 的 paper：<a href="http://www.sunburst-design.com/papers/CummingsSNUG1999Boston_FullParallelCase.pdf">"full_case parallel_case", the Evil Twins of Verilog Synthesis</a> 和 <a href="http://www.phei.com.cn/module/goods/wssd_content.jsp?bookid=38848">Verilog 编程艺术</a></p>
 <p>总结一下笔记。</p>
-<h2>Def</h2>
+<h2>1. Def</h2>
 <hr>
-<h3>Syntax:</h3>
+<h3>1.1. Syntax:</h3>
 <div class="highlight"><pre><span></span><span class="k">case</span> <span class="p">(</span><span class="n">case_expression</span><span class="p">)</span>
  <span class="n">case_item1</span> <span class="p">:</span> <span class="n">case_item_statement1</span><span class="p">;</span>
  <span class="n">case_item2</span> <span class="p">:</span> <span class="n">case_item_statement2</span><span class="p">;</span>
@@ -125,29 +126,29 @@
 
 
 <p>首先说明一些基本名词的定义：</p>
-<h3>Case statement header</h3>
+<h3>1.2. Case statement header</h3>
 <p>header 由 关键字 <code>case</code>/<code>casex</code>/<code>casez</code> + case expression 两部分组成，它们通常写在同一行（上面语法的第一行）。添加 "parallel_case" 或者 "full_case" 综合指令的方法就是把指令当作注释写在 header 的那一行，后续 case item 之前。</p>
-<h3>Case expression</h3>
+<h3>1.3. Case expression</h3>
 <p><code>case</code> 关键字之后，括号中间的内容。它可以是一个常量（如 '1'），也可以是一个表达式，或者更常见的一个 1 bit / n bits 的向量，用来和后面的 case item 做比较。</p>
-<h3>Case item</h3>
+<h3>1.4. Case item</h3>
 <p>可以是单比特、向量、表达式，用来和 case expression 做比较。和高级编程语言（C 语言）不同的是，verilog 中的 case 自带隐含的 <code>break</code> 语句，所以就不用再费心多写代码了。</p>
-<h3>Case item statement</h3>
+<h3>1.5. Case item statement</h3>
 <p>case item 内的语句，多于 1 句时，要用 <code>begin-end</code>。</p>
-<h3>Case default</h3>
+<h3>1.6. Case default</h3>
 <p>默认分支，虽然这个分支不是强制要求的，但是在所有分支后面加上 default 分支是一个良好的编程习惯。</p>
-<h3>Casez</h3>
+<h3>1.7. Casez</h3>
 <p>case 语句的变种，casez 把 expression 或者是 item 中的 "z"/"?" 忽略，当作不关心的值。</p>
 <blockquote>
 <p><strong>Guideline:</strong> Exercise caution when coding synthesizable models using the Verilog casez statement</p>
 <p><strong>Coding Style Guideline:</strong> When coding a case statement with "don't cares," use a casez statement
 and use "?" characters instead of "z" characters in the case items to indicate "don't care" bits.</p>
 </blockquote>
-<h3>casex</h3>
+<h3>1.8. casex</h3>
 <p>类似于 casez，不关心的值为 "z" / "?" / "x"。</p>
 <blockquote>
 <p><strong>Guideline:</strong> Do not use casex for synthesizable code</p>
 </blockquote>
-<h3>Process</h3>
+<h3>1.9. Process</h3>
 <p>case 的执行过程：</p>
 <ol>
 <li>
@@ -167,7 +168,7 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 </li>
 </ol>
 <p>这个按照顺序比较的过程就是可能导致 priority encoder 的原因。</p>
-<h3>reverse case</h3>
+<h3>1.10. reverse case</h3>
 <p>reverse case 是 case 的一个变形，也叫做 <code>case if true</code>。这种风格中 case expression 是一个常量，而 case items 是由变量构成的表达式。这种风格通常用在 One-hot FSM 中，并且采用 parallel 方式。</p>
 <p>见另外一篇博客：<a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></p>
 <p><br></p>
@@ -190,7 +191,7 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 <p>An alternate title for this paper could be: "How to add $200,000 to the cost and 3-6 months to the schedule of your ASIC design without trying!"</p>
 </blockquote>
 <p><br></p>
-<h2>"full" case statement</h2>
+<h2>2. "full" case statement</h2>
 <hr>
 <p>"full" 的意思就是 expression 的任何取值都有一个 item/default 分支与其对应，否者就不是 "full case"。</p>
 <p><strong>example1: Non-"full" case</strong></p>
@@ -228,9 +229,9 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 
 <p>在这个例子中，当 sel 的取值是 2'b11 时，由于没有定义输出值 y 为多少，仿真器会保持之前的取值，综合器会综合出一个 latch。</p>
 <p>（基于 Virtex-4 器件，XST 的 synthesis report 给出的结果是 1 bit latch + 1 bit 3-to-1 multiplexers）</p>
-<h3>HDL full case</h3>
+<h3>2.1. HDL full case</h3>
 <p>从 HDL 仿真器的角度看，full case 语句就是 case item 包含了 expression 可以取的任何值。</p>
-<h3>Synthesis full case</h3>
+<h3>2.2. Synthesis full case</h3>
 <p>从综合工具的角度看，full case 语句就是 expression 的每种可能的取值组合都被包含在 item 中。</p>
 <p>虽然 Verilog 语法不要求 case 语句必须是 HDL full 或者 synthesis full ，但是我们可以通过手动添加一个 default 分支来使得 case 变为 full。</p>
 <p><strong>example2: "full" case</strong></p>
@@ -286,7 +287,7 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 </pre></div>
 </td></tr></table>
 
-<h3>XST full case</h3>
+<h3>2.3. XST full case</h3>
 <p>综合指令是一些特殊的可以被综合工具识别，并指导综合工具工作的语句。不同的综合工具的综合指令语法不相同。我用的是 ISE 自带的 XST。查看 XST User Guide 就可以找到 full case 的相关指令：</p>
 <p>这个指令与架构（Architecture）无关、只适用于 verilog 的 case 语句：</p>
 <ul>
@@ -414,10 +415,10 @@ behavior of the case statement.</p>
 </li>
 </ol>
 <p><br></p>
-<h2>"parallel" case statement</h2>
+<h2>3. "parallel" case statement</h2>
 <hr>
 <p>"parallel" 的意思就是 expression 的取值每次有且只有一个 item 与其对应，否则就不是 "parallel" case，而匹配的 items 称为 "overlapping" case items。</p>
-<h3>Non-parallel case statements</h3>
+<h3>3.1. Non-parallel case statements</h3>
 <div class="highlight"><pre><span></span><span class="nv">always</span> @<span class="nv">sel</span> <span class="nv">begin</span>
     <span class="nv">casez</span> <span class="ss">(</span><span class="nv">sel</span><span class="ss">)</span>
         <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b1??: y = 3</span><span class="s1">&#39;</span><span class="nv">b100</span><span class="c1">;</span>
@@ -429,7 +430,7 @@ behavior of the case statement.</p>
 
 
 <p>当输入是 3'b011, 3'b101, 3'b110, 3'b111 时，会有多个 item 与 expression 对应，所以不是 parallel 的，会综合出一个 priority encoder。</p>
-<h3>Parallel case statements</h3>
+<h3>3.2. Parallel case statements</h3>
 <p>对上面的例子稍微修改一下，就得到了 parallel case：</p>
 <div class="highlight"><pre><span></span><span class="nv">always</span> @<span class="nv">sel</span> <span class="nv">begin</span>
     <span class="nv">casez</span> <span class="ss">(</span><span class="nv">sel</span><span class="ss">)</span>
@@ -441,7 +442,7 @@ behavior of the case statement.</p>
 </pre></div>
 
 
-<h3>XST parallel case</h3>
+<h3>3.3. XST parallel case</h3>
 <p>语法同 full case，只需要将 full_case 替换为 parallel_case 即可。如果 case 本来就是 parallel 的，那么这个指令就完全不起作用，只是一些额外的代码。</p>
 <p>不要故意使用 Non-parallel case 来推译 priority encoder，这是不好的编程习惯。如果我们的目的就是要生成 priority encoder，应该使用级联的 if-else 语句，这样更能表达意图。</p>
 <p>下面的这些 guideline 可以帮助我们避免 case 生成 priority encoder，从而避免前后仿真不一致：</p>
@@ -452,7 +453,7 @@ behavior of the case statement.</p>
 <p><strong>Guideline:</strong> Change the case statement code, as outlined in the above coding guidelines, whenever the synthesis tool reports that the case statement is not parallel (whenever the synthesis tool reports "no" for "parallel_case")</p>
 </blockquote>
 <p><br></p>
-<h2>Synthesis coding styles</h2>
+<h2>4. Synthesis coding styles</h2>
 <hr>
 <p>在总结了 full_parallel_case 之后，Cummings 大神给出了建议：</p>
 <blockquote>
@@ -470,7 +471,7 @@ devices!</p>
 </blockquote>
 <p>甚至建议要开除写 full_parallel_case 的员工...</p>
 <p><br></p>
-<h2>Summary</h2>
+<h2>5. Summary</h2>
 <hr>
 <p>总结一下所有的 guidelines：</p>
 <blockquote>
@@ -489,7 +490,7 @@ statements.</p>
 <p><strong>Conclusion:</strong> "full_case" and "parallel_case" directives are most dangerous when they work! It is better to code a full and parallel case statement than it is to use directives to make up for poor coding practices.</p>
 </blockquote>
 <p><br></p>
-<h2>Ref</h2>
+<h2>6. Ref</h2>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG1999Boston_FullParallelCase.pdf">"full_case parallel_case", the Evil Twins of Verilog Synthesis</a></p>
 <p><a href="http://www.phei.com.cn/module/goods/wssd_content.jsp?bookid=38848">Verilog 编程艺术</a></p>
   </div>
@@ -538,7 +539,7 @@ statements.</p>
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结使用 Ctags/Cscope/Taglist 的使用方法。" />
 <meta name="keywords" content="vim, ctags, cscope, taglist">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="学习 Vim 之 Ctags/Cscope/Taglist"/>
 <meta property="og:description" content="总结使用 Ctags/Cscope/Taglist 的使用方法。"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -55,16 +55,16 @@
 <meta property="article:tag" content="taglist"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 学习 Vim 之 Ctags/Cscope/Taglist</title>
+  <title>Qian's Blog &ndash; 学习 Vim 之 Ctags/Cscope/Taglist</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -98,12 +98,13 @@
     <p>
       Posted on 2015-01-25 21:32 in <a href="http://guqian110.github.io/category/linux.html">Linux</a>
 
+        &#8226; 5 min read
     </p>
   </header>
 
 
   <div>
-    <h2>Background</h2>
+    <h2>1. Background</h2>
 <hr>
 <p>tags 文件是一种非常有用的文件，本文的内容都是基于 <code>tag</code> 的，所以首先得了解什么是 tag？</p>
 <p>Vim Manual 里面的简单介绍就足够我们进行下面的内容了。查看 Manual：</p>
@@ -124,9 +125,9 @@
 </li>
 </ol>
 <p><br></p>
-<h2>Ctags</h2>
+<h2>2. Ctags</h2>
 <hr>
-<h3>Intro</h3>
+<h3>2.1. Intro</h3>
 <p><a href="ctags.sourceforge.net/">Ctags 官网</a></p>
 <p><a href="http://en.wikipedia.org/wiki/Ctags">wiki</a></p>
 <blockquote>
@@ -145,13 +146,13 @@
 
 <p>简而言之，Ctags 是一个可以自动提取源文件和头文件中函数、变量、类成员、宏定义等元素的工具，然后它会建立一个 tags 文件，其他编辑器（比如我们使用的 Vim）可以读取这个 tags 文件，从而快速定位代码的位置。</p>
 <p>使用 <code>ctags --list-language</code> 可以查看 ctags 支持的语言，使用 <code>ctags --list-maps</code> 可以查看哪些后缀名对应对应的语言。</p>
-<h3>Install</h3>
+<h3>2.2. Install</h3>
 <p>ctags 是 Unix 系统自带的一个工具，但是功能比较少，所以一般使用 Exuberant Ctags。在 Linux 上，Exuberant Ctags 是默认的 Ctags 程序。如果系统中没有安装的话，我们可以从官网上下载源码编译安装，或者直接 apt-get 安装。</p>
 <div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">exuberant</span><span class="o">-</span><span class="n">ctags</span>
 </pre></div>
 
 
-<h3>Config</h3>
+<h3>2.3. Config</h3>
 <p>我们要使用 tags，第一步就是生成 tags 文件。生成 tags 文件时，ex-ctags 提供了很多参数供我们控制生成结果，详细内容可以查看其 manpage，这里有 easwy 大神翻译的中文版：</p>
 <p><a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/">Exuberant Ctags中文手册</a></p>
 <p>我们可以将配置写在 .vimrc 中：</p>
@@ -161,7 +162,7 @@
 
 
 <p>这样，我们只需要按 Ctrl-F12 即可自动生成 C++ 项目的 tags 文件。</p>
-<h3>Usage</h3>
+<h3>2.4. Usage</h3>
 <p>Vim 提供了接口可以调用 tags 文件，它使用一个栈来记录我们在文件中跳转的位置。ctags 其 manual page 中有说明如何在 Vi 中使用 ctags：</p>
 <ol>
 <li>
@@ -196,9 +197,9 @@
 </li>
 </ol>
 <p><br></p>
-<h2>Cscope</h2>
+<h2>3. Cscope</h2>
 <hr>
-<h3>Intro</h3>
+<h3>3.1. Intro</h3>
 <p><a href="http://cscope.sourceforge.net/">Cscope 官网</a></p>
 <p><a href="http://en.wikipedia.org/wiki/Cscope">cscope wiki</a>:</p>
 <blockquote>
@@ -280,12 +281,12 @@
 <p>简而言之，就是 ctags 的加强版，ctags 只能让我们跳转到某个 tag 的定义之处，但是无法让我们知道这个 tag 还在哪里出现过，或者被哪个函数调用过，这时候就需要 cscope 来大显身手了～</p>
 <p><strong>P.S.</strong></p>
 <p>cscope 对 C/C++ 支持比较好，当然我们也可以自己定制来支持其他语言，比如 Java，Python 等。</p>
-<h3>Install</h3>
+<h3>3.2. Install</h3>
 <div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">cscope</span>
 </pre></div>
 
 
-<h3>Usage</h3>
+<h3>3.3. Usage</h3>
 <p>联合使用 Cscope + Vim 的流程：</p>
 <ol>
 <li>
@@ -336,7 +337,7 @@
 
 </li>
 </ol>
-<h3>Config</h3>
+<h3>3.4. Config</h3>
 <p>Vim 的 cscope 接口提供了一些参数，可以让我们更加灵活地使用 cscope，可以用 <code>help if_cscop</code> 来查看完整的说明，这里有一份前辈翻译的中文版</p>
 <p><a href="http://blog.csdn.net/dengxiayehu/article/details/6330200">Cscope的使用（领略Vim + Cscope的强大魅力）</a></p>
 <p>下面我找了几个常用的选项：</p>
@@ -413,23 +414,23 @@
 
 
 <p><br></p>
-<h2>Taglist</h2>
+<h2>4. Taglist</h2>
 <hr>
-<h3>Intro</h3>
+<h3>4.1. Intro</h3>
 <p><a href="http://www.vim.org/scripts/script.php?script_id=273">Taglist 官网</a></p>
 <p>使用过 VS 的人都知道，在左侧有一个窗口专门显示当前代码文件中的宏、函数、变量定义，并且随着文件切换自动更新。我们这里介绍的 Taglist 完成的就是类似的功能，让我们可以高效地浏览代码。不过要使用 Taglist，首先要安装前面介绍的 Ctags。</p>
 <blockquote>
 <p>The "Tag List" plugin is a source code browser plugin for Vim and provides an overview of the structure of source code files and allows 
 you to efficiently browse through source code files for different programming languages. </p>
 </blockquote>
-<h3>Install</h3>
+<h3>4.2. Install</h3>
 <p>与前面的 ctags、cscope 不同的是，taglist 是一款 Vim 插件。如果使用 Vundle 来管理、安装插件，在 .vimrc 中添加</p>
 <div class="highlight"><pre><span></span><span class="n">Bundle</span> <span class="s1">&#39;taglist.vim&#39;</span>
 </pre></div>
 
 
 <p>然后打开 vi，然后输入命令 <code>:BundleInstall</code> 即可。</p>
-<h3>Config</h3>
+<h3>4.3. Config</h3>
 <p>使用 <code>:help taglist</code> 查看帮助。</p>
 <p>使用 <code>:TlistToggle</code> 切换是否显示 Taglist 窗口。</p>
 <p>我们可以直接在 .vimrc 中添加以下设置：</p>
@@ -440,7 +441,7 @@ you to efficiently browse through source code files for different programming la
 </pre></div>
 
 
-<h3>Usage</h3>
+<h3>4.4. Usage</h3>
 <p>在 taglist 窗口，我们可以使用下面的一些快捷键：</p>
 <ul>
 <li>
@@ -465,7 +466,7 @@ you to efficiently browse through source code files for different programming la
 <p><strong>P.S.</strong></p>
 <p>配合另外一个窗口管理插件 winmanager，我们可以将我们的 Vim 打造成一个伪 IDE :D</p>
 <p><br></p>
-<h2>Ref</h2>
+<h2>5. Ref</h2>
 <p><a href="http://blog.csdn.net/alexdboy/article/details/3871707">ctags的使用及相关参数介绍</a></p>
 <p><a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/">Exuberant Ctags中文手册</a></p>
 <p><a href="http://easwy.com/blog/archives/advanced-vim-skills-use-ctags-tag-file/">vi/vim使用进阶: 使用标签(tag)文件</a></p>
@@ -497,11 +498,11 @@ you to efficiently browse through source code files for different programming la
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
     </ul>
   </div>
 
@@ -533,7 +534,7 @@ you to efficiently browse through source code files for different programming la
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

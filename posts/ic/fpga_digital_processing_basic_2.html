@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结 FPGA 处理数字信号的基础知识 (2)" />
 <meta name="keywords" content="digital processing">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="FPGA 数字处理基础 (2)"/>
 <meta property="og:description" content="总结 FPGA 处理数字信号的基础知识 (2)"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="digital processing"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; FPGA 数字处理基础 (2)</title>
+  <title>Qian's Blog &ndash; FPGA 数字处理基础 (2)</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,13 +95,14 @@
     <p>
       Posted on 2014-07-07 23:28 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 3 min read
     </p>
   </header>
 
 
   <div>
     <p>讨论 FPGA 中无符号数 unsigned 和有符号数 signed 的问题。</p>
-<h2>Basic Knowledge</h2>
+<h2>1. Basic Knowledge</h2>
 <hr>
 <p><strong>整数的分类：</strong> 无符号数 <code>unsigned</code> 和 有符号数 <code>signed</code>。</p>
 <p><strong>数制：</strong> 10、2、8、16 进制</p>
@@ -114,9 +115,9 @@
 <p>以前写过一篇总结，<a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic_1.html">FPGA 数字处理基础 (1)</a></p>
 <p>本文算是上面文章的续吧。</p>
 <p><br></p>
-<h2>(un)signed in Verilog</h2>
+<h2>2. (un)signed in Verilog</h2>
 <hr>
-<h3>Integer</h3>
+<h3>2.1. Integer</h3>
 <p>标准格式：</p>
 <p><code>&lt;null|+|-&gt;&lt;size&gt;&lt;sign:s|S&gt;&lt;base:d|D|h|H|o|O|b|B&gt;&lt;0~9|0～f|0~7|0~1|x|z&gt;</code></p>
 <p>其中 size 和 base 可选。</p>
@@ -154,7 +155,7 @@
 </pre></div>
 </td></tr></table>
 
-<h3>Register</h3>
+<h3>2.2. Register</h3>
 <p>Verilog 中数据的基本类型： <code>wire</code>、<code>reg</code>、<code>integer</code></p>
 <p>在 Verilog-1995 中，规定所有的 wire、reg 都是 unsigned 类型，只有 integer 是 signed 类型。但是 integer 的宽度是固定的(与宿主机的字是一样的，最小为 32 位)，这样子，造成了很大的不方便和浪费。</p>
 <p>在 Verilog-2001 中，添加了 wire、reg 也可以是 signed 类型了。</p>
@@ -187,7 +188,7 @@
 <p>编写一个简单的测试程序，查看综合结果和仿真波形，就可以知道综合时的策略。</p>
 <p><strong>module: <a href="http://guqian110.github.io/files/test_signed.v">test_signed.v</a></strong></p>
 <p><strong>testbench: <a href="http://guqian110.github.io/files/tb_test_signed.v">tb_test_signed.v</a></strong></p>
-<h4>1. unsigned reg &amp; unsigned value</h4>
+<h4>2.2.1. 1. unsigned reg &amp; unsigned value</h4>
 <p>定义 reg 为 unsigned 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
@@ -201,7 +202,7 @@
 </td></tr></table>
 
 <p>那么可以从 RTL Schematic 中看到，综合出来的比较器是 unsigned 类型。</p>
-<h4>2. unsigned reg &amp; signed value</h4>
+<h4>2.2.2. 2. unsigned reg &amp; signed value</h4>
 <p>定义 reg 为 unsigned 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
@@ -215,7 +216,7 @@
 </td></tr></table>
 
 <p>那么综合出来的比较器是 unsigned 类型。</p>
-<h4>3. signed reg &amp; signed value</h4>
+<h4>2.2.3. 3. signed reg &amp; signed value</h4>
 <p>定义 reg 为 signed 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="k">signed</span>  <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
@@ -229,7 +230,7 @@
 </td></tr></table>
 
 <p>那么综合出来的比较器是 signed 类型。</p>
-<h4>4. signed reg &amp; unsigned value</h4>
+<h4>2.2.4. 4. signed reg &amp; unsigned value</h4>
 <p>定义 reg 为 signed 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="k">signed</span>  <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
@@ -243,7 +244,7 @@
 </td></tr></table>
 
 <p>那么综合出来的比较器是 signed 类型。</p>
-<h4>5. signed reg &amp; unsigned reg</h4>
+<h4>2.2.5. 5. signed reg &amp; unsigned reg</h4>
 <p>如果参与运算的两个变量一个是 signed，另一个是 unsigned。（注意这种现象应该避免，一般我们是不会将两种不同类型的数据混在一起进行计算的）</p>
 <p>定义 i 为 unsigned 类型，flag 为 signed 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -279,7 +280,7 @@ Help
 </blockquote>
 <p>花费了大量时间上网找资料，在论坛里问别人无果，最后自己动手写程序测试，最后才发现原来官方资料里面早就写的清清楚楚 =.=</p>
 <p><br></p>
-<h2>Conclusion</h2>
+<h2>3. Conclusion</h2>
 <hr>
 <p>说了这么多，总结下来就是下面这几句话：</p>
 <p><strong>经验：</strong></p>
@@ -358,7 +359,7 @@ Help
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

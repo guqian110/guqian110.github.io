@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结信号处理中的各种角频率" />
 <meta name="keywords" content="digital procesing, frequency">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="数字信号处理中的各种频率"/>
 <meta property="og:description" content="总结信号处理中的各种角频率"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -53,16 +53,16 @@
 <meta property="article:tag" content="frequency"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 数字信号处理中的各种频率</title>
+  <title>Qian's Blog &ndash; 数字信号处理中的各种频率</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -96,13 +96,14 @@
     <p>
       Posted on 2015-08-27 22:06 in <a href="http://guqian110.github.io/category/telecom.html">Telecom</a>
 
+        &#8226; 2 min read
     </p>
   </header>
 
 
   <div>
     <p>最近实习的时候，发现自己的 DSP 基本功还是不够扎实，关于模拟/数字角频率，频率，采样速率等一些概念理解的都不太深刻，愧对老师和这么多年的学习，Google 到一些讲解的比较清楚的 blog，备忘（抄袭）过来，温故而知新。</p>
-<h2>unit circle &amp; sin(cos)</h2>
+<h2>1. unit circle &amp; sin(cos)</h2>
 <hr>
 <p>首先从最基本的三角函数的定义开始：</p>
 <p>三角函数的定义方式有很多种，我觉得基于单位圆的定义是最形象，对之后理解各种角频率的物理/数学含义最有帮助。</p>
@@ -122,7 +123,7 @@
 <p><br></p>
 <p><em>有了上面简单的背景，就可以开始逐个讨论信号处理中的概念了。</em></p>
 <p><br></p>
-<h2>Ω</h2>
+<h2>2. Ω</h2>
 <hr>
 <p>我们已经知道小球在圆周上做匀速率的圆周运动时，它在两个坐标轴上的投影就分别是 sin(cos)，如果我们想进一步描述小球的运动速率的快慢呢？</p>
 <p>假设小球完整转一圈所花费的时间为 T，转动的角度为 2π，则我们可以定义</p>
@@ -151,7 +152,7 @@
 <p>结果如下图：</p>
 <p><img alt="OMEGA" src="/images/summary-of-frequency-in-digital-signal-processing/OMEGA.jpg"></p>
 <p><br></p>
-<h2>f</h2>
+<h2>3. f</h2>
 <hr>
 <p>小球在二维平面上的圆周运动投影到一维的坐标轴 x(y) 轴上看，则是左右（上下）振动。和 Ω 类似，我们也可以定义一个物理量来描述这种振动的快慢：</p>
 <p>小球完成一次完整的圆周运动所花费的时间为 T，也就是完成一次振动花费了 T 时间，我们定义</p>
@@ -180,7 +181,7 @@
 <p>结果如下图：</p>
 <p><img alt="f" src="/images/summary-of-frequency-in-digital-signal-processing/f.jpg"></p>
 <p><br></p>
-<h2>w</h2>
+<h2>4. w</h2>
 <hr>
 <p>计算机的世界是离散的，所以当连续信号经过采样、量化得到离散信号后：</p>
 <p>y = sin(Ω<em>t) = sin(Ω</em>n<em>Ts) = sin(Ω</em>Ts<em>n) = sin(w</em>n)</p>
@@ -259,7 +260,7 @@
 </tbody>
 </table>
 <p><br></p>
-<h2>Ref</h2>
+<h2>5. Ref</h2>
 <p><a href="https://en.wikipedia.org/wiki/Trigonometric_functions">Trigonometric functions</a></p>
 <p><a href="http://anony3721.blog.163.com/blog/static/51197420111129503233/">阿英讲频率f，角频率Ω和数字频率w的物理含义--附MATLAB仿真</a></p>
 <p><a href="http://zhuanlan.zhihu.com/wille/19763358">傅里叶分析之掐死教程（完整版）更新于2014.06.06</a></p>
@@ -316,7 +317,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

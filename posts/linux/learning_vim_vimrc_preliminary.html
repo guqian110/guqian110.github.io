@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结初步配置 Vim，让 Vim 更顺手 。" />
 <meta name="keywords" content="Vim">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="学习 Vim 初步配置 Vim"/>
 <meta property="og:description" content="总结初步配置 Vim，让 Vim 更顺手 。"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="Vim"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 学习 Vim 初步配置 Vim</title>
+  <title>Qian's Blog &ndash; 学习 Vim 初步配置 Vim</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,6 +95,7 @@
     <p>
       Posted on 2014-04-16 12:44 in <a href="http://guqian110.github.io/category/linux.html">Linux</a>
 
+        &#8226; 3 min read
     </p>
   </header>
 
@@ -102,7 +103,7 @@
   <div>
     <p>总结初步配置 Vim，让 Vim 更顺手 。</p>
 <p><br></p>
-<h2>在哪里配置 Vim</h2>
+<h2>1. 在哪里配置 Vim</h2>
 <hr>
 <p><a href="http://book.douban.com/subject/6126937/">学习 Vi 和 Vim 编辑器</a>：</p>
 <blockquote>
@@ -140,7 +141,7 @@
 </li>
 </ol>
 <p><br></p>
-<h2>映射 <code>esc</code> 键</h2>
+<h2>2. 映射 <code>esc</code> 键</h2>
 <hr>
 <p>因为历史原因，Joy 设计 vi 时采用的键盘和我们现在用的标准键盘布局并不一样，当时他的键盘的 <code>esc</code> 键在现在我们的 <code>Caps Lock</code> 键的位置，所以才设计使用 <code>esc</code> 作为模式转换键 。为了更加方便顺手地使用 vim，当然要把这两个键相互调换一下 。</p>
 <p>在 vim 的官网上就有介绍如何实现两个按键的调换</p>
@@ -166,7 +167,7 @@ add <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
 
 <p>这时，对于整个系统范围，这两个键已经调换了位置 。</p>
 <p><br></p>
-<h2>设置颜色主题 colorscheme</h2>
+<h2>3. 设置颜色主题 colorscheme</h2>
 <hr>
 <p>Vim 自带一些颜色主题，一般存放在 <code>/usr/share/vim/vim7x</code> 目录下（我的 Vim 版本为 7.3，所以路径为 <code>/usr/share/vim/vim73</code>）.</p>
 <p>如果对系统自带的主题不满意，网上有很多不错的主题，个人最喜欢 <a href="https://github.com/tomasr/molokai">molikai</a> 主题，把下载下来的配色文件拷贝到 <code>usr/share/vim/vim73</code> 路径下，打开 vim 后 输入</p>
@@ -180,7 +181,7 @@ add <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
 </td></tr></table>
 
 <p><br></p>
-<h2>编写 .Vimrc</h2>
+<h2>4. 编写 .Vimrc</h2>
 <hr>
 <p>vimrc 文件是配置 Vim 编辑特性比较好的地方，差不多任何 Vim 选项都能在次文件中被设置为打开或者关闭，而且它特别适合设置全局变量与定义函数、缩写、按键映射 。</p>
 <ul>
@@ -191,7 +192,7 @@ add <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
 <p>可以用冒号 <code>:</code> 表示 ex 命令</p>
 </li>
 </ul>
-<h3>配置 Vim 特性</h3>
+<h3>4.1. 配置 Vim 特性</h3>
 <p>vimrc 配置很简单，网上有很多人都分享了自己的配置方案 。我找到一份注释良好的<a href="https://github.com/amix/vimrc">配置范例</a>，这篇博客的作者总结了自己 8 年的使用经验，给出了两份配置文件，基本版 <a href="https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim">Basic</a> 和 终极版<a href="https://github.com/amix/vimrc">Ultimate</a> 。</p>
 <p>作为码农，当然要选择终极版了～不过个人喜欢用 Vundle 管理我的 Vim 插件（计划下篇博客记录我的配置过程），不是很喜欢作者选择的所有插件，想自己定制插件组合，那么目前只需要看 基础版就足够了 。</p>
 <p>copy 了一份基础版到自己的 github 中，有备无患 :-D</p>
@@ -509,7 +510,7 @@ map &lt;C-l&gt; &lt;C-w&gt;l
 </td></tr></table>
 
 <p><br></p>
-<h2>参考</h2>
+<h2>5. 参考</h2>
 <p><a href="http://book.douban.com/subject/6126937/">学习vi 和 Vim 编辑器</a></p>
 <p><a href="https://github.com/amix/vimrc">The Ultimate vimrc</a></p>
   </div>
@@ -532,11 +533,11 @@ map &lt;C-l&gt; &lt;C-w&gt;l
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
     </ul>
   </div>
 
@@ -568,7 +569,7 @@ map &lt;C-l&gt; &lt;C-w&gt;l
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"

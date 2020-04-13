@@ -18,7 +18,7 @@
 
     <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian Gu Atom">
+    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
@@ -39,7 +39,7 @@
 <meta name="description" content="总结可配置设计" />
 <meta name="keywords" content="configurable design">
 
-<meta property="og:site_name" content="Qian Gu"/>
+<meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="可配置设计"/>
 <meta property="og:description" content="总结可配置设计"/>
 <meta property="og:locale" content="zh_CN"/>
@@ -52,16 +52,16 @@
 <meta property="article:tag" content="configurable design"/>
 <meta property="og:image" content="http://guqian110.github.io/images/logo.png">
 
-  <title>Qian Gu &ndash; 可配置设计</title>
+  <title>Qian's Blog &ndash; 可配置设计</title>
 
 </head>
 <body>
   <aside>
     <div>
       <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian's Blog" title="Qian's Blog">
+        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
-      <h1><a href="http://guqian110.github.io">Qian's Blog</a></h1>
+      <h1><a href="http://guqian110.github.io">Qian Gu</a></h1>
 
 <p>Stay hungry. Stay foolish.</p>
 
@@ -95,13 +95,14 @@
     <p>
       Posted on 2015-04-17 00:00 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
 
+        &#8226; 2 min read
     </p>
   </header>
 
 
   <div>
     <p><a href="http://www.amazon.cn/EDA%E7%B2%BE%E5%93%81%E6%99%BA%E6%B1%87%E9%A6%86-Verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF-%E9%AD%8F%E5%AE%B6%E6%98%8E/dp/B00HNVY3SY/ref=sr_1_1?ie=UTF8&amp;qid=1429188978&amp;sr=8-1&amp;keywords=verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF">Verilog 编程艺术</a> 的可配置设计一章 学习笔记。</p>
-<h2>Configurable design</h2>
+<h2>1. Configurable design</h2>
 <hr>
 <blockquote>
 <p>我们做设计的时候，就要考虑做成可以灵活配置的设计，不管是小模块，还是大模块，这样便于以后维护和移植。可配置模块的设计方法如下：</p>
@@ -127,7 +128,7 @@
 <p><a href="http://www.amazon.com/Reuse-Methodology-Manual-System-Designs/dp/0387740988">Reuse Methodology Manual for System-on-a-Chip Designs</a> 是一本很经典的书，里面有全面详细的可重用设计的方法，有时间了看了再补上。</p>
 <p>下面是一些实际例子，展示如何设计可配置模块。</p>
 <p><br></p>
-<h2>Gray-2-Binary</h2>
+<h2>2. Gray-2-Binary</h2>
 <hr>
 <p>Binary 编码是最自然的、最符合平常的思维的，但是这种编码方式有时候存在一些问题：比如在 DAC 中，数字 3(011) 变为 数字 4(100) 时，每 1 bit 都发生了变化，电路中会产生很大的尖峰电流脉冲。</p>
 <p>而 Gray 编码就没有这样的问题，Gray 码有很多优点，应用很广泛，就不再重复了。（比如在 FIFO 设计中，内部就有 Gray 和 Binary 的相互转换）</p>
@@ -160,7 +161,7 @@
 
 
 <p><br></p>
-<h2>CRC</h2>
+<h2>3. CRC</h2>
 <hr>
 <p>Cyclic Redundancy Check，循环冗余检测。不同的协议使用的 CRC 多项式不相同，在硬件上体现在 LSR 的宽度和抽头位置不同，我们可以写一个通用的 CRC 模块。</p>
 <p>下面的例子，通过<strong>将端口位宽参数化</strong>，实现了可配置的 CRC 模块。</p>
@@ -211,13 +212,13 @@
 
 <p>在调用时，通过传递合适的参数即可实现不同的 CRC 模块。</p>
 <p><br></p>
-<h2>FIFO controller</h2>
+<h2>4. FIFO controller</h2>
 <hr>
 <p>略...</p>
 <p><br></p>
-<h2>RAM wrapper</h2>
+<h2>5. RAM wrapper</h2>
 <hr>
-<h3>problem</h3>
+<h3>5.1. problem</h3>
 <p>FPGA 中的 RAM/ROM 是用厂家的工具生成的，而 ASIC 中的 RAM/ROM 是用 ARM 公司的 Memory Compiler 生成的，两者的端口名不一样，有些控制信号的极性也不相同。</p>
 <p>通常的做法是<strong>使用条件编译</strong>，写如下的代码</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -245,8 +246,8 @@
 </li>
 </ol>
 <p>另外一种更好的方法是 <strong>写 wrapper</strong></p>
-<h3>wrapper</h3>
-<h4>name</h4>
+<h3>5.2. wrapper</h3>
+<h4>5.2.1. name</h4>
 <p>命名规范：按照 ARM 公司的规范，</p>
 <p>RAM/ROM type:</p>
 <table>
@@ -347,7 +348,7 @@
 <p>F_RF1_IW_128x8：RF1 类型，支持 bit 写，8 个 WEN，深度为 129，宽度为 8-bit</p>
 </li>
 </ul>
-<h4>generate wrapper</h4>
+<h4>5.2.2. generate wrapper</h4>
 <ol>
 <li>
 <p>提前写好的 Perl 脚本 和 参数化模块</p>
@@ -364,7 +365,7 @@
 </ol>
 <p>每个步骤的具体实现方法以后再补...</p>
 <p><br></p>
-<h2>GPIO</h2>
+<h2>6. GPIO</h2>
 <hr>
 <p>运用模块化的设计思想，提取公共代码，设计子模块，通过子模块实现大模块的设计，虽然参数化以后 GPIO 看起来比较复杂，但是这个模块是很通用的，设计好之后只需要修改参数就可以重复使用了。这在设计期间，修改起来非常方便。</p>
 <p>整个 GPIO 由 5  个模块组成：</p>
@@ -378,23 +379,23 @@
 
 <p>具体代码略，直接看书</p>
 <p><br></p>
-<h2>BusMatrix</h2>
+<h2>7. BusMatrix</h2>
 <hr>
 <p>...</p>
 <p><br></p>
-<h2>Andes Core N801</h2>
+<h2>8. Andes Core N801</h2>
 <hr>
 <p>...</p>
 <p><br></p>
-<h2>ARM926EJS</h2>
+<h2>9. ARM926EJS</h2>
 <hr>
 <p>...</p>
 <p><br></p>
-<h2>coreConsultant</h2>
+<h2>10. coreConsultant</h2>
 <hr>
 <p>...</p>
 <p><br></p>
-<h2>Ref</h2>
+<h2>11. Ref</h2>
 <p><a href="http://www.amazon.cn/EDA%E7%B2%BE%E5%93%81%E6%99%BA%E6%B1%87%E9%A6%86-Verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF-%E9%AD%8F%E5%AE%B6%E6%98%8E/dp/B00HNVY3SY/ref=sr_1_1?ie=UTF8&amp;qid=1429188978&amp;sr=8-1&amp;keywords=verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF">Verilog 编程艺术</a></p>
   </div>
   <div class="tag-cloud">
@@ -442,7 +443,7 @@
 {
   "@context" : "http://schema.org",
   "@type" : "Blog",
-  "name": " Qian Gu ",
+  "name": " Qian's Blog ",
   "url" : "http://guqian110.github.io",
   "image": "http://guqian110.github.io/images/logo.png",
   "description": "Qian's Thoughts and Writings"
