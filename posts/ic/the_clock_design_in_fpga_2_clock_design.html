@@ -100,15 +100,19 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 时钟设计 2 &mdash;&mdash; 时钟设计">FPGA 时钟设计 2 &mdash;&mdash; 时钟设计</a><ul><li><a class="toc-href" href="#1. clock design" title="1. Clock Design">1. Clock Design</a><ul><li><a class="toc-href" href="#1.1. gloabl clock" title="1.1. Gloabl Clock">1.1. Gloabl Clock</a></li><li><a class="toc-href" href="#1.2. gated clock" title="1.2. Gated Clock">1.2. Gated Clock</a></li><li><a class="toc-href" href="#1.3. logic clock" title="1.3. Logic Clock">1.3. Logic Clock</a></li><li><a class="toc-href" href="#1.4. divide/multiplied clock" title="1.4. Divide/Multiplied Clock">1.4. Divide/Multiplied Clock</a></li></ul></li><li><a class="toc-href" href="#2. other tips_1" title="2. Other Tips">2. Other Tips</a></li><li><a class="toc-href" href="#3. reference" title="3. Reference">3. Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <blockquote>
 <p>无论是离散逻辑、可编程逻辑，还是用全定制硅器件实现的任何数字设计，为了成功地操作，可靠的时钟是非常关键的。</p>
 <p>设计不良的时钟在极限的温度、电压或者制造工艺的偏差情况下将导致错误的行为，并且调试困难、花销很大。</p>
 </blockquote>
 <p>总结一下 FPGA 中的时钟设计原则。</p>
-<p><br></p>
-<h2>1. Clock Design</h2>
-<hr>
+<p><br/></p>
+<h2 id="1. clock design">1. Clock Design</h2>
+<hr/>
 <blockquote>
 <p>在 FPGA/CPLD 中通常采用几种时钟类型：</p>
 <ul>
@@ -142,12 +146,12 @@
 <p>分频/倍频时钟 Divied/Multiplied Clock</p>
 </li>
 </ol>
-<h3>1.1. Gloabl Clock</h3>
-<p>关于全局时钟，前面一篇 blog  <a href="">FPGA 时钟设计 1 —— 时钟资源总结</a> 中有总结。</p>
+<h3 id="1.1. gloabl clock">1.1. Gloabl Clock</h3>
+<p>关于全局时钟，前面一篇 blog  <a href="">FPGA 时钟设计 1 &mdash;&mdash; 时钟资源总结</a> 中有总结。</p>
 <p>对于一个项目来说，全局时钟是 <strong>最简单</strong>、<strong>最可预测</strong> 的时钟。</p>
 <p>在 PLD/FPGA 项目中 <strong>最好的时钟方案</strong> 是：由专用的全局时钟输入引脚驱动的单个主时钟去钟控设计项目中的每一个触发器。只要可能就应该尽量在设计中采用全局时钟</p>
 <p>PLD/FPGA 都具有专门的全局时钟引脚，它直接连接到器件中的每一个寄存器，这种全局时钟提供最短的时钟到输出的延时。</p>
-<h3>1.2. Gated Clock</h3>
+<h3 id="1.2. gated clock">1.2. Gated Clock</h3>
 <p>门控时钟的意思是通过组合逻辑，控制、禁止或允许时钟输入到寄存器和其他同步原件上的一种方法。因为它能够有效地降低功耗，所以被广泛地应用于 ASIC 设计中。但是，它不符合 <code>同步设计</code> 的思想，可能会影响系统设计的实现和验证，所以，<strong>在 FPGA 设计中应该避免使用门控时钟。</strong></p>
 <p>因为 ASIC 和 FPGA 结构设计上的区别，两者对待门控时钟的态度是完全不同的：</p>
 <p><a href="http://electronics.stackexchange.com/questions/73398/gated-clocks-and-clock-enables-in-fpga-and-asics">Gated clocks and clock enables in FPGA and ASICS</a></p>
@@ -183,7 +187,6 @@
 <span class="k">end</span>
 </pre></div>
 </td></tr></table>
-
 <p>得到的结果就是原语 <code>FDCE</code></p>
 <blockquote>
 <p>// FDCE: Single Data Rate D Flip-Flop with Asynchronous Clear and</p>
@@ -191,7 +194,7 @@
 </blockquote>
 <p><strong>方法二</strong></p>
 <p>使用 <code>多路选择器（mux）</code> 将组合逻辑从时钟通路搬移到数据通路。如下图所示</p>
-<p><img alt="mux" src="/images/the-clock-design-in-fpga-2-clock-design/mux.png"></p>
+<p><img alt="mux" src="/images/the-clock-design-in-fpga-2-clock-design/mux.png"/></p>
 <p>如果在设计中无法避免门控时钟，那么只要保证满足下面两个条件就可以使门控时钟和全局时钟一样可靠地工作：</p>
 <ol>
 <li>
@@ -202,8 +205,8 @@
 </li>
 </ol>
 <p>这些条件的目的就是为了避免组合逻辑中的竞争带来的毛刺。</p>
-<p>根据数字电路的知识，我们知道可以通过添加“冗余逻辑”的方法来消除组合逻辑的冒险，但是，FPGA 的编译器在 综合时会去掉这些冗余逻辑，所以不能采用这种方法。</p>
-<h3>1.3. Logic Clock</h3>
+<p>根据数字电路的知识，我们知道可以通过添加&ldquo;冗余逻辑&rdquo;的方法来消除组合逻辑的冒险，但是，FPGA 的编译器在 综合时会去掉这些冗余逻辑，所以不能采用这种方法。</p>
+<h3 id="1.3. logic clock">1.3. Logic Clock</h3>
 <p>有时候会用到组合逻辑的输出作为时钟信号或者复位信号，但是这种时钟信号有两个非常重要的缺陷：</p>
 <ol>
 <li>
@@ -215,7 +218,7 @@
 </ol>
 <p>（看到书上提出一个解决方案是：使用系统专用的时钟信号，将组合逻辑的输出打一拍，避免组合逻辑的直接输出，达到同步的效果。但是我个人认为这个方案不是非常好。）</p>
 <p>综上，对于 FPGA 来说，还是应该<strong>尽量避免使用组合逻辑的输出作为时钟</strong>。</p>
-<h3>1.4. Divide/Multiplied Clock</h3>
+<h3 id="1.4. divide/multiplied clock">1.4. Divide/Multiplied Clock</h3>
 <p><strong>Guideline：</strong> 尽量避免分频时钟</p>
 <p>在我们的设计中，一般都不止一个时钟频率。如果不加注意，随意使用分频时钟，这叫做时钟满天飞，是非常不好的设计风格。</p>
 <p>如果一定要使用分频时钟：</p>
@@ -229,9 +232,9 @@
 <p>对于这些情况，首先检查是否可以用 <code>CE</code> (clock enable) 来代替分频时钟，如果不行，则使用 <a href="http://guqian110.github.io/pages/2014/10/13/clock_dividers.html">时钟分频器</a> 中讨论的分频方法。</p>
 </li>
 </ol>
-<p><br></p>
-<h2>2. Other Tips</h2>
-<hr>
+<p><br/></p>
+<h2 id="2. other tips_1">2. Other Tips</h2>
+<hr/>
 <ul>
 <li>
 <p><strong>只使用时钟的单个边沿</strong></p>
@@ -246,8 +249,8 @@
 <p>使用 DCM/MMCM 的 <code>locked</code> 输出，在使用时钟前先检查时钟是否锁定。</p>
 </li>
 </ul>
-<p><br></p>
-<h2>3. Reference</h2>
+<p><br/></p>
+<h2 id="3. reference">3. Reference</h2>
 <p><a href="http://book.douban.com/subject/10593491/">Xilinx FPGA 高级设计及应用</a></p>
 <p><a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG">FPGA 高手设计实战真经 100 则</a></p>
 <p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发实用教程</a></p>
@@ -272,8 +275,8 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="http://guqian110.github.io/posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/clock_dividers.html">时钟分频器</a></li>
+      <li><a href="http://guqian110.github.io/posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
     </ul>
   </div>

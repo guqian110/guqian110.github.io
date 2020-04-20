@@ -101,6 +101,10 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Vim 之 lookupfile 插件">学习 Vim 之 lookupfile 插件</a><ul><li><a class="toc-href" href="#1. install" title="1. Install">1. Install</a></li><li><a class="toc-href" href="#2. config" title="2. Config">2. Config</a><ul><li><a class="toc-href" href="#2.1. tags" title="2.1. tags">2.1. tags</a></li><li><a class="toc-href" href="#2.2. case sensitive" title="2.2. case sensitive">2.2. case sensitive</a></li><li><a class="toc-href" href="#2.3. summary" title="2.3. Summary">2.3. Summary</a></li></ul></li><li><a class="toc-href" href="#3. usage_1" title="3. Usage">3. Usage</a><ul><li><a class="toc-href" href="#3.1. :lookupfile" title="3.1. :LookupFile">3.1. :LookupFile</a></li><li><a class="toc-href" href="#3.2. :lubufs" title="3.2. :LUBufs">3.2. :LUBufs</a></li><li><a class="toc-href" href="#3.3. :luwalk" title="3.3. :LUWalk">3.3. :LUWalk</a></li></ul></li><li><a class="toc-href" href="#4. ref_1" title="4. Ref">4. Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>系统内置的 <code>:find</code> 命令不够好：</p>
 <ol>
@@ -113,17 +117,15 @@
 </ol>
 <p>而使用 NERDTree 的话，在一个小窗口内，按照目录浏览查找的效率也很低。</p>
 <p><code>lookupfile</code> 这个插件可以实现类似 Sublime Text 中 Ctrl + P 的效果，只需要输入文件的部分名字即可匹配查找到文件。</p>
-<h2>1. Install</h2>
-<hr>
+<h2 id="1. install">1. Install</h2>
+<hr/>
 <p>lookupfile 需要 <code>genutils</code> 插件的支持，使用 Vundle 安装两个插件：</p>
-<div class="highlight"><pre><span></span><span class="n">Bundle</span> <span class="s1">&#39;genutils&#39;</span>
-<span class="n">Bundle</span> <span class="s1">&#39;lookupfile&#39;</span>
+<div class="highlight"><pre><span></span><span class="n">Bundle</span> <span class="s1">'genutils'</span>
+<span class="n">Bundle</span> <span class="s1">'lookupfile'</span>
 </pre></div>
-
-
-<p><br></p>
-<h2>2. Config</h2>
-<hr>
+<p><br/></p>
+<h2 id="2. config">2. Config</h2>
+<hr/>
 <p>关于 lookupfile 的详细配置，查看 help 文档，下面是几个常用的配置选项：</p>
 <div class="highlight"><pre><span></span><span class="n">let</span> <span class="k">g</span><span class="p">:</span><span class="n">LookupFile_MinPatLength</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">let</span> <span class="k">g</span><span class="p">:</span><span class="n">LookupFile_PreserveLastPattern</span> <span class="o">=</span> <span class="mi">0</span>
@@ -131,9 +133,7 @@
 <span class="n">let</span> <span class="k">g</span><span class="p">:</span><span class="n">LookupFile_AlwaysAcceptFirst</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">let</span> <span class="k">g</span><span class="p">:</span><span class="n">LookupFile_AllowNewFiles</span> <span class="o">=</span> <span class="mi">0</span>
 </pre></div>
-
-
-<h3>2.1. tags</h3>
+<h3 id="2.1. tags">2.1. tags</h3>
 <p><a href="http://easwy.com/blog/archives/advanced-vim-skills-lookupfile-plugin/">vi/vim使用进阶: lookupfile插件</a> 中介绍到 lookupfile 可以使用 ctags 生成的 tags 文件来查找，不过其查找效率比较低，所以作者写了一个 shell 脚本来生成专用的 tags 文件：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -141,94 +141,87 @@
 4
 5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
 <span class="c1"># generate tag file for lookupfile plugin</span>
-<span class="nb">echo</span> -e <span class="s2">&quot;!_TAG_FILE_SORTED\t2\t/2=foldcase/&quot;</span> &gt; filenametags
-find . -not -regex <span class="s1">&#39;.*\.\(png\|gif\)&#39;</span> -type f -printf <span class="s2">&quot;%f\t%p\t1\n&quot;</span> <span class="p">|</span> <span class="se">\</span>
+<span class="nb">echo</span> -e <span class="s2">"!_TAG_FILE_SORTED\t2\t/2=foldcase/"</span> &gt; filenametags
+find . -not -regex <span class="s1">'.*\.\(png\|gif\)'</span> -type f -printf <span class="s2">"%f\t%p\t1\n"</span> <span class="p">|</span> <span class="se">\</span>
     sort -f &gt;&gt; filenametags
 </pre></div>
 </td></tr></table>
-
 <p>为了方便起见，把这个脚本保存为 <code>genfiletags</code> 文件，然后将其移动到专门存放常用 shell 脚本的目录下，将这个目录添加到系统变量 <code>$PATH</code> 中，这样在 vim 中直接运行 <code>:!genfiletags</code> 就可以生成 tags 文件了。</p>
 <p>生成好 tags 文件后，还要配置 vim，告诉它使用这个文件来查找：</p>
-<div class="highlight"><pre><span></span><span class="k">if</span> <span class="nv">filereadable</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">./filenametags</span><span class="s2">&quot;</span><span class="ss">)</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_TagExpr</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">&quot;./filenametags&quot;</span><span class="s1">&#39;</span>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="nv">filereadable</span><span class="ss">(</span><span class="s2">"</span><span class="s">./filenametags</span><span class="s2">"</span><span class="ss">)</span>
+    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_TagExpr</span> <span class="o">=</span> <span class="s1">'</span><span class="s">"./filenametags"</span><span class="s1">'</span>
 <span class="k">endif</span>
 </pre></div>
-
-
-<h3>2.2. case sensitive</h3>
+<h3 id="2.2. case sensitive">2.2. case sensitive</h3>
 <p>lookupfile 插件是大小写敏感的，可以在查找到时候加上 <code>\c</code> 就能忽略大小写，不过这样很麻烦，下面是更加简单的方法，在 .vimrc 中添加下面这段代码即可：</p>
 <div class="highlight"><pre><span></span><span class="nv">function</span><span class="o">!</span> <span class="nv">LookupFile_IgnoreCaseFunc</span><span class="ss">(</span><span class="nv">pattern</span><span class="ss">)</span>
     <span class="nv">let</span> <span class="nv">_tags</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">tags</span>
     <span class="nv">try</span>
         <span class="nv">let</span> <span class="o">&amp;</span><span class="nv">tags</span> <span class="o">=</span> <span class="nv">eval</span><span class="ss">(</span><span class="nv">g</span>:<span class="nv">LookupFile_TagExpr</span><span class="ss">)</span>
-        <span class="nv">let</span> <span class="nv">newpattern</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">\c</span><span class="s1">&#39;</span> . <span class="nv">a</span>:<span class="nv">pattern</span>
+        <span class="nv">let</span> <span class="nv">newpattern</span> <span class="o">=</span> <span class="s1">'</span><span class="s">\c</span><span class="s1">'</span> . <span class="nv">a</span>:<span class="nv">pattern</span>
         <span class="nv">let</span> <span class="nv">tags</span> <span class="o">=</span> <span class="nv">taglist</span><span class="ss">(</span><span class="nv">newpattern</span><span class="ss">)</span>
     <span class="nv">catch</span>
-        <span class="nv">echohl</span> <span class="nv">ErrorMsg</span> <span class="o">|</span> <span class="nv">echo</span> <span class="s2">&quot;</span><span class="s">Exception: </span><span class="s2">&quot;</span> . <span class="nv">v</span>:<span class="nv">exception</span> <span class="o">|</span> <span class="nv">echohl</span> <span class="nv">NONE</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+        <span class="nv">echohl</span> <span class="nv">ErrorMsg</span> <span class="o">|</span> <span class="nv">echo</span> <span class="s2">"</span><span class="s">Exception: </span><span class="s2">"</span> . <span class="nv">v</span>:<span class="nv">exception</span> <span class="o">|</span> <span class="nv">echohl</span> <span class="nv">NONE</span>
+        <span class="k">return</span> <span class="s2">""</span>
     <span class="nv">finally</span>
         <span class="nv">let</span> <span class="o">&amp;</span><span class="nv">tags</span> <span class="o">=</span> <span class="nv">_tags</span>
     <span class="nv">endtry</span>
 
-    <span class="s2">&quot;</span><span class="s"> Show the matches for what is typed so far.</span>
-    <span class="nv">let</span> <span class="nv">files</span> <span class="o">=</span> <span class="nv">map</span><span class="ss">(</span><span class="nv">tags</span>, <span class="s1">&#39;</span><span class="s">v:val[&quot;filename&quot;]</span><span class="s1">&#39;</span><span class="ss">)</span>
+    <span class="s2">"</span><span class="s"> Show the matches for what is typed so far.</span>
+    <span class="nv">let</span> <span class="nv">files</span> <span class="o">=</span> <span class="nv">map</span><span class="ss">(</span><span class="nv">tags</span>, <span class="s1">'</span><span class="s">v:val["filename"]</span><span class="s1">'</span><span class="ss">)</span>
     <span class="k">return</span> <span class="nv">files</span>
 <span class="nv">endfunction</span>
-<span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_LookupFunc</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">LookupFile_IgnoreCaseFunc</span><span class="s1">&#39;</span>
+<span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_LookupFunc</span> <span class="o">=</span> <span class="s1">'</span><span class="s">LookupFile_IgnoreCaseFunc</span><span class="s1">'</span>
 </pre></div>
-
-
-<h3>2.3. Summary</h3>
+<h3 id="2.3. summary">2.3. Summary</h3>
 <p>综上，.vimrc 中的配置内容如下：</p>
-<div class="highlight"><pre><span></span><span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
-<span class="s2">&quot;</span><span class="s"> Config lookupfile</span>
-<span class="s2">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span></span><span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">"</span><span class="s"> Config lookupfile</span>
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
 <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_MinPatLength</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_PreserveLastPattern</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_PreservePatternHistory</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_AlwaysAcceptFirst</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_AllowNewFiles</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">if</span> <span class="nv">filereadable</span> <span class="ss">(</span><span class="s2">&quot;</span><span class="s">./filenametags</span><span class="s2">&quot;</span><span class="ss">)</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_TagExpr</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">&quot;./filenametags&quot;</span><span class="s1">&#39;</span>
+<span class="k">if</span> <span class="nv">filereadable</span> <span class="ss">(</span><span class="s2">"</span><span class="s">./filenametags</span><span class="s2">"</span><span class="ss">)</span>
+    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_TagExpr</span> <span class="o">=</span> <span class="s1">'</span><span class="s">"./filenametags"</span><span class="s1">'</span>
 <span class="k">endif</span>
 <span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">silent</span><span class="o">&gt;&lt;</span><span class="nv">leader</span><span class="o">&gt;</span><span class="nv">lk</span> :<span class="nv">LUTags</span><span class="o">&lt;</span><span class="nv">cr</span><span class="o">&gt;</span>
 <span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">silent</span><span class="o">&gt;&lt;</span><span class="nv">leader</span><span class="o">&gt;</span><span class="nv">ll</span> :<span class="nv">LUBufs</span><span class="o">&lt;</span><span class="nv">cr</span><span class="o">&gt;</span>
 <span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">silent</span><span class="o">&gt;&lt;</span><span class="nv">leader</span><span class="o">&gt;</span><span class="nv">lw</span> :<span class="nv">LUWalk</span><span class="o">&lt;</span><span class="nv">cr</span><span class="o">&gt;</span>
-<span class="s2">&quot;</span><span class="s"> lookup file with ignore case</span>
+<span class="s2">"</span><span class="s"> lookup file with ignore case</span>
 <span class="nv">function</span><span class="o">!</span> <span class="nv">LookupFile_IgnoreCaseFunc</span><span class="ss">(</span><span class="nv">pattern</span><span class="ss">)</span>
     <span class="nv">let</span> <span class="nv">_tags</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">tags</span>
     <span class="nv">try</span>
         <span class="nv">let</span> <span class="o">&amp;</span><span class="nv">tags</span> <span class="o">=</span> <span class="nv">eval</span><span class="ss">(</span><span class="nv">g</span>:<span class="nv">LookupFile_TagExpr</span><span class="ss">)</span>
-        <span class="nv">let</span> <span class="nv">newpattern</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">\c</span><span class="s1">&#39;</span> . <span class="nv">a</span>:<span class="nv">pattern</span>
+        <span class="nv">let</span> <span class="nv">newpattern</span> <span class="o">=</span> <span class="s1">'</span><span class="s">\c</span><span class="s1">'</span> . <span class="nv">a</span>:<span class="nv">pattern</span>
         <span class="nv">let</span> <span class="nv">tags</span> <span class="o">=</span> <span class="nv">taglist</span><span class="ss">(</span><span class="nv">newpattern</span><span class="ss">)</span>
     <span class="nv">catch</span>
-        <span class="nv">echohl</span> <span class="nv">ErrorMsg</span> <span class="o">|</span> <span class="nv">echo</span> <span class="s2">&quot;</span><span class="s">Exception: </span><span class="s2">&quot;</span> . <span class="nv">v</span>:<span class="nv">exception</span> <span class="o">|</span> <span class="nv">echohl</span> <span class="nv">NONE</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+        <span class="nv">echohl</span> <span class="nv">ErrorMsg</span> <span class="o">|</span> <span class="nv">echo</span> <span class="s2">"</span><span class="s">Exception: </span><span class="s2">"</span> . <span class="nv">v</span>:<span class="nv">exception</span> <span class="o">|</span> <span class="nv">echohl</span> <span class="nv">NONE</span>
+        <span class="k">return</span> <span class="s2">""</span>
     <span class="nv">finally</span>
         <span class="nv">let</span> <span class="o">&amp;</span><span class="nv">tags</span> <span class="o">=</span> <span class="nv">_tags</span>
     <span class="nv">endtry</span>
 
-    <span class="s2">&quot;</span><span class="s"> Show the matches for what is typed so far.</span>
-    <span class="nv">let</span> <span class="nv">files</span> <span class="o">=</span> <span class="nv">map</span><span class="ss">(</span><span class="nv">tags</span>, <span class="s1">&#39;</span><span class="s">v:val[&quot;filename&quot;]</span><span class="s1">&#39;</span><span class="ss">)</span>
+    <span class="s2">"</span><span class="s"> Show the matches for what is typed so far.</span>
+    <span class="nv">let</span> <span class="nv">files</span> <span class="o">=</span> <span class="nv">map</span><span class="ss">(</span><span class="nv">tags</span>, <span class="s1">'</span><span class="s">v:val["filename"]</span><span class="s1">'</span><span class="ss">)</span>
     <span class="k">return</span> <span class="nv">files</span>
 <span class="nv">endfunction</span>
-<span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_LookupFunc</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="s">LookupFile_IgnoreCaseFunc</span><span class="s1">&#39;</span>
+<span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_LookupFunc</span> <span class="o">=</span> <span class="s1">'</span><span class="s">LookupFile_IgnoreCaseFunc</span><span class="s1">'</span>
 </pre></div>
-
-
-<p><br></p>
-<h2>3. Usage</h2>
-<hr>
+<p><br/></p>
+<h2 id="3. usage_1">3. Usage</h2>
+<hr/>
 <p>lookupfile 可以查找文件夹、缓冲区、按照目录查找三种方法：</p>
-<h3>3.1. <code>:LookupFile</code></h3>
+<h3 id="3.1. :lookupfile">3.1. <code>:LookupFile</code></h3>
 <p>按 F5 或者输入命令 <code>:LookupFile</code> 来打开上部的 lookupfile 小窗口，输入文件名即可查找，可以使用 vim 的正则表达式查找，使用 Ctrl-N 和 Ctrl-P 来上下选择查找结果。</p>
-<h3>3.2. <code>:LUBufs</code></h3>
+<h3 id="3.2. :lubufs">3.2. <code>:LUBufs</code></h3>
 <p>虽然有 <code>BufExplorer</code> 可以查看 buffers，但是当 buffer 很多时，使用 lookupfile 更加方便一点。</p>
 <p>输入命令 <code>:LUBufs</code> 查找缓冲区的文件。</p>
-<h3>3.3. <code>:LUWalk</code></h3>
+<h3 id="3.3. :luwalk">3.3. <code>:LUWalk</code></h3>
 <p>使用 <code>:LUWalk</code> 来浏览目录。这个功能和 NERDTree 重复了，个人感觉 NERDTree 浏览目录更加方便一点，毕竟不用输入文件目录名，可以少翘几个字符...</p>
-<p><br></p>
-<h2>4. Ref</h2>
+<p><br/></p>
+<h2 id="4. ref_1">4. Ref</h2>
 <p><a href="http://easwy.com/blog/archives/advanced-vim-skills-lookupfile-plugin/">vi/vim使用进阶: lookupfile插件</a></p>
 <p><a href="http://blog.163.com/lgh_2002/blog/static/44017526201061313442254/">lookupfile.vim插件详解【OK】</a></p>
   </div>
@@ -252,11 +245,11 @@ find . -not -regex <span class="s1">&#39;.*\.\(png\|gif\)&#39;</span> -type f -p
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_bufexplorer_nerdtree_winmanager_powerline.html">学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
       <li><a href="http://guqian110.github.io/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
+      <li><a href="http://guqian110.github.io/posts/linux/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
     </ul>
   </div>
 

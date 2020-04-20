@@ -102,22 +102,26 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="OFDM 中的 IFFT/FFT 注意事项">OFDM 中的 IFFT/FFT 注意事项</a><ul><li><a class="toc-href" href="#1. intro" title="1. Intro">1. Intro</a></li><li><a class="toc-href" href="#2. ifft / fft" title="2. IFFT / FFT">2. IFFT / FFT</a></li><li><a class="toc-href" href="#3. ifft /fft in ofdm" title="3. IFFT /FFT in OFDM">3. IFFT /FFT in OFDM</a></li><li><a class="toc-href" href="#4. ref" title="4. Ref">4. Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2>1. Intro</h2>
+    <h2 id="1. intro">1. Intro</h2>
 <p>在做 OFDM 项目时，发现一个容易犯错的地方：<code>IFFT</code>/<code>FFT</code>。</p>
 <p>在很多介绍 OFDM 的书中，给出结论：在发射机，基带信号的复包络采用值正好是待发射序列的 IDFT，所以在 N 是 2 的指数时，可以采用 IFFT 来快速计算；在接收机，将接收的频带信号解调到基带，采样得到基带复包络，然后做 DFT (FFT) 即可得到原始的发射序列。</p>
 <p>这个结论是正确的，但是需要注意的一点是：</p>
 <p><strong>调制/解调所做的运算的形式和 IFFT/FFT 是相同的，但是有一个功率归一化的系数的差别。</strong></p>
 <p>很多书（<a href="http://book.douban.com/subject/1446684/">通信原理</a>）都给出了公式推导，然而这些公式并不严谨，这些公式只是为了说明做的变换形式是 IFFT/FFT。</p>
 <p>有的书（<a href="http://book.douban.com/subject/1140934/">宽带无线通信OFDM技术</a>）则给出了更加详细，严谨的公式推导。</p>
-<h2>2. IFFT / FFT</h2>
-<p><img alt="fft/ifft" src="http://guqian110.github.io/images/xilinx_fft_core_notes/theory.png"></p>
-<h2>3. IFFT /FFT in OFDM</h2>
+<h2 id="2. ifft / fft">2. IFFT / FFT</h2>
+<p><img alt="fft/ifft" src="http://guqian110.github.io/images/xilinx_fft_core_notes/theory.png"/></p>
+<h2 id="3. ifft /fft in ofdm">3. IFFT /FFT in OFDM</h2>
 <p>OFDM 中 <strong>功率归一化因子</strong> 为 1/sqr(N)，而标准的 IFFT 中的系数为 1/N，所以在调用标准 IFFT 函数之后，需要额外乘以一个 sqr(N) ：</p>
-<p><code>1/N × sqr(N) = 1/sqr(N)</code></p>
+<p><code>1/N &times; sqr(N) = 1/sqr(N)</code></p>
 <p>而在接收端，也要先除以一个 sqr(N)，然后再进行 FFT 。</p>
-<p><br></p>
-<h2>4. Ref</h2>
+<p><br/></p>
+<h2 id="4. ref">4. Ref</h2>
 <p><a href="http://book.douban.com/subject/1446684/">通信原理</a></p>
 <p><a href="http://book.douban.com/subject/1140934/">宽带无线通信OFDM技术</a></p>
   </div>
@@ -142,8 +146,8 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="http://guqian110.github.io/posts/telecom/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/xilinx_fft_core_notes.html">Xilinx FFT IP core 笔记</a></li>
+      <li><a href="http://guqian110.github.io/posts/telecom/learning_ofdm_on_fpga_1_ofdm_basic.html">学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</a></li>
     </ul>
   </div>
 

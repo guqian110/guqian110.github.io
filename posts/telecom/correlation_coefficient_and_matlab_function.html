@@ -101,82 +101,82 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="相关系数及Matlab函数">相关系数及Matlab函数</a><ul><li><a class="toc-href" href="#1. correlation" title="1. Correlation">1. Correlation</a><ul><li><a class="toc-href" coefficient'="" href="#1.1. pearson" moment="" product="" s="" title="1.1. Pearson">1.1. Pearson's product moment coefficient</a></li><li><a class="toc-href" href="#1.2. properties" title="1.2. Properties">1.2. Properties</a></li><li><a class="toc-href" href="#1.3. cross-correlation" title="1.3. Cross-correlation">1.3. Cross-correlation</a></li><li><a class="toc-href" href="#1.4. autocorrelation" title="1.4. Autocorrelation">1.4. Autocorrelation</a></li></ul></li><li><a class="toc-href" href="#2. matlab function_1" title="2. Matlab function">2. Matlab function</a><ul><li><a class="toc-href" href="#2.1. xcorr" title="2.1. xcorr">2.1. xcorr</a></li><li><a class="toc-href" href="#2.2. corrcoef" title="2.2. corrcoef">2.2. corrcoef</a></li></ul></li><li><a class="toc-href" href="#3. ref_1" title="3. Ref">3. Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2>1. Correlation</h2>
-<hr>
+    <h2 id="1. correlation">1. Correlation</h2>
+<hr/>
 <p>首先总结一下基础背景知识：</p>
-<p><a href="http://en.wikipedia.org/wiki/Correlation_and_dependence">相关 <code>Correlation</code></a> 是概率论与统计学中用来刻画两个随机变量之间统计关系的强弱和方向的量。在广义的定义下，有很多种类的相关系数（<code>correlation coefficient</code>），它们通常用字母 <code>ρ</code> 或者 <code>r</code> 来表示。</p>
+<p><a href="http://en.wikipedia.org/wiki/Correlation_and_dependence">相关 <code>Correlation</code></a> 是概率论与统计学中用来刻画两个随机变量之间统计关系的强弱和方向的量。在广义的定义下，有很多种类的相关系数（<code>correlation coefficient</code>），它们通常用字母 <code>&rho;</code> 或者 <code>r</code> 来表示。</p>
 <p>我们通常说的相关系数的学名是：<a href="http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">皮尔逊积差系数（Pearson's product moment coefficient）</a>，这种相关系数只对两个变量的线性关系敏感。</p>
-<h3>1.1. Pearson's product moment coefficient</h3>
+<h3 id="1.1. pearson's product moment coefficient">1.1. Pearson's product moment coefficient</h3>
 <p><strong>在统计学中，基于总体的定义如下：</strong></p>
 <p>Pearson 相关系数使用两个变量的协方差（<code>covariance</code>）和标准差（<code>standard deviations</code>）来定义：</p>
-<p><img alt="eq1" src="http://upload.wikimedia.org/math/5/c/f/5cfbb6f9088ef5fbc8a84f59da872984.png"></p>
+<p><img alt="eq1" src="http://upload.wikimedia.org/math/5/c/f/5cfbb6f9088ef5fbc8a84f59da872984.png"/></p>
 <p>其中，cov 是协方差，sigma 是标准差。因为 cov 可以写作：</p>
-<p><img alt="eq2" src="http://upload.wikimedia.org/math/8/8/a/88a377faf813d502d6ab1f8193481223.png"></p>
+<p><img alt="eq2" src="http://upload.wikimedia.org/math/8/8/a/88a377faf813d502d6ab1f8193481223.png"/></p>
 <p>所以 Person 相关系数的定义式可以写作：</p>
-<p><img alt="eq3" src="http://upload.wikimedia.org/math/e/2/6/e26e29b58777e55d79883c77edca4428.png"></p>
+<p><img alt="eq3" src="http://upload.wikimedia.org/math/e/2/6/e26e29b58777e55d79883c77edca4428.png"/></p>
 <p>根据概率论知识可以得到如下的变形形式：</p>
-<p><img alt="eq4" src="http://upload.wikimedia.org/math/0/9/d/09d413641c8ba8f54b6113e5857c69f8.png"></p>
+<p><img alt="eq4" src="http://upload.wikimedia.org/math/0/9/d/09d413641c8ba8f54b6113e5857c69f8.png"/></p>
 <p><strong>基于样本来估计协方差和标准差，可以得到定义如下：</strong></p>
-<p><img alt="eq5" src="http://upload.wikimedia.org/math/e/3/c/e3c7ff025788887bba2f3dfca7df94b9.png"></p>
+<p><img alt="eq5" src="http://upload.wikimedia.org/math/e/3/c/e3c7ff025788887bba2f3dfca7df94b9.png"/></p>
 <p>通过变形，可以得到下式：</p>
-<p><img alt="eq6" src="http://upload.wikimedia.org/math/8/0/5/8059a4dddb8b6c2c5e1eeefcb9630d93.png"></p>
-<h3>1.2. Properties</h3>
+<p><img alt="eq6" src="http://upload.wikimedia.org/math/8/0/5/8059a4dddb8b6c2c5e1eeefcb9630d93.png"/></p>
+<h3 id="1.2. properties">1.2. Properties</h3>
 <p><a href="http://zh.wikipedia.org/wiki/%E7%9B%B8%E5%85%B3">wiki</a>:</p>
 <blockquote>
 <p>当两个变量的标准差都不为零，相关系数才有定义。从柯西-施瓦茨不等式可知，相关系数的绝对值不超过1。当两个变量的线性关系增强时，相关系数趋于1或-1。当一个变量增加而另一变量也增加时，相关系数大于0。当一个变量的增加而另一变量减少时，相关系数小于0。当两个变量独立时，相关系数为0.但反之并不成立。这是因为相关系数仅仅反映了两个变量之间是否线性相关。比如说，X是区间［－1，1］上的一个均匀分布的随机变量。Y = X2.那么Y是完全由X确定。因此Y和X是不独立的。但是相关系数为0。或者说他们是不相关的。当Y和X服从联合正态分布时，其相互独立和不相关是等价的。</p>
-<p>当一个或两个变量带有测量误差时，他们的相关性就受到削弱，这时，“反衰减”性（disattenuation）是一个更准确的系数。</p>
+<p>当一个或两个变量带有测量误差时，他们的相关性就受到削弱，这时，&ldquo;反衰减&rdquo;性（disattenuation）是一个更准确的系数。</p>
 </blockquote>
 <p><a href="http://blog.sina.com.cn/s/blog_6ce23c390101c6zc.html">【总结】matlab求两个序列的相关性</a></p>
 <blockquote>
 <p>相关系数只是一个比率，不是等单位量度，无什么单位名称，也不是相关的百分数，一般取小数点后两位来表示。相关系数的正负号只表示相关的方向，绝对值表示相关的程度。因为不是等单位的度量，因而不能说相关系数0.7是0.35两倍，只能说相关系数为0.7的二列变量相关程度比相关系数为0.35的二列变量相关程度更为密切和更高。也不能说相关系数从0.70到0.80与相关系数从0.30到0.40增加的程度一样大。</p>
 <p>对于相关系数的大小所表示的意义目前在统计学界尚不一致，但通常按下是这样认为的：</p>
 <p>相关系数      相关程度</p>
-<p>0.00-±0.30    微相关</p>
-<p>±0.30-±0.50   实相关</p>
-<p>±0.50-±0.80   显著相关</p>
-<p>±0.80-±1.00   高度相关</p>
+<p>0.00-&plusmn;0.30    微相关</p>
+<p>&plusmn;0.30-&plusmn;0.50   实相关</p>
+<p>&plusmn;0.50-&plusmn;0.80   显著相关</p>
+<p>&plusmn;0.80-&plusmn;1.00   高度相关</p>
 </blockquote>
 <p>复习了基础知识，另外还有两个概念：</p>
-<h3>1.3. Cross-correlation</h3>
+<h3 id="1.3. cross-correlation">1.3. Cross-correlation</h3>
 <p>对于连续函数，有下面的定义：</p>
-<p><img alt="eq7" src="http://upload.wikimedia.org/math/3/a/a/3aa0f20ebd9e984d8a17642c11d43de2.png"></p>
+<p><img alt="eq7" src="http://upload.wikimedia.org/math/3/a/a/3aa0f20ebd9e984d8a17642c11d43de2.png"/></p>
 <p>对于离散函数，有下面的定义：</p>
-<p><img alt="eq8" src="http://upload.wikimedia.org/math/d/f/6/df665b17d676571c9dc7a1800e1b186a.png"></p>
+<p><img alt="eq8" src="http://upload.wikimedia.org/math/d/f/6/df665b17d676571c9dc7a1800e1b186a.png"/></p>
 <p>在信号处理中，用 互相关 <a href="http://en.wikipedia.org/wiki/Cross-correlation">Cross-correlation</a> 来<strong>衡量两个序列之间的相似程度</strong>，通常可以用于在长序列中寻找一个特定的短序列（也就是通信系统的同步中）。</p>
 <p>在数理统计中，互相关用来两个随机序列的相关性。</p>
 <p>从定义式中可以看到，互相关函数和卷积运算类似，也是两个序列滑动相乘，但是区别在于：</p>
 <p>互相关的两个序列都不翻转，直接滑动相乘，求和；卷积的其中一个序列需要先翻转，然后滑动相乘，求和。</p>
 <p>所以，<strong>f(t) 和 g(t) 做相关 = f*(-t) 与 g(t) 做卷积</strong></p>
-<h3>1.4. Autocorrelation</h3>
+<h3 id="1.4. autocorrelation">1.4. Autocorrelation</h3>
 <p>自相关 <a href="http://en.wikipedia.org/wiki/Autocorrelation">Autocorrelation</a> 是互相关的一种特殊情况，就是一个序列和它本身做相关，而不是两个序列，它<strong>主要用来衡量一个序列在不同时刻取值的相似程度</strong>。</p>
 <p><strong>在数理统计中，自相关的定义式如下：</strong></p>
-<p><img alt="eq9" src="http://upload.wikimedia.org/math/3/7/c/37c9812eaf2deca258f5526ac9067aa2.png"></p>
+<p><img alt="eq9" src="http://upload.wikimedia.org/math/3/7/c/37c9812eaf2deca258f5526ac9067aa2.png"/></p>
 <p>如果随机过程是一个宽平稳过程，那么均值和方差都不是时间的函数，所以，自相关定义式变为：</p>
-<p><img alt="eq10" src="http://upload.wikimedia.org/math/1/c/c/1cc9b1b80ab17d64568bca15bc7a5a9d.png"></p>
-<p>在某些学科中，会去掉归一化因子 σ2，使用 自协方差 来代替 自相关。但是归一化因子可以让自相关的取值在 [-1, +1] 之间，不会随着序列的绝对大小而变化。</p>
+<p><img alt="eq10" src="http://upload.wikimedia.org/math/1/c/c/1cc9b1b80ab17d64568bca15bc7a5a9d.png"/></p>
+<p>在某些学科中，会去掉归一化因子 &sigma;2，使用 自协方差 来代替 自相关。但是归一化因子可以让自相关的取值在 [-1, +1] 之间，不会随着序列的绝对大小而变化。</p>
 <p><strong>在信号处理中，</strong></p>
 <p>自相关的定义会去掉归一化，即不用减去均值，也不用除以方差。当除以方差时，一般叫做另外一个名字：自相关系数 <code>autocorrelation coefficient</code>。</p>
 <p>对于连续函数，自相关的定义如下：</p>
-<p><img alt="eq11" src="http://upload.wikimedia.org/math/9/8/c/98cd888f0d13972a937f5d37d9f24623.png"></p>
+<p><img alt="eq11" src="http://upload.wikimedia.org/math/9/8/c/98cd888f0d13972a937f5d37d9f24623.png"/></p>
 <p>对于离散函数，自相关的定义如下：</p>
-<p><img alt="eq12" src="http://upload.wikimedia.org/math/4/c/2/4c23ef05df69ee440a2bda5a0b1d83bc.png"></p>
-<p>自相关有很多性质，比如对称性、<a href="http://en.wikipedia.org/wiki/Wiener%E2%80%93Khinchin_theorem">维纳-辛钦定理（Wiener–Khinchin theorem）</a> 等，就不再重复了。</p>
-<p><br></p>
-<h2>2. Matlab function</h2>
-<hr>
-<h3>2.1. xcorr</h3>
+<p><img alt="eq12" src="http://upload.wikimedia.org/math/4/c/2/4c23ef05df69ee440a2bda5a0b1d83bc.png"/></p>
+<p>自相关有很多性质，比如对称性、<a href="http://en.wikipedia.org/wiki/Wiener%E2%80%93Khinchin_theorem">维纳-辛钦定理（Wiener&ndash;Khinchin theorem）</a> 等，就不再重复了。</p>
+<p><br/></p>
+<h2 id="2. matlab function_1">2. Matlab function</h2>
+<hr/>
+<h3 id="2.1. xcorr">2.1. xcorr</h3>
 <p>在 Matlab 中，计算自相关和互相关，可以使用同一个函数：<code>xcorr</code>。</p>
 <p>自相关：</p>
 <div class="highlight"><pre><span></span><span class="k">c</span> <span class="o">=</span> <span class="n">xcorr</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 </pre></div>
-
-
 <p>互相关：</p>
 <div class="highlight"><pre><span></span><span class="k">c</span> <span class="o">=</span> <span class="n">xcorr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 </pre></div>
-
-
 <p>因为两个长度为 N 的序列进行相关，可以知道最多有 2N - 1 个非 0 的移位相乘结果，所以 xcorr 的返回结果就是长度为 2N - 1 的向量。（如果其中一个序列的长度小于 N，则会先补零再计算相关）</p>
 <p>用 <code>help xcorr</code> 来查看详细的函数说明。</p>
 <p>下面举个使用例子：</p>
@@ -195,12 +195,9 @@
 <span class="n">c3</span> <span class="p">=</span> <span class="n">xcorr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">);</span>
 </pre></div>
 </td></tr></table>
-
 <p>对于序列 x = [1, 2, 3]，移位相乘、求和，可以得到结果：</p>
 <div class="highlight"><pre><span></span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span>
 </pre></div>
-
-
 <p>对于序列 y 类似。</p>
 <p>对于 x、y 的互相关，当两个序列对齐的时候，相关性最高（归一化后为 1，意味着两个序列线性相关）</p>
 <p>xcorr 默认的返回结果是没有经过归一化的，而通常的应用中都要求归一化以得到精确的估计。解决这一问题的方法就是使用 xcorr 函数提供的 <code>option</code> 选项：</p>
@@ -218,24 +215,21 @@
 <p>'none' 未经归一化的原始数据，默认的返回结果</p>
 </li>
 </ul>
-<h3>2.2. corrcoef</h3>
-<p>可以用 <code>corrcoef</code> 函数来求两个序列的相关系数，函数的返回值为一个 2×2 的矩阵，对角线上的值为两个序列的自相关系数，非对角线上的值为两个序列的互相关系数。</p>
+<h3 id="2.2. corrcoef">2.2. corrcoef</h3>
+<p>可以用 <code>corrcoef</code> 函数来求两个序列的相关系数，函数的返回值为一个 2&times;2 的矩阵，对角线上的值为两个序列的自相关系数，非对角线上的值为两个序列的互相关系数。</p>
 <p>在上面的例子中加入下面两句：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="p">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">];</span>
 <span class="n">c4</span> <span class="p">=</span> <span class="n">corrcoef</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">z</span><span class="p">);</span>
 </pre></div>
 </td></tr></table>
-
 <p>返回结果为</p>
 <div class="highlight"><pre><span></span><span class="mi">1</span>   <span class="o">-</span><span class="mi">1</span>
 <span class="o">-</span><span class="mi">1</span>   <span class="mi">1</span>
 </pre></div>
-
-
 <p>因为 z 是 x 的线性函数，且系数为 -1，所以非对角线上的值为 -1。</p>
-<p><br></p>
-<h2>3. Ref</h2>
+<p><br/></p>
+<h2 id="3. ref_1">3. Ref</h2>
 <p><a href="http://en.wikipedia.org/wiki/Correlation_and_dependence">correlation wiki</a></p>
 <p><a href="http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">pearson wiki</a></p>
 <p><a href="http://en.wikipedia.org/wiki/Cross-correlation">Cross-correlation</a></p>

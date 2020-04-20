@@ -102,42 +102,43 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Ubuntu 下安装 ISE &amp; Modelsim">Ubuntu 下安装 ISE &amp; Modelsim</a><ul><li><a class="toc-href" href="#1. xia zai" title="1. 下载">1. 下载</a><ul><li><a class="toc-href" href="#1.1. ise design suit for linux" title="1.1. ISE Design Suit for Linux">1.1. ISE Design Suit for Linux</a></li><li><a class="toc-href" href="#1.2. modelsim for linux" title="1.2. ModelSim for Linux">1.2. ModelSim for Linux</a></li></ul></li><li><a class="toc-href" href="#2. an zhuang_1" title="2. 安装">2. 安装</a><ul><li><a class="toc-href" href="#2.1. ise ds 14.7" title="2.1. ISE DS 14.7">2.1. ISE DS 14.7</a></li><li><a class="toc-href" href="#2.2. modelsim" title="2.2. ModelSim">2.2. ModelSim</a></li></ul></li><li><a class="toc-href" href="#3. pei zhi  ise &amp; modelsim_1" title="3. 配置 ISE &amp; ModelSim">3. 配置 ISE &amp; ModelSim</a><ul><li><a class="toc-href" href="#3.1. ise" title="3.1. ISE">3.1. ISE</a></li><li><a class="toc-href" href="#3.2. modelsim" title="3.2. ModelSim">3.2. ModelSim</a></li></ul></li><li><a class="toc-href" href="#4. can kao_1" title="4. 参考">4. 参考</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来。</p>
 <p><em>软件版本：</em></p>
 <p>Ubuntu 13.10 Desktop amd64 </p>
 <p>ISE 14.7 for Linux</p>
 <p>ModelSim 6.5b for Linux</p>
-<p><br></p>
-<h2>1. 下载</h2>
-<hr>
-<h3>1.1. ISE Design Suit for Linux</h3>
+<p><br/></p>
+<h2 id="1. xia zai">1. 下载</h2>
+<hr/>
+<h3 id="1.1. ise design suit for linux">1.1. ISE Design Suit for Linux</h3>
 <p>Xilinx 官方网站上有<a href="https://secure.xilinx.com/webreg/register.do?group=dlc&amp;htmlfile=&amp;emailFile=&amp;cancellink=&amp;eFrom=&amp;eSubject=&amp;version=14.7&amp;akdm=1&amp;filename=Xilinx_ISE_DS_Lin_14.7_1015_1.tar">下载链接</a>，但是在校园网内下载速度实在是蛋疼，还好有校内 bt 资源。</p>
 <p>我下载下来的 ISE 版本为 <strong>14.7</strong>，tar 包大小为 6.5 G 。</p>
-<h3>1.2. ModelSim for Linux</h3>
+<h3 id="1.2. modelsim for linux">1.2. ModelSim for Linux</h3>
 <p>网上的教程（2011 年前）都说是 <a href="http://www.mentor.com/products/fpga/model">ModelSim 官方网站</a> 上提供 ftp 下载链接，但是好像现在官网上不再提供下载链接了，我只找到 ModelSim PE Student Edition，而且还是 Windows 平台的...</p>
 <p>花费了一下午的时间，不停地在各个论坛注册下载附件，终于把 ModelSim_6.5b for Linux 下载下来了,结果安装时提示找不到 <code>libxp.so.6</code> 库，于是 <code>apt-get</code> 到一些 <code>libxp</code> 的库，安装后仍然提示找不到，无奈放弃了，准备老老实实用 <code>ism</code> 了（以后有时间了再慢慢折腾 T_T）</p>
-<p><br></p>
-<h2>2. 安装</h2>
-<hr>
-<h3>2.1. ISE DS 14.7</h3>
+<p><br/></p>
+<h2 id="2. an zhuang_1">2. 安装</h2>
+<hr/>
+<h3 id="2.1. ise ds 14.7">2.1. ISE DS 14.7</h3>
 <p>首先解压</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>tar -xvf Xilinx_ISE_DS_Lin_14.7_1015_1.tar
 </pre></div>
 </td></tr></table>
-
 <p>接着进入解压出来的目录并给安装文件赋予执行的权限</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">cd</span> Xilinx_ISE_DS_Lin_14.7_1015_1/
 sudo chmod +x xsetup
 </pre></div>
 </td></tr></table>
-
 <p>然后执行 xsetup</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo ./xsetup
 </pre></div>
 </td></tr></table>
-
 <p>然后熟悉的图形界面就出来，和 Windows 下一样，同意安装许可协议，不停地下一步就可以安装成功。</p>
 <p>安装完成以后，运行</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -145,14 +146,12 @@ sudo chmod +x xsetup
 <span class="nb">source</span> settings64.sh
 </pre></div>
 </td></tr></table>
-
 <p>此时，已经可以从终端运行 ISE 了</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>nohup ise<span class="p">&amp;</span>
 </pre></div>
 </td></tr></table>
-
 <p>熟悉的图形界面出来了：</p>
-<p><img alt="ise" src="/images/install-ise-modelsim/ise_start.png"></p>
+<p><img alt="ise" src="/images/install-ise-modelsim/ise_start.png"/></p>
 <p>P.S.</p>
 <ol>
 <li>
@@ -175,53 +174,47 @@ sudo chmod +x xsetup
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install libusb-dev libc6-dev-i386 fxload
 </pre></div>
 </td></tr></table>
-
 <p>接着下载驱动程序的源代码</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">cd</span> /opt/Xilinx
 sudo git clone git://git.zerfleddert.de/usb-driver
 </pre></div>
 </td></tr></table>
-
 <p>然后编译驱动程序</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">cd</span> usb-driver/
 sudo make
 </pre></div>
 </td></tr></table>
-
 <p>下载下来的源代码中有个脚本可以设置好一切，我们只需要运行脚本就 ok</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>./setup_pcusb /opt/Xilinx/14.7/ISE_DS/ISE/
 </pre></div>
 </td></tr></table>
-
 <p>把 Xilinx 路径添加到系统 PATH 中</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/&quot;</span> &gt;&gt; ~/.bashrc
-<span class="nb">echo</span> <span class="s2">&quot;export PATH&quot;</span> &gt;&gt; ~/.bashrc
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">"PATH=\$PATH:/opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/"</span> &gt;&gt; ~/.bashrc
+<span class="nb">echo</span> <span class="s2">"export PATH"</span> &gt;&gt; ~/.bashrc
 </pre></div>
 </td></tr></table>
-
 <p>这时候，写个小测试的程序，<code>Systhesize</code> -&gt; <code>Implement</code> -&gt; <code>Generate Programming File</code>，打开 <code>iMPACT</code>, 如图所示，可以看到已经识别出 JTAG 链上的芯片</p>
-<p><img alt="jtag" src="/images/install-ise-modelsim/jtag.png"></p>
-<h3>2.2. ModelSim</h3>
+<p><img alt="jtag" src="/images/install-ise-modelsim/jtag.png"/></p>
+<h3 id="2.2. modelsim">2.2. ModelSim</h3>
 <p>待续...</p>
-<p><br></p>
-<h2>3. 配置 ISE &amp; ModelSim</h2>
-<hr>
-<h3>3.1. ISE</h3>
+<p><br/></p>
+<h2 id="3. pei zhi  ise &amp; modelsim_1">3. 配置 ISE &amp; ModelSim</h2>
+<hr/>
+<h3 id="3.1. ise">3.1. ISE</h3>
 <p>其实也没有特殊配置的地方，主要是自定义代码编辑器，目前我的主要使用的是 <code>sublime text 2</code>，正在向 <code>vim</code> 过度ing</p>
-<p>具体步骤 Edit -&gt; Preferences -&gt; Editors，选择 <code>custom</code>，在右侧的 “Command line syntax” 中写自定义编辑器的执行路径</p>
+<p>具体步骤 Edit -&gt; Preferences -&gt; Editors，选择 <code>custom</code>，在右侧的 &ldquo;Command line syntax&rdquo; 中写自定义编辑器的执行路径</p>
 <p>配置自定义编辑器为 vim</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>gnome-terminal --maximize -x vim <span class="nv">$1</span>
 </pre></div>
 </td></tr></table>
-
-<h3>3.2. ModelSim</h3>
+<h3 id="3.2. modelsim">3.2. ModelSim</h3>
 <p>ModelSim 编译 Xilinx库，ISE 关联 ModelSim</p>
 <p>待续...</p>
-<p><br></p>
-<h2>4. 参考</h2>
+<p><br/></p>
+<h2 id="4. can kao_1">4. 参考</h2>
 <p><a href="http://rmdir.de/~michael/xilinx/">XILINX JTAG tools on Linux without proprietary kernel modules</a></p>
 <p><a href="http://www.george-smart.co.uk/wiki/Xilinx_JTAG_Linux">Xilinx JTAG Linux</a></p>
 <p><a href="http://blog.csdn.net/yunz1994/article/details/12350071">【Linux软件安装】Ubuntu12.04: Xilinx ISE 14.6</a></p>

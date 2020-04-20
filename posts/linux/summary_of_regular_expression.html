@@ -100,23 +100,27 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Regular Expression 小结">Regular Expression 小结</a><ul><li><a class="toc-href" href="#1. what is a re?" title="1. What Is a RE?">1. What Is a RE?</a></li><li><a class="toc-href" href="#2. basic" title="2. Basic">2. Basic</a></li><li><a class="toc-href" href="#3. simple match patterns" title="3. Simple Match Patterns">3. Simple Match Patterns</a></li><li><a class="toc-href" href="#4. boundaries" title="4. Boundaries">4. Boundaries</a></li><li><a class="toc-href" href="#5. alternation, groups, and backreferences" title="5. Alternation, Groups, and Backreferences">5. Alternation, Groups, and Backreferences</a></li><li><a class="toc-href" href="#6. character classes" title="6. Character Classes">6. Character Classes</a></li><li><a class="toc-href" href="#7. matching unicode and other characters" title="7. Matching Unicode and Other Characters">7. Matching Unicode and Other Characters</a></li><li><a class="toc-href" href="#8. quantifiers" title="8. Quantifiers">8. Quantifiers</a><ul><li><a class="toc-href" href="#8.1. greedy, lazy, and possessive" title="8.1. Greedy, Lazy, and Possessive">8.1. Greedy, Lazy, and Possessive</a></li><li><a class="toc-href" href="#8.2. basic quantifiers" title="8.2. Basic Quantifiers">8.2. Basic Quantifiers</a></li><li><a class="toc-href" href="#8.3. range syntax" title="8.3. Range Syntax">8.3. Range Syntax</a></li><li><a class="toc-href" href="#8.4. lazy quantifiers" title="8.4. Lazy Quantifiers">8.4. Lazy Quantifiers</a></li><li><a class="toc-href" href="#8.5. possessive quantifiers" title="8.5. Possessive Quantifiers">8.5. Possessive Quantifiers</a></li></ul></li><li><a class="toc-href" href="#9. lookarounds_1" title="9. Lookarounds">9. Lookarounds</a></li><li><a class="toc-href" href="#10. ref" title="10. Ref">10. Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>看完了 <a href="http://book.douban.com/subject/6959486/">Introducing Regular Expressions</a>，记录一下学习笔记。这本书是非常简单的入门书，一天时间就能看完。作者还推荐了基本进阶书：</p>
 <p><a href="http://book.douban.com/subject/1872091/">Mastering Regular Expressions</a></p>
 <p><a href="http://book.douban.com/subject/3443904/">Regular Expressions Cookbook</a></p>
 <p><a href="http://book.douban.com/subject/2363803/">Regular Expression Pocket Reference</a></p>
 <p><em>看完这本书，基本上已经满足项目中简单的 RE 需求，以后需要深入的话，再补这几本书。</em></p>
-<p><br></p>
-<h2>1. What Is a RE?</h2>
-<hr>
+<p><br/></p>
+<h2 id="1. what is a re?">1. What Is a RE?</h2>
+<hr/>
 <p>引用 Ken Thompson 的话：</p>
 <blockquote>
 <p>A regular expression is a pattern which specifies a set of strings of characters; it is said
 to match certain strings.</p>
 </blockquote>
-<p><br></p>
-<h2>2. Basic</h2>
-<hr>
+<p><br/></p>
+<h2 id="2. basic">2. Basic</h2>
+<hr/>
 <ul>
 <li>
 <p>metacharacters</p>
@@ -133,12 +137,10 @@ to match certain strings.</p>
 <span class="err">{}</span>  <span class="o">//</span> <span class="err">量词或代码块符号</span>
 <span class="p">()</span>  <span class="o">//</span> <span class="err">分组符号</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>character shorthand</p>
-<p>也叫做 character escape，中文翻译成：“字符组简写” / “转义字符”，常用简写：</p>
+<p>也叫做 character escape，中文翻译成：&ldquo;字符组简写&rdquo; / &ldquo;转义字符&rdquo;，常用简写：</p>
 <div class="highlight"><pre><span></span><span class="err">\</span><span class="n">d</span>      <span class="o">//</span> <span class="err">数字字符，</span><span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
 <span class="err">\</span><span class="n">D</span>      <span class="o">//</span> <span class="err">非数字字符，</span> <span class="o">=</span> <span class="p">[</span><span class="o">^</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
 <span class="err">\</span><span class="n">w</span>      <span class="o">//</span> <span class="err">单词字符</span>
@@ -150,12 +152,10 @@ to match certain strings.</p>
 <span class="err">\</span><span class="n">a</span>      <span class="o">//</span> <span class="err">报警符</span>
 <span class="err">\</span><span class="n">cx</span>     <span class="o">//</span> <span class="err">控制字符</span>
 </pre></div>
-
-
 </li>
 </ul>
-<h2>3. Simple Match Patterns</h2>
-<hr>
+<h2 id="3. simple match patterns">3. Simple Match Patterns</h2>
+<hr/>
 <p>几个常见的模式匹配：</p>
 <ul>
 <li>
@@ -168,8 +168,6 @@ to match certain strings.</p>
 <span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>   <span class="o">//</span> <span class="mi">0</span><span class="o">~</span><span class="mi">9</span> <span class="err">任意一个数字</span>
 <span class="p">[</span><span class="mi">1278</span><span class="p">]</span>  <span class="o">//</span> <span class="err">限定备选集合为</span> <span class="mi">1</span><span class="err">，</span><span class="mi">2</span><span class="err">，</span><span class="mi">7</span><span class="err">，</span><span class="mi">8</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>non-digits</p>
@@ -178,16 +176,12 @@ to match certain strings.</p>
 <span class="p">[</span><span class="o">^</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
 <span class="p">[</span><span class="o">^</span><span class="err">\</span><span class="n">d</span><span class="p">]</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>word characters</p>
 <div class="highlight"><pre><span></span><span class="err">\</span><span class="n">w</span>              <span class="o">//</span> <span class="err">简写形式</span>
 <span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>     <span class="o">//</span> <span class="n">a</span><span class="o">~</span><span class="n">z</span><span class="err">、</span><span class="n">A</span><span class="o">~</span><span class="n">Z</span><span class="err">、</span><span class="mi">0</span><span class="o">~</span><span class="mi">9</span> <span class="err">任意一个字符</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>non-word characters</p>
@@ -196,36 +190,28 @@ to match certain strings.</p>
 <span class="p">[</span><span class="o">^</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
 <span class="p">[</span><span class="o">^</span><span class="err">\</span><span class="n">w</span><span class="p">]</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>whitespace</p>
 <div class="highlight"><pre><span></span><span class="err">\</span><span class="n">s</span>
 <span class="p">[</span> <span class="err">\</span><span class="n">t</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span><span class="p">]</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>any characters</p>
 <div class="highlight"><pre><span></span><span class="p">.</span>
 </pre></div>
-
-
 </li>
 </ul>
-<p><br></p>
-<h2>4. Boundaries</h2>
-<hr>
+<p><br/></p>
+<h2 id="4. boundaries">4. Boundaries</h2>
+<hr/>
 <ul>
 <li>
 <p>行首、行尾</p>
 <div class="highlight"><pre><span></span><span class="o">^</span>       <span class="o">//</span> <span class="err">行首</span>
 <span class="err">$</span>       <span class="o">//</span> <span class="err">行尾</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>单词边界</p>
@@ -233,41 +219,31 @@ to match certain strings.</p>
 <span class="err">\</span><span class="o">&lt;</span>      <span class="o">//</span> <span class="err">单词开头</span>
 <span class="err">\</span><span class="o">&gt;</span>      <span class="o">//</span> <span class="err">单词结尾</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>非单词边界</p>
 <div class="highlight"><pre><span></span><span class="err">\</span><span class="n">B</span>
 </pre></div>
-
-
 </li>
 </ul>
-<p><br></p>
-<h2>5. Alternation, Groups, and Backreferences</h2>
-<hr>
+<p><br/></p>
+<h2 id="5. alternation, groups, and backreferences">5. Alternation, Groups, and Backreferences</h2>
+<hr/>
 <ul>
 <li>
 <p>Alternation</p>
 <p>比如要匹配 THE 或者 The 或者 the，使用如下的语法</p>
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="n">THE</span><span class="o">|</span><span class="n">The</span><span class="o">|</span><span class="n">the</span><span class="p">)</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>Subpatterns</p>
 <p>THE、The、the 是 3 个子模式：</p>
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="n">THE</span><span class="o">|</span><span class="n">The</span><span class="o">|</span><span class="n">the</span><span class="p">)</span>
 </pre></div>
-
-
 <p>括号对于子模式不是必须的：</p>
 <div class="highlight"><pre><span></span><span class="err">\</span><span class="n">b</span><span class="o">[</span><span class="n">tT</span><span class="o">]</span><span class="n">h</span><span class="o">[</span><span class="n">ceinry</span><span class="o">]*</span><span class="err">\</span><span class="n">b</span><span class="w"></span>
 </pre></div>
-
-
 <p>可以匹配 the、The、their 等单词，严格意义上中括号内的叫做 字符组 <code>character classes</code>，不过因为两者有近似的功能，所以也可以将其做一类。</p>
 </li>
 <li>
@@ -280,13 +256,11 @@ to match certain strings.</p>
 <p>对于之后不会进行引用的分组，可以使用非捕获分组，因为不会对其分配内存所以可以提高性能。</p>
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="o">?</span><span class="p">:</span><span class="n">THE</span><span class="o">|</span><span class="n">The</span><span class="o">|</span><span class="n">the</span><span class="p">)</span>
 </pre></div>
-
-
 </li>
 </ul>
-<p><br></p>
-<h2>6. Character Classes</h2>
-<hr>
+<p><br/></p>
+<h2 id="6. character classes">6. Character Classes</h2>
+<hr/>
 <ul>
 <li>
 <p>Character Classes</p>
@@ -294,21 +268,15 @@ to match certain strings.</p>
 <p>匹配特定字符</p>
 <div class="highlight"><pre><span></span><span class="o">[</span><span class="n">aeiou</span><span class="o">]</span><span class="w">         </span><span class="o">//</span><span class="w"> </span><span class="n">匹配元音字符</span><span class="w"></span>
 </pre></div>
-
-
 <p>匹配特定字符序列：</p>
 <div class="highlight"><pre><span></span><span class="err">\</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">24680</span><span class="p">]</span><span class="err">\</span><span class="n">b</span>      <span class="o">//</span> <span class="err">匹配</span> <span class="mi">10</span><span class="err">～</span><span class="mi">19</span> <span class="err">之间的偶数</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>Negated Character Classes</p>
 <p>匹配与字符组不匹配的字符，方法就是在开头加上 脱字符 <code>^</code>：</p>
 <div class="highlight"><pre><span></span><span class="p">[</span><span class="o">^</span><span class="n">aeiou</span><span class="p">]</span>    <span class="o">//</span> <span class="err">不想匹配元音字符</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>Union and Difference</p>
@@ -316,13 +284,9 @@ to match certain strings.</p>
 <p>并集：</p>
 <div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">3</span><span class="p">][</span><span class="mi">6</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>      <span class="o">//</span> <span class="err">匹配</span> <span class="mi">0</span><span class="o">~</span><span class="mi">3</span> <span class="err">或者</span> <span class="mi">6</span><span class="o">~</span><span class="mi">9</span> <span class="err">之间的数字</span>
 </pre></div>
-
-
 <p>差集：</p>
 <div class="highlight"><pre><span></span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="o">&amp;&amp;</span><span class="p">[</span><span class="o">^</span><span class="n">m</span><span class="o">-</span><span class="n">r</span><span class="p">]]</span>   <span class="o">//</span> <span class="err">匹配</span> <span class="n">a</span><span class="o">~</span><span class="n">z</span> <span class="err">之间，但是排除</span> <span class="n">m</span><span class="o">~</span><span class="n">r</span> <span class="err">之间的字符</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>POSIX Character Classes</p>
@@ -330,38 +294,30 @@ to match certain strings.</p>
 <div class="highlight"><pre><span></span><span class="k">[[: xxxx:]]</span>
 <span class="na">[[:^ xxxx:]]        // 取反匹配</span>
 </pre></div>
-
-
 <p>其中 xxxx 取值为 digit、word 等，举例：</p>
 <div class="highlight"><pre><span></span><span class="p">[[:</span><span class="n">alnum</span><span class="p">:]]</span>         <span class="o">//</span> <span class="err">匹配字母和数字</span>
 <span class="p">[[:</span><span class="n">alpha</span><span class="p">:]]</span>         <span class="o">//</span> <span class="err">匹配大写或小写字母</span>
 <span class="p">[[:</span><span class="n">ascii</span><span class="p">:]]</span>         <span class="o">//</span> <span class="err">匹配</span> <span class="n">ASCII</span> <span class="err">范围内的字符</span>
 </pre></div>
-
-
 <p>一般不常用 POSIX 格式。</p>
 </li>
 </ul>
-<p><br></p>
-<h2>7. Matching Unicode and Other Characters</h2>
-<hr>
+<p><br/></p>
+<h2 id="7. matching unicode and other characters">7. Matching Unicode and Other Characters</h2>
+<hr/>
 <ul>
 <li>
 <p>Matching a Unicode Character</p>
 <div class="highlight"><pre><span></span><span class="o">/</span><span class="n">uxxxx</span>      <span class="o">//</span> <span class="n">syntax</span>
-<span class="o">/</span><span class="n">u00e9</span>      <span class="o">//</span> <span class="o">=</span> <span class="nb">character</span> <span class="err">é</span> 
+<span class="o">/</span><span class="n">u00e9</span>      <span class="o">//</span> <span class="o">=</span> <span class="nb">character</span> <span class="err">&eacute;</span> 
 <span class="o">/</span><span class="n">u6c60</span>      <span class="o">//</span> <span class="o">=</span> <span class="nb">character</span> <span class="err">池</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>Matching Characters with Octal Numbers</p>
 <div class="highlight"><pre><span></span><span class="o">`</span><span class="err">\</span><span class="n">xxx</span><span class="o">`</span>      <span class="o">//</span> <span class="n">xxx</span> <span class="err">是</span> <span class="mi">3</span> <span class="err">位</span> <span class="mi">8</span> <span class="err">进制数字</span>
 </pre></div>
-
-
-<p>比如 é 也可以用 <code>\351</code> 来匹配。</p>
+<p>比如 &eacute; 也可以用 <code>\351</code> 来匹配。</p>
 </li>
 <li>
 <p>Matching Control Characters</p>
@@ -370,21 +326,19 @@ to match certain strings.</p>
 <span class="err">\</span><span class="n">cG</span>         <span class="o">//</span> <span class="err">报警字符</span> <span class="n">BEL</span>
 <span class="err">\</span><span class="n">cH</span>         <span class="o">//</span> <span class="err">退格符</span> <span class="n">Backspcace</span>
 </pre></div>
-
-
 </li>
 </ul>
-<p><br></p>
-<h2>8. Quantifiers</h2>
-<hr>
-<h3>8.1. Greedy, Lazy, and Possessive</h3>
+<p><br/></p>
+<h2 id="8. quantifiers">8. Quantifiers</h2>
+<hr/>
+<h3 id="8.1. greedy, lazy, and possessive">8.1. Greedy, Lazy, and Possessive</h3>
 <p>量词的属性有 贪婪，懒惰，占有。</p>
 <ul>
 <li>
 <p>Greedy</p>
-<p>所谓 “贪婪” 就是说 在匹配前会选定尽可能多的内容，也就是整个输入。然后开始匹配时，会首先匹配整个字符串，如果失败，则回退一个字符，重新匹配（这个过程叫做回溯 backtracking），直到找到匹配的内容或者没有字符可以尝试为止。</p>
+<p>所谓 &ldquo;贪婪&rdquo; 就是说 在匹配前会选定尽可能多的内容，也就是整个输入。然后开始匹配时，会首先匹配整个字符串，如果失败，则回退一个字符，重新匹配（这个过程叫做回溯 backtracking），直到找到匹配的内容或者没有字符可以尝试为止。</p>
 <p>量词的默认属性是贪婪的。</p>
-<p>形象的描述是：它先 “吃” 进所有的字符，然后每次 “吐” 出一点，慢慢咀嚼消化...</p>
+<p>形象的描述是：它先 &ldquo;吃&rdquo; 进所有的字符，然后每次 &ldquo;吐&rdquo; 出一点，慢慢咀嚼消化...</p>
 <blockquote>
 <p>It takes a mouthful, then spits back a little at a time, chewing on what it just ate.</p>
 </blockquote>
@@ -400,13 +354,13 @@ to match certain strings.</p>
 <li>
 <p>Possessive</p>
 <p>占有量词会抓取整个目标，然后尝试寻找匹配。不过它只尝试一次，不会回溯。</p>
-<p>形象的描述是：它不 “咀嚼” 而是直接 “吞咽”，然后才想知道 “吃” 的是什么。</p>
+<p>形象的描述是：它不 &ldquo;咀嚼&rdquo; 而是直接 &ldquo;吞咽&rdquo;，然后才想知道 &ldquo;吃&rdquo; 的是什么。</p>
 <blockquote>
-<p>It doesn’t chew; it just swallows, then wonders what it just ate. </p>
+<p>It doesn&rsquo;t chew; it just swallows, then wonders what it just ate. </p>
 </blockquote>
 </li>
 </ul>
-<h3>8.2. Basic Quantifiers</h3>
+<h3 id="8.2. basic quantifiers">8.2. Basic Quantifiers</h3>
 <ul>
 <li><code>?</code>    匹配 0 或 1 次</li>
 <li><code>+</code>    匹配 1 或 多次</li>
@@ -414,7 +368,7 @@ to match certain strings.</p>
 </ul>
 <p>这些量词默认是贪心的，也就是说第一次尝试时会尽可能多地匹配字符。</p>
 <p><code>.*</code> 叫做 <code>Kleene star</code>，以纪念 RE 的发明人Stephen Kleene。</p>
-<h3>8.3. Range Syntax</h3>
+<h3 id="8.3. range syntax">8.3. Range Syntax</h3>
 <ul>
 <li><code>{n}</code>   精确匹配 n 次</li>
 <li><code>{n,}</code>  匹配 n 次 或 多次</li>
@@ -423,7 +377,7 @@ to match certain strings.</p>
 <li><code>{1,0}</code> 与 <code>+</code> 相同（1 或 多次）</li>
 <li><code>{0,}</code>  与 <code>*</code> 相同（0 或 多次）</li>
 </ul>
-<h3>8.4. Lazy Quantifiers</h3>
+<h3 id="8.4. lazy quantifiers">8.4. Lazy Quantifiers</h3>
 <p>懒惰的意思就是匹配尽可能少的字符，它就是个懒虫！它总会找到匹配下限。比如 5*?，它不会匹配任何内容，因为 * 的下限是 0 次；再比如 5+?，它只会匹配 1 个5，因为 + 的下限是 1 次；再比如 5{2,5}?，它只会匹配 2 个 5，因为下限是 2。</p>
 <ul>
 <li>?? </li>
@@ -434,7 +388,7 @@ to match certain strings.</p>
 <li>{m,n}?</li>
 </ul>
 <p>上面这些加了 ? 的 RE 表示懒惰匹配，也就是 <em>找下限</em>。</p>
-<h3>8.5. Possessive Quantifiers</h3>
+<h3 id="8.5. possessive quantifiers">8.5. Possessive Quantifiers</h3>
 <p>占有式量词就是贪婪式量词的弱化版，只在第一次进行匹配，如果失败就停止，而不是继续回溯下去。它会将自己的输入</p>
 <ul>
 <li>?+</li>
@@ -445,9 +399,9 @@ to match certain strings.</p>
 <li>{m,n}+</li>
 </ul>
 <p>这些量词后面加了 + 的 RE 表示占有匹配，也就是只检查第一次尝试。</p>
-<p><br></p>
-<h2>9. Lookarounds</h2>
-<hr>
+<p><br/></p>
+<h2 id="9. lookarounds_1">9. Lookarounds</h2>
+<hr/>
 <p>环视 是一种非捕获分组，它的作用是检查模式的前/后的内容来匹配，也成为 零宽度断言 <code>zero-width
 assertions</code>。</p>
 <ul>
@@ -457,8 +411,6 @@ assertions</code>。</p>
 <p>比如想找到所有之后紧随着一个 marinere 的 ancyent ：</p>
 <div class="highlight"><pre><span></span><span class="n">ancyent</span> <span class="p">(</span><span class="o">?=</span><span class="n">marinere</span><span class="p">)</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>Negative Lookaheads</p>
@@ -466,8 +418,6 @@ assertions</code>。</p>
 <p>比如想找到所有后面没有 marinere 的 ancyent：</p>
 <div class="highlight"><pre><span></span><span class="n">ancyent</span> <span class="p">(</span><span class="o">?!</span><span class="n">marinere</span><span class="p">)</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>Positive Lookbehinds</p>
@@ -475,8 +425,6 @@ assertions</code>。</p>
 <p>比如想找到所有之前有 ancyent 的 marinere：</p>
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="o">?&lt;=</span><span class="n">ancyent</span><span class="p">)</span> <span class="n">marinere</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>Negative Lookbehinds</p>
@@ -484,8 +432,6 @@ assertions</code>。</p>
 <p>比如想找到所有之前不存在 ancyent 的 marinere：</p>
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="o">?&lt;!</span><span class="n">ancyent</span><span class="p">)</span> <span class="n">marinere</span>
 </pre></div>
-
-
 </li>
 </ul>
 <p>关于正、反；前瞻、后顾可以用下面的规律记：</p>
@@ -507,10 +453,10 @@ assertions</code>。</p>
 <p>如果条件是 lookarounds 不存在，就是 负</p>
 </li>
 </ul>
-<p><br></p>
+<p><br/></p>
 <p>了解了这些基础知识，基本上就可以读懂、书写 RE 了，还需要的就是平时多加思考练习，然后看更加高阶的书了。</p>
-<p><br></p>
-<h2>10. Ref</h2>
+<p><br/></p>
+<h2 id="10. ref">10. Ref</h2>
 <p><a href="http://book.douban.com/subject/6959486/">Introducing Regular Expressions</a></p>
   </div>
   <div class="tag-cloud">

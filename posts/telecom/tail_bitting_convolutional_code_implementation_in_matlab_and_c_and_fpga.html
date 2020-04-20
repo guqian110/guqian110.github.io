@@ -100,9 +100,13 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="LTE 咬尾卷积编码器的 Matlab 、C 语言及 FPGA 实现">LTE 咬尾卷积编码器的 Matlab 、C 语言及 FPGA 实现</a><ul><li><a class="toc-href" href="#1. tail bitting" title="1. Tail Bitting">1. Tail Bitting</a></li><li><a class="toc-href" href="#2. matlab implementation" title="2. Matlab Implementation">2. Matlab Implementation</a></li><li><a class="toc-href" href="#3. c implementation" title="3. C Implementation">3. C Implementation</a></li><li><a class="toc-href" href="#4. verlog implementation" title="4. Verlog Implementation">4. Verlog Implementation</a><ul><li><a class="toc-href" href="#4.1. module &amp; testbench" title="4.1. module &amp; testbench">4.1. module &amp; testbench</a></li><li><a class="toc-href" href="#4.2. simulation" title="4.2. simulation">4.2. simulation</a></li></ul></li><li><a class="toc-href" href="#5. summary_1" title="5. Summary">5. Summary</a></li><li><a class="toc-href" href="#6. reference" title="6. Reference">6. Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2>1. Tail Bitting</h2>
-<hr>
+    <h2 id="1. tail bitting">1. Tail Bitting</h2>
+<hr/>
 <p>咬尾卷积编码是一种特殊的卷积编码，它通过将编码器的移位寄存器的初始值设置为输入流的尾比特值，使得移位寄存器的初始和最终状态相同。和普通的卷积编码相比，咬尾的方案最大的优点是克服了编码时的码率损失，并且适合迭代译码，不过付出的代价是译码复杂度的增加。在 LTE 的标准中，咬尾卷积编码是一种备选的信道编码方案。</p>
 <p>通常以 (n, k, K) 来描述卷积编码，其中：</p>
 <ul>
@@ -119,7 +123,7 @@
 <p>由输入的 k 个信息比特，得到 n 个编码结果，所以 <em>编码效率</em> = k/n</p>
 <p>约束长度 <code>K</code> 的意思是，编码结果不仅取决于当前输入的 k 比特信息，还取决于前 (K-1) 段时间内的信息位。在 k = 1 的条件下，编码器需要的 <em>移位寄存器级数</em> m = K - 1。</p>
 <p>LTE 标准中编码器的结构如下图所示：</p>
-<p><img alt="coder" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/coder.jpg"></p>
+<p><img alt="coder" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/coder.jpg"/></p>
 <ul>
 <li>
 <p>假设输入的比特流为 c1, c2, c3, ... 得到的编码结果为 d1, d2, d3, ...</p>
@@ -138,15 +142,13 @@
 </li>
 </ul>
 <p>以上的内容已经提供了足够的信息供我们实现，关于更多的卷积编码、LTE 标准等请查阅 wiki 和专业书籍。</p>
-<p><br></p>
-<h2>2. Matlab Implementation</h2>
-<hr>
+<p><br/></p>
+<h2 id="2. matlab implementation">2. Matlab Implementation</h2>
+<hr/>
 <p>Matlab 的 <code>Communications System Toolbox</code> 中提供了大量的常用函数，其中就有卷积编码函数 <code>convenc</code>。我们就是基于这个函数实现LTE中的咬尾卷积编码。</p>
 <p>通过</p>
 <div class="highlight"><pre><span></span><span class="n">help</span> <span class="n">convenc</span>
 </pre></div>
-
-
 <p>和 hlep browser，可以查到这个函数的用法，简单解释如下:</p>
 <p>convenc 函数有几种方式来调用：</p>
 <div class="highlight"><pre><span></span><span class="n">CODE</span> <span class="o">=</span> <span class="n">convenc</span><span class="p">(</span><span class="n">MSG</span><span class="p">,</span> <span class="n">TRELLIS</span><span class="p">)</span>
@@ -155,8 +157,6 @@
 
 <span class="n">CODE</span> <span class="o">=</span> <span class="n">convenc</span><span class="p">(...,</span> <span class="n">INIT_STATE</span><span class="p">)</span>
 </pre></div>
-
-
 <ul>
 <li>
 <p>第一个参数 <code>MSG</code> 是待编码的信息比特</p>
@@ -167,17 +167,13 @@
 <p>查阅 poly2trellis 的 help 就可以看到它的用法。</p>
 <div class="highlight"><pre><span></span><span class="n">trellis</span> <span class="o">=</span> <span class="n">poly2trellis</span><span class="p">(</span><span class="n">ConstraintLength</span><span class="p">,</span> <span class="n">CodeGenerator</span><span class="p">)</span>
 </pre></div>
-
-
-<p>其中，<code>ConstraintLength</code> 是个 1×k 维的向量，表示编码器的约束长度；<code>CodeGenerator</code> 是个 k×n 维的向量，表示编码器中各个寄存器的抽头。</p>
+<p>其中，<code>ConstraintLength</code> 是个 1&times;k 维的向量，表示编码器的约束长度；<code>CodeGenerator</code> 是个 k&times;n 维的向量，表示编码器中各个寄存器的抽头。</p>
 <p>help 中以一个 2/3 码率的编码器为例，其结构如下图所示：</p>
-<p><img alt="exmaple" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/example.png"></p>
+<p><img alt="exmaple" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/example.png"/></p>
 <p>两组寄存器的长度分别为 4 和 3，所以 constraintlength 的取值为 [5, 4]；将每路输出的抽头用 8 进制来表示，即可得到 codegenerator 的取值 [27, 33, 0; 0, 5, 13]，表示第一路输出由第一组寄存器的 27 组合方式 + 第二组寄存器的 0 组合方式得到，第二路输出由第一组寄存器的 33 组合方式 + 第二组寄存器的 5 组合方式得到，第三路同理。</p>
 <p>应用到我们的编码器中，很容易写出其栅格描述</p>
 <div class="highlight"><pre><span></span><span class="n">tre</span> <span class="o">=</span> <span class="n">poly2trellis</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="p">[</span><span class="mi">133</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">165</span><span class="p">]);</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>第三个参数 INIT_STATE 是移位寄存器的初始值</p>
@@ -185,8 +181,6 @@
 <p>在下面的程序中，我们的测试向量的最后 6 bit 为 010110，所以对应的</p>
 <div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span>
 </pre></div>
-
-
 </li>
 </ul>
 <p>综上，可以写出 matlab 程序来实现咬尾卷积编码，如下：</p>
@@ -209,16 +203,13 @@
 <span class="n">b</span> <span class="p">=</span> <span class="n">convenc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">tre</span><span class="p">,</span> <span class="n">init</span><span class="p">);</span>
 </pre></div>
 </td></tr></table>
-
 <p>得到的编码结果是：</p>
 <div class="highlight"><pre><span></span><span class="mi">0</span>  <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span>
 </pre></div>
-
-
 <p>数据的格式是将 3 位并行结果串行输出： d00, d01, d02, d10, d11, d12, ...</p>
-<p><br></p>
-<h2>3. C Implementation</h2>
-<hr>
+<p><br/></p>
+<h2 id="3. c implementation">3. C Implementation</h2>
+<hr/>
 <p>C 的实现很简单:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -271,24 +262,23 @@
 <span class="p">}</span>
 </pre></div>
 </td></tr></table>
-
-<h2>4. Verlog Implementation</h2>
-<hr>
+<h2 id="4. verlog implementation">4. Verlog Implementation</h2>
+<hr/>
 <p>用 verilog 来实现编码器就相对简单直观的多，毕竟只有一组移位寄存器和一些抽头的异或运算。</p>
-<h3>4.1. module &amp; testbench</h3>
+<h3 id="4.1. module &amp; testbench">4.1. module &amp; testbench</h3>
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tbce.v">module</a></p>
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_tbce.v">testbench</a></p>
-<h3>4.2. simulation</h3>
+<h3 id="4.2. simulation">4.2. simulation</h3>
 <p>如下图所示</p>
-<p><img alt="sim1" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim1.png"></p>
-<p><img alt="sim2" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim2.png"></p>
+<p><img alt="sim1" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim1.png"/></p>
+<p><img alt="sim2" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim2.png"/></p>
 <p>和 matlab 中结果对比，结果是一致的。</p>
-<h2>5. Summary</h2>
-<hr>
+<h2 id="5. summary_1">5. Summary</h2>
+<hr/>
 <p>一个简单的咬尾卷积编码花费了一上午的时间才搞定，最大的收获就是：心态很重要，欲速则不达。没有认真看 help 就写程序，本来想节省时间，结果却相反 =.=</p>
 <p>戒骄戒躁！！！</p>
-<p><br></p>
-<h2>6. Reference</h2>
+<p><br/></p>
+<h2 id="6. reference">6. Reference</h2>
 <p><a href="http://book.douban.com/subject/1446684/">通信原理</a></p>
 <p><a href="http://book.douban.com/subject/24784764/">无线通信新协议与新算法</a></p>
   </div>

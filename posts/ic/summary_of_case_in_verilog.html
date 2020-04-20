@@ -100,12 +100,16 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Verilog 的 case 小结">Verilog 的 case 小结</a><ul><li><a class="toc-href" href="#1. def" title="1. Def">1. Def</a><ul><li><a class="toc-href" href="#1.1. syntax:" title="1.1. Syntax:">1.1. Syntax:</a></li><li><a class="toc-href" href="#1.2. case statement header" title="1.2. Case statement header">1.2. Case statement header</a></li><li><a class="toc-href" href="#1.3. case expression" title="1.3. Case expression">1.3. Case expression</a></li><li><a class="toc-href" href="#1.4. case item" title="1.4. Case item">1.4. Case item</a></li><li><a class="toc-href" href="#1.5. case item statement" title="1.5. Case item statement">1.5. Case item statement</a></li><li><a class="toc-href" href="#1.6. case default" title="1.6. Case default">1.6. Case default</a></li><li><a class="toc-href" href="#1.7. casez" title="1.7. Casez">1.7. Casez</a></li><li><a class="toc-href" href="#1.8. casex" title="1.8. casex">1.8. casex</a></li><li><a class="toc-href" href="#1.9. process" title="1.9. Process">1.9. Process</a></li><li><a class="toc-href" href="#1.10. reverse case" title="1.10. reverse case">1.10. reverse case</a></li></ul></li><li><a class="toc-href" href='#2. "full" case statement_1' title='2. "full" case statement'>2. "full" case statement</a><ul><li><a class="toc-href" href="#2.1. hdl full case" title="2.1. HDL full case">2.1. HDL full case</a></li><li><a class="toc-href" href="#2.2. synthesis full case" title="2.2. Synthesis full case">2.2. Synthesis full case</a></li><li><a class="toc-href" href="#2.3. xst full case" title="2.3. XST full case">2.3. XST full case</a></li></ul></li><li><a class="toc-href" href='#3. "parallel" case statement_1' title='3. "parallel" case statement'>3. "parallel" case statement</a><ul><li><a class="toc-href" href="#3.1. non-parallel case statements" title="3.1. Non-parallel case statements">3.1. Non-parallel case statements</a></li><li><a class="toc-href" href="#3.2. parallel case statements" title="3.2. Parallel case statements">3.2. Parallel case statements</a></li><li><a class="toc-href" href="#3.3. xst parallel case" title="3.3. XST parallel case">3.3. XST parallel case</a></li></ul></li><li><a class="toc-href" href="#4. synthesis coding styles_1" title="4. Synthesis coding styles">4. Synthesis coding styles</a></li><li><a class="toc-href" href="#5. summary" title="5. Summary">5. Summary</a></li><li><a class="toc-href" href="#6. ref" title="6. Ref">6. Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>学习了 Cummings 大神 的 paper：<a href="http://www.sunburst-design.com/papers/CummingsSNUG1999Boston_FullParallelCase.pdf">"full_case parallel_case", the Evil Twins of Verilog Synthesis</a> 和 <a href="http://www.phei.com.cn/module/goods/wssd_content.jsp?bookid=38848">Verilog 编程艺术</a></p>
 <p>总结一下笔记。</p>
-<h2>1. Def</h2>
-<hr>
-<h3>1.1. Syntax:</h3>
+<h2 id="1. def">1. Def</h2>
+<hr/>
+<h3 id="1.1. syntax:">1.1. Syntax:</h3>
 <div class="highlight"><pre><span></span><span class="k">case</span> <span class="p">(</span><span class="n">case_expression</span><span class="p">)</span>
  <span class="n">case_item1</span> <span class="p">:</span> <span class="n">case_item_statement1</span><span class="p">;</span>
  <span class="n">case_item2</span> <span class="p">:</span> <span class="n">case_item_statement2</span><span class="p">;</span>
@@ -114,8 +118,6 @@
  <span class="k">default</span> <span class="p">:</span> <span class="n">case_item_statement5</span><span class="p">;</span>
 <span class="n">endcase</span>
 </pre></div>
-
-
 <p>等价于</p>
 <div class="highlight"><pre><span></span><span class="k">if</span> <span class="ss">(</span><span class="nv">case_expression</span> <span class="o">===</span> <span class="nv">case_item1</span><span class="ss">)</span> <span class="nv">case_item_statement1</span><span class="c1">;</span>
 <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">case_expression</span> <span class="o">===</span> <span class="nv">case_item2</span><span class="ss">)</span> <span class="nv">case_item_statement2</span><span class="c1">;</span>
@@ -123,32 +125,30 @@
 <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">case_expression</span> <span class="o">===</span> <span class="nv">case_item4</span><span class="ss">)</span> <span class="nv">case_item_statement4</span><span class="c1">;</span>
 <span class="k">else</span>                                     <span class="nv">case_item_statement5</span><span class="c1">;</span>
 </pre></div>
-
-
 <p>首先说明一些基本名词的定义：</p>
-<h3>1.2. Case statement header</h3>
+<h3 id="1.2. case statement header">1.2. Case statement header</h3>
 <p>header 由 关键字 <code>case</code>/<code>casex</code>/<code>casez</code> + case expression 两部分组成，它们通常写在同一行（上面语法的第一行）。添加 "parallel_case" 或者 "full_case" 综合指令的方法就是把指令当作注释写在 header 的那一行，后续 case item 之前。</p>
-<h3>1.3. Case expression</h3>
+<h3 id="1.3. case expression">1.3. Case expression</h3>
 <p><code>case</code> 关键字之后，括号中间的内容。它可以是一个常量（如 '1'），也可以是一个表达式，或者更常见的一个 1 bit / n bits 的向量，用来和后面的 case item 做比较。</p>
-<h3>1.4. Case item</h3>
+<h3 id="1.4. case item">1.4. Case item</h3>
 <p>可以是单比特、向量、表达式，用来和 case expression 做比较。和高级编程语言（C 语言）不同的是，verilog 中的 case 自带隐含的 <code>break</code> 语句，所以就不用再费心多写代码了。</p>
-<h3>1.5. Case item statement</h3>
+<h3 id="1.5. case item statement">1.5. Case item statement</h3>
 <p>case item 内的语句，多于 1 句时，要用 <code>begin-end</code>。</p>
-<h3>1.6. Case default</h3>
+<h3 id="1.6. case default">1.6. Case default</h3>
 <p>默认分支，虽然这个分支不是强制要求的，但是在所有分支后面加上 default 分支是一个良好的编程习惯。</p>
-<h3>1.7. Casez</h3>
+<h3 id="1.7. casez">1.7. Casez</h3>
 <p>case 语句的变种，casez 把 expression 或者是 item 中的 "z"/"?" 忽略，当作不关心的值。</p>
 <blockquote>
 <p><strong>Guideline:</strong> Exercise caution when coding synthesizable models using the Verilog casez statement</p>
 <p><strong>Coding Style Guideline:</strong> When coding a case statement with "don't cares," use a casez statement
 and use "?" characters instead of "z" characters in the case items to indicate "don't care" bits.</p>
 </blockquote>
-<h3>1.8. casex</h3>
+<h3 id="1.8. casex">1.8. casex</h3>
 <p>类似于 casez，不关心的值为 "z" / "?" / "x"。</p>
 <blockquote>
 <p><strong>Guideline:</strong> Do not use casex for synthesizable code</p>
 </blockquote>
-<h3>1.9. Process</h3>
+<h3 id="1.9. process">1.9. Process</h3>
 <p>case 的执行过程：</p>
 <ol>
 <li>
@@ -168,10 +168,10 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 </li>
 </ol>
 <p>这个按照顺序比较的过程就是可能导致 priority encoder 的原因。</p>
-<h3>1.10. reverse case</h3>
+<h3 id="1.10. reverse case">1.10. reverse case</h3>
 <p>reverse case 是 case 的一个变形，也叫做 <code>case if true</code>。这种风格中 case expression 是一个常量，而 case items 是由变量构成的表达式。这种风格通常用在 One-hot FSM 中，并且采用 parallel 方式。</p>
 <p>见另外一篇博客：<a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">有限状态机设计</a></p>
-<p><br></p>
+<p><br/></p>
 <p>下面讨论 full_case 和 parallel_case 的相关问题。很多人都会使用这两个综合指令，他们的理由是：</p>
 <blockquote>
 <ul>
@@ -190,9 +190,9 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 <blockquote>
 <p>An alternate title for this paper could be: "How to add $200,000 to the cost and 3-6 months to the schedule of your ASIC design without trying!"</p>
 </blockquote>
-<p><br></p>
-<h2>2. "full" case statement</h2>
-<hr>
+<p><br/></p>
+<h2 id='2. "full" case statement_1'>2. "full" case statement</h2>
+<hr/>
 <p>"full" 的意思就是 expression 的任何取值都有一个 item/default 分支与其对应，否者就不是 "full case"。</p>
 <p><strong>example1: Non-"full" case</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -217,21 +217,20 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 
     <span class="k">always</span> <span class="p">@</span><span class="o">*</span> <span class="k">begin</span>
         <span class="k">case</span> <span class="p">(</span><span class="n">sel</span><span class="p">)</span>
-            <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
-            <span class="mh">2</span><span class="mb">&#39;b01</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
-            <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+            <span class="mh">2</span><span class="mb">'b00</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+            <span class="mh">2</span><span class="mb">'b01</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+            <span class="mh">2</span><span class="mb">'b10</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
         <span class="k">endcase</span>
     <span class="k">end</span>
 
 <span class="k">endmodule</span>
 </pre></div>
 </td></tr></table>
-
 <p>在这个例子中，当 sel 的取值是 2'b11 时，由于没有定义输出值 y 为多少，仿真器会保持之前的取值，综合器会综合出一个 latch。</p>
 <p>（基于 Virtex-4 器件，XST 的 synthesis report 给出的结果是 1 bit latch + 1 bit 3-to-1 multiplexers）</p>
-<h3>2.1. HDL full case</h3>
+<h3 id="2.1. hdl full case">2.1. HDL full case</h3>
 <p>从 HDL 仿真器的角度看，full case 语句就是 case item 包含了 expression 可以取的任何值。</p>
-<h3>2.2. Synthesis full case</h3>
+<h3 id="2.2. synthesis full case">2.2. Synthesis full case</h3>
 <p>从综合工具的角度看，full case 语句就是 expression 的每种可能的取值组合都被包含在 item 中。</p>
 <p>虽然 Verilog 语法不要求 case 语句必须是 HDL full 或者 synthesis full ，但是我们可以通过手动添加一个 default 分支来使得 case 变为 full。</p>
 <p><strong>example2: "full" case</strong></p>
@@ -257,17 +256,16 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 
     <span class="k">always</span> <span class="p">@</span><span class="o">*</span> <span class="k">begin</span>
         <span class="k">case</span> <span class="p">(</span><span class="n">sel</span><span class="p">)</span>
-            <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
-            <span class="mh">2</span><span class="mb">&#39;b01</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
-            <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
-            <span class="k">default</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="p">&#39;</span><span class="n">bx</span><span class="p">;</span>
+            <span class="mh">2</span><span class="mb">'b00</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+            <span class="mh">2</span><span class="mb">'b01</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+            <span class="mh">2</span><span class="mb">'b10</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+            <span class="k">default</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="p">'</span><span class="n">bx</span><span class="p">;</span>
         <span class="k">endcase</span>
 
 <span class="k">endmodule</span>
 </pre></div>
 </td></tr></table>
-
-<p>在这个例子中，因为有了 default 分支，所以它是一个 full case。在仿真时，如果 sel 是 2'b11，那么 y 取值为 x（不确定，unknown），而综合器会把 x 当作 “不关心”（don't care，有可能为 1，也有可能为 0）。这就导致了仿真和综合不一致。解决这个问题的方法就是给 y 赋值一个常数 or 像其他 item 一样赋值一个输入。</p>
+<p>在这个例子中，因为有了 default 分支，所以它是一个 full case。在仿真时，如果 sel 是 2'b11，那么 y 取值为 x（不确定，unknown），而综合器会把 x 当作 &ldquo;不关心&rdquo;（don't care，有可能为 1，也有可能为 0）。这就导致了仿真和综合不一致。解决这个问题的方法就是给 y 赋值一个常数 or 像其他 item 一样赋值一个输入。</p>
 <p>（基于 Virtex-4 器件，XST 的 synthesis report 给出的结果是 1 bit 3-to-1 multiplexers）</p>
 <p>P.S. 我们可以利用前后仿真不同这一点来帮助我们调试。在设计 FSM 时，default 分支处，next_state 赋值为 x，这样如果存在错误转换，next_state 就会保持为 x，在波形上很方便看到。</p>
 <p>还有一种方法是在所有的 item 之前，给输出赋一个默认值，这样即使不是 full，也不会产生 latch：</p>
@@ -278,16 +276,15 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 5
 6
 7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">c</span> <span class="k">or</span> <span class="n">sel</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b0</span><span class="p">;</span>
     <span class="k">case</span> <span class="p">(</span><span class="n">sel</span><span class="p">)</span>
-        <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
-        <span class="mh">2</span><span class="mb">&#39;b01</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
-        <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+        <span class="mh">2</span><span class="mb">'b00</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+        <span class="mh">2</span><span class="mb">'b01</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+        <span class="mh">2</span><span class="mb">'b10</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
     <span class="k">endcase</span>
 </pre></div>
 </td></tr></table>
-
-<h3>2.3. XST full case</h3>
+<h3 id="2.3. xst full case">2.3. XST full case</h3>
 <p>综合指令是一些特殊的可以被综合工具识别，并指导综合工具工作的语句。不同的综合工具的综合指令语法不相同。我用的是 ISE 自带的 XST。查看 XST User Guide 就可以找到 full case 的相关指令：</p>
 <p>这个指令与架构（Architecture）无关、只适用于 verilog 的 case 语句：</p>
 <ul>
@@ -307,43 +304,33 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 <p><strong>Verilog Syntax</strong></p>
 <div class="highlight"><pre><span></span><span class="c">(* full_case *)</span>
 </pre></div>
-
-
 <p>在 case header 的上面一行</p>
 <p>or</p>
 <div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">synthesis</span> <span class="n">full_case</span>
 </pre></div>
-
-
 <p>这种方式，注释必须在 case header 的同一行</p>
 <p>example3:</p>
 <div class="highlight"><pre><span></span><span class="c">(* full_case *)</span>
 <span class="n">casex</span> <span class="n">select</span>
-    <span class="mi">4</span><span class="err">’</span><span class="n">b1xxx</span><span class="o">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">data1</span><span class="o">;</span>
-    <span class="mi">4</span><span class="err">’</span><span class="n">bx1xx</span><span class="o">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">data2</span><span class="o">;</span>
-    <span class="mi">4</span><span class="err">’</span><span class="n">bxx1x</span><span class="o">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">data3</span><span class="o">;</span>
-    <span class="mi">4</span><span class="err">’</span><span class="n">bxxx1</span><span class="o">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">data4</span><span class="o">;</span>
+    <span class="mi">4</span><span class="err">&rsquo;</span><span class="n">b1xxx</span><span class="o">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">data1</span><span class="o">;</span>
+    <span class="mi">4</span><span class="err">&rsquo;</span><span class="n">bx1xx</span><span class="o">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">data2</span><span class="o">;</span>
+    <span class="mi">4</span><span class="err">&rsquo;</span><span class="n">bxx1x</span><span class="o">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">data3</span><span class="o">;</span>
+    <span class="mi">4</span><span class="err">&rsquo;</span><span class="n">bxxx1</span><span class="o">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">data4</span><span class="o">;</span>
 <span class="n">endcase</span>
 </pre></div>
-
-
 <p>example4:</p>
 <div class="highlight"><pre><span></span><span class="nt">casex</span> <span class="nt">select</span> <span class="o">//</span> <span class="nt">synthesis</span> <span class="nt">full_case</span>
-    <span class="nt">4</span><span class="err">’</span><span class="nt">b1xxx</span><span class="o">:</span> <span class="nt">res</span> <span class="o">=</span> <span class="nt">data1</span><span class="o">;</span>
-    <span class="nt">4</span><span class="err">’</span><span class="nt">bx1xx</span><span class="o">:</span> <span class="nt">res</span> <span class="o">=</span> <span class="nt">data2</span><span class="o">;</span>
-    <span class="nt">4</span><span class="err">’</span><span class="nt">bxx1x</span><span class="o">:</span> <span class="nt">res</span> <span class="o">=</span> <span class="nt">data3</span><span class="o">;</span>
-    <span class="nt">4</span><span class="err">’</span><span class="nt">bxxx1</span><span class="o">:</span> <span class="nt">res</span> <span class="o">=</span> <span class="nt">data4</span><span class="o">;</span>
+    <span class="nt">4</span><span class="err">&rsquo;</span><span class="nt">b1xxx</span><span class="o">:</span> <span class="nt">res</span> <span class="o">=</span> <span class="nt">data1</span><span class="o">;</span>
+    <span class="nt">4</span><span class="err">&rsquo;</span><span class="nt">bx1xx</span><span class="o">:</span> <span class="nt">res</span> <span class="o">=</span> <span class="nt">data2</span><span class="o">;</span>
+    <span class="nt">4</span><span class="err">&rsquo;</span><span class="nt">bxx1x</span><span class="o">:</span> <span class="nt">res</span> <span class="o">=</span> <span class="nt">data3</span><span class="o">;</span>
+    <span class="nt">4</span><span class="err">&rsquo;</span><span class="nt">bxxx1</span><span class="o">:</span> <span class="nt">res</span> <span class="o">=</span> <span class="nt">data4</span><span class="o">;</span>
 <span class="nt">endcase</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>XST Command Line</p>
 <div class="highlight"><pre><span></span><span class="n">xst</span> <span class="n">run</span> <span class="o">-</span><span class="n">vlgcase</span> <span class="p">[</span><span class="k">full</span><span class="o">|</span><span class="n">parallel</span><span class="o">|</span><span class="k">full</span><span class="o">-</span><span class="n">parallel</span><span class="p">]</span>
 </pre></div>
-
-
 </li>
 <li>
 <p>ISE Design Suit</p>
@@ -370,25 +357,21 @@ behavior of the case statement.</p>
 <div class="highlight"><pre><span></span><span class="nv">always</span> @<span class="o">*</span> <span class="nv">begin</span><span class="c1">;</span>
     <span class="ss">(</span><span class="o">*</span> <span class="nv">full_case</span> <span class="o">*</span><span class="ss">)</span>
     <span class="nv">case</span> <span class="ss">(</span><span class="nv">sel</span><span class="ss">)</span>
-        <span class="mi">2</span><span class="s1">&#39;</span><span class="s">b00: y = a;</span>
-        <span class="mi">2</span><span class="s1">&#39;</span><span class="s">b01: y = b;</span>
-        <span class="mi">2</span><span class="s1">&#39;</span><span class="s">b10: y = c;</span>
+        <span class="mi">2</span><span class="s1">'</span><span class="s">b00: y = a;</span>
+        <span class="mi">2</span><span class="s1">'</span><span class="s">b01: y = b;</span>
+        <span class="mi">2</span><span class="s1">'</span><span class="s">b10: y = c;</span>
     <span class="nv">endcase</span>
 <span class="k">end</span>
 </pre></div>
-
-
 <p>或者是</p>
 <div class="highlight"><pre><span></span><span class="nv">always</span> @<span class="o">*</span> <span class="nv">begin</span>
     <span class="nv">case</span> <span class="ss">(</span><span class="nv">sel</span><span class="ss">)</span>  <span class="o">//</span> <span class="nv">synthesis</span> <span class="nv">full_case</span>
-        <span class="mi">2</span><span class="s1">&#39;</span><span class="s">b00: y = a;</span>
-        <span class="mi">2</span><span class="s1">&#39;</span><span class="s">b01: y = b;</span>
-        <span class="mi">2</span><span class="s1">&#39;</span><span class="s">b10: y = c;</span>
+        <span class="mi">2</span><span class="s1">'</span><span class="s">b00: y = a;</span>
+        <span class="mi">2</span><span class="s1">'</span><span class="s">b01: y = b;</span>
+        <span class="mi">2</span><span class="s1">'</span><span class="s">b10: y = c;</span>
     <span class="nv">endcase</span>
 <span class="k">end</span>
 </pre></div>
-
-
 <p>那么就只会生成 1 bit 3-to-1 multiplexers，不会有多余的 latch。</p>
 <p>虽然这些指令有好处，但是一定要谨慎使用，而且使用时需要注意：</p>
 <ol>
@@ -399,50 +382,44 @@ behavior of the case statement.</p>
 <p>有时候使用指令，会适得其反，导致结果面积变大、速度变慢</p>
 </li>
 <li>
-<p>一般有迷信的说法：“使用 full case 指令，可以消除 latch。” 这个说法太绝对了，事实上并不总是这样。如果有多个输出需要赋值，而有些分支只忽略了一些赋值，那么即使使用 full_case 指令，也不能避免 latch 的产生。</p>
+<p>一般有迷信的说法：&ldquo;使用 full case 指令，可以消除 latch。&rdquo; 这个说法太绝对了，事实上并不总是这样。如果有多个输出需要赋值，而有些分支只忽略了一些赋值，那么即使使用 full_case 指令，也不能避免 latch 的产生。</p>
 <p>举例，在下面的例子中，仍然会产生 latch</p>
 <div class="highlight"><pre><span></span><span class="nv">always</span> @<span class="o">*</span> <span class="nv">begin</span>
     <span class="nv">casez</span> <span class="ss">(</span><span class="nv">sel</span><span class="ss">)</span> <span class="o">//</span> <span class="nv">synthesis</span> <span class="nv">full_case</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b100: y1 = 3</span><span class="s1">&#39;</span><span class="nv">b100</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b010: y1 = 3</span><span class="s1">&#39;</span><span class="nv">b010</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b001: y2 = 3</span><span class="s1">&#39;</span><span class="nv">b001</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b100: y1 = 3</span><span class="s1">'</span><span class="nv">b100</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b010: y1 = 3</span><span class="s1">'</span><span class="nv">b010</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b001: y2 = 3</span><span class="s1">'</span><span class="nv">b001</span><span class="c1">;</span>
     <span class="nv">endcase</span>
 <span class="k">end</span>
 </pre></div>
-
-
 <p>我们使用 full case 指令的目的就是为了避免生成意外的 latch，但是这种方法有以上的各种弊端。其实还有一种更加简单的方法来避免 latch，就是前面说的，<strong>在 case 前，给所有的输出赋一个默认值。</strong></p>
 </li>
 </ol>
-<p><br></p>
-<h2>3. "parallel" case statement</h2>
-<hr>
+<p><br/></p>
+<h2 id='3. "parallel" case statement_1'>3. "parallel" case statement</h2>
+<hr/>
 <p>"parallel" 的意思就是 expression 的取值每次有且只有一个 item 与其对应，否则就不是 "parallel" case，而匹配的 items 称为 "overlapping" case items。</p>
-<h3>3.1. Non-parallel case statements</h3>
+<h3 id="3.1. non-parallel case statements">3.1. Non-parallel case statements</h3>
 <div class="highlight"><pre><span></span><span class="nv">always</span> @<span class="nv">sel</span> <span class="nv">begin</span>
     <span class="nv">casez</span> <span class="ss">(</span><span class="nv">sel</span><span class="ss">)</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b1??: y = 3</span><span class="s1">&#39;</span><span class="nv">b100</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b?1?: y = 3</span><span class="s1">&#39;</span><span class="nv">b010</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b??1: y = 3</span><span class="s1">&#39;</span><span class="nv">b001</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b1??: y = 3</span><span class="s1">'</span><span class="nv">b100</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b?1?: y = 3</span><span class="s1">'</span><span class="nv">b010</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b??1: y = 3</span><span class="s1">'</span><span class="nv">b001</span><span class="c1">;</span>
     <span class="nv">endcase</span>
 <span class="k">end</span>
 </pre></div>
-
-
 <p>当输入是 3'b011, 3'b101, 3'b110, 3'b111 时，会有多个 item 与 expression 对应，所以不是 parallel 的，会综合出一个 priority encoder。</p>
-<h3>3.2. Parallel case statements</h3>
+<h3 id="3.2. parallel case statements">3.2. Parallel case statements</h3>
 <p>对上面的例子稍微修改一下，就得到了 parallel case：</p>
 <div class="highlight"><pre><span></span><span class="nv">always</span> @<span class="nv">sel</span> <span class="nv">begin</span>
     <span class="nv">casez</span> <span class="ss">(</span><span class="nv">sel</span><span class="ss">)</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b1??: y1 = 1</span><span class="s1">&#39;</span><span class="nv">b1</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b01?: y2 = 1</span><span class="s1">&#39;</span><span class="nv">b1</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b001: y3 = 1</span><span class="s1">&#39;</span><span class="nv">b1</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b1??: y1 = 1</span><span class="s1">'</span><span class="nv">b1</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b01?: y2 = 1</span><span class="s1">'</span><span class="nv">b1</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b001: y3 = 1</span><span class="s1">'</span><span class="nv">b1</span><span class="c1">;</span>
     <span class="nv">endcase</span>
 <span class="k">end</span>
 </pre></div>
-
-
-<h3>3.3. XST parallel case</h3>
+<h3 id="3.3. xst parallel case">3.3. XST parallel case</h3>
 <p>语法同 full case，只需要将 full_case 替换为 parallel_case 即可。如果 case 本来就是 parallel 的，那么这个指令就完全不起作用，只是一些额外的代码。</p>
 <p>不要故意使用 Non-parallel case 来推译 priority encoder，这是不好的编程习惯。如果我们的目的就是要生成 priority encoder，应该使用级联的 if-else 语句，这样更能表达意图。</p>
 <p>下面的这些 guideline 可以帮助我们避免 case 生成 priority encoder，从而避免前后仿真不一致：</p>
@@ -452,9 +429,9 @@ behavior of the case statement.</p>
 <p><strong>Guideline:</strong> Examine all synthesis tool case-statement reports </p>
 <p><strong>Guideline:</strong> Change the case statement code, as outlined in the above coding guidelines, whenever the synthesis tool reports that the case statement is not parallel (whenever the synthesis tool reports "no" for "parallel_case")</p>
 </blockquote>
-<p><br></p>
-<h2>4. Synthesis coding styles</h2>
-<hr>
+<p><br/></p>
+<h2 id="4. synthesis coding styles_1">4. Synthesis coding styles</h2>
+<hr/>
 <p>在总结了 full_parallel_case 之后，Cummings 大神给出了建议：</p>
 <blockquote>
 <p>Sunburst Design Assumption: it is generally a bad coding practice to give the synthesis tool
@@ -470,9 +447,9 @@ devices!</p>
 <p>Guideline: only use full_case parallel_case to optimize onehot FSM designs.</p>
 </blockquote>
 <p>甚至建议要开除写 full_parallel_case 的员工...</p>
-<p><br></p>
-<h2>5. Summary</h2>
-<hr>
+<p><br/></p>
+<h2 id="5. summary">5. Summary</h2>
+<hr/>
 <p>总结一下所有的 guidelines：</p>
 <blockquote>
 <p><strong>Guideline:</strong> Exercise caution when coding synthesizable models using the Verilog casez statement</p>
@@ -489,8 +466,8 @@ statements.</p>
 <p><strong>Guideline:</strong> Educate (or fire) any employee or consultant that routinely adds "full_case parallel_case" to all case statements in their Verilog code.</p>
 <p><strong>Conclusion:</strong> "full_case" and "parallel_case" directives are most dangerous when they work! It is better to code a full and parallel case statement than it is to use directives to make up for poor coding practices.</p>
 </blockquote>
-<p><br></p>
-<h2>6. Ref</h2>
+<p><br/></p>
+<h2 id="6. ref">6. Ref</h2>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG1999Boston_FullParallelCase.pdf">"full_case parallel_case", the Evil Twins of Verilog Synthesis</a></p>
 <p><a href="http://www.phei.com.cn/module/goods/wssd_content.jsp?bookid=38848">Verilog 编程艺术</a></p>
   </div>

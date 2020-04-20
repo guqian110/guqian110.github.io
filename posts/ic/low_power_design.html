@@ -99,11 +99,15 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="低功耗设计">低功耗设计</a><ul><li><a class="toc-href" href="#1. sources of power consumption" title="1. Sources of Power Consumption">1. Sources of Power Consumption</a></li><li><a class="toc-href" href="#2. power reduction power reduction" title="2. Power Reduction Power Reduction">2. Power Reduction Power Reduction</a></li><li><a class="toc-href" href="#3. system level" title="3. System Level">3. System Level</a><ul><li><a class="toc-href" href="#3.1. soc approach" title="3.1. SoC Approach">3.1. SoC Approach</a></li><li><a class="toc-href" href="#3.2. hw/sw partitioning" title="3.2. HW/SW Partitioning">3.2. HW/SW Partitioning</a></li><li><a class="toc-href" href="#3.3. low power software" title="3.3. Low Power Software">3.3. Low Power Software</a></li><li><a class="toc-href" href="#3.4. choice of processor" title="3.4. Choice of Processor">3.4. Choice of Processor</a></li></ul></li><li><a class="toc-href" href="#4. architecture level power reduction_1" title="4. Architecture Level Power Reduction">4. Architecture Level Power Reduction</a><ul><li><a class="toc-href" href="#4.1. advanced clock gating" title="4.1. Advanced Clock Gating">4.1. Advanced Clock Gating</a></li><li><a class="toc-href" href="#4.2. dynamic voltage and frequency scaling (dvfs)" title="4.2. Dynamic Voltage and Frequency Scaling (DVFS)">4.2. Dynamic Voltage and Frequency Scaling (DVFS)</a></li><li><a class="toc-href" href="#4.3. cache based architecture" title="4.3. Cache Based Architecture">4.3. Cache Based Architecture</a></li><li><a class="toc-href" href="#4.4. log fft architecture" title="4.4. Log FFT Architecture">4.4. Log FFT Architecture</a></li><li><a class="toc-href" href="#4.5. asynchronous (clockless) design" title="4.5. Asynchronous (Clockless) Design">4.5. Asynchronous (Clockless) Design</a></li><li><a class="toc-href" href="#4.6. power gating" title="4.6. Power Gating">4.6. Power Gating</a></li><li><a class="toc-href" href="#4.7. multi-threshold voltage" title="4.7. Multi-threshold Voltage">4.7. Multi-threshold Voltage</a></li><li><a class="toc-href" href="#4.8. multi-supply voltage" title="4.8. Multi-supply Voltage">4.8. Multi-supply Voltage</a></li><li><a class="toc-href" href="#4.9. gate memory power" title="4.9. Gate Memory Power">4.9. Gate Memory Power</a></li></ul></li><li><a class="toc-href" href="#5. register transfer level (rtl) power reduction_1" title="5. Register Transfer Level (RTL) Power Reduction">5. Register Transfer Level (RTL) Power Reduction</a><ul><li><a class="toc-href" href="#5.1. state machine encoding and decomposition" title="5.1. State Machine Encoding and Decomposition">5.1. State Machine Encoding and Decomposition</a></li><li><a class="toc-href" href="#5.2. binary number representation" title="5.2. Binary Number Representation">5.2. Binary Number Representation</a></li><li><a class="toc-href" href="#5.3. basic gated clock" title="5.3. Basic Gated Clock">5.3. Basic Gated Clock</a></li><li><a class="toc-href" href="#5.4. one hot encoded multiplexer" title="5.4. One Hot Encoded Multiplexer">5.4. One Hot Encoded Multiplexer</a></li><li><a class="toc-href" href="#5.5. removing redundant transactions" title="5.5. Removing Redundant Transactions">5.5. Removing Redundant Transactions</a></li><li><a class="toc-href" href="#5.6. resource sharing" title="5.6. Resource Sharing">5.6. Resource Sharing</a></li><li><a class="toc-href" href="#5.7. using ripple counters for low power" title="5.7. Using Ripple Counters for Low Power">5.7. Using Ripple Counters for Low Power</a></li><li><a class="toc-href" href="#5.8. bus inversion" title="5.8. Bus Inversion">5.8. Bus Inversion</a></li></ul></li><li><a class="toc-href" href="#6. transistor level power reduction_1" title="6. Transistor Level Power Reduction">6. Transistor Level Power Reduction</a></li><li><a class="toc-href" href="#7. ref" title="7. Ref">7. Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>在一些情况下，是不需要考虑低功耗设计的，但是更多的情况下，低功耗是必须考虑的，总结一下 <a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">THE ART OF HARDWARE ARCHITECTURE</a> 中介绍的低功耗设计的方法。</p>
-<p><br></p>
-<h2>1. Sources of Power Consumption</h2>
-<hr>
+<p><br/></p>
+<h2 id="1. sources of power consumption">1. Sources of Power Consumption</h2>
+<hr/>
 <p>首先，分析功耗的来源。</p>
 <p>功耗可以分为 3 类：</p>
 <ol>
@@ -123,28 +127,26 @@
 <p>综上，ASIC 的总功耗定义为：</p>
 <div class="highlight"><pre><span></span><span class="n">Ptotal</span> <span class="o">=</span> <span class="n">Pdynamic</span> <span class="o">+</span> <span class="n">Pstatic</span>
 </pre></div>
-
-
 <p>其中，动态功耗占了主要部分，典型应用中，动态功耗占到总功耗的 80% 。</p>
-<p><br></p>
-<h2>2. Power Reduction Power Reduction</h2>
-<hr>
+<p><br/></p>
+<h2 id="2. power reduction power reduction">2. Power Reduction Power Reduction</h2>
+<hr/>
 <p>可以从系统的不同层次来降低功耗，下图展示了不同级别的不同技术，虽然可以在各个级别进行，但是在抽象层次越高的级别，得到的效果越有效，即在系统层（system level）和体系结构层（architecture level）进行。</p>
-<p><img alt="level" src="/images/low-power-design/level.png"></p>
+<p><img alt="level" src="/images/low-power-design/level.png"/></p>
 <p>下面一张表展示了各个级别对功耗降低程度的影响：</p>
-<p><img alt="opportunities" src="/images/low-power-design/opportunities.png"></p>
-<p><br></p>
+<p><img alt="opportunities" src="/images/low-power-design/opportunities.png"/></p>
+<p><br/></p>
 <p><em>下面分别从不同层次总结。</em></p>
-<p><br></p>
-<h2>3. System Level</h2>
-<hr>
-<h3>3.1. SoC Approach</h3>
+<p><br/></p>
+<h2 id="3. system level">3. System Level</h2>
+<hr/>
+<h3 id="3.1. soc approach">3.1. SoC Approach</h3>
 <p>对于纳米级高端芯片，I/O 使用比芯片内核更高的电压，占到了总功耗的 50% 以上。如果有很多芯片的话，芯片之间的连线会消耗大量的功耗，所以就提出了 SoC，以缩减面积，降低成本。</p>
-<h3>3.2. HW/SW Partitioning</h3>
+<h3 id="3.2. hw/sw partitioning">3.2. HW/SW Partitioning</h3>
 <p>相比于硬件，使用软件高级语言编程可以很方便的实现功能。但是，一些功能可以使用硬件来实现，来降低功耗。</p>
 <p>比如通信算法中有很多递归运算，实现递归的软件代码可能很少，但是这段只占代码量的 10% 的代码却花费了 90% 的执行时间，如果将这段代码使用硬件实现，就能够节约大量能源，显著降低功耗。</p>
 <p>常规的软硬件划分方法如下图所示：</p>
-<p><img alt="Partitioning" src="/images/low-power-design/partitioning.png"></p>
+<p><img alt="Partitioning" src="/images/low-power-design/partitioning.png"/></p>
 <p>典型的设计流程如下：</p>
 <ol>
 <li>
@@ -169,7 +171,7 @@
 <p>首先，设计者根据规范和自身经验对系统性能做出推测，根据推测来决定系统哪部分用硬件实现，哪部分用软件实现。</p>
 <p>然后，对软硬件进行描述，硬件用 Verilog/VHDL，软件使用 C 。</p>
 <p>下一步对软硬件进行协同仿真，验证设计功能。如果不满足要求，则从系统划分开始重新再来。</p>
-<h3>3.3. Low Power Software</h3>
+<h3 id="3.3. low power software">3.3. Low Power Software</h3>
 <p>软件设计部分也可以像硬件设计一样，在设计时就进行一些优化，得到更加绿色、高效的系统。</p>
 <p>比如，将下面的两个循环合并为一个：</p>
 <div class="highlight"><pre><span></span><span class="o">//</span> <span class="nv">code1</span>
@@ -187,68 +189,64 @@
     <span class="k">do</span> <span class="nv">b</span><span class="c1">;</span>
 <span class="k">end</span>
 </pre></div>
-
-
 <p>因为减少了循环计数器（初始化、递增、比较），所以循环指令数目就减少了。</p>
-<h3>3.4. Choice of Processor</h3>
+<h3 id="3.4. choice of processor">3.4. Choice of Processor</h3>
 <p>选择处理器会对整体功耗产生明显影响。（高级话题，以后再补）</p>
-<p><br></p>
-<h2>4. Architecture Level Power Reduction</h2>
-<hr>
-<h3>4.1. Advanced Clock Gating</h3>
+<p><br/></p>
+<h2 id="4. architecture level power reduction_1">4. Architecture Level Power Reduction</h2>
+<hr/>
+<h3 id="4.1. advanced clock gating">4.1. Advanced Clock Gating</h3>
 <p>同步设计中，时钟占据了整个动态功耗的绝大部分，在许多情况下都可以通过门控时钟将绝大多数不使用的电路关闭掉。</p>
 <p>门控时钟有如下的两种：</p>
 <ol>
 <li>组合门控时钟</li>
 </ol>
-<p><img alt="combinational" src="/images/low-power-design/combinational.png"></p>
+<p><img alt="combinational" src="/images/low-power-design/combinational.png"/></p>
 <ol>
 <li>时序门控时钟</li>
 </ol>
-<p><img alt="sequential" src="/images/low-power-design/sequential.png"></p>
-<h3>4.2. Dynamic Voltage and Frequency Scaling (DVFS)</h3>
+<p><img alt="sequential" src="/images/low-power-design/sequential.png"/></p>
+<h3 id="4.2. dynamic voltage and frequency scaling (dvfs)">4.2. Dynamic Voltage and Frequency Scaling (DVFS)</h3>
 <p>...</p>
-<h3>4.3. Cache Based Architecture</h3>
+<h3 id="4.3. cache based architecture">4.3. Cache Based Architecture</h3>
 <p>缓存一方面可以缓解内存和 CPU 之间速度的差异，还可以用来减少访问内存的次数，把需要频繁访问的数据保存在缓存中，可以使得计算能耗大量下降。</p>
-<h3>4.4. Log FFT Architecture</h3>
+<h3 id="4.4. log fft architecture">4.4. Log FFT Architecture</h3>
 <p>对于大规模运算的应用，使用对数系统（ logarithmic number system，LNS）比线性系统更好。LNS 在降低平均位元活跃度的同时用加法和奖罚实现乘除运算，使其效率比线性系统更高。</p>
-<h3>4.5. Asynchronous (Clockless) Design</h3>
+<h3 id="4.5. asynchronous (clockless) design">4.5. Asynchronous (Clockless) Design</h3>
 <p>同步设计的时钟信号带来的问题很多，同时产生的功耗也很大，所以移除时钟是一个很有诱惑力的想法，这就是异步设计的基本意图，不过异步设计不是简单的移除时钟，仍然需要对电路进行某种控制。异步电路本质上进行自我控制，因此也成为自定时电路。</p>
-<h3>4.6. Power Gating</h3>
+<h3 id="4.6. power gating">4.6. Power Gating</h3>
 <p>...</p>
-<h3>4.7. Multi-threshold Voltage</h3>
+<h3 id="4.7. multi-threshold voltage">4.7. Multi-threshold Voltage</h3>
 <p>...</p>
-<h3>4.8. Multi-supply Voltage</h3>
+<h3 id="4.8. multi-supply voltage">4.8. Multi-supply Voltage</h3>
 <p>...</p>
-<h3>4.9. Gate Memory Power</h3>
+<h3 id="4.9. gate memory power">4.9. Gate Memory Power</h3>
 <p>...</p>
-<p><br></p>
-<h2>5. Register Transfer Level (RTL) Power Reduction</h2>
-<hr>
+<p><br/></p>
+<h2 id="5. register transfer level (rtl) power reduction_1">5. Register Transfer Level (RTL) Power Reduction</h2>
+<hr/>
 <p>在大规模 ASIC 中，在 RTL 级完成时，至少 80% 的功耗已经确定了，后端流程无法解决所有的功耗问题，后端无法解决微架构、RTL 代码风格对动态和静态功耗的影响，所以在 RTL 阶段就要将功耗相关的问题一起解决。</p>
-<h3>5.1. State Machine Encoding and Decomposition</h3>
+<h3 id="5.1. state machine encoding and decomposition">5.1. State Machine Encoding and Decomposition</h3>
 <p>在各种状态机编码类型中，格雷码是最符合低功耗设计的。因为格雷码相邻码之间只有一位翻转，所以消耗的能量最少。（格雷码是最优的，有个 条件就是状态机是按顺序跳转的，如果状态跳转的次序是不定的，那么格雷码的优势就不存在了）</p>
 <p>即使因为一些原因，没有使用格雷码，仍然可以通过降低翻转较多的状态的切换频率，来降低功耗。</p>
 <p>还有一种方法是将 FSM 进行分解为两个，两个小的 FSM 组合起来等效于原始的 FSM。当一个的 FSM 激活时，可以关闭另外一个 FSM，这样绝大多数时间内只需要给较小且更有效率的子 FSM 提供时钟，从而降低了功耗。</p>
-<h3>5.2. Binary Number Representation</h3>
+<h3 id="5.2. binary number representation">5.2. Binary Number Representation</h3>
 <p>虽然在大多数应用中，补码比原码更方便，但是有些特殊应用中，在切换过程中原码更有优势。比如 0 和 -1 分别用原码和补码表示：</p>
 <div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Signed</span> <span class="n">Magnitude</span>
 <span class="mi">0</span>  <span class="o">-&gt;</span> <span class="mi">00000000</span>
 <span class="o">-</span><span class="mi">1</span> <span class="o">-&gt;</span> <span class="mi">10000001</span>
 
-<span class="o">//</span> <span class="mi">2</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">compliment</span>
+<span class="o">//</span> <span class="mi">2</span><span class="err">'</span><span class="n">s</span> <span class="n">compliment</span>
 <span class="mi">0</span>  <span class="o">-&gt;</span> <span class="mi">00000000</span>
 <span class="o">-</span><span class="mi">1</span> <span class="o">-&gt;</span> <span class="mi">11111111</span>
 </pre></div>
-
-
 <p>当从 0 变为 1 时，原码只需要变化两位，而补码所有位都会变化。</p>
-<h3>5.3. Basic Gated Clock</h3>
+<h3 id="5.3. basic gated clock">5.3. Basic Gated Clock</h3>
 <p>门控时钟在 Architecture 部分已经说过了，这里从 RTL 的角度再重复一下。RTL 的代码风格会影响到最终的实现结果，所以应该在编写 RTL 的时候需要特别注意。</p>
 <div class="highlight"><pre><span></span><span class="o">//</span> <span class="nv">bad</span> <span class="nv">example</span>
 <span class="nv">always</span> @<span class="ss">(</span><span class="nv">posedge</span> <span class="nv">clk</span> <span class="nv">or</span> <span class="nv">negedge</span> <span class="nv">rst_n</span><span class="ss">)</span> <span class="nv">begin</span>
     <span class="k">if</span> <span class="ss">(</span><span class="o">!</span><span class="nv">rst_n</span><span class="ss">)</span>
-        <span class="nv">test_ff</span> <span class="o">&lt;=</span> <span class="mi">32</span><span class="s1">&#39;</span><span class="s">b0;</span>
+        <span class="nv">test_ff</span> <span class="o">&lt;=</span> <span class="mi">32</span><span class="s1">'</span><span class="s">b0;</span>
     <span class="k">else</span>
         <span class="nv">test_ff</span> <span class="o">&lt;=</span> <span class="nv">test_next</span><span class="c1">;</span>
 <span class="k">end</span>
@@ -258,30 +256,28 @@
 <span class="o">//</span> <span class="nv">good</span> <span class="nv">example</span>
 <span class="nv">always</span> @<span class="ss">(</span><span class="nv">posedge</span> <span class="nv">clk</span> <span class="nv">or</span> <span class="nv">negedge</span> <span class="nv">rst_n</span><span class="ss">)</span> <span class="nv">begin</span>
     <span class="k">if</span> <span class="ss">(</span><span class="o">!</span><span class="nv">rst_n</span><span class="ss">)</span>
-        <span class="nv">test_ff</span> <span class="o">&lt;=</span> <span class="mi">32</span><span class="s1">&#39;</span><span class="s">b0;</span>
+        <span class="nv">test_ff</span> <span class="o">&lt;=</span> <span class="mi">32</span><span class="s1">'</span><span class="s">b0;</span>
     <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">load_cond</span><span class="ss">)</span>
         <span class="nv">test_ff</span> <span class="o">&lt;=</span> <span class="nv">test_data</span><span class="c1">;</span>
 <span class="k">end</span>
 </pre></div>
-
-
-<h3>5.4. One Hot Encoded Multiplexer</h3>
+<h3 id="5.4. one hot encoded multiplexer">5.4. One Hot Encoded Multiplexer</h3>
 <p>Mux 的编码方案也可以采用独热码的方式，从而减少开关切换的数目，降低功耗。</p>
-<h3>5.5. Removing Redundant Transactions</h3>
+<h3 id="5.5. removing redundant transactions">5.5. Removing Redundant Transactions</h3>
 <p>有时候，一些没有意义的数据切换去掉，从而降低功耗。比如前级的逻辑产生一些数据，但是在后级逻辑中没有使用，这时候就可以修改设计，在前面一级就关闭，在需要数据的时候，让真正生成数据的电路工作。</p>
-<h3>5.6. Resource Sharing</h3>
+<h3 id="5.6. resource sharing">5.6. Resource Sharing</h3>
 <p>如果有一些相同的操作，那么可以使用资源共享的方法，避免运算逻辑重复出现。</p>
 <div class="highlight"><pre><span></span><span class="o">//</span> <span class="nv">bad</span> <span class="nv">example</span>
 <span class="nv">always</span> @<span class="o">*</span> <span class="nv">begin</span>
     <span class="nv">case</span> <span class="ss">(</span><span class="nv">SEL</span><span class="ss">)</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b000: OUT = 1</span><span class="s1">&#39;</span><span class="nv">b0</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b001: OUT = 1</span><span class="s1">&#39;</span><span class="nv">b1</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b010: OUT = (value1 == value2);</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b011: OUT = (value1 != value2);</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b100: OUT = (value1 &gt;= value2);</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b101: OUT = (value1 &lt;= value2);</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b110: OUT = (value1 &lt;  value2);</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b111: OUT = (value1 &gt;  value2);</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b000: OUT = 1</span><span class="s1">'</span><span class="nv">b0</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b001: OUT = 1</span><span class="s1">'</span><span class="nv">b1</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b010: OUT = (value1 == value2);</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b011: OUT = (value1 != value2);</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b100: OUT = (value1 &gt;= value2);</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b101: OUT = (value1 &lt;= value2);</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b110: OUT = (value1 &lt;  value2);</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b111: OUT = (value1 &gt;  value2);</span>
     <span class="nv">endcase</span>
 <span class="k">end</span>
 
@@ -291,30 +287,28 @@
 
 <span class="nv">always</span> @<span class="o">*</span> <span class="nv">begin</span>
     <span class="nv">case</span> <span class="ss">(</span><span class="nv">SEL</span><span class="ss">)</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b000: OUT = 1</span><span class="s1">&#39;</span><span class="nv">b0</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b001: OUT = 1</span><span class="s1">&#39;</span><span class="nv">b1</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b010: OUT = cmp_equal;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b011: OUT = !cmp_equal;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b100: OUT = (cmp_equal || cmp_greater);</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b101: OUT = !cmp_greater;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b110: OUT = !cmp_equal &amp;&amp; !cmp_greater;</span>
-        <span class="mi">3</span><span class="s1">&#39;</span><span class="s">b111: OUT = cmp_greater;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b000: OUT = 1</span><span class="s1">'</span><span class="nv">b0</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b001: OUT = 1</span><span class="s1">'</span><span class="nv">b1</span><span class="c1">;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b010: OUT = cmp_equal;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b011: OUT = !cmp_equal;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b100: OUT = (cmp_equal || cmp_greater);</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b101: OUT = !cmp_greater;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b110: OUT = !cmp_equal &amp;&amp; !cmp_greater;</span>
+        <span class="mi">3</span><span class="s1">'</span><span class="s">b111: OUT = cmp_greater;</span>
     <span class="nv">endcase</span>
 <span class="k">end</span>
 </pre></div>
-
-
-<h3>5.7. Using Ripple Counters for Low Power</h3>
+<h3 id="5.7. using ripple counters for low power">5.7. Using Ripple Counters for Low Power</h3>
 <p>行波计数器属于异步设计，会给时序分析，电路的可靠性带来很多问题。所以一般要避免使用的。不过在一些低速的应用中（比如数码管显示），仍然可以使用行波计数器来降低功耗。</p>
-<h3>5.8. Bus Inversion</h3>
+<h3 id="5.8. bus inversion">5.8. Bus Inversion</h3>
 <p>当总线上的当前数据和下一个数据之间的汉明距离大于 N/2 时（N 是总线宽度），就将下一个数据反向再传输。这样做可以降低总线上出现的转换次数，从而降低功耗。</p>
 <p>如下图所示：</p>
-<p><img alt="bus" src="/images/low-power-design/bus_trans.png"></p>
-<p><br></p>
-<h2>6. Transistor Level Power Reduction</h2>
+<p><img alt="bus" src="/images/low-power-design/bus_trans.png"/></p>
+<p><br/></p>
+<h2 id="6. transistor level power reduction_1">6. Transistor Level Power Reduction</h2>
 <p>寄存器级别的技术基本属于后端 &amp; 微电子科学了，就不再总结了。</p>
-<p><br></p>
-<h2>7. Ref</h2>
+<p><br/></p>
+<h2 id="7. ref">7. Ref</h2>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">THE ART OF HARDWARE ARCHITECTURE</a></p>
   </div>
   <div class="tag-cloud">
