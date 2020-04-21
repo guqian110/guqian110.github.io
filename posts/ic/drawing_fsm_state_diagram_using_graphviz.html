@@ -101,13 +101,10 @@
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="利用 Graphviz 画 FSM 状态图">利用 Graphviz 画 FSM 状态图</a><ul><li><a class="toc-href" href="#1. graphviz" title="1. Graphviz">1. Graphviz</a></li><li><a class="toc-href" href="#2. usage" title="2. Usage">2. Usage</a><ul><li><a class="toc-href" href="#2.1. dot" title="2.1. DOT">2.1. DOT</a></li><li><a class="toc-href" href="#2.2. command" title="2.2. Command">2.2. Command</a></li></ul></li><li><a class="toc-href" href="#3. example_1" title="3. Example">3. Example</a></li><li><a class="toc-href" href="#4. ref" title="4. Ref">4. Ref</a></li></ul></li></ul></div>
-    </div>
 
   <div>
-    <h2 id="1. graphviz">1. Graphviz</h2>
-<hr/>
+    <h2>1. Graphviz</h2>
+<hr>
 <p>Graphviz 是一个由AT&amp;T实验室启动的开源工具包，用于绘制DOT语言脚本描述的图形。</p>
 <p><a href="http://en.wikipedia.org/wiki/Graphviz">wiki</a>:</p>
 <blockquote>
@@ -133,11 +130,11 @@
 </ul>
 <p>Graphviz 可以帮助我们画数据结构图、模块图、流程图等，是程序猿的画图利器。这里我们只用它来画简单的 流程图 / 状态图 ，所以只要有基本的图论知识，不涉及高级主题，所以学习起来是很轻松的。</p>
 <p>因为在<a href="http://guqian110.github.io/pages/2015/01/11/how_to_analyse_code_elegantly.html">前面一篇博客</a>中我们已经简单介绍了 <a href="http://www.graphviz.org/">Graphviz</a> 这个工具软件的安装方法，所以下面直接进入正题：<strong>如何使用 Graphviz 画 FSM 的状态转移图。</strong></p>
-<p><br/></p>
-<h2 id="2. usage">2. Usage</h2>
-<hr/>
+<p><br></p>
+<h2>2. Usage</h2>
+<hr>
 <p>下面的内容是我精简出来了的最小学习方法，使用方法的详细攻略请看 Graphviz 官网上的 <a href="http://www.graphviz.org/Documentation.php">Documentation</a>。</p>
-<h3 id="2.1. dot">2.1. DOT</h3>
+<h3>2.1. DOT</h3>
 <p>DOT 语法在 <a href="http://www.graphviz.org/Documentation.php">Documentation</a> 里面有介绍，它的定义方法和 C/C++ 中的 <code>struct</code> 类似。由图论的基本知识，我们知道描述一个图，只要用节点（<code>node</code>)、边（<code>edge</code>） 这两个要素就能描述清楚，而 DOT 语言也就是利用这两个信息来描述一个图的。下面用几个基本的例子来说明。</p>
 <ol>
 <li>
@@ -150,8 +147,10 @@
     <span class="n">node3</span> <span class="c1">-- node4</span>
 <span class="err">}</span>
 </pre></div>
+
+
 <p>结果：</p>
-<p><img alt="example1" src="/images/drawing-fsm-state-diagram-using-graphviz/example1.png"/></p>
+<p><img alt="example1" src="/images/drawing-fsm-state-diagram-using-graphviz/example1.png"></p>
 </li>
 <li>
 <p><strong>有向图</strong></p>
@@ -163,8 +162,10 @@
     <span class="n">node3</span> <span class="o">-&gt;</span> <span class="n">nod31</span>
 <span class="err">}</span>
 </pre></div>
+
+
 <p>结果：</p>
-<p><img alt="example2" src="/images/drawing-fsm-state-diagram-using-graphviz/example2.png"/></p>
+<p><img alt="example2" src="/images/drawing-fsm-state-diagram-using-graphviz/example2.png"></p>
 </li>
 <li>
 <p><strong>添加属性</strong></p>
@@ -175,66 +176,76 @@
     <span class="n">node2</span> <span class="o">-&gt;</span> <span class="n">node3</span>
     <span class="n">node3</span> <span class="o">-&gt;</span> <span class="n">node1</span>
 
-    <span class="n">node1</span> <span class="p">[</span><span class="n">shape</span> <span class="o">=</span> <span class="n">circle</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="ss">"state1"</span><span class="p">,</span> <span class="n">fillcolor</span> <span class="o">=</span> <span class="ss">"#123456"</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="n">filled</span><span class="p">]</span>
-    <span class="n">node2</span> <span class="p">[</span><span class="n">shape</span> <span class="o">=</span> <span class="n">triangle</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="ss">"state2"</span><span class="p">,</span> <span class="n">fillcolor</span> <span class="o">=</span> <span class="ss">"#345678"</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="n">filled</span><span class="p">]</span>
-    <span class="n">node3</span> <span class="p">[</span><span class="n">shape</span> <span class="o">=</span> <span class="n">box</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="ss">"state3"</span><span class="p">,</span> <span class="n">fillcolor</span> <span class="o">=</span> <span class="ss">"#567890"</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="n">unfilled</span><span class="p">]</span>
+    <span class="n">node1</span> <span class="p">[</span><span class="n">shape</span> <span class="o">=</span> <span class="n">circle</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="ss">&quot;state1&quot;</span><span class="p">,</span> <span class="n">fillcolor</span> <span class="o">=</span> <span class="ss">&quot;#123456&quot;</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="n">filled</span><span class="p">]</span>
+    <span class="n">node2</span> <span class="p">[</span><span class="n">shape</span> <span class="o">=</span> <span class="n">triangle</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="ss">&quot;state2&quot;</span><span class="p">,</span> <span class="n">fillcolor</span> <span class="o">=</span> <span class="ss">&quot;#345678&quot;</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="n">filled</span><span class="p">]</span>
+    <span class="n">node3</span> <span class="p">[</span><span class="n">shape</span> <span class="o">=</span> <span class="n">box</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="ss">&quot;state3&quot;</span><span class="p">,</span> <span class="n">fillcolor</span> <span class="o">=</span> <span class="ss">&quot;#567890&quot;</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="n">unfilled</span><span class="p">]</span>
 <span class="err">}</span>
 </pre></div>
+
+
 <p>结果：</p>
-<p><img alt="example3" src="/images/drawing-fsm-state-diagram-using-graphviz/example3.png"/></p>
+<p><img alt="example3" src="/images/drawing-fsm-state-diagram-using-graphviz/example3.png"></p>
 </li>
 <li>
 <p><strong>标注</strong></p>
 <p>上面的结果和我们的状态转移图相比，还差一点就是转移箭头边上的标注，我们可以在 edge 后面加上 <code>label</code> 属性来标注信息。</p>
 <p>脚本（example4.dot）：</p>
 <div class="highlight"><pre><span></span><span class="n">digraph</span> <span class="n">example4</span> <span class="err">{</span>
-    <span class="n">node1</span> <span class="o">-&gt;</span> <span class="n">node2</span> <span class="p">[</span><span class="n">label</span> <span class="o">=</span> <span class="ss">"condition1"</span><span class="p">]</span>
-    <span class="n">node2</span> <span class="o">-&gt;</span> <span class="n">node3</span> <span class="p">[</span><span class="n">label</span> <span class="o">=</span> <span class="ss">"condition2"</span><span class="p">]</span>
-    <span class="n">node3</span> <span class="o">-&gt;</span> <span class="n">node1</span> <span class="p">[</span><span class="n">label</span> <span class="o">=</span> <span class="ss">"condition3"</span><span class="p">]</span>
+    <span class="n">node1</span> <span class="o">-&gt;</span> <span class="n">node2</span> <span class="p">[</span><span class="n">label</span> <span class="o">=</span> <span class="ss">&quot;condition1&quot;</span><span class="p">]</span>
+    <span class="n">node2</span> <span class="o">-&gt;</span> <span class="n">node3</span> <span class="p">[</span><span class="n">label</span> <span class="o">=</span> <span class="ss">&quot;condition2&quot;</span><span class="p">]</span>
+    <span class="n">node3</span> <span class="o">-&gt;</span> <span class="n">node1</span> <span class="p">[</span><span class="n">label</span> <span class="o">=</span> <span class="ss">&quot;condition3&quot;</span><span class="p">]</span>
 <span class="err">}</span>
 </pre></div>
+
+
 <p>结果：</p>
-<p><img alt="example4" src="/images/drawing-fsm-state-diagram-using-graphviz/example4.png"/></p>
+<p><img alt="example4" src="/images/drawing-fsm-state-diagram-using-graphviz/example4.png"></p>
 </li>
 </ol>
 <p>以上的 4 个例子就足够我们画 FSM 的状态转移图了。更加详细的说明参考官方文档和一篇文章：<a href="http://www.openfoundry.org/en/foss-programs/8820-graphviz-">Graphviz - 用指令來畫關係圖吧！</a></p>
-<h3 id="2.2. command">2.2. Command</h3>
+<h3>2.2. Command</h3>
 <p>Graphviz 的命令格式为</p>
 <div class="highlight"><pre><span></span><span class="n">cmd</span> <span class="p">[</span> <span class="n">flags</span> <span class="p">]</span> <span class="p">[</span> <span class="n">input</span> <span class="n">files</span> <span class="p">]</span>
 </pre></div>
-<p>其中，cmd 可以是它包含的几个工具 <code>dot</code>、<code>neato</code>、<code>circo</code>、<code>fdp</code>、<code>osage</code>、<code>sfdp</code>、<code>twopi</code>，我们可以查看 man <cmd> 来看它们的区别，也可以直接运行看结果中的区别。</cmd></p>
+
+
+<p>其中，cmd 可以是它包含的几个工具 <code>dot</code>、<code>neato</code>、<code>circo</code>、<code>fdp</code>、<code>osage</code>、<code>sfdp</code>、<code>twopi</code>，我们可以查看 man <cmd> 来看它们的区别，也可以直接运行看结果中的区别。</p>
 <p>其中，flags 可以设置相关属性，比如 <code>-Tformat</code>，如果我们需要产生 PNG 图片，那么这里就应该是 <code>-Tpng</code>；再比如 <code>-o</code> 设置输出目的地。</p>
 <p>所以我们上面 example1 的命令格式为</p>
 <div class="highlight"><pre><span></span><span class="n">dot</span> <span class="n">example1</span><span class="p">.</span><span class="n">dot</span> <span class="o">-</span><span class="n">Tpng</span> <span class="o">-</span><span class="n">o</span> <span class="n">exampl1</span><span class="p">.</span><span class="n">png</span>
 </pre></div>
+
+
 <p>example2，example3，exampl4 同理。</p>
-<p><br/></p>
-<h2 id="3. example_1">3. Example</h2>
-<hr/>
+<p><br></p>
+<h2>3. Example</h2>
+<hr>
 <p>下面是实际程序中的一个例子：</p>
 <p>dot 脚本：</p>
 <div class="highlight"><pre><span></span><span class="n">digraph</span> <span class="n">fsm</span> <span class="err">{</span>                                                               
-       <span class="ss">"a"</span> <span class="o">-&gt;</span> <span class="ss">"a"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"a"</span> <span class="o">-&gt;</span> <span class="ss">"b"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/0"</span><span class="p">]</span>
-       <span class="ss">"b"</span> <span class="o">-&gt;</span> <span class="ss">"c"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"b"</span> <span class="o">-&gt;</span> <span class="ss">"d"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/0"</span><span class="p">]</span>
-       <span class="ss">"c"</span> <span class="o">-&gt;</span> <span class="ss">"a"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"c"</span> <span class="o">-&gt;</span> <span class="ss">"d"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/0"</span><span class="p">]</span>
-       <span class="ss">"d"</span> <span class="o">-&gt;</span> <span class="ss">"e"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"d"</span> <span class="o">-&gt;</span> <span class="ss">"f"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/1"</span><span class="p">]</span>
-       <span class="ss">"e"</span> <span class="o">-&gt;</span> <span class="ss">"a"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"e"</span> <span class="o">-&gt;</span> <span class="ss">"f"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/1"</span><span class="p">]</span>
-       <span class="ss">"f"</span> <span class="o">-&gt;</span> <span class="ss">"f"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/1"</span><span class="p">]</span>
-       <span class="ss">"f"</span> <span class="o">-&gt;</span> <span class="ss">"g"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"g"</span> <span class="o">-&gt;</span> <span class="ss">"a"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"g"</span> <span class="o">-&gt;</span> <span class="ss">"f"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/1"</span><span class="p">]</span>
+       <span class="ss">&quot;a&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;a&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;0/0&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;a&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;b&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;1/0&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;b&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;c&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;0/0&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;b&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;d&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;1/0&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;c&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;a&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;0/0&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;c&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;d&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;1/0&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;d&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;e&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;0/0&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;d&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;f&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;1/1&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;e&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;a&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;0/0&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;e&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;f&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;1/1&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;f&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;f&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;1/1&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;f&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;g&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;0/0&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;g&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;a&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;0/0&quot;</span><span class="p">]</span>
+       <span class="ss">&quot;g&quot;</span> <span class="o">-&gt;</span> <span class="ss">&quot;f&quot;</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">&quot;1/1&quot;</span><span class="p">]</span>
 <span class="err">}</span>
 </pre></div>
+
+
 <p>使用 dot 生成的结果：</p>
-<p><img alt="fsm_dot" src="/images/drawing-fsm-state-diagram-using-graphviz/fsm_dot.png"/></p>
+<p><img alt="fsm_dot" src="/images/drawing-fsm-state-diagram-using-graphviz/fsm_dot.png"></p>
 <p>使用 circo 生成的结果：</p>
-<p><img alt="fsm_circo" src="/images/drawing-fsm-state-diagram-using-graphviz/fsm_circo.png"/></p>
-<h2 id="4. ref">4. Ref</h2>
+<p><img alt="fsm_circo" src="/images/drawing-fsm-state-diagram-using-graphviz/fsm_circo.png"></p>
+<h2>4. Ref</h2>
 <p><a href="http://www.ibm.com/developerworks/cn/aix/library/au-aix-graphviz/">使用 Graphviz 生成自动化系统图</a></p>
 <p><a href="http://www.openfoundry.org/en/foss-programs/8820-graphviz-">Graphviz - 用指令來畫關係圖吧！</a></p>
 <p><a href="http://blog.163.com/prevBlogPerma.do?host=lockriver&amp;srl=487232242010101761749383&amp;mode=prev">Graphviz使用简介(中文乱码的问题)</a></p>

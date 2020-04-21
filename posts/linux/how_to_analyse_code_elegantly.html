@@ -101,9 +101,6 @@
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="如何优雅的分析代码">如何优雅的分析代码</a><ul><li><a class="toc-href" href="#1. graphviz" title="1. Graphviz">1. Graphviz</a><ul><li><a class="toc-href" href="#1.1. what is graphviz?" title="1.1. What is Graphviz?">1.1. What is Graphviz?</a></li><li><a class="toc-href" href="#1.2. installation" title="1.2. Installation">1.2. Installation</a></li><li><a class="toc-href" href="#1.3. more" title="1.3. More">1.3. More</a></li></ul></li><li><a class="toc-href" href="#2. doxygen_1" title="2. Doxygen">2. Doxygen</a><ul><li><a class="toc-href" href="#2.1. what is doxygen" title="2.1. What is Doxygen">2.1. What is Doxygen</a></li><li><a class="toc-href" href="#2.2. installation" title="2.2. Installation">2.2. Installation</a></li><li><a class="toc-href" href="#2.3. getting started" title="2.3. Getting Started">2.3. Getting Started</a></li><li><a class="toc-href" href="#2.4. documenting the code" title="2.4. Documenting the code">2.4. Documenting the code</a><ul><li><a class="toc-href" href="#2.4.1. putting documentation after members" title="2.4.1. Putting documentation after members">2.4.1. Putting documentation after members</a></li><li><a class="toc-href" href="#2.4.2. examples" title="2.4.2. Examples">2.4.2. Examples</a></li><li><a class="toc-href" href="#2.4.3. documentation at other places" title="2.4.3. Documentation at other places">2.4.3. Documentation at other places</a></li><li><a class="toc-href" href="#2.4.4. anatomy of a comment block" title="2.4.4. Anatomy of a comment block">2.4.4. Anatomy of a comment block</a></li></ul></li></ul></li><li><a class="toc-href" href="#3. ref._2" title="3. Ref.">3. Ref.</a></li></ul></li></ul></div>
-    </div>
 
   <div>
     <p>当我们来接手一个别人的工程时，阅读别人的代码是一件很痛苦的事。成千上百的函数，糟糕的代码风格，不知所云的注释，这些都是让人抓狂。那么，问题就来了：<strong>如何优雅地分析别人的代码？</strong></p>
@@ -112,30 +109,32 @@
 <p>这个功能在自动生成文档、代码分析时非常强大，下面分别简单介绍一下。</p>
 <p><strong>P.S.</strong></p>
 <p>在 Linux 环境下，Vim 有插件 <strong>DoxygenToolKIt.vim</strong> 可以帮助我们很方便地写出 Doxygen 风格的代码。这里只介绍 Doxygen + Graphviz，DoxygenToolKit.vim 在另外一篇中介绍。</p>
-<p><br/></p>
-<h2 id="1. graphviz">1. Graphviz</h2>
-<hr/>
-<h3 id="1.1. what is graphviz?">1.1. What is Graphviz?</h3>
+<p><br></p>
+<h2>1. Graphviz</h2>
+<hr>
+<h3>1.1. What is Graphviz?</h3>
 <p><a href="http://www.graphviz.org/">Graphviz official website</a>:</p>
 <blockquote>
 <p>Graphviz is open source graph visualization software. Graph visualization is a way of representing structural information as diagrams of abstract graphs and networks. It has important applications in networking, bioinformatics,  software engineering, database and web design, machine learning, and in visual interfaces for other technical domains. </p>
 </blockquote>
-<h3 id="1.2. installation">1.2. Installation</h3>
+<h3>1.2. Installation</h3>
 <p>官方网站上有各个平台（Windows/Unix/Linnux/Mac）的安装文件和源码，在 Ubuntu 13.10 saucy 下，直接使用 apt-get 安装即可：</p>
 <div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">graphviz</span>
 </pre></div>
-<h3 id="1.3. more">1.3. More</h3>
+
+
+<h3>1.3. More</h3>
 <p>更多详细的介绍见官网的 About、Documentation、Wiki、FAQ。</p>
-<p><br/></p>
-<h2 id="2. doxygen_1">2. Doxygen</h2>
-<hr/>
-<h3 id="2.1. what is doxygen">2.1. What is Doxygen</h3>
+<p><br></p>
+<h2>2. Doxygen</h2>
+<hr>
+<h3>2.1. What is Doxygen</h3>
 <p><a href="http://www.stack.nl/~dimitri/doxygen/index.html">Doxygen Official website</a>:</p>
 <blockquote>
 <p>Doxygen is the de facto standard tool for generating documentation from annotated C++ sources, but it also supports other popular programming languages such as C, Objective-C, C#, PHP, Java, Python, IDL (Corba, Microsoft, and UNO/OpenOffice flavors), Fortran, VHDL, Tcl, and to some extent D.</p>
 </blockquote>
 <p>简而言之，Doxygen 是一个程序的文件产生工具，可将程序中的特定批注转换成为说明文件。只要我们在写注释的时候按照它制定的规则写，那么它就可以为我们生成漂亮的文档。</p>
-<h3 id="2.2. installation">2.2. Installation</h3>
+<h3>2.2. Installation</h3>
 <p>官网上的 Manual 中有详细的介绍，对于不同平台，采用不同的安装方式（从源码编译安装、二进制文件安装），下面仅记录我在 Ubuntu 下使用源码编码的方式安装过程。</p>
 <ol>
 <li>
@@ -143,6 +142,8 @@
 <div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">doxygen</span><span class="o">/</span><span class="n">doxygen</span><span class="p">.</span><span class="n">git</span>
 <span class="n">cd</span> <span class="n">doxygen</span>
 </pre></div>
+
+
 </li>
 <li>
 <p>安装</p>
@@ -150,6 +151,8 @@
 <span class="n">make</span>
 <span class="n">make</span> <span class="n">install</span>
 </pre></div>
+
+
 </li>
 </ol>
 <p>安装成功之后，在 <code>/usr/bin/</code> 或者 <code>/usr/local/bin</code> 目录下可以查看到二进制 <code>doxygen</code> 文件。</p>
@@ -162,7 +165,7 @@
 <p>因为 Doxygen 要调用 Graphviz，所以先安装 Graphviz，然后编译安装 Doxygen</p>
 </li>
 </ol>
-<h3 id="2.3. getting started">2.3. Getting Started</h3>
+<h3>2.3. Getting Started</h3>
 <p><a href="http://www.stack.nl/~dimitri/doxygen/manual/starting.html">Getting Started</a>:</p>
 <ol>
 <li>
@@ -174,6 +177,8 @@
 <p>Doxygen 使用一个配置文件来工作，，每个项目都应该有一个自己对应的配置文件。我们可以使用 <code>doxygen -g</code> 来让 Doxygen 自动生成一个参考配置文件，然后修改其中个别配置即可.</p>
 <div class="highlight"><pre><span></span><span class="n">doxygen</span> <span class="o">-</span><span class="k">g</span> <span class="o">&lt;</span><span class="n">config</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
 </pre></div>
+
+
 <p><strong>常用配置：</strong></p>
 <ul>
 <li>
@@ -203,6 +208,8 @@
 <p>运行 Doxygen</p>
 <div class="highlight"><pre><span></span><span class="n">doxygen</span> <span class="o">&lt;</span><span class="n">config</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
 </pre></div>
+
+
 <p>如果前一步没有指定配置文件的名字的话，直接运行 <code>doxygen</code> 即可。</p>
 <p>运行完之后，就可以在指定的输出目录中看到结果，用浏览器可以看到 HTML 版本的结果。</p>
 </li>
@@ -211,7 +218,7 @@
 <p>这一步应该在最前面，即先按照 Doxygen 风格格式注释好代码，然后再进行分析。官网上针对不同的编程语言，有详细的举例说明：<a href="http://www.stack.nl/~dimitri/doxygen/manual/docblocks.html#specialblock">Documenting the code</a></p>
 </li>
 </ol>
-<h3 id="2.4. documenting the code">2.4. Documenting the code</h3>
+<h3>2.4. Documenting the code</h3>
 <p>这部分虽然在最后，事实上应该是第一步，也就是说我们先按照规定添加 Doxygen 风格的注释，然后再配置、调用 Doxygen 来生成文档。<a href="http://www.stack.nl/~dimitri/doxygen/index.html">Doxygen 官网</a>上有详细的注释<a href="http://www.stack.nl/~dimitri/doxygen/manual/docblocks.html">格式说明</a>，下面是我搬运来学习，自己翻译的。</p>
 <p>我们在 C/C++ 风格注释块中加入一些特殊符号，这样 Doxygen 就知道需要把这段注释分析生成在文档中，这样的注释在官网中叫做 <code>Special comment blocks</code>。下面详细介绍类 C/C++ 语言（C/C++/C#/Objective-C/PHP/Java）的注释，其他语言（Python, VHDL, Fortran, Tcl）见官网。</p>
 <p>对于代码中的任何实体（<code>entity</code>），都有两种注释，它们一起工作，完成注释功能，但至少得有一个：</p>
@@ -236,6 +243,8 @@
 <span class="cm">* ... text ...</span>
 <span class="cm">*/</span><span class="w"></span>
 </pre></div>
+
+
 </li>
 <li>
 <p><strong>Qt Style</strong></p>
@@ -244,6 +253,8 @@
 <span class="cm">* ... text ...</span>
 <span class="cm">*/</span><span class="w"></span>
 </pre></div>
+
+
 </li>
 <li>
 <p><strong>C++ Comment Style</strong></p>
@@ -252,11 +263,15 @@
 <span class="o">///</span> <span class="p">...</span> <span class="nb">text</span> <span class="p">...</span>
 <span class="o">///</span>
 </pre></div>
+
+
 <p>or</p>
 <div class="highlight"><pre><span></span><span class="o">//!</span>
 <span class="o">//!</span> <span class="p">...</span> <span class="nb">text</span> <span class="p">...</span>
 <span class="o">//!</span>
 </pre></div>
+
+
 </li>
 <li>
 <p>第四种格式，有的人喜欢让自己的注释更加醒目一些：</p>
@@ -264,6 +279,8 @@
 <span class="o">///</span> <span class="p">...</span> <span class="nb">text</span> <span class="p">...</span>
 <span class="o">/////////////////////////////////////////////////</span>
 </pre></div>
+
+
 </li>
 </ol>
 <p>对于简单注释（brief description），也有以下的几种方案：</p>
@@ -276,6 +293,8 @@
 <span class="cm">*  Detailed description starts here.</span>
 <span class="cm">*/</span><span class="w"></span>
 </pre></div>
+
+
 </li>
 <li>
 <p>如果选择 JavaDoc 的风格，并且在配置文件中设置 <code>JAVADOC_AUTOBRIEF = YES</code> 的话，Doxygen 会自动将第一句话作为 brief description，这个句子以 <code>. + 空格/空行</code> 结束。</p>
@@ -283,47 +302,65 @@
 <span class="cm">*   here.</span>
 <span class="cm">*/</span><span class="w"></span>
 </pre></div>
+
+
 <p>这种方式对多行的 C++ 特殊注释风格也有效：</p>
 <div class="highlight"><pre><span></span><span class="o">///</span> <span class="n">Brief</span> <span class="n">description</span> <span class="n">which</span> <span class="n">ends</span> <span class="k">at</span> <span class="n">this</span> <span class="n">dot</span><span class="p">.</span> <span class="n">Details</span> <span class="n">follow</span>
 <span class="o">///</span> <span class="n">here</span><span class="p">.</span>
 </pre></div>
+
+
 </li>
 <li>
 <p>第三种方法是使用不多于一行的特殊 C++ 风格注释，下面是两个例子：</p>
 <div class="highlight"><pre><span></span><span class="o">///</span> <span class="n">Brief</span> <span class="n">description</span><span class="p">.</span>
 <span class="cm">/** Detailed description. */</span>
 </pre></div>
+
+
 <p>或者：（这种情况下，必须用空行把 brief 和 detailed 分开，同时 <code>JAVADOC_AUTOBRIEF = NO</code>）</p>
 <div class="highlight"><pre><span></span><span class="o">//!</span> <span class="n">Brief</span> <span class="n">description</span><span class="p">.</span>
 
 <span class="o">//!</span> <span class="n">Detailed</span> <span class="n">description</span> 
 <span class="o">//!</span> <span class="n">starts</span> <span class="n">here</span><span class="p">.</span>
 </pre></div>
+
+
 </li>
 </ol>
 <p>Doxygen 和其他的文档系统的一个不同之处就是它允许把注释写在实体的定义（包括全局函数）之前。这样，就可以把注释直接写在源文件里面而不是头文件中，从而使头文件更加紧凑，而且功能的实现人员也更容易阅读注释。<strong>所以，一个折衷方案就是在声明前写 brief description，在定义前写 detailed description。</strong></p>
-<h4 id="2.4.1. putting documentation after members">2.4.1. Putting documentation after members</h4>
+<h4>2.4.1. Putting documentation after members</h4>
 <p>在注释结构体、类、枚举类型等时，有时习惯将注释写在代码的后面，而不是前面。因为 Doxygen 默认注释是解释后面的代码，所以这时候就需要在注释中添加一个额外的 <code>&lt;</code> 来标明是注释前面的内容。</p>
 <p><strong>example：</strong></p>
 <p>Qt 风格的注释：</p>
 <div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">var</span><span class="p">;</span> <span class="cm">/*!&lt; Detailed description after the member */</span>
 </pre></div>
+
+
 <p>或者：</p>
 <div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">var</span><span class="p">;</span> <span class="cm">/**&lt; Detailed description after the member */</span>
 </pre></div>
+
+
 <p>或者：</p>
 <div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">var</span><span class="p">;</span> <span class="o">//!&lt;</span> <span class="n">Detailed</span> <span class="n">description</span> <span class="k">after</span> <span class="n">the</span> <span class="n">member</span>
          <span class="o">//!&lt;</span>
 </pre></div>
+
+
 <p>一般来说，我们通常在后面添加的注释都是 brief description 而不是 detailed description，所以更常见的格式如下：</p>
 <div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">var</span><span class="p">;</span> <span class="o">//!&lt;</span> <span class="n">Brief</span> <span class="n">description</span> <span class="k">after</span> <span class="n">the</span> <span class="n">member</span>
 </pre></div>
+
+
 <p>或者：</p>
 <div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">var</span><span class="p">;</span> <span class="o">///&lt;</span> <span class="n">Brief</span> <span class="n">description</span> <span class="k">after</span> <span class="n">the</span> <span class="n">member</span>
 </pre></div>
+
+
 <p><strong>Warning:</strong></p>
 <p>这种添加 <code>&lt;</code> 的方法只能用在 成员（<code>member</code>）和 参数（<code>parameter</code>）中，不能用在描述文件、类、联合体、名字空间和枚举本身。此外, 在后面提到的结构化命令（如<code>\class</code>）在这种注释段中是无效的。</p>
-<h4 id="2.4.2. examples">2.4.2. Examples</h4>
+<h4>2.4.2. Examples</h4>
 <p>官网上提供了一个例子，分别用 Qt 和 JavaDoc 的风格注释一段相同的 C++ 代码：</p>
 <p><strong>Qt style:</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -449,6 +486,7 @@
 <span class="p">};</span>
 </pre></div>
 </td></tr></table>
+
 <p>生成的 HTML 网页：http://www.stack.nl/~dimitri/doxygen/manual/examples/qtstyle/html/class_test.html</p>
 <p><strong>JavaDoc style:</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -574,8 +612,9 @@
 <span class="p">};</span>
 </pre></div>
 </td></tr></table>
+
 <p>生成的 HTML 网页：http://www.stack.nl/~dimitri/doxygen/manual/examples/jdstyle/html/class_test.html</p>
-<h4 id="2.4.3. documentation at other places">2.4.3. Documentation at other places</h4>
+<h4>2.4.3. Documentation at other places</h4>
 <p>我们之前的例子中注释都是在文件、命名空间、类的声明或者定义之前，或者在它们的成员的前/后。虽然一般来说这是很正常的，但是有时候我们需要把代码写在在文档的其他地方。对于文件的注释更是如此，因为对于文件来说，根本就不存在在它之前的地方（"in front of a file"）。</p>
 <p>Doxygen 允许你把注释写在任何地方（例外情况是在函数体内 or 在 C 风格注释块内）。你需要付出的代价就是要在注释块内部多写一些结构化命令（<code>structural command</code>）来标明。所以，<strong>一般来说，我们应该尽量避免使用结构化命令，除非是有其他的特殊要求这样做。</strong></p>
 <p>结构化命令以一个 <code>\</code> 或者 <code>@</code>（JavaDoc 风格）开始，后面接一个命令名字 + 一个（多个）参数。举例如下：</p>
@@ -585,6 +624,8 @@
 <span class="cm">    A more detailed class description.</span>
 <span class="cm">*/</span><span class="w"></span>
 </pre></div>
+
+
 <p>这个例子中的 <code>\class</code> 指示这个注释块中包含一个 Test 类的文档。其他常用的命名如下：</p>
 <ul>
 <li>
@@ -627,9 +668,13 @@
 <p>在重复一下容易出错的地方：<strong>在注释全局对象时，必须先注释它们所在的文件。</strong>也就是说，必须包含以下两者之一：</p>
 <div class="highlight"><pre><span></span><span class="cm">/* \file */</span><span class="w"></span>
 </pre></div>
+
+
 <p>或者</p>
 <div class="highlight"><pre><span></span><span class="cm">/* @file */</span><span class="w"></span>
 </pre></div>
+
+
 <p>下面是官网上的一个 C 头文件的例子：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -726,6 +771,7 @@
 <span class="kt">int</span> <span class="nf">read</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">char</span> <span class="o">*</span><span class="p">,</span><span class="kt">size_t</span><span class="p">);</span>
 </pre></div>
 </td></tr></table>
+
 <p>上面这个例子中的每个注释块都包含了一条结构化命令，所以这些注释可以放在文件的其他位置或者放在其他文件中，不会影响到最终生成的文档。这种方法的坏处在于我们实际上写了两遍原型，当做修改时我们必须同时修改代码和注释。因此，我们在使用前应该仔细考虑是否真的需要结构化命令，并且尽可能避免使用它。一个常见的现象就是在函数前的注释块中包含了 <code>\fn</code> 命令，显然这是冗余的，除了导致错误，这个命令毫无作用。</p>
 <p>如果我们对以 .dox, .txt, .doc 结尾的文件注释，那么 Doxygen 会自动忽略这些文件。</p>
 <p>如果我们有一个 Doxygen 无法解析的文件，但是仍然像注释它，那么就使用 <code>\verbinclude</code> 这个命令：</p>
@@ -734,19 +780,21 @@
 <span class="cm">*  \verbinlcude mycript.sh</span>
 <span class="cm">*/</span><span class="w"></span>
 </pre></div>
+
+
 <p>还要确定在配置文件中 <code>INPUT</code> 变量显式地说明这个脚本文件，或者 <code>FILE_PATTERNS</code> 变量必须包含<code>.sh</code> 文件扩展名并且可以通过 <code>EXAMPLE_PATH</code> 变量寻找到这个文件。</p>
-<h4 id="2.4.4. anatomy of a comment block">2.4.4. Anatomy of a comment block</h4>
+<h4>2.4.4. Anatomy of a comment block</h4>
 <p>前面介绍了如何对代码进行注释，并且讨论了两种不同的注释：brief 和 detailed，还讨论了如何使用结构化命令。</p>
 <p>下面我们分析注释块本身。</p>
 <p>Doxygen 支持很多种格式的注释，最简单的就是文本文件，适用于比较短的注释。对于比较长的注释，我们需要清单、表格等更加结构化的元素，对于这种情况，Doxygen 支持 Markdown 语法，可以直接读取 Markdown 文件，详细内容看这里：<a href="http://www.stack.nl/~dimitri/doxygen/manual/markdown.html">Markdown Support</a>。</p>
 <p>(Markdown 源自邮件的文本格式，语法非常简洁，并且功能很强大，这篇文章本书就是用 Markdown 语法写的，语法细节见官网，这里不再赘述。)</p>
 <p>P.S.</p>
 <p>找到一篇博客，详细介绍了基于 Doxygen 的 C++ 注释风格：<a href="http://blog.csdn.net/czyt1988/article/details/8901191">C++标准注释原则 - 基于doxygen的C++注释</a></p>
-<p><br/></p>
+<p><br></p>
 <p>最后展示一张我的效果图：</p>
-<p><img alt="image" src="/images/how-to-analyse-code-elegantly/result.png"/></p>
-<p><br/></p>
-<h2 id="3. ref._2">3. Ref.</h2>
+<p><img alt="image" src="/images/how-to-analyse-code-elegantly/result.png"></p>
+<p><br></p>
+<h2>3. Ref.</h2>
 <p><a href="http://blog.csdn.net/blood008/article/details/6567169">linux doxygen 的安装和使用</a></p>
 <p><a href="http://www.stack.nl/~dimitri/doxygen/index.html">Doxygen</a></p>
 <p><a href="http://www.graphviz.org/">Graphviz</a></p>

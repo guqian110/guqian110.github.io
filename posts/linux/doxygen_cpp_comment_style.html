@@ -101,9 +101,6 @@
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="基于 Doxygen 的 C++ 注释风格">基于 Doxygen 的 C++ 注释风格</a><ul><li><a class="toc-href" href="#1. doxygen" title="1. Doxygen">1. Doxygen</a></li><li><a class="toc-href" href="#2. c++ comment style" title="2. C++ Comment Style">2. C++ Comment Style</a><ul><li><a class="toc-href" href="#2.1. license" title="2.1. License">2.1. License</a></li></ul></li><li><a class="toc-href" href="#3. file header_1" title="3. File header">3. File header</a><ul><li><a class="toc-href" href="#3.1. namespace" title="3.1. Namespace">3.1. Namespace</a></li><li><a class="toc-href" href="#3.2. class" title="3.2. Class">3.2. Class</a><ul><li><a class="toc-href" href="#3.2.1. member function" title="3.2.1. member function">3.2.1. member function</a></li><li><a class="toc-href" href="#3.2.2. member variable" title="3.2.2. member variable">3.2.2. member variable</a></li></ul></li><li><a class="toc-href" href="#3.3. function_1" title="3.3. Function">3.3. Function</a></li><li><a class="toc-href" href="#3.4. variable" title="3.4. Variable">3.4. Variable</a></li><li><a class="toc-href" href="#3.5. enum &amp; struct" title="3.5. Enum &amp; Struct">3.5. Enum &amp; Struct</a></li><li><a class="toc-href" href="#3.6. others" title="3.6. Others">3.6. Others</a></li></ul></li><li><a class="toc-href" href="#4. ref_1" title="4. Ref">4. Ref</a></li></ul></li></ul></div>
-    </div>
 
   <div>
     <p>本文内容参考自网上博客内容</p>
@@ -111,9 +108,9 @@
 <p><a href="http://blog.sina.com.cn/s/blog_6294abe701012pee.html">Doxygen C++注释规范及生成帮助文档配置步骤</a></p>
 <p><a href="http://ticktick.blog.51cto.com/823160/188674">Doxygen详细介绍（三）（Doxygen注释风格）</a></p>
 <p>重新整理排版了一下。写本文的主要目的是备忘，当作快速参考来查。</p>
-<p><br/></p>
-<h2 id="1. doxygen">1. Doxygen</h2>
-<hr/>
+<p><br></p>
+<h2>1. Doxygen</h2>
+<hr>
 <p>若想用 Doxygen 生成漂亮的文档，我们必须在以下几个地方添加 Doxygen 风格的注释：</p>
 <ol>
 <li>
@@ -137,9 +134,9 @@
 <p>对函数的功能、参数、返回值、需要注意的问题、相关说明等进行 detailed description。</p>
 </li>
 </ol>
-<p><br/></p>
-<h2 id="2. c++ comment style">2. C++ Comment Style</h2>
-<hr/>
+<p><br></p>
+<h2>2. C++ Comment Style</h2>
+<hr>
 <p>Doxygen 支持多种注释风格，比如 JavaDoc-like 风格，Qt 风格等。在写 C++ 代码时，我们应该遵守 C++ 的行注释风格，所谓行注释风格，是指一般 C++ 程序员避免使用 C 风格的注释符号 <code>/* */</code>，而是使用 3 个连续的 <code>/</code> 作为注释的开头。除了这个区别之外，其他部分和 JavaDoc 风格类似：</p>
 <ul>
 <li>
@@ -159,13 +156,14 @@
 <span class="c1">/// should be 2 line at least.</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 </ul>
 <p>下面是代码模板：</p>
-<h3 id="2.1. license">2.1. License</h3>
+<h3>2.1. License</h3>
 <p>使用 DoxygenToolKit 自动生成的 Lisence 即可。</p>
-<h2 id="3. file header_1">3. File header</h2>
-<hr/>
+<h2>3. File header</h2>
+<hr>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -183,7 +181,8 @@
 <span class="c1">/// \date xxxx-xx-xx</span>
 </pre></div>
 </td></tr></table>
-<h3 id="3.1. namespace">3.1. Namespace</h3>
+
+<h3>3.1. Namespace</h3>
 <p>namespace 的注释方式：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -202,7 +201,8 @@
 <span class="p">}</span>
 </pre></div>
 </td></tr></table>
-<h3 id="3.2. class">3.2. Class</h3>
+
+<h3>3.2. Class</h3>
 <p>class 的定义和声明都在头文件中，所以使用下面这种 brief 和 detailed 结合的方式：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -221,7 +221,8 @@
 <span class="p">}</span>
 </pre></div>
 </td></tr></table>
-<h4 id="3.2.1. member function">3.2.1. member function</h4>
+
+<h4>3.2.1. member function</h4>
 <p>对于成员函数，</p>
 <ul>
 <li>
@@ -234,14 +235,15 @@
 <p>若是在头文件处，声明和定义重合，使用 brief + detailed</p>
 </li>
 </ul>
-<h4 id="3.2.2. member variable">3.2.2. member variable</h4>
+<h4>3.2.2. member variable</h4>
 <p>对于成员变量，在行末使用 <code>///&lt;</code>。</p>
-<h3 id="3.3. function_1">3.3. Function</h3>
+<h3>3.3. Function</h3>
 <p><strong>brief:</strong></p>
 <p>单行的 <code>///</code> 注释：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">/// A brief function description.</span>
 </pre></div>
 </td></tr></table>
+
 <p><strong>detailed:</strong></p>
 <p>至少两行 <code>///</code> 的注释：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -249,6 +251,7 @@
 <span class="c1">/// should be 2 lines at least.</span>
 </pre></div>
 </td></tr></table>
+
 <p>在 detailed description 中还可以添加一些 <code>structural command</code>，常用的有 <code>\param</code>、<code>\return</code>、<code>\see</code>、<code>\note</code>、<code>\warning</code> 等：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -269,6 +272,7 @@
 <span class="c1">/// \see See-also</span>
 </pre></div>
 </td></tr></table>
+
 <p><strong>brief + detailed:</strong></p>
 <p>如果函数声明和定义重合，则 brief 和 detailed 合在一起，并且使用 <code>\brief</code> 命令，格式如下：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -290,6 +294,7 @@
 <span class="kt">bool</span> <span class="nf">test</span><span class="p">(</span><span class="kt">int</span> <span class="n">n1</span><span class="p">,</span> <span class="kt">char</span> <span class="n">c1</span><span class="p">);</span>
 </pre></div>
 </td></tr></table>
+
 <p>在 Doxgyen 的 manual 里面有：</p>
 <blockquote>
 <p>Unlike most other documentation systems, doxygen also allows you to put the documentation of members (including global functions) in front of the definition. This way the documentation can be placed in the source file instead of the header file. This keeps the header file compact, and allows the implementer of the members more direct access to the documentation. As a compromise the brief description could be placed before the declaration and the detailed description before the member definition.</p>
@@ -303,13 +308,14 @@
 <p>对于 inline 函数，使用 brief，尽量保持简洁，不要多于一行。</p>
 </li>
 </ul>
-<h3 id="3.4. variable">3.4. Variable</h3>
+<h3>3.4. Variable</h3>
 <p>变量一般使用 <code>///&lt;</code> 方式即可：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">m_a</span><span class="p">;</span> <span class="c1">///&lt; brief description for variable m_a</span>
 <span class="kt">double</span> <span class="n">m_b</span><span class="p">;</span>  <span class="c1">///&lt; brief description for variable m_b</span>
 </pre></div>
 </td></tr></table>
+
 <p>如果需要进行详细描述，则采用类似函数注释的方法（brief + detailed）：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -322,7 +328,8 @@
 <span class="kt">float</span> <span class="n">m_c</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-<h3 id="3.5. enum &amp; struct">3.5. Enum &amp; Struct</h3>
+
+<h3>3.5. Enum &amp; Struct</h3>
 <p>类似于 Variable 的注释方式：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -345,20 +352,23 @@
 <span class="n">emVar</span><span class="p">;</span> <span class="c1">///&lt; enum variable.</span>
 </pre></div>
 </td></tr></table>
-<h3 id="3.6. others">3.6. Others</h3>
+
+<h3>3.6. Others</h3>
 <p>TODO 命令：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">/// \todo Task1 to do</span>
 <span class="c1">/// \todo Task2 to do</span>
 </pre></div>
 </td></tr></table>
+
 <p>BUG 命令：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">/// \bug Bug1 to be fixed</span>
 <span class="c1">/// \bug Bug2 to be fixed</span>
 </pre></div>
 </td></tr></table>
-<p><br/></p>
+
+<p><br></p>
 <p><strong>P.S.</strong></p>
 <p>从网上找到一个Doxygen for C 的示例：</p>
 <p><a href="http://fnch.users.sourceforge.net/doxygen_c.html">Doxygen usage example (for C)</a></p>
@@ -366,8 +376,8 @@
 <p><strong>P.P.S</strong></p>
 <p>又找到一份注释规范的文档，写的挺好，值得一看。</p>
 <p><a href="/file/cpp_comment_standard.doc">C++注释规范</a></p>
-<p><br/></p>
-<h2 id="4. ref_1">4. Ref</h2>
+<p><br></p>
+<h2>4. Ref</h2>
   </div>
   <div class="tag-cloud">
     <p>

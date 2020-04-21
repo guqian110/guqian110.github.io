@@ -101,28 +101,25 @@
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="Verilog HDL coding style">Verilog HDL coding style</a><ul><li><a class="toc-href" href="#1. goal" title="1. Goal">1. Goal</a></li><li><a class="toc-href" href="#2. module partition" title="2. Module Partition">2. Module Partition</a></li><li><a class="toc-href" href="#3. coding style" title="3. Coding Style">3. Coding Style</a><ul><li><a class="toc-href" href="#3.1. part a" title="3.1. Part A">3.1. Part A</a></li><li><a class="toc-href" href="#3.2. part b" title="3.2. Part B">3.2. Part B</a></li><li><a class="toc-href" href="#3.3. part c" title="3.3. Part C">3.3. Part C</a></li><li><a class="toc-href" href="#3.4. part d" title="3.4. Part D">3.4. Part D</a></li><li><a class="toc-href" href="#3.5. part e" title="3.5. Part E">3.5. Part E</a></li><li><a class="toc-href" href="#3.6. part f" title="3.6. Part F">3.6. Part F</a></li><li><a class="toc-href" href="#3.7. part g" title="3.7. Part G">3.7. Part G</a></li></ul></li><li><a class="toc-href" href="#4. naming_1" title="4. Naming">4. Naming</a></li><li><a class="toc-href" href="#5. format" title="5. Format">5. Format</a><ul><li><a class="toc-href" href="#5.1. poart declaration" title="5.1. Poart Declaration">5.1. Poart Declaration</a></li><li><a class="toc-href" href="#5.2. module instantiate" title="5.2. Module Instantiate">5.2. Module Instantiate</a></li><li><a class="toc-href" href="#5.3. task &amp; function" title="5.3. Task &amp; Function">5.3. Task &amp; Function</a></li><li><a class="toc-href" href="#5.4. statement" title="5.4. Statement">5.4. Statement</a></li><li><a class="toc-href" href="#5.5. expression" title="5.5. Expression">5.5. Expression</a></li><li><a class="toc-href" href="#5.6. comments" title="5.6. Comments">5.6. Comments</a></li><li><a class="toc-href" href="#5.7. lint" title="5.7. Lint">5.7. Lint</a></li></ul></li><li><a class="toc-href" href="#6. appdidx_1" title="6. Appdidx">6. Appdidx</a></li></ul></li></ul></div>
-    </div>
 
   <div>
     <p><strong>Update (2015/04/21):</strong></p>
 <p>参考了网上流传的 华为 coding style guide 和 其他的一些资料，还有 <a href="http://www.amazon.cn/EDA%E7%B2%BE%E5%93%81%E6%99%BA%E6%B1%87%E9%A6%86-Verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF-%E9%AD%8F%E5%AE%B6%E6%98%8E/dp/B00HNVY3SY/ref=sr_1_1?ie=UTF8&amp;qid=1429188978&amp;sr=8-1&amp;keywords=verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF">Verilog 编程艺术</a> 的内容，重新整理一下自己的 Coding Style Guide，以便做项目的时候参考对比。</p>
-<p><br/></p>
+<p><br></p>
 <p><strong>Version</strong> : 2.0</p>
 <p><strong>Date</strong> : 2015-04-21</p>
 <p><strong>Author</strong> : Qian Gu (guqian110@gmail.com)</p>
 <p><strong>Summary</strong> : This is a personal Verilog HDL coding style guide for designs on FPGA.</p>
-<p><br/></p>
-<h2 id="1. goal">1. Goal</h2>
-<hr/>
+<p><br></p>
+<h2>1. Goal</h2>
+<hr>
 <p>干干净净的代码：</p>
 <p><strong>代码整洁、结构合理、层次清晰、注释明了、没有烂代码、没有冗余代码，合理地建立目录，合理地分配到不同文件中。</strong></p>
-<p><br/></p>
+<p><br></p>
 <p><em>下面分几个方面来总结，如何达到这样的目的。</em></p>
-<p><br/></p>
-<h2 id="2. module partition">2. Module Partition</h2>
-<hr/>
+<p><br></p>
+<h2>2. Module Partition</h2>
+<hr>
 <p>把代码划分为 模块、函数、任务，形成合理的层次结构。</p>
 <p><strong>划分的原则：高内聚、低耦合</strong></p>
 <ol>
@@ -130,7 +127,7 @@
 <p>一般来说，每个模块、函数、任务完成一个功能，隐藏内部实现细节，提供一个干净的接口</p>
 </li>
 <li>
-<p>灵活掌握，不要划分出太多的模块，不必拘泥于 &ldquo;模块最好在 500 行左右&rdquo;（太多的实例和连线反而容易出错）</p>
+<p>灵活掌握，不要划分出太多的模块，不必拘泥于 “模块最好在 500 行左右”（太多的实例和连线反而容易出错）</p>
 </li>
 <li>
 <p>低耦合的原则就是模块之间尽量用少的连线</p>
@@ -151,11 +148,11 @@
 <p>为了减少修改内容、避免出错、移植方便、创建可重用模块，在编写代码的时候使用 define、parameter、localparam 定义可重定义的参数（如 SIZE、WIDTH、DEPTH 等）。如果可能，把所有 define 放在一个 definition.vh 中，编译时首先读取这个文件</p>
 </li>
 </ol>
-<p><br/></p>
-<h2 id="3. coding style">3. Coding Style</h2>
-<hr/>
+<p><br></p>
+<h2>3. Coding Style</h2>
+<hr>
 <p>灵活合理地运用，才能设计出强壮的、简洁的代码，目标是可以清晰地表达出设计意图。</p>
-<h3 id="3.1. part a">3.1. Part A</h3>
+<h3>3.1. Part A</h3>
 <ol>
 <li>
 <p>设计时把应用文档和设计文档写好，在设计文档中要把设计思路、数据通路、实现细节等描述清楚，在经过评审之后才能开始编写代码（磨刀不误砍柴工，节约时间，而且项目可控、可实现）</p>
@@ -173,7 +170,7 @@
 <p>按照合理的层次结构组织各个模块，存放在合理的目录结构中</p>
 </li>
 </ol>
-<h3 id="3.2. part b">3.2. Part B</h3>
+<h3>3.2. Part B</h3>
 <ol>
 <li>
 <p>避免书写可能导致竞争冲突（race condition）的语句（给仿真调试带来很大的麻烦）</p>
@@ -194,7 +191,7 @@
 <p>避免 Latch，避免无意中形成的 Latch（常规设计中，只有顶层模块的 clock_gate 会使用 latch，以节省功耗）</p>
 </li>
 </ol>
-<h3 id="3.3. part c">3.3. Part C</h3>
+<h3>3.3. Part C</h3>
 <ol>
 <li>
 <p>保证时钟和复位信号没有 glitch</p>
@@ -229,7 +226,7 @@
 写可测性的设计（DFT, Design for Test）</p>
 </li>
 </ol>
-<h3 id="3.4. part d">3.4. Part D</h3>
+<h3>3.4. Part D</h3>
 <ol>
 <li>
 <p>对于组合逻辑，使用 always @*</p>
@@ -248,7 +245,7 @@
 <p>通常，case 的时序比 if-else 的时序好，优先级编码器只有在信号先后到来的时候才使用。</p>
 </li>
 </ol>
-<h3 id="3.5. part e">3.5. Part E</h3>
+<h3>3.5. Part E</h3>
 <ol>
 <li>
 <p>模块的输入信号尽量用 DFF 先锁存再使用（若输入是其他的寄存器输出则不必）</p>
@@ -269,7 +266,7 @@
 <p>设计代码中，函数、任务不要使用全局变量；验证代码无此要求</p>
 </li>
 </ol>
-<h3 id="3.6. part f">3.6. Part F</h3>
+<h3>3.6. Part F</h3>
 <ol>
 <li>
 <p>`include 的文件名不要包含路径名（后期编译、综合、移植困难）</p>
@@ -290,7 +287,7 @@
 <p>为了模块可配置、可移植，使用 parameter</p>
 </li>
 </ol>
-<h3 id="3.7. part g">3.7. Part G</h3>
+<h3>3.7. Part G</h3>
 <ol>
 <li>
 <p>使用简洁的写法（可省略的 begin-end 省略不写）</p>
@@ -342,11 +339,12 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
     <span class="k">else</span> <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 </ol>
-<p><br/></p>
-<h2 id="4. naming_1">4. Naming</h2>
-<hr/>
+<p><br></p>
+<h2>4. Naming</h2>
+<hr>
 <ol>
 <li>
 <p>建立一套命名约定和缩略语清单，以文档的形式记录下来，严格遵守</p>
@@ -389,6 +387,7 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 <span class="no">DEC</span>     <span class="c1">// Decoder</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 <li>
 <p><strong>模块间信号名</strong></p>
@@ -396,6 +395,7 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="n">CPUMMU_wr_req</span><span class="p">;</span>     <span class="c1">// write request form CPU to MMU</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 <li>
 <p><strong>模块内命名</strong></p>
@@ -403,6 +403,7 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="n">sdram_wr_en</span><span class="p">;</span>       <span class="c1">// SDRAM write enable</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 <li>
 <p><strong>系统级命名</strong></p>
@@ -414,6 +415,7 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 <span class="kt">wire</span> <span class="n">SYS_rst_cnt</span><span class="p">;</span>            <span class="c1">// system counter reset</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 <li>
 <p><strong>低电平有效信号命名</strong></p>
@@ -421,6 +423,7 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="n">rst_n</span><span class="p">;</span>             <span class="c1">// low valid reset</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 <li>
 <p><strong>经过锁存器的信号</strong></p>
@@ -428,15 +431,17 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span> <span class="n">din_r</span><span class="p">;</span>              <span class="c1">// latch input data</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 <li>
 <p><strong>参数名</strong></p>
 <p>parameter 全部大写，用 parameter 定义有实际意义的常数，比如 LED 亮灯状态、状态机状态等，避免 "magic number"。举例：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">10</span><span class="mi">'d0</span><span class="p">,</span>
-            <span class="no">WAIT</span> <span class="o">=</span> <span class="mh">10</span><span class="mi">'d1</span><span class="p">;</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">10</span><span class="mi">&#39;d0</span><span class="p">,</span>
+            <span class="no">WAIT</span> <span class="o">=</span> <span class="mh">10</span><span class="mi">&#39;d1</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 </ol>
 <p><strong>常用信号名缩写：</strong></p>
@@ -596,10 +601,10 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 </tr>
 </tbody>
 </table>
-<p><br/></p>
-<h2 id="5. format">5. Format</h2>
-<hr/>
-<h3 id="5.1. poart declaration">5.1. Poart Declaration</h3>
+<p><br></p>
+<h2>5. Format</h2>
+<hr>
+<h3>5.1. Poart Declaration</h3>
 <ol>
 <li>
 <p>尽量使用 Verilog-2001 标准，减少代码行，便于修改和删除</p>
@@ -640,10 +645,10 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 </ol>
 </li>
 </ol>
-<h3 id="5.2. module instantiate">5.2. Module Instantiate</h3>
+<h3>5.2. Module Instantiate</h3>
 <ol>
 <li>
-<p>例化名和模块名保持一致，加统一的前缀，如 u1_<module_name>、u2_<module_name></module_name></module_name></p>
+<p>例化名和模块名保持一致，加统一的前缀，如 u1_<module_name>、u2_<module_name></p>
 </li>
 <li>
 <p>端口名映射法，not 位置映射法</p>
@@ -658,9 +663,9 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 <p>例化<em>大量小模块</em>时，可以多个端口放在同一行的紧凑形式（如大量 PAD 实例化）</p>
 </li>
 </ol>
-<h3 id="5.3. task &amp; function">5.3. Task &amp; Function</h3>
+<h3>5.3. Task &amp; Function</h3>
 <p>使用 C 语言的习惯，在合适的位置添加空格</p>
-<h3 id="5.4. statement">5.4. Statement</h3>
+<h3>5.4. Statement</h3>
 <ol>
 <li>
 <p>每个语句单独成行</p>
@@ -690,13 +695,13 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 <p>合理使用 tab （1 tab = 4 space）</p>
 </li>
 </ol>
-<h3 id="5.5. expression">5.5. Expression</h3>
+<h3>5.5. Expression</h3>
 <ol>
 <li>
 <p>使用括号表示优先级（括号有可能影响综合结果的情况不在此列）</p>
 </li>
 <li>
-<p>双目、三目操作符左右空格，如 =、+、-、&times;、/、%、&lt;&lt;、&gt;&gt;、&amp;、&amp;&amp;、|| 等</p>
+<p>双目、三目操作符左右空格，如 =、+、-、×、/、%、&lt;&lt;、&gt;&gt;、&amp;、&amp;&amp;、|| 等</p>
 </li>
 <li>
 <p>逗号(,) 只在逗号后加空格</p>
@@ -714,7 +719,7 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 <p>表达式很长时，适当位置断行，使用空格对齐某些变量</p>
 </li>
 </ol>
-<h3 id="5.6. comments">5.6. Comments</h3>
+<h3>5.6. Comments</h3>
 <ol>
 <li>
 <p>文件头，使用 doxverilog 注释</p>
@@ -747,7 +752,7 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 <p>特殊注释：note、warning、todo</p>
 </li>
 </ol>
-<h3 id="5.7. lint">5.7. Lint</h3>
+<h3>5.7. Lint</h3>
 <ol>
 <li>
 <p>编译时，打开 vcs 或 ncveriog 的 lint 检查</p>
@@ -762,9 +767,9 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
 <p>检测 always 敏感列表是否完全</p>
 </li>
 </ol>
-<p><br/></p>
-<h2 id="6. appdidx_1">6. Appdidx</h2>
-<hr/>
+<p><br></p>
+<h2>6. Appdidx</h2>
+<hr>
 <p>FSM 的模板<a href="http://guqian110.github.io/pages/2014/06/05/fsm_design.html">另外一篇博客</a>中已经总结过了。下面是一个简单的模块模板格式。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -908,8 +913,8 @@ by poorly spaced and formatted RTL code and silly comments that state the obviou
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="http://guqian110.github.io/posts/ic/fsm_design.html">有限状态机 FSM 设计</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
+      <li><a href="http://guqian110.github.io/posts/ic/fsm_design.html">有限状态机 FSM 设计</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/doxygen_for_verilog.html">针对 Verilog 的 Doxygen</a></li>
     </ul>
   </div>

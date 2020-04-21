@@ -101,40 +101,41 @@
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="编写可综合的 Verilog HDL 代码">编写可综合的 Verilog HDL 代码</a><ul><li><a class="toc-href" href="#1. hdl" title="1. HDL">1. HDL</a></li><li><a class="toc-href" href="#2. ke zong he dai ma" title="2. 可综合代码">2. 可综合代码</a><ul><li><a class="toc-href" href="#2.1. suo you zong he gong ju du zhi chi de yu fa :" title="2.1. 所有综合工具都支持的语法：">2.1. 所有综合工具都支持的语法：</a></li><li><a class="toc-href" href="#2.2. you xie gong ju zhi chi ,you xie gong ju bu zhi chi de yu fa :" title="2.2. 有些工具支持，有些工具不支持的语法：">2.2. 有些工具支持，有些工具不支持的语法：</a></li><li><a class="toc-href" href="#2.3. jian li ke zong he mo kuai de yuan ze" title="2.3. 建立可综合模块的原则">2.3. 建立可综合模块的原则</a></li></ul></li><li><a class="toc-href" href="#3. bu ke zong he dai ma_1" title="3. 不可综合代码">3. 不可综合代码</a><ul><li><a class="toc-href" href="#3.1. bu ke zong he yu fa :" title="3.1. 不可综合语法：">3.1. 不可综合语法：</a></li></ul></li><li><a class="toc-href" href="#4. pan duan shi fou ke zong he_1" title="4. 判断是否可综合">4. 判断是否可综合</a></li><li><a class="toc-href" href="#5. can kao" title="5. 参考">5. 参考</a></li></ul></li></ul></div>
-    </div>
 
   <div>
     <p>对电路建模方法有很多种，可以用绘制原理图，也可以用 <em>硬件描述语言（Hardware Description Language）</em> 建模 。硬件描述语言中最常用的就是 Verlilog 和 VHDL 。</p>
 <p>Verilog HDL和VHDL相比有很多优点，有C语言基础的话很容易上手。搜集了一些网上大神的经验总结和书上的例子，所以对于和我一样的初学者，这篇博客应该还是很有提高作用的，至于具体语法，任何一本书都讲的很详细。</p>
-<h2 id="1. hdl">1. HDL</h2>
-<hr/>
+<h2>1. HDL</h2>
+<hr>
 <p>从网上找到一篇文章，把 HDL 的历史说的非常清楚。</p>
 <p>作者 董培良 </p>
 <p>题目： <a href="http://www.dzkf.cn/html/EDAjishu/2006/0720/9.html">浅谈VHDL/Verilog的可综合性以及对初学者的一些建议</a></p>
-<p>首先要明确的是 VHDL 和 Verilog 并非是针对硬件设计而开发的语言，只不过目前被我们用来设计硬件。HDL 是 Hardware <strong>Description</strong> Language 的缩写，正式中文名称是 &ldquo;硬件描述语言&rdquo;。也就是说，HDL 并不是 &ldquo;硬件设计语言（Hardware <strong>Design</strong> Language）&rdquo;。别看只差这一个单词，正是这一个单词才决定了绝大部分电路设计必须遵循RTL的模式来编写代码，而不能随心所欲得写仅仅符合语法的 HDL 代码。</p>
+<p>首先要明确的是 VHDL 和 Verilog 并非是针对硬件设计而开发的语言，只不过目前被我们用来设计硬件。HDL 是 Hardware <strong>Description</strong> Language 的缩写，正式中文名称是 “硬件描述语言”。也就是说，HDL 并不是 “硬件设计语言（Hardware <strong>Design</strong> Language）”。别看只差这一个单词，正是这一个单词才决定了绝大部分电路设计必须遵循RTL的模式来编写代码，而不能随心所欲得写仅仅符合语法的 HDL 代码。</p>
 <p>VHDL 于 1980 年开始在美国国防部的指导下开发，完成于 1983 年，并于 1987 年成为 IEEE 的标准。当初开发这种语言，是出于美国国防部采购电子设备的需要。美军的装备采购自私人企业，时常要面对这样一种风险：如果某种武器大量装备部队，而其中某个零件的供应商却在几年后倒闭了，那这种武器的再生产、维修和保养都会出现大问题。而电子设备、尤其是集成电路的内部结构较为复杂，若出现前面所说的情况要找其他公司生产代用品非常困难。于是美国防部希望供应商能以某种形式留下其产品的信息，以保证一旦其破产后能由其他厂商迅速生产出代用品。</p>
-<p>显然，当初的设计文档显然是不能交出来的，这在美国会涉及商业机密和知识产权问题。于是美国防部就想出了一种折衷的方法&mdash;&mdash;描述硬件的语言，也就是 VHDL 。通过 VHDL，供应商要把自己生产的集成电路芯片的行为描述出来：比如说，加了什么样的信号后过多少时间它能输出什么等等。这样，如果有必要让其他厂商生产代用品，他们只需照着 VHDL 文档，设计出行为与其相同的芯片即可。这样的代用品相当于是新厂商在不了解原产品结构的情况下独立设计的，所以不太会涉及知识侵权。</p>
+<p>显然，当初的设计文档显然是不能交出来的，这在美国会涉及商业机密和知识产权问题。于是美国防部就想出了一种折衷的方法——描述硬件的语言，也就是 VHDL 。通过 VHDL，供应商要把自己生产的集成电路芯片的行为描述出来：比如说，加了什么样的信号后过多少时间它能输出什么等等。这样，如果有必要让其他厂商生产代用品，他们只需照着 VHDL 文档，设计出行为与其相同的芯片即可。这样的代用品相当于是新厂商在不了解原产品结构的情况下独立设计的，所以不太会涉及知识侵权。</p>
 <p>Verilog HDL 也形成于差不多的年代，是由 Gateway Design Automation 公司大约在 1983 年左右开发的。其架构同 VHDL 相似，但主要被用来进行硬件仿真。或许私人公司更注重实用，Verilog 要比 VHDL 简洁得多。</p>
 <p>由此可见，这两种最流行的用于电路设计的语言，没有一种是为了设计硬件而开发的（更何况 80 年代还没有现在的那些功能强大的EDA软件呢）。因此，当初制订 HDL 语言标准的时候，并没有考虑这些代码如何用硬件来实现。换句话说，有些代码写起来简单，实现起来却可能非常复杂，或者几乎不可能实现。</p>
-<p><br/></p>
-<h2 id="2. ke zong he dai ma">2. 可综合代码</h2>
-<hr/>
+<p><br></p>
+<h2>2. 可综合代码</h2>
+<hr>
 <p>任何符合 HDL 语法标准的代码都是对硬件行为的一种描述，但不一定是可直接对应成电路的设计信息。行为描述可以基于不同的层次，如系统级，算法级，寄存器传输级(RTL)、门级等等。以目前大部分EDA软件的综合能力来说，<strong>只有RTL或更低层次的行为描述才能保证是可综合的</strong>。而众多初学者试图做的，却是想让软件去综合 <em>算法级或者更加抽象的硬件行为描述</em>。</p>
-<h3 id="2.1. suo you zong he gong ju du zhi chi de yu fa :">2.1. 所有综合工具都支持的语法：</h3>
+<h3>2.1. 所有综合工具都支持的语法：</h3>
 <div class="highlight"><pre><span></span>    <span class="k">always</span><span class="p">,</span> <span class="k">assign</span><span class="p">,</span> <span class="k">begin</span><span class="p">,</span> <span class="k">end</span><span class="p">,</span> 
     <span class="kt">wire</span><span class="p">,</span> <span class="kt">tri</span><span class="p">,</span> <span class="k">inout</span><span class="p">,</span> <span class="n">aupply0</span><span class="p">,</span> <span class="kt">supply1</span><span class="p">,</span> <span class="k">input</span><span class="p">,</span> <span class="kt">reg</span><span class="p">,</span> <span class="k">integer</span><span class="p">,</span> <span class="k">default</span><span class="p">,</span> 
     <span class="k">and</span><span class="p">,</span> <span class="k">nand</span><span class="p">,</span> <span class="k">or</span><span class="p">,</span> <span class="k">nor</span><span class="p">,</span> <span class="k">xor</span><span class="p">,</span> <span class="k">xnor</span><span class="p">,</span> <span class="k">buf</span><span class="p">,</span> <span class="k">not</span><span class="p">,</span> <span class="k">bufif0</span><span class="p">,</span><span class="k">bufif1</span><span class="p">,</span> <span class="k">notif0</span><span class="p">,</span> <span class="k">notif1</span><span class="p">,</span> 
     <span class="k">if</span><span class="p">,</span> <span class="k">case</span><span class="p">,</span> <span class="k">for</span><span class="p">,</span> <span class="k">function</span><span class="p">,</span> <span class="n">instantitation</span><span class="p">,</span> <span class="k">module</span><span class="p">,</span> <span class="k">negedge</span><span class="p">,</span> <span class="k">posedge</span><span class="p">,</span> <span class="n">operators</span><span class="p">,</span> <span class="k">output</span><span class="p">,</span> <span class="k">parameter</span>  
 </pre></div>
-<h3 id="2.2. you xie gong ju zhi chi ,you xie gong ju bu zhi chi de yu fa :">2.2. 有些工具支持，有些工具不支持的语法：</h3>
+
+
+<h3>2.2. 有些工具支持，有些工具不支持的语法：</h3>
 <div class="highlight"><pre><span></span>    <span class="n">asex</span><span class="p">,</span> <span class="k">casez</span><span class="p">,</span> <span class="kt">wand</span><span class="p">,</span> <span class="kt">triand</span><span class="p">,</span> <span class="n">wor</span><span class="p">,</span> <span class="kt">trior</span><span class="p">,</span> <span class="kt">real</span><span class="p">,</span> <span class="k">disable</span><span class="p">,</span> <span class="k">forever</span><span class="p">,</span> <span class="n">arrays</span><span class="p">,</span> <span class="n">memories</span><span class="p">,</span> <span class="n">repreat</span><span class="p">,</span> <span class="k">task</span><span class="p">,</span><span class="k">while</span>
 </pre></div>
-<h3 id="2.3. jian li ke zong he mo kuai de yuan ze">2.3. 建立可综合模块的原则</h3>
+
+
+<h3>2.3. 建立可综合模块的原则</h3>
 <ul>
 <li>
-<p>不要用 initial （FPGA 上电时初始状态不定，一般需要上电复位信号，在复位信号有效的时候进行初始化，上电复位信号可以由外部手动输入，也可以系统自己产生 &mdash;&mdash; 写一个实现上电产生自动复位信号的模块）。P.S. 现在的综合软件功能已经足够强大，即使写了 initial 语句，在 ISE 13.3 中仍然是可综合的，而且没有 warning 和 info 的提示）</p>
+<p>不要用 initial （FPGA 上电时初始状态不定，一般需要上电复位信号，在复位信号有效的时候进行初始化，上电复位信号可以由外部手动输入，也可以系统自己产生 —— 写一个实现上电产生自动复位信号的模块）。P.S. 现在的综合软件功能已经足够强大，即使写了 initial 语句，在 ISE 13.3 中仍然是可综合的，而且没有 warning 和 info 的提示）</p>
 </li>
 <li>
 <p>不使用 <code>#10</code>（在仿真中有用，实际在硬件上不会实现）</p>
@@ -177,12 +178,14 @@
 <p>避免在 <code>case</code> 语句中使用 <code>x</code> 或 <code>z</code> 值</p>
 </li>
 </ul>
-<p><br/></p>
-<h2 id="3. bu ke zong he dai ma_1">3. 不可综合代码</h2>
-<hr/>
-<h3 id="3.1. bu ke zong he yu fa :">3.1. 不可综合语法：</h3>
+<p><br></p>
+<h2>3. 不可综合代码</h2>
+<hr>
+<h3>3.1. 不可综合语法：</h3>
 <div class="highlight"><pre><span></span>    <span class="kt">time</span><span class="p">,</span> <span class="k">defparam</span><span class="p">,</span> <span class="nb">$finish</span><span class="p">,</span> <span class="k">fork</span><span class="p">,</span> <span class="k">join</span><span class="p">,</span> <span class="k">initial</span><span class="p">,</span> <span class="n">delays</span><span class="p">,</span> <span class="no">UDP</span><span class="p">,</span> <span class="k">wait</span>
 </pre></div>
+
+
 <ul>
 <li>
 <p><code>initial</code> 只能在 Testbench 中使用，不能综合</p>
@@ -221,19 +224,21 @@
 <p>与 <code>x</code>、<code>z</code> 比较，综合工具会忽略，所以要保证信号只有两个状态，<code>0</code> 或 <code>1</code></p>
 </li>
 </ul>
-<p><br/></p>
-<h2 id="4. pan duan shi fou ke zong he_1">4. 判断是否可综合</h2>
-<hr/>
+<p><br></p>
+<h2>4. 判断是否可综合</h2>
+<hr>
 <p>继续引用 <strong>董培良</strong> 的文章：</p>
 <p>用一句简单的话概括：电脑永远没有你聪明 。具体来说，通常 EDA 软件对 HDL 代码的综合能力总是比人差 。对于一段代码，如果你不能想象出一个较直观的硬件实现方法，那 EDA 软件肯定也不行。比如说，加法器、多路选择器是大家都很熟悉的电路，所以类似</p>
 <div class="highlight"><pre><span></span>        <span class="no">A</span><span class="o">+</span><span class="no">B</span><span class="o">-</span><span class="no">C</span>
         <span class="p">(</span><span class="no">A</span><span class="o">&gt;</span><span class="no">B</span><span class="p">)</span><span class="o">?</span><span class="nl">C:</span><span class="no">D</span>
 </pre></div>
+
+
 <p>这样的运算一定可以综合。而除法、开根、对数等等较复杂的运算，必须通过一定的算法实现，没有直观简单的实现方法，则可以判断那些计算式是不能综合的，必须按它们的算法写出更具体的代码才能实现 。此外，硬件无法支持的行为描述，当然也不能被综合（比如想在 FPGA 上实现 DDR 内存那样的双延触发逻辑，代码很容易写，但却不能实现）。</p>
 <p>不过，这样的判断标准非常主观模糊，遇到具体情况还得按设计人员自己的经验来判断 。如果要一个相对客观的标准，一般来说：在 RTL 级的描述中，所有逻辑运算和加减法运算、以及他们的有限次组合，基本上是可综合的，否则就有无法综合的可能性 。当然，这样的标准仍然有缺陷，更况且 EDA 的技术也在不断发展，过去无法综合的代码或许将来行，某些软件不支持的代码换个软件或许行 。比如固定次数的循环，含一个常数参数的乘法运算等等，有些 EDA 软件支持对它们的综合，而有些软件不行。</p>
 <p>所以，正确的判断仍然要靠实践来积累经验。当你可以较准确判断代码的可综合性的时候，你对 HDL 的掌握就算完全入门了。</p>
-<p><br/></p>
-<h2 id="5. can kao">5. 参考</h2>
+<p><br></p>
+<h2>5. 参考</h2>
 <p><a href="http://www.dzkf.cn/html/EDAjishu/2006/0720/9.html">浅谈VHDL/Verilog的可综合性以及对初学者的一些建议</a></p>
   </div>
   <div class="tag-cloud">

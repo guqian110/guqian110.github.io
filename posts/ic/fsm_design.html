@@ -101,17 +101,14 @@
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="有限状态机 FSM 设计">有限状态机 FSM 设计</a><ul><li><a class="toc-href" href="#1. what is fsm" title="1. What is FSM">1. What is FSM</a></li><li><a class="toc-href" href="#2. how to design a fsm" title="2. How to Design a FSM">2. How to Design a FSM</a></li><li><a class="toc-href" href="#3. how to implement a fsm" title="3. How to implement a FSM">3. How to implement a FSM</a><ul><li><a class="toc-href" href="#3.1. coding goals" title="3.1. Coding goals">3.1. Coding goals</a></li><li><a class="toc-href" href="#3.2. template" title="3.2. Template">3.2. Template</a></li><li><a class="toc-href" href="#3.3. always block" title="3.3. Always Block">3.3. Always Block</a></li><li><a class="toc-href" href="#3.4. localparam" title="3.4. localparam">3.4. localparam</a></li><li><a class="toc-href" href="#3.5. reset" title="3.5. Reset">3.5. Reset</a></li><li><a class="toc-href" href="#3.6. state encode" title="3.6. State encode">3.6. State encode</a></li><li><a class="toc-href" href="#3.7. safe fsm" title="3.7. Safe FSM">3.7. Safe FSM</a></li><li><a class="toc-href" href="#3.8. case(cs)" title="3.8. case(CS)">3.8. case(CS)</a></li><li><a class="toc-href" href="#3.9. ouput" title="3.9. Ouput">3.9. Ouput</a></li><li><a class="toc-href" href="#3.10. case (ns) vs case (cs)" title="3.10. case (NS) vs case (CS)">3.10. case (NS) vs case (CS)</a></li></ul></li><li><a class="toc-href" href="#4. ref_1" title="4. Ref">4. Ref</a></li></ul></li></ul></div>
-    </div>
 
   <div>
     <p>有限状态机是数字电路中经常出现、非常重要的电路，设计一个安全、高效的状态机有一套程序化的方法，我们在数字电路课中就学习过了。搬运以前写的博客，总结一下相关知识，温故而知新～</p>
 <p><strong>写在前面的废话：</strong></p>
 <p>这篇博客是在我以前在 CSDN 上写的两篇博客的基础上，参考了其他各位大神、博主的文章，写的总结。欢迎批评、讨论，毕竟写博客的意义就在于给自己一个总结知识的机会、并且在和别人讨论的过程中进步 :-D</p>
-<p><br/></p>
-<h2 id="1. what is fsm">1. What is FSM</h2>
-<hr/>
+<p><br></p>
+<h2>1. What is FSM</h2>
+<hr>
 <p><a href="http://en.wikipedia.org/wiki/Finite-state_machine">FSM on wiki</a></p>
 <p><strong>有限状态机 (Finite State Machine, FSM)</strong> 有时候也简称为<strong>状态机 (state machine)</strong>，它是一种数学模型，通常用来设计电脑程序或者时序电路。它被构思设计为一个抽象的机器，并且某个时刻只能处于一个有限数字代表的状态之下。</p>
 <p>有限状态自动机在很多不同领域中是重要的，包括电子工程、语言学、计算机科学、哲学、生物学、数学和逻辑学。有限状态机是在自动机理论和计算理论中研究的一类自动机。在计算机科学中，有限状态机被广泛用于建模应用行为、硬件电路系统设计、软件工程，编译器、网络协议、和计算与语言的研究。(这里讨论的只限于电子工程里的状态机)</p>
@@ -124,7 +121,7 @@
 </ul>
 <p><strong>分类：</strong></p>
 <p>状态机的框图如下：</p>
-<p><img alt="diagram" src="/images/fsm-design/fsm.png"/></p>
+<p><img alt="diagram" src="/images/fsm-design/fsm.png"></p>
 <p>按照输出的产生方式，可以将状态机分为两类：</p>
 <ul>
 <li>
@@ -136,9 +133,9 @@
 <p>它的输出不仅和当前状态有关，而且和输入也有关。Mealy 有限状态机对输入的响应发生在当前时钟周期，比 Moore 有限状态机对输入信号的响应要早一个周期。因此，输入信号的噪声可能影响在输出的信号。</p>
 </li>
 </ul>
-<p><br/></p>
-<h2 id="2. how to design a fsm">2. How to Design a FSM</h2>
-<hr/>
+<p><br></p>
+<h2>2. How to Design a FSM</h2>
+<hr>
 <p>关于如何设计一个状态机，这在数字电路和逻辑设计的书里有详细介绍。简单地总结一下步骤：</p>
 <ol>
 <li>逻辑抽象，建立原始状态转移图：确定输入、输出、状态变量、画状态转移图</li>
@@ -146,13 +143,13 @@
 <li>状态分配，选择编码方案(Binary、Gray、One-Hot)</li>
 <li>画逻辑图，检查能否自启动，得到了最终的状态机模型</li>
 </ol>
-<p><br/></p>
-<h2 id="3. how to implement a fsm">3. How to implement a FSM</h2>
-<hr/>
+<p><br></p>
+<h2>3. How to implement a FSM</h2>
+<hr>
 <p>当设计好之后，就要使用 HDL 语言来实现这个 FSM 了。</p>
 <p><strong>语言：</strong> Verilog HDL</p>
 <p><strong>综合工具：</strong> XST (Xilinx Synthesis Tools)</p>
-<h3 id="3.1. coding goals">3.1. Coding goals</h3>
+<h3>3.1. Coding goals</h3>
 <p>我们的代码需要达到的目的应该是：</p>
 <blockquote>
 <ol>
@@ -173,7 +170,7 @@
 </li>
 </ol>
 </blockquote>
-<h3 id="3.2. template">3.2. Template</h3>
+<h3>3.2. Template</h3>
 <p>为了达到目的，总结出了下面的这个三段式的模板（使用 index one-hot + reverse case + synopsys FSM 语法）</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -249,11 +246,11 @@
 72
 73
 74</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="c1">// synopsys enum code</span>
-                     <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d0</span><span class="p">,</span>
-                       <span class="no">S1</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d1</span><span class="p">,</span>
-                       <span class="no">S2</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d2</span><span class="p">,</span>
-                       <span class="no">S3</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d3</span><span class="p">,</span>
-                    <span class="no">ERROR</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d4</span><span class="p">;</span>
+                     <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">&#39;d0</span><span class="p">,</span>
+                       <span class="no">S1</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">&#39;d1</span><span class="p">,</span>
+                       <span class="no">S2</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">&#39;d2</span><span class="p">,</span>
+                       <span class="no">S3</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">&#39;d3</span><span class="p">,</span>
+                    <span class="no">ERROR</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">&#39;d4</span><span class="p">;</span>
 
 <span class="c1">// synopsys state_vector state</span>
 <span class="kt">reg</span>     <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="c1">// synopsys enum code</span>
@@ -261,8 +258,8 @@
 
 <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
-        <span class="no">CS</span>       <span class="o">&lt;=</span> <span class="mh">5</span><span class="mi">'d0</span><span class="p">;</span>
-        <span class="no">CS</span><span class="p">[</span><span class="no">IDLE</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+        <span class="no">CS</span>       <span class="o">&lt;=</span> <span class="mh">5</span><span class="mi">&#39;d0</span><span class="p">;</span>
+        <span class="no">CS</span><span class="p">[</span><span class="no">IDLE</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
     <span class="k">end</span>
     <span class="k">else</span> <span class="k">begin</span>
         <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">NS</span><span class="p">;</span>
@@ -270,30 +267,30 @@
 <span class="k">end</span>
 
 <span class="k">always</span> <span class="p">@</span><span class="o">*</span> <span class="k">begin</span>
-    <span class="no">NS</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b0</span><span class="p">;</span>
-    <span class="k">case</span> <span class="p">(</span><span class="mh">1</span><span class="mb">'b1</span><span class="p">)</span>     <span class="c1">// synopsys full_case parallel_case</span>
+    <span class="no">NS</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">&#39;b0</span><span class="p">;</span>
+    <span class="k">case</span> <span class="p">(</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">)</span>     <span class="c1">// synopsys full_case parallel_case</span>
         <span class="no">CS</span><span class="p">[</span><span class="no">IDLE</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="no">CS</span><span class="p">[</span><span class="no">S1</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="no">CS</span><span class="p">[</span><span class="no">S2</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="no">CS</span><span class="p">[</span><span class="no">S3</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="no">CS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">restart</span><span class="p">)</span>    <span class="no">NS</span><span class="p">[</span><span class="no">IDLE</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">restart</span><span class="p">)</span>    <span class="no">NS</span><span class="p">[</span><span class="no">IDLE</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
     <span class="k">endcase</span>
 <span class="k">end</span>
 
@@ -303,7 +300,7 @@
     <span class="k">end</span>
     <span class="k">else</span> <span class="k">begin</span>
         <span class="c1">// default output</span>
-        <span class="k">case</span> <span class="p">(</span><span class="mh">1</span><span class="mb">'b1</span><span class="p">)</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">)</span>
             <span class="no">NS</span><span class="p">[</span><span class="no">IDLE</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
                 <span class="c1">// ...</span>
             <span class="k">end</span>
@@ -324,6 +321,7 @@
 <span class="k">end</span>
 </pre></div>
 </td></tr></table>
+
 <p>需要注意的是 synopsys FSM 的语法：</p>
 <ul>
 <li>
@@ -335,7 +333,7 @@
 </ul>
 <p>即使改用其他的综合工具，前面的 FSM 定义的综合指令不影响，需要修改的只有 case 综合指令（如 XST 改为 <code>// synthesis full_case parallel_case</code>）。</p>
 <p>下面逐个讨论为什么这么写，以及需要注意的问题。</p>
-<h3 id="3.3. always block">3.3. Always Block</h3>
+<h3>3.3. Always Block</h3>
 <p>状态机一般有三种写法，他们在速度、面积、代码可维护性等各个方面互有优劣。</p>
 <p><strong>一段式：</strong> 只有一个always block，把所有的逻辑（输入、输出、状态）都在一个always block中实现</p>
 <ul>
@@ -368,7 +366,7 @@
 </ul>
 <p><strong>一段 or 三段？</strong></p>
 <p>一般来说，三段式的效果更好，唯一的缺点是占用的资源稍微多一点(对于拥有丰富的触发器资源的 FPGA 来说，这个缺点可以忽略吧)。所以除非是非常简单的状态机用一段式实现，其他情况下三段式更简单。</p>
-<h3 id="3.4. localparam">3.4. localparam</h3>
+<h3>3.4. localparam</h3>
 <p>尽量使用 <code>localparam</code> 而不是 <code>define</code> 和 <code>parameter</code>。这个原则不仅仅限于 FSM，其他模块也应该遵守。</p>
 <p><strong>Reason</strong></p>
 <ul>
@@ -380,7 +378,7 @@
 </li>
 </ul>
 <p>综上，使用 <code>localparam</code> 是更好的选择。</p>
-<h3 id="3.5. reset">3.5. Reset</h3>
+<h3>3.5. Reset</h3>
 <p>FPGA 上电时，GSR(Global Set/Reset) 拉高，对所有 寄存器/RAM 进行复位，此时配置于 FPGA 的逻辑并未生效，所以不能保证 FSM 进入正确的初始化状态。</p>
 <p><strong>解决方法：</strong></p>
 <ol>
@@ -405,12 +403,13 @@
 <span class="k">end</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 <li>
 <p>还有一种方法，是将初始状态编码为全 0 (带 0 的 One-Hot 编码方式)，这样当 GSR 复位后，状态机自动进入初始状态。</p>
 </li>
 </ol>
-<h3 id="3.6. state encode">3.6. State encode</h3>
+<h3>3.6. State encode</h3>
 <p>状态机的状态的编码，通常有 <code>Binary</code>、<code>One-Hot</code>、<code>Gray</code> 码等几种。</p>
 <p><strong>Binary 码</strong></p>
 <p>采用最简单的递增的编码方式对状态进行编码，对于 n 个状态的状态机，共需要 log2(n) 个触发器表示所有的状态。</p>
@@ -450,14 +449,14 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>利用前面的模板和结尾附录的模板，对参考文章 <a href="http://www.trilobyte.com/pdf/golson_snug94.pdf">Steve Golson State machine design techniques for Verilog and VHDL</a> 中的状态机例子进行综合测试，实际结果证实了 index 方式要更加节省资源（如果状态机更加复杂一些的话，两者的差别应该更大）：</p>
 <p>index one-hot style:</p>
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm_index.v">index.v</a></p>
-<p><img alt="indx style" src="/images/fsm-design/index_summary.png"/></p>
+<p><img alt="indx style" src="/images/fsm-design/index_summary.png"></p>
 <p>non-index one-hot style:</p>
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm_non_index.v">non-index.v</a></p>
-<p><img alt="non-index" src="/images/fsm-design/non_index_summary.png"/></p>
+<p><img alt="non-index" src="/images/fsm-design/non_index_summary.png"></p>
 <p>========================分割线=============================</p>
 <p>使用 XST 综合上面的 index one-hot + reverse case 风格的 FSM，结果 XST 并没有识别出 FSM，而 Synplify 我没有破解版本，只能作罢 =.=</p>
 <p>虽然 XST 没有识别出 non-index 的 FSM，但是 Modelsim 是可以识别出来的，可以在 Modelsim 中查看最终综合出来的 FSM 如下：</p>
-<p><img alt="diagram" src="/images/fsm-design/state_diagram.png"/></p>
+<p><img alt="diagram" src="/images/fsm-design/state_diagram.png"></p>
 <p>补上普通的 one-hot + case 的模板，这个模板是可以被 XST 识别出来的：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -532,11 +531,11 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 71
 72
 73</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="c1">// synopsys enum code</span>
-                     <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b00001</span><span class="p">,</span>
-                       <span class="no">S1</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b00010</span><span class="p">,</span>
-                       <span class="no">S2</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b00100</span><span class="p">,</span>
-                       <span class="no">S3</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b01000</span><span class="p">,</span>
-                    <span class="no">ERROR</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b10000</span><span class="p">;</span>
+                     <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">&#39;b00001</span><span class="p">,</span>
+                       <span class="no">S1</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">&#39;b00010</span><span class="p">,</span>
+                       <span class="no">S2</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">&#39;b00100</span><span class="p">,</span>
+                       <span class="no">S3</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">&#39;b01000</span><span class="p">,</span>
+                    <span class="no">ERROR</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">&#39;b10000</span><span class="p">;</span>
 
 <span class="c1">// synopsys state_vector state</span>
 <span class="kt">reg</span>     <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="c1">// synopsys enum code</span>
@@ -552,7 +551,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <span class="k">end</span>
 
 <span class="k">always</span> <span class="p">@</span><span class="o">*</span> <span class="k">begin</span>
-    <span class="no">NS</span> <span class="o">=</span> <span class="mh">5</span><span class="p">'</span><span class="n">bx</span><span class="p">;</span>
+    <span class="no">NS</span> <span class="o">=</span> <span class="mh">5</span><span class="p">&#39;</span><span class="n">bx</span><span class="p">;</span>
     <span class="k">case</span> <span class="p">(</span><span class="no">CS</span><span class="p">)</span>     <span class="c1">// synopsys full_case parallel_case</span>
         <span class="nl">IDLE:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
@@ -606,11 +605,12 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <span class="k">end</span>
 </pre></div>
 </td></tr></table>
+
 <p>========================分割线=============================</p>
-<h3 id="3.7. safe fsm">3.7. Safe FSM</h3>
-<p>所谓 &ldquo;安全&rdquo; 的状态机，就是说即使因为某些意外原因，状态机跑飞了，仍然可以自动回复到正常状态。</p>
+<h3>3.7. Safe FSM</h3>
+<p>所谓 “安全” 的状态机，就是说即使因为某些意外原因，状态机跑飞了，仍然可以自动回复到正常状态。</p>
 <p><strong>举例：可能出现的不安全情况</strong></p>
-<p>比如，我们采用 One-Hot 编码方式，对于 8 个状态，总共使用了 8 bit 的寄存器，那么这个状态寄存器向量可以取到的值一共有 <code>2^8 = 256</code> 种。如果我们只对需要的 8 种状态进行了说明，而忽略了剩余的 248 种，此时综合工具(Synplify、XST)会对设计进行 &ldquo;优化&rdquo;，将没有用到的状态去掉。但是，有时候这种 &ldquo;优化&rdquo; 反而不好，如果状态机进入未定义的全 0 状态，那么它就会卡在这个未定义的状态，无法自动回复正常工作状态。</p>
+<p>比如，我们采用 One-Hot 编码方式，对于 8 个状态，总共使用了 8 bit 的寄存器，那么这个状态寄存器向量可以取到的值一共有 <code>2^8 = 256</code> 种。如果我们只对需要的 8 种状态进行了说明，而忽略了剩余的 248 种，此时综合工具(Synplify、XST)会对设计进行 “优化”，将没有用到的状态去掉。但是，有时候这种 “优化” 反而不好，如果状态机进入未定义的全 0 状态，那么它就会卡在这个未定义的状态，无法自动回复正常工作状态。</p>
 <p><strong>解决方法</strong></p>
 <p>有两种方法：</p>
 <ol>
@@ -624,10 +624,11 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <span class="k">end</span>
 </pre></div>
 </td></tr></table>
+
 <p>这里应该赋值 <code>8'bx</code> 更合理，因为状态机上电时处于未知状态，所以应该赋值 <code>x</code> 更符合实际，但是这样赋值必须有个条件，就是必须所有的状态编码都全部被使用了，不然就会出现锁死现象，FSM 无法返回工作状态。我们前面使用的是 One-Hot 编码方式，有大量无效状态，所以这里不能赋值为 <code>x</code>。</p>
 </li>
 <li>
-<p>XST支持状态机编码的完备属性 &mdash;&mdash; <code>case implementation style</code></p>
+<p>XST支持状态机编码的完备属性 —— <code>case implementation style</code></p>
 <p>但是这个设置可能会导致前后仿真不一致的问题，一般不使用。我们应该在代码中满足条件，而不是依靠综合工具。</p>
 <p>XST 的选项 <code>safe implementation</code> 值默认为 <code>None</code>，如果应用环境要求 FSM 必须能恢复任何错误，比如航天、医疗、汽车等，这时我们可以打开这个设置，这时综合工具会添加额外的逻辑，保证 FSM 可以从无效状态恢复过来。</p>
 </li>
@@ -640,42 +641,52 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>显式地定义定义一个 ERROR state</p>
 <p>如模板所示。</p>
 <p>比如一个 FSM，有 4 个状态，分别是 IDLE、S1、S2、S3，那么额外定义一个 ERROR 状态机的框图如下：</p>
-<div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">IDLE</span>  <span class="o">=</span> <span class="mi">5</span><span class="s1">'d0,</span>
-<span class="s1">                    S1    = 5'</span><span class="n">d1</span><span class="p">,</span>
-                    <span class="n">S2</span>    <span class="o">=</span> <span class="mi">5</span><span class="s1">'d2,</span>
-<span class="s1">                    S3    = 5'</span><span class="n">d3</span><span class="p">,</span>
-                    <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="err">'</span><span class="n">d4</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">IDLE</span>  <span class="o">=</span> <span class="mi">5</span><span class="s1">&#39;d0,</span>
+<span class="s1">                    S1    = 5&#39;</span><span class="n">d1</span><span class="p">,</span>
+                    <span class="n">S2</span>    <span class="o">=</span> <span class="mi">5</span><span class="s1">&#39;d2,</span>
+<span class="s1">                    S3    = 5&#39;</span><span class="n">d3</span><span class="p">,</span>
+                    <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="err">&#39;</span><span class="n">d4</span><span class="p">;</span>
 </pre></div>
+
+
 <p>在每个 case item 中，最后添加一个 else 分支且 <code>NS[ERROR] = 1'b1</code>，并且多加一个 case item</p>
 <div class="highlight"><pre><span></span><span class="nv">CS</span>[<span class="nv">ERROR</span>]: <span class="nv">begin</span>
-    <span class="k">if</span> <span class="ss">(</span><span class="nv">restart</span><span class="ss">)</span> <span class="nv">NS</span>[<span class="nv">IDLE</span>] <span class="o">=</span> <span class="mi">1</span><span class="s1">'</span><span class="s">b1;</span>
+    <span class="k">if</span> <span class="ss">(</span><span class="nv">restart</span><span class="ss">)</span> <span class="nv">NS</span>[<span class="nv">IDLE</span>] <span class="o">=</span> <span class="mi">1</span><span class="s1">&#39;</span><span class="s">b1;</span>
 <span class="k">end</span>
 </pre></div>
+
+
 </li>
 <li>
 <p>zero-idle</p>
 <p>在状态定义时，不用显式地定义一个 ERROR 状态，而是用全 0 状态表示 ERROR 状态：</p>
-<div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>   <span class="n">IDLE</span>  <span class="o">=</span> <span class="mi">5</span><span class="s1">'d1,</span>
-<span class="s1">                    S1    = 5'</span><span class="n">d2</span><span class="p">,</span>
-                    <span class="n">S2</span>    <span class="o">=</span> <span class="mi">5</span><span class="s1">'d3,</span>
-<span class="s1">                    S3    = 5'</span><span class="n">d4</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>   <span class="n">IDLE</span>  <span class="o">=</span> <span class="mi">5</span><span class="s1">&#39;d1,</span>
+<span class="s1">                    S1    = 5&#39;</span><span class="n">d2</span><span class="p">,</span>
+                    <span class="n">S2</span>    <span class="o">=</span> <span class="mi">5</span><span class="s1">&#39;d3,</span>
+<span class="s1">                    S3    = 5&#39;</span><span class="n">d4</span><span class="p">;</span>
 </pre></div>
+
+
 <p>多加一个 case item：</p>
 <div class="highlight"><pre><span></span><span class="o">~|</span><span class="nv">CS</span>: <span class="nv">begin</span>
-    <span class="k">if</span><span class="ss">(</span><span class="nv">restart</span><span class="ss">)</span> <span class="nv">NS</span>[<span class="nv">IDLE</span>] <span class="o">=</span> <span class="mi">1</span><span class="s1">'</span><span class="s">b1;</span>
+    <span class="k">if</span><span class="ss">(</span><span class="nv">restart</span><span class="ss">)</span> <span class="nv">NS</span>[<span class="nv">IDLE</span>] <span class="o">=</span> <span class="mi">1</span><span class="s1">&#39;</span><span class="s">b1;</span>
 <span class="k">end</span>
 </pre></div>
+
+
 </li>
 </ol>
 <p>对比两种方式，我觉得第一种更能体现出设计意图，所以在模板中选择这种方式。</p>
-<h3 id="3.8. case(cs)">3.8. case(CS)</h3>
+<h3>3.8. case(CS)</h3>
 <p><strong>使用 case 的原则：</strong> 尽量不要使用综合指令 full_case 和 parallel_case，而是代码本身满足 full、parallel 的条件（因为综合指令可能导致前后仿真不一致的问题）</p>
 <p>下面根据状态编码方案分类讨论：</p>
 <ol>
 <li>
-<p>如果使用 &ldquo;非 index one-hot + 非 reverse case&rdquo; 的方法，那么在第二个 always block 中，在 case 前给 NS 一个默认值（如下）</p>
-<div class="highlight"><pre><span></span><span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">'</span><span class="n">bx</span><span class="p">;</span>
+<p>如果使用 “非 index one-hot + 非 reverse case” 的方法，那么在第二个 always block 中，在 case 前给 NS 一个默认值（如下）</p>
+<div class="highlight"><pre><span></span><span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">bx</span><span class="p">;</span>
 </pre></div>
+
+
 <p>这是个很有用的小技巧，它可以帮助我们在综合前发现状态是否完备：如果状态完备，则在下面的 <code>case</code> 中会给 <code>NS</code> 合适的值；如果状态不完备，则状态机会进入错误状态，输出不定，仿真时可以很快的发现。而且，综合工具对于 <code>x</code> 采取的态度是 <code>don't care</code>，综合时会自动将其忽略，生成的电路最简洁。</p>
 </li>
 <li>
@@ -683,28 +694,34 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <ul>
 <li>
 <p>NS 必须赋值为全 0：</p>
-<div class="highlight"><pre><span></span><span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">'</span><span class="n">b0</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
 </pre></div>
+
+
 </li>
 <li>
 <p>使用 synopsys 综合指令</p>
 <p>一般的原则是尽量不要使用综合指令，这里是个特殊情况。</p>
 <div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">synopsys</span> <span class="n">full_case</span> <span class="n">parallel_case</span>
 </pre></div>
+
+
 </li>
 <li>
 <p>default 分支</p>
 <p>使用了综合指令，则 default 分支在综合时就没有必要，但是仿真器并不能识别综合指令，所以在行为仿真的时候仍然需要 default 分支，所以可以用下面的方法：</p>
 <div class="highlight"><pre><span></span><span class="o">//</span> <span class="nt">synopsys</span> <span class="nt">translate_off</span>
-<span class="nt">default</span><span class="o">:</span> <span class="o">$</span><span class="nt">display</span><span class="o">(</span><span class="s2">"FSM is dead!"</span><span class="o">);</span>
+<span class="nt">default</span><span class="o">:</span> <span class="o">$</span><span class="nt">display</span><span class="o">(</span><span class="s2">&quot;FSM is dead!&quot;</span><span class="o">);</span>
 <span class="o">//</span> <span class="nt">synopsys</span> <span class="nt">translate_on</span>
 </pre></div>
+
+
 </li>
 </ul>
 <p>采用 index one-hot + reverse case 的方式，这里违背了 case 语句本身满足 full_case、parallel_case 的原则，使用了综合指令、并且省掉了 default 分支，是唯一的例外情况，其他情况下都应该遵守这一原则！</p>
 </li>
 </ol>
-<h3 id="3.9. ouput">3.9. Ouput</h3>
+<h3>3.9. Ouput</h3>
 <p><strong>避免 Latch</strong></p>
 <ol>
 <li>
@@ -729,7 +746,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>在考虑 FSM 的响应速度时，不能独立的考虑 FSM 本身，需要综合考虑 FSM 模块和上、下游模块构成的电路。采用输出寄存器的电路可以运行在更高的时钟频率下，所引入的响应时延与更高的运行频率相比是可以牺牲的。</p>
 </li>
 </ol>
-<h3 id="3.10. case (ns) vs case (cs)">3.10. case (NS) vs case (CS)</h3>
+<h3>3.10. case (NS) vs case (CS)</h3>
 <p>采用二段式实现状态机，它的输出是组合逻辑，可能存在竞争和冒险，产生毛刺，要消除毛刺就要对输出用寄存器打一拍，但是很多时候，是不允许插入寄存器节拍的。</p>
 <p>这时候可以采用三段式实现，三段式的输出是寄存器输出，所以消除了毛次；同时，如果三段式的第三段判断输出采用</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -751,21 +768,22 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <span class="k">endcase</span>
 </pre></div>
 </td></tr></table>
+
 <p>就可以提前判断下一状态的输出，节省了一个节拍，使输出和状态变化同步。</p>
 <p><strong>example</strong></p>
 <p>设计一个简单的 FSM，测试使用 <code>case(CS)</code> 和 <code>case(NS)</code> 的结果：</p>
 <p>FSM 设计：一共有 4 个状态(IDLE、S1、S2、S3)，只有一个输入(<code>jump</code> 信号)，两个输出(<code>dout_p</code>、<code>dout_q</code>)。</p>
 <p>跳转规律：状态机开始处于 IDLE 状态，当 jump 变高时，从 IDLE 跳转到 S1 状态，同时内部的一个 4 bit 计数器开始计数，当计数到 <code>4'b1111</code> 时，跳转到 S2，当再次计数到 <code>4'b1111</code> 时跳转到 S3，当再次计数到 <code>4'b1111</code> 时，跳转到 IDLE，等待 jump 再次变高。状态转移图：</p>
-<p><img alt="diagram" src="/images/fsm-design/diagram.png"/></p>
+<p><img alt="diagram" src="/images/fsm-design/diagram.png"></p>
 <p>程序：</p>
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm.v">状态机源文件 fsm.v</a></p>
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_fsm.v">测试平台 testbench tb_fsm.v</a></p>
 <p>仿真结果：使用 <code>NS</code> 判断，结果如下图，可以看到，当 <code>CS</code> 发生变化时，输出同时改变。</p>
-<p><img alt="case ns" src="/images/fsm-design/case_ns.png"/></p>
+<p><img alt="case ns" src="/images/fsm-design/case_ns.png"></p>
 <p>使用 <code>CS</code> 判断，结果如下图，可以看到，当 <code>CS</code> 发生变化时，输出变化相对于状态变化延时一个时钟周期。</p>
-<p><img alt="case ns" src="/images/fsm-design/case_cs.png"/></p>
-<p><br/></p>
-<h2 id="4. ref_1">4. Ref</h2>
+<p><img alt="case ns" src="/images/fsm-design/case_cs.png"></p>
+<p><br></p>
+<h2>4. Ref</h2>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG1998SJ_FSM.pdf">Clifford E. Cumming State Machine Coding Styles for Synthesis</a></p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsICU2002_FSMFundamentals.pdf">Clifford E. Cumming The Fundamentals of Efficient Synthesizable Finite State Machine
 Design using NC-Verilog and BuildGates</a></p>
@@ -794,9 +812,9 @@ Design using NC-Verilog and BuildGates</a></p>
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
+      <li><a href="http://guqian110.github.io/posts/ic/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/drawing_fsm_state_diagram_using_graphviz.html">利用 Graphviz 画 FSM 状态图</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/doxygen_for_verilog.html">针对 Verilog 的 Doxygen</a></li>
-      <li><a href="http://guqian110.github.io/posts/ic/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/verilog_hdl_coding_style_guide.html">Verilog HDL coding style</a></li>
     </ul>
   </div>

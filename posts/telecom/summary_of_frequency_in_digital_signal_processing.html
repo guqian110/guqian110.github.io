@@ -101,40 +101,37 @@
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="数字信号处理中的各种频率">数字信号处理中的各种频率</a><ul><li><a class="toc-href" href="#1. unit circle &amp; sin(cos)" title="1. unit circle &amp; sin(cos)">1. unit circle &amp; sin(cos)</a></li><li><a class="toc-href" href="#2. o" title="2. &Omega;">2. &Omega;</a></li><li><a class="toc-href" href="#3. f" title="3. f">3. f</a></li><li><a class="toc-href" href="#4. w" title="4. w">4. w</a></li><li><a class="toc-href" href="#5. ref" title="5. Ref">5. Ref</a></li></ul></li></ul></div>
-    </div>
 
   <div>
     <p>最近实习的时候，发现自己的 DSP 基本功还是不够扎实，关于模拟/数字角频率，频率，采样速率等一些概念理解的都不太深刻，愧对老师和这么多年的学习，Google 到一些讲解的比较清楚的 blog，备忘（抄袭）过来，温故而知新。</p>
-<h2 id="1. unit circle &amp; sin(cos)">1. unit circle &amp; sin(cos)</h2>
-<hr/>
+<h2>1. unit circle &amp; sin(cos)</h2>
+<hr>
 <p>首先从最基本的三角函数的定义开始：</p>
 <p>三角函数的定义方式有很多种，我觉得基于单位圆的定义是最形象，对之后理解各种角频率的物理/数学含义最有帮助。</p>
 <p>我们应该是在初中的时候第一次接触到三角函数，那时候三角函数的定义是直接给个三角形，然后直接定义 sin(cos) 为哪条边比哪条边的值，然后给出 sin(cos)  的波形如下图所示：</p>
-<p><img alt="sine &amp; cosine" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Sine_cosine_one_period.svg/600px-Sine_cosine_one_period.svg.png"/>
+<p><img alt="sine &amp; cosine" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Sine_cosine_one_period.svg/600px-Sine_cosine_one_period.svg.png">
 "Sine cosine one period" by Geek3 - Own work. Licensed under CC BY 3.0 via Commons - https://commons.wikimedia.org/wiki/File:Sine_cosine_one_period.svg#/media/File:Sine_cosine_one_period.svg</p>
 <p>当我们将这个三角形和单位圆联系在一起的时候，sin(cos) 的几何意义就很明显了：</p>
-<p><img alt="enter image description here" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Circle-trig6.svg/338px-Circle-trig6.svg.png"/></p>
+<p><img alt="enter image description here" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Circle-trig6.svg/338px-Circle-trig6.svg.png"></p>
 <p>"Circle-trig6" by This is a vector graphic version of Image:Circle-trig6.png by user:Tttrung which was licensed under the GFDL. Based on en:Image:Circle-trig6.png, which was donated to Wikipedia under GFDL by Steven G. Johnson. - This is a vector graphic version of Image:Circle-trig6.png by user:Tttrung which was licensed under the GFDL. ; Based on en:Image:Circle-trig6.png, which was donated to Wikipedia under GFDL by Steven G. Johnson.. Licensed under CC BY-SA 3.0 via Commons - https://commons.wikimedia.org/wiki/File:Circle-trig6.svg#/media/File:Circle-trig6.svg</p>
 <p>图中红色的线段长度就是 sin 的值，蓝色的线段长度就是 cos 的值，如果我们假设坐标系的原点和单位圆重合，脑补一下下面的场景：有个小球（只能）沿着单位圆的圆周做运动。这时候，我们就会发现一个事实：</p>
 <p><strong>sin(t) 是小球 t 时刻在 y 轴上的投影，cos(t) 是小球 t 时刻在 x 轴上的投影。</strong></p>
 <p>进一步，当小球的运动速率是匀速率的时候，就有了上面提到的波形，更加形象的图如下：</p>
-<p><img alt="enter image description here" src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Circle_cos_sin.gif"/></p>
+<p><img alt="enter image description here" src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Circle_cos_sin.gif"></p>
 <p>"Circle cos sin" by LucasVB - Own work. Licensed under Public Domain via Commons - https://commons.wikimedia.org/wiki/File:Circle_cos_sin.gif#/media/File:Circle_cos_sin.gif</p>
 <p><strong>P.S.</strong> 关于投影，wiki 上有个解释欧拉公式的图特别好：</p>
 <p>"Sine and Cosine fundamental relationship to Circle (and Helix)" by Tdadamemd - Own work by uploader (.gif frames created in Powerpoint). Licensed under CC BY-SA 3.0 via Commons - https://commons.wikimedia.org/wiki/File:Sine_and_Cosine_fundamental_relationship_to_Circle_(and_Helix).gif#/media/File:Sine_and_Cosine_fundamental_relationship_to_Circle_(and_Helix).gif</p>
-<p><br/></p>
+<p><br></p>
 <p><em>有了上面简单的背景，就可以开始逐个讨论信号处理中的概念了。</em></p>
-<p><br/></p>
-<h2 id="2. o">2. &Omega;</h2>
-<hr/>
+<p><br></p>
+<h2>2. Ω</h2>
+<hr>
 <p>我们已经知道小球在圆周上做匀速率的圆周运动时，它在两个坐标轴上的投影就分别是 sin(cos)，如果我们想进一步描述小球的运动速率的快慢呢？</p>
-<p>假设小球完整转一圈所花费的时间为 T，转动的角度为 2&pi;，则我们可以定义</p>
-<p><strong>模拟角频率</strong> <code>&Omega; = 2&pi;/T</code>，单位是 rad / s</p>
+<p>假设小球完整转一圈所花费的时间为 T，转动的角度为 2π，则我们可以定义</p>
+<p><strong>模拟角频率</strong> <code>Ω = 2π/T</code>，单位是 rad / s</p>
 <p>来描述小球的转动速率的快慢。</p>
-<p>当 t = 2&pi; 时，y = sin(&Omega;*2&pi;)，这时候可以看出 &Omega; 的物理含义：<strong>在 2&pi; 的时间内，小球所完成的圈数。</strong></p>
-<p>下面的 Matlab 小程序演示了 2&pi; 时间内 &Omega; 和周期的对应关系：</p>
+<p>当 t = 2π 时，y = sin(Ω*2π)，这时候可以看出 Ω 的物理含义：<strong>在 2π 的时间内，小球所完成的圈数。</strong></p>
+<p>下面的 Matlab 小程序演示了 2π 时间内 Ω 和周期的对应关系：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -145,23 +142,24 @@
 8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="p">=</span> <span class="mi">0</span><span class="p">:</span> <span class="nb">pi</span><span class="o">/</span><span class="mi">50</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="p">;</span>
 <span class="k">for</span> <span class="n">OMEGA</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">4</span>
     <span class="n">y</span><span class="p">(:,</span><span class="n">OMEGA</span><span class="p">)</span> <span class="p">=</span> <span class="nb">sin</span><span class="p">(</span><span class="n">OMEGA</span><span class="o">*</span><span class="n">t</span><span class="p">);</span>
-    <span class="n">str</span><span class="p">{</span><span class="n">OMEGA</span><span class="p">}</span> <span class="p">=</span> <span class="p">[</span><span class="s">'OMEGA='</span><span class="p">,</span> <span class="n">num2str</span><span class="p">(</span><span class="n">OMEGA</span><span class="p">)];</span>
+    <span class="n">str</span><span class="p">{</span><span class="n">OMEGA</span><span class="p">}</span> <span class="p">=</span> <span class="p">[</span><span class="s">&#39;OMEGA=&#39;</span><span class="p">,</span> <span class="n">num2str</span><span class="p">(</span><span class="n">OMEGA</span><span class="p">)];</span>
 <span class="k">end</span>
 <span class="n">h</span> <span class="p">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span> <span class="n">grid</span> <span class="n">on</span><span class="p">;</span>
-<span class="n">xlabel</span><span class="p">(</span><span class="s">'t / s'</span><span class="p">);</span> <span class="n">ylabel</span><span class="p">(</span><span class="s">'amp'</span><span class="p">);</span> <span class="n">title</span><span class="p">(</span><span class="s">'y = sin(OMEGA*t)'</span><span class="p">);</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;t / s&#39;</span><span class="p">);</span> <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;amp&#39;</span><span class="p">);</span> <span class="n">title</span><span class="p">(</span><span class="s">&#39;y = sin(OMEGA*t)&#39;</span><span class="p">);</span>
 <span class="n">legend</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
 </pre></div>
 </td></tr></table>
+
 <p>结果如下图：</p>
-<p><img alt="OMEGA" src="/images/summary-of-frequency-in-digital-signal-processing/OMEGA.jpg"/></p>
-<p><br/></p>
-<h2 id="3. f">3. f</h2>
-<hr/>
-<p>小球在二维平面上的圆周运动投影到一维的坐标轴 x(y) 轴上看，则是左右（上下）振动。和 &Omega; 类似，我们也可以定义一个物理量来描述这种振动的快慢：</p>
+<p><img alt="OMEGA" src="/images/summary-of-frequency-in-digital-signal-processing/OMEGA.jpg"></p>
+<p><br></p>
+<h2>3. f</h2>
+<hr>
+<p>小球在二维平面上的圆周运动投影到一维的坐标轴 x(y) 轴上看，则是左右（上下）振动。和 Ω 类似，我们也可以定义一个物理量来描述这种振动的快慢：</p>
 <p>小球完成一次完整的圆周运动所花费的时间为 T，也就是完成一次振动花费了 T 时间，我们定义</p>
 <p><strong>频率</strong> <code>f = 1 / T</code>，单位是 Hz</p>
-<p>来描述振动的快慢。由前面 &Omega; 的定义式可知，<code>&Omega; = 2&pi; * f</code>，有 y = sin(2&pi; * f * t)。</p>
-<p>当 t = 1s 时，y = sin(2&pi; * f)，这时候可以看出 f 的物理意义：<strong>在 1s 的时间内，小球所完成的振动次数。</strong></p>
+<p>来描述振动的快慢。由前面 Ω 的定义式可知，<code>Ω = 2π * f</code>，有 y = sin(2π * f * t)。</p>
+<p>当 t = 1s 时，y = sin(2π * f)，这时候可以看出 f 的物理意义：<strong>在 1s 的时间内，小球所完成的振动次数。</strong></p>
 <p>下面的 Matlab 小程序演示了 1s 时间内 f 和振动周期的对应关系：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -173,25 +171,26 @@
 8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="p">=</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="mi">100</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
 <span class="k">for</span> <span class="n">f</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">4</span>
     <span class="n">y</span><span class="p">(:,</span><span class="n">f</span><span class="p">)</span> <span class="p">=</span> <span class="nb">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="n">f</span><span class="o">*</span><span class="n">t</span><span class="p">);</span>
-    <span class="n">str</span><span class="p">{</span><span class="n">f</span><span class="p">}</span> <span class="p">=</span> <span class="p">[</span><span class="s">'f='</span><span class="p">,</span> <span class="n">num2str</span><span class="p">(</span><span class="n">f</span><span class="p">)];</span>
+    <span class="n">str</span><span class="p">{</span><span class="n">f</span><span class="p">}</span> <span class="p">=</span> <span class="p">[</span><span class="s">&#39;f=&#39;</span><span class="p">,</span> <span class="n">num2str</span><span class="p">(</span><span class="n">f</span><span class="p">)];</span>
 <span class="k">end</span>
 <span class="n">h</span> <span class="p">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">);</span> <span class="n">grid</span> <span class="n">on</span><span class="p">;</span>
-<span class="n">xlabel</span><span class="p">(</span><span class="s">'t / s'</span><span class="p">);</span> <span class="n">ylabel</span><span class="p">(</span><span class="s">'amp'</span><span class="p">);</span> <span class="n">title</span><span class="p">(</span><span class="s">'y = sin(2*pi*f*t)'</span><span class="p">);</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;t / s&#39;</span><span class="p">);</span> <span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;amp&#39;</span><span class="p">);</span> <span class="n">title</span><span class="p">(</span><span class="s">&#39;y = sin(2*pi*f*t)&#39;</span><span class="p">);</span>
 <span class="n">legend</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
 </pre></div>
 </td></tr></table>
+
 <p>结果如下图：</p>
-<p><img alt="f" src="/images/summary-of-frequency-in-digital-signal-processing/f.jpg"/></p>
-<p><br/></p>
-<h2 id="4. w">4. w</h2>
-<hr/>
+<p><img alt="f" src="/images/summary-of-frequency-in-digital-signal-processing/f.jpg"></p>
+<p><br></p>
+<h2>4. w</h2>
+<hr>
 <p>计算机的世界是离散的，所以当连续信号经过采样、量化得到离散信号后：</p>
-<p>y = sin(&Omega;<em>t) = sin(&Omega;</em>n<em>Ts) = sin(&Omega;</em>Ts<em>n) = sin(w</em>n)</p>
+<p>y = sin(Ω<em>t) = sin(Ω</em>n<em>Ts) = sin(Ω</em>Ts<em>n) = sin(w</em>n)</p>
 <p>从数学上我们就可以得到：</p>
-<p><strong>数字角频率</strong> <code>w = &Omega;*Ts = &Omega; / Fs</code>，单位是 rad</p>
-<p>可以看到，w 是用采样频率 Fs 对 &Omega; 进行归一化得到的，所以 w 准确地应该叫做归一化数字角频率。</p>
-<p>连接模拟和数字的桥梁就是采样频率 Fs，由计算过程可以知道，w 相同的两个信号，它们的 &Omega; 不一定相同。因为丢失了 Fs 信息，所以单独讨论 w 是没有意义的。</p>
-<p>虽然单独讨论 w 是没有意义的，但是这不代表 w 没有物理意义，当小球的振动频率为 f 时，每秒在圆周上转过的角度为 &Omega; = 2&pi; * f，而采样频率为 Fs 就是说每秒钟对小球进行 Fs 次采样（拍照），显然有 Fs 个样值（照片）。这些样值（照片）是均匀分布的，所以每两个样值点之间的弧度为 2&pi; * f / Fs = w，这也就是 w 的物理含义：<strong>相邻两个样值点之间的弧度数。</strong></p>
+<p><strong>数字角频率</strong> <code>w = Ω*Ts = Ω / Fs</code>，单位是 rad</p>
+<p>可以看到，w 是用采样频率 Fs 对 Ω 进行归一化得到的，所以 w 准确地应该叫做归一化数字角频率。</p>
+<p>连接模拟和数字的桥梁就是采样频率 Fs，由计算过程可以知道，w 相同的两个信号，它们的 Ω 不一定相同。因为丢失了 Fs 信息，所以单独讨论 w 是没有意义的。</p>
+<p>虽然单独讨论 w 是没有意义的，但是这不代表 w 没有物理意义，当小球的振动频率为 f 时，每秒在圆周上转过的角度为 Ω = 2π * f，而采样频率为 Fs 就是说每秒钟对小球进行 Fs 次采样（拍照），显然有 Fs 个样值（照片）。这些样值（照片）是均匀分布的，所以每两个样值点之间的弧度为 2π * f / Fs = w，这也就是 w 的物理含义：<strong>相邻两个样值点之间的弧度数。</strong></p>
 <p>================================== summary ====================================</p>
 <p>这几个频率之间是线性关系，可以得到下面的对应关系：</p>
 <table>
@@ -211,10 +210,10 @@
 <td align="center">N</td>
 </tr>
 <tr>
-<td align="left">&Omega;</td>
+<td align="left">Ω</td>
 <td align="center">0</td>
-<td align="center">&Omega;s/2</td>
-<td align="center">&Omega;s</td>
+<td align="center">Ωs/2</td>
+<td align="center">Ωs</td>
 </tr>
 <tr>
 <td align="left">f</td>
@@ -225,12 +224,12 @@
 <tr>
 <td align="left">w</td>
 <td align="center">0</td>
-<td align="center">&pi;</td>
-<td align="center">2*&pi;</td>
+<td align="center">π</td>
+<td align="center">2*π</td>
 </tr>
 </tbody>
 </table>
-<p>由频谱的搬移过程可以知道，w 从 &pi; 到 2&pi; 是负频率搬移的结果，所以通常分析的时候 w 的范围为 [-&pi;, &pi;)，如下</p>
+<p>由频谱的搬移过程可以知道，w 从 π 到 2π 是负频率搬移的结果，所以通常分析的时候 w 的范围为 [-π, π)，如下</p>
 <table>
 <thead>
 <tr>
@@ -242,10 +241,10 @@
 </thead>
 <tbody>
 <tr>
-<td align="left">&Omega;</td>
-<td align="center">-&Omega;s/2</td>
+<td align="left">Ω</td>
+<td align="center">-Ωs/2</td>
 <td align="center">0</td>
-<td align="center">&Omega;s/2</td>
+<td align="center">Ωs/2</td>
 </tr>
 <tr>
 <td align="left">f</td>
@@ -255,16 +254,16 @@
 </tr>
 <tr>
 <td align="left">w</td>
-<td align="center">-&pi;</td>
+<td align="center">-π</td>
 <td align="center">0</td>
-<td align="center">&pi;</td>
+<td align="center">π</td>
 </tr>
 </tbody>
 </table>
-<p><br/></p>
-<h2 id="5. ref">5. Ref</h2>
+<p><br></p>
+<h2>5. Ref</h2>
 <p><a href="https://en.wikipedia.org/wiki/Trigonometric_functions">Trigonometric functions</a></p>
-<p><a href="http://anony3721.blog.163.com/blog/static/51197420111129503233/">阿英讲频率f，角频率&Omega;和数字频率w的物理含义--附MATLAB仿真</a></p>
+<p><a href="http://anony3721.blog.163.com/blog/static/51197420111129503233/">阿英讲频率f，角频率Ω和数字频率w的物理含义--附MATLAB仿真</a></p>
 <p><a href="http://zhuanlan.zhihu.com/wille/19763358">傅里叶分析之掐死教程（完整版）更新于2014.06.06</a></p>
   </div>
   <div class="tag-cloud">

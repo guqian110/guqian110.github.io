@@ -101,9 +101,6 @@
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 时钟设计 1 &mdash;&mdash; 时钟资源总结">FPGA 时钟设计 1 &mdash;&mdash; 时钟资源总结</a><ul><li><a class="toc-href" href="#1. three types of clock resource" title="1. Three Types of clock resource">1. Three Types of clock resource</a><ul><li><a class="toc-href" href="#1.1. global clocks" title="1.1. Global Clocks">1.1. Global Clocks</a></li><li><a class="toc-href" href="#1.2. regional clocks" title="1.2. Regional Clocks">1.2. Regional Clocks</a></li><li><a class="toc-href" href="#1.3. i/o clocks" title="1.3. I/O clocks">1.3. I/O clocks</a></li></ul></li><li><a class="toc-href" href="#2. global clocking resources_1" title="2. Global Clocking Resources">2. Global Clocking Resources</a><ul><li><a class="toc-href" href="#2.1.1. global clock inputs" title="2.1.1. Global Clock Inputs">2.1.1. Global Clock Inputs</a></li><li><a class="toc-href" href="#2.1.2. global clock buffers" title="2.1.2. Global Clock Buffers">2.1.2. Global Clock Buffers</a></li><li><a class="toc-href" href="#2.1.3. clock tree and nets - gclk" title="2.1.3. Clock Tree and Nets - GCLK">2.1.3. Clock Tree and Nets - GCLK</a></li><li><a class="toc-href" href="#2.1.4. clock regions" title="2.1.4. Clock Regions">2.1.4. Clock Regions</a></li><li><a class="toc-href" href="#2.2. how to use global clock_1" title="2.2. How to use global clock">2.2. How to use global clock</a></li><li><a class="toc-href" href="#2.3. principle in using global clock" title="2.3. Principle in Using global clock">2.3. Principle in Using global clock</a></li><li><a class="toc-href" href="#2.4. p.s. di er quan ju shi zhong zi yuan" title="2.4. P.S. 第二全局时钟资源">2.4. P.S. 第二全局时钟资源</a></li></ul></li><li><a class="toc-href" href="#3. regional clocking resources_1" title="3. Regional Clocking Resources">3. Regional Clocking Resources</a><ul><li><a class="toc-href" href="#3.1. clock capable i/o" title="3.1. Clock Capable I/O">3.1. Clock Capable I/O</a></li><li><a class="toc-href" href="#3.2. i/o clock buffer - bufio" title="3.2. I/O Clock Buffer - BUFIO">3.2. I/O Clock Buffer - BUFIO</a></li><li><a class="toc-href" href="#3.3. regional clock buffer - bufr" title="3.3. Regional Clock Buffer - BUFR">3.3. Regional Clock Buffer - BUFR</a></li><li><a class="toc-href" href="#3.4. regional clock nets" title="3.4. Regional Clock Nets">3.4. Regional Clock Nets</a></li></ul></li><li><a class="toc-href" href="#4. clock management technology_1" title="4. Clock Management Technology">4. Clock Management Technology</a><ul><li><a class="toc-href" href="#4.1. dcm" title="4.1. DCM">4.1. DCM</a></li><li><a class="toc-href" href="#4.2. pll" title="4.2. PLL">4.2. PLL</a></li><li><a class="toc-href" href="#4.3. mmcm" title="4.3. MMCM">4.3. MMCM</a></li></ul></li><li><a class="toc-href" href="#5. other tips_1" title="5. Other Tips">5. Other Tips</a></li><li><a class="toc-href" href="#6. summary" title="6. Summary">6. Summary</a></li><li><a class="toc-href" href="#7. reference" title="7. Reference">7. Reference</a></li></ul></li></ul></div>
-    </div>
 
   <div>
     <p>关于一款芯片，最权威、最新的资料当然是厂家的官方文件。很多大牛都推荐直接阅读原厂的 datasheet 和 user guide。根据我的体验，这确实是最好的途径。原因有两个：</p>
@@ -116,10 +113,10 @@
 </li>
 </ul>
 <p>实验室有的芯片是 Xilinx 的 Virtex-5 系列，Virtex-5 的 User Guide 是 <a href="http://www.xilinx.com/support/documentation/user_guides/ug190.pdf">UG190</a>，以下内容都是从中摘抄的笔记。</p>
-<p><br/></p>
-<h2 id="1. three types of clock resource">1. Three Types of clock resource</h2>
-<hr/>
-<h3 id="1.1. global clocks">1.1. Global Clocks</h3>
+<p><br></p>
+<h2>1. Three Types of clock resource</h2>
+<hr>
+<h3>1.1. Global Clocks</h3>
 <ul>
 <li>
 <p>为了时钟目的，每个 Virtex-5 系列的器件内部都被分成不同的区域（regions），随着器件的尺寸不同，最小的有 8 个区域，最大的有 24 个区域。</p>
@@ -146,7 +143,7 @@
 <p>全局时钟的个数比 CMTs 多，但是一个 CMT 可以驱动多个全局时钟。</p>
 </li>
 </ul>
-<h3 id="1.2. regional clocks">1.2. Regional Clocks</h3>
+<h3>1.2. Regional Clocks</h3>
 <ul>
 <li>
 <p>每个区域（region）含有 2 个局部时钟缓冲器（regional clock buffer）和 4 个局部时钟树（regional clock tree）。</p>
@@ -159,13 +156,13 @@
 钟（I/O clocks）和两个区域时钟（regional clock）。</p>
 </li>
 </ul>
-<h3 id="1.3. i/o clocks">1.3. I/O clocks</h3>
+<h3>1.3. I/O clocks</h3>
 <ul>
 <li>第三种时钟资源是 I/O clocks，可以达到非常高的速度，用于局部的 I/O 串行器/解串器。
-<br/></li>
+<br></li>
 </ul>
-<h2 id="2. global clocking resources_1">2. Global Clocking Resources</h2>
-<hr/>
+<h2>2. Global Clocking Resources</h2>
+<hr>
 <ul>
 <li>
 <p>全局时钟（global clocks）是个专用网络，是专为覆盖对 FPGA 中各种资源的所有时钟输入设计的。</p>
@@ -188,7 +185,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="2.1.1. global clock inputs">2.1.1. Global Clock Inputs</h4>
+<h4>2.1.1. Global Clock Inputs</h4>
 <ul>
 <li>
 <p>Virtex-5 FPGA 包含专用的全局时钟输入位置，这些输入位置即使不用作时钟输入，也可用作常规用户 I/O。</p>
@@ -211,7 +208,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="2.1.2. global clock buffers">2.1.2. Global Clock Buffers</h4>
+<h4>2.1.2. Global Clock Buffers</h4>
 <ul>
 <li>
 <p>每个 Virtex-5 器件有 32 个全局时钟缓冲器。</p>
@@ -284,7 +281,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="2.1.3. clock tree and nets - gclk">2.1.3. Clock Tree and Nets - GCLK</h4>
+<h4>2.1.3. Clock Tree and Nets - GCLK</h4>
 <ul>
 <li>
 <p>Virtex-5 时钟树是为低歪斜和低功耗操作设计的。</p>
@@ -302,7 +299,7 @@
 <p>在 Virtex-5 架构中，全局时钟线的引脚接入不仅限于逻辑资源的时钟引脚。全局时钟线不用局部互连即可接入 CLB 中的其他引脚。</p>
 </li>
 </ul>
-<h4 id="2.1.4. clock regions">2.1.4. Clock Regions</h4>
+<h4>2.1.4. Clock Regions</h4>
 <ul>
 <li>
 <p>Virtex-5 器件通过使用时钟区域改善时钟控制分配。</p>
@@ -314,12 +311,12 @@
 <p>这十个全局时钟可以由 32 个全局时钟缓冲器的任意组合驱动。</p>
 </li>
 </ul>
-<h3 id="2.2. how to use global clock_1">2.2. How to use global clock</h3>
+<h3>2.2. How to use global clock</h3>
 <p>Xilinx 芯片全局时钟资源的使用方法主要有 5 种：</p>
 <ol>
 <li>
 <p><strong>IBUFG + BUFG</strong></p>
-<p>最基本的全局时钟资源使用方法，也称为 &ldquo; BUFGP 法 &rdquo;</p>
+<p>最基本的全局时钟资源使用方法，也称为 “ BUFGP 法 ”</p>
 </li>
 <li>
 <p><strong>IBUFGDS + BUFG</strong></p>
@@ -347,17 +344,18 @@
 <li>
 <p>在综合阶段/实现阶段通过约束文件的方式实现</p>
 <p>随着综合工具/布局布线工具的不同而变化，大多数综合工具会自动分析时钟信号的扇出数目，在全局时钟资源富裕的情况下，使扇出数目最大的信号自动指定使用全局时钟资源。这时候我们必须保证满足下面的原则，否则会报错。如果不能满足，则必须在约束文件中明确声明该信号不使用全局时钟资源。</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="no">NET</span> <span class="s">"CLK"</span> <span class="no">CLOCK_DEDICATED_ROUTE</span> <span class="o">=</span> <span class="no">FALSE</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="no">NET</span> <span class="s">&quot;CLK&quot;</span> <span class="no">CLOCK_DEDICATED_ROUTE</span> <span class="o">=</span> <span class="no">FALSE</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 </ol>
-<h3 id="2.3. principle in using global clock">2.3. Principle in Using global clock</h3>
+<h3>2.3. Principle in Using global clock</h3>
 <p><strong>原则：</strong> 使用 IBUFG / IBUFGDS 的必要条件是信号从全局时钟引脚输入。</p>
 <p>也就是说，如果某个信号从全局时钟引脚输入，不管它是否为时钟信号，必须使用 IBUFG/IBUFGDS；如果对某个信号使用了 IBUFG/IBUFGDS，则这个信号必须从全局时钟引脚输入。</p>
 <p><strong>原因：</strong> 由 Xilinx FPGA 内部结构决定的，IBUFG/IBUFGDS 的输入端仅和芯片的全局时钟引脚有物理连接，与普通的 I/O 和其他内部 CLB 等没有物理连接。</p>
-<h3 id="2.4. p.s. di er quan ju shi zhong zi yuan">2.4. P.S. 第二全局时钟资源</h3>
-<p>在看其他资料时，看到一种新的时钟资源 &mdash;&mdash; 第二全局时钟资源。官方的文档我还没有找到，所以就直接摘抄书上的笔记了 =.=</p>
+<h3>2.4. P.S. 第二全局时钟资源</h3>
+<p>在看其他资料时，看到一种新的时钟资源 —— 第二全局时钟资源。官方的文档我还没有找到，所以就直接摘抄书上的笔记了 =.=</p>
 <ul>
 <li>
 <p>第二全局时钟资源属于长线资源，长度和驱动能力仅次于全局时钟资源，也可以驱动芯片内部的任何一个逻辑，抖动和延时仅次于全局时钟。</p>
@@ -370,19 +368,20 @@
 </li>
 <li>
 <p><strong>使用方法</strong></p>
-<p>可以在约束编辑器中的专用约束Misc选项中，指定所选信号使用低抖动延迟资源&ldquo;Low Skew&rdquo;来指定，也可以在ucf文件中添加&ldquo;USELOWSKEWLINES"约束命令。</p>
+<p>可以在约束编辑器中的专用约束Misc选项中，指定所选信号使用低抖动延迟资源“Low Skew”来指定，也可以在ucf文件中添加“USELOWSKEWLINES"约束命令。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="no">NET</span> <span class="s">"s1"</span> <span class="no">USELOWSKEWLINES</span><span class="p">;</span>
-<span class="no">NET</span> <span class="s">"s2"</span> <span class="no">USELOWSKEWLINES</span><span class="p">;</span>
-<span class="no">NET</span> <span class="s">"s3"</span> <span class="no">USELOWSKEWLINES</span><span class="p">;</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="no">NET</span> <span class="s">&quot;s1&quot;</span> <span class="no">USELOWSKEWLINES</span><span class="p">;</span>
+<span class="no">NET</span> <span class="s">&quot;s2&quot;</span> <span class="no">USELOWSKEWLINES</span><span class="p">;</span>
+<span class="no">NET</span> <span class="s">&quot;s3&quot;</span> <span class="no">USELOWSKEWLINES</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
+
 </li>
 </ul>
-<p><br/></p>
-<h2 id="3. regional clocking resources_1">3. Regional Clocking Resources</h2>
-<hr/>
+<p><br></p>
+<h2>3. Regional Clocking Resources</h2>
+<hr>
 <ul>
 <li>
 <p>区域时钟网络是一组独立于全局时钟网络的时钟网络。</p>
@@ -408,7 +407,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="3.1. clock capable i/o">3.1. Clock Capable I/O</h3>
+<h3>3.1. Clock Capable I/O</h3>
 <ul>
 <li>
 <p>典型时钟区域中有四个 clock-capable I/O 引脚对 （中心列有例外）。</p>
@@ -426,7 +425,7 @@
 <p>这些引脚不能直接连接到全局时钟缓冲器。</p>
 </li>
 </ul>
-<h3 id="3.2. i/o clock buffer - bufio">3.2. I/O Clock Buffer - BUFIO</h3>
+<h3>3.2. I/O Clock Buffer - BUFIO</h3>
 <ul>
 <li>
 <p>I/O 时钟缓冲器 (BUFIO) 是可以在 Virtex-5 器件中使用的一种时钟缓冲器。</p>
@@ -450,7 +449,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="3.3. regional clock buffer - bufr">3.3. Regional Clock Buffer - BUFR</h3>
+<h3>3.3. Regional Clock Buffer - BUFR</h3>
 <ul>
 <li>
 <p>区域时钟缓冲器 (BUFR) 是可以在 Virtex-5 器件中使用的另一种时钟缓冲器。</p>
@@ -474,7 +473,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="3.4. regional clock nets">3.4. Regional Clock Nets</h3>
+<h3>3.4. Regional Clock Nets</h3>
 <ul>
 <li>
 <p>除了全局时钟树和网（global clock trees and nets），Virtex-5 器件还包含区域时钟网（Regional Clock Nets）。</p>
@@ -501,9 +500,9 @@
 <p>一个 BUFR 最多可以驱动两个相邻时钟区域中的区域时钟。</p>
 </li>
 </ul>
-<p><br/></p>
-<h2 id="4. clock management technology_1">4. Clock Management Technology</h2>
-<hr/>
+<p><br></p>
+<h2>4. Clock Management Technology</h2>
+<hr>
 <ul>
 <li>
 <p>Virtex-5 系列的芯片内部含有的时钟管理模块（Clock Management Tiles，CMTs）可以提供灵活的、高性能的时钟信号。</p>
@@ -512,7 +511,7 @@
 <p>每个 CMT 由 2 个 DCM 和 1 个 PLL 组成。</p>
 </li>
 </ul>
-<h3 id="4.1. dcm">4.1. DCM</h3>
+<h3>4.1. DCM</h3>
 <ul>
 <li>
 <p>DCM 原语有两个：DCM_BASE、DCM_ADV</p>
@@ -533,7 +532,7 @@
 <p>DCM 会把输入时钟 <code>clkin</code> 和 反馈时钟 <code>clkfb</code> 相比较，调节 <code>clkin</code> 和 <code>clk_1x</code> 之间的延时线的数目，直到 <code>clkin</code> 和 <code>clkfb</code> 之间的相位差等于所设置的参数 <code>PHASESHIFT</code>。如果 <code>clk_1x</code> 和 <code>clkfb</code> 不相关的话，那么就永远不能锁定了。</p>
 <p>这个从一开始的不等于到等于所花费的时间就是输出时钟锁定的时间，锁定之后，<code>locked</code> 信号才会变高。</p>
 <p><strong>DCM 的常用方法</strong></p>
-<p><img alt="dcm_usage" src="/images/the-clock-design-in-fpga-1-summary-of-clock-resource/dcm_usage.jpg"/></p>
+<p><img alt="dcm_usage" src="/images/the-clock-design-in-fpga-1-summary-of-clock-resource/dcm_usage.jpg"></p>
 <p>将其输出 <code>clk_1x</code> 连接到 <code>BUFG</code> 的输入，通过 BUFG 之后的输出一条支路是反馈到 DCM 的反馈时钟引脚 <code>clkfb</code> 上，另外一条支路则输出驱动其他单元。</p>
 <p><strong>DCM 消除 skew</strong></p>
 <p>问题：</p>
@@ -586,7 +585,7 @@
 </li>
 </ol>
 <p>如果没有这么做，而是完全按照单个 DCM 的流程使用，那么因为时钟引脚和两个 DCM 的路径长短不同，无法做到输入时钟、两个 DCM 的输出信号的相位对齐，输入时钟只能和其中一个对其，如果对相位有要求，则必须手动调整 DCM 在芯片中的位置。</p>
-<h3 id="4.2. pll">4.2. PLL</h3>
+<h3>4.2. PLL</h3>
 <ul>
 <li>
 <p>Virtex-5 芯片最多包含了 6 个 CMT 模块，每个 CMT 模块包含一个 PLL，PLL 主要用来广谱频率的合成，并且与 DCM 配合最为外部/内部时钟的抖动滤波器。</p>
@@ -598,13 +597,13 @@
 <p>PLL_BASE 提供基本的功能，比如时钟去歪斜、频率合成、精确相移、占空比调整；PLL_ADV 提供更高级的功能，比如时钟切换、动态重配置等。</p>
 </li>
 </ul>
-<h3 id="4.3. mmcm">4.3. MMCM</h3>
+<h3>4.3. MMCM</h3>
 <p>不同系列的芯片内部的时钟管理模块是不同的，比如在 Virtex-5 系列后的芯片就含有了 混合模式时钟管理器 MMCM 。</p>
 <p>具体实现时该如何选择 DCM、DLL、PLL、MMCM ？找到一篇介绍 Xilinx 时钟资源的文章：</p>
 <p><a href="http://www.ednchina.com/ART_8800512846_18_20010_TA_25f01c24.HTM">如何正确使用FPGA的时钟资源</a></p>
-<p><br/></p>
-<h2 id="5. other tips_1">5. Other Tips</h2>
-<hr/>
+<p><br></p>
+<h2>5. Other Tips</h2>
+<hr>
 <ol>
 <li>
 <p>一般来说，外部提供的时钟信号都需要进行倍频/分频才可以使用，这时候需要组合各种时钟缓冲器和 DCM、PLL 等模块，我们有两种方法：</p>
@@ -622,13 +621,13 @@
 <p>对 FPGA 设计而言，全局时钟是最简单最可预测的时钟，最好的时钟方案是：由专用的全局时钟输入引脚驱动单个全局时钟，并用后者去控制设计中的每个触发器。全局时钟资源是专用布线资源，存在与全铜布线层上，使用全局时钟资源不影响芯片的其他布线资源，因此在可以使用全局时钟的时候尽可能使用。</p>
 </li>
 </ol>
-<p><br/></p>
-<h2 id="6. summary">6. Summary</h2>
-<hr/>
+<p><br></p>
+<h2>6. Summary</h2>
+<hr>
 <p>虽然各个芯片都不尽相同，但是了解相关的基本知识有利于我们快速掌握芯片的时钟资源、快速上手。</p>
 <p>Xilinx 的所有器件上的时钟资源可以分为前面说的 3 类：全局时钟（global clock）、局部时钟（regional clock）、I/O 时钟（I/O clock），但是不同的器件内部含有的时钟管理模块是不同的，具体到每一款芯片，应该以对应的 User Guide 为准。</p>
-<p><br/></p>
-<h2 id="7. reference">7. Reference</h2>
+<p><br></p>
+<h2>7. Reference</h2>
 <p><a href="http://www.xilinx.com/support/documentation/user_guides/ug190.pdf">Virtex 5 User Guide</a></p>
 <p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发使用教程</a></p>
 <p><a href="http://book.douban.com/subject/10593491/">Xilinx FPGA 高级设计及应用</a></p>
@@ -657,8 +656,8 @@
     <h4>You might enjoy</h4>
     <ul class="related-posts">
       <li><a href="http://guqian110.github.io/posts/ic/clock_dividers.html">时钟分频器</a></li>
-      <li><a href="http://guqian110.github.io/posts/ic/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
       <li><a href="http://guqian110.github.io/posts/ic/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
+      <li><a href="http://guqian110.github.io/posts/ic/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
     </ul>
   </div>
 

@@ -100,14 +100,11 @@
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 OFDM 及其 FPGA 实现 1 &mdash;&mdash; OFDM Basic">学习 OFDM 及其 FPGA 实现 1 &mdash;&mdash; OFDM Basic</a><ul><li><a class="toc-href" href="#1. why ofdm" title="1. Why OFDM">1. Why OFDM</a><ul><li><a class="toc-href" href="#1.1. background" title="1.1. Background">1.1. Background</a></li><li><a class="toc-href" href="#1.2. problem" title="1.2. Problem">1.2. Problem</a><ul><li><a class="toc-href" href="#1.2.1. xu qiu" title="1.2.1. 需求">1.2.1. 需求</a></li><li><a class="toc-href" href="#1.2.2. ping jing" title="1.2.2. 瓶颈">1.2.2. 瓶颈</a></li></ul></li><li><a class="toc-href" href="#1.3. solution_1" title="1.3. Solution">1.3. Solution</a></li></ul></li><li><a class="toc-href" href="#2. ofdm history_1" title="2. OFDM History">2. OFDM History</a></li><li><a class="toc-href" href="#3. ofdm theory" title="3. OFDM Theory">3. OFDM Theory</a><ul><li><a class="toc-href" href="#3.1. ofdm ji dai shu zi shi xian" title="3.1. OFDM 基带数字实现">3.1. OFDM 基带数字实现</a><ul><li><a class="toc-href" href="#3.1.1. fa song duan  transmitter" title="3.1.1. 发送端 Transmitter">3.1.1. 发送端 Transmitter</a></li><li><a class="toc-href" href="#3.1.2. jie shou duan  receiver" title="3.1.2. 接收端 Receiver">3.1.2. 接收端 Receiver</a></li></ul></li><li><a class="toc-href" href="#3.2. xun huan qian zhui  cyclic prefix_1" title="3.2. 循环前缀 cyclic prefix">3.2. 循环前缀 cyclic prefix</a></li><li><a class="toc-href" href="#3.3. jia chuang ji zhu" title="3.3. 加窗技术">3.3. 加窗技术</a></li><li><a class="toc-href" href="#3.4. ofdm xi tong she ji" title="3.4. OFDM 系统设计">3.4. OFDM 系统设计</a></li></ul></li><li><a class="toc-href" href="#4. can kao_1" title="4. 参考">4. 参考</a></li></ul></li></ul></div>
-    </div>
 
   <div>
-    <h2 id="1. why ofdm">1. Why OFDM</h2>
-<hr/>
-<h3 id="1.1. background">1.1. Background</h3>
+    <h2>1. Why OFDM</h2>
+<hr>
+<h3>1.1. Background</h3>
 <p>移动通信的信道模型一般建立为 <strong>时变多径信道模型</strong>，描述信道多径时延特性的一个重要统计参量是 <strong>均方根时延扩展</strong> 。</p>
 <p>经过无线信道的时变多径传输，接收到的信号幅度会有起伏变化（瑞利分布 or 莱斯分布），这种现象称为 <strong>信号衰落</strong> 。按照已调信号的带宽可以将衰落分为两类：</p>
 <ul>
@@ -116,62 +113,62 @@
 </ul>
 <p><strong>判断信号受到何种衰落：</strong></p>
 <p>定义信道的 <strong>相干带宽</strong> 。当数字信号的带宽越小于信道的相干带宽，则经过时变多经信道后，在信号带宽内的不同频率分量的幅度的相关性越大，不同的频率分量近似经历相同的衰落，即平坦性衰落，平坦性衰落对接收信号的波形无明显影响，码间干扰可以忽略，该系统称为 <strong>窄带系统</strong> 。当数字信号的带宽相对于信道的相干带宽越大时，信号带宽内的不同频率分量通过信道传输时会受到不同的衰落，即频率选择性衰落，频率选择性衰落使信号中的不同频率分量产生不同的幅度变化，造成接收信号的严重失真，引起吗见干扰，产生误码，该系统称为 <strong>宽带系统</strong> 。</p>
-<h3 id="1.2. problem">1.2. Problem</h3>
-<h4 id="1.2.1. xu qiu">1.2.1. 需求</h4>
+<h3>1.2. Problem</h3>
+<h4>1.2.1. 需求</h4>
 <p>无线信道的频率资源是有限的，要求数字通信系统有效利用信道频带。希望数据传输速率越高越好。</p>
-<h4 id="1.2.2. ping jing">1.2.2. 瓶颈</h4>
+<h4>1.2.2. 瓶颈</h4>
 <p>在系统设计选择数字调制方式时，必须兼顾 <strong>频带利用率</strong> 和 <strong>误码性能</strong> 。在 AWGN 信道下，在满足误码性能的前提下，应该尽可能采用频带利用率高的数字调制方式。</p>
 <p>然而，在以衰落为特征的移动通信系统中，影响误码性能的不仅仅是 <strong>加性噪声</strong>，还包括 <strong>衰落</strong> 和 <strong>码间干扰</strong> 。实现高速无线通信并非易事。</p>
 <p>为避免码间干扰，数字调制信号的最大符号速率受到很大的限制 。</p>
-<h3 id="1.3. solution_1">1.3. Solution</h3>
+<h3>1.3. Solution</h3>
 <p><strong>信道均衡</strong> 是一种经典的对抗码间干扰的技术，许多移动通信系统都采用信道均衡技术消除码间干扰。但是如果数据速率非常高，采用单载波传输数据，需要设计几十审计上百个抽头的均衡器，这简直是硬件设计的噩梦 。</p>
-<p>既要对抗码间干扰，又要满足低复杂度且高效的手段传输高速数据业务，我们可以采用另外一种技术 &mdash;&mdash; <strong>OFDM</strong> 。</p>
-<p><br/></p>
-<h2 id="2. ofdm history_1">2. OFDM History</h2>
-<hr/>
+<p>既要对抗码间干扰，又要满足低复杂度且高效的手段传输高速数据业务，我们可以采用另外一种技术 —— <strong>OFDM</strong> 。</p>
+<p><br></p>
+<h2>2. OFDM History</h2>
+<hr>
 <p>多载波调制技术早在 20 世纪 50年代末至 60 年代初就已经应用于军事高频无线通信中，由于实现复杂，没有被广泛应用 。OFDM 就是一种多载波调制，其子载波间隔是子载波符号间隔的倒数，各子载波的频谱是重叠的，这种重叠可以使频谱效率显著提高 。</p>
 <p>20 世纪 70 年代，Weinstein 和 Ebert 提出用 <strong>离傅里叶变换(DFT)</strong> 及其 <strong>逆变换(IDFT)</strong> 进行 OFDM 多载波调制方式的运算。</p>
 <p>DFT 和 IDFT 的快速计算方法：FFT 和 IFFT 使 OFDM 能够以低成本的数字方式实现 。</p>
 <p>在 20 世纪 80 年代，随着 OFDM 理论的不断完善、数字信号处理及微电子技术的不断快速发展，OFDM 技术也逐步走向实用化 。</p>
 <p>大约从 20 世纪 90 年代起，OFDM 技术开始应用于各种有线及无线通信中，包括：DSL、DAB、DVB、WLAN等。OFDM 已经成为下一代蜂窝移动通信空中接口的候选技术 。</p>
-<p><br/></p>
-<h2 id="3. ofdm theory">3. OFDM Theory</h2>
-<hr/>
+<p><br></p>
+<h2>3. OFDM Theory</h2>
+<hr>
 <p>Orthogonal frequency-division multiplexing (OFDM) 的基本原理是将高速的数据流分解为多路并行的低速数据流，在多个载波上同时进行传输。</p>
 <p>通过将高速数据分解为多个并行低速速率，克服了信道时延扩展对数据速率的限制，其中各个子载波之间是相互正交的关系，如图：</p>
-<p><img alt="carrier wave" src="/images/learning-ofdm-basic/carriers.png"/></p>
+<p><img alt="carrier wave" src="/images/learning-ofdm-basic/carriers.png"></p>
 <p>OFDM 每个子载波的调制方式可以相互不同，比如 BPSK、QPSK、QAM 等方式 。</p>
 <p>(OFDM 系统的内容可以写一本书了，简单写写 :-P )</p>
-<h3 id="3.1. ofdm ji dai shu zi shi xian">3.1. OFDM 基带数字实现</h3>
-<h4 id="3.1.1. fa song duan  transmitter">3.1.1. 发送端 Transmitter</h4>
+<h3>3.1. OFDM 基带数字实现</h3>
+<h4>3.1.1. 发送端 Transmitter</h4>
 <p>基带系统发送端要实现的功能是将待发送序列 {A1,A2,A3...} 变换，得到复包络的采样值 {a1,a2,a3...} 。</p>
 <p>为了实现 OFDM 调制的基带数字实现，首先要将 OFDM 信号的复包络进行采样，成为离散时间信号 。根据公式(《通信原理》)，采样结果正好是对发送序列进行离散傅里叶反变换(IDFT)的结果，所以，我们可以 <em>借助 IDFT 即可得到 OFDM 复包络的时间采样 。</em></p>
 <p>发送端框图：</p>
-<p><img alt="transmitter" src="/images/learning-ofdm-basic/transmitter.png"/></p>
-<h4 id="3.1.2. jie shou duan  receiver">3.1.2. 接收端 Receiver</h4>
+<p><img alt="transmitter" src="/images/learning-ofdm-basic/transmitter.png"></p>
+<h4>3.1.2. 接收端 Receiver</h4>
 <p>基带系统接收端要实现的功能是对采样序列 {a1,a2,a3...} 进行变换，得到发送端发送过来的信息序列 {A1,A2,A3...} 。</p>
 <p>接收端通过 I/Q 正交解调可以恢复 OFDM 信号的复包络，将其采样得到的时间序列 。因为发送端采用的 IDFT 是可逆变换，所以对采样结果进行 DFT 就可以得到发送序列 。</p>
 <p>当序列的点数为 2 的整幂次时，DFT 和 IDFT 存在快速算法： FFT 和 IFFT 。</p>
 <p>接收端框图：</p>
-<p><img alt="receiver" src="/images/learning-ofdm-basic/receiver.png"/></p>
-<h3 id="3.2. xun huan qian zhui  cyclic prefix_1">3.2. 循环前缀 cyclic prefix</h3>
+<p><img alt="receiver" src="/images/learning-ofdm-basic/receiver.png"></p>
+<h3>3.2. 循环前缀 cyclic prefix</h3>
 <p>为了有效对抗多径信道的时延扩展，OFDM 系统由多个子载波构成，只要子载波的取值可以满足符号周期远大于信道的时延扩展，就可以达到目标。在此基础上，还需要采取措施消除前后两个 OFDM 符号之间的 <strong>码间干扰 ISI</strong> 。</p>
 <p>一种方法是在每个 OFDM 符号之间插入 <strong>保护间隔 Guard Interval</strong> 。为了对抗信号因信道延迟的影响，Gurad interval(Tg) 长度要大于最大的 Delay spread，即 Tg &gt; delay spread time。</p>
-<p>在保护区间未放信号的 OFDM 系统称 ZP-OFDM(zero padding)。ZP-OFDM 有比较低的传输功率，但在接收端接收于 zero padding 区域信号时，会破坏载波的正交性造成 &ldquo;<strong>载波间的干扰（ICI）</strong>&rdquo;，所以复制 OFDM symbol 后半段信号并摆放于保护区间内，称之为 <strong>循环字首(cyclic prefix)</strong> 。</p>
-<h3 id="3.3. jia chuang ji zhu">3.3. 加窗技术</h3>
+<p>在保护区间未放信号的 OFDM 系统称 ZP-OFDM(zero padding)。ZP-OFDM 有比较低的传输功率，但在接收端接收于 zero padding 区域信号时，会破坏载波的正交性造成 “<strong>载波间的干扰（ICI）</strong>”，所以复制 OFDM symbol 后半段信号并摆放于保护区间内，称之为 <strong>循环字首(cyclic prefix)</strong> 。</p>
+<h3>3.3. 加窗技术</h3>
 <p>前面介绍了 OFDM 符号的生成、循环前缀消除码间干扰，但是此时符号边界有尖锐的相位跳变，由此可知，OFDM 的带外衰减是比较慢的 。虽然随着载波数目的增大，OFDM 信号的带外衰减会增加，但是仍然不够快 。</p>
 <p>为了使 OFDM 信号的带外衰减更快，可以采用对单个 OFDM 符号加窗的方法 。OFDM 的窗函数可以使信号的幅度在u符号边界更平滑地过渡到 0 。常用的窗函数是 <strong>升余弦滚降窗</strong> 。</p>
 <p>增大滚降因子虽然能够使带外衰减更快，但降低了 OFDM 系统对多经实验的容忍能力，所以 <em>在实际系统设计中，应当选择较小的滚降因子 。</em></p>
-<h3 id="3.4. ofdm xi tong she ji">3.4. OFDM 系统设计</h3>
+<h3>3.4. OFDM 系统设计</h3>
 <p>OFDM 系统框图如下：</p>
-<p><img alt="ofdm-system" src="/images/learning-ofdm-basic/ofdm_system.jpg"/></p>
+<p><img alt="ofdm-system" src="/images/learning-ofdm-basic/ofdm_system.jpg"></p>
 <p>其中，<strong>交织</strong> 是为了克服深衰落发生突发差错的影响，如果交织器的长度足够大，解交织后可将突发差错改造为独立差错，再通过纠错译码来纠正 。</p>
 <p><strong>在发送端：</strong></p>
 <p><em>二进制数据</em> 通过纠错编码、交织后映射到 QAM 星座得到 <em>一个 QAM 复数符号序列</em>，再经过并串转换，得到 <em>N个并行 QAM 符号</em>，每个符号进行 IFFT，将 OFDM 复包络的频域样值变换为 <em>时域样值</em>，进行并串转换，将时域样值变换为按时间顺序排列的 <em>时域样值</em>，然后在每个 OFDM 符号前插入前缀，通过 D/A，将离散的复包络变成 <em>连续时间的复包络</em> 。再将复包络的 I(t) 和 Q(t) 正交调制得到 <em>OFDM信号</em>，将基带信号上变频到射频，经过功放，发送出去 。</p>
 <p><strong>在接收端：</strong></p>
 <p>接收端于发送端进行相反的变换，恢复出原数据 .</p>
-<p><br/></p>
-<h2 id="4. can kao_1">4. 参考</h2>
+<p><br></p>
+<h2>4. 参考</h2>
 <p><a href="http://book.douban.com/subject/1446684/">《通信原理》</a></p>
 <p><a href="http://book.douban.com/subject/4130536/">《移动通信原理》</a></p>
 <p><a href="http://en.wikipedia.org/wiki/Orthogonal_frequency-division_multiplexing">OFDM wikipedia</a></p>
