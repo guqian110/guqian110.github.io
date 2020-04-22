@@ -119,20 +119,19 @@ main {
   nav {
     text-align: center;
     text-transform: uppercase;
-    font-size: .72em;
     padding: 14px 0 14px 0;
     border-bottom: @nav-border-color 1px solid;
+
+    // Need to use font-size of 0 so that whitespace between the <a> tags
+    // doesn't have an affect on alignment.
+    font-size: 0;
   }
 
   nav, .translations {
     a {
-      padding: 0 4px 0 4px;
-      border-left: @nav-border-color 1px solid;
+      font-size: 12px;
+      padding: 0 4px;
       border-right: @nav-border-color 1px solid;
-    }
-
-    :first-child {
-      border-left: none;
     }
 
     :last-child {
@@ -250,6 +249,32 @@ main {
         border-top: 1px solid #ddd;
       }
     }
+
+    table.highlighttable {
+      width: 100%;
+      table-layout: fixed;
+
+      td {
+        border-style: none;
+        padding: 0px;
+      }
+
+      td.linenos {
+        width: 2.5em;
+
+        pre {
+          padding-right: .8em;
+          background-color: inherit;
+          text-align: right;
+        }
+      }
+    }
+
+    // Add a bit of padding between each of the entry boxes in the Isso auth
+    // section. By default, they are squished together, which looks terrible.
+    section#isso-thread .auth-section .input-wrapper {
+      margin-right: 5px;
+    }
   }
 
   footer {
@@ -262,6 +287,11 @@ main {
       padding: 0 40px 0 40px;
       color: @footer-text-color;
       font-size: 11px;
+    }
+
+    // Flex credits and theme selection separator
+    span.footer-separator {
+      margin: 0 6px;
     }
   }
 }
@@ -284,7 +314,8 @@ main {
   }
 }
 
-a.btn {
+a.btn,
+section#isso-thread section.auth-section p.post-action input {
   background-color: @btn-bg;
   padding: .6em .6em;
   font-size: .8em;
@@ -293,6 +324,7 @@ a.btn {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
+  border: none;
   border-radius: .25em;
 }
 
@@ -368,8 +400,8 @@ ul.social {
 
   a:hover {
     z-index: 2;
-    -webkit-transform: translateY(-5px);
-    transform: translateY(-5px);
+    -webkit-transform: translateY(-2px);
+    transform: translateY(-2px);
   }
 
   a {
@@ -392,6 +424,10 @@ ul.social {
 
   a.sc-instagram {
     background-color: @instagram-bg-color;
+  }
+
+  a.sc-keybase {
+    background-color: @keybase-bg-color;
   }
 
   a.sc-pinterest {
@@ -430,7 +466,7 @@ ul.social {
     background-color: @github-bg-color;
   }
 
-  a.sc-envelope-o {
+  a.sc-envelope {
     background-color: @email-bg-color;
   }
 
@@ -454,6 +490,22 @@ ul.social {
     background-color: @bitbucket-bg-color;
   }
 
+  a.sc-mastodon {
+    background-color: @mastodon-bg-color;
+  }
+
+  a.sc-diaspora {
+    color: @diaspora-color;
+    background-color: @diaspora-bg-color;
+  }
+
+  a.sc-flickr {
+    background-color: @flickr-bg-color;
+  }
+
+  a.sc-lastfm {
+    background-color: @lastfm-bg-color;
+  }
 }
 
 .ads-aside {
@@ -476,8 +528,8 @@ ul.social {
 
 @media screen and (min-width: 768px) {
   aside {
-    width: 25%;
-    height: 100%;
+    width: 25vw;
+    height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
@@ -502,16 +554,17 @@ ul.social {
   }
 
   main {
-    width: 75%;
-    height: 100%;
+    width: 75vw;
+    height: 100vh;
     position: absolute;
     top: 0;
-    left: 25%;
+    left: 25vw;
+    overflow-x: hidden;
 
     article {
 
       &.single {
-        min-height: 80%;
+        min-height: 80vh;
       }
 
       ul.list {
@@ -529,4 +582,111 @@ ul.social {
   .ads-responsive {
     height: 90px;
   }
+}
+
+// Admonition
+div.admonition {
+  margin-bottom: 2.5rem;
+  border-radius: 4px;
+  padding: 0.5em 1.25em 1.25em 1.25em;
+
+  p.admonition-title::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    font-family: "Font Awesome 5 Free";
+  }
+
+  p.admonition-title {
+    font-weight: 600;
+    line-height: 1.25em;
+    margin-bottom: 1.25em;
+    margin-top: inherit;
+  }
+
+  p, div, pre {
+    margin-bottom: 0;
+  }
+}
+
+div.admonition.attention {
+  p.admonition-title::before {
+    content: @admonition-attention-icon;
+  }
+
+  color: @admonition-attention-color;
+  background-color: @admonition-attention-bg-color;
+}
+
+div.admonition.caution {
+  p.admonition-title::before {
+    content: @admonition-caution-icon;
+  }
+
+  color: @admonition-caution-color;
+  background-color: @admonition-caution-bg-color;
+}
+
+div.admonition.danger {
+  p.admonition-title::before {
+    content: @admonition-danger-icon;
+  }
+
+  color: @admonition-danger-color;
+  background-color: @admonition-danger-bg-color;
+}
+
+div.admonition.error {
+  p.admonition-title::before {
+    content: @admonition-error-icon;
+  }
+
+  color: @admonition-error-color;
+  background-color: @admonition-error-bg-color;
+}
+
+div.admonition.hint {
+  p.admonition-title::before {
+    content: @admonition-hint-icon;
+  }
+
+  color: @admonition-hint-color;
+  background-color: @admonition-hint-bg-color;
+}
+
+div.admonition.important {
+  p.admonition-title::before {
+    content: @admonition-important-icon;
+  }
+
+  color: @admonition-important-color;
+  background-color: @admonition-important-bg-color;
+}
+
+div.admonition.note {
+  p.admonition-title::before {
+    content: @admonition-note-icon;
+  }
+
+  color: @admonition-note-color;
+  background-color: @admonition-note-bg-color;
+}
+
+div.admonition.tip {
+  p.admonition-title::before {
+    content: @admonition-tip-icon;
+  }
+
+  color: @admonition-tip-color;
+  background-color: @admonition-tip-bg-color;
+}
+
+div.admonition.warning {
+  p.admonition-title::before {
+    content: @admonition-warning-icon;
+  }
+
+  color: @admonition-warning-color;
+  background-color: @admonition-warning-bg-color;
 }
