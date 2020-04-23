@@ -123,34 +123,38 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Arduino #2 初识 Intel Galileo 开发板">学习 Arduino #2 初识 Intel Galileo 开发板</a><ul><li><a class="toc-href" href="#1. preface" title="1. Preface">1. Preface</a></li><li><a class="toc-href" href="#2. official arduino boards" title="2. Official Arduino Boards">2. Official Arduino Boards</a></li><li><a class="toc-href" href="#3. intel galileo board" title="3. Intel Galileo Board">3. Intel Galileo Board</a><ul><li><a class="toc-href" href="#3.1. arduinco.cc" title="3.1. Arduinco.cc">3.1. Arduinco.cc</a></li><li><a class="toc-href" href="#3.2. intel official introduction" title="3.2. Intel Official Introduction">3.2. Intel Official Introduction</a></li><li><a class="toc-href" href="#3.3. other introductions" title="3.3. Other Introductions">3.3. Other Introductions</a></li></ul></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2>1. Preface</h2>
-<hr>
-<p>Arduino 有很多开发板，分别针对不同的应用环境含有不同的模块。学习一款 Intel 推出的开发板 —— <em>Intel Galileo Development Board</em> 。</p>
+    <h2 id="1. preface">1. Preface</h2>
+<hr/>
+<p>Arduino 有很多开发板，分别针对不同的应用环境含有不同的模块。学习一款 Intel 推出的开发板 &mdash;&mdash; <em>Intel Galileo Development Board</em> 。</p>
 <p>Intel Gailileo Development Board 是 Intel 进入 Arduino 领域的试水产品，它含有一颗 Quark Soc X1000 CPU，这是一款 32 位、x86 构架、低功耗的 SoC 芯片，它的主频可以达到 400 MHz，内部有 512 KB 的 SRAM，同时 Galileo 有丰富的接口(USB, JTag, RS232, Ethernet, mPCIE...)，支持很多外围设备。</p>
 <p>Galileo 试图达到的目标是融合 Arduino 对硬件操作的便利和 Linux 系统对硬件操作完整支持。所以，Galileo 也兼容 Arduino 接口，你可以很方便的把 Arduino 项目移植到 Galileo 上运行，使用常用的一些 Arduino 库(Ethernet, Wi-Fi, SD, EEPROM...)也可以获得内部 Linux 系统的完整功能(Python, SSH, Telnet， OpenCV...)。</p>
 <p>总结一下我学习这块板子的知识，不仅仅为 Arduino 开发做准备，也为后面的一个竞赛(基于Yocto 项目)开发积累知识～</p>
-<p><br></p>
-<h2>2. Official Arduino Boards</h2>
-<hr>
+<p><br/></p>
+<h2 id="2. official arduino boards">2. Official Arduino Boards</h2>
+<hr/>
 <p>Arduino 官网上列出所有了官方开发板，其中也包含了官方认证过的开发板(Intel Galileo)，和一些推荐的第三方产品</p>
 <p><a href="http://arduino.cc/en/Main/Products">Arduino Products</a></p>
 <p>还详细列出了这些开发板上的微控制器的区别</p>
 <p><a href="http://arduino.cc/en/Products.Compare">Compare boards specs</a></p>
-<p><br></p>
+<p><br/></p>
 <p><em>官方的开发板的核心都是 Atmel 的微控制器，基于市场战略的需求，看到数莓派、Arduino发展的热火朝天，Intel 也坐不住了(瞎猜的 =.=)，推出了新的基于 Intel 架构(x86)、可以和 Arduino 兼容的开发板。Galileo 是这个家族中的第一款，目前 Intel 又推出了一款新的开发板，取名叫 Edison。(Intel 这是要把所有科学家的名字都取个遍么)</em></p>
-<p><br></p>
-<h2>3. Intel Galileo Board</h2>
-<hr>
-<h3>3.1. Arduinco.cc</h3>
+<p><br/></p>
+<h2 id="3. intel galileo board">3. Intel Galileo Board</h2>
+<hr/>
+<h3 id="3.1. arduinco.cc">3.1. Arduinco.cc</h3>
 <p>在 Arduino 官网上有一篇简单介绍 Galileo 的网页</p>
 <p><a href="http://arduino.cc/en/ArduinoCertified/IntelGalileo">Intel Galileo on arduino.cc</a></p>
-<h3>3.2. Intel Official Introduction</h3>
+<h3 id="3.2. intel official introduction">3.2. Intel Official Introduction</h3>
 <p>Arduino 官网上的介绍只是非常简单的介绍，Intel 自己的官网上有关于 Galileo 全部的详细资料</p>
 <p><a href="http://www.intel.cn/content/www/cn/zh/do-it-yourself/galileo-maker-quark-board.html">Galileo Maker Quark Board</a></p>
 <p>关于 Galileo 的全部文档，包括 Datasheet、Schematic、Quick Start、User Guide 等：</p>
 <p><a href="https://communities.intel.com/community/makers/documentation/galileodocuments">Intel Galileo Development Board Documents</a></p>
-<h3>3.3. Other Introductions</h3>
+<h3 id="3.3. other introductions">3.3. Other Introductions</h3>
 <p><strong>首先</strong> 送上一篇非常好的介绍文章（来自 Ifanr.com），介绍了在 Maker 眼中，这个板子到底可以 hack 到什么程度～</p>
 <p><a href="http://www.ifanr.com/388835">x86 版的 Arduino 来了，Intel Galileo 开发板的体验、分析和应用【超长文多图】</a></p>
 <p><strong>再</strong> 附上一篇完爆我的总结的教程～</p>
@@ -175,7 +179,6 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ sudo ./arduino <span class="p">&amp;</span>
 </pre></div>
 </td></tr></table>
-
 </li>
 <li>
 <p>Linux 下 disable modem manager</p>
@@ -187,8 +190,8 @@
 <li>
 <p>硬件配置</p>
 <p>从 Board Guide 中找到的截图如下</p>
-<p><img alt="key_componets_1" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_1.png"></p>
-<p><img alt="key_componets_2" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_2.png"></p>
+<p><img alt="key_componets_1" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_1.png"/></p>
+<p><img alt="key_componets_2" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_2.png"/></p>
 <p>从它的配置中可以看到，Galileo 并不是一款简单的 Arduino 开发板，它的硬件系统其实是按照 PC 来设计的，如果我们只是简单的把它当作 Arduino 开发板来应用，有点大材小用了，这样子完全没有体现出 Galileo 的优势，只是一个速度更快的 Arduino 罢了。</p>
 <p>事实上，如果功能上没有比传统的 Arduino 更强大的功能，估计 Intel 也不会推出这个产品了～Galileo 的真正强大的地方在于：</p>
 <blockquote>
@@ -197,9 +200,9 @@
 </li>
 <li>
 <p>软件构架</p>
-<p>Galileo 不仅仅是硬件上按照 PC 设计的，事实上，它的软件构架也和 PC 一样。和普通的单片机不同，它并不是简单的运行用户开发的程序那么简单。它实际上运行着一个操作系统 —— 包含 UEFI(BIOS 的替代者)、Grub、嵌入式 Linux 系统，用户编写的 <code>Sketch</code> 只是一个在 Linux 上面运行的应用而已。</p>
+<p>Galileo 不仅仅是硬件上按照 PC 设计的，事实上，它的软件构架也和 PC 一样。和普通的单片机不同，它并不是简单的运行用户开发的程序那么简单。它实际上运行着一个操作系统 &mdash;&mdash; 包含 UEFI(BIOS 的替代者)、Grub、嵌入式 Linux 系统，用户编写的 <code>Sketch</code> 只是一个在 Linux 上面运行的应用而已。</p>
 <p>Galileo 启动时可以从 ISP Flash 中启动一个微型的 Linux 系统，也可以从 MicroSD 卡中启动一个完整版的 Linux 系统。我们 <code>Upload</code> 时，Arduino IDE 将程序编译链接成一个标准的 Linux ELF 文件，并且下载到 Arduino 板子上运行，如图所示</p>
-<p><img alt="target_software" src="/images/learning-arduino-series-2-intel-galileo-development-board/target_software.png"></p>
+<p><img alt="target_software" src="/images/learning-arduino-series-2-intel-galileo-development-board/target_software.png"/></p>
 </li>
 <li>
 <p>开发嵌入式 Linux 设备</p>
@@ -207,7 +210,7 @@
 </li>
 </ol>
 <p>最后，送上一个别人的 Galileo 开箱视频</p>
-<p><embed src="http://player.youku.com/player.php/sid/XNjQ0NTMzMjYw/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed></p>
+<p><embed align="middle" allowfullscreen="true" allowscriptaccess="always" height="400" quality="high" src="http://player.youku.com/player.php/sid/XNjQ0NTMzMjYw/v.swf" type="application/x-shockwave-flash" width="480"/></p>
   </div>
   <div class="tag-cloud">
     <p>

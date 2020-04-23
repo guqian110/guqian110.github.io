@@ -122,6 +122,10 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Linux SSH">学习 Linux SSH</a><ul><li><a class="toc-href" href="#1. shi yao shi  ssh" title="1. 什么是 SSH">1. 什么是 SSH</a><ul><li><a class="toc-href" href="#1.1. ssh" title="1.1. SSH">1.1. SSH</a></li></ul></li><li><a class="toc-href" href="#2. ssh de yong fa_1" title="2. SSH 的用法">2. SSH 的用法</a><ul><li><a class="toc-href" href="#2.1. an zhuang  ssh server" title="2.1. 安装 SSH server">2.1. 安装 SSH server</a></li><li><a class="toc-href" href="#2.2. qi dong  ssh fu wu" title="2.2. 启动 SSH 服务">2.2. 启动 SSH 服务</a></li><li><a class="toc-href" href="#2.3. yuan cheng fang wen" title="2.3. 远程访问">2.3. 远程访问</a></li><li><a class="toc-href" href="#2.4. sheng qu  ip di zhi" title="2.4. 省去 IP 地址">2.4. 省去 IP 地址</a></li><li><a class="toc-href" href="#2.5. gong yao deng lu" title="2.5. 公钥登录">2.5. 公钥登录</a></li></ul></li><li><a class="toc-href" href="#3. shi yong  scp chuan shu wen jian_1" title="3. 使用 SCP 传输文件">3. 使用 SCP 传输文件</a><ul><li><a class="toc-href" href="#3.1. shang chuan  dom ben di wen jian zhi fu wu qi  lab" title="3.1. 上传 dom 本地文件至服务器 lab">3.1. 上传 dom 本地文件至服务器 lab</a></li><li><a class="toc-href" href="#3.2. xia zai  lab fu wu qi wen jian zhi ben di  dom" title="3.2. 下载 lab 服务器文件至本地 dom">3.2. 下载 lab 服务器文件至本地 dom</a></li></ul></li><li><a class="toc-href" href="#4. reference_1" title="4. Reference">4. Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>实验室的师兄师姐毕业了，继承了他们的旧电脑 。宿舍的笔记本和实验室的电脑出现了相互之间传送同步文件的需求 。想到了两种方法：</p>
 <ol>
@@ -131,23 +135,22 @@
 <p>解决方案 1 是最省事的，也是目前最流行的，目前各大互联网公司都提供各种云服务，比如国外的 Google Drive、Dropbox，国内的百度云、360 网盘什么的。这种方案最大的有点是跨平台，不过这个方案是借助了第三方的服务器，需要连接到互联网才行，而且对网速是有一定要求的。</p>
 <p>解决方案 2 相比于方案 1 的优势是：不是必须要连接到互联网，在局域网内也可以同步文件 。一般局域网内传输文件的速度要比连外界的服务器快很多 。</p>
 <p>考虑到校园网的环境，明显方案 2 更加好 。</p>
-<p><br></p>
-<h2>1. 什么是 SSH</h2>
-<hr>
+<p><br/></p>
+<h2 id="1. shi yao shi  ssh">1. 什么是 SSH</h2>
+<hr/>
 <p>最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑 。<a href="http://en.wikipedia.org/wiki/Secure_Shell">SSH</a> 协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为 Linux 系统的标准配置 。</p>
-<p>最初的 SSH 协议是由芬兰的一家公司的研究员 Tatu Ylönen 于 1995 年设计开发的，但是因为受版权和加密算法等等的限制，现在很多人都转而使用 OpenSSH 。OpenSSH 是 SSH 的替代软件包，而且是开放源代码和免费的 。—— Wikipedia</p>
+<p>最初的 SSH 协议是由芬兰的一家公司的研究员 Tatu Yl&ouml;nen 于 1995 年设计开发的，但是因为受版权和加密算法等等的限制，现在很多人都转而使用 OpenSSH 。OpenSSH 是 SSH 的替代软件包，而且是开放源代码和免费的 。&mdash;&mdash; Wikipedia</p>
 <p>关于 SSH 的原理，找到了一系列 <a href="http://www.ruanyifeng.com/blog/">阮一峰</a>的文章，很简洁明了:</p>
-<h3>1.1. SSH</h3>
+<h3 id="1.1. ssh">1.1. SSH</h3>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">SSH原理与运用（一）：远程登录</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html">SSH原理与运用（二）：远程操作与端口转发</a></p>
-<p><br></p>
-<h2>2. SSH 的用法</h2>
-<hr>
+<p><br/></p>
+<h2 id="2. ssh de yong fa_1">2. SSH 的用法</h2>
+<hr/>
 <p>最简单明了的教程就是 man page 了</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>man ssh
 </pre></div>
 </td></tr></table>
-
 <p>内容为</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -159,7 +162,7 @@
  8
  9
 10</pre></div></td><td class="code"><div class="highlight"><pre><span></span>NAME
-    ssh — OpenSSH SSH client <span class="o">(</span>remote login program<span class="o">)</span>
+    ssh &mdash; OpenSSH SSH client <span class="o">(</span>remote login program<span class="o">)</span>
 
 SYNOPSIS
  ssh <span class="o">[</span>-1246AaCfgKkMNnqsTtVvXxYy<span class="o">]</span> <span class="o">[</span>-b bind_address<span class="o">]</span> <span class="o">[</span>-c cipher_spec<span class="o">]</span>
@@ -170,87 +173,74 @@ SYNOPSIS
      <span class="o">[</span>-w local_tun<span class="o">[</span>:remote_tun<span class="o">]]</span> <span class="o">[</span>user@<span class="o">]</span>hostname <span class="o">[</span>command<span class="o">]</span>
 </pre></div>
 </td></tr></table>
-
 <p>进阶的书籍有：<a href="http://docstore.mik.ua/orelly/networking_2ndEd/ssh/index.htm">SSH, The Secure Shell: The Definitive Guide</a>, O'reilly</p>
 <p>目前已经有两台安装了 Ubuntu 的电脑，实验室的一台 name 是 <em>lab</em> ，宿舍的一台 name 是 <em>dom</em> ，两台电脑上都有一个用户名为 <em>chien</em> 。</p>
 <p><strong>我们的目的是使两台电脑可以相互之间通过 SSH 访问。</strong> 下面就是整个过程：</p>
-<h3>2.1. 安装 SSH server</h3>
+<h3 id="2.1. an zhuang  ssh server">2.1. 安装 SSH server</h3>
 <p>SSH 只是一种协议，在 Ubuntu 下，具体实现使用的是 <a href="http://www.openssh.com/">OpenSSH</a> 。Ubuntu 默认是安装了 SSH 客户端 <code>openssh-client</code>，而没有安装 SSH 服务程序 <code>openssh-server</code>。</p>
 <p>检测本机是否已经安装了 SSH server</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ssh localhost
 </pre></div>
 </td></tr></table>
-
 <p>如果结果是</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ssh: connect to host localhost port <span class="m">22</span>: Connection refused
 </pre></div>
 </td></tr></table>
-
 <p>说明 SSH server 还没有安装 。</p>
 <p>安装方法：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install openssh-server
 </pre></div>
 </td></tr></table>
-
-<h3>2.2. 启动 SSH 服务</h3>
+<h3 id="2.2. qi dong  ssh fu wu">2.2. 启动 SSH 服务</h3>
 <p>启动 SSH server</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo /etc/init.d/ssh start
 </pre></div>
 </td></tr></table>
-
 <p>查询服务是否正确启动</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ps -e <span class="p">|</span> grep ssh
 </pre></div>
 </td></tr></table>
-
 <p>返回结果应该类似于</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="m">4156</span> ?        <span class="m">00</span>:00:00 ssh-agent
  <span class="m">4606</span> ?        <span class="m">00</span>:00:00 sshd
 </pre></div>
 </td></tr></table>
-
 <p>则说明服务已经正确启动 。</p>
 <p><em>因为两台电脑要相互访问，所以它们的角色即使 server，又是 client，所以需要在两台电脑上都执行上面两步 。</em></p>
-<h3>2.3. 远程访问</h3>
+<h3 id="2.3. yuan cheng fang wen">2.3. 远程访问</h3>
 <p>首先，查询本机 IP 地址</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ifconfig
 </pre></div>
 </td></tr></table>
-
 <p>比如 lab 的 IP 地址是 <code>10.105.55.155</code>, dom 的 IP 地址是 <code>10.210.111.116</code> 。（因为是校园网，所以分配到的都是内网地址）</p>
 <p>然后，在宿舍用 dom 访问 lab 这台机器</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ssh chien@10.105.55.155
 </pre></div>
 </td></tr></table>
-
 <p>实际结果如下图</p>
-<p><img alt="login1" src="/images/learning-linux-ssh/login1.png"></p>
+<p><img alt="login1" src="/images/learning-linux-ssh/login1.png"/></p>
 <p>在执行命令前，提示符显示目前的用户是在 dom 这台机器上的用户 chien，本机 home 目录下有 <code>dom</code> 文件，但是没有 <code>lab</code> 文件 。执行了登录命令以后，就会切换到以 chien 身份登录到 lab 机器，远程机器 home 目录下有 <code>lab</code> 文件，但是没有 <code>dom</code> 文件 。</p>
 <p>同理，在实验室用 lab 访问 dom 这台机器</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ssh chien@10.210.111.116
 </pre></div>
 </td></tr></table>
-
 <p>实际结果如下图</p>
-<p><img alt="login2" src="/images/learning-linux-ssh/login2.png"></p>
+<p><img alt="login2" src="/images/learning-linux-ssh/login2.png"/></p>
 <p>在执行命令前，提示符显示目前的用户是在 lab 这台机器上的用户 chien，本机 home 目录下有 <code>lab</code> 文件，但是没有 <code>dom</code> 文件 。执行了登录命令以后，就会切换到以 chien 身份登录到 dom 机器，远程机器 home 目录下有有 <code>dom</code> 文件，但是没有 <code>lab</code> 文件 。</p>
-<h3>2.4. 省去 IP 地址</h3>
+<h3 id="2.4. sheng qu  ip di zhi">2.4. 省去 IP 地址</h3>
 <p>每次登录都需要记忆、手动输入 IP 地址，其实只需要改 <code>/etc/hosts</code> 文件，就能省去手动输入 IP 地址的烦恼。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>vim /etc/hosts
 </pre></div>
 </td></tr></table>
-
 <p>在 dom 的 hosts 文件后面添加</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>lab    <span class="m">10</span>.105.55.155
 </pre></div>
 </td></tr></table>
-
 <p>在 lab 的 hosts 文件后面添加</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>dom     <span class="m">10</span>.210.111.116
 </pre></div>
 </td></tr></table>
-
 <p>以后，登录时只需要输入</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -263,9 +253,8 @@ ssh lab
 ssh dom
 </pre></div>
 </td></tr></table>
-
 <p>就可以登录了。</p>
-<h3>2.5. 公钥登录</h3>
+<h3 id="2.5. gong yao deng lu">2.5. 公钥登录</h3>
 <p>上一步解决了 IP 地址的问题，但是还是需要手动输入密码 。我们可以用公钥登录的方法，免去输密码的烦恼。</p>
 <p><strong>首先，什么是数字签名 Digital Signature</strong></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html">数字签名是什么？</a></p>
@@ -275,7 +264,6 @@ ssh dom
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ssh-keygen
 </pre></div>
 </td></tr></table>
-
 <p>命令执行过程中会询问保存密钥文件的路径，还可以为密钥文件设置口令（passphrase）。运行结束以后，在 <code>$HOME/.ssh/</code> 目录下，会新生成两个文件：<code>id_rsa.pub</code> 和 <code>id_rsa</code> 。前者是你的公钥，后者是你的私钥。</p>
 <p><strong>然后，发布数字签名</strong></p>
 <p>使用 <code>ssh-copy-id</code> 命令可以把公钥复制到远程机器中 。</p>
@@ -283,12 +271,10 @@ ssh dom
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ssh-copy-di chien@lab
 </pre></div>
 </td></tr></table>
-
 <p>将 lab 的公钥发送到 dom 中</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ssh-copy-di chien@dom
 </pre></div>
 </td></tr></table>
-
 <p><strong>最后，使用公钥登录</strong></p>
 <p>此时，远程登录时就不再需要输入密码了</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -302,16 +288,14 @@ ssh lab
 ssh dom
 </pre></div>
 </td></tr></table>
-
-<p><br></p>
-<h2>3. 使用 SCP 传输文件</h2>
-<hr>
+<p><br/></p>
+<h2 id="3. shi yong  scp chuan shu wen jian_1">3. 使用 SCP 传输文件</h2>
+<hr/>
 <p>SSH 提供了一些命令和 shell 用来登录远程服务器 。在默认情况下它不允许你拷贝文件,但是还是提供了一个 "scp" 命令 。scp 命令是 SSH 中最方便有用的命令了，试想，在两台服务器之间直接传送文件。仅仅用 scp 一个命令就完全解决了 。</p>
 <p>man page</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>man scp
 </pre></div>
 </td></tr></table>
-
 <p>内容为</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -320,7 +304,7 @@ ssh dom
 5
 6
 7</pre></div></td><td class="code"><div class="highlight"><pre><span></span>NAME
- scp — secure copy <span class="o">(</span>remote file copy program<span class="o">)</span>
+ scp &mdash; secure copy <span class="o">(</span>remote file copy program<span class="o">)</span>
 
 SYNOPSIS
  scp <span class="o">[</span>-12346BCpqrv<span class="o">]</span> <span class="o">[</span>-c cipher<span class="o">]</span> <span class="o">[</span>-F ssh_config<span class="o">]</span> <span class="o">[</span>-i identity_file<span class="o">]</span>
@@ -328,27 +312,23 @@ SYNOPSIS
      <span class="o">[[</span>user@<span class="o">]</span>host1:<span class="o">]</span>file1 ... <span class="o">[[</span>user@<span class="o">]</span>host2:<span class="o">]</span>file2
 </pre></div>
 </td></tr></table>
-
 <p>scp 可以实现把 [[user@]host1:]file1 复制到 [[user@]host2:]file2 的功能。所以</p>
-<h3>3.1. 上传 dom 本地文件至服务器 lab</h3>
+<h3 id="3.1. shang chuan  dom ben di wen jian zhi fu wu qi  lab">3.1. 上传 dom 本地文件至服务器 lab</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>scp ~/dom chien@lab:~/
 </pre></div>
 </td></tr></table>
-
-<h3>3.2. 下载 lab 服务器文件至本地 dom</h3>
+<h3 id="3.2. xia zai  lab fu wu qi wen jian zhi ben di  dom">3.2. 下载 lab 服务器文件至本地 dom</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>scp chien@lab:lab ~/
 </pre></div>
 </td></tr></table>
-
 <p>若发送文件夹则添加参数 <code>-r</code> 即可</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>scp -r ~/test chien@lab:~/
 </pre></div>
 </td></tr></table>
-
-<p><br></p>
+<p><br/></p>
 <p>至此，就实现了两台电脑的之间相互远程访问的功能 。</p>
-<p><br></p>
-<h2>4. Reference</h2>
+<p><br/></p>
+<h2 id="4. reference_1">4. Reference</h2>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">数字签名是什么？</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html">What is a Digital Signature?</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html">SSH原理与运用（一）：远程登录</a></p>

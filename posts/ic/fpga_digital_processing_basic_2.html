@@ -122,24 +122,28 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 数字处理基础 (2)">FPGA 数字处理基础 (2)</a><ul><li><a class="toc-href" href="#1. basic knowledge" title="1. Basic Knowledge">1. Basic Knowledge</a></li><li><a class="toc-href" href="#2. (un)signed in verilog" title="2. (un)signed in Verilog">2. (un)signed in Verilog</a><ul><li><a class="toc-href" href="#2.1. integer" title="2.1. Integer">2.1. Integer</a></li><li><a class="toc-href" href="#2.2. register" title="2.2. Register">2.2. Register</a><ul><li><a class="toc-href" href="#2.2.1. 1. unsigned reg &amp; unsigned value" title="2.2.1. 1. unsigned reg &amp; unsigned value">2.2.1. 1. unsigned reg &amp; unsigned value</a></li><li><a class="toc-href" href="#2.2.2. 2. unsigned reg &amp; signed value" title="2.2.2. 2. unsigned reg &amp; signed value">2.2.2. 2. unsigned reg &amp; signed value</a></li><li><a class="toc-href" href="#2.2.3. 3. signed reg &amp; signed value" title="2.2.3. 3. signed reg &amp; signed value">2.2.3. 3. signed reg &amp; signed value</a></li><li><a class="toc-href" href="#2.2.4. 4. signed reg &amp; unsigned value" title="2.2.4. 4. signed reg &amp; unsigned value">2.2.4. 4. signed reg &amp; unsigned value</a></li><li><a class="toc-href" href="#2.2.5. 5. signed reg &amp; unsigned reg" title="2.2.5. 5. signed reg &amp; unsigned reg">2.2.5. 5. signed reg &amp; unsigned reg</a></li></ul></li></ul></li><li><a class="toc-href" href="#3. conclusion_2" title="3. Conclusion">3. Conclusion</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>讨论 FPGA 中无符号数 unsigned 和有符号数 signed 的问题。</p>
-<h2>1. Basic Knowledge</h2>
-<hr>
+<h2 id="1. basic knowledge">1. Basic Knowledge</h2>
+<hr/>
 <p><strong>整数的分类：</strong> 无符号数 <code>unsigned</code> 和 有符号数 <code>signed</code>。</p>
 <p><strong>数制：</strong> 10、2、8、16 进制</p>
 <p><strong>机器数：</strong> 机器数的意思是数字在机器中的表示方式。主要有 3 种</p>
 <p><code>原码 sign-magnitude</code>、<code>反码 one's complement</code>、<code>补码 two's complement</code></p>
 <p>以前写过的一篇总结： <a href="http://guqian110.github.io/pages/2014/03/19/signed_number_representations.html">原码、反码、补码</a></p>
 <p><strong>计算机系统：</strong> 采用二进制、补码系统。</p>
-<p><br></p>
+<p><br/></p>
 <p><em>FPGA 中是如何表示数字的呢？</em></p>
 <p>以前写过一篇总结，<a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic_1.html">FPGA 数字处理基础 (1)</a></p>
 <p>本文算是上面文章的续吧。</p>
-<p><br></p>
-<h2>2. (un)signed in Verilog</h2>
-<hr>
-<h3>2.1. Integer</h3>
+<p><br/></p>
+<h2 id="2. (un)signed in verilog">2. (un)signed in Verilog</h2>
+<hr/>
+<h3 id="2.1. integer">2.1. Integer</h3>
 <p>标准格式：</p>
 <p><code>&lt;null|+|-&gt;&lt;size&gt;&lt;sign:s|S&gt;&lt;base:d|D|h|H|o|O|b|B&gt;&lt;0~9|0～f|0~7|0~1|x|z&gt;</code></p>
 <p>其中 size 和 base 可选。</p>
@@ -170,14 +174,13 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="mh">4</span><span class="mi">&#39;d5</span>   <span class="c1">// 占用 4 bit，存储的值为无符号数  5 的原码 0101，综合工具将其视为无符号数 5</span>
-<span class="mh">4</span><span class="p">&#39;</span><span class="n">sd5</span>  <span class="c1">// 占用 4 bit，存储的值为无符号数  5 的原码 0101，综合工具将其视为有符号数 +5</span>
-<span class="o">-</span><span class="mh">4</span><span class="mi">&#39;d5</span>  <span class="c1">// 占用 4 bit，存储的值为有符号数 -5 的补码 1011，综合工具将其视为无符号数 11</span>
-<span class="o">-</span><span class="mh">4</span><span class="p">&#39;</span><span class="n">sd5</span> <span class="c1">// 占用 4 bit，存储的值为 1011</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="mh">4</span><span class="mi">'d5</span>   <span class="c1">// 占用 4 bit，存储的值为无符号数  5 的原码 0101，综合工具将其视为无符号数 5</span>
+<span class="mh">4</span><span class="p">'</span><span class="n">sd5</span>  <span class="c1">// 占用 4 bit，存储的值为无符号数  5 的原码 0101，综合工具将其视为有符号数 +5</span>
+<span class="o">-</span><span class="mh">4</span><span class="mi">'d5</span>  <span class="c1">// 占用 4 bit，存储的值为有符号数 -5 的补码 1011，综合工具将其视为无符号数 11</span>
+<span class="o">-</span><span class="mh">4</span><span class="p">'</span><span class="n">sd5</span> <span class="c1">// 占用 4 bit，存储的值为 1011</span>
 </pre></div>
 </td></tr></table>
-
-<h3>2.2. Register</h3>
+<h3 id="2.2. register">2.2. Register</h3>
 <p>Verilog 中数据的基本类型： <code>wire</code>、<code>reg</code>、<code>integer</code></p>
 <p>在 Verilog-1995 中，规定所有的 wire、reg 都是 unsigned 类型，只有 integer 是 signed 类型。但是 integer 的宽度是固定的(与宿主机的字是一样的，最小为 32 位)，这样子，造成了很大的不方便和浪费。</p>
 <p>在 Verilog-2001 中，添加了 wire、reg 也可以是 signed 类型了。</p>
@@ -186,8 +189,7 @@
 <span class="kt">reg</span>     <span class="k">signed</span>  <span class="p">[</span><span class="mh">8</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">b</span><span class="p">;</span>  <span class="c1">// signed</span>
 </pre></div>
 </td></tr></table>
-
-<p><br></p>
+<p><br/></p>
 <p><strong>Problem</strong></p>
 <blockquote>
 <p>数据可以是 signed 和 unsigned，寄存器也可以是 signed 和 unsigned，那么综合时，是以哪个为准呢？</p>
@@ -198,75 +200,67 @@
 <ol>
 <li>
 <p><em>以变量类型为准</em></p>
-<p>即 reg/wire 为哪种，那么综合时就以这个为标准进行综合。比如当 reg 为 unsigned 类型，当我们给它赋值为 signed 类型的数据 <code>-5</code>(<code>-4’d5</code>) 时，综合出来的结果为 reg 存储的是 <code>-5</code> 的补码 <code>1011</code>,但是解释为 unsigned 类型的 <code>+11</code>。这时候就结果和我们的预期是不一样的，出现了误差，一定要注意！另一种情况类似。</p>
+<p>即 reg/wire 为哪种，那么综合时就以这个为标准进行综合。比如当 reg 为 unsigned 类型，当我们给它赋值为 signed 类型的数据 <code>-5</code>(<code>-4&rsquo;d5</code>) 时，综合出来的结果为 reg 存储的是 <code>-5</code> 的补码 <code>1011</code>,但是解释为 unsigned 类型的 <code>+11</code>。这时候就结果和我们的预期是不一样的，出现了误差，一定要注意！另一种情况类似。</p>
 </li>
 <li>
 <p>如果参与运算的变量混合有 signed 和 unsigned 类型，那么会将 signed 转换为 unsigned 类型。(应该避免这种情况)</p>
 </li>
 </ol>
 </blockquote>
-<p><br></p>
+<p><br/></p>
 <p>=========================================以下为详细的分类讨论==================================</p>
 <p>编写一个简单的测试程序，查看综合结果和仿真波形，就可以知道综合时的策略。</p>
 <p><strong>module: <a href="http://guqian110.github.io/files/test_signed.v">test_signed.v</a></strong></p>
 <p><strong>testbench: <a href="http://guqian110.github.io/files/tb_test_signed.v">tb_test_signed.v</a></strong></p>
-<h4>2.2.1. 1. unsigned reg &amp; unsigned value</h4>
+<h4 id="2.2.1. 1. unsigned reg &amp; unsigned value">2.2.1. 1. unsigned reg &amp; unsigned value</h4>
 <p>定义 reg 为 unsigned 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
 <span class="kt">reg</span>     <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// unsigned</span>
 </pre></div>
 </td></tr></table>
-
 <p>赋值为 unsigned 类型</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flag</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">&#39;d10</span><span class="p">;</span>  <span class="c1">// unsigned</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flag</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">'d10</span><span class="p">;</span>  <span class="c1">// unsigned</span>
 </pre></div>
 </td></tr></table>
-
 <p>那么可以从 RTL Schematic 中看到，综合出来的比较器是 unsigned 类型。</p>
-<h4>2.2.2. 2. unsigned reg &amp; signed value</h4>
+<h4 id="2.2.2. 2. unsigned reg &amp; signed value">2.2.2. 2. unsigned reg &amp; signed value</h4>
 <p>定义 reg 为 unsigned 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
 <span class="kt">reg</span>     <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// unsigned</span>
 </pre></div>
 </td></tr></table>
-
 <p>赋值为 signed 类型</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mh">8</span><span class="p">&#39;</span><span class="n">sd10</span><span class="p">;</span>    <span class="c1">// signed</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mh">8</span><span class="p">'</span><span class="n">sd10</span><span class="p">;</span>    <span class="c1">// signed</span>
 </pre></div>
 </td></tr></table>
-
 <p>那么综合出来的比较器是 unsigned 类型。</p>
-<h4>2.2.3. 3. signed reg &amp; signed value</h4>
+<h4 id="2.2.3. 3. signed reg &amp; signed value">2.2.3. 3. signed reg &amp; signed value</h4>
 <p>定义 reg 为 signed 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="k">signed</span>  <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
 <span class="kt">reg</span>     <span class="k">signed</span>  <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// signed</span>
 </pre></div>
 </td></tr></table>
-
 <p>赋值为 signed 类型</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mh">8</span><span class="p">&#39;</span><span class="n">sd10</span><span class="p">;</span>    <span class="c1">// signed</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mh">8</span><span class="p">'</span><span class="n">sd10</span><span class="p">;</span>    <span class="c1">// signed</span>
 </pre></div>
 </td></tr></table>
-
 <p>那么综合出来的比较器是 signed 类型。</p>
-<h4>2.2.4. 4. signed reg &amp; unsigned value</h4>
+<h4 id="2.2.4. 4. signed reg &amp; unsigned value">2.2.4. 4. signed reg &amp; unsigned value</h4>
 <p>定义 reg 为 signed 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="k">signed</span>  <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
 <span class="kt">reg</span>     <span class="k">signed</span>  <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// unsigned</span>
 </pre></div>
 </td></tr></table>
-
 <p>赋值为 unsigned 类型</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flag</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">&#39;d10</span><span class="p">;</span>  <span class="c1">// unsigned</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flag</span> <span class="o">&lt;=</span> <span class="mh">8</span><span class="mi">'d10</span><span class="p">;</span>  <span class="c1">// unsigned</span>
 </pre></div>
 </td></tr></table>
-
 <p>那么综合出来的比较器是 signed 类型。</p>
-<h4>2.2.5. 5. signed reg &amp; unsigned reg</h4>
+<h4 id="2.2.5. 5. signed reg &amp; unsigned reg">2.2.5. 5. signed reg &amp; unsigned reg</h4>
 <p>如果参与运算的两个变量一个是 signed，另一个是 unsigned。（注意这种现象应该避免，一般我们是不会将两种不同类型的数据混在一起进行计算的）</p>
 <p>定义 i 为 unsigned 类型，flag 为 signed 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -274,12 +268,10 @@
 <span class="kt">reg</span>     <span class="k">signed</span>  <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">flag</span><span class="p">;</span>   <span class="c1">// signed</span>
 </pre></div>
 </td></tr></table>
-
 <p>给 flag 赋值为 signed 的 -5</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mh">4</span><span class="mi">&#39;d5</span><span class="p">;</span>      <span class="c1">// sigend</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flag</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mh">4</span><span class="mi">'d5</span><span class="p">;</span>      <span class="c1">// sigend</span>
 </pre></div>
 </td></tr></table>
-
 <p>综合出来的比较器为 unsigned 类型。</p>
 <p><strong>P.S.</strong> 变量 integer 也是也可综合的。在上例中，如果将 flag 的类型改为 integer 也是可综合的，但是，因为只用到了低 8 位，所以在综合时会提示高 24 位是未连接 unconnected，但是因为 integer 是一个整体，所以即使未连接也不能优化掉，这就是在 Verilog-1995 中 integer 不够灵活的体现，好在 Verilog-2001 中已经添加了支持 reg/wire 为 signed 的类型，而且综合工具(XST)也是支持的。</p>
 <p>=======================================分割线结束==========================================</p>
@@ -294,16 +286,16 @@
 implemented for signed and unsigned values.
 To enable support for signed and unsigned values in Verilog, enable Verilog-2001
 as follows:
-+ ISE® Design Suite
++ ISE&reg; Design Suite
   Select Verilog 2001 as instructed in the Synthesis Options topic of ISE Design Suite
 Help
 + XST Command Line
   Set -verilog2001 to yes.</p>
 </blockquote>
 <p>花费了大量时间上网找资料，在论坛里问别人无果，最后自己动手写程序测试，最后才发现原来官方资料里面早就写的清清楚楚 =.=</p>
-<p><br></p>
-<h2>3. Conclusion</h2>
-<hr>
+<p><br/></p>
+<h2 id="3. conclusion_2">3. Conclusion</h2>
+<hr/>
 <p>说了这么多，总结下来就是下面这几句话：</p>
 <p><strong>经验：</strong></p>
 <ol>
@@ -326,7 +318,7 @@ Help
 <p>综合时的原则是按照寄存器的类型进行综合(即上面的分类讨论的结论)。</p>
 </li>
 <li>
-<p>仔细对比 signed 和 unsigned 类型的综合结果，可以发现 Technology Schematic 是一样的，之所以和 “理论上硬件电路是应该不一样” 矛盾，我认为原因在于 FPGA 的实现是基于查找表的。以上面的例子来说明，这个比较器的功能最终是在一个 LUT6 的查找表上实现的，所以，ASIC 上硬件电路的不同映射到 FPGA 中就是 LUT 的内容不同。</p>
+<p>仔细对比 signed 和 unsigned 类型的综合结果，可以发现 Technology Schematic 是一样的，之所以和 &ldquo;理论上硬件电路是应该不一样&rdquo; 矛盾，我认为原因在于 FPGA 的实现是基于查找表的。以上面的例子来说明，这个比较器的功能最终是在一个 LUT6 的查找表上实现的，所以，ASIC 上硬件电路的不同映射到 FPGA 中就是 LUT 的内容不同。</p>
 </li>
 </ol>
   </div>

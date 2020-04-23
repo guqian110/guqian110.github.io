@@ -122,8 +122,12 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 中的延时">FPGA 中的延时</a><ul><li><a class="toc-href" href="#1. delay in circuits" title="1. Delay in circuits">1. Delay in circuits</a></li><li><a class="toc-href" href="#2. models in verilog hdl" title="2. Models in Verilog HDL">2. Models in Verilog HDL</a></li><li><a class="toc-href" href="#3. implement" title="3. Implement">3. Implement</a><ul><li><a class="toc-href" href="#3.1. in asics" title="3.1. in ASICs">3.1. in ASICs</a></li><li><a class="toc-href" href="#3.2. in fpgas" title="3.2. in FPGAs">3.2. in FPGAs</a></li></ul></li><li><a class="toc-href" href="#4. simulation_1" title="4. Simulation">4. Simulation</a><ul><li><a class="toc-href" href="#4.1. blocking assignment" title="4.1. Blocking assignment">4.1. Blocking assignment</a></li><li><a class="toc-href" href="#4.2. non-blocking assignment" title="4.2. Non-blocking assignment">4.2. Non-blocking assignment</a></li><li><a class="toc-href" href="#4.3. continuous assignment" title="4.3. Continuous assignment">4.3. Continuous assignment</a></li><li><a class="toc-href" href="#4.4. conclusions" title="4.4. Conclusions">4.4. Conclusions</a></li></ul></li><li><a class="toc-href" href="#5. reference_1" title="5. Reference">5. Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2>1. Delay in circuits</h2>
+    <h2 id="1. delay in circuits">1. Delay in circuits</h2>
 <p>从模拟电路的知识，我们可以知道 <strong>电路中存在很多类型不同的延时。</strong> 比如：</p>
 <ol>
 <li>
@@ -154,7 +158,7 @@ interval is the fact that the switches in the output stage of a digital componen
 </blockquote>
 <p>我们可以把对晶体管的讨论推广到其他的数字元件：</p>
 <blockquote>
-<p>A similar argument regarding time taken to switch transistors on and off and to charge and discharge capacitance also applies within a digital component. Without going into the details of a component’s circuit, we can summarize the argument by saying that, due to the switching time of the internal transistors, it takes some time for a change of logic level at an input to cause a corresponding change at the output. We call that time the <code>propagation delay</code>, denoted by <code>tpd</code>, of the component.</p>
+<p>A similar argument regarding time taken to switch transistors on and off and to charge and discharge capacitance also applies within a digital component. Without going into the details of a component&rsquo;s circuit, we can summarize the argument by saying that, due to the switching time of the internal transistors, it takes some time for a change of logic level at an input to cause a corresponding change at the output. We call that time the <code>propagation delay</code>, denoted by <code>tpd</code>, of the component.</p>
 </blockquote>
 </li>
 <li>
@@ -176,8 +180,8 @@ interval is the fact that the switches in the output stage of a digital componen
 <p>最大值 (<code>maximum</code>)</p>
 </li>
 </ul>
-<p><br></p>
-<h2>2. Models in Verilog HDL</h2>
+<p><br/></p>
+<h2 id="2. models in verilog hdl">2. Models in Verilog HDL</h2>
 <p>为了对电路中的时延现象进行建模，Verilog HDL 定义了延时语法。</p>
 <ul>
 <li>
@@ -187,7 +191,6 @@ interval is the fact that the switches in the output stage of a digital componen
 <span class="k">assign</span> <span class="p">#(</span><span class="mh">1</span><span class="p">,</span> <span class="mh">2</span><span class="p">,</span> <span class="mh">3</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>第一句表示一个异或门上升时延为 1，下降时延为 2，关闭和X时延为两者中的最小值，即 1；</p>
 <p>第二句表示一个异或门的上升、下降、关闭时延分别是 1，2，3，X时延为 3 者中的最小值，即 1。</p>
 </li>
@@ -196,7 +199,6 @@ interval is the fact that the switches in the output stage of a digital componen
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">assgin</span> <span class="p">#(</span><span class="mh">2</span><span class="o">:</span><span class="mh">3</span><span class="o">:</span><span class="mh">4</span><span class="p">,</span> <span class="mh">3</span><span class="o">:</span><span class="mh">4</span><span class="o">:</span><span class="mh">5</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>表示上升时延的 min:typ:max = 2:3:4，下降时延的 min:typ:max = 3:4:5。</p>
 </li>
 </ul>
@@ -204,14 +206,13 @@ interval is the fact that the switches in the output stage of a digital componen
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="p">#</span><span class="mh">10</span> <span class="n">wireA</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>这个叫做 <code>net delay</code>，它是和 wireA 绑定的，对 wireA 进行的任何赋值必须延迟 10 个时间单位之后才有效。当在连续赋值语句中，延时是属于连续赋值语句的一部分，而不属于 net，所以只在这一句中有效，对其他赋值语句没有影响。</p>
 <p><strong>一般来说，assign 语句中的延时特性会被综合工具忽略。</strong>因为综合工具需要完成的功能就是将代码描述映射为逻辑电路，而逻辑电路中的延时是由最基本的单元库和走线延时决定的，用户是无法对逻辑单元指定延时长度的，只能在综合、实现时添加时序约束条件，使工具尽量满足要求。</p>
-<p><br></p>
-<h2>3. Implement</h2>
+<p><br/></p>
+<h2 id="3. implement">3. Implement</h2>
 <p>Verilog HDL 中的延时语法不可综合并不代表就不能在实际电路中实现延时。</p>
 <p>在实际电路中，不同的情况下需要采用不同的方法来实现延时：一般来说，异步电路的时延通过门延时来完成，比较难预测，而同步电路的时延通过触发器或者计数器来实现。</p>
-<h3>3.1. in ASICs</h3>
+<h3 id="3.1. in asics">3.1. in ASICs</h3>
 <p>在早期的逻辑电路图设计阶段，有且设计者养成了手工加入 Buffer 或者非门调整数据
 延时的习惯，以保证本级模块的时钟对上级模块数据的建立及保持时间的要求。这些做法目
 前主要应用于两种场合：</p>
@@ -225,12 +226,12 @@ interval is the fact that the switches in the output stage of a digital componen
 <p>在 ASIC 中采用这种方法，是以严格的仿真和时序约束为前提的。</p>
 </li>
 </ol>
-<h3>3.2. in FPGAs</h3>
+<h3 id="3.2. in fpgas">3.2. in FPGAs</h3>
 <p>在 ASIC 中采用的添加 Buffer、非门的设计方法并不适合 FPGA/CPLD 等可编程逻辑，在 FPGA 中应该尽量避免这种设计。</p>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art of Hardware Architecture</a>：</p>
 <blockquote>
 <p>Delay chains occur when two or more consecutive nodes with a single fan-in and a single fan-out are used to cause delay. Often inverters are chained together to add delay. Delay chains generally result from asynchronous design practices, and are sometimes used to resolve race conditions created by other combinational logic. In both FPGA and ASIC, delays can change with each place-and-route. Delay
-chains can cause various design problems, including an increase in a design’s sensitivity to operating conditions, a decrease in a design’s reliability, and difficulties when migrating to different device architecture. <strong>Avoid using delay chains in a design, rely on synchronous practices instead.</strong></p>
+chains can cause various design problems, including an increase in a design&rsquo;s sensitivity to operating conditions, a decrease in a design&rsquo;s reliability, and difficulties when migrating to different device architecture. <strong>Avoid using delay chains in a design, rely on synchronous practices instead.</strong></p>
 </blockquote>
 <p>总结下来主要就是 3 个原因：</p>
 <ol>
@@ -262,11 +263,11 @@ chains can cause various design problems, including an increase in a design’s 
 <p>如果延时相对较大，可以使用计数器来延时输出。</p>
 </li>
 </ol>
-<p><br></p>
+<p><br/></p>
 <p>====================== Update 01/31/2015 ========================</p>
-<h2>4. Simulation</h2>
-<hr>
-<p>我们知道，仿真器使用 “ 事件” (<code>event</code>) 来模拟实际的电路行为，但是毕竟软件和硬件还是不同的，而 Verilog 语言又是很灵活的，如果不加注意，很可能不能对电路进行正确的建模。Clifford E. Cummings 大神写了一篇 paper 介绍了 Verilog HDL 中应该如何正确使用延时，才能保证建模的正确性：</p>
+<h2 id="4. simulation_1">4. Simulation</h2>
+<hr/>
+<p>我们知道，仿真器使用 &ldquo; 事件&rdquo; (<code>event</code>) 来模拟实际的电路行为，但是毕竟软件和硬件还是不同的，而 Verilog 语言又是很灵活的，如果不加注意，很可能不能对电路进行正确的建模。Clifford E. Cummings 大神写了一篇 paper 介绍了 Verilog HDL 中应该如何正确使用延时，才能保证建模的正确性：</p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsHDLCON1999_BehavioralDelays_Rev1_1.pdf">Correct Methods For Adding Delays To Verilog Behavioral Models</a></p>
 <p>下面我的笔记，摘录一部分内容和结论：</p>
 <p>要讨论正确的延时的代码风格，首先要了解仿真器在对延时进行建模时，通常使用的两种不同类型的 Delay 模型：</p>
@@ -281,7 +282,7 @@ chains can cause various design problems, including an increase in a design’s 
 </li>
 </ol>
 <p><em>有了上面两个延时的概念之后，我们就可以分类讨论下面三种情况下应该如何添加延时了。</em></p>
-<h3>4.1. Blocking assignment</h3>
+<h3 id="4.1. blocking assignment">4.1. Blocking assignment</h3>
 <p>在阻塞赋值中，通常添加延时的方法有两种：</p>
 <ol>
 <li>
@@ -289,14 +290,12 @@ chains can cause various design problems, including an increase in a design’s 
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">#</span><span class="mh">5</span> <span class="n">y</span> <span class="o">=</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 </li>
 <li>
 <p>right-hand-side</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="p">#</span><span class="mh">5</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 </li>
 </ol>
 <p>但是这两种方法都有可能存在问题：</p>
@@ -306,9 +305,8 @@ chains can cause various design problems, including an increase in a design’s 
     <span class="p">#</span><span class="mh">12</span> <span class="p">{</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>在下图时序中可以看到，当 t = 15 时，a 发生变化，触发 always 块，模块计算新的求和结果。但是，在接下来的 t = 15 ~ 24 内，a、b、ci 分别发生了变化，所以当从触发开始，到 12ns 过后该输出结果时，计算结果的值使用的是当前最新的值（可以看到，ci 的变化和输出之间仅仅有 3ns &lt; 12ns），而非触发时刻的值。</p>
-<p><img alt="timing1" src="/images/delay-in-fpgas/timing1.png"></p>
+<p><img alt="timing1" src="/images/delay-in-fpgas/timing1.png"/></p>
 <p>事实上，在任何阻塞赋值的左边添加延时都会存在类似的问题。</p>
 <blockquote>
 <p><strong>Modeling Guideline:</strong> do not place delays on the LHS of blocking assignments to model combinational logic. This is a bad coding style.</p>
@@ -320,14 +318,13 @@ chains can cause various design problems, including an increase in a design’s 
     <span class="p">{</span><span class="n">ci</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="p">#</span><span class="mh">12</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>假设在 t = 15 时刻，a 发生变化，触发 always 块，模块会对当前的值进行采样，并且在 12ns 之后将采样结果输出，而在这 12ns 期间，输入端的任何变化都会被忽略，这意味着错误的旧值会一直保持下去，直到有新的变化重新触发。</p>
 <blockquote>
 <p><strong>Modeling Guideline:</strong> do not place delays on the RHS of blocking assignments to model combinational logic. This is a bad coding style.</p>
 <p><strong>Testbench Guideline:</strong> do not place delays on the RHS of blocking assignments in a testbench.</p>
 <p><strong>General Guideline:</strong> placing a delay on the RHS of any blocking assignment is both confusing and a poor coding style. This Verilog coding practice should be avoided.</p>
 </blockquote>
-<h3>4.2. Non-blocking assignment</h3>
+<h3 id="4.2. non-blocking assignment">4.2. Non-blocking assignment</h3>
 <p>在非阻塞赋值中，同样有两种方法来添加延时：</p>
 <ol>
 <li>
@@ -335,14 +332,12 @@ chains can cause various design problems, including an increase in a design’s 
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">#</span><span class="mh">5</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 </li>
 <li>
 <p>right-hand-side</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">&lt;=</span> <span class="p">#</span><span class="mh">5</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 </li>
 </ol>
 <p>仍然使用上面加法器的例子，如果我们在左边添加延时，会和阻塞赋值存在一样的问题：</p>
@@ -351,7 +346,6 @@ chains can cause various design problems, including an increase in a design’s 
     <span class="p">#</span><span class="mh">12</span> <span class="p">{</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>当 t = 15 时，触发 always 块，但是输出时结果时，使用的是最新时刻的值。</p>
 <p>事实上，在任何非阻塞赋值的左边添加延时都会存在类似的问题。</p>
 <blockquote>
@@ -364,9 +358,8 @@ chains can cause various design problems, including an increase in a design’s 
     <span class="p">{</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">&lt;=</span> <span class="p">#</span><span class="mh">12</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>当 t = 15 时刻，a 发生变化触发 always 块，此时会立刻对输入进行采样，然后等待 12ns 之后输出；在将这一时间存放在时间队列之后，always 块会被下一个变化时间重新触发，这意味着输出会随着输入的变化在 12ns 之后变化，如下图所示：</p>
-<p><img alt="timing2" src="/images/delay-in-fpgas/timing2.png"></p>
+<p><img alt="timing2" src="/images/delay-in-fpgas/timing2.png"/></p>
 <blockquote>
 <p><strong>Recommended Application:</strong> Use this coding style to model behavioral delay-line logic.</p>
 <p><strong>Modeling Guideline:</strong> place delays on the RHS of nonblocking assignments only when trying to model transport output-prapagation behavior. This coding style will accurately model delay lines and combinational logic with pure <code>transport delays</code>; however, this coding style generally causes slower simulations.</p>
@@ -374,20 +367,18 @@ chains can cause various design problems, including an increase in a design’s 
 <p><strong>Modeling Guideline:</strong> in general, do not place delays on the RHS of nonblocking assignments to model <em>combinational logic</em>. This coding style can be confusing and is not very simulation efficient. It is a common and sometimes useful practice to palce delays n the RHS of nonblocking assignments to model clock-to-output behavior on <em>sequential logic</em>.</p>
 <p><strong>Testbench Guideline:</strong> there are some multi-clock design verification suites that benefit from using multiple nonblocking assignments with RHS delays; however, this coding style can be confusing, therefore placing delays on the RHS of nonblocking assignments in testbenches is not generally recommended.</p>
 </blockquote>
-<h3>4.3. Continuous assignment</h3>
+<h3 id="4.3. continuous assignment">4.3. Continuous assignment</h3>
 <p>连续赋值语句中，只能在左侧添加延时，在右边添加延时是非法的：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="p">#</span><span class="mh">5</span> <span class="n">y</span> <span class="o">=</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>在连续赋值语句的左边添加延时，会准确描述惯性延时（<code>inertial delay</code>），一般推荐使用这种方式。</p>
 <p>以上面的加法器为例：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="p">#</span><span class="mh">12</span> <span class="p">{</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>如下图，在 t = 15 时刻，a 发生变化触发 assign 语句，应该在 t = 27 时刻输出结果，但是在 t = 17, 19, 21 时刻，a，b 分别发生了变化，这会导致有 3 个新的值，最终会只输出最后一个值（在 t = 21 + 12 = 33 时刻）。</p>
-<p><img alt="timing3" src="/images/delay-in-fpgas/timing3.png"></p>
+<p><img alt="timing3" src="/images/delay-in-fpgas/timing3.png"/></p>
 <p>因为连续赋值语句不会排队输出这个概念，它只会跟踪输出结果，所以，连续赋值语句中的延时是对惯性延时（<code>inertial delay</code>）的建模。</p>
 <p>混合方式：无延时的 always 块 + 连续赋值语句</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -399,17 +390,16 @@ chains can cause various design problems, including an increase in a design’s 
 <span class="k">assign</span> <span class="p">#</span><span class="mh">12</span> <span class="p">{</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>仍然会准确描述组合逻辑中的 inertial delay。在每个输入变化时，tmp 的值都会改变，在 tmp 改变的 12ns 之后，连续赋值的输出发生变化。tmp 一旦发生变化，assign 会重新赋值，重新延时，所以这种方式会准确描述组合逻辑的 inertial delay。</p>
 <blockquote>
 <p><strong>Modeling Guide:</strong> Use continuous assignments with delays to model simple combinational logic. This coding style will accurately model combinational logic with inertial delays.</p>
 <p><strong>Modeling Guide:</strong> Use always blocks with no delays to model complex combinational logic that are more easily rendered sing Verilog behavroral constructs such as "case-casez-casex", "if-else", etc. The outputs from the no-delay always blocks can be driven into continuous assignments to apply behavioral delays to the models. This coding style will accurately model complex combinational logic with inertial delays.</p>
 <p><strong>Testbench Guideline:</strong> Continuous assignments can be used anywhere in a testbench to drive stimulus values onto input port and bi-directional port and bi-directional ports of instantiated models.</p>
 </blockquote>
-<h3>4.4. Conclusions</h3>
+<h3 id="4.4. conclusions">4.4. Conclusions</h3>
 <p>always 块中的任何延时都无法准确对真实硬件的行为进行准确建模，应该避免这种延时建模。有一个例外：在非阻塞复制的右边添加延时，来描述 transport delay，但是这种方式是以仿真性能的下降为代价的。</p>
 <p>在 连续赋值语句 / 无延时的always + 连续赋值语句 中添加延时，这两种方式都会对 inertial delays 建模，推荐使用这种方式来对组合逻辑建模。</p>
-<h2>5. Reference</h2>
+<h2 id="5. reference_1">5. Reference</h2>
 <p><a href="http://www.amazon.cn/Digital-Design-An-Embedded-Systems-Approach-Using-Verilog-Ashenden-Peter-J/dp/0123695279">Digital Design (Verilog): An Embedded Systems Approach Using Verilog</a></p>
 <p><a href="http://www.amazon.com/FPGA-Based-System-paperback-Prentice-Semiconductor/dp/0137033486">FPGA-Based System Design</a></p>
 <p><a href="http://book.douban.com/subject/1882474/">设计与验证Verilog HDL</a></p>

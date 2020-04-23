@@ -121,14 +121,18 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="计数器设计小结">计数器设计小结</a><ul><li><a class="toc-href" href="#1. introduction" title="1. Introduction">1. Introduction</a></li><li><a class="toc-href" href="#2. type" title="2. Type">2. Type</a></li><li><a class="toc-href" href="#3. implement" title="3. Implement">3. Implement</a><ul><li><a class="toc-href" href="#3.1. binary counter" title="3.1. Binary Counter">3.1. Binary Counter</a></li><li><a class="toc-href" href="#3.2. bcd counter (mod-m counter)" title="3.2. BCD Counter (mod-m counter)">3.2. BCD Counter (mod-m counter)</a></li><li><a class="toc-href" href="#3.3. ring counter" title="3.3. Ring Counter">3.3. Ring Counter</a></li><li><a class="toc-href" href="#3.4. johnson counter" title="3.4. Johnson Counter">3.4. Johnson Counter</a></li><li><a class="toc-href" href="#3.5. ripple counter" title="3.5. Ripple Counter">3.5. Ripple Counter</a></li><li><a class="toc-href" href="#3.6. gray code counter" title="3.6. Gray Code Counter">3.6. Gray Code Counter</a></li></ul></li><li><a class="toc-href" href="#4. reference_1" title="4. Reference">4. Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2>1. Introduction</h2>
-<hr>
+    <h2 id="1. introduction">1. Introduction</h2>
+<hr/>
 <p>计数器 在数字电路设计 和 计算机程序设计 中都应用非常广泛，其功能顾名思义，就是用来计数。这里只讨论数字电路设计中的计数器。</p>
 <p>通常，将包含触发器 flip-flop 的电路（即使含有组合电路部分）认为是时序电路。时序电路通常不以电路命名，而是以功能进行分类，分别是 <strong>寄存器</strong> 和 <strong>计数器</strong>。</p>
 <p>计数器 <a href="http://en.wikipedia.org/wiki/Counter">counter</a> 从本质上来说也是寄存器，不过它是在预先设定好的状态序列中转移，尽管计数器是寄存器的一种特殊形式，通常还是以不同的名称来加以区分。</p>
-<p><br></p>
-<h2>2. Type</h2>
+<p><br/></p>
+<h2 id="2. type">2. Type</h2>
 <p>按照不同的标准来划分，计数器可以有不同的划分方法：</p>
 <ol>
 <li>
@@ -161,10 +165,10 @@
 </ol>
 <p>计数器在数字电路中的用途非常广，可以作为定时器、实用计数器、状态机等。在具体实现时，有前面总结的不同的计数器类型可供选择，每种计数器由其特点决定了适用场合，我们要做到就是在不同计数器类型和配置之间进行权衡，选择正确的设计，以节省大量逻辑资源，并提高性能。</p>
 <p>下面分别讨论各种计数器的特点和 HDL 实现。</p>
-<h2>3. Implement</h2>
-<hr>
-<h3>3.1. Binary Counter</h3>
-<p>最简单、最基本的计数器就是 二进制计数器 Binary Counter。它的计数方式就是从 0 开始每个脉冲进行 “+1” 操作，直到最大值，然后重新从 0 开始。</p>
+<h2 id="3. implement">3. Implement</h2>
+<hr/>
+<h3 id="3.1. binary counter">3.1. Binary Counter</h3>
+<p>最简单、最基本的计数器就是 二进制计数器 Binary Counter。它的计数方式就是从 0 开始每个脉冲进行 &ldquo;+1&rdquo; 操作，直到最大值，然后重新从 0 开始。</p>
 <p><a href="http://www.amazon.com/FPGA-Prototyping-Verilog-Examples-Spartan-3/dp/0470185325">FPGA Prototyping By Verilog Examples: Xilinx Spartan-3 Version</a> 里面有个例子，这里稍作修改就可以当作通用模块，供其他模块调用了。</p>
 <p><strong>Code</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -232,7 +236,7 @@
             <span class="n">max_tick</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="k">else</span> <span class="k">begin</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="p">{</span><span class="no">N</span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">}})</span> <span class="k">begin</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="p">{</span><span class="no">N</span><span class="p">{</span><span class="mh">1</span><span class="mb">'b1</span><span class="p">}})</span> <span class="k">begin</span>
                 <span class="n">max_tick</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="p">;</span>
             <span class="k">end</span>
             <span class="k">else</span> <span class="k">begin</span>
@@ -244,8 +248,7 @@
 <span class="k">endmodule</span>
 </pre></div>
 </td></tr></table>
-
-<h3>3.2. BCD Counter (mod-m counter)</h3>
+<h3 id="3.2. bcd counter (mod-m counter)">3.2. BCD Counter (mod-m counter)</h3>
 <p>人类更习惯使用十进制进行计数，十进制一共有 10 个符号，我们只需要从 4 bit 的二进制计数器中选取 10 个数字，只使用这 10 个数字进行计数即可，通常去掉 1010 ~ 1111 这 6 个数字，即使用 8421BCD码 来对十进制数进行编码、计数，即 BCD Counter。</p>
 <p>将十进制进行推广，我们就可以写出任意的 模 m 的计数器，在下面的例子中，M 表示计数器的模值（默认为 10），N 表示计数器需要的位数（默认为 4）。在例化时如果要修改，则需要手动计算这两个参数进行赋值。</p>
 <p><strong>Code</strong></p>
@@ -336,11 +339,10 @@
 <span class="k">endmodule</span>
 </pre></div>
 </td></tr></table>
-
-<h3>3.3. Ring Counter</h3>
+<h3 id="3.3. ring counter">3.3. Ring Counter</h3>
 <p>基于线性移位寄存器 <a href="http://en.wikipedia.org/wiki/Linear_feedback_shift_register"><code>LFSR</code> (Linear feedback shift register) </a> 可以衍生出两种计数器：<a href="http://en.wikipedia.org/wiki/Ring_counter">环形计数器 (ring counter)</a> 和 扭环计数器（约翰逊计数器）。</p>
 <p>将 LFSR 中存储的数字设置为独热码的形式，即只有一位为 1，其他位为 0。然后把最后一级的输出直接反馈到第一级的输入，这样，输入和输出组成了一个环形，所以称为 环形计数器。4 bit 的环形计数器电路图如下：</p>
-<p><img alt="ring counter" src="/images/counter-design-summary/ring_counter.png"></p>
+<p><img alt="ring counter" src="/images/counter-design-summary/ring_counter.png"/></p>
 <p>(ref: http://electronics-course.com/ring-counter)</p>
 <p><strong>Adv</strong></p>
 <ol>
@@ -409,7 +411,7 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
             <span class="c1">// reset</span>
             <span class="n">q</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
-            <span class="n">q</span><span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+            <span class="n">q</span><span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="k">else</span> <span class="k">begin</span>
             <span class="n">q</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">q</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">1</span><span class="p">]};</span>    <span class="c1">// right shift</span>
@@ -434,11 +436,10 @@
 <span class="k">endmodule</span>
 </pre></div>
 </td></tr></table>
-
-<h3>3.4. Johnson Counter</h3>
+<h3 id="3.4. johnson counter">3.4. Johnson Counter</h3>
 <p>在 ring counter 的反馈链路中加入一个反相器，就好象把一个环扭了一下，所以称为 扭环计数器 (Johnson Counter)</p>
 <p>4 bit 的 Johnson Counter 如下图所示：</p>
-<p><img alt="johnson counter" src="http://upload.wikimedia.org/wikipedia/commons/e/e8/JohnsonCounter2.png"></p>
+<p><img alt="johnson counter" src="http://upload.wikimedia.org/wikipedia/commons/e/e8/JohnsonCounter2.png"/></p>
 <p><strong>Adv</strong></p>
 <p>最大的优点就是它可以计数的范围和 ring counter 相比，扩大了一倍，达到了 2N。</p>
 <p><strong>Disadv</strong></p>
@@ -448,7 +449,6 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="o">~</span><span class="n">q</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">1</span><span class="p">]};</span>    <span class="c1">// right shift</span>
 </pre></div>
 </td></tr></table>
-
 <p>同时，计数器的终点也要进行相应的修改，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -463,17 +463,16 @@
 <span class="k">end</span>
 </pre></div>
 </td></tr></table>
-
-<h3>3.5. Ripple Counter</h3>
+<h3 id="3.5. ripple counter">3.5. Ripple Counter</h3>
 <p>前面总结的这些计数器都是同步计数器，组成它们的 flip-flop 是由同一个脉冲信号触发的。还有一种计数器是异步计数器，它内部的 flip-flop 不是由同一个脉冲信号触发的。由于 FPGA 特殊的结构原因，在 FPGA 中应该使用同步设计，所以一般 FPGA 不会使用这种计数器。</p>
 <p>ripple counter 的每个 flip-flop 使用前一级的 flip-flop 的输出信号作为触发信号，所以后一级的触发器必须等到前一级的触发器输出之后才能工作，所以对于一个长度为 N 的触发器链，从输入时间开始，要等 N 个触发器依次工作完之后才能输出有效结果。</p>
 <p>示意图：</p>
-<p><img alt="ripple counter" src="/images/counter-design-summary/ripple_counter.png"></p>
+<p><img alt="ripple counter" src="/images/counter-design-summary/ripple_counter.png"/></p>
 <p>(ref: http://www.eecs.tufts.edu/~dsculley/tutorial/flopsandcounters/flops6.html)</p>
 <p><strong>Adv</strong></p>
 <ol>
 <li>
-<p>面积小（不需要电路来实现 “+1” 功能）</p>
+<p>面积小（不需要电路来实现 &ldquo;+1&rdquo; 功能）</p>
 </li>
 <li>
 <p>功率少（因为面积小）</p>
@@ -486,7 +485,7 @@
 <p>代码在</p>
 <p><a href="http://www.amazon.com/Hdl-Chip-Design-Synthesizing-Simulating/dp/0965193438">Hdl Chip Design: A Practical Guide for Designing, Synthesizing &amp; Simulating Asics &amp; Fpgas Using Vhdl or Verilog</a></p>
 <p>里面有介绍。</p>
-<h3>3.6. Gray Code Counter</h3>
+<h3 id="3.6. gray code counter">3.6. Gray Code Counter</h3>
 <p>Gray 码和普通的二进制编码相比，优势就是它相邻数字之间只有一位不同，这样在计数时，就避免的多位不是同时变化导致的毛刺。</p>
 <p><a href="http://en.wikipedia.org/wiki/Gray_code">Gray Code wiki</a>:</p>
 <blockquote>
@@ -495,10 +494,10 @@
 <p>在大神 Clifford E. Cummings 的论文 </p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">synthesis and scripting techniques for designing multi-asynchronous clock designs</a></p>
 <p>中有详细介绍如何设计一个 Gray Code Counter 的过程，其基本思想就是利用一个 binary counter 来实现目的，计数器的计数功能由内部的 binary counter 实现，将 binary 的计数结果通过一个 binary2gray 的转换电路转化为 gray code 后再输出；输出的 gray code 反馈回计数器之前，再通过一个 gray2bianry 的电路转化回 binary 形式，以供内部的 binary counter 使用。模块示意图如下：</p>
-<p><img alt="gray code counter" src="/images/counter-design-summary/gray_code_counter.png"></p>
+<p><img alt="gray code counter" src="/images/counter-design-summary/gray_code_counter.png"/></p>
 <p>代码略...</p>
-<p><br></p>
-<h2>4. Reference</h2>
+<p><br/></p>
+<h2 id="4. reference_1">4. Reference</h2>
 <p><a href="http://www.amazon.com/FPGA-Prototyping-Verilog-Examples-Spartan-3/dp/0470185325">FPGA Prototyping By Verilog Examples: Xilinx Spartan-3 Version</a></p>
 <p><a href="http://www.amazon.com/Hdl-Chip-Design-Synthesizing-Simulating/dp/0965193438">Hdl Chip Design: A Practical Guide for Designing, Synthesizing &amp; Simulating Asics &amp; Fpgas Using Vhdl or Verilog</a></p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">synthesis and scripting techniques for designing multi-asynchronous clock designs</a></p>

@@ -122,10 +122,14 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="静态时序分析 STA 1 &mdash;&mdash; 基础知识">静态时序分析 STA 1 &mdash;&mdash; 基础知识</a><ul><li><a class="toc-href" href="#1. clock" title="1. Clock">1. Clock</a><ul><li><a class="toc-href" href="#1.1. skew" title="1.1. Skew">1.1. Skew</a></li><li><a class="toc-href" href="#1.2. jitter" title="1.2. Jitter">1.2. Jitter</a></li><li><a class="toc-href" href="#1.3. duty cycle distortion" title="1.3. Duty Cycle Distortion">1.3. Duty Cycle Distortion</a></li></ul></li><li><a class="toc-href" href="#2. ohters_1" title="2. Ohters">2. Ohters</a><ul><li><a class="toc-href" href="#2.1. fan-out/fan-out" title="2.1. Fan-out/Fan-out">2.1. Fan-out/Fan-out</a></li><li><a class="toc-href" href="#2.2. setup/hold/recovery/removal time" title="2.2. Setup/Hold/Recovery/Removal Time">2.2. Setup/Hold/Recovery/Removal Time</a></li></ul></li><li><a class="toc-href" href="#3. sta intro_1" title="3. STA Intro">3. STA Intro</a><ul><li><a class="toc-href" href="#3.1. definitions" title="3.1. Definitions">3.1. Definitions</a></li><li><a class="toc-href" href="#3.2. purpose" title="3.2. Purpose">3.2. Purpose</a></li><li><a class="toc-href" href="#3.3. theory" title="3.3. Theory">3.3. Theory</a></li><li><a class="toc-href" href="#3.4. setup time failure" title="3.4. Setup Time Failure">3.4. Setup Time Failure</a></li><li><a class="toc-href" href="#3.5. hold time failure" title="3.5. Hold Time Failure">3.5. Hold Time Failure</a></li><li><a class="toc-href" href="#3.6. summary" title="3.6. summary">3.6. summary</a></li></ul></li><li><a class="toc-href" href="#4. ref_1" title="4. Ref">4. Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>静态时序分析（Static Timing）是数字 IC 设计中不可避免的话题，也是一个菜鸟成长必须掌握的技术。本文先总结 STA 中常见的定义、名词等。</p>
-<h2>1. Clock</h2>
-<hr>
+<h2 id="1. clock">1. Clock</h2>
+<hr/>
 <p>时钟是数字电路的动力系统，可以说数字电路中最重要的信号就是时钟信号了。一般时钟信号的时序特性分为：</p>
 <ol>
 <li>
@@ -139,14 +143,12 @@
 </li>
 </ol>
 <p>对于低速设计，基本不用考虑这些特征，但是对于高速设计，由于时钟本身造成的问题越来越普遍，因此有必要关注高速设计中的时序特性。</p>
-<h3>1.1. Skew</h3>
+<h3 id="1.1. skew">1.1. Skew</h3>
 <p>时钟信号要提供给整个电路的时序单元，所以时钟信号线非常长，并构成分布式的RC网路。它的延时与时钟线的长度、时序单元的负载电容、个数有关，由于时钟线长度及负载不同，会导致时钟信号到达相邻两个时序单元的时间不同，这个时间上的偏差就是 时钟偏移 <code>Skew</code>。如下图所示：</p>
-<p><img alt="skew" src="/images/static-timing-analysis-1-basic/skew.jpg"></p>
+<p><img alt="skew" src="/images/static-timing-analysis-1-basic/skew.jpg"/></p>
 <p>假设时钟信号达到两个 DFF 的延时分别为 Tc1 和 Tc2，用 Tskew 来表示它们之间的时钟偏移，则计算公式如下：</p>
 <div class="highlight"><pre><span></span><span class="n">Tskew</span> <span class="o">=</span> <span class="n">Tc2</span> <span class="o">-</span> <span class="n">Tc1</span>
 </pre></div>
-
-
 <p>根据差值可以分为正偏移和负偏移：</p>
 <ul>
 <li>
@@ -160,40 +162,40 @@
 <p>FPGA 在设计架构时，专门针对这种现象进行优化，采用全铜工艺和树状结构，并且设计了专用的时钟缓冲和驱动网络，这么做的目的就是尽量使时钟到达不同时序单元的路径一样长，从而使时钟偏移非常小，可以忽略不计。</p>
 <p>所以，<strong>Skew 问题的解决方法就是：设计中的主要信号应该走全局时钟网络。</strong></p>
 <p>即使采用了这样的设计，在实际电路中，时钟信号到达每个 DFF 的时间也不可能完全相等，Skew 是肯定存在的。所以 STA 仍然需要考虑该因素。在 PAR 之前，STA 只能根据设计的面积来粗略估计 Skew，在 PAR 之后，因为有了更具体的信息（线段长度、宽度、信号分布情况）STA 的估计值更加精确。</p>
-<h3>1.2. Jitter</h3>
+<h3 id="1.2. jitter">1.2. Jitter</h3>
 <p>理想的时钟信号是方波，但是实际中的时钟信号边沿不可能是瞬间变化的，是个斜坡，如下图所示：</p>
-<p><img alt="clock" src="/images/static-timing-analysis-1-basic/clock.jpg"></p>
+<p><img alt="clock" src="/images/static-timing-analysis-1-basic/clock.jpg"/></p>
 <p>时钟抖动 <code>Jitter</code> 的定义很多，最常见的有 3 种：</p>
 <ul>
 <li>
 <p>周期抖动 <code>Period Jitter</code></p>
-<p><img alt="Period Jitter" src="/images/static-timing-analysis-1-basic/period_jitter.jpg"></p>
+<p><img alt="Period Jitter" src="/images/static-timing-analysis-1-basic/period_jitter.jpg"/></p>
 <p>实际时钟信号周期与理想时钟周期的差值的变化。这是最早最直接的一种衡量抖动的方式，这个指标说明了时钟信号每个周期的变化。</p>
-<p>因为这个差值是个随机变量，并且满足高斯分布，所以可以用期望和方差来描述。一般随机选择很多个周期，然后计算平均周期、标准差、峰峰值。标准差称为 “<code>RMS 抖动</code>”，峰峰值称为 “<code>Pk-Pk 周期抖动</code>”。知道 Pk-Pk 周期抖动，对于恰当配置系统和保持时间很有用。</p>
+<p>因为这个差值是个随机变量，并且满足高斯分布，所以可以用期望和方差来描述。一般随机选择很多个周期，然后计算平均周期、标准差、峰峰值。标准差称为 &ldquo;<code>RMS 抖动</code>&rdquo;，峰峰值称为 &ldquo;<code>Pk-Pk 周期抖动</code>&rdquo;。知道 Pk-Pk 周期抖动，对于恰当配置系统和保持时间很有用。</p>
 </li>
 <li>
 <p>周期差抖动 <code>Cycle-to-cycle Jitter</code></p>
-<p><img alt="c2c_jitter" src="/images/static-timing-analysis-1-basic/cycle_to_cycle_jitter.jpg"></p>
+<p><img alt="c2c_jitter" src="/images/static-timing-analysis-1-basic/cycle_to_cycle_jitter.jpg"/></p>
 <p>两个相邻时钟周期的差值的变化。根据定义可知，对周期抖动做一阶差分，就可以得到周期差抖动。</p>
 <p>这个差值也是一个服从高斯分布的随机变量。</p>
 </li>
 <li>
 <p>相位抖动 <code>Phase Jitter</code></p>
-<p><img alt="phase_jitter" src="/images/static-timing-analysis-1-basic/phase_jitter.jpg"></p>
+<p><img alt="phase_jitter" src="/images/static-timing-analysis-1-basic/phase_jitter.jpg"/></p>
 <p>一个时钟沿相对于基准对齐之后，经过一段时间后，与理想位置的偏差。这个指标说明了周期抖动在各个时期的累计效应。</p>
 <p>因为需要累积一段时间，所以这个误差又称为 时间间隔误差（TIE, Timer Interval Error）。</p>
 </li>
 </ul>
 <p>由于 周期抖动 和 周期差抖动 是单个周期或者相邻周期的偏差，所以表征为短期抖动行为。而相位抖动需要累积一段时间，所以表征为长期抖动行为。</p>
 <p>时钟抖动的原因就是噪声。<strong>时钟抖动是永远存在的</strong>，当其大到可以和时钟周期相比拟的时候，会影响到设计，这样的抖动是不可接受的。</p>
-<h3>1.3. Duty Cycle Distortion</h3>
-<p><img alt="dcd" src="/images/static-timing-analysis-1-basic/dcd.jpg"></p>
+<h3 id="1.3. duty cycle distortion">1.3. Duty Cycle Distortion</h3>
+<p><img alt="dcd" src="/images/static-timing-analysis-1-basic/dcd.jpg"/></p>
 <p>占空比失真，即时钟不对称，有脉冲的时间和无脉冲的时间发生了变化。DCD 会吞噬大量的时序裕量，造成数字信号的失真，使过零区间偏离理想的位置。DCD通常是由信号的上升沿和下降沿之间时序不同而造成的。</p>
-<p><br></p>
-<h2>2. Ohters</h2>
-<hr>
+<p><br/></p>
+<h2 id="2. ohters_1">2. Ohters</h2>
+<hr/>
 <p>除去时钟信号，还有一些其他的相关定义。</p>
-<h3>2.1. Fan-out/Fan-out</h3>
+<h3 id="2.1. fan-out/fan-out">2.1. Fan-out/Fan-out</h3>
 <p><strong>Fan-out</strong></p>
 <p>在数字电路中，逻辑门相互连接，组成更加复杂的电路，所以大多数逻辑门的输出端都连接着多个别的单元的输入。所以需要一个术语来描述逻辑门的驱动能力的大小，也就是扇出 <code>Fan-out</code>。最大扇出数 <code>maximum fan-out</code> 定义为一个逻辑门可以驱动的同类逻辑门的最大数。</p>
 <blockquote>
@@ -204,7 +206,7 @@
 </blockquote>
 <p><strong>Fan-in</strong></p>
 <p>与扇出相对的概念是 扇入 <code>Fan-in</code>，它描述的是一个逻辑门能够处理的外部输入的能力。扇入大的逻辑门的速度要比扇入小的慢，原因是增加扇入相当于增加逻辑门的输入电容。我们可以用使用多级逻辑门来代替高扇入的设计。</p>
-<h3>2.2. Setup/Hold/Recovery/Removal Time</h3>
+<h3 id="2.2. setup/hold/recovery/removal time">2.2. Setup/Hold/Recovery/Removal Time</h3>
 <p>建立/保持时间是在同步设计中的概念：</p>
 <p>建立时间 <code>setup time</code> ：触发器在时钟信号上升沿到来以前，要求输入数据必须保持稳定不变一段时间，这段时间就是器件需要的建立时间。如不满足 setup time，这个数据就不能被这一时钟打入触发器。</p>
 <p>保持时间 <code>hold time</code> ：触发器在时钟信号上升沿到来以后，要求数据保持稳定不变一段时间，以便能够稳定读取，这段时间就是器件需要的保持时间。如果不满足 hold time，数据同样不能被打入触发器。</p>
@@ -212,15 +214,15 @@
 <p>恢复时间 <code>recovery time</code> : 对于异步信号（比如异步复位/置位），信号变无效的边沿和下一个时钟沿之间必须满足一个最小的间隔。其意义在于，如果保证不了这个最小时间，也就是异步信号无效边离时钟边沿太近了，异步信号解除（无效）之后，没有给 DFF 足够的时间来恢复（recovery）到正常状态，那么就不能保证在时钟沿到来时 DFF 可以正常工作。</p>
 <p>撤销时间 <code>removal time</code> : 对于异步信号（比如异步复位/置位），信号变有效的边沿和前一个时钟沿之间必须满足一个最小的间隔。其意义在于，如果保证不了这个最小时间，也就是异步信号的有效沿离时钟太近了，在时钟信号去除（无效）之前，异步信号提前有效了，可能会造成 DFF 处于不确定状态。</p>
 <p><a href="http://blog.sina.cn/dpool/blog/s/blog_72c14a3d01013tpi.html?type=-1">更加详细的总结：锁存器 Latch v.s. 触发器 Flip-Flop</a>。</p>
-<p><br></p>
-<h2>3. STA Intro</h2>
-<hr>
+<p><br/></p>
+<h2 id="3. sta intro_1">3. STA Intro</h2>
+<hr/>
 <p><a href="http://en.wikipedia.org/wiki/Static_timing_analysis">STA 的 wiki</a> 已经说的很明白了，下面的内容基本就是引用和翻译：</p>
 <blockquote>
 <p>Static timing analysis (STA) is a method of computing the expected timing of a digital circuit without requiring simulation.</p>
 <p>High-performance integrated circuits have traditionally been characterized by the clock frequency at which they operate. Gauging the ability of a circuit to operate at the specified speed requires an ability to measure, during the design process, its delay at numerous steps. Moreover, delay calculation must be incorporated into the inner loop of timing optimizers at various phases of design, such as logic synthesis, layout (placement and routing), and in in-place optimizations performed late in the design cycle. While such timing measurements can theoretically be performed using a rigorous circuit simulation, such an approach is liable to be too slow to be practical. Static timing analysis plays a vital role in facilitating the fast and reasonably accurate measurement of circuit timing. The speedup comes from the use of simplified timing models and by mostly ignoring logical interactions in circuits. It has become a mainstay of design over the last few decades.</p>
 </blockquote>
-<h3>3.1. Definitions</h3>
+<h3 id="3.1. definitions">3.1. Definitions</h3>
 <p>STA 中的一些术语定义如下：</p>
 <ul>
 <li>
@@ -265,7 +267,7 @@
 </li>
 </ul>
 <p>如下图所示：</p>
-<p><img alt="path" src="/images/static-timing-analysis-1-basic/path.jpg"></p>
+<p><img alt="path" src="/images/static-timing-analysis-1-basic/path.jpg"/></p>
 <ul>
 <li>
 <p><code>critical path</code></p>
@@ -284,7 +286,7 @@
 <p>时序裕量：<code>slack = required time - arrival time</code>。如果计算出某条路径的 slack 是正数，说明这条路径的时延是满足要求的；如果计算出某条路径的 slack 是负数，则表示路径上的延时太大了，必须做出修改（修改设计 or 修改约束 or 换芯片），否则包含它的电路不能以预期的频率工作。</p>
 </li>
 </ul>
-<h3>3.2. Purpose</h3>
+<h3 id="3.2. purpose">3.2. Purpose</h3>
 <p>在同步设计中，数据的流动是统一步伐的，即时钟信号每改变一次，数据跟随改变一次。这种运作方式是基于同步器件（DFF 或者 Latch）来实现的，这类器件以时钟信号作为指示，将其输入端的数据复制到输出端。在同步设计中只存在两种时序错误：</p>
 <ul>
 <li>
@@ -323,15 +325,13 @@
 <p><strong>STA的目的就是要保证 DUT（Device Under Test）中所有的路径满足内部时序单位对 setup time 和 hold
  time 的要求。信号可以及时的从任一时序路径的起点传递到终点，同时要求在电路正常工作所需的时间内保持恒定。</strong></p>
 </blockquote>
-<h3>3.3. Theory</h3>
+<h3 id="3.3. theory">3.3. Theory</h3>
 <p>STA 是基于前面介绍的时序路径的，在分析时，计算时序路径上数据信号的到达时间和要求时间的差值，以判断是否存在违反设计规则的错误。</p>
 <div class="highlight"><pre><span></span><span class="n">Slack</span> <span class="o">=</span> <span class="n">Trequired_time</span> <span class="o">-</span> <span class="n">Tarrival_time</span>
 </pre></div>
-
-
 <p>如果时序裕量 Slack 为正，表示满足时序，负值表示不满足时序。STA 按照上式分析设计中所有路径，如果 Slack为负值，则该路径为影响设计的关键路径，需要修改设计以达到时序要求。</p>
-<p>STA 是通过“穷举法”抽取整个设计电路的所有时序路径，按照约束条件分析电路中是否有违反设计规则的问题，并计算出设计的最高频率。</p>
-<p><br></p>
+<p>STA 是通过&ldquo;穷举法&rdquo;抽取整个设计电路的所有时序路径，按照约束条件分析电路中是否有违反设计规则的问题，并计算出设计的最高频率。</p>
+<p><br/></p>
 <p>========= Update 05/18/2015===========================</p>
 <p>很多笔试题里面都有考计算最大时钟频率的题，看到几篇文章:</p>
 <p><a href="http://www.vlsiinterviewquestions.org/2011/12/17/static-timing-analysis-101/">Static Timing Analysis 101</a></p>
@@ -348,9 +348,9 @@
 </li>
 </ol>
 <p>一般时序分析都是分析前面介绍的 Path2 的路径，如下图所示：</p>
-<p><img alt="path2" src="/images/static-timing-analysis-1-basic/path2.jpg"></p>
+<p><img alt="path2" src="/images/static-timing-analysis-1-basic/path2.jpg"/></p>
 <p>在这个图中，第一级的 DFF 的输出经过组合逻辑进入第二级 DFF，图中的时序是满足条件的，电路可以正常工作；但是如果违反 setup / hold time 的话，电路就无法正常工作，下面分别说明：</p>
-<h3>3.4. Setup Time Failure</h3>
+<h3 id="3.4. setup time failure">3.4. Setup Time Failure</h3>
 <p>前面已经提到了，对于任何 DFF，都必须满足 setup time 的要求：<strong>数据信号要在时钟信号之前到达 DFF，并保持稳定至少 setup time 时间，才能被成功打入 DFF</strong>。</p>
 <p>分类讨论一下：</p>
 <ol>
@@ -362,60 +362,50 @@
 </li>
 </ol>
 <p>下图是一个 setup time failure 的具体例子：</p>
-<p><img alt="setup failure" src="/images/static-timing-analysis-1-basic/setup_fail.jpg"></p>
+<p><img alt="setup failure" src="/images/static-timing-analysis-1-basic/setup_fail.jpg"/></p>
 <p>第一级的 DFF 在时钟的上升沿对输入数据 In 进行采样，并经过一段时间（Tco，clock to output delay）后输出为 FF1_out，输出数据经过中间的组合逻辑变为 FF2_in 输入到第二级 DFF，因为中间的组合逻辑的时延太大，FF2_in 违反了 setup time 的要求（图中橙色线条所示）。由于第二级 DFF 的输入不满足 setup time，所以这个 DFF 会进入亚稳态，它将花费 1
 个或多个时钟周期才能脱离亚稳态，在这期间它的输出都是不确定的，那么下游逻辑将会在这期间采样到错误数值，电路会发生错误。</p>
 <p>如果中间的组合逻辑过多，产生的时延过大，以至于 FF2_in 的变化落在了第二个时钟沿的后面，这时所然没有违反 setup time 的要求，第二个 DFF 不会进入亚稳态，但是它采样的数据是旧数据，这个数据可能是错误的，同样会导致下游逻辑发生错误。</p>
 <p>如果我们将时钟频率降到足够低，那么就可以避免 setup time failure 的问题。</p>
 <p>通过上面的分析，可以知道 setup time 限制了中间组合逻辑的最大时延，所以这个 setup time constraint 也叫做 max delay constraint。为了保证在最恶劣的情况下设计仍然能够满足要求，在计算 setup time 时中应该使用最大的数据时延路径。</p>
 <p>P.S. 上面的图中还包含了 clock skew，clk1 和 clk2 没有对齐，这加剧了 setup time failure 的机率。在实际中，时钟信号到达各个 DFF 的时间是不同的，设计者必须将这个因素考虑在内。</p>
-<h3>3.5. Hold Time Failure</h3>
+<h3 id="3.5. hold time failure">3.5. Hold Time Failure</h3>
 <p>和 setup time 对应，对于任何时序器件（DFF)，都必须满足 hold time 的要求：<strong>数据信号要在时钟信号达到之后保持稳定至少 hold time 的时间，否则输出是错误</strong>。</p>
 <p>下图是一个 hold time failure 的具体例子：</p>
-<p><img alt="hold failure" src="/images/static-timing-analysis-1-basic/hold_fail.jpg"></p>
+<p><img alt="hold failure" src="/images/static-timing-analysis-1-basic/hold_fail.jpg"/></p>
 <p>第一级 DFF 在时钟的上升沿对输入数据 In 进行采样，经过一段时间（Tco）后，输出为 FF1_out，输出数据经过中间的组合逻辑变为 FF2_in，输入到第二级 DFF。因为中间的组合逻辑时延非常小，而且由于 clock skew 的原因，导致第二级 DFF 在第一个时钟周期的 hold time 内输入的 FF2_in 发生了变化，违法了 hold time 要求，DFF2 进入亚稳态，它将花费 1 个或多个时钟周期才能退出亚稳态，在此期间输出的是错误数据。</p>
 <p>在现实中，导致这个问题的因素有可能是设计的问题（比如两个 DFF 邻接，中间没有其他逻辑），也有可能是器件的原因。</p>
 <p>因为传输时延太小，从而导致在第一个时钟沿信号就被 DFF2 采样了，而设计本意是在第二个时钟沿采样，看起来好像是信号跑（racing）的太快了，所以 hold time failure 也叫做 race。</p>
 <p>通过上面的分析，可以知道 hold time 限制了中间组合逻辑的最小时延，所以这个 hold time constraint 也叫做 min delay constraint。为了保证在最恶劣的情况下设计仍然能够满足要求，在计算 hold time 时中应该使用最小的数据时延路径。</p>
 <p>P.S. 上面的例子中 clock skew 加剧了 hold time failure 的机率，如果两个时钟是对齐的，那么就不会出现 hold time failure，输出也就不会出错。</p>
-<h3>3.6. summary</h3>
+<h3 id="3.6. summary">3.6. summary</h3>
 <p>假设理想的时钟为 clk，它的周期为 T，它连接到 DFF1 和 DFF2 的时钟为 clk1 和 clk2，它们相对于理想时钟的时延分别为 Tc1 和 Tc2；DFF 的参数分别为 Tsu，Th 和 Tco，中间组合逻辑的时延为 Tcomb。</p>
 <p>数据的时延：Tc1 + Tco + Tcomb</p>
 <p>时钟的时延：Tc2 + T  </p>
 <p>要满足 setup time 的要求，则有 Tc2 + T - (Tc1 + Tco + Tcomb) &gt;= Tsu，整理一下即：</p>
 <div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">&gt;=</span> <span class="n">Tsu</span> <span class="o">+</span> <span class="n">Tco</span> <span class="o">+</span> <span class="n">Tcomb</span> <span class="o">-</span> <span class="n">Tskew</span>     <span class="c1">--Eq1</span>
 </pre></div>
-
-
 <p>所以可以确定出系统的最大工作频率：</p>
 <div class="highlight"><pre><span></span><span class="n">Fmax</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">Tsu</span> <span class="o">+</span> <span class="n">Tco</span> <span class="o">+</span> <span class="n">Tcomb</span> <span class="o">-</span> <span class="n">Tskew</span><span class="p">)</span>     <span class="c1">-- Eq2</span>
 </pre></div>
-
-
 <p>因为 Tc1, Tc2, Tco, Tsu 都是固定值，所以一个系统的最大工作频率取决 Tcomb。</p>
 <p>而对于 hold time，则有不等式：Tc1 + Tco + Tcomb &gt; Tc2 + Th，整理一下就有：</p>
 <div class="highlight"><pre><span></span><span class="n">Tco</span> <span class="o">+</span> <span class="n">Tcomb</span> <span class="o">-</span> <span class="n">Tskew</span> <span class="o">&gt;</span> <span class="n">Th</span>        <span class="c1">-- Eq3</span>
 </pre></div>
-
-
 <p>上一级 DFF 的输出数据不能传输太快，侵占了下一级 DFF 正在锁存的 hold time，也就是说限制了数据的传输速度的上限。</p>
 <p>有了前面的 3 个公式，就可以解决大部分问题了。比如华为某年的笔试题：</p>
 <p>下图中时钟周期为T,触发器D1的建立时间最大为T1max，最小为T1min。组合逻辑电路最大延迟为T2max,最小为T2min。问，触发器D2的建立时间T3和保持时间应满足什么条件?</p>
-<p><img alt="huawei" src="/images/static-timing-analysis-1-basic/huawei.png"></p>
+<p><img alt="huawei" src="/images/static-timing-analysis-1-basic/huawei.png"/></p>
 <p>答：</p>
 <p>题目中 Tco = 0，Tskew = 0</p>
 <p>对于 setup time 的要求，将 Tco = 0，Tskew = 0 代入 Eq1 得：</p>
 <div class="highlight"><pre><span></span><span class="n">Tsu</span> <span class="o">&lt;=</span> <span class="err">{</span><span class="n">T</span> <span class="o">-</span> <span class="n">Tcomb</span><span class="err">}</span><span class="k">min</span> <span class="o">=</span> <span class="n">T</span> <span class="o">-</span> <span class="n">T2max</span>
 </pre></div>
-
-
 <p>对于 hold time 的要求，将 Tco = 0，Tskew = 0 代入 Eq2 得：</p>
 <div class="highlight"><pre><span></span><span class="n">Th</span> <span class="o">&lt;=</span> <span class="err">{</span><span class="n">Tcomb</span><span class="err">}</span><span class="k">min</span> <span class="o">=</span> <span class="n">T2min</span>
 </pre></div>
-
-
-<p><br></p>
-<h2>4. Ref</h2>
+<p><br/></p>
+<h2 id="4. ref_1">4. Ref</h2>
 <p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发实用教程</a></p>
 <p><a href="http://www.ictest8.com/debug/rf_pcb.htm">RF类IC demo 板loadboard设计参考资料之时钟部分</a></p>
 <p><a href="http://www.ti.com.cn/cn/lit/an/zhca492/zhca492.pdf">正确理解时钟器件的抖动性能</a></p>

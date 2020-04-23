@@ -122,6 +122,10 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="FIFO 设计笔记">FIFO 设计笔记</a><ul><li><a class="toc-href" href="#1. sync fifo" title="1. Sync FIFO">1. Sync FIFO</a></li><li><a class="toc-href" href="#2. async fifo" title="2. Async FIFO">2. Async FIFO</a><ul><li><a class="toc-href" href="#2.1. gray code" title="2.1. Gray Code">2.1. Gray Code</a></li><li><a class="toc-href" href="#2.2. wr_ptr / rd_ptr sync lag" title="2.2. wr_ptr / rd_ptr Sync Lag">2.2. wr_ptr / rd_ptr Sync Lag</a></li><li><a class="toc-href" href="#2.3. full / empty generation" title="2.3. Full / Empty Generation">2.3. Full / Empty Generation</a></li><li><a class="toc-href" href="#2.4. dual clock fifo design" title="2.4. Dual Clock FIFO Design">2.4. Dual Clock FIFO Design</a></li></ul></li><li><a class="toc-href" href="#3. summary_1" title="3. Summary">3. Summary</a></li><li><a class="toc-href" href="#4. ref" title="4. Ref">4. Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>FIFO 的重要性就不用再重复了，在笔试面试的时候也常常被问到，总结一下设计 FIFO 需要注意的问题。</p>
 <p>FIFO 可以分为两类：</p>
@@ -142,16 +146,16 @@
 <p>FIFO 空满的判断</p>
 </li>
 </ol>
-<h2>1. Sync FIFO</h2>
-<hr>
+<h2 id="1. sync fifo">1. Sync FIFO</h2>
+<hr/>
 <p>Sync FIFO 的框图如下所示：</p>
-<p><img alt="sync fifo" src="/images/fifo-design-notes/sync_fifo.png"></p>
+<p><img alt="sync fifo" src="/images/fifo-design-notes/sync_fifo.png"/></p>
 <p>因为同步 FIFO 的读写速率是相同的，所以 FIFO 的大小设置不必考虑读写速率差这个因素，要简单很多。</p>
 <p>在 FIFO 内部，一般使用 dual port RAM 存储数据。双端口 RAM 有两套独立的读写地址，读地址和写地址分别由读指针和写指针来产生：写指针指向下一个数据被写入的地址，读指针指向下一个被读出的数据的地址，通过判断读写指针的相对大小，就可以得到 FIFO 的状态（full / empty）。</p>
 <p>还有另外一种方法来产生 full / empty 信号：FIFO 内部维护一个计数器，每次写入一个数据 cnt++，每次读出一个数据 cnt--。这种方法产生 full / empty 很简单：当 cnt == 0，表示 FIFO empty；当 cnt == max，表示 FIFO full。虽然这种方法产生 full / empty 很简单，但是需要额外的计数器，而且计数器的位宽随着 FIFO 的深度增加，不仅占用的资源更多，而且会降低 FIFO 最终可以达到的速度。</p>
-<p><br></p>
-<h2>2. Async FIFO</h2>
-<hr>
+<p><br/></p>
+<h2 id="2. async fifo">2. Async FIFO</h2>
+<hr/>
 <p>一般异步 FIFO 的读写速率不同，如果写速度 &gt; 读速度，则当数据量超过一定长度时，会出现溢出的情况，为了防止这种情况，可以采用两种措施：</p>
 <ol>
 <li>
@@ -162,35 +166,35 @@
 <p>握手机制（full / empty）</p>
 <p>很多情况下，突发数据的长度和分布是预先不知道的，此时则无法确保 FIFO 的深度足够大，因此需要握手机制来告诉发送端已经没有多余的空地址保存数据 or 告诉接收端已经内部已经没有剩余的可以读取的数据。通常使用如下的 FSM 来实现：</p>
 <p>发送端，写数据：</p>
-<p><img alt="wr fsm" src="/images/fifo-design-notes/wr_fsm.png"></p>
+<p><img alt="wr fsm" src="/images/fifo-design-notes/wr_fsm.png"/></p>
 <p>接收端，读数据：</p>
-<p><img alt="rd fsm" src="/images/fifo-design-notes/rd_fsm.png"></p>
+<p><img alt="rd fsm" src="/images/fifo-design-notes/rd_fsm.png"/></p>
 </li>
 </ol>
-<h3>2.1. Gray Code</h3>
-<p>在异步 FIFO 中，因为一些内部的信号要从写/读时钟域传递到读/写时钟域，所以必须要解决异步信号同步的问题，而且有的信号不止 1 bit，如果使用“同步桥”，则因为各个 bit 的同步时延不一定（1~2T），所以不能用同步桥。</p>
+<h3 id="2.1. gray code">2.1. Gray Code</h3>
+<p>在异步 FIFO 中，因为一些内部的信号要从写/读时钟域传递到读/写时钟域，所以必须要解决异步信号同步的问题，而且有的信号不止 1 bit，如果使用&ldquo;同步桥&rdquo;，则因为各个 bit 的同步时延不一定（1~2T），所以不能用同步桥。</p>
 <p>这个问题可以使用 gray code 解决：gray code 是循环码，每次只有 1 bit 变化，这样就避免了多 bits 变化的数据同步问题。如下图：</p>
-<p><img alt="sync" src="/images/fifo-design-notes/sync.png"></p>
+<p><img alt="sync" src="/images/fifo-design-notes/sync.png"/></p>
 <p>gray code 与 binary code 的相互想换见另<a href="">外一篇 blog</a>。</p>
-<h3>2.2. wr_ptr / rd_ptr Sync Lag</h3>
+<h3 id="2.2. wr_ptr / rd_ptr sync lag">2.2. wr_ptr / rd_ptr Sync Lag</h3>
 <p>异步 FIFO 还有个问题是：地址信号跨时钟域时，可能会有 1T 的时延，这个多余的时延并不会导致 full /empty 错误置位，引起错误的 overf：</p>
 <ul>
 <li>
 <p>如果地址信号传递到读时钟域时延时了 1T，此时接收端并不知道数据已经写入了 FIFO，仍然认为 FIFO 是空的，这种情况只会对 FIFO 的吞吐率 throughput 有影响，但是不会导致 underflow；</p>
 <p>如下图，先写满 FIFO，然后开始读：在 t6 时 FIFO 读空，empty = 1，在 t7 时，写入了一个新数据，此时 FIFO 内已经有有效数据了，但是 wr_ptr 同步到读时钟域要花费 2T，所以在 t9 时 empty = 0。有两个时钟周期（t7, t8） rd 被阻塞了，但是并不影响 FIFO 正常工作。</p>
-<p><img alt="empty" src="/images/fifo-design-notes/empty.png"></p>
+<p><img alt="empty" src="/images/fifo-design-notes/empty.png"/></p>
 <p>时序图：</p>
-<p><img alt="empty timing" src="/images/fifo-design-notes/empty_timing.png"></p>
+<p><img alt="empty timing" src="/images/fifo-design-notes/empty_timing.png"/></p>
 </li>
 <li>
 <p>如果地址信号传递到写时钟域时延是了 1T，此时发送端并不知道 FIFO 已经有空余地址了，仍然认为 FIFO 是满的，这种情况也是只会对 FIFO 的吞吐率 throughput 有影响，但是不会导致 overfl；</p>
 <p>如下图，先写满 FIFO，然后开始读：在 t5 时，full = 1，在 t6 时，读出了一个数据，此时 FIFO 已经有空余地址了，但是 rd_ptr 同步到写时钟域要花费 2T，所以在 t8 时 full = 0。有两个时钟周期（t6, t7） wr 被阻塞了，但是并不影响 FIFO 正常工作。</p>
-<p><img alt="full" src="/images/fifo-design-notes/full.png"></p>
+<p><img alt="full" src="/images/fifo-design-notes/full.png"/></p>
 <p>时序图：</p>
-<p><img alt="full timing" src="/images/fifo-design-notes/full_timing.png"></p>
+<p><img alt="full timing" src="/images/fifo-design-notes/full_timing.png"/></p>
 </li>
 </ul>
-<h3>2.3. Full / Empty Generation</h3>
+<h3 id="2.3. full / empty generation">2.3. Full / Empty Generation</h3>
 <p>因为 wr_ptr 和 rd_ptr 相同时，FIFO 既可能是 full，也有可能是 empt，所以需要额外的 1 bit 来区别这两种情况：</p>
 <p>假设 FIFO 的深度是 8，则地址为 3 bits，初始时 wr_ptr 和 rd_ptr 都是 <code>0000</code>，FIFO 此时是 empty：</p>
 <ol>
@@ -203,13 +207,13 @@
 </ol>
 <p>借助这多余的 1 bit，可以区分出是 wr_ptr 太快，将 rd_ptr 套圈了（wr_ptr = <code>1000</code>，rd_ptr = <code>0000</code>， 即 full），还是 rd_ptr 更快，追上了 wr_ptr（rd_ptr = wr_ptr = <code>1000</code>）。</p>
 <p>框图如下：</p>
-<p><img alt="full empty gen" src="/images/fifo-design-notes/full_empty_gen.png"></p>
+<p><img alt="full empty gen" src="/images/fifo-design-notes/full_empty_gen.png"/></p>
 <p>这种 wr_ptr / rd_ptr 用 gray code 保存，比较/+1 用 binary 保存的方式，使得 design / debug 变得很简单，但是需要的资源比较多。如果全部使用 gray code，虽然可以降低资源占用，但是需要其他逻辑。</p>
-<h3>2.4. Dual Clock FIFO Design</h3>
+<h3 id="2.4. dual clock fifo design">2.4. Dual Clock FIFO Design</h3>
 <p>下图是使用 Dual port RAM 的异步 FIFO 框图，其中 wr_ptr 和 rd_ptr 直接使用 gray code，节省了 gray code 和 binary code 之间的转换逻辑。</p>
-<p><img alt="dual clock fifo" src="/images/fifo-design-notes/dual_port_fifo.png"></p>
+<p><img alt="dual clock fifo" src="/images/fifo-design-notes/dual_port_fifo.png"/></p>
 <p>和前面的逻辑类似，使用多 1 bit 来辅助区分 full / empt，不过因为改成用 gray code 来比较，所以稍有不同，下图显示了 FIFO 从 empty 到 full 再到 empty 的过程：</p>
-<p><img alt="full empty condition" src="/images/fifo-design-notes/full_empty_condition.png"></p>
+<p><img alt="full empty condition" src="/images/fifo-design-notes/full_empty_condition.png"/></p>
 <ol>
 <li>
 <p>FIFO empty</p>
@@ -232,12 +236,12 @@
 </ol>
 </li>
 </ol>
-<p><br></p>
-<h2>3. Summary</h2>
-<hr>
+<p><br/></p>
+<h2 id="3. summary_1">3. Summary</h2>
+<hr/>
 <p>总结 FIFO 的设计，只要注意 FIFO 通过 wr_ptr 和 rd_ptr 得到 full / empty，而且使用 gray code 来跨时钟域，基本上就没问题了 :-D</p>
-<p><br></p>
-<h2>4. Ref</h2>
+<p><br/></p>
+<h2 id="4. ref">4. Ref</h2>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art of Hardware Architecture: Design Methods and Techniques for Digital Circuits</a></p>
 <p><a href="http://www.amazon.com/Advanced-FPGA-Design-Architecture-Implementation/dp/0470054379/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1432020884&amp;sr=1-1&amp;keywords=advanced+fpga+design">Advanced FPGA Design: Architecture, Implementation, and Optimization</a></p>
   </div>

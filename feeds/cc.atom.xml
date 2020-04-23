@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog - C/C++</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/cc.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-09T11:13:00+08:00</updated><subtitle>Stay hungry. Stay foolish.</subtitle><entry><title>C++ const 限定符</title><link href="http://guqian110.github.io/posts/cc/cosnt_qualifier.html" rel="alternate"></link><published>2014-04-09T11:13:00+08:00</published><updated>2014-04-09T11:13:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-04-09:/posts/cc/cosnt_qualifier.html</id><summary type="html">&lt;p&gt;总结 const 限定符的用法。&lt;/p&gt;</summary><content type="html">&lt;h2&gt;1. 为什么要使用 const 限定符&lt;/h2&gt;
-&lt;hr&gt;
-&lt;h3&gt;1.1. 一个需要使用 const 的简单例子&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog - C/C++</title><link href="http://guqian110.github.io/" rel="alternate"></link><link href="http://guqian110.github.io/feeds/cc.atom.xml" rel="self"></link><id>http://guqian110.github.io/</id><updated>2014-04-09T11:13:00+08:00</updated><subtitle>Stay hungry. Stay foolish.</subtitle><entry><title>C++ const 限定符</title><link href="http://guqian110.github.io/posts/cc/cosnt_qualifier.html" rel="alternate"></link><published>2014-04-09T11:13:00+08:00</published><updated>2014-04-09T11:13:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-04-09:/posts/cc/cosnt_qualifier.html</id><summary type="html">&lt;p&gt;总结 const 限定符的用法。&lt;/p&gt;</summary><content type="html">&lt;h2 id="1. wei shi yao yao shi yong  const xian ding fu"&gt;1. 为什么要使用 const 限定符&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;h3 id="1.1. yi ge xu yao shi yong  const de jian dan li zi"&gt;1.1. 一个需要使用 const 的简单例子&lt;/h3&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1767741/"&gt;&lt;em&gt;C++ Primer&lt;/em&gt;&lt;/a&gt; 中的例子&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
@@ -10,7 +10,6 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;这段代码语法上是没有问题的，但是事实上是有两个小问题的，而且两个小问题都和数字 &lt;code&gt;512&lt;/code&gt; 有关 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;第一个问题是 程序的可读性&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;比较 &lt;code&gt;index&lt;/code&gt; 与 &lt;code&gt;512&lt;/code&gt; 有什么意思呢？也就是说 512 这个值作用何在？在程序中这种数字被称为 &lt;code&gt;魔数（magic number）&lt;/code&gt;，它的意义在上下文中没有体现出来，好像这个数是凭空魔术般变出来的 。&lt;/p&gt;
@@ -26,18 +25,16 @@
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;通过定义一个好记的变量，就可以增强程序的可读性，而且需要改变这个值时，只需要咋初始化的地方做修改 。这种方法不仅明显减小了工作量，而且大大减小了出错的可能性 。&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;看起来问题好像已经解决了，但是，事实上，我们可以进一步&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;在上面的代码中，&lt;code&gt;buf_size&lt;/code&gt; 是可以被修改的，它有可能会被有意或者无意修改 。为了避免这种情况，就需要使用 const 限定符了 。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="n"&gt;buf_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;512&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;定义 &lt;code&gt;buf_size&lt;/code&gt; 为 &lt;strong&gt;常量（constant）&lt;/strong&gt;，并且初始化为 512 .&lt;strong&gt;变量（variable）&lt;/strong&gt; &lt;code&gt;buf_size&lt;/code&gt; 仍然是一个左值，但是这个左值现在是不能被修改的。（因为 const 把变量转化为常量，所以在定义的时候必须初始化！）&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;2. 如何使用 const 限定符&lt;/h2&gt;
-&lt;hr&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="2. ru he shi yong  const xian ding fu_1"&gt;2. 如何使用 const 限定符&lt;/h2&gt;
+&lt;hr/&gt;
 &lt;p&gt;C++ Primer 中有这么一句话&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;It (const) transforms an object into a constant.&lt;/p&gt;
@@ -46,8 +43,8 @@
 &lt;blockquote&gt;
 &lt;p&gt;The variable bufSize is still an lvalue&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性“&lt;/p&gt;
-&lt;h3&gt;2.1. 文件的局部变量&lt;/h3&gt;
+&lt;p&gt;这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性&amp;ldquo;&lt;/p&gt;
+&lt;h3 id="2.1. wen jian de ju bu bian liang"&gt;2.1. 文件的局部变量&lt;/h3&gt;
 &lt;p&gt;const 限定符修同时也改变了变量的作用范围 。普通非 const 变量的默认是具有 &lt;em&gt;外部连接（external linkage）&lt;/em&gt;的，在全局作用域内定义非 const 变量时，它在整个程序中都可以被访问 。比如&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
@@ -62,7 +59,6 @@
 &lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;counter&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;但是，对于 全局作用域内的 const 类型的对象，其默认是 &lt;em&gt;内部连接（internal linkage）&lt;/em&gt;，仅在定义该对象的文件内可见，不能被其他文件访问 。要想在整个程序里面访问，就必须在定义的时候显式地声明为 &lt;code&gt;extern&lt;/code&gt; 类型 。比如&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
@@ -79,12 +75,11 @@
     &lt;span class="c1"&gt;//...&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
-&lt;h3&gt;2.2. 使用 const 的方法&lt;/h3&gt;
+&lt;h3 id="2.2. shi yong  const de fang fa"&gt;2.2. 使用 const 的方法&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;定义在头文件中 inlcude&lt;/p&gt;
-&lt;p&gt;如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 ”重定义“  的问题 。&lt;/p&gt;
+&lt;p&gt;如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 &amp;rdquo;重定义&amp;ldquo;  的问题 。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
@@ -94,11 +89,10 @@
 &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;512&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="c1"&gt;// file2.cpp&lt;/span&gt;
-&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;file1.h&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="s"&gt;"file1.h"&lt;/span&gt;
 &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;定义时声明为 extern&lt;/p&gt;
@@ -109,7 +103,6 @@
 &lt;span class="k"&gt;extern&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;512&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;在头文件中声明为 extern 类型，以使其他文件共享。&lt;/p&gt;
@@ -122,11 +115,10 @@
 &lt;span class="k"&gt;extern&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="c1"&gt;// fil2.cpp&lt;/span&gt;
-&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;quot;file1.h&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;"file1.h"&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
 &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;不需要在头文件中声明，在其他文件中使用前声明&lt;/p&gt;
@@ -137,7 +129,6 @@
 &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bufsize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -147,84 +138,75 @@
 &lt;blockquote&gt;
 &lt;p&gt;Constants were introduced in early versions of C++ while the Standard C specification was
 still being finished. It was then seen as a good idea and included in C. But somehow, const in
-C came to mean “an ordinary variable that cannot be changed.” &lt;em&gt;In C, it always occupies
+C came to mean &amp;ldquo;an ordinary variable that cannot be changed.&amp;rdquo; &lt;em&gt;In C, it always occupies
 storage and its name is global. The C compiler cannot treat a const as a compile-time
 constant.&lt;/em&gt; In C, if you say&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;bufsize&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nc"&gt;char&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;buf&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;bufsize&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;you will get an error, even though it seems like a rational thing to do. Because bufsize
 occupies storage somewhere, the C compiler cannot know the value at compile time.&lt;/p&gt;
-&lt;p&gt;In C++, a const doesn’t necessarily create storage. In C a const always creates storage.
+&lt;p&gt;In C++, a const doesn&amp;rsquo;t necessarily create storage. In C a const always creates storage.
 Whether or not storage is reserved for a const in C++ depends on how it is used. In general, if
 a const is used simply to replace a name with a value (just as you would use a #define), then
-storage doesn’t have to be created for the const. If no storage is created (this depends on the
+storage doesn&amp;rsquo;t have to be created for the const. If no storage is created (this depends on the
 complexity of the data type and the sophistication of the compiler), the values may be folded
 into the code for greater efficiency after type checking, not before, as with #define. If,
 however, you take an address of a const(even unknowingly, by passing it to a function that
 takes a reference argument) or you define it as extern, then storage is created for the const.&lt;/p&gt;
-&lt;p&gt;Since a const in C++ defaults to internal linkage, you can’t just define a const in one file and
+&lt;p&gt;Since a const in C++ defaults to internal linkage, you can&amp;rsquo;t just define a const in one file and
 reference it as an extern in another file. To give a const external linkage so it can be
 referenced from another file, you must explicitly define it as extern, like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="n"&gt;extern&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;Notice that by giving it an initializer and saying it is extern, you force storage to be created for the const(although the compiler still has the option of doing constant folding here). The
 initialization establishes this as a definition, not a declaration. The declaration:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="n"&gt;extern&lt;/span&gt; &lt;span class="n"&gt;const&lt;/span&gt; &lt;span class="nb"&gt;int&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-
-
 &lt;p&gt;in C++ means that the definition exists elsewhere (again, this is not necessarily true in C).
 &lt;em&gt;You can now see why C++ requires a constdefinition to have an initializer: the initializer
-distinguishes a declaration from a definition (in C it’s always a definition, so no initializer is
+distinguishes a declaration from a definition (in C it&amp;rsquo;s always a definition, so no initializer is
 necessary).&lt;/em&gt; With an external constdeclaration, the compiler cannot do constant folding
-because it doesn’t know the value.&lt;/p&gt;
+because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h3&gt;2.3. const 引用 &amp;amp; const 对象&lt;/h3&gt;
+&lt;h3 id="2.3. const yin yong  &amp;amp; const dui xiang"&gt;2.3. const 引用 &amp;amp; const 对象&lt;/h3&gt;
 &lt;p&gt;在引用的定义中声明 const，此 const 约束的是引用，而不是引用的对象 。比如&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;ref&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ival&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;其中，&lt;code&gt;const&lt;/code&gt; 修饰的是 &lt;code&gt;int &amp;amp;&lt;/code&gt;，规定了引用 &lt;code&gt;ref&lt;/code&gt; 为 const 类型变量，而 &lt;code&gt;ival&lt;/code&gt; 的类型则由其他语句定义说明 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;const 引用： 引用变量为 const 类型，引用对象的类型可以是 const、nonconst、r-value&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;nonconst 引用： 引用变量为 nonconst 类型，引用对象只能是同类型的 nonconst 类型&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;因为引用只是对象的另外一个名字，它们指向的是统一块内存空间，所以通过修改引用的值就能达到修改对象的值的目的 。&lt;/p&gt;
 &lt;p&gt;当对象是 const 类型时，隐含的含义是该对象不能被修改，所以只能定义 const 类型的引用指向它；nonconst 类型的引用隐含的意思是可以通过引用修改对象值，这对于 const 类型的对象来说是不允许的 。&lt;/p&gt;
 &lt;p&gt;当对象是 nonconst 类型时，隐含的含义是该对象可以通过引用来修改，此时，const 引用和 nonconst 引用都可以指向该对象 。当使用 nonconst 引用时，可以通过引用修改对象的值；当使用 const 引用时，虽然对象的值是可以改变的，但是不能通过该引用修改，因为引用的类型是 const，定义以后，不能再修改 。 &lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;3. 何时应该使用 const&lt;/h2&gt;
-&lt;hr&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="3. he shi ying gai shi yong  const_1"&gt;3. 何时应该使用 const&lt;/h2&gt;
+&lt;hr/&gt;
 &lt;p&gt;Scott Meyers 大神的经典著作 &lt;a href="http://book.douban.com/subject/1842426/"&gt;Effective C++&lt;/a&gt; 里面提到的关于 const 的使用 。&lt;/p&gt;
-&lt;h3&gt;3.1. Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）&lt;/h3&gt;
+&lt;h3 id="3.1. effective c++ tiao kuan  02:jin liang yi  const, enum, inline ti huan  #define(prefer consts,enums,and inline to #define)"&gt;3.1. Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）&lt;/h3&gt;
 &lt;p&gt;使用const 代替 #define，事实上 &lt;code&gt;const&lt;/code&gt; 的最初动机就是取代预处理器 &lt;code&gt;#define&lt;/code&gt; 来进行值替代 。因为 #define 不被视为语言的一部分，这就是它的问题所在 。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#define ASPECT_RATIO 1.653;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;记号名 ASPECT_RATIO 也许从未被编译器看见，也许在编译器开始处理代码前就被与处理器移走了，于是记号没有进入记号表，当出现编译错误时，也许会提示是 1.653 而不是 ASPECT_RATIO，这回带来很多困惑 。&lt;/p&gt;
 &lt;p&gt;解决之道就是以一个常量代替上述的宏&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;AspectRatio&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.653&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
-&lt;h3&gt;3.2. Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）&lt;/h3&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;4. 参考&lt;/h2&gt;
+&lt;h3 id="3.2. effective c++ tiao kuan  03:jin ke neng shi yong  const(use const whenever possile)"&gt;3.2. Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）&lt;/h3&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="4. can kao_1"&gt;4. 参考&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1767741/"&gt;C++ Primer&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1459728/"&gt;Thinking in C++&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1842426/"&gt;Effective C++&lt;/a&gt;&lt;/p&gt;</content><category term="C/C++"></category><category term="const"></category></entry><entry><title>C/C++ 内置数据类型</title><link href="http://guqian110.github.io/posts/cc/built_in_types.html" rel="alternate"></link><published>2014-03-31T13:37:00+08:00</published><updated>2014-03-31T13:37:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:guqian110.github.io,2014-03-31:/posts/cc/built_in_types.html</id><summary type="html">&lt;p&gt;重读经典 C++ Primer，总结 C++ 内置数据类型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;类型是程序设计的基础。一些程序设计语言，比如 Smalltalk 和 Python，在运行的时候才检查预计中的对象的类型，想反，C++ 是静态类型（statically typed）语言，在编译时执行类型检查。导致的结果是：&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;变量和函数在使用前必须先声明&lt;/em&gt; 。&lt;/p&gt;
-&lt;p&gt;每种类型都定义了其存储空间要求和可以在该类型的所有对象上执行的操作。C++ 是 在 C 的基础上扩充得到的，为了和 C 兼容， C++ 在必要时必须能够直接处理硬件，所以 C++ 提供的一组基本内置类型，如int、char等，这些类型与它们在机器硬件上的标示方式紧密相关。（所以，C++ 可以称为 “具有高级语言库的低级语言”）&lt;/p&gt;
+&lt;p&gt;每种类型都定义了其存储空间要求和可以在该类型的所有对象上执行的操作。C++ 是 在 C 的基础上扩充得到的，为了和 C 兼容， C++ 在必要时必须能够直接处理硬件，所以 C++ 提供的一组基本内置类型，如int、char等，这些类型与它们在机器硬件上的标示方式紧密相关。（所以，C++ 可以称为 &amp;ldquo;具有高级语言库的低级语言&amp;rdquo;）&lt;/p&gt;
 &lt;p&gt;本文只限于总结 C++ 的内置类型（Built-in Types），不讨论自定义类型 。&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;1. 基本内置类型&lt;/h2&gt;
-&lt;hr&gt;
-&lt;h3&gt;1.1. 算术类型&lt;/h3&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="1. ji ben nei zhi lei xing"&gt;1. 基本内置类型&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;h3 id="1.1. suan zhu lei xing"&gt;1.1. 算术类型&lt;/h3&gt;
 &lt;p&gt;C++ 语言自身定义了一组基本类型来表示不同的数据，如整数、浮点数、字母、bool 类型等，这些类型统称为 &lt;em&gt;算术类型（Arithmetic type）&lt;/em&gt; 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;size&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;算术类型的存储空间依机器而定，即用多少二进制位 bit 来表示一个数 。C++ 标准规定了每个算术类型的最小存储空间，但它并不阻止编译器使用更大的存储空间 。事实上，对于 &lt;code&gt;int&lt;/code&gt; 类型，几乎所有的编译器使用的存储空间都比所要求的大 。&lt;/p&gt;
@@ -232,10 +214,9 @@ because it doesn’t know the value.&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;limits&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;就可以使用 STL 库中的 &lt;code&gt;numeric_limits&amp;lt;T&amp;gt;::max&lt;/code&gt; 和 &lt;code&gt;numeric_limits&amp;lt;T&amp;gt;::min&lt;/code&gt; 查询各个内置内类类型的最大值和最小值。&lt;/p&gt;
 &lt;p&gt;下面是 Ubuntu amd64 版本上的结果：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="size" src="/images/built-in-types/size.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="size" src="/images/built-in-types/size.png"/&gt;&lt;/p&gt;
 &lt;p&gt;算术类型可以分为两类：表示整数的 &lt;em&gt;整型&lt;/em&gt; 和表示浮点数的 &lt;em&gt;浮点型&lt;/em&gt; 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Integral Types&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;表示整数、字符、布尔值的算术类型合称为 整型（integral types）。&lt;/p&gt;
@@ -249,7 +230,6 @@ because it doesn’t know the value.&lt;/p&gt;
 &lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;long&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;每一种的数据长短和可以表示的范围都不相同。&lt;/p&gt;
 &lt;p&gt;字符类型有两种：&lt;code&gt;char&lt;/code&gt; 和 &lt;code&gt;wchar_t&lt;/code&gt; 。char 用来表示 &lt;em&gt;基本字符集&lt;/em&gt; 中的字符，wchar_t 用于 &lt;em&gt;扩展字符集&lt;/em&gt; ，比如汉字和日语 。修饰 int 类型有无符号的 signed 和 unsigned 也可以修饰 char 类型 。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1767741/"&gt;C++ Primer&lt;/a&gt; (chapter 2) 中写到：&lt;/p&gt;
@@ -270,12 +250,11 @@ because it doesn’t know the value.&lt;/p&gt;
 &lt;p&gt;源代码：&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kt"&gt;char&lt;/span&gt; &lt;span class="n"&gt;ch1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;ch1 = %d&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;ch1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"ch1 = %d&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;ch1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;运行结果：&lt;/p&gt;
-&lt;p&gt;&lt;img alt="char" src="/images/built-in-types/char.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="char" src="/images/built-in-types/char.png"/&gt;&lt;/p&gt;
 &lt;p&gt;结果说明，gcc 把 char 默认为 signed char 处理。&lt;/p&gt;
 &lt;p&gt;布尔类型表示 &lt;code&gt;true&lt;/code&gt; 和 &lt;code&gt;false&lt;/code&gt; 。可以将任何算术类型的值赋给 &lt;code&gt;bool&lt;/code&gt; 对象，&lt;code&gt;0&lt;/code&gt; 表示 &lt;code&gt;false&lt;/code&gt; ，任何非 &lt;code&gt;0&lt;/code&gt; 值都表示 &lt;code&gt;true&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Floating-Point Types&lt;/strong&gt;&lt;/p&gt;
@@ -288,12 +267,12 @@ because it doesn’t know the value.&lt;/p&gt;
 &lt;p&gt;The float type is usually not precise enough for real programsfloat is guaranteed to offer only 6 significant digits. The double type guarantees at least 10 significant digits, which is sufficient for most calculations.&lt;/p&gt;
 &lt;p&gt;Determining which floating-point type to use is easier: It is almost always right to use double. The loss of precision implicit in float is significant, whereas the cost of double precision calculations versus single precision is negligible. In fact, on some machines, double precision is faster than single. The precision offered by long double usually is unnecessary and often entails considerable extra run-time cost.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h3&gt;1.2. void&lt;/h3&gt;
+&lt;h3 id="1.2. void"&gt;1.2. void&lt;/h3&gt;
 &lt;p&gt;void 类型没有对应的值，仅用在有限的一些情况下，通常用作无返回值函数的返回类型。&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;2. 初始化 Initialize&lt;/h2&gt;
-&lt;hr&gt;
-&lt;h3&gt;2.1. 初始化 &amp;amp; 赋值&lt;/h3&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="2. chu shi hua  initialize_1"&gt;2. 初始化 Initialize&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;h3 id="2.1. chu shi hua  &amp;amp; fu zhi"&gt;2.1. 初始化 &amp;amp; 赋值&lt;/h3&gt;
 &lt;p&gt;首先是初始化的必要性：&lt;/p&gt;
 &lt;p&gt;在 C++ 中，初始化是一个非常重要的概念，给变量一个初始值几乎总是正确的，但不要求必须这么做。定义变量时，应该给变量赋初始值，除非确定将变量用于其他意图之前会覆盖这个初值。如果不能保证读取变量前重置变量，就应该初始化变量。变量没有初始化是很常见的导致程序崩溃/结果错误的原因，而且有时候很难像 Debug 一样找到这个错误（bug 导致程序一定不对，但是没有初始化的变量的结果是随机的）。所以，良好的习惯是对每个变量都进行初始化 。&lt;/p&gt;
 &lt;p&gt;其次是初始化和赋值的区别：&lt;/p&gt;
@@ -305,16 +284,15 @@ because it doesn’t know the value.&lt;/p&gt;
 &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;ival&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1024&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;    &lt;span class="c1"&gt;// direct-initialization&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;使用 &lt;code&gt;=&lt;/code&gt; 很容易让人把初始化和赋值混淆在一起，但是在 C++ 中这是两种不同的操作，当涉及到类对象时，两种不同的初始化方式的区别是很微妙的。目前先不考虑这点，只需要知道直接初始化语法更灵活而且效率高。&lt;/p&gt;
-&lt;h3&gt;2.2. 内置类型初始化&lt;/h3&gt;
+&lt;h3 id="2.2. nei zhi lei xing chu shi hua"&gt;2.2. 内置类型初始化&lt;/h3&gt;
 &lt;p&gt;当我们定义一个变量却没有初始化时，系统 &lt;em&gt;有可能&lt;/em&gt; 会为我们进行隐式的初始化。至于系统是否帮我们隐式初始化变量，以及为变量赋予一个怎样的初始值，这要取决于 &lt;em&gt;该变量的类型&lt;/em&gt; 以及我们 &lt;em&gt;在何处定义的该变量&lt;/em&gt; 。&lt;/p&gt;
 &lt;p&gt;这里我们只考虑内置类型的初始化：&lt;/p&gt;
 &lt;p&gt;内置类型的变量是否自动初始化取决于变量定义的位置。在函数体外（全局范围）定义的变量都初始化为 0，函数体内定义的变量不进行自动初始化 。&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;3. 算术类型转换&lt;/h2&gt;
-&lt;hr&gt;
-&lt;h3&gt;3.1. 隐式类型转换&lt;/h3&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="3. suan zhu lei xing zhuan huan_1"&gt;3. 算术类型转换&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;h3 id="3.1. yin shi lei xing zhuan huan"&gt;3.1. 隐式类型转换&lt;/h3&gt;
 &lt;p&gt;当两个操作数类型不同时，C++ 并不是直接把两个数加在一起，而是提供了一组转换规则，以便在执行算术操作之前，将两个数转换为同一数据类型。这些转换规则由编译器自动执行，不需要程序眼介入，有时甚至不需要程序员了解。因此，它们被称为 隐式类型转换 (&lt;code&gt;implicit type conversion&lt;/code&gt;) 。&lt;/p&gt;
 &lt;p&gt;在以下情况会发生隐式类型转换：&lt;/p&gt;
 &lt;ul&gt;
@@ -327,7 +305,6 @@ because it doesn’t know the value.&lt;/p&gt;
 &lt;span class="n"&gt;ival&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;=&lt;/span&gt; &lt;span class="n"&gt;dval&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;   &lt;span class="c1"&gt;// ival converted to double&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;用作条件表达式被转化为 bool 型&lt;/p&gt;
@@ -338,7 +315,6 @@ because it doesn’t know the value.&lt;/p&gt;
 &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;cin&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;    &lt;span class="c1"&gt;// cin converted to bool&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;用表达式初始化（赋值）某一变量，表达式被转化为该变量类型&lt;/p&gt;
@@ -349,11 +325,10 @@ because it doesn’t know the value.&lt;/p&gt;
 &lt;span class="n"&gt;ip&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;             &lt;span class="c1"&gt;// the int 0 converted to a null pointer of type int *&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;另外，函数调用时也可能发生隐式类型转化。&lt;/p&gt;
-&lt;h3&gt;3.2. 算术类型转换&lt;/h3&gt;
+&lt;h3 id="3.2. suan zhu lei xing zhuan huan"&gt;3.2. 算术类型转换&lt;/h3&gt;
 &lt;p&gt;C++ 语言为内置类型提供了一组转化规则，其中最常用的就是算术转化（arithmetic conversion）。算术转化规则定义了一个 &lt;em&gt;类型转换层次&lt;/em&gt;，该层次规定了操作数应该按照什么次序转换为表达式中最宽的数据类型。&lt;/p&gt;
 &lt;p&gt;有两条通用规则：&lt;/p&gt;
 &lt;ol&gt;
@@ -387,22 +362,20 @@ because it doesn’t know the value.&lt;/p&gt;
 4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="kt"&gt;signed&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="n"&gt;cout&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;unsigned int b&amp;#39; = &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;endl&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;cout&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="s"&gt;"unsigned int b' = "&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="kt"&gt;unsigned&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;endl&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;运行结果为&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
-2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4294967276&lt;/span&gt;
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kt"&gt;unsigned&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="err"&gt;'&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4294967276&lt;/span&gt;
 &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
 &lt;p&gt;因为 &lt;code&gt;b = -2&lt;/code&gt; 被转化为一个很大的正数 &lt;code&gt;b' = 4294967276&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;h2&gt;4. references&lt;/h2&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="4. references_1"&gt;4. references&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1767741/"&gt;c++ Primer&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx"&gt;C++之char , signed char , unsigned char，以及Integral Promotion&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.51cto.com/art/200912/166574.htm"&gt;Linux C编程一站式学习：整型&lt;/a&gt;&lt;/p&gt;</content><category term="C/C++"></category><category term="data type"></category></entry></feed>

@@ -122,10 +122,14 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="C++ const 限定符">C++ const 限定符</a><ul><li><a class="toc-href" href="#1. wei shi yao yao shi yong  const xian ding fu" title="1. 为什么要使用 const 限定符">1. 为什么要使用 const 限定符</a><ul><li><a class="toc-href" href="#1.1. yi ge xu yao shi yong  const de jian dan li zi" title="1.1. 一个需要使用 const 的简单例子">1.1. 一个需要使用 const 的简单例子</a></li></ul></li><li><a class="toc-href" href="#2. ru he shi yong  const xian ding fu_1" title="2. 如何使用 const 限定符">2. 如何使用 const 限定符</a><ul><li><a class="toc-href" href="#2.1. wen jian de ju bu bian liang" title="2.1. 文件的局部变量">2.1. 文件的局部变量</a></li><li><a class="toc-href" href="#2.2. shi yong  const de fang fa" title="2.2. 使用 const 的方法">2.2. 使用 const 的方法</a></li><li><a class="toc-href" href="#2.3. const yin yong  &amp; const dui xiang" title="2.3. const 引用 &amp; const 对象">2.3. const 引用 &amp; const 对象</a></li></ul></li><li><a class="toc-href" href="#3. he shi ying gai shi yong  const_1" title="3. 何时应该使用 const">3. 何时应该使用 const</a><ul><li><a class="toc-href" href="#3.1. effective c++ tiao kuan  02:jin liang yi  const, enum, inline ti huan  #define(prefer consts,enums,and inline to #define)" title="3.1. Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）">3.1. Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</a></li><li><a class="toc-href" href="#3.2. effective c++ tiao kuan  03:jin ke neng shi yong  const(use const whenever possile)" title="3.2. Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）">3.2. Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</a></li></ul></li><li><a class="toc-href" href="#4. can kao_1" title="4. 参考">4. 参考</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2>1. 为什么要使用 const 限定符</h2>
-<hr>
-<h3>1.1. 一个需要使用 const 的简单例子</h3>
+    <h2 id="1. wei shi yao yao shi yong  const xian ding fu">1. 为什么要使用 const 限定符</h2>
+<hr/>
+<h3 id="1.1. yi ge xu yao shi yong  const de jian dan li zi">1.1. 一个需要使用 const 的简单例子</h3>
 <p><a href="http://book.douban.com/subject/1767741/"><em>C++ Primer</em></a> 中的例子</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -134,7 +138,6 @@
 <span class="p">}</span>
 </pre></div>
 </td></tr></table>
-
 <p>这段代码语法上是没有问题的，但是事实上是有两个小问题的，而且两个小问题都和数字 <code>512</code> 有关 。</p>
 <p><strong>第一个问题是 程序的可读性</strong></p>
 <p>比较 <code>index</code> 与 <code>512</code> 有什么意思呢？也就是说 512 这个值作用何在？在程序中这种数字被称为 <code>魔数（magic number）</code>，它的意义在上下文中没有体现出来，好像这个数是凭空魔术般变出来的 。</p>
@@ -150,18 +153,16 @@
 <span class="p">}</span>
 </pre></div>
 </td></tr></table>
-
 <p>通过定义一个好记的变量，就可以增强程序的可读性，而且需要改变这个值时，只需要咋初始化的地方做修改 。这种方法不仅明显减小了工作量，而且大大减小了出错的可能性 。</p>
 <p><em>看起来问题好像已经解决了，但是，事实上，我们可以进一步</em></p>
 <p>在上面的代码中，<code>buf_size</code> 是可以被修改的，它有可能会被有意或者无意修改 。为了避免这种情况，就需要使用 const 限定符了 。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">buf_size</span> <span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>定义 <code>buf_size</code> 为 <strong>常量（constant）</strong>，并且初始化为 512 .<strong>变量（variable）</strong> <code>buf_size</code> 仍然是一个左值，但是这个左值现在是不能被修改的。（因为 const 把变量转化为常量，所以在定义的时候必须初始化！）</p>
-<p><br></p>
-<h2>2. 如何使用 const 限定符</h2>
-<hr>
+<p><br/></p>
+<h2 id="2. ru he shi yong  const xian ding fu_1">2. 如何使用 const 限定符</h2>
+<hr/>
 <p>C++ Primer 中有这么一句话</p>
 <blockquote>
 <p>It (const) transforms an object into a constant.</p>
@@ -170,8 +171,8 @@
 <blockquote>
 <p>The variable bufSize is still an lvalue</p>
 </blockquote>
-<p>这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性“</p>
-<h3>2.1. 文件的局部变量</h3>
+<p>这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性&ldquo;</p>
+<h3 id="2.1. wen jian de ju bu bian liang">2.1. 文件的局部变量</h3>
 <p>const 限定符修同时也改变了变量的作用范围 。普通非 const 变量的默认是具有 <em>外部连接（external linkage）</em>的，在全局作用域内定义非 const 变量时，它在整个程序中都可以被访问 。比如</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -186,7 +187,6 @@
 <span class="o">++</span><span class="n">counter</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <p>但是，对于 全局作用域内的 const 类型的对象，其默认是 <em>内部连接（internal linkage）</em>，仅在定义该对象的文件内可见，不能被其他文件访问 。要想在整个程序里面访问，就必须在定义的时候显式地声明为 <code>extern</code> 类型 。比如</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -203,12 +203,11 @@
     <span class="c1">//...</span>
 </pre></div>
 </td></tr></table>
-
-<h3>2.2. 使用 const 的方法</h3>
+<h3 id="2.2. shi yong  const de fang fa">2.2. 使用 const 的方法</h3>
 <ul>
 <li>
 <p>定义在头文件中 inlcude</p>
-<p>如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 ”重定义“  的问题 。</p>
+<p>如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 &rdquo;重定义&ldquo;  的问题 。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -218,11 +217,10 @@
 <span class="k">const</span> <span class="kt">int</span> <span class="n">bufsize</span> <span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
 
 <span class="c1">// file2.cpp</span>
-<span class="n">include</span> <span class="s">&quot;file1.h&quot;</span>
+<span class="n">include</span> <span class="s">"file1.h"</span>
 <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">bufsize</span>
 </pre></div>
 </td></tr></table>
-
 </li>
 <li>
 <p>定义时声明为 extern</p>
@@ -233,7 +231,6 @@
 <span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">bufsize</span> <span class="o">=</span> <span class="mi">512</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 <ul>
 <li>
 <p>在头文件中声明为 extern 类型，以使其他文件共享。</p>
@@ -246,11 +243,10 @@
 <span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">bufsize</span><span class="p">;</span>
 
 <span class="c1">// fil2.cpp</span>
-<span class="cp">#include</span> <span class="cpf">&quot;file1.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"file1.h"</span><span class="cp"></span>
 <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">bufsize</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 </li>
 <li>
 <p>不需要在头文件中声明，在其他文件中使用前声明</p>
@@ -261,7 +257,6 @@
 <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">bufsize</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
 </li>
 </ul>
 </li>
@@ -271,74 +266,65 @@
 <blockquote>
 <p>Constants were introduced in early versions of C++ while the Standard C specification was
 still being finished. It was then seen as a good idea and included in C. But somehow, const in
-C came to mean “an ordinary variable that cannot be changed.” <em>In C, it always occupies
+C came to mean &ldquo;an ordinary variable that cannot be changed.&rdquo; <em>In C, it always occupies
 storage and its name is global. The C compiler cannot treat a const as a compile-time
 constant.</em> In C, if you say</p>
 <div class="highlight"><pre><span></span><span class="w">  </span><span class="n">const</span><span class="w"> </span><span class="n">bufsize</span><span class="w"> </span><span class="o">=</span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
 <span class="w">  </span><span class="nc">char</span><span class="w"> </span><span class="n">buf</span><span class="o">[</span><span class="n">bufsize</span><span class="o">]</span><span class="p">;</span><span class="w"></span>
 </pre></div>
-
-
 <p>you will get an error, even though it seems like a rational thing to do. Because bufsize
 occupies storage somewhere, the C compiler cannot know the value at compile time.</p>
-<p>In C++, a const doesn’t necessarily create storage. In C a const always creates storage.
+<p>In C++, a const doesn&rsquo;t necessarily create storage. In C a const always creates storage.
 Whether or not storage is reserved for a const in C++ depends on how it is used. In general, if
 a const is used simply to replace a name with a value (just as you would use a #define), then
-storage doesn’t have to be created for the const. If no storage is created (this depends on the
+storage doesn&rsquo;t have to be created for the const. If no storage is created (this depends on the
 complexity of the data type and the sophistication of the compiler), the values may be folded
 into the code for greater efficiency after type checking, not before, as with #define. If,
 however, you take an address of a const(even unknowingly, by passing it to a function that
 takes a reference argument) or you define it as extern, then storage is created for the const.</p>
-<p>Since a const in C++ defaults to internal linkage, you can’t just define a const in one file and
+<p>Since a const in C++ defaults to internal linkage, you can&rsquo;t just define a const in one file and
 reference it as an extern in another file. To give a const external linkage so it can be
 referenced from another file, you must explicitly define it as extern, like this:</p>
 <div class="highlight"><pre><span></span>  <span class="n">extern</span> <span class="n">const</span> <span class="nb">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 </pre></div>
-
-
 <p>Notice that by giving it an initializer and saying it is extern, you force storage to be created for the const(although the compiler still has the option of doing constant folding here). The
 initialization establishes this as a definition, not a declaration. The declaration:</p>
 <div class="highlight"><pre><span></span>  <span class="n">extern</span> <span class="n">const</span> <span class="nb">int</span> <span class="n">x</span><span class="p">;</span>
 </pre></div>
-
-
 <p>in C++ means that the definition exists elsewhere (again, this is not necessarily true in C).
 <em>You can now see why C++ requires a constdefinition to have an initializer: the initializer
-distinguishes a declaration from a definition (in C it’s always a definition, so no initializer is
+distinguishes a declaration from a definition (in C it&rsquo;s always a definition, so no initializer is
 necessary).</em> With an external constdeclaration, the compiler cannot do constant folding
-because it doesn’t know the value.</p>
+because it doesn&rsquo;t know the value.</p>
 </blockquote>
-<h3>2.3. const 引用 &amp; const 对象</h3>
+<h3 id="2.3. const yin yong  &amp; const dui xiang">2.3. const 引用 &amp; const 对象</h3>
 <p>在引用的定义中声明 const，此 const 约束的是引用，而不是引用的对象 。比如</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref</span> <span class="o">=</span> <span class="n">ival</span>
 </pre></div>
 </td></tr></table>
-
 <p>其中，<code>const</code> 修饰的是 <code>int &amp;</code>，规定了引用 <code>ref</code> 为 const 类型变量，而 <code>ival</code> 的类型则由其他语句定义说明 。</p>
 <p><strong>const 引用： 引用变量为 const 类型，引用对象的类型可以是 const、nonconst、r-value</strong></p>
 <p><strong>nonconst 引用： 引用变量为 nonconst 类型，引用对象只能是同类型的 nonconst 类型</strong></p>
 <p>因为引用只是对象的另外一个名字，它们指向的是统一块内存空间，所以通过修改引用的值就能达到修改对象的值的目的 。</p>
 <p>当对象是 const 类型时，隐含的含义是该对象不能被修改，所以只能定义 const 类型的引用指向它；nonconst 类型的引用隐含的意思是可以通过引用修改对象值，这对于 const 类型的对象来说是不允许的 。</p>
 <p>当对象是 nonconst 类型时，隐含的含义是该对象可以通过引用来修改，此时，const 引用和 nonconst 引用都可以指向该对象 。当使用 nonconst 引用时，可以通过引用修改对象的值；当使用 const 引用时，虽然对象的值是可以改变的，但是不能通过该引用修改，因为引用的类型是 const，定义以后，不能再修改 。 </p>
-<p><br></p>
-<h2>3. 何时应该使用 const</h2>
-<hr>
+<p><br/></p>
+<h2 id="3. he shi ying gai shi yong  const_1">3. 何时应该使用 const</h2>
+<hr/>
 <p>Scott Meyers 大神的经典著作 <a href="http://book.douban.com/subject/1842426/">Effective C++</a> 里面提到的关于 const 的使用 。</p>
-<h3>3.1. Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</h3>
+<h3 id="3.1. effective c++ tiao kuan  02:jin liang yi  const, enum, inline ti huan  #define(prefer consts,enums,and inline to #define)">3.1. Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</h3>
 <p>使用const 代替 #define，事实上 <code>const</code> 的最初动机就是取代预处理器 <code>#define</code> 来进行值替代 。因为 #define 不被视为语言的一部分，这就是它的问题所在 。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#define ASPECT_RATIO 1.653;</span>
 </pre></div>
 </td></tr></table>
-
 <p>记号名 ASPECT_RATIO 也许从未被编译器看见，也许在编译器开始处理代码前就被与处理器移走了，于是记号没有进入记号表，当出现编译错误时，也许会提示是 1.653 而不是 ASPECT_RATIO，这回带来很多困惑 。</p>
 <p>解决之道就是以一个常量代替上述的宏</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="kt">double</span> <span class="n">AspectRatio</span> <span class="o">=</span> <span class="mf">1.653</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-
-<h3>3.2. Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</h3>
-<p><br></p>
-<h2>4. 参考</h2>
+<h3 id="3.2. effective c++ tiao kuan  03:jin ke neng shi yong  const(use const whenever possile)">3.2. Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</h3>
+<p><br/></p>
+<h2 id="4. can kao_1">4. 参考</h2>
 <p><a href="http://book.douban.com/subject/1767741/">C++ Primer</a></p>
 <p><a href="http://book.douban.com/subject/1459728/">Thinking in C++</a></p>
 <p><a href="http://book.douban.com/subject/1842426/">Effective C++</a></p>
