@@ -10,27 +10,44 @@
 
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    <link rel="stylesheet/less" type="text/css" href="http://guqian110.github.io/theme/stylesheet/style.less">
+    <link rel="stylesheet/less" type="text/css" href="http://qiangu.cool/theme/stylesheet/style.less">
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js" type="text/javascript"></script>
 
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="http://qiangu.cool/theme/stylesheet/dark-theme.min.css">
 
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="http://qiangu.cool/theme/pygments/monokai.min.css">
     <link id="pygments-light-theme" rel="stylesheet" type="text/css"
-          href="http://guqian110.github.io/theme/pygments/monokai.min.css">
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="http://qiangu.cool/theme/pygments/monokai.min.css">
 
 
-  <link rel="stylesheet" type="text/css" href="http://guqian110.github.io/theme/font-awesome/css/fontawesome.css">
-  <link rel="stylesheet" type="text/css" href="http://guqian110.github.io/theme/font-awesome/css/brands.css">
-  <link rel="stylesheet" type="text/css" href="http://guqian110.github.io/theme/font-awesome/css/solid.css">
+  <link rel="stylesheet" type="text/css" href="http://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="http://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="http://qiangu.cool/theme/font-awesome/css/solid.css">
 
-    <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
+    <link href="http://qiangu.cool/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
-
-
-    <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
+    <link href="http://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
+    <link rel="shortcut icon" href="http://qiangu.cool/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="http://qiangu.cool/images/favicon.png" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
     <!-- Chrome, Firefox OS and Opera -->
     <meta name="theme-color" content="#333333">
     <!-- Windows Phone -->
@@ -50,27 +67,34 @@
 <meta property="og:title" content="Verilog 的 case 小结"/>
 <meta property="og:description" content="总结 case 的用法和需要注意的细节"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="http://guqian110.github.io/posts/ic/summary_of_case_in_verilog.html"/>
+<meta property="og:url" content="http://qiangu.cool/posts/ic/summary_of_case_in_verilog.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2015-04-15 15:50:00+08:00"/>
 <meta property="article:modified_time" content=""/>
-<meta property="article:author" content="http://guqian110.github.io/author/qian-gu.html">
+<meta property="article:author" content="http://qiangu.cool/author/qian-gu.html">
 <meta property="article:section" content="IC"/>
 <meta property="article:tag" content="case"/>
-<meta property="og:image" content="http://guqian110.github.io/images/logo.png">
+<meta property="og:image" content="http://qiangu.cool/images/logo.png">
 
   <title>Qian's Blog &ndash; Verilog 的 case 小结</title>
 
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
 </head>
-<body class="light-theme">
+<body >
   <aside>
     <div>
-      <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      <a href="http://qiangu.cool">
+        <img src="http://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
-        <a href="http://guqian110.github.io">Qian Gu</a>
+        <a href="http://qiangu.cool">Qian Gu</a>
       </h1>
 
 <p>Stay hungry. Stay foolish.</p>
@@ -99,14 +123,14 @@
   <main>
 
     <nav>
-      <a href="http://guqian110.github.io">Home</a>
+      <a href="http://qiangu.cool">Home</a>
 
       <a href="/authors.html">Authors</a>
       <a href="/archives.html">Archives</a>
       <a href="/categories.html">Categories</a>
       <a href="/tags.html">Tags</a>
 
-      <a href="http://guqian110.github.io/feeds/all.atom.xml">Atom</a>
+      <a href="http://qiangu.cool/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
@@ -115,16 +139,12 @@
       
     <h1 id="summary_of_case_in_verilog">Verilog 的 case 小结</h1>
     <p>
-      Posted on 2015-04-15 15:50 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
+      Posted on 2015-04-15 15:50 in <a href="http://qiangu.cool/category/ic.html">IC</a>
 
         &#8226; 6 min read
     </p>
   </header>
 
-
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="Verilog 的 case 小结">Verilog 的 case 小结</a><ul><li><a class="toc-href" href="#1. def" title="1. Def">1. Def</a><ul><li><a class="toc-href" href="#1.1. syntax:" title="1.1. Syntax:">1.1. Syntax:</a></li><li><a class="toc-href" href="#1.2. case statement header" title="1.2. Case statement header">1.2. Case statement header</a></li><li><a class="toc-href" href="#1.3. case expression" title="1.3. Case expression">1.3. Case expression</a></li><li><a class="toc-href" href="#1.4. case item" title="1.4. Case item">1.4. Case item</a></li><li><a class="toc-href" href="#1.5. case item statement" title="1.5. Case item statement">1.5. Case item statement</a></li><li><a class="toc-href" href="#1.6. case default" title="1.6. Case default">1.6. Case default</a></li><li><a class="toc-href" href="#1.7. casez" title="1.7. Casez">1.7. Casez</a></li><li><a class="toc-href" href="#1.8. casex" title="1.8. casex">1.8. casex</a></li><li><a class="toc-href" href="#1.9. process" title="1.9. Process">1.9. Process</a></li><li><a class="toc-href" href="#1.10. reverse case" title="1.10. reverse case">1.10. reverse case</a></li></ul></li><li><a class="toc-href" href='#2. "full" case statement_1' title='2. "full" case statement'>2. "full" case statement</a><ul><li><a class="toc-href" href="#2.1. hdl full case" title="2.1. HDL full case">2.1. HDL full case</a></li><li><a class="toc-href" href="#2.2. synthesis full case" title="2.2. Synthesis full case">2.2. Synthesis full case</a></li><li><a class="toc-href" href="#2.3. xst full case" title="2.3. XST full case">2.3. XST full case</a></li></ul></li><li><a class="toc-href" href='#3. "parallel" case statement_1' title='3. "parallel" case statement'>3. "parallel" case statement</a><ul><li><a class="toc-href" href="#3.1. non-parallel case statements" title="3.1. Non-parallel case statements">3.1. Non-parallel case statements</a></li><li><a class="toc-href" href="#3.2. parallel case statements" title="3.2. Parallel case statements">3.2. Parallel case statements</a></li><li><a class="toc-href" href="#3.3. xst parallel case" title="3.3. XST parallel case">3.3. XST parallel case</a></li></ul></li><li><a class="toc-href" href="#4. synthesis coding styles_1" title="4. Synthesis coding styles">4. Synthesis coding styles</a></li><li><a class="toc-href" href="#5. summary" title="5. Summary">5. Summary</a></li><li><a class="toc-href" href="#6. ref" title="6. Ref">6. Ref</a></li></ul></li></ul></div>
-    </div>
 
   <div>
     <p>学习了 Cummings 大神 的 paper：<a href="http://www.sunburst-design.com/papers/CummingsSNUG1999Boston_FullParallelCase.pdf">"full_case parallel_case", the Evil Twins of Verilog Synthesis</a> 和 <a href="http://www.phei.com.cn/module/goods/wssd_content.jsp?bookid=38848">Verilog 编程艺术</a></p>
@@ -495,22 +515,43 @@ statements.</p>
   </div>
   <div class="tag-cloud">
     <p>
-      <a href="http://guqian110.github.io/tag/case.html">case</a>
+      <a href="http://qiangu.cool/tag/case.html">case</a>
     </p>
   </div>
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="http://guqian110.github.io/posts/misc/on_top_of_tides_review.html" title="不想当司机的厨子不是好码农 —— 读《浪潮之巅》">
+    <a class="btn float-left" href="http://qiangu.cool/posts/misc/on_top_of_tides_review.html" title="不想当司机的厨子不是好码农 —— 读《浪潮之巅》">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
-    <a class="btn float-right" href="http://guqian110.github.io/posts/ic/configurable_design.html" title="可配置设计">
+    <a class="btn float-right" href="http://qiangu.cool/posts/ic/configurable_design.html" title="可配置设计">
       Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
 
 
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
 </article>
 
     <footer>
@@ -519,6 +560,14 @@ statements.</p>
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="http://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
 </p><p>
   <a rel="license"
      href="http://creativecommons.org/licenses/by-sa/4.0/"
@@ -541,8 +590,8 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@context" : "http://schema.org",
   "@type" : "Blog",
   "name": " Qian's Blog ",
-  "url" : "http://guqian110.github.io",
-  "image": "http://guqian110.github.io/images/logo.png",
+  "url" : "http://qiangu.cool",
+  "image": "http://qiangu.cool/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }
 </script>

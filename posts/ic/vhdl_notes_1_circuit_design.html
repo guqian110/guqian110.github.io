@@ -10,27 +10,44 @@
 
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    <link rel="stylesheet/less" type="text/css" href="http://guqian110.github.io/theme/stylesheet/style.less">
+    <link rel="stylesheet/less" type="text/css" href="http://qiangu.cool/theme/stylesheet/style.less">
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js" type="text/javascript"></script>
 
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="http://qiangu.cool/theme/stylesheet/dark-theme.min.css">
 
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="http://qiangu.cool/theme/pygments/monokai.min.css">
     <link id="pygments-light-theme" rel="stylesheet" type="text/css"
-          href="http://guqian110.github.io/theme/pygments/monokai.min.css">
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="http://qiangu.cool/theme/pygments/monokai.min.css">
 
 
-  <link rel="stylesheet" type="text/css" href="http://guqian110.github.io/theme/font-awesome/css/fontawesome.css">
-  <link rel="stylesheet" type="text/css" href="http://guqian110.github.io/theme/font-awesome/css/brands.css">
-  <link rel="stylesheet" type="text/css" href="http://guqian110.github.io/theme/font-awesome/css/solid.css">
+  <link rel="stylesheet" type="text/css" href="http://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="http://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="http://qiangu.cool/theme/font-awesome/css/solid.css">
 
-    <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
+    <link href="http://qiangu.cool/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
-
-
-    <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
+    <link href="http://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
+    <link rel="shortcut icon" href="http://qiangu.cool/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="http://qiangu.cool/images/favicon.png" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
     <!-- Chrome, Firefox OS and Opera -->
     <meta name="theme-color" content="#333333">
     <!-- Windows Phone -->
@@ -50,28 +67,35 @@
 <meta property="og:title" content="VHDL 笔记 1 —— 电路设计"/>
 <meta property="og:description" content="VHDL 笔记, 电路设计"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="http://guqian110.github.io/posts/ic/vhdl_notes_1_circuit_design.html"/>
+<meta property="og:url" content="http://qiangu.cool/posts/ic/vhdl_notes_1_circuit_design.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2014-09-16 14:56:00+08:00"/>
 <meta property="article:modified_time" content=""/>
-<meta property="article:author" content="http://guqian110.github.io/author/qian-gu.html">
+<meta property="article:author" content="http://qiangu.cool/author/qian-gu.html">
 <meta property="article:section" content="IC"/>
 <meta property="article:tag" content="VHDL"/>
 <meta property="article:tag" content="syntax"/>
-<meta property="og:image" content="http://guqian110.github.io/images/logo.png">
+<meta property="og:image" content="http://qiangu.cool/images/logo.png">
 
   <title>Qian's Blog &ndash; VHDL 笔记 1 —— 电路设计</title>
 
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
 </head>
-<body class="light-theme">
+<body >
   <aside>
     <div>
-      <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      <a href="http://qiangu.cool">
+        <img src="http://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
-        <a href="http://guqian110.github.io">Qian Gu</a>
+        <a href="http://qiangu.cool">Qian Gu</a>
       </h1>
 
 <p>Stay hungry. Stay foolish.</p>
@@ -100,14 +124,14 @@
   <main>
 
     <nav>
-      <a href="http://guqian110.github.io">Home</a>
+      <a href="http://qiangu.cool">Home</a>
 
       <a href="/authors.html">Authors</a>
       <a href="/archives.html">Archives</a>
       <a href="/categories.html">Categories</a>
       <a href="/tags.html">Tags</a>
 
-      <a href="http://guqian110.github.io/feeds/all.atom.xml">Atom</a>
+      <a href="http://qiangu.cool/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
@@ -116,16 +140,12 @@
       
     <h1 id="vhdl_notes_1_circuit_design">VHDL 笔记 1 —— 电路设计</h1>
     <p>
-      Posted on 2014-09-16 14:56 in <a href="http://guqian110.github.io/category/ic.html">IC</a>
+      Posted on 2014-09-16 14:56 in <a href="http://qiangu.cool/category/ic.html">IC</a>
 
         &#8226; 5 min read
     </p>
   </header>
 
-
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="VHDL 笔记 1 &mdash;&mdash; 电路设计">VHDL 笔记 1 &mdash;&mdash; 电路设计</a><ul><li><a class="toc-href" href="#1. code structure" title="1. Code Structure">1. Code Structure</a></li><li><a class="toc-href" href="#2. data types" title="2. Data Types">2. Data Types</a><ul><li><a class="toc-href" href="#2.1. pre-defined data types" title="2.1. Pre-defined Data Types">2.1. Pre-defined Data Types</a><ul><li><a class="toc-href" href="#2.1.1. bit &amp; bit_vector" title="2.1.1. bit &amp; bit_vector">2.1.1. bit &amp; bit_vector</a></li><li><a class="toc-href" href="#2.1.2. std_logic &amp; std_logic_vector" title="2.1.2. std_logic &amp; std_logic_vector">2.1.2. std_logic &amp; std_logic_vector</a></li><li><a class="toc-href" href="#2.1.3. std_ulogic &amp; std_ulogic_vector" title="2.1.3. std_ulogic &amp; std_ulogic_vector">2.1.3. std_ulogic &amp; std_ulogic_vector</a></li><li><a class="toc-href" href="#2.1.4. boolean" title="2.1.4. boolean">2.1.4. boolean</a></li><li><a class="toc-href" href="#2.1.5. integer" title="2.1.5. integer">2.1.5. integer</a></li><li><a class="toc-href" href="#2.1.6. natural" title="2.1.6. natural">2.1.6. natural</a></li><li><a class="toc-href" href="#2.1.7. real" title="2.1.7. real">2.1.7. real</a></li><li><a class="toc-href" href="#2.1.8. physical literal" title="2.1.8. physical literal">2.1.8. physical literal</a></li><li><a class="toc-href" href="#2.1.9. character" title="2.1.9. character">2.1.9. character</a></li><li><a class="toc-href" href="#2.1.10. signed &amp; unsigned" title="2.1.10. signed &amp; unsigned">2.1.10. signed &amp; unsigned</a></li></ul></li><li><a class="toc-href" href="#2.2. user-defined data types_1" title="2.2. User-defined Data Types">2.2. User-defined Data Types</a></li><li><a class="toc-href" href="#2.3. subtypes" title="2.3. Subtypes">2.3. Subtypes</a></li><li><a class="toc-href" href="#2.4. arrays" title="2.4. Arrays">2.4. Arrays</a></li><li><a class="toc-href" href="#2.5. port array" title="2.5. Port Array">2.5. Port Array</a></li><li><a class="toc-href" href="#2.6. signed and unsigned data types" title="2.6. Signed and Unsigned Data Types">2.6. Signed and Unsigned Data Types</a></li><li><a class="toc-href" href="#2.7. data conversion" title="2.7. Data Conversion">2.7. Data Conversion</a></li></ul></li><li><a class="toc-href" href="#3. operators and attributes_1" title="3. Operators and Attributes">3. Operators and Attributes</a><ul><li><a class="toc-href" href="#3.1. opreators" title="3.1. Opreators">3.1. Opreators</a><ul><li><a class="toc-href" href="#3.1.1. assignment" title="3.1.1. assignment">3.1.1. assignment</a></li><li><a class="toc-href" href="#3.1.2. logical" title="3.1.2. logical">3.1.2. logical</a></li><li><a class="toc-href" href="#3.1.3. arithmetic" title="3.1.3. arithmetic">3.1.3. arithmetic</a></li><li><a class="toc-href" href="#3.1.4. comparison" title="3.1.4. comparison">3.1.4. comparison</a></li><li><a class="toc-href" href="#3.1.5. shift" title="3.1.5. shift">3.1.5. shift</a></li><li><a class="toc-href" href="#3.1.6. concatenation" title="3.1.6. concatenation">3.1.6. concatenation</a></li></ul></li><li><a class="toc-href" href="#3.2. attributes_1" title="3.2. Attributes">3.2. Attributes</a><ul><li><a class="toc-href" href="#3.2.1. pre-defined" title="3.2.1. Pre-defined">3.2.1. Pre-defined</a></li><li><a class="toc-href" href="#3.2.2. user-defined" title="3.2.2. User-defined">3.2.2. User-defined</a></li></ul></li><li><a class="toc-href" href="#3.3. operator overloading_1" title="3.3. Operator Overloading">3.3. Operator Overloading</a></li><li><a class="toc-href" href="#3.4. generic" title="3.4. GENERIC">3.4. GENERIC</a></li></ul></li><li><a class="toc-href" href="#4. concurrent code_1" title="4. Concurrent Code">4. Concurrent Code</a><ul><li><a class="toc-href" href="#4.1. when" title="4.1. when">4.1. when</a></li><li><a class="toc-href" href="#4.2. generate" title="4.2. generate">4.2. generate</a></li><li><a class="toc-href" href="#4.3. block" title="4.3. block">4.3. block</a></li></ul></li><li><a class="toc-href" href="#5. sequential code_1" title="5. Sequential Code">5. Sequential Code</a><ul><li><a class="toc-href" href="#5.1. process" title="5.1. process">5.1. process</a></li><li><a class="toc-href" href="#5.2. if" title="5.2. if">5.2. if</a></li><li><a class="toc-href" href="#5.3. wait" title="5.3. wait">5.3. wait</a></li><li><a class="toc-href" href="#5.4. case" title="5.4. case">5.4. case</a></li><li><a class="toc-href" href="#5.5. loop" title="5.5. loop">5.5. loop</a></li></ul></li><li><a class="toc-href" href="#6. signals &amp; variables_1" title="6. Signals &amp; Variables">6. Signals &amp; Variables</a><ul><li><a class="toc-href" href="#6.1. constant" title="6.1. constant">6.1. constant</a></li><li><a class="toc-href" href="#6.2. signal" title="6.2. signal">6.2. signal</a></li><li><a class="toc-href" href="#6.3. variable" title="6.3. variable">6.3. variable</a></li></ul></li><li><a class="toc-href" href="#7. reference_1" title="7. Reference">7. Reference</a></li></ul></li></ul></div>
-    </div>
 
   <div>
     <h2 id="1. code structure">1. Code Structure</h2>
@@ -765,17 +785,17 @@
   </div>
   <div class="tag-cloud">
     <p>
-      <a href="http://guqian110.github.io/tag/vhdl.html">VHDL</a>
-      <a href="http://guqian110.github.io/tag/syntax.html">syntax</a>
+      <a href="http://qiangu.cool/tag/vhdl.html">VHDL</a>
+      <a href="http://qiangu.cool/tag/syntax.html">syntax</a>
     </p>
   </div>
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="http://guqian110.github.io/posts/ic/the_clock_design_in_fpga_2_clock_design.html" title="FPGA 时钟设计 2 —— 时钟设计">
+    <a class="btn float-left" href="http://qiangu.cool/posts/ic/the_clock_design_in_fpga_2_clock_design.html" title="FPGA 时钟设计 2 —— 时钟设计">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
-    <a class="btn float-right" href="http://guqian110.github.io/posts/ic/vhdl_notes_2_system_design.html" title="VHDL 笔记 2 —— 系统设计">
+    <a class="btn float-right" href="http://qiangu.cool/posts/ic/vhdl_notes_2_system_design.html" title="VHDL 笔记 2 —— 系统设计">
       Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
@@ -783,11 +803,32 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="http://guqian110.github.io/posts/ic/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
+      <li><a href="http://qiangu.cool/posts/ic/vhdl_notes_2_system_design.html">VHDL 笔记 2 —— 系统设计</a></li>
     </ul>
   </div>
 
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
 </article>
 
     <footer>
@@ -796,6 +837,14 @@
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="http://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
 </p><p>
   <a rel="license"
      href="http://creativecommons.org/licenses/by-sa/4.0/"
@@ -818,8 +867,8 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@context" : "http://schema.org",
   "@type" : "Blog",
   "name": " Qian's Blog ",
-  "url" : "http://guqian110.github.io",
-  "image": "http://guqian110.github.io/images/logo.png",
+  "url" : "http://qiangu.cool",
+  "image": "http://qiangu.cool/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }
 </script>

@@ -10,27 +10,44 @@
 
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    <link rel="stylesheet/less" type="text/css" href="http://guqian110.github.io/theme/stylesheet/style.less">
+    <link rel="stylesheet/less" type="text/css" href="http://qiangu.cool/theme/stylesheet/style.less">
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js" type="text/javascript"></script>
 
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="http://qiangu.cool/theme/stylesheet/dark-theme.min.css">
 
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="http://qiangu.cool/theme/pygments/monokai.min.css">
     <link id="pygments-light-theme" rel="stylesheet" type="text/css"
-          href="http://guqian110.github.io/theme/pygments/monokai.min.css">
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="http://qiangu.cool/theme/pygments/monokai.min.css">
 
 
-  <link rel="stylesheet" type="text/css" href="http://guqian110.github.io/theme/font-awesome/css/fontawesome.css">
-  <link rel="stylesheet" type="text/css" href="http://guqian110.github.io/theme/font-awesome/css/brands.css">
-  <link rel="stylesheet" type="text/css" href="http://guqian110.github.io/theme/font-awesome/css/solid.css">
+  <link rel="stylesheet" type="text/css" href="http://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="http://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="http://qiangu.cool/theme/font-awesome/css/solid.css">
 
-    <link href="http://guqian110.github.io/static/custom.css" rel="stylesheet">
+    <link href="http://qiangu.cool/static/custom.css" rel="stylesheet">
 
-    <link href="http://guqian110.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
-
-
-    <link rel="shortcut icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="http://guqian110.github.io/images/favicon.png" type="image/x-icon">
+    <link href="http://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
+    <link rel="shortcut icon" href="http://qiangu.cool/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="http://qiangu.cool/images/favicon.png" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
     <!-- Chrome, Firefox OS and Opera -->
     <meta name="theme-color" content="#333333">
     <!-- Windows Phone -->
@@ -50,27 +67,34 @@
 <meta property="og:title" content="C++ const 限定符"/>
 <meta property="og:description" content="总结 const 限定符的用法。"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="http://guqian110.github.io/posts/cc/cosnt_qualifier.html"/>
+<meta property="og:url" content="http://qiangu.cool/posts/cc/cosnt_qualifier.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2014-04-09 11:13:00+08:00"/>
 <meta property="article:modified_time" content=""/>
-<meta property="article:author" content="http://guqian110.github.io/author/qian-gu.html">
+<meta property="article:author" content="http://qiangu.cool/author/qian-gu.html">
 <meta property="article:section" content="C/C++"/>
 <meta property="article:tag" content="const"/>
-<meta property="og:image" content="http://guqian110.github.io/images/logo.png">
+<meta property="og:image" content="http://qiangu.cool/images/logo.png">
 
   <title>Qian's Blog &ndash; C++ const 限定符</title>
 
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
 </head>
-<body class="light-theme">
+<body >
   <aside>
     <div>
-      <a href="http://guqian110.github.io">
-        <img src="http://guqian110.github.io/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      <a href="http://qiangu.cool">
+        <img src="http://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
-        <a href="http://guqian110.github.io">Qian Gu</a>
+        <a href="http://qiangu.cool">Qian Gu</a>
       </h1>
 
 <p>Stay hungry. Stay foolish.</p>
@@ -99,14 +123,14 @@
   <main>
 
     <nav>
-      <a href="http://guqian110.github.io">Home</a>
+      <a href="http://qiangu.cool">Home</a>
 
       <a href="/authors.html">Authors</a>
       <a href="/archives.html">Archives</a>
       <a href="/categories.html">Categories</a>
       <a href="/tags.html">Tags</a>
 
-      <a href="http://guqian110.github.io/feeds/all.atom.xml">Atom</a>
+      <a href="http://qiangu.cool/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
@@ -115,16 +139,12 @@
       
     <h1 id="cosnt_qualifier">C++ const 限定符</h1>
     <p>
-      Posted on 2014-04-09 11:13 in <a href="http://guqian110.github.io/category/cc.html">C/C++</a>
+      Posted on 2014-04-09 11:13 in <a href="http://qiangu.cool/category/cc.html">C/C++</a>
 
         &#8226; 4 min read
     </p>
   </header>
 
-
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="C++ const 限定符">C++ const 限定符</a><ul><li><a class="toc-href" href="#1. wei shi yao yao shi yong  const xian ding fu" title="1. 为什么要使用 const 限定符">1. 为什么要使用 const 限定符</a><ul><li><a class="toc-href" href="#1.1. yi ge xu yao shi yong  const de jian dan li zi" title="1.1. 一个需要使用 const 的简单例子">1.1. 一个需要使用 const 的简单例子</a></li></ul></li><li><a class="toc-href" href="#2. ru he shi yong  const xian ding fu_1" title="2. 如何使用 const 限定符">2. 如何使用 const 限定符</a><ul><li><a class="toc-href" href="#2.1. wen jian de ju bu bian liang" title="2.1. 文件的局部变量">2.1. 文件的局部变量</a></li><li><a class="toc-href" href="#2.2. shi yong  const de fang fa" title="2.2. 使用 const 的方法">2.2. 使用 const 的方法</a></li><li><a class="toc-href" href="#2.3. const yin yong  &amp; const dui xiang" title="2.3. const 引用 &amp; const 对象">2.3. const 引用 &amp; const 对象</a></li></ul></li><li><a class="toc-href" href="#3. he shi ying gai shi yong  const_1" title="3. 何时应该使用 const">3. 何时应该使用 const</a><ul><li><a class="toc-href" href="#3.1. effective c++ tiao kuan  02:jin liang yi  const, enum, inline ti huan  #define(prefer consts,enums,and inline to #define)" title="3.1. Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）">3.1. Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</a></li><li><a class="toc-href" href="#3.2. effective c++ tiao kuan  03:jin ke neng shi yong  const(use const whenever possile)" title="3.2. Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）">3.2. Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</a></li></ul></li><li><a class="toc-href" href="#4. can kao_1" title="4. 参考">4. 参考</a></li></ul></li></ul></div>
-    </div>
 
   <div>
     <h2 id="1. wei shi yao yao shi yong  const xian ding fu">1. 为什么要使用 const 限定符</h2>
@@ -331,22 +351,43 @@ because it doesn&rsquo;t know the value.</p>
   </div>
   <div class="tag-cloud">
     <p>
-      <a href="http://guqian110.github.io/tag/const.html">const</a>
+      <a href="http://qiangu.cool/tag/const.html">const</a>
     </p>
   </div>
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="http://guqian110.github.io/posts/ic/pulse_edge_detection.html" title="脉冲边沿检测">
+    <a class="btn float-left" href="http://qiangu.cool/posts/ic/pulse_edge_detection.html" title="脉冲边沿检测">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
-    <a class="btn float-right" href="http://guqian110.github.io/posts/misc/steve_jobs_review.html" title="乔布斯传 书评">
+    <a class="btn float-right" href="http://qiangu.cool/posts/misc/steve_jobs_review.html" title="乔布斯传 书评">
       Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
 
 
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
 </article>
 
     <footer>
@@ -355,6 +396,14 @@ because it doesn&rsquo;t know the value.</p>
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="http://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
 </p><p>
   <a rel="license"
      href="http://creativecommons.org/licenses/by-sa/4.0/"
@@ -377,8 +426,8 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@context" : "http://schema.org",
   "@type" : "Blog",
   "name": " Qian's Blog ",
-  "url" : "http://guqian110.github.io",
-  "image": "http://guqian110.github.io/images/logo.png",
+  "url" : "http://qiangu.cool",
+  "image": "http://qiangu.cool/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }
 </script>
