@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -98,8 +104,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -110,6 +132,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -147,6 +179,10 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="在 Ubuntu 下运行 WarCraft">在 Ubuntu 下运行 WarCraft</a><ul><li><a class="toc-href" href="#an zhuang  wine" title="安装 Wine">安装 Wine</a></li><li><a class="toc-href" href="#kao bei  warcraft" title="拷贝 WarCraft">拷贝 WarCraft</a></li><li><a class="toc-href" href="#pei zhi  wine &amp; warcraft" title="配置 Wine &amp; WarCraft">配置 Wine &amp; WarCraft</a><ul><li><a class="toc-href" href="#cd key zhu ce biao wen ti" title="CD key 注册表问题">CD key 注册表问题</a></li><li><a class="toc-href" href="#fen bian lu wen ti" title="分辨率问题">分辨率问题</a></li><li><a class="toc-href" href="#hua mian qia" title="画面卡">画面卡</a></li></ul></li><li><a class="toc-href" href="#yun xing_1" title="运行">运行</a><ul><li><a class="toc-href" href="#zhong duan xia" title="终端下">终端下</a></li><li><a class="toc-href" href="#zhuo mian qi dong qi" title="桌面启动器">桌面启动器</a></li></ul></li><li><a class="toc-href" href="#can kao_1" title="参考">参考</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>闲来无聊，在 Ubuntu 下 wine 了一个 WarCraft 3 玩</p>
 <p>在实验室的 &rdquo;老爷车&ldquo; 电脑上运行。稍微有一点卡，在5年前买的笔记本（core 2 T6600, 4G RAM）上运行就感觉不到卡了 。</p>
@@ -156,7 +192,7 @@
 <p>Memory: 2.0 GiB</p>
 <p>OS type: 32-bit</p>
 <p><br/></p>
-<h2 id="1. an zhuang  wine">1. 安装 Wine</h2>
+<h2 id="an zhuang  wine">安装 Wine</h2>
 <hr/>
 <p><a href="http://en.wikipedia.org/wiki/Wine_(software)">Wine</a> 是 wine is not an emulator 的缩写，它可以在 x86、x86-64 上容许类 Unix 操作系统在 X Window System 下运行 Microsoft Windows 程序的软件 .它的官方网址：http://www.winehq.org/</p>
 <p>方法一：</p>
@@ -170,13 +206,13 @@ suod apt-get install wine
 </td></tr></table>
 <p>P.S. 若是其他系统，找不到对应的二进制包，可以直接从官网上下载源码，自己编译（官网上有详细的 <a href="http://wiki.winehq.org/FAQ_zhcn">FAQ</a>）</p>
 <p><br/></p>
-<h2 id="2. kao bei  warcraft">2. 拷贝 WarCraft</h2>
+<h2 id="kao bei  warcraft">拷贝 WarCraft</h2>
 <hr/>
 <p>如果是双系统，则不必拷贝 WarCraft 文件夹，因为我电脑上只有 Ubuntu，所以从同学那里拷贝了一个，放在了 <code>～/</code> 目录下 。</p>
 <p><br/></p>
-<h2 id="3. pei zhi  wine &amp; warcraft">3. 配置 Wine &amp; WarCraft</h2>
+<h2 id="pei zhi  wine &amp; warcraft">配置 Wine &amp; WarCraft</h2>
 <hr/>
-<h3 id="3.1. cd key zhu ce biao wen ti">3.1. CD key 注册表问题</h3>
+<h3 id="cd key zhu ce biao wen ti">CD key 注册表问题</h3>
 <p>直接以 wine 运行 <code>war3.exe</code> 时提示没有 CD key，在 WarCraft 目录下找到了两个注册表文件，<code>War3.reg</code> 和 <code>一键导入.reg</code> 。</p>
 <p>在终端下导入注册表</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine regedit
@@ -190,17 +226,17 @@ suod apt-get install wine
 <p>因为我的 Ubuntu 是英文版的，打开后是乱码...</p>
 <p><img alt="war3regfixer" src="/images/run-warcraft-on-ubuntu/war3regfixer.png"/></p>
 <p>找了一台 Windows 电脑，运行了一下，按照向导就可以修复 CD key 的问题 。</p>
-<h3 id="3.2. fen bian lu wen ti">3.2. 分辨率问题</h3>
+<h3 id="fen bian lu wen ti">分辨率问题</h3>
 <p>第一次运行的结果一般不会全屏，处女座的强迫症犯了，还好比较简单 ：D</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine regedit
 </pre></div>
 </td></tr></table>
 <p>找到 <code>HKEY_CURRENT_USER/Software/Blizzard Entertainment/Warcraft III/Video</code>，里面有两个注册表值 <code>resheight</code> 和 <code>reswidth</code>，将他们设为和当前分辨率相同的十进制数值就可以了。</p>
-<h3 id="3.3. hua mian qia">3.3. 画面卡</h3>
+<h3 id="hua mian qia">画面卡</h3>
 <p>因为 Wine 对 DirectX 的支持还不够好，如果电脑配置比较低，运行的时候添加参数 <code>-opengl</code> 就可以了，为了避免每次运行都要输入参数，可以在注册表 <code>HKEY_CURRENT_USER/Software/Blizzard Entertainment/Warcraft III/</code> 下新建整数（DWORD），名为 <code>Gfx OpenGL</code>，值为 1 。</p>
 <p><br/></p>
-<h2 id="4. yun xing_1">4. 运行</h2>
-<h3 id="4.1. zhong duan xia">4.1. 终端下</h3>
+<h2 id="yun xing_1">运行</h2>
+<h3 id="zhong duan xia">终端下</h3>
 <p>现在就可以在终端下运行 war3.exe 了</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine war3.exe
 </pre></div>
@@ -213,7 +249,7 @@ suod apt-get install wine
 <p>效果如下</p>
 <p><img alt="war3window" src="/images/run-warcraft-on-ubuntu/war3window.png"/></p>
 <p>不过个人不是很喜欢，因为鼠标总是超出窗口，极其不方便，影响游戏操作和感受 ：D</p>
-<h3 id="4.2. zhuo mian qi dong qi">4.2. 桌面启动器</h3>
+<h3 id="zhuo mian qi dong qi">桌面启动器</h3>
 <p>我们可以为 war3 添加一个桌面启动器，这样就不用进入终端启动了</p>
 <p>新建文件 <code>frozen-throne.desktop</code> 文件，添加以下内容</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -237,7 +273,7 @@ suod apt-get install wine
 <p>至此，就可以在 Ubuntu 下享受 War3 了</p>
 <p>gl hf！</p>
 <p><br/></p>
-<h2 id="5. can kao_1">5. 参考</h2>
+<h2 id="can kao_1">参考</h2>
 <p><a href="http://linux-wiki.cn/wiki/zh-hans/%E7%94%A8Wine%E8%BF%90%E8%A1%8C%E9%AD%94%E5%85%BD%E4%BA%89%E9%9C%B8III">用Wine运行魔兽争霸III</a></p>
 <p><a href="http://blog.ubuntusoft.com/wine-warcraft-3.html#.U0Xt11SSx38">Wine 魔兽争霸3的一些设置</a></p>
 <p><a href="http://hi.baidu.com/chenwzox/item/4e6346f1575a7ab231c199b4">Wine魔兽争霸3，流畅运行+键盘操作+窗口化</a></p>
@@ -251,7 +287,7 @@ suod apt-get install wine
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="https://qiangu.cool/posts/misc/steve_jobs_review.html" title="乔布斯传 书评">
+    <a class="btn float-left" href="https://qiangu.cool/posts/book/steve_jobs_review.html" title="乔布斯传 书评">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
     <a class="btn float-right" href="https://qiangu.cool/posts/misc/how_to_use_gmail_elegantly.html" title="如何优雅地使用 Gmail">
@@ -344,6 +380,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

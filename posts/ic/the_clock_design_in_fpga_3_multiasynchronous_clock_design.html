@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -97,8 +103,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -109,6 +131,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -146,8 +178,12 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 时钟设计 3 &mdash;&mdash; 跨时钟域设计">FPGA 时钟设计 3 &mdash;&mdash; 跨时钟域设计</a><ul><li><a class="toc-href" href="#problem" title="Problem">Problem</a></li><li><a class="toc-href" href="#synchronous design" title="Synchronous Design">Synchronous Design</a></li><li><a class="toc-href" href="#solution" title="Solution">Solution</a><ul><li><a class="toc-href" href="#solution 1: daul rank synchronizer" title="Solution 1: Daul Rank Synchronizer">Solution 1: Daul Rank Synchronizer</a><ul><li><a class="toc-href" href="#level synchronizer" title="level synchronizer">level synchronizer</a></li><li><a class="toc-href" href="#edge-detecting synchronizer" title="edge-detecting synchronizer">edge-detecting synchronizer</a></li><li><a class="toc-href" href="#pulse synchronizer" title="pulse synchronizer">pulse synchronizer</a></li><li><a class="toc-href" href="#timing" title="Timing">Timing</a></li><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li></ul></li><li><a class="toc-href" href="#solution 2: handshaking_1" title="Solution 2: Handshaking">Solution 2: Handshaking</a><ul><li><a class="toc-href" href="#full handshaking" title="full handshaking">full handshaking</a></li><li><a class="toc-href" href="#partial handshaking" title="partial handshaking">partial handshaking</a></li><li><a class="toc-href" href="#summary_1" title="summary">summary</a></li></ul></li><li><a class="toc-href" href="#solution 3: datapath design_1" title="Solution 3: Datapath Design">Solution 3: Datapath Design</a><ul><li><a class="toc-href" href="#problem_1" title="problem">problem</a></li><li><a class="toc-href" href="#solution_1" title="solution">solution</a></li></ul></li><li><a class="toc-href" href="#solution 4: advanced datapath design_1" title="Solution 4: Advanced Datapath Design">Solution 4: Advanced Datapath Design</a></li><li><a class="toc-href" href="#design partitioning" title="Design Partitioning">Design Partitioning</a></li><li><a class="toc-href" href="#clock name conventions" title="Clock Name Conventions">Clock Name Conventions</a></li></ul></li><li><a class="toc-href" href="#gated clock_1" title="Gated Clock">Gated Clock</a></li><li><a class="toc-href" href="#summary_2" title="Summary">Summary</a></li><li><a class="toc-href" href="#reference" title="Reference">Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2 id="1. problem">1. Problem</h2>
+    <h2 id="problem">Problem</h2>
 <hr/>
 <p>在前面一篇总结 <a href="http://guqian110.github.io/pages/2014/09/23/latch_versus_flip_flop.html">Latch V.S. Flip-flop</a> 的博文中，已经解释了 flip-flop 的一些参数：建立时间 <code>setup time</code>、保持时间 <code>hold time</code>、恢复时间 <code>recovery time</code>、撤销时间 <code>removal time</code>。</p>
 <p>如果不满足这些参数的要求，则会发生所谓的 亚稳态 <code>Metastability</code> 的问题。下面是 Altera 官方的一篇关于亚稳态的 white paper，详细介绍了亚稳态的产生原因、它是如何导致设计出现问题、以及描述它的参数 MTBF (Mean Time Between Failures) 如何计算。</p>
@@ -165,7 +201,7 @@
 <p>如果不加处理，亚稳态产生的错误值将会传播到设计的其他部分，导致更加严重的问题</p>
 <p><img alt="propagatetion" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/propagation.png"/></p>
 <p><br/></p>
-<h2 id="2. synchronous design">2. Synchronous Design</h2>
+<h2 id="synchronous design">Synchronous Design</h2>
 <hr/>
 <p>多时钟域导致的亚稳态的问题的根本原因就是：信号和时钟是异步的，也就是设计不是同步设计 <code>Synchronous Design</code>。</p>
 <p><strong>同步化设计思想</strong> 是 FPGA 中非常重要的原则：</p>
@@ -185,9 +221,9 @@
 </blockquote>
 <p>下面提到的所有方法，就是同步化思想的应用，其核心目的就是将本时钟域外的 <strong>异步信号同步化</strong>。</p>
 <p><br/></p>
-<h2 id="3. solution">3. Solution</h2>
+<h2 id="solution">Solution</h2>
 <hr/>
-<h3 id="3.1. solution 1: daul rank synchronizer">3.1. Solution 1: Daul Rank Synchronizer</h3>
+<h3 id="solution 1: daul rank synchronizer">Solution 1: Daul Rank Synchronizer</h3>
 <p>通常使用 <code>MTBF (Mean Time Between Failures)</code> 来描述 flip-flop 亚稳态指标，MTBF 越大，表示出现故障的间隔越大，表示设计越可靠。</p>
 <p>以一个典型的 0.25 us 工艺的 ASIC 库中的 flip-flop 的参数计算可以得到 MTBF = 2.01 d，即两天就会出现一次亚稳态。显然这是不能接受的，但是如果将两个 flip-flop 级联在一起，计算结果则变成了 9.57&times;109 years，显然这个概率基本就可以忽略不计，可以看作是消除了亚稳态。</p>
 <p>理论上，亚稳态是不可能完全消除的，一般级联多少个 flip-flop，由实际指标要求和设计者的强迫症习惯决定，对于普通的应用来说，2 级 flip-flop 级联已经足够了。</p>
@@ -208,7 +244,7 @@
 </li>
 </ol>
 <p>下面分别讨论：</p>
-<h4 id="3.1.1. level synchronizer">3.1.1. level synchronizer</h4>
+<h4 id="level synchronizer">level synchronizer</h4>
 <p><strong>Schematic:</strong></p>
 <p>电平同步器的结构图就是前面的图，在 Clifford E. Cummings 的 <a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">paper</a> 中有更详细的图解说明：</p>
 <p><img alt="level" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/level.png"/></p>
@@ -317,7 +353,7 @@
 </li>
 </ol>
 <p><em>level synchronizer 是其他两种同步器的基础：</em></p>
-<h4 id="3.1.2. edge-detecting synchronizer">3.1.2. edge-detecting synchronizer</h4>
+<h4 id="edge-detecting synchronizer">edge-detecting synchronizer</h4>
 <p>边沿检测同步器 是在 level synchronizer 的输出端增加了一个 flip-flop，如下图所示。这个电路的功能是实现上升沿检测，产生一个和时钟周期等宽，高电平有效的脉冲；如果将与门的两个输入端交换，则会完成下降沿检测。如果改为非门，则可以得到一个低电平脉冲有效的电路。</p>
 <p><strong>Schematic:</strong></p>
 <p><img alt="edge-detecting" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/edge-detecting.png"/></p>
@@ -418,7 +454,7 @@
 </li>
 </ol>
 <p><em>edge-detecting synchronizer 在将一个慢时钟域的信号同步到一个较快时钟域时可以正常工作，它会产生一个脉冲表示输入信号的上升沿或者下降沿。但是反过来，将一个快时钟域的信号同步到慢时钟域时，并不能正常工作，这时候需要使用 pusle synchronizer。</em></p>
-<h4 id="3.1.3. pulse synchronizer">3.1.3. pulse synchronizer</h4>
+<h4 id="pulse synchronizer">pulse synchronizer</h4>
 <p>脉冲同步器的基本功能是从某个时钟域中取出一个单时钟宽度的脉冲，然后在新的时钟域中建立另外一个单时钟宽度的脉冲。</p>
 <p>源时钟域的单时钟宽度的脉冲不是直接输出的，而是先经过一个源时钟域的翻转电路。这个翻转电路在每次输入一个脉冲时，它的输出会在高、低电平之间翻转。</p>
 <p>而在目的时钟域，翻转电路的输出先通过一个 level synchronizer，其输出到达异或门的一个输入端，而这个输出再经过一个 DFF，延时一个时钟周期后进入异或门的另外一个输入端。最后异或门的输出即最终的同步结果：</p>
@@ -482,16 +518,16 @@
 <p>一般为了保险起见，要求其保持至少两个时钟宽度。</p>
 </li>
 </ol>
-<h4 id="3.1.4. timing">3.1.4. Timing</h4>
+<h4 id="timing">Timing</h4>
 <p>synchronizer 需要花费 1～2 个时钟周期来完成同步，所以粗略的估计可以认为 synchronizer 会造成目的时钟域的 2 个周期的延迟，我们在设计时需要考虑 synchronizer 对时序产生的影响。</p>
-<h4 id="3.1.5. summary">3.1.5. Summary</h4>
+<h4 id="summary">Summary</h4>
 <p>总结 3 种同步器的特点，有下表：</p>
 <p><img alt="synchronizer sum" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/synchronizer_sum.png"/></p>
 <p>虽然还有其他类型的 synchronizer，但是这 3 种基本上就可以解决设计中遇到的多数问题了。</p>
 <p><br/></p>
 <p><em>synchronizer 仅适用于简单的数据跨时钟域传输的同步，除了简单的信号之外，还有数据、地址、控制总线信号等也要跨时钟域。对于这些需求，可以使用其他的工具，比如握手协议、FIFO 等。</em></p>
 <p><br/></p>
-<h3 id="3.2. solution 2: handshaking_1">3.2. Solution 2: Handshaking</h3>
+<h3 id="solution 2: handshaking_1">Solution 2: Handshaking</h3>
 <blockquote>
 <p>Handshaking allows digital circuits to effectively communicate with each other when the response time of one or both circuits is unpredictable. For example, an arbitrated bus allows more than one circuit to request access to a single bus, such as PCI or AMBA (Advanced Microcontroller Bus Architecture), using arbitration to determine which circuit gains access to the bus. Each circuit signals a request, and the arbitration logic determines which request &ldquo;wins.&rdquo; This winning circuit receives an acknowledgment indicating that it has access to the bus. It then discontinues its request and begins the bus transaction.</p>
 </blockquote>
@@ -507,12 +543,12 @@
 </li>
 </ol>
 <p>这两种握手协议都要用到 synchronizer，每种都有各自的优缺点，下面分别讨论：</p>
-<h4 id="3.2.1. full handshaking">3.2.1. full handshaking</h4>
+<h4 id="full handshaking">full handshaking</h4>
 <p><img alt="full" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/full.png"/></p>
 <p>如图所示，全握手协议中，双方电路在声明或中止各自的握手信号前都要等待对方的相应。首先，发送方电路A声明它的请求信号，然后接收方电路B检测到该请求有效后，声明它的效应信号；当电路A检测到响应信号有效之后，中止自己的请求信号；最后，当电路B检测到请求无效之后，中止自己的相应信号。这样，算是完成了一次通信。除非A检测到无效的响应信号，否则它不会再声明新的请求信号。这种机制要求请求电路A必须延迟它的下一个请求，直到它检测到无效的响应信号（意味着上次请求已完成）。</p>
 <p>这种类型的握手使用了 level synchronizer。可以根据两点来粗略估计这个协议的时序：信号跨域一个时钟域需要花费 2 个时钟周期，信号在跨域时钟域之前被电路寄存花费 1 个时钟周期。所以，发送端A需要 5 个周期，接收端B需要 6 个周期。</p>
 <p>全握手鲁棒性很好，因为通过检测请求和响应信号，每个电路都清楚地知道对方的状态，这种方式的不足之处是完成整个过程要花费很多时钟周期。</p>
-<h4 id="3.2.2. partial handshaking">3.2.2. partial handshaking</h4>
+<h4 id="partial handshaking">partial handshaking</h4>
 <p>另一中类型是部分握手。部分握手的双方不用等对方的响应就中止各自的信号，并继续执行握手命令序列。</p>
 <p>部分握手比全握手在健壮性方面稍弱，因为握手信号并不指示各自电路的状态，每一电路都必须保存状态信息（在全握手里这个信息被送出去），但是，由于无需等待对方的响应，完整的时间序列花费较少的时间。</p>
 <p>有两种类型的部分握手：</p>
@@ -524,7 +560,7 @@
 <p>第二种握手方法中，电路A使用一个单时钟宽度脉冲发出它的请求，电路B也以一个单时钟宽度脉冲响应这个请求。这种情况下，两个电路都需要保存状态，以指示请求正待处理。</p>
 <p><img alt="partial-2" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partial_2.png"/></p>
 <p>这种握手使用的是 pusle synchronizer。完整的时序是：电路A需要花费 2 个时钟周期，电路B需要花费 3 个时钟周期。</p>
-<h4 id="3.2.3. summary">3.2.3. summary</h4>
+<h4 id="summary_1">summary</h4>
 <p><img alt="handshaing sum" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/handshaking_sum.png"/></p>
 <p>因为 handshaking 内部采用了 synchronizer，所以可以解决异步信号导致的亚稳态现象。根据实际要求，选择不同的 synchronizer 和握手信号，就有了前面介绍的 3 种不同的 handshaking：</p>
 <ul>
@@ -548,11 +584,11 @@
 <p><br/></p>
 <p><em>在许多应用中，跨时钟域传送的不只是简单的信号，数据总线、地址总线、控制总线都会同时跨域传输。因为 synchronizer 需要花费的时间是不确定的（1 or 2 个时钟周期），所以对于这些多 bit 的数据，synchronizer 无法完成同步功能，通常采用其他的方法，比如使用 FIFO。</em></p>
 <p><br/></p>
-<h3 id="3.3. solution 3: datapath design_1">3.3. Solution 3: Datapath Design</h3>
+<h3 id="solution 3: datapath design_1">Solution 3: Datapath Design</h3>
 <p>在进行信号同步时，有一个重要的原则：</p>
 <p><strong>不应该在设计中的多个地方对同一信号进行同步，即禁止单个信号扇出至多个同步器。</strong></p>
 <p>因为 synchronizer 要花 1~2 个时钟周期，设计者不能确切预测到每个信号何时跨越时钟域，此外，在新时钟域中一组经过同步后的信号其时序是不定的，因为 synchronier 的延迟可以是 1～2 个时钟周期，这种情况下各个同步信号间形成一种&ldquo;竞争状况&rdquo;，这种竞争状况在需要跨域时钟域传输的多组信号间也会发生，例如数据总线、地址总线、控制总线等。因此，<strong>不能对组中的每个信号单独使用 synchronizer，也不能对数据/地址总线的每一位单独使用同步器</strong>，因为在新的时钟域中，要求每个信号同时有效。</p>
-<h4 id="3.3.1. problem">3.3.1. problem</h4>
+<h4 id="problem_1">problem</h4>
 <p>Clifford E. Cummings 在他的文章中举例说明了几种常见的错误：</p>
 <blockquote>
 <p>A frequent mistake made by engineers when working on multi-clock designs is passing multiple control signals from one clock domain to another and overlooking the importance of the sequencing of the control signals. <strong>Simply using synchronizers on all control signals is not always good enough</strong> as will be shown in the following examples. </p>
@@ -569,7 +605,7 @@ enable signal in order to load a data value into the register. If both the load 
 <p><strong> Solution - Logic to generate the proper sequencing signals</strong></p>
 <p><img alt="solution 2" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/solution_2.png"/></p>
 </blockquote>
-<h4 id="3.3.2. solution">3.3.2. solution</h4>
+<h4 id="solution_1">solution</h4>
 <p>有一种解决这个问题的方法是：<strong>使用一个保持寄存器 + 一个握手信号</strong>。</p>
 <p><img alt="solution" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/datapath.png"/></p>
 <p>保持寄存器保持信号总线的数据，握手信号指示目标时钟域何时可以对总线进行采样，源时钟域何时可以更换当前寄存器中保存的内容。</p>
@@ -586,7 +622,7 @@ enable signal in order to load a data value into the register. If both the load 
 <p><br/></p>
 <p><em>如果发送端的数据速率很快/无法控制发送端发送数据的速度，那么就有可能无法满足握手机制中要求数据保持稳定这一要求，这时候这种方法就不再适用，而应该采用其他的方法，比如 FIFO。</em></p>
 <p><br/></p>
-<h3 id="3.4. solution 4: advanced datapath design_1">3.4. Solution 4: Advanced Datapath Design</h3>
+<h3 id="solution 4: advanced datapath design_1">Solution 4: Advanced Datapath Design</h3>
 <p>有时候，数据在跨时钟域时需要&ldquo;堆积&rdquo;起来，这时候只使用单个的寄存器就无法完成工作。比如某个传输电路突发式地发送数据，接收电路来不及采样，为了保持数据不丢失，就必须先把数据存储起来；还有一种情况是接收电路的采样速率比发送速度快，但是位宽却不够，仍然需要将没有采样的数据先暂存起来，这时候就需要使用 FIFO。</p>
 <p>基本上，使用 FIFO 的目的有两个：</p>
 <ol>
@@ -607,7 +643,7 @@ enable signal in order to load a data value into the register. If both the load 
 <p>==============end of update==================================</p>
 <p><em>关于跨时钟域 <a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">papaer1</a> 中还有一些其他方面的技巧，可以帮助我们更好的实现设计。</em></p>
 <p><br/></p>
-<h3 id="3.5. design partitioning">3.5. Design Partitioning</h3>
+<h3 id="design partitioning">Design Partitioning</h3>
 <p><strong>Guideline:</strong></p>
 <blockquote>
 <p>Only allow one clock per module.</p>
@@ -628,7 +664,7 @@ enable signal in order to load a data value into the register. If both the load 
 <p>举例如下图所示：</p>
 <p><img alt="partitioning" src="/images/the-clock-design-in-fpga-3-multiasynchronous-clock-design/partitioning.png"/></p>
 <p><br/></p>
-<h3 id="3.6. clock name conventions">3.6. Clock Name Conventions</h3>
+<h3 id="clock name conventions">Clock Name Conventions</h3>
 <p><strong>Guideline:</strong></p>
 <blockquote>
 <p>Use a clock naming convention to identify the clock source of every signal in a design.</p>
@@ -640,7 +676,7 @@ enable signal in order to load a data value into the register. If both the load 
 <p>作者还举例说明了一个这样的例子：1995 年为 In Focus projectors 设计 video ASIC 时，他们就采用了这样的方法，对于 mircroprocessor 的时钟命名为 uClk，对于 video 的时钟则命名为 vClk。对应的时钟域中的信号的名字也添加了对应的前缀，比如udata，uwrite，uadder等。</p>
 <p>使用了这样的策略后，整个设计团队的攻城狮们都可以很方便地确定某个信号是否为异步信号，如何处理。当时有个攻城狮没有按照这种策略，使用了自己的命名方式，在一次会议之后，大家墙裂建议他修改命名，结果也证明修改之后遇到的问题、出错的概率都小了很多。</p>
 <p><br/></p>
-<h2 id="4. gated clock_1">4. Gated Clock</h2>
+<h2 id="gated clock_1">Gated Clock</h2>
 <hr/>
 <p>虽然 FPGA 可以用来为 ASIC 搭建原型，但是一些 ASIC 中的技术并不适用于 FPGA，比如 gated clock。一般也没有必要在 FPGA 中模拟 ASIC 的低功耗优化。事实上，由于 FPGA 时钟资源的的粗颗粒度性，并不是总能模拟成功。</p>
 <p>下面简单讨论一下 ASIC 中 gated clock 的问题。（更详细的内容见 gated clock 文章，未写）</p>
@@ -730,7 +766,7 @@ enable signal in order to load a data value into the register. If both the load 
 </li>
 </ol>
 <p><br/></p>
-<h2 id="5. summary">5. Summary</h2>
+<h2 id="summary_2">Summary</h2>
 <hr/>
 <p>以上，就是一些在多时钟域设计中处理异步数据的常用方法，总结如下：</p>
 <ol>
@@ -757,7 +793,7 @@ enable signal in order to load a data value into the register. If both the load 
 </li>
 </ol>
 <p><br/></p>
-<h2 id="6. reference">6. Reference</h2>
+<h2 id="reference">Reference</h2>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">Synthesis and Scripting Techniques for Designing Multi-Asynchronous Clock Designs</a></p>
 <p><a href="http://inst.eecs.berkeley.edu/~cs150/sp10/Collections/Papers/ClockCrossing.pdf">Crossing the abyss: asynchronous signals in a synchronous world</a></p>
 <p><a href="http://book.douban.com/subject/10593491/">Xilinx FPGA高级设计及应用</a></p>
@@ -787,9 +823,9 @@ enable signal in order to load a data value into the register. If both the load 
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
       <li><a href="https://qiangu.cool/posts/ic/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
       <li><a href="https://qiangu.cool/posts/ic/clock_dividers.html">时钟分频器</a></li>
-      <li><a href="https://qiangu.cool/posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
     </ul>
   </div>
 
@@ -877,6 +913,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

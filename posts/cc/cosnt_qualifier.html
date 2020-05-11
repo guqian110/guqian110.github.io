@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -97,8 +103,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -109,6 +131,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -146,10 +178,14 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="C++ const 限定符">C++ const 限定符</a><ul><li><a class="toc-href" href="#wei shi yao yao shi yong  const xian ding fu" title="为什么要使用 const 限定符">为什么要使用 const 限定符</a><ul><li><a class="toc-href" href="#yi ge xu yao shi yong  const de jian dan li zi" title="一个需要使用 const 的简单例子">一个需要使用 const 的简单例子</a></li></ul></li><li><a class="toc-href" href="#ru he shi yong  const xian ding fu_1" title="如何使用 const 限定符">如何使用 const 限定符</a><ul><li><a class="toc-href" href="#wen jian de ju bu bian liang" title="文件的局部变量">文件的局部变量</a></li><li><a class="toc-href" href="#shi yong  const de fang fa" title="使用 const 的方法">使用 const 的方法</a></li><li><a class="toc-href" href="#const yin yong  &amp; const dui xiang" title="const 引用 &amp; const 对象">const 引用 &amp; const 对象</a></li></ul></li><li><a class="toc-href" href="#he shi ying gai shi yong  const_1" title="何时应该使用 const">何时应该使用 const</a><ul><li><a class="toc-href" href="#effective c++ tiao kuan  02:jin liang yi  const, enum, inline ti huan  #define(prefer consts,enums,and inline to #define)" title="Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）">Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</a></li><li><a class="toc-href" href="#effective c++ tiao kuan  03:jin ke neng shi yong  const(use const whenever possile)" title="Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）">Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</a></li></ul></li><li><a class="toc-href" href="#can kao_1" title="参考">参考</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2 id="1. wei shi yao yao shi yong  const xian ding fu">1. 为什么要使用 const 限定符</h2>
+    <h2 id="wei shi yao yao shi yong  const xian ding fu">为什么要使用 const 限定符</h2>
 <hr/>
-<h3 id="1.1. yi ge xu yao shi yong  const de jian dan li zi">1.1. 一个需要使用 const 的简单例子</h3>
+<h3 id="yi ge xu yao shi yong  const de jian dan li zi">一个需要使用 const 的简单例子</h3>
 <p><a href="http://book.douban.com/subject/1767741/"><em>C++ Primer</em></a> 中的例子</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -181,7 +217,7 @@
 </td></tr></table>
 <p>定义 <code>buf_size</code> 为 <strong>常量（constant）</strong>，并且初始化为 512 .<strong>变量（variable）</strong> <code>buf_size</code> 仍然是一个左值，但是这个左值现在是不能被修改的。（因为 const 把变量转化为常量，所以在定义的时候必须初始化！）</p>
 <p><br/></p>
-<h2 id="2. ru he shi yong  const xian ding fu_1">2. 如何使用 const 限定符</h2>
+<h2 id="ru he shi yong  const xian ding fu_1">如何使用 const 限定符</h2>
 <hr/>
 <p>C++ Primer 中有这么一句话</p>
 <blockquote>
@@ -192,7 +228,7 @@
 <p>The variable bufSize is still an lvalue</p>
 </blockquote>
 <p>这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性&ldquo;</p>
-<h3 id="2.1. wen jian de ju bu bian liang">2.1. 文件的局部变量</h3>
+<h3 id="wen jian de ju bu bian liang">文件的局部变量</h3>
 <p>const 限定符修同时也改变了变量的作用范围 。普通非 const 变量的默认是具有 <em>外部连接（external linkage）</em>的，在全局作用域内定义非 const 变量时，它在整个程序中都可以被访问 。比如</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -223,7 +259,7 @@
     <span class="c1">//...</span>
 </pre></div>
 </td></tr></table>
-<h3 id="2.2. shi yong  const de fang fa">2.2. 使用 const 的方法</h3>
+<h3 id="shi yong  const de fang fa">使用 const 的方法</h3>
 <ul>
 <li>
 <p>定义在头文件中 inlcude</p>
@@ -317,7 +353,7 @@ distinguishes a declaration from a definition (in C it&rsquo;s always a definiti
 necessary).</em> With an external constdeclaration, the compiler cannot do constant folding
 because it doesn&rsquo;t know the value.</p>
 </blockquote>
-<h3 id="2.3. const yin yong  &amp; const dui xiang">2.3. const 引用 &amp; const 对象</h3>
+<h3 id="const yin yong  &amp; const dui xiang">const 引用 &amp; const 对象</h3>
 <p>在引用的定义中声明 const，此 const 约束的是引用，而不是引用的对象 。比如</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref</span> <span class="o">=</span> <span class="n">ival</span>
 </pre></div>
@@ -329,10 +365,10 @@ because it doesn&rsquo;t know the value.</p>
 <p>当对象是 const 类型时，隐含的含义是该对象不能被修改，所以只能定义 const 类型的引用指向它；nonconst 类型的引用隐含的意思是可以通过引用修改对象值，这对于 const 类型的对象来说是不允许的 。</p>
 <p>当对象是 nonconst 类型时，隐含的含义是该对象可以通过引用来修改，此时，const 引用和 nonconst 引用都可以指向该对象 。当使用 nonconst 引用时，可以通过引用修改对象的值；当使用 const 引用时，虽然对象的值是可以改变的，但是不能通过该引用修改，因为引用的类型是 const，定义以后，不能再修改 。 </p>
 <p><br/></p>
-<h2 id="3. he shi ying gai shi yong  const_1">3. 何时应该使用 const</h2>
+<h2 id="he shi ying gai shi yong  const_1">何时应该使用 const</h2>
 <hr/>
 <p>Scott Meyers 大神的经典著作 <a href="http://book.douban.com/subject/1842426/">Effective C++</a> 里面提到的关于 const 的使用 。</p>
-<h3 id="3.1. effective c++ tiao kuan  02:jin liang yi  const, enum, inline ti huan  #define(prefer consts,enums,and inline to #define)">3.1. Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</h3>
+<h3 id="effective c++ tiao kuan  02:jin liang yi  const, enum, inline ti huan  #define(prefer consts,enums,and inline to #define)">Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</h3>
 <p>使用const 代替 #define，事实上 <code>const</code> 的最初动机就是取代预处理器 <code>#define</code> 来进行值替代 。因为 #define 不被视为语言的一部分，这就是它的问题所在 。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#define ASPECT_RATIO 1.653;</span>
 </pre></div>
@@ -342,9 +378,9 @@ because it doesn&rsquo;t know the value.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="kt">double</span> <span class="n">AspectRatio</span> <span class="o">=</span> <span class="mf">1.653</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-<h3 id="3.2. effective c++ tiao kuan  03:jin ke neng shi yong  const(use const whenever possile)">3.2. Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</h3>
+<h3 id="effective c++ tiao kuan  03:jin ke neng shi yong  const(use const whenever possile)">Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</h3>
 <p><br/></p>
-<h2 id="4. can kao_1">4. 参考</h2>
+<h2 id="can kao_1">参考</h2>
 <p><a href="http://book.douban.com/subject/1767741/">C++ Primer</a></p>
 <p><a href="http://book.douban.com/subject/1459728/">Thinking in C++</a></p>
 <p><a href="http://book.douban.com/subject/1842426/">Effective C++</a></p>
@@ -360,7 +396,7 @@ because it doesn&rsquo;t know the value.</p>
     <a class="btn float-left" href="https://qiangu.cool/posts/ic/pulse_edge_detection.html" title="脉冲边沿检测">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
-    <a class="btn float-right" href="https://qiangu.cool/posts/misc/steve_jobs_review.html" title="乔布斯传 书评">
+    <a class="btn float-right" href="https://qiangu.cool/posts/book/steve_jobs_review.html" title="乔布斯传 书评">
       Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
@@ -450,6 +486,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

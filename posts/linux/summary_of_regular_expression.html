@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -97,8 +103,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -109,6 +131,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -146,6 +178,10 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Regular Expression 小结">Regular Expression 小结</a><ul><li><a class="toc-href" href="#what is a re?" title="What Is a RE?">What Is a RE?</a></li><li><a class="toc-href" href="#basic" title="Basic">Basic</a></li><li><a class="toc-href" href="#simple match patterns" title="Simple Match Patterns">Simple Match Patterns</a></li><li><a class="toc-href" href="#boundaries" title="Boundaries">Boundaries</a></li><li><a class="toc-href" href="#alternation, groups, and backreferences" title="Alternation, Groups, and Backreferences">Alternation, Groups, and Backreferences</a></li><li><a class="toc-href" href="#character classes" title="Character Classes">Character Classes</a></li><li><a class="toc-href" href="#matching unicode and other characters" title="Matching Unicode and Other Characters">Matching Unicode and Other Characters</a></li><li><a class="toc-href" href="#quantifiers" title="Quantifiers">Quantifiers</a><ul><li><a class="toc-href" href="#greedy, lazy, and possessive" title="Greedy, Lazy, and Possessive">Greedy, Lazy, and Possessive</a></li><li><a class="toc-href" href="#basic quantifiers" title="Basic Quantifiers">Basic Quantifiers</a></li><li><a class="toc-href" href="#range syntax" title="Range Syntax">Range Syntax</a></li><li><a class="toc-href" href="#lazy quantifiers" title="Lazy Quantifiers">Lazy Quantifiers</a></li><li><a class="toc-href" href="#possessive quantifiers" title="Possessive Quantifiers">Possessive Quantifiers</a></li></ul></li><li><a class="toc-href" href="#lookarounds_1" title="Lookarounds">Lookarounds</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>看完了 <a href="http://book.douban.com/subject/6959486/">Introducing Regular Expressions</a>，记录一下学习笔记。这本书是非常简单的入门书，一天时间就能看完。作者还推荐了基本进阶书：</p>
 <p><a href="http://book.douban.com/subject/1872091/">Mastering Regular Expressions</a></p>
@@ -153,7 +189,7 @@
 <p><a href="http://book.douban.com/subject/2363803/">Regular Expression Pocket Reference</a></p>
 <p><em>看完这本书，基本上已经满足项目中简单的 RE 需求，以后需要深入的话，再补这几本书。</em></p>
 <p><br/></p>
-<h2 id="1. what is a re?">1. What Is a RE?</h2>
+<h2 id="what is a re?">What Is a RE?</h2>
 <hr/>
 <p>引用 Ken Thompson 的话：</p>
 <blockquote>
@@ -161,7 +197,7 @@
 to match certain strings.</p>
 </blockquote>
 <p><br/></p>
-<h2 id="2. basic">2. Basic</h2>
+<h2 id="basic">Basic</h2>
 <hr/>
 <ul>
 <li>
@@ -196,7 +232,7 @@ to match certain strings.</p>
 </pre></div>
 </li>
 </ul>
-<h2 id="3. simple match patterns">3. Simple Match Patterns</h2>
+<h2 id="simple match patterns">Simple Match Patterns</h2>
 <hr/>
 <p>几个常见的模式匹配：</p>
 <ul>
@@ -246,7 +282,7 @@ to match certain strings.</p>
 </li>
 </ul>
 <p><br/></p>
-<h2 id="4. boundaries">4. Boundaries</h2>
+<h2 id="boundaries">Boundaries</h2>
 <hr/>
 <ul>
 <li>
@@ -269,7 +305,7 @@ to match certain strings.</p>
 </li>
 </ul>
 <p><br/></p>
-<h2 id="5. alternation, groups, and backreferences">5. Alternation, Groups, and Backreferences</h2>
+<h2 id="alternation, groups, and backreferences">Alternation, Groups, and Backreferences</h2>
 <hr/>
 <ul>
 <li>
@@ -301,7 +337,7 @@ to match certain strings.</p>
 </li>
 </ul>
 <p><br/></p>
-<h2 id="6. character classes">6. Character Classes</h2>
+<h2 id="character classes">Character Classes</h2>
 <hr/>
 <ul>
 <li>
@@ -345,7 +381,7 @@ to match certain strings.</p>
 </li>
 </ul>
 <p><br/></p>
-<h2 id="7. matching unicode and other characters">7. Matching Unicode and Other Characters</h2>
+<h2 id="matching unicode and other characters">Matching Unicode and Other Characters</h2>
 <hr/>
 <ul>
 <li>
@@ -371,9 +407,9 @@ to match certain strings.</p>
 </li>
 </ul>
 <p><br/></p>
-<h2 id="8. quantifiers">8. Quantifiers</h2>
+<h2 id="quantifiers">Quantifiers</h2>
 <hr/>
-<h3 id="8.1. greedy, lazy, and possessive">8.1. Greedy, Lazy, and Possessive</h3>
+<h3 id="greedy, lazy, and possessive">Greedy, Lazy, and Possessive</h3>
 <p>量词的属性有 贪婪，懒惰，占有。</p>
 <ul>
 <li>
@@ -402,7 +438,7 @@ to match certain strings.</p>
 </blockquote>
 </li>
 </ul>
-<h3 id="8.2. basic quantifiers">8.2. Basic Quantifiers</h3>
+<h3 id="basic quantifiers">Basic Quantifiers</h3>
 <ul>
 <li><code>?</code>    匹配 0 或 1 次</li>
 <li><code>+</code>    匹配 1 或 多次</li>
@@ -410,7 +446,7 @@ to match certain strings.</p>
 </ul>
 <p>这些量词默认是贪心的，也就是说第一次尝试时会尽可能多地匹配字符。</p>
 <p><code>.*</code> 叫做 <code>Kleene star</code>，以纪念 RE 的发明人Stephen Kleene。</p>
-<h3 id="8.3. range syntax">8.3. Range Syntax</h3>
+<h3 id="range syntax">Range Syntax</h3>
 <ul>
 <li><code>{n}</code>   精确匹配 n 次</li>
 <li><code>{n,}</code>  匹配 n 次 或 多次</li>
@@ -419,7 +455,7 @@ to match certain strings.</p>
 <li><code>{1,0}</code> 与 <code>+</code> 相同（1 或 多次）</li>
 <li><code>{0,}</code>  与 <code>*</code> 相同（0 或 多次）</li>
 </ul>
-<h3 id="8.4. lazy quantifiers">8.4. Lazy Quantifiers</h3>
+<h3 id="lazy quantifiers">Lazy Quantifiers</h3>
 <p>懒惰的意思就是匹配尽可能少的字符，它就是个懒虫！它总会找到匹配下限。比如 5*?，它不会匹配任何内容，因为 * 的下限是 0 次；再比如 5+?，它只会匹配 1 个5，因为 + 的下限是 1 次；再比如 5{2,5}?，它只会匹配 2 个 5，因为下限是 2。</p>
 <ul>
 <li>?? </li>
@@ -430,7 +466,7 @@ to match certain strings.</p>
 <li>{m,n}?</li>
 </ul>
 <p>上面这些加了 ? 的 RE 表示懒惰匹配，也就是 <em>找下限</em>。</p>
-<h3 id="8.5. possessive quantifiers">8.5. Possessive Quantifiers</h3>
+<h3 id="possessive quantifiers">Possessive Quantifiers</h3>
 <p>占有式量词就是贪婪式量词的弱化版，只在第一次进行匹配，如果失败就停止，而不是继续回溯下去。它会将自己的输入</p>
 <ul>
 <li>?+</li>
@@ -442,7 +478,7 @@ to match certain strings.</p>
 </ul>
 <p>这些量词后面加了 + 的 RE 表示占有匹配，也就是只检查第一次尝试。</p>
 <p><br/></p>
-<h2 id="9. lookarounds_1">9. Lookarounds</h2>
+<h2 id="lookarounds_1">Lookarounds</h2>
 <hr/>
 <p>环视 是一种非捕获分组，它的作用是检查模式的前/后的内容来匹配，也成为 零宽度断言 <code>zero-width
 assertions</code>。</p>
@@ -498,7 +534,7 @@ assertions</code>。</p>
 <p><br/></p>
 <p>了解了这些基础知识，基本上就可以读懂、书写 RE 了，还需要的就是平时多加思考练习，然后看更加高阶的书了。</p>
 <p><br/></p>
-<h2 id="10. ref">10. Ref</h2>
+<h2 id="ref">Ref</h2>
 <p><a href="http://book.douban.com/subject/6959486/">Introducing Regular Expressions</a></p>
   </div>
   <div class="tag-cloud">
@@ -602,6 +638,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

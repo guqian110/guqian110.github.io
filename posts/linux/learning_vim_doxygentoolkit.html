@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -99,8 +105,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -111,6 +133,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -148,13 +180,17 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Vim 插件 DoxygenToolKit.vim">学习 Vim 插件 DoxygenToolKit.vim</a><ul><li><a class="toc-href" href="#doxygentoolkit" title="DoxygenToolKit">DoxygenToolKit</a><ul><li><a class="toc-href" href="#installation" title="Installation">Installation</a></li><li><a class="toc-href" href="#configuration for c++" title="Configuration for c++">Configuration for c++</a></li><li><a class="toc-href" href="#usage" title="Usage">Usage</a></li><li><a class="toc-href" href="#example" title="Example">Example</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p><a href="http://guqian110.github.io/pages/2015/01/11/how_to_analysize_code_elegantly.html">前面一篇博客</a>已经介绍过 Doxygen 了，Doxygen 的确是一个非常给力的工具，但是为了生成文档，我们必须在注释上花费很大的时间和精力。</p>
 <p>那么问题又来了：<strong>如何才能既享受 Doxygen 的强大功能，同时又避免大量的重复性的注释内容？</strong></p>
 <p>解决思路： 让编辑器来替我们写那些格式和内容固定的部分，我们只负责写真正的有效内容。</p>
 <p>所以，答案就是：<strong>Vim + DoxygenToolKit.vim 插件</strong></p>
 <p><br/></p>
-<h2 id="1. doxygentoolkit">1. DoxygenToolKit</h2>
+<h2 id="doxygentoolkit">DoxygenToolKit</h2>
 <hr/>
 <p>DoxygenToolKit 是 Vim 的一款插件，用它可以很方便地添加 Doxygen 风格的注释，可以节省大量时间和精力，提高写代码的效率。</p>
 <p><a href="http://www.vim.org/scripts/script.php?script_id=987">DoxygenToolKit Official Website</a> 官网上介绍，目前定义了 5 个功能：</p>
@@ -178,7 +214,7 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 </li>
 </ul>
 </blockquote>
-<h3 id="1.1. installation">1.1. Installation</h3>
+<h3 id="installation">Installation</h3>
 <p>如果我们使用 Vundle 管理插件，安装步骤就非常简单了：</p>
 <ol>
 <li>
@@ -193,7 +229,7 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 </li>
 </ol>
 <p>Vundle 会自动完成安装 :-D</p>
-<h3 id="1.2. configuration for c++">1.2. Configuration for c++</h3>
+<h3 id="configuration for c++">Configuration for c++</h3>
 <p>我们有两种方法可以修改设置，方法一是直接在 DoxygenToolKit.vim 脚本文件中修改相关变量；方法二是在 ~/.vimrc 里面修改。显然方法二更加好一点，因为如果用方法一直接改原脚本，可能还得保存备份才能恢复默认值。</p>
 <p>因为平时写的 C++ 程序比较多，所以针对<a href="http://blog.csdn.net/czyt1988/article/details/8901191">基于 Doxygen 的 C++ 注释风格</a>，我们需要进行以下几步：</p>
 <ol>
@@ -226,7 +262,7 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 </pre></div>
 </li>
 </ol>
-<h3 id="1.3. usage">1.3. Usage</h3>
+<h3 id="usage">Usage</h3>
 <p>官网上也给出了使用方法：</p>
 <ul>
 <li>
@@ -251,7 +287,7 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 </li>
 </ul>
 <p>为了方便使用，我们可以自定义一些 map，省去输入命令的繁琐。</p>
-<h3 id="1.4. example">1.4. Example</h3>
+<h3 id="example">Example</h3>
 <p>同样是官网上的例子：</p>
 <p>假设有个函数如下</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -292,7 +328,7 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 </pre></div>
 </td></tr></table>
 <p><br/></p>
-<h2 id="2. ref_1">2. Ref</h2>
+<h2 id="ref_1">Ref</h2>
 <p><a href="http://www.vim.org/scripts/script.php?script_id=987">DoxygenToolKit.vim</a></p>
   </div>
   <div class="tag-cloud">
@@ -317,9 +353,9 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
     <h4>You might enjoy</h4>
     <ul class="related-posts">
       <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_bufexplorer_nerdtree_winmanager_powerline.html">学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learn_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
       <li><a href="https://qiangu.cool/posts/ic/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & Modelsim</a></li>
     </ul>
   </div>
@@ -408,6 +444,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

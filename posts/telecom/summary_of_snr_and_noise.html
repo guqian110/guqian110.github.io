@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -97,8 +103,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -109,6 +131,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -146,9 +178,13 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="信噪比小结">信噪比小结</a><ul><li><a class="toc-href" href="#snr def" title="SNR Def">SNR Def</a></li><li><a class="toc-href" href="#snr in telecom" title="SNR in telecom">SNR in telecom</a><ul><li><a class="toc-href" href="#eb/n0" title="Eb/N0">Eb/N0</a></li></ul></li><li><a class="toc-href" href="#awgn_1" title="AWGN">AWGN</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>所谓 <code>信噪比（SNR, Signal-to-noise ratio）</code> 就是指 信号的功率 和噪声的功率 的比值。我们可以用它来比较信号的和背景噪声的相对大小，如果比值大于 1（0 dB），说明信号功率比噪声功率强。</p>
-<h2 id="1. snr def">1. SNR Def</h2>
+<h2 id="snr def">SNR Def</h2>
 <hr/>
 <p>信噪比的定义式：</p>
 <p><img alt="def" src="http://upload.wikimedia.org/math/f/0/e/f0e032777062c3f945554f1c63d9c864.png"/></p>
@@ -177,7 +213,7 @@
 </li>
 </ul>
 <p><br/></p>
-<h2 id="2. snr in telecom">2. SNR in telecom</h2>
+<h2 id="snr in telecom">SNR in telecom</h2>
 <hr/>
 <p>在物理学中，交流电信号的 平均功率 = (电压&times;电流) 的均值，如下式：</p>
 <p><img alt="eq5" src="http://upload.wikimedia.org/math/b/a/1/ba1615e4d1dc51196247c5a912227dba.png"/></p>
@@ -186,7 +222,7 @@
 <p>所以信号的功率表示式简化为下面的公式：</p>
 <p><img alt="eq7" src="http://upload.wikimedia.org/math/a/e/7/ae780e83e953d7329de754a42fcddb63.png"/></p>
 <p>（其中，<code>A</code> 是交流信号的幅度）</p>
-<h3 id="2.1. eb/n0">2.1. Eb/N0</h3>
+<h3 id="eb/n0">Eb/N0</h3>
 <p>在数字系统中可以使用 SNR 表示噪声的等级，但是更常用的是 <code>Eb/N0 (energy per bit to noise power spectral density ratio)</code>。</p>
 <p>Eb/N0 是一种归一化的 SNR，称为 &ldquo; SNR 每 bit &rdquo;，在比较不同的调制方案的 <code>误比特率（BER, bit error rate）</code> 性能时，因为这种方法不考虑带宽的因素，所以很有效。</p>
 <p>其中 Eb 是平均比特能量，它表示平均每个 bit 包含的能量。</p>
@@ -194,7 +230,7 @@
 <p><img alt="eq9" src="http://upload.wikimedia.org/math/3/5/3/353410b95506c2f45e069c58ff3d121b.png"/></p>
 <p>P.S. 上面的公式左边使用的是载噪比 CNR，在抑制载波的调制方式中，等于信噪比 SNR。</p>
 <p><br/></p>
-<h2 id="3. awgn_1">3. AWGN</h2>
+<h2 id="awgn_1">AWGN</h2>
 <hr/>
 <p>高斯分布（<code>Gaussian distribution</code>）可以使用 <code>N(&mu;,&sigma;2 )</code> 来表示，其中 &mu; 是均值，&sigma; 是标准差。</p>
 <p>对噪声进行建模，最简单的就是 <strong>加性高斯白噪声 (AWGN, Additive White Gaussian Noise)</strong>。</p>
@@ -223,7 +259,7 @@
 </li>
 </ol>
 <p><br/></p>
-<h2 id="4. ref">4. Ref</h2>
+<h2 id="ref">Ref</h2>
 <p><a href="http://en.wikipedia.org/wiki/Signal-to-noise_ratio">Signal-to-noise ratio</a></p>
 <p><a href="http://en.wikipedia.org/wiki/Eb/N0">Eb/N0</a></p>
 <p><a href="http://en.wikipedia.org/wiki/Gaussian_noise">Gaussian noise</a></p>
@@ -330,6 +366,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

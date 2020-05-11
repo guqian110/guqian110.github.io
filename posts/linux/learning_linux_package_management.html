@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -97,8 +103,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -109,6 +131,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -146,8 +178,12 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Linux 软件包依赖管理">学习 Linux 软件包依赖管理</a><ul><li><a class="toc-href" href="#linux ruan jian bao yi lai wen ti" title="Linux 软件包依赖问题">Linux 软件包依赖问题</a></li><li><a class="toc-href" href="#linux bao guan li xi tong" title="Linux 包管理系统">Linux 包管理系统</a><ul><li><a class="toc-href" href="#dpkg" title="Dpkg">Dpkg</a><ul><li><a class="toc-href" href="#chang yong yu fa" title="常用语法">常用语法</a></li><li><a class="toc-href" href="#xiang xi yong fa" title="详细用法">详细用法</a></li></ul></li><li><a class="toc-href" href="#apt_1" title="Apt">Apt</a><ul><li><a class="toc-href" href="#chang yong yu fa_1" title="常用语法">常用语法</a></li><li><a class="toc-href" href="#xiang xi yong fa_1" title="详细用法">详细用法</a></li><li><a class="toc-href" href="#cai dan" title="彩蛋">彩蛋</a></li></ul></li><li><a class="toc-href" href="#aptitude_1" title="Aptitude">Aptitude</a><ul><li><a class="toc-href" href="#chang yong yu fa_2" title="常用语法">常用语法</a></li><li><a class="toc-href" href="#xiang xi yong fa_2" title="详细用法">详细用法</a></li><li><a class="toc-href" href="#cai dan_1" title="彩蛋">彩蛋</a></li></ul></li><li><a class="toc-href" href="#yum_1" title="YUM">YUM</a></li></ul></li><li><a class="toc-href" href="#ju ge li zi_1" title="举个栗子">举个栗子</a><ul><li><a class="toc-href" href="#wen ti" title="问题">问题</a></li><li><a class="toc-href" href="#jie jue wen ti  ---- shi yong  aptitude" title="解决问题 &mdash;&mdash; 使用 aptitude">解决问题 &mdash;&mdash; 使用 aptitude</a></li></ul></li><li><a class="toc-href" href="#can kao_1" title="参考">参考</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2 id="1. linux ruan jian bao yi lai wen ti">1. Linux 软件包依赖问题</h2>
+    <h2 id="linux ruan jian bao yi lai wen ti">Linux 软件包依赖问题</h2>
 <hr/>
 <p>早期的 Linux 系统上的软件是通过源码方式发布的，大家下载下来，在自己的机器上编译，得到可执行程序 。</p>
 <p>但是，任何程序员写程序都有可能会依赖一些别人已经写成的库，所以几乎一定规模的程序必然有依赖 。尤其是对于 Linux 系统，因为它是 <strong>free（自由，not 免费）</strong>，开源软件的开发者不是在一个体系下，软件包的依赖关系就比较伤脑筋了， 尤其是当我们的系统里有成百上千的软件时，软件包管理的必要性就更明显了 。</p>
@@ -183,7 +219,7 @@ Windows：通常而言，这个系统的软件是商业软件，因此，他们�
 4. 系统中安装的软件越多，越容易出问题。</p>
 </blockquote>
 <p><br/></p>
-<h2 id="2. linux bao guan li xi tong">2. Linux 包管理系统</h2>
+<h2 id="linux bao guan li xi tong">Linux 包管理系统</h2>
 <hr/>
 <p><a href="http://en.wikipedia.org/wiki/Package_management_system">Package management system on wikipedia</a>:</p>
 <blockquote>
@@ -193,12 +229,12 @@ Windows：通常而言，这个系统的软件是商业软件，因此，他们�
 Package management systems are designed to save organizations time and money through remote administration and software distribution technology that eliminate the need for manual installs and updates. This can be particularly useful for large enterprises whose operating systems are based on Linux and other Unix-like systems, typically consisting of hundreds or even thousands of distinct software packages; in the former case, a package management system is a convenience, in the latter case it becomes essential.</p>
 </blockquote>
 <p>在 Linux 发行版中，几乎每一个发行版都有自己的软件包管理系统 。</p>
-<h3 id="2.1. dpkg">2.1. Dpkg</h3>
+<h3 id="dpkg">Dpkg</h3>
 <p><a href="http://en.wikipedia.org/wiki/Dpkg">Dpkg on wiki</a></p>
 <p>Dpkg 是基于 Debian 系统的包管理软件 。<code>dpg</code> 可以用来安装、删除、提供<code>.deb</code> 格式软件包相关信息的文件 。</p>
 <p>dpkg 由 Matt Welsh、Carl Streeter、 Ian Murdock 用 Perl 语言编写，后来在 1994 年。 Ian Jackson 改用 C 重写了大部分内容 。</p>
 <p>dpkg 是 &ldquo;Debian package&rdquo; 的缩写，它最初是为 Debian 系统编写的，也可以在使用 <code>.deb</code> 格式的 Ubuntu 系统上使用 。</p>
-<h4 id="2.1.1. chang yong yu fa">2.1.1. 常用语法</h4>
+<h4 id="chang yong yu fa">常用语法</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -208,20 +244,20 @@ dpkg -l <span class="o">[</span>optional pattern<span class="o">]</span>  // lis
 dpkg --configure package    // configure package
 </pre></div>
 </td></tr></table>
-<h4 id="2.1.2. xiang xi yong fa">2.1.2. 详细用法</h4>
+<h4 id="xiang xi yong fa">详细用法</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>dpkg --help
 man dpkg
 </pre></div>
 </td></tr></table>
-<h3 id="2.2. apt_1">2.2. Apt</h3>
+<h3 id="apt_1">Apt</h3>
 <p><a href="http://en.wikipedia.org/wiki/Advanced_Packaging_Tool">Advanced Packaging Tool on wiki</a></p>
 <blockquote>
 <p>The Advanced Packaging Tool, or APT, is a free software user interface that works with core libraries to handle the installation and removal of software on the Debian GNU/Linux distribution and its variants. APT simplifies the process of managing software on Unix-like computer systems by automating the retrieval, configuration and installation of software packages, either from precompiled files or by compiling source code.</p>
 </blockquote>
 <p>apt 最初是设计为 dpkg 的前端，用来处理 <code>.deb</code> 格式的文件，后来它被 <code>APT-RPM</code> 组织改造可以支持 RPM 包管理系统 。</p>
 <p>apt 由 <code>apt-get</code>、<code>apt-cache</code> 和 <code>apt-config</code> 等小工具组成</p>
-<h4 id="2.2.1. chang yong yu fa">2.2.1. 常用语法</h4>
+<h4 id="chang yong yu fa_1">常用语法</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -233,7 +269,7 @@ apt-get update                      // update <span class="nb">source</span> lis
 apt-get upgrade                     // upgrade installed software
 </pre></div>
 </td></tr></table>
-<h4 id="2.2.2. xiang xi yong fa">2.2.2. 详细用法</h4>
+<h4 id="xiang xi yong fa_1">详细用法</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -243,7 +279,7 @@ man apt-update
 man apt-upgrade
 </pre></div>
 </td></tr></table>
-<h4 id="2.2.3. cai dan">2.2.3. 彩蛋</h4>
+<h4 id="cai dan">彩蛋</h4>
 <ul>
 <li>
 <p>在 terminal 中输入 <code>apt-get -h</code></p>
@@ -267,13 +303,13 @@ man apt-upgrade
    <span class="p">....</span><span class="ss">"Have you mooed today?"</span><span class="p">...</span>
 </pre></div>
 </blockquote>
-<h3 id="2.3. aptitude_1">2.3. Aptitude</h3>
+<h3 id="aptitude_1">Aptitude</h3>
 <p><a href="http://en.wikipedia.org/wiki/Aptitude_(software)">aptitude on wiki</a></p>
 <blockquote>
 <p>aptitude is a front-end to the Advanced Packaging Tool (APT). It displays a list of software packages and allows the user to interactively pick packages to install or remove. It has an especially powerful search system utilizing flexible search patterns. It was initially created for Debian, but has appeared in RPM Package Manager (RPM) based distributions as well (such as Conectiva).</p>
 </blockquote>
 <p>aptitude 是 APT 的文本界面客户端，它的交互性比 apt 好，似乎在处理依赖问题上也更好一些（我遇到的问题，用 aptitude 可以很方便地解决而 apt 不行 ）</p>
-<h4 id="2.3.1. chang yong yu fa">2.3.1. 常用语法</h4>
+<h4 id="chang yong yu fa_2">常用语法</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -289,25 +325,25 @@ aptitude update
 aptitude dist-update
 </pre></div>
 </td></tr></table>
-<h4 id="2.3.2. xiang xi yong fa">2.3.2. 详细用法</h4>
+<h4 id="xiang xi yong fa_2">详细用法</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>man aptitude
 aptitude -h
 </pre></div>
 </td></tr></table>
-<h4 id="2.3.3. cai dan">2.3.3. 彩蛋</h4>
+<h4 id="cai dan_1">彩蛋</h4>
 <p><img alt="aptitude" src="/images/learning-linux-package-management/aptitude.png"/></p>
-<h3 id="2.4. yum_1">2.4. YUM</h3>
+<h3 id="yum_1">YUM</h3>
 <p><a href="http://zh.wikipedia.org/wiki/Yum">Yellowdog Updater, Modified on wiki</a></p>
 <blockquote>
 <p>The Yellowdog Updater, Modified (yum) is an open-source command-line package-management utility for Linux operating systems using the RPM Package Manager. Though yum has a command-line interface, several other tools provide graphical user interfaces to yum functionality.</p>
 </blockquote>
 <p>YUM 是一个基于 RPM 包管理的字符前端软件包管理器。能够从指定的服务器自动下载 RPM 包并且安装，可以处理依赖性关系，并且一次安装所有依赖的软件包，无须繁琐地一次次下载、安装 。被 Yellow Dog Linux 本身，以及 Fedora、Red Hat Enterprise Linux 采用 。</p>
 <p><br/></p>
-<h2 id="3. ju ge li zi_1">3. 举个栗子</h2>
+<h2 id="ju ge li zi_1">举个栗子</h2>
 <hr/>
 <p>有些软件要求的库的版本高于(&gt;=)xx.xxx，有些软件要求库的版本必须是(=)xx.xxx，如果我们的库不能满足要求则无法安装软件 。一般 <code>apt-get</code> 会处理比较简单的依赖关系，但是有些依赖关系 <code>apt-get</code> 并不能解决 。这时候可以试试 <code>aptitude</code> 。</p>
-<h3 id="3.1. wen ti">3.1. 问题</h3>
+<h3 id="wen ti">问题</h3>
 <p>为新安装的 Ubuntu 安装开发环境时，遇到了库版本过高的问题，执行下面的命令</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install build-essential
 </pre></div>
@@ -372,7 +408,7 @@ Recommends: build-essential but it is not going to be installed
 <br/>
 E: Unable to correct problems, you have held broken packages.</p>
 </blockquote>
-<h3 id="3.2. jie jue wen ti  ---- shi yong  aptitude">3.2. 解决问题 &mdash;&mdash; 使用 <code>aptitude</code></h3>
+<h3 id="jie jue wen ti  ---- shi yong  aptitude">解决问题 &mdash;&mdash; 使用 <code>aptitude</code></h3>
 <p><strong>解决方法就是降级</strong> 。</p>
 <p>方法有两个：</p>
 <ol>
@@ -460,7 +496,7 @@ Do you want to continue? [Y/n/?] </p>
 <p>选择 <code>y</code>。然后 aptitude 会完成剩余的工作 。</p>
 <p>问题解决啦！</p>
 <p><br/></p>
-<h2 id="4. can kao_1">4. 参考</h2>
+<h2 id="can kao_1">参考</h2>
 <p><a href="http://www.zhihu.com/question/20443067">Unix 的包依赖是如何形成的？</a></p>
 <p><a href="http://daway320.blog.163.com/blog/static/3878369920107331733393/">apt-get install安装软件问题(安装包的依赖库版本过高问题)</a></p>
   </div>
@@ -475,7 +511,7 @@ Do you want to continue? [Y/n/?] </p>
     <a class="btn float-left" href="https://qiangu.cool/posts/linux/learning_vim_save_project_configuration.html" title="学习 Vim 保存项目设置">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
-    <a class="btn float-right" href="https://qiangu.cool/posts/misc/make_friends_with_time_review.html" title="把时间当作朋友 书评">
+    <a class="btn float-right" href="https://qiangu.cool/posts/book/make_friends_with_time_review.html" title="把时间当作朋友 书评">
       Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
@@ -565,6 +601,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

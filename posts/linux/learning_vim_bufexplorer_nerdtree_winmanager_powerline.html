@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -101,8 +107,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -113,6 +135,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -150,8 +182,12 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件">学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件</a><ul><li><a class="toc-href" href="#bufexplorer" title="BufExplorer">BufExplorer</a><ul><li><a class="toc-href" href="#install" title="Install">Install</a></li><li><a class="toc-href" href="#config" title="Config">Config</a></li></ul></li><li><a class="toc-href" href="#nerdtree_1" title="NERDTree">NERDTree</a><ul><li><a class="toc-href" href="#install_1" title="Install">Install</a></li><li><a class="toc-href" href="#usage" title="Usage">Usage</a></li></ul></li><li><a class="toc-href" href="#powerline_1" title="Powerline">Powerline</a><ul><li><a class="toc-href" href="#install_2" title="Install">Install</a></li><li><a class="toc-href" href="#config_1" title="Config">Config</a></li></ul></li><li><a class="toc-href" href="#winmanager_1" title="WinManager">WinManager</a><ul><li><a class="toc-href" href="#install_3" title="Install">Install</a></li><li><a class="toc-href" href="#config_2" title="Config">Config</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2 id="1. bufexplorer">1. BufExplorer</h2>
+    <h2 id="bufexplorer">BufExplorer</h2>
 <hr/>
 <p>我们可以使用 <code>:ls</code> 命令可以查看打开的 buffer，然后在不同的 buffer 之间切换：</p>
 <div class="highlight"><pre><span></span><span class="p">:</span><span class="n">bn</span>
@@ -163,7 +199,7 @@
 <p><a href="http://stackoverflow.com/questions/1649187/vim-minibufexpl-versus-bufexplorer-plugins">ViM: minibufexpl versus bufexplorer plugins</a></p>
 <p>我个人觉得 BufExplorer 更好一些，主要原因在于 Mini 在打开很多 buffer时（&gt;8个），切换 buffer 效率很低，而且 Mini 会占用几行宝贵的屏幕资源。</p>
 <p>下面就主要说 BufExlplorer。</p>
-<h3 id="1.1. install">1.1. Install</h3>
+<h3 id="install">Install</h3>
 <p>使用 Vundle 安装：</p>
 <ol>
 <li>
@@ -177,7 +213,7 @@
 </pre></div>
 </li>
 </ol>
-<h3 id="1.2. config">1.2. Config</h3>
+<h3 id="config">Config</h3>
 <p>查看 help 文档，自定义配置，我的简单配置如下：</p>
 <div class="highlight"><pre><span></span><span class="s2">""""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
 <span class="s2">"</span><span class="s"> Config BufExplorer</span>
@@ -187,10 +223,10 @@
 <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">bufExplorerSortBy</span><span class="o">=</span><span class="s1">'</span><span class="s">mru</span><span class="s1">'</span>        <span class="s2">"</span><span class="s"> Sort by most recently used.</span>
 </pre></div>
 <p><br/></p>
-<h2 id="2. nerdtree_1">2. NERDTree</h2>
+<h2 id="nerdtree_1">NERDTree</h2>
 <hr/>
 <p>NERDTree 是一款可以提供树形目录的 vim 插件，使用它我们可以在 vim 内以树形结构浏览文件目录。</p>
-<h3 id="2.1. install">2.1. Install</h3>
+<h3 id="install_1">Install</h3>
 <p>使用 Vundle 安装：</p>
 <ol>
 <li>
@@ -204,7 +240,7 @@
 </pre></div>
 </li>
 </ol>
-<h3 id="2.2. usage">2.2. Usage</h3>
+<h3 id="usage">Usage</h3>
 <ul>
 <li>输入 <code>:NERDTree</code> 打开 NERDTree 窗口</li>
 </ul>
@@ -230,13 +266,13 @@
 </li>
 </ul>
 <p><br/></p>
-<h2 id="3. powerline_1">3. Powerline</h2>
+<h2 id="powerline_1">Powerline</h2>
 <hr/>
 <p>状态栏也是一个非常重要的窗口，可以为我们提供一些文档的基本信息，我们可以自己 DIY，在 .vimrc 文件中添加相关的设置</p>
 <div class="highlight"><pre><span></span><span class="k">set</span> <span class="n">statusline</span><span class="o">=%</span><span class="n">F</span><span class="o">%</span><span class="n">m</span><span class="o">%</span><span class="n">r</span><span class="o">%</span><span class="n">h</span><span class="o">%</span><span class="n">w</span><span class="err">\</span> <span class="p">[</span><span class="n">FORMAT</span><span class="o">=%</span><span class="err">{</span><span class="o">&amp;</span><span class="n">ff</span><span class="err">}</span><span class="p">]</span><span class="err">\</span> <span class="p">[</span><span class="k">TYPE</span><span class="o">=%</span><span class="n">Y</span><span class="p">]</span><span class="err">\</span> <span class="p">[</span><span class="n">POS</span><span class="o">=%</span><span class="n">l</span><span class="p">,</span><span class="o">%</span><span class="n">v</span><span class="p">][</span><span class="o">%</span><span class="n">p</span><span class="o">%%</span><span class="p">]</span><span class="err">\</span> <span class="o">%</span><span class="err">{</span><span class="n">strftime</span><span class="p">(</span><span class="err">\</span><span class="ss">"%d/%m/%y\ -\ %H:%M\"</span><span class="p">)</span><span class="err">}</span>
 </pre></div>
 <p>也可以使用 <a href="https://github.com/Lokaltog/vim-powerline">Powerline</a> 插件，一款可以提供非常漂亮的状态栏的插件。它会覆盖掉 .vimrc 中对状态的配置，删除插件后配置信息可以重新起作用。</p>
-<h3 id="3.1. install">3.1. Install</h3>
+<h3 id="install_2">Install</h3>
 <p>使用 Vundle 安装：</p>
 <ol>
 <li>
@@ -250,7 +286,7 @@
 </pre></div>
 </li>
 </ol>
-<h3 id="3.2. config">3.2. Config</h3>
+<h3 id="config_1">Config</h3>
 <p>为了保证状态栏始终显示，在 .vimrc 中添加</p>
 <div class="highlight"><pre><span></span><span class="k">set</span> <span class="n">laststatus</span><span class="o">=</span><span class="mi">2</span>
 </pre></div>
@@ -260,10 +296,10 @@
 </pre></div>
 <p>我们还可以自定义一些选项，比如颜色主题等。</p>
 <p><br/></p>
-<h2 id="4. winmanager_1">4. WinManager</h2>
+<h2 id="winmanager_1">WinManager</h2>
 <hr/>
 <p>我们已经安装很多插件，比如 Taglist，BufExlporer、NERDTree 等，这时候我们就需要一个窗口管理插件来将它们组合起来 &mdash;&mdash; <a href="http://www.vim.org/scripts/script.php?script_id=95">WinManager</a> </p>
-<h3 id="4.1. install">4.1. Install</h3>
+<h3 id="install_3">Install</h3>
 <p>使用 Vundle 安装：</p>
 <ol>
 <li>
@@ -277,7 +313,7 @@
 </pre></div>
 </li>
 </ol>
-<h3 id="4.2. config">4.2. Config</h3>
+<h3 id="config_2">Config</h3>
 <p>查看 help 文档，我们可以进行简单的设置：</p>
 <div class="highlight"><pre><span></span><span class="s2">""""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
 <span class="s2">"</span><span class="s"> Config Winmanager</span>
@@ -300,7 +336,7 @@
 <p>最后附上效果图一张：</p>
 <p><img alt="image" src="/images/learning-vim-bufexplorer-nerdtree-winmanager-powerline/screenshot.png"/></p>
 <p><br/></p>
-<h2 id="5. ref_1">5. Ref</h2>
+<h2 id="ref_1">Ref</h2>
 <p><a href="http://easwy.com/blog/archives/advanced-vim-skills-netrw-bufexplorer-winmanager-plugin/">vi/vim使用进阶: 文件浏览和缓冲区浏览</a></p>
 <p><a href="http://blog.csdn.net/bokee/article/details/6633193"> 将Vim改造为强大的IDE&mdash;Vim集成Ctags/Taglist/Cscope/Winmanager/NERDTree/OmniCppComplete（有图有真相）</a></p>
 <p><a href="http://www.cnblogs.com/chijianqiang/archive/2012/11/06/vim-3.html">谁说Vim不是IDE？（三）</a></p>
@@ -317,7 +353,7 @@
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="https://qiangu.cool/posts/misc/to_live_review.html" title="活着 有感">
+    <a class="btn float-left" href="https://qiangu.cool/posts/book/to_live_review.html" title="活着 有感">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
     <a class="btn float-right" href="https://qiangu.cool/posts/telecom/summary_of_snr_and_noise.html" title="信噪比小结">
@@ -328,11 +364,11 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
       <li><a href="https://qiangu.cool/posts/linux/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
     </ul>
   </div>
 
@@ -420,6 +456,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

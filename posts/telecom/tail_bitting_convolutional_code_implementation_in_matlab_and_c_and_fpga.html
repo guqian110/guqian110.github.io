@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -97,8 +103,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -109,6 +131,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -146,8 +178,12 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="LTE 咬尾卷积编码器的 Matlab 、C 语言及 FPGA 实现">LTE 咬尾卷积编码器的 Matlab 、C 语言及 FPGA 实现</a><ul><li><a class="toc-href" href="#tail bitting" title="Tail Bitting">Tail Bitting</a></li><li><a class="toc-href" href="#matlab implementation" title="Matlab Implementation">Matlab Implementation</a></li><li><a class="toc-href" href="#c implementation" title="C Implementation">C Implementation</a></li><li><a class="toc-href" href="#verlog implementation" title="Verlog Implementation">Verlog Implementation</a><ul><li><a class="toc-href" href="#module &amp; testbench" title="module &amp; testbench">module &amp; testbench</a></li><li><a class="toc-href" href="#simulation" title="simulation">simulation</a></li></ul></li><li><a class="toc-href" href="#summary_1" title="Summary">Summary</a></li><li><a class="toc-href" href="#reference" title="Reference">Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2 id="1. tail bitting">1. Tail Bitting</h2>
+    <h2 id="tail bitting">Tail Bitting</h2>
 <hr/>
 <p>咬尾卷积编码是一种特殊的卷积编码，它通过将编码器的移位寄存器的初始值设置为输入流的尾比特值，使得移位寄存器的初始和最终状态相同。和普通的卷积编码相比，咬尾的方案最大的优点是克服了编码时的码率损失，并且适合迭代译码，不过付出的代价是译码复杂度的增加。在 LTE 的标准中，咬尾卷积编码是一种备选的信道编码方案。</p>
 <p>通常以 (n, k, K) 来描述卷积编码，其中：</p>
@@ -185,7 +221,7 @@
 </ul>
 <p>以上的内容已经提供了足够的信息供我们实现，关于更多的卷积编码、LTE 标准等请查阅 wiki 和专业书籍。</p>
 <p><br/></p>
-<h2 id="2. matlab implementation">2. Matlab Implementation</h2>
+<h2 id="matlab implementation">Matlab Implementation</h2>
 <hr/>
 <p>Matlab 的 <code>Communications System Toolbox</code> 中提供了大量的常用函数，其中就有卷积编码函数 <code>convenc</code>。我们就是基于这个函数实现LTE中的咬尾卷积编码。</p>
 <p>通过</p>
@@ -250,7 +286,7 @@
 </pre></div>
 <p>数据的格式是将 3 位并行结果串行输出： d00, d01, d02, d10, d11, d12, ...</p>
 <p><br/></p>
-<h2 id="3. c implementation">3. C Implementation</h2>
+<h2 id="c implementation">C Implementation</h2>
 <hr/>
 <p>C 的实现很简单:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -304,23 +340,23 @@
 <span class="p">}</span>
 </pre></div>
 </td></tr></table>
-<h2 id="4. verlog implementation">4. Verlog Implementation</h2>
+<h2 id="verlog implementation">Verlog Implementation</h2>
 <hr/>
 <p>用 verilog 来实现编码器就相对简单直观的多，毕竟只有一组移位寄存器和一些抽头的异或运算。</p>
-<h3 id="4.1. module &amp; testbench">4.1. module &amp; testbench</h3>
+<h3 id="module &amp; testbench">module &amp; testbench</h3>
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tbce.v">module</a></p>
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/tb_tbce.v">testbench</a></p>
-<h3 id="4.2. simulation">4.2. simulation</h3>
+<h3 id="simulation">simulation</h3>
 <p>如下图所示</p>
 <p><img alt="sim1" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim1.png"/></p>
 <p><img alt="sim2" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/sim2.png"/></p>
 <p>和 matlab 中结果对比，结果是一致的。</p>
-<h2 id="5. summary_1">5. Summary</h2>
+<h2 id="summary_1">Summary</h2>
 <hr/>
 <p>一个简单的咬尾卷积编码花费了一上午的时间才搞定，最大的收获就是：心态很重要，欲速则不达。没有认真看 help 就写程序，本来想节省时间，结果却相反 =.=</p>
 <p>戒骄戒躁！！！</p>
 <p><br/></p>
-<h2 id="6. reference">6. Reference</h2>
+<h2 id="reference">Reference</h2>
 <p><a href="http://book.douban.com/subject/1446684/">通信原理</a></p>
 <p><a href="http://book.douban.com/subject/24784764/">无线通信新协议与新算法</a></p>
   </div>
@@ -425,6 +461,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -97,8 +103,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -109,6 +131,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -146,12 +178,16 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="流水线 pipeline 的艺术">流水线 pipeline 的艺术</a><ul><li><a class="toc-href" href="#pipeline intro" title="Pipeline Intro">Pipeline Intro</a></li><li><a class="toc-href" href="#a simple example" title="A Simple Example">A Simple Example</a></li><li><a class="toc-href" href="#performance increase from pipelining" title="Performance Increase from Pipelining">Performance Increase from Pipelining</a></li><li><a class="toc-href" href="#dxl instruction" title="DXL Instruction">DXL Instruction</a></li><li><a class="toc-href" href="#pipelining principles" title="Pipelining Principles">Pipelining Principles</a></li><li><a class="toc-href" href="#another example" title="Another Example">Another Example</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>PC 世界永恒不变的信条就是提高性能，其中一个方法就是提高系统的时钟频率。</p>
 <p>在另外一篇 blog <a href="http://guqian110.github.io/pages/2015/03/18/static_timing_analysis_1_basic.html">静态时序分析 STA</a> 中已经总结过了，限制系统最大工作频率的因素有很多，设计者能够控制的是 DFF 之间的组合逻辑的时延 Tcomb，降低最大时延路径（关键路径，critical path）的时延 Tcomb，就可以提高系统的工作频率。</p>
 <p>如何降低呢？方法就是流水线（pipeline）。</p>
 <p><br/></p>
-<h2 id="1. pipeline intro">1. Pipeline Intro</h2>
+<h2 id="pipeline intro">Pipeline Intro</h2>
 <hr/>
 <p>所谓流水线（pipeline）设计，应该是从汽车工业中的 流水生产线 借鉴过来的说法吧。</p>
 <p>在汽车生产的时候，假设分为 5 个阶段，每个阶段都需要 1 个工人花费 1 小时完成，因为后续的阶段必须等前面阶段完成后才能进行，所以总共需要 5 个小时才能完成一辆汽车。但是采用流水线方式，在进行后续阶段时，前面的阶段可以进行新的工作，那么每个小时都可以生产出一辆汽车了，生产效率提高了 5 倍。</p>
@@ -166,7 +202,7 @@
 </li>
 </ul>
 <p><br/></p>
-<h2 id="2. a simple example">2. A Simple Example</h2>
+<h2 id="a simple example">A Simple Example</h2>
 <hr/>
 <p>采用流水设计的方法就是：<strong>在较长的组合逻辑路径中插入 DFF，将其分割为几个小的组合逻辑，新的 Tcomb 显然小于原来的 Tcomb，所以系统的时钟频率就可以提高了。</strong></p>
 <p>举例来说明：设计一个电路完成 i = (a + b + c + d) + (e + f + g + h) 运算。</p>
@@ -184,7 +220,7 @@
 </pre></div>
 <p>显然，采用流水后 Tff 更小，系统能够达到的工作时钟频率也就更高。</p>
 <p><br/></p>
-<h2 id="3. performance increase from pipelining">3. Performance Increase from Pipelining</h2>
+<h2 id="performance increase from pipelining">Performance Increase from Pipelining</h2>
 <hr/>
 <p>下面更加详细地分析一下流水带来的速度性能的提升。</p>
 <p>首先说明，可以使用系统的流量 throughout 和系统的时滞 latency 来衡量速度性能。</p>
@@ -243,7 +279,7 @@
 <p><strong>conclusion</strong>: 使用流水比不使用流水多使用了 n * m 个 DFF，还使用了更多的连线资源。</p>
 <p>综上，可以看到，虽然流水可以提高系统的工作频率和吞吐率，但是它付出的代价是面积和功耗的增加，这也是<strong>速度和面积之间相互转化</strong>的体现。</p>
 <p><br/></p>
-<h2 id="4. dxl instruction">4. DXL Instruction</h2>
+<h2 id="dxl instruction">DXL Instruction</h2>
 <hr/>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">THE ART OF HARDWARE ARCHITECTURE</a> 中还介绍了 DXL 指令集的实现，简单记录一下笔记，详细过程还是看书吧。</p>
 <p>DXL 指令是 32 位的 RISC 微处理器，每条指令最多由 5 个部分组成：</p>
@@ -275,7 +311,7 @@
 <p>假设执行每条指令花费 10 ns，那么执行 5 条指令：</p>
 <p>非流水的方式总共花费 10 * 5 = 50 ns；流水的方式每条指令花费 5 个时钟周期，每个周期只有 2 ns，完成 5 条指令只需要 5 个时钟周期，总共花费 9 * 2 = 18 ns；性能是原来的 50/18 = 2.8 倍。</p>
 <p><br/></p>
-<h2 id="5. pipelining principles">5. Pipelining Principles</h2>
+<h2 id="pipelining principles">Pipelining Principles</h2>
 <hr/>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">THE ART OF HARDWARE ARCHITECTURE</a> 还总结了流水需要注意的问题：</p>
 <ol>
@@ -305,7 +341,7 @@
 </li>
 </ol>
 <p><br/></p>
-<h2 id="6. another example">6. Another Example</h2>
+<h2 id="another example">Another Example</h2>
 <hr/>
 <p>将前面总结的 &ldquo;在组合逻辑路径中插入 DFF，形成流水&rdquo; 的思路进一步扩展，可以得到更加上层的流水思想。<a href="http://www.amazon.com/Advanced-FPGA-Design-Architecture-Implementation/dp/0470054379/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1432020884&amp;sr=1-1&amp;keywords=advanced+fpga+design">Advanced FPGA Design: Architecture, Implementation, and Optimization</a> 中介绍了一个算法中使用流水的例子，其关键在于 &ldquo;拆开环路&rdquo;：</p>
 <p>假设要计算 x^3 这个值，下面这段软件的代码</p>
@@ -351,7 +387,7 @@
 </pre></div>
 <p>可以看到，throughout 的提升是以面积为代价的。</p>
 <p><br/></p>
-<h2 id="7. ref">7. Ref</h2>
+<h2 id="ref">Ref</h2>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">THE ART OF HARDWARE ARCHITECTURE</a></p>
 <p><a href="http://www.amazon.com/Advanced-FPGA-Design-Architecture-Implementation/dp/0470054379/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1432020884&amp;sr=1-1&amp;keywords=advanced+fpga+design">Advanced FPGA Design: Architecture, Implementation, and Optimization</a></p>
   </div>
@@ -456,6 +492,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

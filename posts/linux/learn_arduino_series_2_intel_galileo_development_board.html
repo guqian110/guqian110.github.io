@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -98,8 +104,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -110,6 +132,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -147,15 +179,19 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Arduino #2 初识 Intel Galileo 开发板">学习 Arduino #2 初识 Intel Galileo 开发板</a><ul><li><a class="toc-href" href="#preface" title="Preface">Preface</a></li><li><a class="toc-href" href="#official arduino boards" title="Official Arduino Boards">Official Arduino Boards</a></li><li><a class="toc-href" href="#intel galileo board" title="Intel Galileo Board">Intel Galileo Board</a><ul><li><a class="toc-href" href="#arduinco.cc" title="Arduinco.cc">Arduinco.cc</a></li><li><a class="toc-href" href="#intel official introduction" title="Intel Official Introduction">Intel Official Introduction</a></li><li><a class="toc-href" href="#other introductions" title="Other Introductions">Other Introductions</a></li></ul></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2 id="1. preface">1. Preface</h2>
+    <h2 id="preface">Preface</h2>
 <hr/>
 <p>Arduino 有很多开发板，分别针对不同的应用环境含有不同的模块。学习一款 Intel 推出的开发板 &mdash;&mdash; <em>Intel Galileo Development Board</em> 。</p>
 <p>Intel Gailileo Development Board 是 Intel 进入 Arduino 领域的试水产品，它含有一颗 Quark Soc X1000 CPU，这是一款 32 位、x86 构架、低功耗的 SoC 芯片，它的主频可以达到 400 MHz，内部有 512 KB 的 SRAM，同时 Galileo 有丰富的接口(USB, JTag, RS232, Ethernet, mPCIE...)，支持很多外围设备。</p>
 <p>Galileo 试图达到的目标是融合 Arduino 对硬件操作的便利和 Linux 系统对硬件操作完整支持。所以，Galileo 也兼容 Arduino 接口，你可以很方便的把 Arduino 项目移植到 Galileo 上运行，使用常用的一些 Arduino 库(Ethernet, Wi-Fi, SD, EEPROM...)也可以获得内部 Linux 系统的完整功能(Python, SSH, Telnet， OpenCV...)。</p>
 <p>总结一下我学习这块板子的知识，不仅仅为 Arduino 开发做准备，也为后面的一个竞赛(基于Yocto 项目)开发积累知识～</p>
 <p><br/></p>
-<h2 id="2. official arduino boards">2. Official Arduino Boards</h2>
+<h2 id="official arduino boards">Official Arduino Boards</h2>
 <hr/>
 <p>Arduino 官网上列出所有了官方开发板，其中也包含了官方认证过的开发板(Intel Galileo)，和一些推荐的第三方产品</p>
 <p><a href="http://arduino.cc/en/Main/Products">Arduino Products</a></p>
@@ -164,17 +200,17 @@
 <p><br/></p>
 <p><em>官方的开发板的核心都是 Atmel 的微控制器，基于市场战略的需求，看到数莓派、Arduino发展的热火朝天，Intel 也坐不住了(瞎猜的 =.=)，推出了新的基于 Intel 架构(x86)、可以和 Arduino 兼容的开发板。Galileo 是这个家族中的第一款，目前 Intel 又推出了一款新的开发板，取名叫 Edison。(Intel 这是要把所有科学家的名字都取个遍么)</em></p>
 <p><br/></p>
-<h2 id="3. intel galileo board">3. Intel Galileo Board</h2>
+<h2 id="intel galileo board">Intel Galileo Board</h2>
 <hr/>
-<h3 id="3.1. arduinco.cc">3.1. Arduinco.cc</h3>
+<h3 id="arduinco.cc">Arduinco.cc</h3>
 <p>在 Arduino 官网上有一篇简单介绍 Galileo 的网页</p>
 <p><a href="http://arduino.cc/en/ArduinoCertified/IntelGalileo">Intel Galileo on arduino.cc</a></p>
-<h3 id="3.2. intel official introduction">3.2. Intel Official Introduction</h3>
+<h3 id="intel official introduction">Intel Official Introduction</h3>
 <p>Arduino 官网上的介绍只是非常简单的介绍，Intel 自己的官网上有关于 Galileo 全部的详细资料</p>
 <p><a href="http://www.intel.cn/content/www/cn/zh/do-it-yourself/galileo-maker-quark-board.html">Galileo Maker Quark Board</a></p>
 <p>关于 Galileo 的全部文档，包括 Datasheet、Schematic、Quick Start、User Guide 等：</p>
 <p><a href="https://communities.intel.com/community/makers/documentation/galileodocuments">Intel Galileo Development Board Documents</a></p>
-<h3 id="3.3. other introductions">3.3. Other Introductions</h3>
+<h3 id="other introductions">Other Introductions</h3>
 <p><strong>首先</strong> 送上一篇非常好的介绍文章（来自 Ifanr.com），介绍了在 Maker 眼中，这个板子到底可以 hack 到什么程度～</p>
 <p><a href="http://www.ifanr.com/388835">x86 版的 Arduino 来了，Intel Galileo 开发板的体验、分析和应用【超长文多图】</a></p>
 <p><strong>再</strong> 附上一篇完爆我的总结的教程～</p>
@@ -252,8 +288,8 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/linux/learn_arduino_series_1_getting_started.html">学习 Arduino #1 Arduino 入门</a></li>
       <li><a href="https://qiangu.cool/posts/linux/learn_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learn_arduino_series_1_getting_started.html">学习 Arduino #1 Arduino 入门</a></li>
     </ul>
   </div>
 
@@ -341,6 +377,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

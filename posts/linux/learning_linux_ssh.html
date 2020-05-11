@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -97,8 +103,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -109,6 +131,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -146,6 +178,10 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Linux SSH">学习 Linux SSH</a><ul><li><a class="toc-href" href="#shi yao shi  ssh" title="什么是 SSH">什么是 SSH</a><ul><li><a class="toc-href" href="#ssh" title="SSH">SSH</a></li></ul></li><li><a class="toc-href" href="#ssh de yong fa_1" title="SSH 的用法">SSH 的用法</a><ul><li><a class="toc-href" href="#an zhuang  ssh server" title="安装 SSH server">安装 SSH server</a></li><li><a class="toc-href" href="#qi dong  ssh fu wu" title="启动 SSH 服务">启动 SSH 服务</a></li><li><a class="toc-href" href="#yuan cheng fang wen" title="远程访问">远程访问</a></li><li><a class="toc-href" href="#sheng qu  ip di zhi" title="省去 IP 地址">省去 IP 地址</a></li><li><a class="toc-href" href="#gong yao deng lu" title="公钥登录">公钥登录</a></li></ul></li><li><a class="toc-href" href="#shi yong  scp chuan shu wen jian_1" title="使用 SCP 传输文件">使用 SCP 传输文件</a><ul><li><a class="toc-href" href="#shang chuan  dom ben di wen jian zhi fu wu qi  lab" title="上传 dom 本地文件至服务器 lab">上传 dom 本地文件至服务器 lab</a></li><li><a class="toc-href" href="#xia zai  lab fu wu qi wen jian zhi ben di  dom" title="下载 lab 服务器文件至本地 dom">下载 lab 服务器文件至本地 dom</a></li></ul></li><li><a class="toc-href" href="#reference_1" title="Reference">Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>实验室的师兄师姐毕业了，继承了他们的旧电脑 。宿舍的笔记本和实验室的电脑出现了相互之间传送同步文件的需求 。想到了两种方法：</p>
 <ol>
@@ -156,16 +192,16 @@
 <p>解决方案 2 相比于方案 1 的优势是：不是必须要连接到互联网，在局域网内也可以同步文件 。一般局域网内传输文件的速度要比连外界的服务器快很多 。</p>
 <p>考虑到校园网的环境，明显方案 2 更加好 。</p>
 <p><br/></p>
-<h2 id="1. shi yao shi  ssh">1. 什么是 SSH</h2>
+<h2 id="shi yao shi  ssh">什么是 SSH</h2>
 <hr/>
 <p>最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑 。<a href="http://en.wikipedia.org/wiki/Secure_Shell">SSH</a> 协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，迅速在全世界获得推广，目前已经成为 Linux 系统的标准配置 。</p>
 <p>最初的 SSH 协议是由芬兰的一家公司的研究员 Tatu Yl&ouml;nen 于 1995 年设计开发的，但是因为受版权和加密算法等等的限制，现在很多人都转而使用 OpenSSH 。OpenSSH 是 SSH 的替代软件包，而且是开放源代码和免费的 。&mdash;&mdash; Wikipedia</p>
 <p>关于 SSH 的原理，找到了一系列 <a href="http://www.ruanyifeng.com/blog/">阮一峰</a>的文章，很简洁明了:</p>
-<h3 id="1.1. ssh">1.1. SSH</h3>
+<h3 id="ssh">SSH</h3>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">SSH原理与运用（一）：远程登录</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html">SSH原理与运用（二）：远程操作与端口转发</a></p>
 <p><br/></p>
-<h2 id="2. ssh de yong fa_1">2. SSH 的用法</h2>
+<h2 id="ssh de yong fa_1">SSH 的用法</h2>
 <hr/>
 <p>最简单明了的教程就是 man page 了</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>man ssh
@@ -196,7 +232,7 @@ SYNOPSIS
 <p>进阶的书籍有：<a href="http://docstore.mik.ua/orelly/networking_2ndEd/ssh/index.htm">SSH, The Secure Shell: The Definitive Guide</a>, O'reilly</p>
 <p>目前已经有两台安装了 Ubuntu 的电脑，实验室的一台 name 是 <em>lab</em> ，宿舍的一台 name 是 <em>dom</em> ，两台电脑上都有一个用户名为 <em>chien</em> 。</p>
 <p><strong>我们的目的是使两台电脑可以相互之间通过 SSH 访问。</strong> 下面就是整个过程：</p>
-<h3 id="2.1. an zhuang  ssh server">2.1. 安装 SSH server</h3>
+<h3 id="an zhuang  ssh server">安装 SSH server</h3>
 <p>SSH 只是一种协议，在 Ubuntu 下，具体实现使用的是 <a href="http://www.openssh.com/">OpenSSH</a> 。Ubuntu 默认是安装了 SSH 客户端 <code>openssh-client</code>，而没有安装 SSH 服务程序 <code>openssh-server</code>。</p>
 <p>检测本机是否已经安装了 SSH server</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ssh localhost
@@ -211,7 +247,7 @@ SYNOPSIS
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install openssh-server
 </pre></div>
 </td></tr></table>
-<h3 id="2.2. qi dong  ssh fu wu">2.2. 启动 SSH 服务</h3>
+<h3 id="qi dong  ssh fu wu">启动 SSH 服务</h3>
 <p>启动 SSH server</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo /etc/init.d/ssh start
 </pre></div>
@@ -228,7 +264,7 @@ SYNOPSIS
 </td></tr></table>
 <p>则说明服务已经正确启动 。</p>
 <p><em>因为两台电脑要相互访问，所以它们的角色即使 server，又是 client，所以需要在两台电脑上都执行上面两步 。</em></p>
-<h3 id="2.3. yuan cheng fang wen">2.3. 远程访问</h3>
+<h3 id="yuan cheng fang wen">远程访问</h3>
 <p>首先，查询本机 IP 地址</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>ifconfig
 </pre></div>
@@ -248,7 +284,7 @@ SYNOPSIS
 <p>实际结果如下图</p>
 <p><img alt="login2" src="/images/learning-linux-ssh/login2.png"/></p>
 <p>在执行命令前，提示符显示目前的用户是在 lab 这台机器上的用户 chien，本机 home 目录下有 <code>lab</code> 文件，但是没有 <code>dom</code> 文件 。执行了登录命令以后，就会切换到以 chien 身份登录到 dom 机器，远程机器 home 目录下有有 <code>dom</code> 文件，但是没有 <code>lab</code> 文件 。</p>
-<h3 id="2.4. sheng qu  ip di zhi">2.4. 省去 IP 地址</h3>
+<h3 id="sheng qu  ip di zhi">省去 IP 地址</h3>
 <p>每次登录都需要记忆、手动输入 IP 地址，其实只需要改 <code>/etc/hosts</code> 文件，就能省去手动输入 IP 地址的烦恼。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>vim /etc/hosts
 </pre></div>
@@ -274,7 +310,7 @@ ssh dom
 </pre></div>
 </td></tr></table>
 <p>就可以登录了。</p>
-<h3 id="2.5. gong yao deng lu">2.5. 公钥登录</h3>
+<h3 id="gong yao deng lu">公钥登录</h3>
 <p>上一步解决了 IP 地址的问题，但是还是需要手动输入密码 。我们可以用公钥登录的方法，免去输密码的烦恼。</p>
 <p><strong>首先，什么是数字签名 Digital Signature</strong></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html">数字签名是什么？</a></p>
@@ -309,7 +345,7 @@ ssh dom
 </pre></div>
 </td></tr></table>
 <p><br/></p>
-<h2 id="3. shi yong  scp chuan shu wen jian_1">3. 使用 SCP 传输文件</h2>
+<h2 id="shi yong  scp chuan shu wen jian_1">使用 SCP 传输文件</h2>
 <hr/>
 <p>SSH 提供了一些命令和 shell 用来登录远程服务器 。在默认情况下它不允许你拷贝文件,但是还是提供了一个 "scp" 命令 。scp 命令是 SSH 中最方便有用的命令了，试想，在两台服务器之间直接传送文件。仅仅用 scp 一个命令就完全解决了 。</p>
 <p>man page</p>
@@ -333,11 +369,11 @@ SYNOPSIS
 </pre></div>
 </td></tr></table>
 <p>scp 可以实现把 [[user@]host1:]file1 复制到 [[user@]host2:]file2 的功能。所以</p>
-<h3 id="3.1. shang chuan  dom ben di wen jian zhi fu wu qi  lab">3.1. 上传 dom 本地文件至服务器 lab</h3>
+<h3 id="shang chuan  dom ben di wen jian zhi fu wu qi  lab">上传 dom 本地文件至服务器 lab</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>scp ~/dom chien@lab:~/
 </pre></div>
 </td></tr></table>
-<h3 id="3.2. xia zai  lab fu wu qi wen jian zhi ben di  dom">3.2. 下载 lab 服务器文件至本地 dom</h3>
+<h3 id="xia zai  lab fu wu qi wen jian zhi ben di  dom">下载 lab 服务器文件至本地 dom</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>scp chien@lab:lab ~/
 </pre></div>
 </td></tr></table>
@@ -348,7 +384,7 @@ SYNOPSIS
 <p><br/></p>
 <p>至此，就实现了两台电脑的之间相互远程访问的功能 。</p>
 <p><br/></p>
-<h2 id="4. reference_1">4. Reference</h2>
+<h2 id="reference_1">Reference</h2>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">数字签名是什么？</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html">What is a Digital Signature?</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/08/what_is_a_digital_signature.html">SSH原理与运用（一）：远程登录</a></p>
@@ -455,6 +491,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

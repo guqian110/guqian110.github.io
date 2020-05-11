@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -97,8 +103,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -109,6 +131,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -146,9 +178,13 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 数字处理基础 (2)">FPGA 数字处理基础 (2)</a><ul><li><a class="toc-href" href="#basic knowledge" title="Basic Knowledge">Basic Knowledge</a></li><li><a class="toc-href" href="#(un)signed in verilog" title="(un)signed in Verilog">(un)signed in Verilog</a><ul><li><a class="toc-href" href="#integer" title="Integer">Integer</a></li><li><a class="toc-href" href="#register" title="Register">Register</a><ul><li><a class="toc-href" href="#1. unsigned reg &amp; unsigned value" title="1. unsigned reg &amp; unsigned value">1. unsigned reg &amp; unsigned value</a></li><li><a class="toc-href" href="#2. unsigned reg &amp; signed value" title="2. unsigned reg &amp; signed value">2. unsigned reg &amp; signed value</a></li><li><a class="toc-href" href="#3. signed reg &amp; signed value" title="3. signed reg &amp; signed value">3. signed reg &amp; signed value</a></li><li><a class="toc-href" href="#4. signed reg &amp; unsigned value" title="4. signed reg &amp; unsigned value">4. signed reg &amp; unsigned value</a></li><li><a class="toc-href" href="#5. signed reg &amp; unsigned reg" title="5. signed reg &amp; unsigned reg">5. signed reg &amp; unsigned reg</a></li></ul></li></ul></li><li><a class="toc-href" href="#conclusion_2" title="Conclusion">Conclusion</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>讨论 FPGA 中无符号数 unsigned 和有符号数 signed 的问题。</p>
-<h2 id="1. basic knowledge">1. Basic Knowledge</h2>
+<h2 id="basic knowledge">Basic Knowledge</h2>
 <hr/>
 <p><strong>整数的分类：</strong> 无符号数 <code>unsigned</code> 和 有符号数 <code>signed</code>。</p>
 <p><strong>数制：</strong> 10、2、8、16 进制</p>
@@ -161,9 +197,9 @@
 <p>以前写过一篇总结，<a href="http://guqian110.github.io/pages/2014/05/14/fpga_digital_processing_basic_1.html">FPGA 数字处理基础 (1)</a></p>
 <p>本文算是上面文章的续吧。</p>
 <p><br/></p>
-<h2 id="2. (un)signed in verilog">2. (un)signed in Verilog</h2>
+<h2 id="(un)signed in verilog">(un)signed in Verilog</h2>
 <hr/>
-<h3 id="2.1. integer">2.1. Integer</h3>
+<h3 id="integer">Integer</h3>
 <p>标准格式：</p>
 <p><code>&lt;null|+|-&gt;&lt;size&gt;&lt;sign:s|S&gt;&lt;base:d|D|h|H|o|O|b|B&gt;&lt;0~9|0～f|0~7|0~1|x|z&gt;</code></p>
 <p>其中 size 和 base 可选。</p>
@@ -200,7 +236,7 @@
 <span class="o">-</span><span class="mh">4</span><span class="p">'</span><span class="n">sd5</span> <span class="c1">// 占用 4 bit，存储的值为 1011</span>
 </pre></div>
 </td></tr></table>
-<h3 id="2.2. register">2.2. Register</h3>
+<h3 id="register">Register</h3>
 <p>Verilog 中数据的基本类型： <code>wire</code>、<code>reg</code>、<code>integer</code></p>
 <p>在 Verilog-1995 中，规定所有的 wire、reg 都是 unsigned 类型，只有 integer 是 signed 类型。但是 integer 的宽度是固定的(与宿主机的字是一样的，最小为 32 位)，这样子，造成了很大的不方便和浪费。</p>
 <p>在 Verilog-2001 中，添加了 wire、reg 也可以是 signed 类型了。</p>
@@ -232,7 +268,7 @@
 <p>编写一个简单的测试程序，查看综合结果和仿真波形，就可以知道综合时的策略。</p>
 <p><strong>module: <a href="http://guqian110.github.io/files/test_signed.v">test_signed.v</a></strong></p>
 <p><strong>testbench: <a href="http://guqian110.github.io/files/tb_test_signed.v">tb_test_signed.v</a></strong></p>
-<h4 id="2.2.1. 1. unsigned reg &amp; unsigned value">2.2.1. 1. unsigned reg &amp; unsigned value</h4>
+<h4 id="1. unsigned reg &amp; unsigned value">1. unsigned reg &amp; unsigned value</h4>
 <p>定义 reg 为 unsigned 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
@@ -244,7 +280,7 @@
 </pre></div>
 </td></tr></table>
 <p>那么可以从 RTL Schematic 中看到，综合出来的比较器是 unsigned 类型。</p>
-<h4 id="2.2.2. 2. unsigned reg &amp; signed value">2.2.2. 2. unsigned reg &amp; signed value</h4>
+<h4 id="2. unsigned reg &amp; signed value">2. unsigned reg &amp; signed value</h4>
 <p>定义 reg 为 unsigned 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// unsigned</span>
@@ -256,7 +292,7 @@
 </pre></div>
 </td></tr></table>
 <p>那么综合出来的比较器是 unsigned 类型。</p>
-<h4 id="2.2.3. 3. signed reg &amp; signed value">2.2.3. 3. signed reg &amp; signed value</h4>
+<h4 id="3. signed reg &amp; signed value">3. signed reg &amp; signed value</h4>
 <p>定义 reg 为 signed 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="k">signed</span>  <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
@@ -268,7 +304,7 @@
 </pre></div>
 </td></tr></table>
 <p>那么综合出来的比较器是 signed 类型。</p>
-<h4 id="2.2.4. 4. signed reg &amp; unsigned value">2.2.4. 4. signed reg &amp; unsigned value</h4>
+<h4 id="4. signed reg &amp; unsigned value">4. signed reg &amp; unsigned value</h4>
 <p>定义 reg 为 signed 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>     <span class="k">signed</span>  <span class="p">[</span><span class="no">SIZE</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">i</span><span class="p">;</span>      <span class="c1">// signed</span>
@@ -280,7 +316,7 @@
 </pre></div>
 </td></tr></table>
 <p>那么综合出来的比较器是 signed 类型。</p>
-<h4 id="2.2.5. 5. signed reg &amp; unsigned reg">2.2.5. 5. signed reg &amp; unsigned reg</h4>
+<h4 id="5. signed reg &amp; unsigned reg">5. signed reg &amp; unsigned reg</h4>
 <p>如果参与运算的两个变量一个是 signed，另一个是 unsigned。（注意这种现象应该避免，一般我们是不会将两种不同类型的数据混在一起进行计算的）</p>
 <p>定义 i 为 unsigned 类型，flag 为 signed 类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -314,7 +350,7 @@ Help
 </blockquote>
 <p>花费了大量时间上网找资料，在论坛里问别人无果，最后自己动手写程序测试，最后才发现原来官方资料里面早就写的清清楚楚 =.=</p>
 <p><br/></p>
-<h2 id="3. conclusion_2">3. Conclusion</h2>
+<h2 id="conclusion_2">Conclusion</h2>
 <hr/>
 <p>说了这么多，总结下来就是下面这几句话：</p>
 <p><strong>经验：</strong></p>
@@ -449,6 +485,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

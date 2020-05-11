@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -98,8 +104,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -110,6 +132,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -147,14 +179,18 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="VHDL 笔记 2 &mdash;&mdash; 系统设计">VHDL 笔记 2 &mdash;&mdash; 系统设计</a><ul><li><a class="toc-href" href="#packages and components" title="Packages and Components">Packages and Components</a><ul><li><a class="toc-href" href="#package" title="Package">Package</a></li><li><a class="toc-href" href="#componet" title="Componet">Componet</a></li><li><a class="toc-href" href="#port map" title="port map">port map</a></li><li><a class="toc-href" href="#generic map" title="generic map">generic map</a></li></ul></li><li><a class="toc-href" href="#functions and procedure_1" title="Functions and Procedure">Functions and Procedure</a><ul><li><a class="toc-href" href="#function" title="Function">Function</a></li><li><a class="toc-href" href="#procedure" title="Procedure">Procedure</a></li><li><a class="toc-href" href="#function versus procedure summary" title="FUNCTION versus PROCEDURE Summary">FUNCTION versus PROCEDURE Summary</a></li></ul></li><li><a class="toc-href" href="#reference_1" title="Reference">Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>总结 <code>packege</code>, <code>component</code>, <code>function</code>, <code>procedure</code> 的相关知识。</p>
 <p>这些组成部分添加到代码主体部分，目的是为了实现常用代码共享。通常这些代码被放在 <code>library</code> 中，我们可以将自己设计的一些常用代码添加到 <code>library</code> 中，这有利于使一个复杂设计具有更清晰的结构。</p>
 <p>总之，经常使用的代码可以以 <code>component</code>, <code>function</code>, <code>procedure</code> 的形式放到 <code>package</code> 中，然后被编译到目标 <code>library</code> 中。</p>
 <p><br/></p>
-<h2 id="1. packages and components">1. Packages and Components</h2>
+<h2 id="packages and components">Packages and Components</h2>
 <hr/>
-<h3 id="1.1. package">1.1. Package</h3>
+<h3 id="package">Package</h3>
 <p>除了 <code>component</code>, <code>function</code>, <code>procedure</code> 之外，package 中还可以包含 <code>TYPE</code>, <code>CONSTANT</code> 的定义。</p>
 <p><strong>syntax</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -227,7 +263,7 @@
 <span class="c1">--------------------------------------</span>
 </pre></div>
 </td></tr></table>
-<h3 id="1.2. componet">1.2. Componet</h3>
+<h3 id="componet">Componet</h3>
 <p>VHDL 中的 <code>component</code> 和 Verilog HDL 中的 <code>module</code> 类似：</p>
 <p>一个 component 是一段完整的代码（包括 library, entity, architecture 这些组成部分），如果将这些代码声明为一个 component，那么就可以被其他电路调用，从而使代码具有了层次化的结构。</p>
 <p>使用 component 必须先声明这个元件，然后再例化这个元件（类似 C++，变量先声明，在定义）。声明和例化都必须在 architecture 中进行。</p>
@@ -282,7 +318,7 @@
 </td></tr></table>
 </li>
 </ul>
-<h3 id="1.3. port map">1.3. port map</h3>
+<h3 id="port map">port map</h3>
 <p>同 Verilog HDL 一样，两种端口映射的方法：位置映射、名字映射。</p>
 <p>位置映射书写简单，但是容易出错；名字映射书写繁琐，但是不易出错，端口连接也更清晰，未连接的端口要使用关键词 <code>open</code>。</p>
 <p><strong>example</strong></p>
@@ -297,7 +333,7 @@
 <span class="n">U1</span><span class="o">:</span> <span class="n">inverter</span> <span class="k">PORT</span> <span class="k">MAP</span> <span class="p">(</span><span class="n">x</span><span class="o">=&gt;</span><span class="n">a</span><span class="p">,</span> <span class="n">y</span><span class="o">=&gt;</span><span class="n">b</span><span class="p">);</span>
 </pre></div>
 </td></tr></table>
-<h3 id="1.4. generic map">1.4. generic map</h3>
+<h3 id="generic map">generic map</h3>
 <p>generic 功能类似于 Veriog HDL 中的 parameter，所以在例化时 component 时，可以重载参数，使设计更方便灵活。</p>
 <p><strong>syntax</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">label</span><span class="o">:</span> <span class="n">component_name</span> <span class="k">GENERIC</span> <span class="k">MAP</span> <span class="p">(</span><span class="n">param</span><span class="p">.</span><span class="n">list</span><span class="p">)</span> <span class="k">PORT</span> <span class="k">MAP</span> <span class="p">(</span><span class="k">port</span> <span class="n">list</span><span class="p">);</span>
@@ -305,10 +341,10 @@
 </td></tr></table>
 <p>也就是说，在例化时，添加一段 <code>GENERIC MAP (param.list)</code> 就可以了。</p>
 <p><br/></p>
-<h2 id="2. functions and procedure_1">2. Functions and Procedure</h2>
+<h2 id="functions and procedure_1">Functions and Procedure</h2>
 <hr/>
 <p>function 和 procedure 统称为 子程序，它们和 process 相似，内部包含的都是顺序描述的代码，通常使用相同的顺序描述语句。但是，function 和 procedure 的存在主要是为了建库，以达到代码重用和共享的目的，当然它们也可以直接建立在主代码中。</p>
-<h3 id="2.1. function">2.1. Function</h3>
+<h3 id="function">Function</h3>
 <p>一个 function 就是一段顺序描述的代码。</p>
 <p>在写代码的过程中，我们通常会遇到一些有共性的问题，我们希望实现这些功能的代码可以被共享和重用，从而使代码变得简洁，易于理解，function 的建立和使用就能达到这个目睹。
 function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> 等语句，但是不能有 <code>signal</code> 和 <code>component</code>。</p>
@@ -349,7 +385,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 <p>Main Code 中，既可以在 entity 中，也可以在 architecture 中</p>
 </li>
 </ul>
-<h3 id="2.2. procedure">2.2. Procedure</h3>
+<h3 id="procedure">Procedure</h3>
 <p>procedure 和 function 类似，目的也相同，不同之处在于 procedure 可以有多个返回值。</p>
 <p>与 function 类似，procedure 也需要定义和调用两个过程。</p>
 <p><strong>Procedure Body</strong></p>
@@ -385,7 +421,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 </td></tr></table>
 <p><strong>Procedure Location</strong></p>
 <p>procedure 的存放和 function 类似，通常放在 package 中，当然也可以放在主代码中。</p>
-<h3 id="2.3. function versus procedure summary">2.3. FUNCTION versus PROCEDURE Summary</h3>
+<h3 id="function versus procedure summary">FUNCTION versus PROCEDURE Summary</h3>
 <ul>
 <li>
 <p>function 有任意个输入参数和一个返回值，输入参数只能是 constant, signal</p>
@@ -404,7 +440,7 @@ function 中可以使用 <code>if</code>, <code>case</code>, <code>loop</code> �
 </li>
 </ul>
 <p><br/></p>
-<h2 id="3. reference_1">3. Reference</h2>
+<h2 id="reference_1">Reference</h2>
 <p><a href="http://www.amazon.com/Circuit-Design-VHDL-Volnei-Pedroni/dp/0262162245">Circuit Design with VHDL</a></p>
   </div>
   <div class="tag-cloud">
@@ -515,6 +551,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

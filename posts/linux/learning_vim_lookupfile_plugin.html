@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -98,8 +104,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -110,6 +132,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -147,6 +179,10 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Vim 之 lookupfile 插件">学习 Vim 之 lookupfile 插件</a><ul><li><a class="toc-href" href="#install" title="Install">Install</a></li><li><a class="toc-href" href="#config" title="Config">Config</a><ul><li><a class="toc-href" href="#tags" title="tags">tags</a></li><li><a class="toc-href" href="#case sensitive" title="case sensitive">case sensitive</a></li><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li></ul></li><li><a class="toc-href" href="#usage_1" title="Usage">Usage</a><ul><li><a class="toc-href" href="#:lookupfile" title=":LookupFile">:LookupFile</a></li><li><a class="toc-href" href="#:lubufs" title=":LUBufs">:LUBufs</a></li><li><a class="toc-href" href="#:luwalk" title=":LUWalk">:LUWalk</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>系统内置的 <code>:find</code> 命令不够好：</p>
 <ol>
@@ -159,14 +195,14 @@
 </ol>
 <p>而使用 NERDTree 的话，在一个小窗口内，按照目录浏览查找的效率也很低。</p>
 <p><code>lookupfile</code> 这个插件可以实现类似 Sublime Text 中 Ctrl + P 的效果，只需要输入文件的部分名字即可匹配查找到文件。</p>
-<h2 id="1. install">1. Install</h2>
+<h2 id="install">Install</h2>
 <hr/>
 <p>lookupfile 需要 <code>genutils</code> 插件的支持，使用 Vundle 安装两个插件：</p>
 <div class="highlight"><pre><span></span><span class="n">Bundle</span> <span class="s1">'genutils'</span>
 <span class="n">Bundle</span> <span class="s1">'lookupfile'</span>
 </pre></div>
 <p><br/></p>
-<h2 id="2. config">2. Config</h2>
+<h2 id="config">Config</h2>
 <hr/>
 <p>关于 lookupfile 的详细配置，查看 help 文档，下面是几个常用的配置选项：</p>
 <div class="highlight"><pre><span></span><span class="n">let</span> <span class="k">g</span><span class="p">:</span><span class="n">LookupFile_MinPatLength</span> <span class="o">=</span> <span class="mi">2</span>
@@ -175,7 +211,7 @@
 <span class="n">let</span> <span class="k">g</span><span class="p">:</span><span class="n">LookupFile_AlwaysAcceptFirst</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">let</span> <span class="k">g</span><span class="p">:</span><span class="n">LookupFile_AllowNewFiles</span> <span class="o">=</span> <span class="mi">0</span>
 </pre></div>
-<h3 id="2.1. tags">2.1. tags</h3>
+<h3 id="tags">tags</h3>
 <p><a href="http://easwy.com/blog/archives/advanced-vim-skills-lookupfile-plugin/">vi/vim使用进阶: lookupfile插件</a> 中介绍到 lookupfile 可以使用 ctags 生成的 tags 文件来查找，不过其查找效率比较低，所以作者写了一个 shell 脚本来生成专用的 tags 文件：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -194,7 +230,7 @@ find . -not -regex <span class="s1">'.*\.\(png\|gif\)'</span> -type f -printf <s
     <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_TagExpr</span> <span class="o">=</span> <span class="s1">'</span><span class="s">"./filenametags"</span><span class="s1">'</span>
 <span class="k">endif</span>
 </pre></div>
-<h3 id="2.2. case sensitive">2.2. case sensitive</h3>
+<h3 id="case sensitive">case sensitive</h3>
 <p>lookupfile 插件是大小写敏感的，可以在查找到时候加上 <code>\c</code> 就能忽略大小写，不过这样很麻烦，下面是更加简单的方法，在 .vimrc 中添加下面这段代码即可：</p>
 <div class="highlight"><pre><span></span><span class="nv">function</span><span class="o">!</span> <span class="nv">LookupFile_IgnoreCaseFunc</span><span class="ss">(</span><span class="nv">pattern</span><span class="ss">)</span>
     <span class="nv">let</span> <span class="nv">_tags</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nv">tags</span>
@@ -215,7 +251,7 @@ find . -not -regex <span class="s1">'.*\.\(png\|gif\)'</span> -type f -printf <s
 <span class="nv">endfunction</span>
 <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_LookupFunc</span> <span class="o">=</span> <span class="s1">'</span><span class="s">LookupFile_IgnoreCaseFunc</span><span class="s1">'</span>
 </pre></div>
-<h3 id="2.3. summary">2.3. Summary</h3>
+<h3 id="summary">Summary</h3>
 <p>综上，.vimrc 中的配置内容如下：</p>
 <div class="highlight"><pre><span></span><span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
 <span class="s2">"</span><span class="s"> Config lookupfile</span>
@@ -252,18 +288,18 @@ find . -not -regex <span class="s1">'.*\.\(png\|gif\)'</span> -type f -printf <s
 <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">LookupFile_LookupFunc</span> <span class="o">=</span> <span class="s1">'</span><span class="s">LookupFile_IgnoreCaseFunc</span><span class="s1">'</span>
 </pre></div>
 <p><br/></p>
-<h2 id="3. usage_1">3. Usage</h2>
+<h2 id="usage_1">Usage</h2>
 <hr/>
 <p>lookupfile 可以查找文件夹、缓冲区、按照目录查找三种方法：</p>
-<h3 id="3.1. :lookupfile">3.1. <code>:LookupFile</code></h3>
+<h3 id=":lookupfile"><code>:LookupFile</code></h3>
 <p>按 F5 或者输入命令 <code>:LookupFile</code> 来打开上部的 lookupfile 小窗口，输入文件名即可查找，可以使用 vim 的正则表达式查找，使用 Ctrl-N 和 Ctrl-P 来上下选择查找结果。</p>
-<h3 id="3.2. :lubufs">3.2. <code>:LUBufs</code></h3>
+<h3 id=":lubufs"><code>:LUBufs</code></h3>
 <p>虽然有 <code>BufExplorer</code> 可以查看 buffers，但是当 buffer 很多时，使用 lookupfile 更加方便一点。</p>
 <p>输入命令 <code>:LUBufs</code> 查找缓冲区的文件。</p>
-<h3 id="3.3. :luwalk">3.3. <code>:LUWalk</code></h3>
+<h3 id=":luwalk"><code>:LUWalk</code></h3>
 <p>使用 <code>:LUWalk</code> 来浏览目录。这个功能和 NERDTree 重复了，个人感觉 NERDTree 浏览目录更加方便一点，毕竟不用输入文件目录名，可以少翘几个字符...</p>
 <p><br/></p>
-<h2 id="4. ref_1">4. Ref</h2>
+<h2 id="ref_1">Ref</h2>
 <p><a href="http://easwy.com/blog/archives/advanced-vim-skills-lookupfile-plugin/">vi/vim使用进阶: lookupfile插件</a></p>
 <p><a href="http://blog.163.com/lgh_2002/blog/static/44017526201061313442254/">lookupfile.vim插件详解【OK】</a></p>
   </div>
@@ -287,11 +323,11 @@ find . -not -regex <span class="s1">'.*\.\(png\|gif\)'</span> -type f -printf <s
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
       <li><a href="https://qiangu.cool/posts/linux/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
     </ul>
   </div>
 
@@ -379,6 +415,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

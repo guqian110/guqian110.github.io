@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -97,8 +103,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -109,6 +131,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -146,15 +178,19 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="C/C++ 内置数据类型">C/C++ 内置数据类型</a><ul><li><a class="toc-href" href="#ji ben nei zhi lei xing" title="基本内置类型">基本内置类型</a><ul><li><a class="toc-href" href="#suan zhu lei xing" title="算术类型">算术类型</a></li><li><a class="toc-href" href="#void" title="void">void</a></li></ul></li><li><a class="toc-href" href="#chu shi hua  initialize_1" title="初始化 Initialize">初始化 Initialize</a><ul><li><a class="toc-href" href="#chu shi hua  &amp; fu zhi" title="初始化 &amp; 赋值">初始化 &amp; 赋值</a></li><li><a class="toc-href" href="#nei zhi lei xing chu shi hua" title="内置类型初始化">内置类型初始化</a></li></ul></li><li><a class="toc-href" href="#suan zhu lei xing zhuan huan_1" title="算术类型转换">算术类型转换</a><ul><li><a class="toc-href" href="#yin shi lei xing zhuan huan" title="隐式类型转换">隐式类型转换</a></li><li><a class="toc-href" href="#suan zhu lei xing zhuan huan_2" title="算术类型转换">算术类型转换</a></li></ul></li><li><a class="toc-href" href="#references_1" title="references">references</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>类型是程序设计的基础。一些程序设计语言，比如 Smalltalk 和 Python，在运行的时候才检查预计中的对象的类型，想反，C++ 是静态类型（statically typed）语言，在编译时执行类型检查。导致的结果是：</p>
 <p><em>变量和函数在使用前必须先声明</em> 。</p>
 <p>每种类型都定义了其存储空间要求和可以在该类型的所有对象上执行的操作。C++ 是 在 C 的基础上扩充得到的，为了和 C 兼容， C++ 在必要时必须能够直接处理硬件，所以 C++ 提供的一组基本内置类型，如int、char等，这些类型与它们在机器硬件上的标示方式紧密相关。（所以，C++ 可以称为 &ldquo;具有高级语言库的低级语言&rdquo;）</p>
 <p>本文只限于总结 C++ 的内置类型（Built-in Types），不讨论自定义类型 。</p>
 <p><br/></p>
-<h2 id="1. ji ben nei zhi lei xing">1. 基本内置类型</h2>
+<h2 id="ji ben nei zhi lei xing">基本内置类型</h2>
 <hr/>
-<h3 id="1.1. suan zhu lei xing">1.1. 算术类型</h3>
+<h3 id="suan zhu lei xing">算术类型</h3>
 <p>C++ 语言自身定义了一组基本类型来表示不同的数据，如整数、浮点数、字母、bool 类型等，这些类型统称为 <em>算术类型（Arithmetic type）</em> 。</p>
 <p><strong>size</strong></p>
 <p>算术类型的存储空间依机器而定，即用多少二进制位 bit 来表示一个数 。C++ 标准规定了每个算术类型的最小存储空间，但它并不阻止编译器使用更大的存储空间 。事实上，对于 <code>int</code> 类型，几乎所有的编译器使用的存储空间都比所要求的大 。</p>
@@ -215,12 +251,12 @@
 <p>The float type is usually not precise enough for real programsfloat is guaranteed to offer only 6 significant digits. The double type guarantees at least 10 significant digits, which is sufficient for most calculations.</p>
 <p>Determining which floating-point type to use is easier: It is almost always right to use double. The loss of precision implicit in float is significant, whereas the cost of double precision calculations versus single precision is negligible. In fact, on some machines, double precision is faster than single. The precision offered by long double usually is unnecessary and often entails considerable extra run-time cost.</p>
 </blockquote>
-<h3 id="1.2. void">1.2. void</h3>
+<h3 id="void">void</h3>
 <p>void 类型没有对应的值，仅用在有限的一些情况下，通常用作无返回值函数的返回类型。</p>
 <p><br/></p>
-<h2 id="2. chu shi hua  initialize_1">2. 初始化 Initialize</h2>
+<h2 id="chu shi hua  initialize_1">初始化 Initialize</h2>
 <hr/>
-<h3 id="2.1. chu shi hua  &amp; fu zhi">2.1. 初始化 &amp; 赋值</h3>
+<h3 id="chu shi hua  &amp; fu zhi">初始化 &amp; 赋值</h3>
 <p>首先是初始化的必要性：</p>
 <p>在 C++ 中，初始化是一个非常重要的概念，给变量一个初始值几乎总是正确的，但不要求必须这么做。定义变量时，应该给变量赋初始值，除非确定将变量用于其他意图之前会覆盖这个初值。如果不能保证读取变量前重置变量，就应该初始化变量。变量没有初始化是很常见的导致程序崩溃/结果错误的原因，而且有时候很难像 Debug 一样找到这个错误（bug 导致程序一定不对，但是没有初始化的变量的结果是随机的）。所以，良好的习惯是对每个变量都进行初始化 。</p>
 <p>其次是初始化和赋值的区别：</p>
@@ -233,14 +269,14 @@
 </pre></div>
 </td></tr></table>
 <p>使用 <code>=</code> 很容易让人把初始化和赋值混淆在一起，但是在 C++ 中这是两种不同的操作，当涉及到类对象时，两种不同的初始化方式的区别是很微妙的。目前先不考虑这点，只需要知道直接初始化语法更灵活而且效率高。</p>
-<h3 id="2.2. nei zhi lei xing chu shi hua">2.2. 内置类型初始化</h3>
+<h3 id="nei zhi lei xing chu shi hua">内置类型初始化</h3>
 <p>当我们定义一个变量却没有初始化时，系统 <em>有可能</em> 会为我们进行隐式的初始化。至于系统是否帮我们隐式初始化变量，以及为变量赋予一个怎样的初始值，这要取决于 <em>该变量的类型</em> 以及我们 <em>在何处定义的该变量</em> 。</p>
 <p>这里我们只考虑内置类型的初始化：</p>
 <p>内置类型的变量是否自动初始化取决于变量定义的位置。在函数体外（全局范围）定义的变量都初始化为 0，函数体内定义的变量不进行自动初始化 。</p>
 <p><br/></p>
-<h2 id="3. suan zhu lei xing zhuan huan_1">3. 算术类型转换</h2>
+<h2 id="suan zhu lei xing zhuan huan_1">算术类型转换</h2>
 <hr/>
-<h3 id="3.1. yin shi lei xing zhuan huan">3.1. 隐式类型转换</h3>
+<h3 id="yin shi lei xing zhuan huan">隐式类型转换</h3>
 <p>当两个操作数类型不同时，C++ 并不是直接把两个数加在一起，而是提供了一组转换规则，以便在执行算术操作之前，将两个数转换为同一数据类型。这些转换规则由编译器自动执行，不需要程序眼介入，有时甚至不需要程序员了解。因此，它们被称为 隐式类型转换 (<code>implicit type conversion</code>) 。</p>
 <p>在以下情况会发生隐式类型转换：</p>
 <ul>
@@ -276,7 +312,7 @@
 </li>
 </ul>
 <p>另外，函数调用时也可能发生隐式类型转化。</p>
-<h3 id="3.2. suan zhu lei xing zhuan huan">3.2. 算术类型转换</h3>
+<h3 id="suan zhu lei xing zhuan huan_2">算术类型转换</h3>
 <p>C++ 语言为内置类型提供了一组转化规则，其中最常用的就是算术转化（arithmetic conversion）。算术转化规则定义了一个 <em>类型转换层次</em>，该层次规定了操作数应该按照什么次序转换为表达式中最宽的数据类型。</p>
 <p>有两条通用规则：</p>
 <ol>
@@ -323,7 +359,7 @@
 </li>
 </ol>
 <p><br/></p>
-<h2 id="4. references_1">4. references</h2>
+<h2 id="references_1">references</h2>
 <p><a href="http://book.douban.com/subject/1767741/">c++ Primer</a></p>
 <p><a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx">C++之char , signed char , unsigned char，以及Integral Promotion</a></p>
 <p><a href="http://book.51cto.com/art/200912/166574.htm">Linux C编程一站式学习：整型</a></p>
@@ -429,6 +465,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -98,8 +104,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -110,6 +132,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -147,6 +179,10 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="锁存器 Latch v.s. 触发器 Flip-Flop">锁存器 Latch v.s. 触发器 Flip-Flop</a><ul><li><a class="toc-href" href="#history" title="History">History</a></li><li><a class="toc-href" href="#implementation" title="Implementation">Implementation</a><ul><li><a class="toc-href" href="#latch" title="Latch">Latch</a><ul><li><a class="toc-href" href="#sr latch" title="SR Latch">SR Latch</a></li><li><a class="toc-href" href="#d latch" title="D Latch">D Latch</a></li></ul></li><li><a class="toc-href" href="#flip-flop_1" title="Flip-Flop">Flip-Flop</a><ul><li><a class="toc-href" href="#d flip-flop" title="D flip-flop">D flip-flop</a></li><li><a class="toc-href" href="#jk flip-flop" title="JK flip-flop">JK flip-flop</a></li><li><a class="toc-href" href="#t flip-flop" title="T flip-flop">T flip-flop</a></li></ul></li></ul></li><li><a class="toc-href" href="#timing considerations_2" title="Timing considerations">Timing considerations</a><ul><li><a class="toc-href" href="#metastability" title="Metastability">Metastability</a></li><li><a class="toc-href" href="#setup, hold, recovery, removal times" title="Setup, hold, recovery, removal times">Setup, hold, recovery, removal times</a></li><li><a class="toc-href" href="#propagation delay" title="Propagation delay">Propagation delay</a></li></ul></li><li><a class="toc-href" href="#in fpga_1" title="in FPGA">in FPGA</a><ul><li><a class="toc-href" href="#reason &amp; solution to unexpected latch" title="Reason &amp; Solution to unexpected latch">Reason &amp; Solution to unexpected latch</a><ul><li><a class="toc-href" href="#reason" title="Reason">Reason</a></li><li><a class="toc-href" href="#solution" title="Solution">Solution</a></li></ul></li><li><a class="toc-href" href="#application_1" title="Application">Application</a></li><li><a class="toc-href" href="#conclusion" title="Conclusion">Conclusion</a></li></ul></li><li><a class="toc-href" href="#reference_1" title="Reference">Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>根据 <a href="http://en.wikipedia.org/wiki/Flip-flop_(electronics">Wiki: Flip-flop (electronics)</a> 上的介绍</p>
 <blockquote>
@@ -160,14 +196,14 @@
 <p>所以按照现在的约定习惯区分，latch 指的是电平触发的触发器，翻译为 &ldquo;锁存器&rdquo;；flip-flop 指边沿触发的触发器，就叫 &ldquo;触发器&rdquo;。</p>
 <p><br/></p>
 <p>[TOC]</p>
-<h2 id="1. history">1. History</h2>
+<h2 id="history">History</h2>
 <hr/>
 <p><em>翻译自 <a href="http://en.wikipedia.org/wiki/Flip-flop_(electronics">wiki</a>:</em></p>
 <p>第一个电子触发器(electronic flip-flop) 由  William Eccles 和 F. W. Jordan 于 1918 年发明的。它最早被称为 ：  <code>Eccles&ndash;Jordan trigger circuit</code>，由两个真空管组成。虽然现在由逻辑门 (logic gates)组成的触发器很常见，但是在集成电路(intergrated circuits)中，这种元件及它的晶体管版本仍然也很常见。早期的触发器常用来构成触发电路或者多谐振荡器(multivibrators)。</p>
 <p><img alt="flip-flop" src="http://upload.wikimedia.org/wikipedia/commons/9/98/Eccles-Jordan_trigger_circuit_flip-flip_drawings.png"/></p>
 <p>根据一个 JPL 的工程师，P. L. Lindley介绍，Montgomery Phister 于 1954 年在 UCLA 的 computer design 的课程上第一次对触发器进行了分类的讨论（RS、D、T、JK），然后在他的书 Logical Design of Digital Computers 中也进行了讨论。Lindley 当时在 Hughes Aircraft 的 Eldred Nelson 手下工作，而Nelson 命名了 JK 触发器。其他的名字则是 Phister 命名的。Lindley 解释说他是从 Nelson 口中得知 JK 触发器的故事的，当时 Hughes Aircraft 使用的触发器都是 JK 触发器。在设计逻辑系统时，Nelson 给触发器的输入命名为 A&amp;B、C&amp;D、E&amp;F、G&amp;H、J&amp;K。在 1953 年 Nelson 申请专利时，采用了 J&amp;K 的命名方案。</p>
 <p><br/></p>
-<h2 id="2. implementation">2. Implementation</h2>
+<h2 id="implementation">Implementation</h2>
 <hr/>
 <blockquote>
 <p>Flip-flops can be either simple (transparent or asynchronous) or clocked (synchronous); the transparent ones are commonly called latches. The word latch is mainly used for storage elements, while clocked devices are described as flip-flops.</p>
@@ -184,9 +220,9 @@
 </li>
 </ul>
 <p>下面分类讨论：</p>
-<h3 id="2.1. latch">2.1. Latch</h3>
+<h3 id="latch">Latch</h3>
 <p>Latch 可以由一对真空管、三极管、场效应管组成，在实际应用中也可以用逻辑门组成 latch。</p>
-<h4 id="2.1.1. sr latch">2.1.1. SR Latch</h4>
+<h4 id="sr latch">SR Latch</h4>
 <p>当使用逻辑门搭建模块时，最基本的 latch 就是 <code>SR latch</code> (set-reset latch)，所有的 latch 和 flip-flop 都是建立在它的基础之上。</p>
 <p>SR latch 的实现可以有两种方案：</p>
 <ul>
@@ -205,7 +241,7 @@
 <p><img alt="nand" src="/images/latch_versus_flip_flop/nand.png"/></p>
 </li>
 </ul>
-<h4 id="2.1.2. d latch">2.1.2. D Latch</h4>
+<h4 id="d latch">D Latch</h4>
 <p>Latch 是 <code>透明的(transparent)</code>，就是说输入的变换立即就能传递到输出端口，当几个透明的 latch 级联时，输入端的信号也能立即传递到输出端。当给 latch 添加额外的逻辑电路（比如使能信号 enable 无效时），就会使它变为 <code>不透明的(non-transparent)</code>。下面的 D latch 就是这样的例子。</p>
 <p>仔细观察 SR latch 的功能表，就可以发现，R 的取值为 S 的补。D latch 利用了这一特点，而且避免了 SR latch 中的禁止状态的出现。</p>
 <p>因为 SR latch 的实现有两种，所以 <code>D latch</code> 的实现也对应有两种：</p>
@@ -222,13 +258,13 @@
 <p>D latch 的功能表：</p>
 <p><img alt="d latch" src="/images/latch_versus_flip_flop/d_latch.png"/></p>
 <p>D latch 也称为  non-transparent、data latch、gated latch。它有一个数据输入端和一个使能端 enable(clock、control)。之所以叫透明，是因为当它使能时，输入端口的信号立刻就能传递到输出端口。</p>
-<h3 id="2.2. flip-flop_1">2.2. Flip-Flop</h3>
+<h3 id="flip-flop_1">Flip-Flop</h3>
 <p>如果 D latch 的控制端口加入时钟信号，就得到了基本触发器，只要时钟信号 CP = 1，则触发器就会受到触发，当 CP 保持为 1 时，数据输入端口的任何变化都将影响到 latch 的状态。</p>
 <p>latch 的这个特点应用到 时序电路中，就会出现比较严重的问题：</p>
 <p>一般时序逻辑的输出会经过组合电路的反馈通道，返回到时序逻辑的输入。当时钟信号有效时，latch 的输出通过组合电路反馈到 latch 的输入端，如果经过组合逻辑后，反馈的信号和之前的信号不同，则反馈信号会导致 latch 的输出变为新的值。在时钟信号有效的期间内，latch 的输出一直在变化，出现了不可预测的结果，这是不可靠的工作。</p>
 <p>latch 的<strong>问题</strong>就在于：<em>它在时钟有效期间内一直在被触发，这种触发时间过长。</em></p>
 <p>这个问题的<strong>解决方法</strong>就是：<em>将触发条件变为时钟沿触发，这样就得到了触发器 <code>flip-flop</code></em></p>
-<h4 id="2.2.1. d flip-flop">2.2.1. D flip-flop</h4>
+<h4 id="d flip-flop">D flip-flop</h4>
 <p>将 latch 改造为边沿敏感的触发器，最简单的就是 <code>D flip-flop</code> (data or delay)，搭建电路最经济有效的方法就是使用 DFF，因为它需要的门电路最少，其他类型的触发器都是在 DFF 的基础上得到的。</p>
 <p>实现 DFF 可以有两种方法：</p>
 <ul>
@@ -246,24 +282,24 @@
 </ul>
 <p>DFF 的特点就是在时钟信号的特定点触发（上升沿 or 下降沿），功能表：</p>
 <p><img alt="dff" src="/images/latch_versus_flip_flop/dff.png"/></p>
-<h4 id="2.2.2. jk flip-flop">2.2.2. JK flip-flop</h4>
+<h4 id="jk flip-flop">JK flip-flop</h4>
 <p>在 DFF 的基础上，可以得到 JK FF。</p>
 <p>JK FF 的特点和 SR latch 类似，可以将 J 看作是 S，K 看作是 R，它和 SR latch 的区别在于它是边沿触发，并且将 S = R = 1 状态设置为 <code>翻转 (toggle)</code>，也就是在下一个时钟边沿，输出取反。当 J = K = 0 时，得到的并不是 DFF，而是保持输出不变。</p>
 <p>功能表：</p>
 <p><img alt="jk" src="/images/latch_versus_flip_flop/jk.png"/></p>
-<h4 id="2.2.3. t flip-flop">2.2.3. T flip-flop</h4>
+<h4 id="t flip-flop">T flip-flop</h4>
 <p>将 JK FF 的输入端 J 和 K 连接到一起，就可以得到 <code>T FF</code> (toggle flip-flop)。</p>
 <p>当 T = 0 (J = K = 0) 时，输出保持不变，时钟边沿不影响状态；当 T = 1 (J = K = 1) 时，在时钟边沿输出反相，也就是翻转。</p>
 <p>功能表：</p>
 <p><img alt="tff" src="/images/latch_versus_flip_flop/tff.png"/></p>
 <p>可以看到 TFF 有 1/2 分频的作用，这一特点在很多电路中得到了应用。</p>
 <p><br/></p>
-<h2 id="3. timing considerations_2">3. Timing considerations</h2>
+<h2 id="timing considerations_2">Timing considerations</h2>
 <hr/>
-<h3 id="3.1. metastability">3.1. Metastability</h3>
+<h3 id="metastability">Metastability</h3>
 <p>伴随着 flip-flop 的一个问题是 <code>亚稳态 Metastability</code>。当两个输入端口 (比如 data 和 clk，或者 reset 和 clk)同时变化时，就会发生亚稳态的问题，需要消耗更长的时间来使输出达到稳定状态，而且这个稳定状态是不可预测的，有可能是 1，也有可能是 0。</p>
 <p>在计算机系统中，如果发生亚稳态，如果在下一个时钟使用数据时，还没有达到稳定状态，会导致数据传输错误或者程序崩溃。如果有两条路径同时用到了这个数据，有可能一条将它当作 1，另一条把它当作 0，这样会导致系统进入不一致的状态。</p>
-<h3 id="3.2. setup, hold, recovery, removal times">3.2. Setup, hold, recovery, removal times</h3>
+<h3 id="setup, hold, recovery, removal times">Setup, hold, recovery, removal times</h3>
 <blockquote>
 <p><strong>Setup time</strong> is the minimum amount of time the data signal should be held steady <strong>before</strong> the clock event so that the data are reliably sampled by the clock. This applies to synchronous input signals to the flip-flop.</p>
 <p><strong>Hold time</strong> is the minimum amount of time the data signal should be held steady <strong>after</strong> the clock event so that the data are reliably sampled. This applies to synchronous input signals to the flip-flop.</p>
@@ -290,11 +326,11 @@
 <p>如果使 flip-flop 的输入满足 setup time 和 hold time，那么就可以避免亚稳态的出现，一般器件的手册上都会标明这些参数，从几 ns 到几百 ps 之间。根据 flip-flop 内的组织情况而定，有时候可以将 setup time 或者 hold time 两者中的一个（只能是其中之一）变为 0 甚至是负数。</p>
 <p>但是，并不是总能满足这一标准，因为有可能 flip-flop 的输入端连到了外界的，设计者无法控制的一个不断变化的信号，这时候设计者所能做的事就是根据电路要求，将发生错误的概率降低到一个确定的水平。通常使用的方法就是将信号通过一条链在一起的 flip-flop 组，这样子可以将发生亚稳态的概率降低到一个可以忽略的程度，但是还是不等于 0。链中的 flip-flop 越多，这个概率就越趋近于 0，通常的情况是采用 1 个或者两个 flip-flop。</p>
 <p>即使现在出现了所谓的 <code>metastable-hardened flip-flops</code>，它可以尽可能地减小 setup time 和 hold time，但是仍然无法完全避免问题的出现。<strong>这是因为亚稳态并不是简单的设计方法上的问题。</strong>当时钟信号和其他信号在相隔很近的时间内变化，flip-flop 必须判断哪一个先发生变化，哪一个后发生变化，无论我们的器件速度有多快，仍然有可能出现两者相隔的太近，以至于无法判断。所以理论上是不可能造出一个完美避免亚稳态的 flip-flop。</p>
-<h3 id="3.3. propagation delay">3.3. Propagation delay</h3>
+<h3 id="propagation delay">Propagation delay</h3>
 <p>flip-flop 还有一个参数叫做 clock-to-output delay (common symbol in data sheets: <code>tco</code>) 或者是 propagation delay (<code>tp</code>)，表示的是 flip-flop 从有效时钟沿开始到输出发生变化所消耗的时间。有时候从高电平变为低电平的时间 (high-to-low transition, tPHL))和从低电平变为高电平的时间 (low-to-high transition, tPLH) 不相等。</p>
 <p>当用同一时钟来驱动级联的 flip-flop (比如移位寄存器 shift register)时，必须保证前一级的 tco 要大于后一级的 th。这是因为必须要保证前一级的数据能够正确移位到后一级中。当有效时钟沿到来时，前后两级的 ff 在同时变化，采样前一级的输出作为本级的输入，然后经过 tco 输出更新的值。当后一级 ff 在 tsu 到 th 段内采样时，必须保证前一级的输出保持不变，也就是说前一级 ff 的响应速度不能太快，至少要等后一级正确采样完成之后才能变化，即 <code>tco &gt; th</code>。如果采用物理构造完全相同的 ff，那么通常是可以保证这一条件的。</p>
 <p><br/></p>
-<h2 id="4. in fpga_1">4. in FPGA</h2>
+<h2 id="in fpga_1">in FPGA</h2>
 <hr/>
 <p>latch 和 flip-flop 的特点决定了它们各自的应用场景</p>
 <p><strong>latch 的优点：</strong></p>
@@ -333,9 +369,9 @@
 <p>目前 latch 只在极高端的电路中使用，如 intel 的 P4 等 CPU。而在 PLD / FPGA 中，基本单元 LE 是查找表 LUT 和触发器 FF 组成的，如果要实现 latch，反而需要更多的资源。</p>
 <p><strong>一般的设计规则是：</strong></p>
 <p>在绝大多数设计中避免产生 latch。它会让您设计的时序完蛋，并且它的隐蔽性很强，非老手不能查出。latch 最大的危害在于不能过滤毛刺。这对于下一级电路是极其危险的。所以，只要能用 DFF 的地方，就不用 latch。</p>
-<h3 id="4.1. reason &amp; solution to unexpected latch">4.1. Reason &amp; Solution to unexpected latch</h3>
+<h3 id="reason &amp; solution to unexpected latch">Reason &amp; Solution to unexpected latch</h3>
 <p>在电路设计中，要对Latch特别谨慎，如果综合出和设计意图不一致的 Latch，会导致设计错误，包括仿真和综合。因此，要避免产生意外的 Latch。</p>
-<h4 id="4.1.1. reason">4.1.1. Reason</h4>
+<h4 id="reason">Reason</h4>
 <p>如果组合逻辑完全不使用 always 语句，那么就不会产生 latch，比如</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">dout</span> <span class="o">=</span> <span class="n">din</span> <span class="o">?</span> <span class="n">x</span> <span class="o">:</span> <span class="n">y</span><span class="p">;</span>
 </pre></div>
@@ -380,7 +416,7 @@
 <p><img alt="case_latch" src="/images/latch_versus_flip_flop/case_latch.png"/></p>
 </li>
 </ol>
-<h4 id="4.1.2. solution">4.1.2. Solution</h4>
+<h4 id="solution">Solution</h4>
 <p>知道了原因，那么解决方法也就显而易见了：</p>
 <ol>
 <li>
@@ -428,7 +464,7 @@
 <p><img alt="case-default" src="/images/latch_versus_flip_flop/case_default.png"/></p>
 </li>
 </ol>
-<h3 id="4.2. application_1">4.2. Application</h3>
+<h3 id="application_1">Application</h3>
 <p><a href="http://book.douban.com/subject/3522845/">《Verilog HDL 程序设计与实践》</a> 笔记：</p>
 <blockquote>
 <p>latch 作为一种电路单元,必然有其存在的理由以及应用场景,并不像目前的很多书籍简单地将锁存器列为&ldquo;头等敌人&rdquo;。其实在实际中,有些设计是不可避免地要用到锁存器,特别是在总线应用上,锁存器能提高驱动能力、隔离前后级。例如,常见的应用包括地址锁存器、数据锁存器以及复位信号锁存器等。但在更多的情况下,很容易在代码中产生未预料到的锁存器,使得逻辑功能不满足要求,浪费了大量的调试时间,从而使得大多数设计人员&ldquo;闻虎色变&rdquo;。</p>
@@ -482,10 +518,10 @@
 </pre></div>
 <p>在ISE中综合后的结果中，可以看到补全if-else后，在比较器后面级联了与门，代替原来的锁存器，仿真结果也正确。</p>
 </blockquote>
-<h3 id="4.3. conclusion">4.3. Conclusion</h3>
+<h3 id="conclusion">Conclusion</h3>
 <p>锁存器 latch 是一种基本电路单元,会影响到电路的时序性能,应该尽量避免使用,但出现锁存器造成设计和原始意图不符的情况,则是由于设计人员代码输入不正确造成的。</p>
 <p><br/></p>
-<h2 id="5. reference_1">5. Reference</h2>
+<h2 id="reference_1">Reference</h2>
 <p><a href="http://en.wikipedia.org/wiki/Flip-flop_(electronics">Flip-flop (electronics) --wikipedia</a></p>
 <p><a href="http://book.douban.com/subject/2883561/">数字设计</a></p>
 <p><a href="http://book.douban.com/subject/3522845/">Verilog HDL 程序设计与实践</a></p>
@@ -593,6 +629,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

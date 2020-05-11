@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -98,8 +104,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -110,6 +132,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -147,15 +179,19 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="在 Vim 中写 Markdown 文件">在 Vim 中写 Markdown 文件</a><ul><li><a class="toc-href" href="#syntax hightlight" title="Syntax Hightlight">Syntax Hightlight</a><ul><li><a class="toc-href" href="#install" title="Install">Install</a></li><li><a class="toc-href" href="#file extension" title="File extension">File extension</a></li></ul></li><li><a class="toc-href" href="#preview_1" title="Preview">Preview</a><ul><li><a class="toc-href" href="#install_1" title="Install">Install</a></li><li><a class="toc-href" href="#config &amp; use" title="Config &amp; Use">Config &amp; Use</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p><code>Vim</code> 和 <code>Markdown</code> 就不多罗嗦了，记录一下最近在 Vim 中摸索使用 Markdown 的经历。</p>
-<h2 id="1. syntax hightlight">1. Syntax Hightlight</h2>
+<h2 id="syntax hightlight">Syntax Hightlight</h2>
 <hr/>
 <p>Vim 可以通过插件来提供对 Markdown 语法的支持，网上找到很多这类插件：</p>
 <p>官网上的插件：<a href="http://www.vim.org/scripts/script.php?script_id=2882">Markdown</a></p>
 <p>我找到的是下面这个：</p>
 <p><a href="https://github.com/plasticboy/vim-markdown">plasticboy/vim-markdown</a></p>
-<h3 id="1.1. install">1.1. Install</h3>
+<h3 id="install">Install</h3>
 <p>使用 Vundle 管理插件，只需要在 <code>.vimrc</code> 文件中添加：</p>
 <div class="highlight"><pre><span></span><span class="n">Bundle</span> <span class="s1">'godlygeek/tabular'</span>
 <span class="n">Bundle</span> <span class="s1">'plasticboy/vim-markdown'</span>
@@ -164,7 +200,7 @@
 <div class="highlight"><pre><span></span><span class="p">:</span><span class="n">BundleInstall</span>
 </pre></div>
 <p>即可。</p>
-<h3 id="1.2. file extension">1.2. File extension</h3>
+<h3 id="file extension">File extension</h3>
 <p>Markdown 文件的后缀名可以是 <code>.markdown</code>，<code>mkd</code>，<code>mkdn</code>，<code>md</code> 等，但是 plasticboy 的插件只识别 <code>mkd</code> 和 <code>markdown</code> 两种：</p>
 <p><a href="http://stackoverflow.com/questions/10964681/enabling-markdown-highlighting-in-vim">Enabling markdown highlighting in Vim</a></p>
 <p>因为我们已经按照 .md 格式写了很多文本了，这时候更好选择当然是修改设置，让 vim 可以识别这种类型的文件，而不是修改文件后缀名。所以我们需要在 vimrc 中设置一下：</p>
@@ -173,12 +209,12 @@
 <p>这样，.md 文件就可以被识别了。</p>
 <p>经过上面两步，此时再打开 markdown 文件就可以看到语法高亮了，plasticboy/vim-markdown 还支持一些高级的主题：比如支持 LaTeX 数学公式的高亮，ToC 等，从 github 上可以看到相关设置的介绍说明。</p>
 <p><br/></p>
-<h2 id="2. preview_1">2. Preview</h2>
+<h2 id="preview_1">Preview</h2>
 <hr/>
 <p>一些专门的 Markdown 软件、网页编辑器都是提供实时预览，Vim 虽然不提供预览窗口，但是配合浏览器，我们也可以实现实时预览的功能，当然还是依靠万能的插件。</p>
 <p>我使用的是：</p>
 <p><a href="https://github.com/suan/vim-instant-markdown">suan/vim-instant-markdown</a></p>
-<h3 id="2.1. install">2.1. Install</h3>
+<h3 id="install_1">Install</h3>
 <ol>
 <li>
 <p>首先要保证已经安装了 node.js</p>
@@ -208,7 +244,7 @@
 </pre></div>
 </li>
 </ol>
-<h3 id="2.2. config &amp; use">2.2. Config &amp; Use</h3>
+<h3 id="config &amp; use">Config &amp; Use</h3>
 <p>如果机器比较老，插件占用的资源过多的话，可以设置</p>
 <div class="highlight"><pre><span></span><span class="n">let</span> <span class="k">g</span><span class="p">:</span><span class="n">instant_markdown_slow</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
@@ -228,7 +264,7 @@
 </ol>
 <p>最后放一张截图：</p>
 <p><img alt="screenshot" src="/images/learning-vim-markdown/screenshot.png"/></p>
-<h2 id="3. ref_1">3. Ref</h2>
+<h2 id="ref_1">Ref</h2>
 <p><a href="https://github.com/plasticboy/vim-markdown">plasticboy/vim-markdown</a></p>
 <p><a href="http://stackoverflow.com/questions/10964681/enabling-markdown-highlighting-in-vim">Enabling markdown highlighting in Vim</a></p>
 <p><a href="https://github.com/suan/vim-instant-markdown">suan/vim-instant-markdown</a></p>
@@ -245,7 +281,7 @@
     <a class="btn float-left" href="https://qiangu.cool/posts/linux/learning_vim_ctags_cscope_taglist.html" title="学习 Vim 之 Ctags/Cscope/Taglist">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
-    <a class="btn float-right" href="https://qiangu.cool/posts/misc/to_live_review.html" title="活着 有感">
+    <a class="btn float-right" href="https://qiangu.cool/posts/book/to_live_review.html" title="活着 有感">
       Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
@@ -253,11 +289,11 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
       <li><a href="https://qiangu.cool/posts/linux/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
     </ul>
   </div>
 
@@ -345,6 +381,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

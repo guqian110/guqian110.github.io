@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -96,8 +102,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -108,6 +130,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -145,14 +177,18 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="计数器设计小结">计数器设计小结</a><ul><li><a class="toc-href" href="#introduction" title="Introduction">Introduction</a></li><li><a class="toc-href" href="#type" title="Type">Type</a></li><li><a class="toc-href" href="#implement" title="Implement">Implement</a><ul><li><a class="toc-href" href="#binary counter" title="Binary Counter">Binary Counter</a></li><li><a class="toc-href" href="#bcd counter (mod-m counter)" title="BCD Counter (mod-m counter)">BCD Counter (mod-m counter)</a></li><li><a class="toc-href" href="#ring counter" title="Ring Counter">Ring Counter</a></li><li><a class="toc-href" href="#johnson counter" title="Johnson Counter">Johnson Counter</a></li><li><a class="toc-href" href="#ripple counter" title="Ripple Counter">Ripple Counter</a></li><li><a class="toc-href" href="#gray code counter" title="Gray Code Counter">Gray Code Counter</a></li></ul></li><li><a class="toc-href" href="#reference_1" title="Reference">Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2 id="1. introduction">1. Introduction</h2>
+    <h2 id="introduction">Introduction</h2>
 <hr/>
 <p>计数器 在数字电路设计 和 计算机程序设计 中都应用非常广泛，其功能顾名思义，就是用来计数。这里只讨论数字电路设计中的计数器。</p>
 <p>通常，将包含触发器 flip-flop 的电路（即使含有组合电路部分）认为是时序电路。时序电路通常不以电路命名，而是以功能进行分类，分别是 <strong>寄存器</strong> 和 <strong>计数器</strong>。</p>
 <p>计数器 <a href="http://en.wikipedia.org/wiki/Counter">counter</a> 从本质上来说也是寄存器，不过它是在预先设定好的状态序列中转移，尽管计数器是寄存器的一种特殊形式，通常还是以不同的名称来加以区分。</p>
 <p><br/></p>
-<h2 id="2. type">2. Type</h2>
+<h2 id="type">Type</h2>
 <p>按照不同的标准来划分，计数器可以有不同的划分方法：</p>
 <ol>
 <li>
@@ -185,9 +221,9 @@
 </ol>
 <p>计数器在数字电路中的用途非常广，可以作为定时器、实用计数器、状态机等。在具体实现时，有前面总结的不同的计数器类型可供选择，每种计数器由其特点决定了适用场合，我们要做到就是在不同计数器类型和配置之间进行权衡，选择正确的设计，以节省大量逻辑资源，并提高性能。</p>
 <p>下面分别讨论各种计数器的特点和 HDL 实现。</p>
-<h2 id="3. implement">3. Implement</h2>
+<h2 id="implement">Implement</h2>
 <hr/>
-<h3 id="3.1. binary counter">3.1. Binary Counter</h3>
+<h3 id="binary counter">Binary Counter</h3>
 <p>最简单、最基本的计数器就是 二进制计数器 Binary Counter。它的计数方式就是从 0 开始每个脉冲进行 &ldquo;+1&rdquo; 操作，直到最大值，然后重新从 0 开始。</p>
 <p><a href="http://www.amazon.com/FPGA-Prototyping-Verilog-Examples-Spartan-3/dp/0470185325">FPGA Prototyping By Verilog Examples: Xilinx Spartan-3 Version</a> 里面有个例子，这里稍作修改就可以当作通用模块，供其他模块调用了。</p>
 <p><strong>Code</strong></p>
@@ -268,7 +304,7 @@
 <span class="k">endmodule</span>
 </pre></div>
 </td></tr></table>
-<h3 id="3.2. bcd counter (mod-m counter)">3.2. BCD Counter (mod-m counter)</h3>
+<h3 id="bcd counter (mod-m counter)">BCD Counter (mod-m counter)</h3>
 <p>人类更习惯使用十进制进行计数，十进制一共有 10 个符号，我们只需要从 4 bit 的二进制计数器中选取 10 个数字，只使用这 10 个数字进行计数即可，通常去掉 1010 ~ 1111 这 6 个数字，即使用 8421BCD码 来对十进制数进行编码、计数，即 BCD Counter。</p>
 <p>将十进制进行推广，我们就可以写出任意的 模 m 的计数器，在下面的例子中，M 表示计数器的模值（默认为 10），N 表示计数器需要的位数（默认为 4）。在例化时如果要修改，则需要手动计算这两个参数进行赋值。</p>
 <p><strong>Code</strong></p>
@@ -359,7 +395,7 @@
 <span class="k">endmodule</span>
 </pre></div>
 </td></tr></table>
-<h3 id="3.3. ring counter">3.3. Ring Counter</h3>
+<h3 id="ring counter">Ring Counter</h3>
 <p>基于线性移位寄存器 <a href="http://en.wikipedia.org/wiki/Linear_feedback_shift_register"><code>LFSR</code> (Linear feedback shift register) </a> 可以衍生出两种计数器：<a href="http://en.wikipedia.org/wiki/Ring_counter">环形计数器 (ring counter)</a> 和 扭环计数器（约翰逊计数器）。</p>
 <p>将 LFSR 中存储的数字设置为独热码的形式，即只有一位为 1，其他位为 0。然后把最后一级的输出直接反馈到第一级的输入，这样，输入和输出组成了一个环形，所以称为 环形计数器。4 bit 的环形计数器电路图如下：</p>
 <p><img alt="ring counter" src="/images/counter-design-summary/ring_counter.png"/></p>
@@ -456,7 +492,7 @@
 <span class="k">endmodule</span>
 </pre></div>
 </td></tr></table>
-<h3 id="3.4. johnson counter">3.4. Johnson Counter</h3>
+<h3 id="johnson counter">Johnson Counter</h3>
 <p>在 ring counter 的反馈链路中加入一个反相器，就好象把一个环扭了一下，所以称为 扭环计数器 (Johnson Counter)</p>
 <p>4 bit 的 Johnson Counter 如下图所示：</p>
 <p><img alt="johnson counter" src="http://upload.wikimedia.org/wikipedia/commons/e/e8/JohnsonCounter2.png"/></p>
@@ -483,7 +519,7 @@
 <span class="k">end</span>
 </pre></div>
 </td></tr></table>
-<h3 id="3.5. ripple counter">3.5. Ripple Counter</h3>
+<h3 id="ripple counter">Ripple Counter</h3>
 <p>前面总结的这些计数器都是同步计数器，组成它们的 flip-flop 是由同一个脉冲信号触发的。还有一种计数器是异步计数器，它内部的 flip-flop 不是由同一个脉冲信号触发的。由于 FPGA 特殊的结构原因，在 FPGA 中应该使用同步设计，所以一般 FPGA 不会使用这种计数器。</p>
 <p>ripple counter 的每个 flip-flop 使用前一级的 flip-flop 的输出信号作为触发信号，所以后一级的触发器必须等到前一级的触发器输出之后才能工作，所以对于一个长度为 N 的触发器链，从输入时间开始，要等 N 个触发器依次工作完之后才能输出有效结果。</p>
 <p>示意图：</p>
@@ -505,7 +541,7 @@
 <p>代码在</p>
 <p><a href="http://www.amazon.com/Hdl-Chip-Design-Synthesizing-Simulating/dp/0965193438">Hdl Chip Design: A Practical Guide for Designing, Synthesizing &amp; Simulating Asics &amp; Fpgas Using Vhdl or Verilog</a></p>
 <p>里面有介绍。</p>
-<h3 id="3.6. gray code counter">3.6. Gray Code Counter</h3>
+<h3 id="gray code counter">Gray Code Counter</h3>
 <p>Gray 码和普通的二进制编码相比，优势就是它相邻数字之间只有一位不同，这样在计数时，就避免的多位不是同时变化导致的毛刺。</p>
 <p><a href="http://en.wikipedia.org/wiki/Gray_code">Gray Code wiki</a>:</p>
 <blockquote>
@@ -517,7 +553,7 @@
 <p><img alt="gray code counter" src="/images/counter-design-summary/gray_code_counter.png"/></p>
 <p>代码略...</p>
 <p><br/></p>
-<h2 id="4. reference_1">4. Reference</h2>
+<h2 id="reference_1">Reference</h2>
 <p><a href="http://www.amazon.com/FPGA-Prototyping-Verilog-Examples-Spartan-3/dp/0470185325">FPGA Prototyping By Verilog Examples: Xilinx Spartan-3 Version</a></p>
 <p><a href="http://www.amazon.com/Hdl-Chip-Design-Synthesizing-Simulating/dp/0965193438">Hdl Chip Design: A Practical Guide for Designing, Synthesizing &amp; Simulating Asics &amp; Fpgas Using Vhdl or Verilog</a></p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">synthesis and scripting techniques for designing multi-asynchronous clock designs</a></p>
@@ -530,7 +566,7 @@
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="https://qiangu.cool/posts/misc/the_pomodoro_technique_practices.html" title="番茄工作法 总结 + 实践">
+    <a class="btn float-left" href="https://qiangu.cool/posts/book/the_pomodoro_technique_practices.html" title="番茄工作法 总结 + 实践">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
     <a class="btn float-right" href="https://qiangu.cool/posts/ic/delay_in_fpgas.html" title="FPGA 中的延时">
@@ -623,6 +659,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

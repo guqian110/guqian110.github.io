@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -98,8 +104,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -110,6 +132,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -147,6 +179,10 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="如何优雅的分析代码">如何优雅的分析代码</a><ul><li><a class="toc-href" href="#graphviz" title="Graphviz">Graphviz</a><ul><li><a class="toc-href" href="#what is graphviz?" title="What is Graphviz?">What is Graphviz?</a></li><li><a class="toc-href" href="#installation" title="Installation">Installation</a></li><li><a class="toc-href" href="#more" title="More">More</a></li></ul></li><li><a class="toc-href" href="#doxygen_1" title="Doxygen">Doxygen</a><ul><li><a class="toc-href" href="#what is doxygen" title="What is Doxygen">What is Doxygen</a></li><li><a class="toc-href" href="#installation_1" title="Installation">Installation</a></li><li><a class="toc-href" href="#getting started" title="Getting Started">Getting Started</a></li><li><a class="toc-href" href="#documenting the code" title="Documenting the code">Documenting the code</a><ul><li><a class="toc-href" href="#putting documentation after members" title="Putting documentation after members">Putting documentation after members</a></li><li><a class="toc-href" href="#examples" title="Examples">Examples</a></li><li><a class="toc-href" href="#documentation at other places" title="Documentation at other places">Documentation at other places</a></li><li><a class="toc-href" href="#anatomy of a comment block" title="Anatomy of a comment block">Anatomy of a comment block</a></li></ul></li></ul></li><li><a class="toc-href" href="#ref._2" title="Ref.">Ref.</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>当我们来接手一个别人的工程时，阅读别人的代码是一件很痛苦的事。成千上百的函数，糟糕的代码风格，不知所云的注释，这些都是让人抓狂。那么，问题就来了：<strong>如何优雅地分析别人的代码？</strong></p>
 <p>答案就是：<strong>Doxygen + Graphviz</strong></p>
@@ -155,29 +191,29 @@
 <p><strong>P.S.</strong></p>
 <p>在 Linux 环境下，Vim 有插件 <strong>DoxygenToolKIt.vim</strong> 可以帮助我们很方便地写出 Doxygen 风格的代码。这里只介绍 Doxygen + Graphviz，DoxygenToolKit.vim 在另外一篇中介绍。</p>
 <p><br/></p>
-<h2 id="1. graphviz">1. Graphviz</h2>
+<h2 id="graphviz">Graphviz</h2>
 <hr/>
-<h3 id="1.1. what is graphviz?">1.1. What is Graphviz?</h3>
+<h3 id="what is graphviz?">What is Graphviz?</h3>
 <p><a href="http://www.graphviz.org/">Graphviz official website</a>:</p>
 <blockquote>
 <p>Graphviz is open source graph visualization software. Graph visualization is a way of representing structural information as diagrams of abstract graphs and networks. It has important applications in networking, bioinformatics,  software engineering, database and web design, machine learning, and in visual interfaces for other technical domains. </p>
 </blockquote>
-<h3 id="1.2. installation">1.2. Installation</h3>
+<h3 id="installation">Installation</h3>
 <p>官方网站上有各个平台（Windows/Unix/Linnux/Mac）的安装文件和源码，在 Ubuntu 13.10 saucy 下，直接使用 apt-get 安装即可：</p>
 <div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">graphviz</span>
 </pre></div>
-<h3 id="1.3. more">1.3. More</h3>
+<h3 id="more">More</h3>
 <p>更多详细的介绍见官网的 About、Documentation、Wiki、FAQ。</p>
 <p><br/></p>
-<h2 id="2. doxygen_1">2. Doxygen</h2>
+<h2 id="doxygen_1">Doxygen</h2>
 <hr/>
-<h3 id="2.1. what is doxygen">2.1. What is Doxygen</h3>
+<h3 id="what is doxygen">What is Doxygen</h3>
 <p><a href="http://www.stack.nl/~dimitri/doxygen/index.html">Doxygen Official website</a>:</p>
 <blockquote>
 <p>Doxygen is the de facto standard tool for generating documentation from annotated C++ sources, but it also supports other popular programming languages such as C, Objective-C, C#, PHP, Java, Python, IDL (Corba, Microsoft, and UNO/OpenOffice flavors), Fortran, VHDL, Tcl, and to some extent D.</p>
 </blockquote>
 <p>简而言之，Doxygen 是一个程序的文件产生工具，可将程序中的特定批注转换成为说明文件。只要我们在写注释的时候按照它制定的规则写，那么它就可以为我们生成漂亮的文档。</p>
-<h3 id="2.2. installation">2.2. Installation</h3>
+<h3 id="installation_1">Installation</h3>
 <p>官网上的 Manual 中有详细的介绍，对于不同平台，采用不同的安装方式（从源码编译安装、二进制文件安装），下面仅记录我在 Ubuntu 下使用源码编码的方式安装过程。</p>
 <ol>
 <li>
@@ -204,7 +240,7 @@
 <p>因为 Doxygen 要调用 Graphviz，所以先安装 Graphviz，然后编译安装 Doxygen</p>
 </li>
 </ol>
-<h3 id="2.3. getting started">2.3. Getting Started</h3>
+<h3 id="getting started">Getting Started</h3>
 <p><a href="http://www.stack.nl/~dimitri/doxygen/manual/starting.html">Getting Started</a>:</p>
 <ol>
 <li>
@@ -253,7 +289,7 @@
 <p>这一步应该在最前面，即先按照 Doxygen 风格格式注释好代码，然后再进行分析。官网上针对不同的编程语言，有详细的举例说明：<a href="http://www.stack.nl/~dimitri/doxygen/manual/docblocks.html#specialblock">Documenting the code</a></p>
 </li>
 </ol>
-<h3 id="2.4. documenting the code">2.4. Documenting the code</h3>
+<h3 id="documenting the code">Documenting the code</h3>
 <p>这部分虽然在最后，事实上应该是第一步，也就是说我们先按照规定添加 Doxygen 风格的注释，然后再配置、调用 Doxygen 来生成文档。<a href="http://www.stack.nl/~dimitri/doxygen/index.html">Doxygen 官网</a>上有详细的注释<a href="http://www.stack.nl/~dimitri/doxygen/manual/docblocks.html">格式说明</a>，下面是我搬运来学习，自己翻译的。</p>
 <p>我们在 C/C++ 风格注释块中加入一些特殊符号，这样 Doxygen 就知道需要把这段注释分析生成在文档中，这样的注释在官网中叫做 <code>Special comment blocks</code>。下面详细介绍类 C/C++ 语言（C/C++/C#/Objective-C/PHP/Java）的注释，其他语言（Python, VHDL, Fortran, Tcl）见官网。</p>
 <p>对于代码中的任何实体（<code>entity</code>），都有两种注释，它们一起工作，完成注释功能，但至少得有一个：</p>
@@ -344,7 +380,7 @@
 </li>
 </ol>
 <p>Doxygen 和其他的文档系统的一个不同之处就是它允许把注释写在实体的定义（包括全局函数）之前。这样，就可以把注释直接写在源文件里面而不是头文件中，从而使头文件更加紧凑，而且功能的实现人员也更容易阅读注释。<strong>所以，一个折衷方案就是在声明前写 brief description，在定义前写 detailed description。</strong></p>
-<h4 id="2.4.1. putting documentation after members">2.4.1. Putting documentation after members</h4>
+<h4 id="putting documentation after members">Putting documentation after members</h4>
 <p>在注释结构体、类、枚举类型等时，有时习惯将注释写在代码的后面，而不是前面。因为 Doxygen 默认注释是解释后面的代码，所以这时候就需要在注释中添加一个额外的 <code>&lt;</code> 来标明是注释前面的内容。</p>
 <p><strong>example：</strong></p>
 <p>Qt 风格的注释：</p>
@@ -365,7 +401,7 @@
 </pre></div>
 <p><strong>Warning:</strong></p>
 <p>这种添加 <code>&lt;</code> 的方法只能用在 成员（<code>member</code>）和 参数（<code>parameter</code>）中，不能用在描述文件、类、联合体、名字空间和枚举本身。此外, 在后面提到的结构化命令（如<code>\class</code>）在这种注释段中是无效的。</p>
-<h4 id="2.4.2. examples">2.4.2. Examples</h4>
+<h4 id="examples">Examples</h4>
 <p>官网上提供了一个例子，分别用 Qt 和 JavaDoc 的风格注释一段相同的 C++ 代码：</p>
 <p><strong>Qt style:</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -617,7 +653,7 @@
 </pre></div>
 </td></tr></table>
 <p>生成的 HTML 网页：http://www.stack.nl/~dimitri/doxygen/manual/examples/jdstyle/html/class_test.html</p>
-<h4 id="2.4.3. documentation at other places">2.4.3. Documentation at other places</h4>
+<h4 id="documentation at other places">Documentation at other places</h4>
 <p>我们之前的例子中注释都是在文件、命名空间、类的声明或者定义之前，或者在它们的成员的前/后。虽然一般来说这是很正常的，但是有时候我们需要把代码写在在文档的其他地方。对于文件的注释更是如此，因为对于文件来说，根本就不存在在它之前的地方（"in front of a file"）。</p>
 <p>Doxygen 允许你把注释写在任何地方（例外情况是在函数体内 or 在 C 风格注释块内）。你需要付出的代价就是要在注释块内部多写一些结构化命令（<code>structural command</code>）来标明。所以，<strong>一般来说，我们应该尽量避免使用结构化命令，除非是有其他的特殊要求这样做。</strong></p>
 <p>结构化命令以一个 <code>\</code> 或者 <code>@</code>（JavaDoc 风格）开始，后面接一个命令名字 + 一个（多个）参数。举例如下：</p>
@@ -777,7 +813,7 @@
 <span class="cm">*/</span><span class="w"></span>
 </pre></div>
 <p>还要确定在配置文件中 <code>INPUT</code> 变量显式地说明这个脚本文件，或者 <code>FILE_PATTERNS</code> 变量必须包含<code>.sh</code> 文件扩展名并且可以通过 <code>EXAMPLE_PATH</code> 变量寻找到这个文件。</p>
-<h4 id="2.4.4. anatomy of a comment block">2.4.4. Anatomy of a comment block</h4>
+<h4 id="anatomy of a comment block">Anatomy of a comment block</h4>
 <p>前面介绍了如何对代码进行注释，并且讨论了两种不同的注释：brief 和 detailed，还讨论了如何使用结构化命令。</p>
 <p>下面我们分析注释块本身。</p>
 <p>Doxygen 支持很多种格式的注释，最简单的就是文本文件，适用于比较短的注释。对于比较长的注释，我们需要清单、表格等更加结构化的元素，对于这种情况，Doxygen 支持 Markdown 语法，可以直接读取 Markdown 文件，详细内容看这里：<a href="http://www.stack.nl/~dimitri/doxygen/manual/markdown.html">Markdown Support</a>。</p>
@@ -788,7 +824,7 @@
 <p>最后展示一张我的效果图：</p>
 <p><img alt="image" src="/images/how-to-analyse-code-elegantly/result.png"/></p>
 <p><br/></p>
-<h2 id="3. ref._2">3. Ref.</h2>
+<h2 id="ref._2">Ref.</h2>
 <p><a href="http://blog.csdn.net/blood008/article/details/6567169">linux doxygen 的安装和使用</a></p>
 <p><a href="http://www.stack.nl/~dimitri/doxygen/index.html">Doxygen</a></p>
 <p><a href="http://www.graphviz.org/">Graphviz</a></p>
@@ -814,9 +850,9 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/book/code_review.html">Code 书评</a></li>
       <li><a href="https://qiangu.cool/posts/ic/doxygen_for_verilog.html">针对 Verilog 的 Doxygen</a></li>
       <li><a href="https://qiangu.cool/posts/telecom/signed_number_representations.html">原码、反码、补码</a></li>
-      <li><a href="https://qiangu.cool/posts/misc/code_review.html">Code 书评</a></li>
     </ul>
   </div>
 
@@ -904,6 +940,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

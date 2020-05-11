@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -98,8 +104,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -110,6 +132,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -147,8 +179,12 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="PEP 翻译计划系列 &mdash;&mdash; PEP0">PEP 翻译计划系列 &mdash;&mdash; PEP0</a><ul><li><a class="toc-href" href="#pep jian jie" title="PEP 简介">PEP 简介</a></li><li><a class="toc-href" href="#fan yi ji hua" title="翻译计划">翻译计划</a></li><li><a class="toc-href" href="#can kao" title="参考">参考</a></li></ul></li></ul></div>
+    </div>
+
   <div>
-    <h2 id="1. pep jian jie">1. PEP 简介</h2>
+    <h2 id="pep jian jie">PEP 简介</h2>
 <hr/>
 <p><a href="https://www.python.org/dev/peps/">PEPs</a> 是 Python Enhancement Proposals 的缩写，它源自于 Python 核心开发者的邮件列表所讨论的问题、提议，最终汇总成了正式文档，为众多 Python 用户提供指导。</p>
 <p><a href="https://www.python.org/dev/peps/">PEP0</a> 是所有 PEP 的目录，<a href="https://www.python.org/dev/peps/pep-0001/">PEP1</a> 说明了 PEP 的目的以及 Guidelines，这里不再赘述。</p>
@@ -173,7 +209,7 @@
 </ol>
 </blockquote>
 <p><br/></p>
-<h2 id="2. fan yi ji hua">2. 翻译计划</h2>
+<h2 id="fan yi ji hua">翻译计划</h2>
 <hr/>
 <p>网上已经有很多人都翻译过了经典 PEP 章节，为了督促自己有计划地完成 PEP 的学习，也是为了以后可以温故而知新，在这里又自己重新翻译一遍。从 PEP0 中可以知道，各种各类的 PEP 加起来目前一共有几百篇，参考网上其他介绍，翻译计划中暂时选择了下面几篇，以后再持续更新。</p>
 <ul>
@@ -197,7 +233,7 @@
 <li>PEP 3120 -- Using UTF-8 as the default source encoding</li>
 </ul>
 <p><br/></p>
-<h2 id="3. can kao">3. 参考</h2>
+<h2 id="can kao">参考</h2>
 <p><a href="https://www.python.org/dev/peps/">PEP0</a></p>
 <p><a href="https://www.python.org/dev/peps/pep-0001/">PEP1</a></p>
 <p><a href="https://www.cnblogs.com/abella/p/10056875.html">python中的PEP是什么？怎么理解？（转）</a></p>
@@ -311,6 +347,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -97,8 +103,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -109,6 +131,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -146,10 +178,14 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Vim 初步配置 Vim">学习 Vim 初步配置 Vim</a><ul><li><a class="toc-href" href="#zai na li pei zhi  vim" title="在哪里配置 Vim">在哪里配置 Vim</a></li><li><a class="toc-href" href="#ying she  esc jian" title="映射 esc 键">映射 esc 键</a></li><li><a class="toc-href" href="#she zhi yan se zhu ti  colorscheme" title="设置颜色主题 colorscheme">设置颜色主题 colorscheme</a></li><li><a class="toc-href" href="#bian xie  .vimrc" title="编写 .Vimrc">编写 .Vimrc</a><ul><li><a class="toc-href" href="#pei zhi  vim te xing" title="配置 Vim 特性">配置 Vim 特性</a></li></ul></li><li><a class="toc-href" href="#can kao_1" title="参考">参考</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>总结初步配置 Vim，让 Vim 更顺手 。</p>
 <p><br/></p>
-<h2 id="1. zai na li pei zhi  vim">1. 在哪里配置 Vim</h2>
+<h2 id="zai na li pei zhi  vim">在哪里配置 Vim</h2>
 <hr/>
 <p><a href="http://book.douban.com/subject/6126937/">学习 Vi 和 Vim 编辑器</a>：</p>
 <blockquote>
@@ -186,7 +222,7 @@
 </li>
 </ol>
 <p><br/></p>
-<h2 id="2. ying she  esc jian">2. 映射 <code>esc</code> 键</h2>
+<h2 id="ying she  esc jian">映射 <code>esc</code> 键</h2>
 <hr/>
 <p>因为历史原因，Joy 设计 vi 时采用的键盘和我们现在用的标准键盘布局并不一样，当时他的键盘的 <code>esc</code> 键在现在我们的 <code>Caps Lock</code> 键的位置，所以才设计使用 <code>esc</code> 作为模式转换键 。为了更加方便顺手地使用 vim，当然要把这两个键相互调换一下 。</p>
 <p>在 vim 的官网上就有介绍如何实现两个按键的调换</p>
@@ -210,7 +246,7 @@ add <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
 </td></tr></table>
 <p>这时，对于整个系统范围，这两个键已经调换了位置 。</p>
 <p><br/></p>
-<h2 id="3. she zhi yan se zhu ti  colorscheme">3. 设置颜色主题 colorscheme</h2>
+<h2 id="she zhi yan se zhu ti  colorscheme">设置颜色主题 colorscheme</h2>
 <hr/>
 <p>Vim 自带一些颜色主题，一般存放在 <code>/usr/share/vim/vim7x</code> 目录下（我的 Vim 版本为 7.3，所以路径为 <code>/usr/share/vim/vim73</code>）.</p>
 <p>如果对系统自带的主题不满意，网上有很多不错的主题，个人最喜欢 <a href="https://github.com/tomasr/molokai">molikai</a> 主题，把下载下来的配色文件拷贝到 <code>usr/share/vim/vim73</code> 路径下，打开 vim 后 输入</p>
@@ -222,7 +258,7 @@ add <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
 </pre></div>
 </td></tr></table>
 <p><br/></p>
-<h2 id="4. bian xie  .vimrc">4. 编写 .Vimrc</h2>
+<h2 id="bian xie  .vimrc">编写 .Vimrc</h2>
 <hr/>
 <p>vimrc 文件是配置 Vim 编辑特性比较好的地方，差不多任何 Vim 选项都能在次文件中被设置为打开或者关闭，而且它特别适合设置全局变量与定义函数、缩写、按键映射 。</p>
 <ul>
@@ -233,7 +269,7 @@ add <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
 <p>可以用冒号 <code>:</code> 表示 ex 命令</p>
 </li>
 </ul>
-<h3 id="4.1. pei zhi  vim te xing">4.1. 配置 Vim 特性</h3>
+<h3 id="pei zhi  vim te xing">配置 Vim 特性</h3>
 <p>vimrc 配置很简单，网上有很多人都分享了自己的配置方案 。我找到一份注释良好的<a href="https://github.com/amix/vimrc">配置范例</a>，这篇博客的作者总结了自己 8 年的使用经验，给出了两份配置文件，基本版 <a href="https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim">Basic</a> 和 终极版<a href="https://github.com/amix/vimrc">Ultimate</a> 。</p>
 <p>作为码农，当然要选择终极版了～不过个人喜欢用 Vundle 管理我的 Vim 插件（计划下篇博客记录我的配置过程），不是很喜欢作者选择的所有插件，想自己定制插件组合，那么目前只需要看 基础版就足够了 。</p>
 <p>copy 了一份基础版到自己的 github 中，有备无患 :-D</p>
@@ -550,7 +586,7 @@ map &lt;C-l&gt; &lt;C-w&gt;l
 </pre></div>
 </td></tr></table>
 <p><br/></p>
-<h2 id="5. can kao_1">5. 参考</h2>
+<h2 id="can kao_1">参考</h2>
 <p><a href="http://book.douban.com/subject/6126937/">学习vi 和 Vim 编辑器</a></p>
 <p><a href="https://github.com/amix/vimrc">The Ultimate vimrc</a></p>
   </div>
@@ -573,11 +609,11 @@ map &lt;C-l&gt; &lt;C-w&gt;l
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
       <li><a href="https://qiangu.cool/posts/linux/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
     </ul>
   </div>
 
@@ -665,6 +701,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

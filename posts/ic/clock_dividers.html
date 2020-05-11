@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -98,8 +104,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -110,6 +132,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -147,6 +179,10 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="时钟分频器">时钟分频器</a><ul><li><a class="toc-href" href="#counter" title="Counter">Counter</a></li><li><a class="toc-href" href="#clock divider" title="Clock divider">Clock divider</a><ul><li><a class="toc-href" href="#even clock divider" title="even clock divider">even clock divider</a></li><li><a class="toc-href" href="#odd clock divider" title="odd clock divider">odd clock divider</a></li><li><a class="toc-href" href="#half integer clock divider" title="half integer clock divider">half integer clock divider</a><ul><li><a class="toc-href" href="#50% duty cycle" title="50% Duty Cycle">50% Duty Cycle</a></li><li><a class="toc-href" href="#non 50% duty cycle" title="Non 50% Duty Cycle">Non 50% Duty Cycle</a></li></ul></li><li><a class="toc-href" href="#fraction divider_1" title="fraction divider">fraction divider</a></li></ul></li><li><a class="toc-href" href="#summary_1" title="Summary">Summary</a></li><li><a class="toc-href" href="#reference" title="Reference">Reference</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>在 <a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">时钟设计</a> 中提到过：</p>
 <p><strong>Guideline：</strong> 尽量避免使用分频时钟</p>
@@ -163,14 +199,14 @@
 </li>
 </ol>
 <p><br/></p>
-<h2 id="1. counter">1. Counter</h2>
+<h2 id="counter">Counter</h2>
 <hr/>
 <p>时钟分频一般都是通过计数器 counter 来实现的，计数器是分频的基础。</p>
 <p>计数器可以分为很多种，<a href="http://en.wikipedia.org/wiki/Counter">Counter on wiki</a>，这里不再跑题展开了，关于计数器的讨论见：<a href="http://guqian110.github.io/pages/2014/11/04/counter_design_summary.html">Counter in FPGAs</a></p>
 <p><br/></p>
-<h2 id="2. clock divider">2. Clock divider</h2>
+<h2 id="clock divider">Clock divider</h2>
 <hr/>
-<h3 id="2.1. even clock divider">2.1. even clock divider</h3>
+<h3 id="even clock divider">even clock divider</h3>
 <p>偶数分频是最简单的情况，使用计数器就可以完成。比如，产生一个分频系数为 N（偶数）的 50% 占空比的分频器一般有两种方法：</p>
 <ol>
 <li>
@@ -181,7 +217,7 @@
 </li>
 </ol>
 <p>方案一只能实现固定的 50% 占空比，方案二则可以实现可以有限调整占空比。</p>
-<h3 id="2.2. odd clock divider">2.2. odd clock divider</h3>
+<h3 id="odd clock divider">odd clock divider</h3>
 <p>如果对占空比没有要求，那么使用和偶数分频类似的方法，一个计数器就可以解决；如果要求占空比是 50%，则可以使用以下的方法：</p>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art of Hardware Architecture</a>:</p>
 <blockquote>
@@ -224,10 +260,10 @@
 <p><img alt="schematic" src="/images/clock-dividers/divide_3_sch.png"/></p>
 <p>Timing:</p>
 <p><img alt="timing" src="/images/clock-dividers/divide_3_timing.png"/></p>
-<h3 id="2.3. half integer clock divider">2.3. half integer clock divider</h3>
+<h3 id="half integer clock divider">half integer clock divider</h3>
 <p>这种分频系数为 (N+1/2)，应该归类到小数分频中，但是因为它的小数部分是特殊的 1/2，所以可以在前面的讨论的基础上得到。</p>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art</a> 中分类讨论了半整数分频：</p>
-<h4 id="2.3.1. 50% duty cycle">2.3.1. 50% Duty Cycle</h4>
+<h4 id="50% duty cycle">50% Duty Cycle</h4>
 <p>以 1.5 分频为例，</p>
 <p>Schematic:</p>
 <p><img alt="1.5 sch" src="/images/clock-dividers/divide_1_5_sch.png"/></p>
@@ -235,7 +271,7 @@
 <p><img alt="1.5 timing" src="/images/clock-dividers/divide_1_5_timing.png"/></p>
 <p>这种方法在仿真的时候是没有问题的，但是综合时可能会产生致命的问题：在切换时钟时，如果两路时钟信号的时延不相等，那么切换的时候就会产生毛刺。</p>
 <p>(Xilinx 提供的原语 <code>BUFGMUX</code> 有去除切换时钟时候的毛刺的功能，但是它只适用于全局时钟网络)</p>
-<h4 id="2.3.2. non 50% duty cycle">2.3.2. Non 50% Duty Cycle</h4>
+<h4 id="non 50% duty cycle">Non 50% Duty Cycle</h4>
 <p>如果占空比不是 50%，则可以通过以下的方法得到：</p>
 <p>从</p>
 <div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
@@ -246,7 +282,7 @@
 <p>Timing:</p>
 <p><img alt="4.5 timing" src="/images/clock-dividers/divide_4_5_timing.png"/></p>
 <p>从图中可以看到，当选择了两个连续的寄存器 (A, B)相或作为第一个脉冲输出之后，再选取相隔 N 的两个连续的寄存器 (C, D)，把它们移动半个时钟周期后，和原始的 D 相或，作为第二个脉冲输出，容易分析，它们是等间隔的。</p>
-<h3 id="2.4. fraction divider_1">2.4. fraction divider</h3>
+<h3 id="fraction divider_1">fraction divider</h3>
 <p>大概有两种方法吧：</p>
 <ol>
 <li>
@@ -278,11 +314,11 @@
 <p>所以可以用 3 次 8 分频 + 7 次 9 分频得到 8.7 分频。因为 <code>10 -7 = 3</code>，前 3 次累积之和都小于 10，所以前 3 次进行 9 分频，第四次累积值为 12，去除进位后余 2，待下次继续累积，第四次结果 12 &gt; 10，所以进行 8 分频。分频方案如下图所示：</p>
 <p><img alt="example" src="/images/clock-dividers/example.png"/></p>
 <p><br/></p>
-<h2 id="3. summary_1">3. Summary</h2>
+<h2 id="summary_1">Summary</h2>
 <hr/>
 <p>本文总结了一些常用的时钟分频技术，虽然不推荐使用逻辑来对时钟信号进行分频，但是在一些要求比较的的情况下，使用逻辑分频不仅可以满足要求，还能降低资源消耗，不失为一种好方法。而且时钟分频也可以训练我们的设计能力。</p>
 <p><br/></p>
-<h2 id="4. reference">4. Reference</h2>
+<h2 id="reference">Reference</h2>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art of Hardware Architecture</a></p>
 <p><a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG">FPGA高手设计实战真经100则</a></p>
 <p><a href="http://read.pudn.com/downloads126/sourcecode/embed/533229/VHDL%E5%88%86%E9%A2%91%E5%99%A8%E8%AE%BE%E8%AE%A1.pdf">使用 VHDL 进行分频器设计</a></p>
@@ -301,7 +337,7 @@
     <a class="btn float-left" href="https://qiangu.cool/posts/ic/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html" title="FPGA 时钟设计 3 —— 跨时钟域设计">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
-    <a class="btn float-right" href="https://qiangu.cool/posts/misc/getting_things_done_review.html" title="GTD 书评 + 总结">
+    <a class="btn float-right" href="https://qiangu.cool/posts/book/getting_things_done_review.html" title="GTD 书评 + 总结">
       Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
@@ -309,8 +345,8 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/ic/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
       <li><a href="https://qiangu.cool/posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
+      <li><a href="https://qiangu.cool/posts/ic/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
       <li><a href="https://qiangu.cool/posts/ic/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
     </ul>
   </div>
@@ -399,6 +435,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

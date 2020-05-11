@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -98,8 +104,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -110,6 +132,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -147,9 +179,13 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="数字信号处理中的各种频率">数字信号处理中的各种频率</a><ul><li><a class="toc-href" href="#unit circle &amp; sin(cos)" title="unit circle &amp; sin(cos)">unit circle &amp; sin(cos)</a></li><li><a class="toc-href" href="#o" title="&Omega;">&Omega;</a></li><li><a class="toc-href" href="#f" title="f">f</a></li><li><a class="toc-href" href="#w" title="w">w</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>最近实习的时候，发现自己的 DSP 基本功还是不够扎实，关于模拟/数字角频率，频率，采样速率等一些概念理解的都不太深刻，愧对老师和这么多年的学习，Google 到一些讲解的比较清楚的 blog，备忘（抄袭）过来，温故而知新。</p>
-<h2 id="1. unit circle &amp; sin(cos)">1. unit circle &amp; sin(cos)</h2>
+<h2 id="unit circle &amp; sin(cos)">unit circle &amp; sin(cos)</h2>
 <hr/>
 <p>首先从最基本的三角函数的定义开始：</p>
 <p>三角函数的定义方式有很多种，我觉得基于单位圆的定义是最形象，对之后理解各种角频率的物理/数学含义最有帮助。</p>
@@ -169,7 +205,7 @@
 <p><br/></p>
 <p><em>有了上面简单的背景，就可以开始逐个讨论信号处理中的概念了。</em></p>
 <p><br/></p>
-<h2 id="2. o">2. &Omega;</h2>
+<h2 id="o">&Omega;</h2>
 <hr/>
 <p>我们已经知道小球在圆周上做匀速率的圆周运动时，它在两个坐标轴上的投影就分别是 sin(cos)，如果我们想进一步描述小球的运动速率的快慢呢？</p>
 <p>假设小球完整转一圈所花费的时间为 T，转动的角度为 2&pi;，则我们可以定义</p>
@@ -197,7 +233,7 @@
 <p>结果如下图：</p>
 <p><img alt="OMEGA" src="/images/summary-of-frequency-in-digital-signal-processing/OMEGA.jpg"/></p>
 <p><br/></p>
-<h2 id="3. f">3. f</h2>
+<h2 id="f">f</h2>
 <hr/>
 <p>小球在二维平面上的圆周运动投影到一维的坐标轴 x(y) 轴上看，则是左右（上下）振动。和 &Omega; 类似，我们也可以定义一个物理量来描述这种振动的快慢：</p>
 <p>小球完成一次完整的圆周运动所花费的时间为 T，也就是完成一次振动花费了 T 时间，我们定义</p>
@@ -225,7 +261,7 @@
 <p>结果如下图：</p>
 <p><img alt="f" src="/images/summary-of-frequency-in-digital-signal-processing/f.jpg"/></p>
 <p><br/></p>
-<h2 id="4. w">4. w</h2>
+<h2 id="w">w</h2>
 <hr/>
 <p>计算机的世界是离散的，所以当连续信号经过采样、量化得到离散信号后：</p>
 <p>y = sin(&Omega;<em>t) = sin(&Omega;</em>n<em>Ts) = sin(&Omega;</em>Ts<em>n) = sin(w</em>n)</p>
@@ -304,7 +340,7 @@
 </tbody>
 </table>
 <p><br/></p>
-<h2 id="5. ref">5. Ref</h2>
+<h2 id="ref">Ref</h2>
 <p><a href="https://en.wikipedia.org/wiki/Trigonometric_functions">Trigonometric functions</a></p>
 <p><a href="http://anony3721.blog.163.com/blog/static/51197420111129503233/">阿英讲频率f，角频率&Omega;和数字频率w的物理含义--附MATLAB仿真</a></p>
 <p><a href="http://zhuanlan.zhihu.com/wille/19763358">傅里叶分析之掐死教程（完整版）更新于2014.06.06</a></p>
@@ -417,6 +453,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -99,8 +105,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -111,6 +133,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -148,6 +180,10 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Ubuntu 下安装 ISE &amp; Modelsim">Ubuntu 下安装 ISE &amp; Modelsim</a><ul><li><a class="toc-href" href="#xia zai" title="下载">下载</a><ul><li><a class="toc-href" href="#ise design suit for linux" title="ISE Design Suit for Linux">ISE Design Suit for Linux</a></li><li><a class="toc-href" href="#modelsim for linux" title="ModelSim for Linux">ModelSim for Linux</a></li></ul></li><li><a class="toc-href" href="#an zhuang_1" title="安装">安装</a><ul><li><a class="toc-href" href="#ise ds 14.7" title="ISE DS 14.7">ISE DS 14.7</a></li><li><a class="toc-href" href="#modelsim" title="ModelSim">ModelSim</a></li></ul></li><li><a class="toc-href" href="#pei zhi  ise &amp; modelsim_1" title="配置 ISE &amp; ModelSim">配置 ISE &amp; ModelSim</a><ul><li><a class="toc-href" href="#ise" title="ISE">ISE</a></li><li><a class="toc-href" href="#modelsim_1" title="ModelSim">ModelSim</a></li></ul></li><li><a class="toc-href" href="#can kao_1" title="参考">参考</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来。</p>
 <p><em>软件版本：</em></p>
@@ -155,18 +191,18 @@
 <p>ISE 14.7 for Linux</p>
 <p>ModelSim 6.5b for Linux</p>
 <p><br/></p>
-<h2 id="1. xia zai">1. 下载</h2>
+<h2 id="xia zai">下载</h2>
 <hr/>
-<h3 id="1.1. ise design suit for linux">1.1. ISE Design Suit for Linux</h3>
+<h3 id="ise design suit for linux">ISE Design Suit for Linux</h3>
 <p>Xilinx 官方网站上有<a href="https://secure.xilinx.com/webreg/register.do?group=dlc&amp;htmlfile=&amp;emailFile=&amp;cancellink=&amp;eFrom=&amp;eSubject=&amp;version=14.7&amp;akdm=1&amp;filename=Xilinx_ISE_DS_Lin_14.7_1015_1.tar">下载链接</a>，但是在校园网内下载速度实在是蛋疼，还好有校内 bt 资源。</p>
 <p>我下载下来的 ISE 版本为 <strong>14.7</strong>，tar 包大小为 6.5 G 。</p>
-<h3 id="1.2. modelsim for linux">1.2. ModelSim for Linux</h3>
+<h3 id="modelsim for linux">ModelSim for Linux</h3>
 <p>网上的教程（2011 年前）都说是 <a href="http://www.mentor.com/products/fpga/model">ModelSim 官方网站</a> 上提供 ftp 下载链接，但是好像现在官网上不再提供下载链接了，我只找到 ModelSim PE Student Edition，而且还是 Windows 平台的...</p>
 <p>花费了一下午的时间，不停地在各个论坛注册下载附件，终于把 ModelSim_6.5b for Linux 下载下来了,结果安装时提示找不到 <code>libxp.so.6</code> 库，于是 <code>apt-get</code> 到一些 <code>libxp</code> 的库，安装后仍然提示找不到，无奈放弃了，准备老老实实用 <code>ism</code> 了（以后有时间了再慢慢折腾 T_T）</p>
 <p><br/></p>
-<h2 id="2. an zhuang_1">2. 安装</h2>
+<h2 id="an zhuang_1">安装</h2>
 <hr/>
-<h3 id="2.1. ise ds 14.7">2.1. ISE DS 14.7</h3>
+<h3 id="ise ds 14.7">ISE DS 14.7</h3>
 <p>首先解压</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>tar -xvf Xilinx_ISE_DS_Lin_14.7_1015_1.tar
 </pre></div>
@@ -240,23 +276,23 @@ sudo make
 </td></tr></table>
 <p>这时候，写个小测试的程序，<code>Systhesize</code> -&gt; <code>Implement</code> -&gt; <code>Generate Programming File</code>，打开 <code>iMPACT</code>, 如图所示，可以看到已经识别出 JTAG 链上的芯片</p>
 <p><img alt="jtag" src="/images/install-ise-modelsim/jtag.png"/></p>
-<h3 id="2.2. modelsim">2.2. ModelSim</h3>
+<h3 id="modelsim">ModelSim</h3>
 <p>待续...</p>
 <p><br/></p>
-<h2 id="3. pei zhi  ise &amp; modelsim_1">3. 配置 ISE &amp; ModelSim</h2>
+<h2 id="pei zhi  ise &amp; modelsim_1">配置 ISE &amp; ModelSim</h2>
 <hr/>
-<h3 id="3.1. ise">3.1. ISE</h3>
+<h3 id="ise">ISE</h3>
 <p>其实也没有特殊配置的地方，主要是自定义代码编辑器，目前我的主要使用的是 <code>sublime text 2</code>，正在向 <code>vim</code> 过度ing</p>
 <p>具体步骤 Edit -&gt; Preferences -&gt; Editors，选择 <code>custom</code>，在右侧的 &ldquo;Command line syntax&rdquo; 中写自定义编辑器的执行路径</p>
 <p>配置自定义编辑器为 vim</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>gnome-terminal --maximize -x vim <span class="nv">$1</span>
 </pre></div>
 </td></tr></table>
-<h3 id="3.2. modelsim">3.2. ModelSim</h3>
+<h3 id="modelsim_1">ModelSim</h3>
 <p>ModelSim 编译 Xilinx库，ISE 关联 ModelSim</p>
 <p>待续...</p>
 <p><br/></p>
-<h2 id="4. can kao_1">4. 参考</h2>
+<h2 id="can kao_1">参考</h2>
 <p><a href="http://rmdir.de/~michael/xilinx/">XILINX JTAG tools on Linux without proprietary kernel modules</a></p>
 <p><a href="http://www.george-smart.co.uk/wiki/Xilinx_JTAG_Linux">Xilinx JTAG Linux</a></p>
 <p><a href="http://blog.csdn.net/yunz1994/article/details/12350071">【Linux软件安装】Ubuntu12.04: Xilinx ISE 14.6</a></p>
@@ -283,8 +319,8 @@ sudo make
     <h4>You might enjoy</h4>
     <ul class="related-posts">
       <li><a href="https://qiangu.cool/posts/linux/learn_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="https://qiangu.cool/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
     </ul>
   </div>
 
@@ -372,6 +408,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>

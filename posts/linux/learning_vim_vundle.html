@@ -24,6 +24,12 @@
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
           href="https://qiangu.cool/theme/pygments/monokai.min.css">
 
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
 
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
@@ -98,8 +104,24 @@
         <a href="https://qiangu.cool">Qian Gu</a>
       </h1>
 
-<p>Stay hungry. Stay foolish.</p>
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
 
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
 
       <ul class="social">
           <li>
@@ -110,6 +132,16 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.cn/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
             </a>
           </li>
           <li>
@@ -147,17 +179,21 @@
   </header>
 
 
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Vim 使用 Vundle 管理插件">学习 Vim 使用 Vundle 管理插件</a><ul><li><a class="toc-href" href="#vim cha jian" title="Vim 插件">Vim 插件</a></li><li><a class="toc-href" href="#shi yao shi  vundle" title="什么是 Vundle">什么是 Vundle</a></li><li><a class="toc-href" href="#ru he shi yong  vundle guan li cha jian" title="如何使用 Vundle 管理插件">如何使用 Vundle 管理插件</a><ul><li><a class="toc-href" href="#an zhuang  vundle" title="安装 Vundle">安装 Vundle</a></li><li><a class="toc-href" href="#pei zhi  vundle" title="配置 Vundle">配置 Vundle</a></li><li><a class="toc-href" href="#yun xing  vundle" title="运行 Vundle">运行 Vundle</a></li></ul></li><li><a class="toc-href" href="#can kao_1" title="参考">参考</a></li></ul></li></ul></div>
+    </div>
+
   <div>
     <p>学习 Vim，使用 Vundle 管理插件 。</p>
 <p><br/></p>
-<h2 id="1. vim cha jian">1. Vim 插件</h2>
+<h2 id="vim cha jian">Vim 插件</h2>
 <hr/>
 <p>Vim 的强大之处在于它的可扩展性，你可以把它当作一个简单的文本编辑器，也可以安装各种功能强大的插件，把它武装成一个 IDE 。</p>
 <p>我们可以从以下几个地方找到 Vim 插件，一般比较常用的插件从官网上都可以找到，还有一些插件是大神们自己写的，托管在 GitHub 上 。</p>
 <p><a href="http://www.vim.org/scripts/script_search_results.php">Vim 官网</a></p>
 <p><a href="https://github.com/">GitHub</a></p>
 <p><br/></p>
-<h2 id="2. shi yao shi  vundle">2. 什么是 Vundle</h2>
+<h2 id="shi yao shi  vundle">什么是 Vundle</h2>
 <hr/>
 <p>Vim 的插件虽然强大，但是因为 Vim 根本就没有插件管理这个概念，所有插件的文件都散布在~/.vim下的几个文件夹中，配置 vim 的过程, 就是在网上不停的搜插件，拷贝到 <code>~/.vim</code> 下，发现更新，要重新下载重新拷贝，想要删除某个不需要插件，更是要小心翼翼的不要删错。配置出顺手的 Vim, 需要极大的耐心和运气，而且如果换一台电脑，就要重复一次这样的痛苦经历 。</p>
 <p>自然地，因为管理插件的需求，最早出现了一些管理插件的脚本，但是写脚本需要一定的 shell 知识，直接 copy 别人的自己并不一定适用 。后来，出现了一些插件，比如 pathogen，muzuiget，vim-flavor，Vundle 等 。</p>
@@ -187,15 +223,15 @@
 </li>
 </ul>
 <p><br/></p>
-<h2 id="3. ru he shi yong  vundle guan li cha jian">3. 如何使用 Vundle 管理插件</h2>
+<h2 id="ru he shi yong  vundle guan li cha jian">如何使用 Vundle 管理插件</h2>
 <hr/>
-<h3 id="3.1. an zhuang  vundle">3.1. 安装 Vundle</h3>
+<h3 id="an zhuang  vundle">安装 Vundle</h3>
 <p>Vundle 的安装需要 <a href="http://git-scm.com/">Git</a> 。</p>
 <p>从 GitHub 上 clone 下来就可以了</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 </pre></div>
 </td></tr></table>
-<h3 id="3.2. pei zhi  vundle">3.2. 配置 Vundle</h3>
+<h3 id="pei zhi  vundle">配置 Vundle</h3>
 <p>将下列内容加入到 <code>.vimrc</code> 文件中</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -301,7 +337,7 @@ filetype plugin indent on     <span class="s2">" required</span>
 <p>不是 GitHub 上的脚本，需要写出插件的详细路径</p>
 </li>
 </ol>
-<h3 id="3.3. yun xing  vundle">3.3. 运行 Vundle</h3>
+<h3 id="yun xing  vundle">运行 Vundle</h3>
 <p>修改好 <code>.vimrc</code> 文件后，打开 Vim，使用以下命令管理插件</p>
 <ul>
 <li>
@@ -387,7 +423,7 @@ Bundle <span class="s1">'godlygeek/tabular'</span>
 </pre></div>
 </td></tr></table>
 <p><br/></p>
-<h2 id="4. can kao_1">4. 参考</h2>
+<h2 id="can kao_1">参考</h2>
 <p><a href="http://zuyunfei.com/2013/04/12/killer-plugin-of-vim-vundle/">vim中的杀手级插件: vundle</a></p>
 <p><a href="http://www.zfanw.com/blog/vundle-vim-plugin-management.html">Vundle 管理 Vim 插件</a></p>
   </div>
@@ -411,11 +447,11 @@ Bundle <span class="s1">'godlygeek/tabular'</span>
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="https://qiangu.cool/posts/linux/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
-      <li><a href="https://qiangu.cool/posts/linux/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+      <li><a href="https://qiangu.cool/posts/linux/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
     </ul>
   </div>
 
@@ -503,6 +539,11 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
     </svg>
 </a>
 <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
 
 </body>
 </html>
