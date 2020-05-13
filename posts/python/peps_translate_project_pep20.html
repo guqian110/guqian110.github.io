@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet/less" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.less">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js" type="text/javascript"></script>
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+    <link href="https://qiangu.cool/static/custom.css" rel="stylesheet">
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="PEPs 翻译系列 PEP20" />
+<meta name="keywords" content="PEP, python">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="PEP 翻译计划系列 —— PEP20"/>
+<meta property="og:description" content="PEPs 翻译系列 PEP20"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/posts/python/peps_translate_project_pep20.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-10 14:36:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="Python"/>
+<meta property="article:tag" content="PEP"/>
+<meta property="article:tag" content="python"/>
+<meta property="og:image" content="https://qiangu.cool/images/logo.png">
+
+  <title>Qian's Blog &ndash; PEP 翻译计划系列 —— PEP20</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="https://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>路漫漫其修远兮，吾将上下而求索</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="https://qiangu.cool/pages/guan-yu-wo.html#guan-yu-wo">
+                  关于我
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-weibo" href="https://weibo.com/guqian110" target="_blank">
+              <i class="fab fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="peps_translate_project_pep20">PEP 翻译计划系列 —— PEP20</h1>
+    <p>
+      Posted on 2020-05-10 14:36 in <a href="https://qiangu.cool/category/python.html">Python</a>
+
+        &#8226; 1 min read
+    </p>
+  </header>
+
+
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="PEP 翻译计划系列 &mdash;&mdash; PEP20">PEP 翻译计划系列 &mdash;&mdash; PEP20</a><ul><li><a class="toc-href" href="#abstract" title="Abstract">Abstract</a></li><li><a class="toc-href" href="#the zen of python" title="The Zen of Python">The Zen of Python</a></li><li><a class="toc-href" href="#easter egg" title="Easter Egg">Easter Egg</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+    </div>
+
+  <div>
+    <p>著名的 python 之禅，<a href="https://www.python.org/dev/peps/pep-0020/">PEP 20 -- The Zen of Python 原文链接</a>。</p>
+<table>
+<thead>
+<tr>
+<th>item</th>
+<th>detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PEP</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>The Zen of Python</td>
+</tr>
+<tr>
+<td>Author</td>
+<td>tim.peters at gmail.com (Tim Peters)</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>Informational</td>
+</tr>
+<tr>
+<td>Created</td>
+<td>19-Aug-2004</td>
+</tr>
+<tr>
+<td>Post-History</td>
+<td>22-Aug-2004</td>
+</tr>
+</tbody>
+</table>
+<h2 id="abstract">Abstract</h2>
+<p>很久之前，Python 先驱 Tim Peters 将 BDFL 的 guide 以 20 条格言的方式简洁地引入到了 
+Python 之中，但是只下写了其中的 19 条。</p>
+<p><br/></p>
+<h2 id="the zen of python">The Zen of Python</h2>
+<p>网上有很多不同版本的翻译，有些语言风趣幽默，有些正经严肃。我个人更喜欢严肃的翻译，因为幽默的
+翻译有时候需要特定的语境和背景只是才能理解，反而增加了理解难度。下面的翻译一些是我按照自己的
+理解写的，有些是网上别人的翻译（因为出处已经无法找到了，所以只能感谢原作者的分析了）。文学水平
+太低做不到 <code>达雅</code>，只能争取做到 <code>信</code>，尽量不要误导大家。</p>
+<ol>
+<li>
+<p><strong>Beautiful is better than ugly.</strong></p>
+<p>优美胜于丑陋（Pyhton 以编写 <code>优美</code> 的代码为目标）</p>
+</li>
+<li>
+<p><strong>Explicit is better than implicit.</strong></p>
+<p>显式胜于隐式（代码应该是明了的）</p>
+</li>
+<li>
+<p><strong>Simple is better than complex.</strong></p>
+<p>简单胜于复杂（选择最简单实现方案/接口）</p>
+</li>
+<li>
+<p><strong>Complex is better than complicated.</strong></p>
+<p>复杂胜于凌乱（如果复杂不可避免，也要避免令人费解的实现）</p>
+</li>
+<li>
+<p><strong>Flat is better than nested.</strong></p>
+<p>扁平胜于嵌套（代码尽量少嵌套，降低理解难度）</p>
+</li>
+<li>
+<p><strong>Sparse is better than dense.</strong></p>
+<p>间隔胜于紧凑（适当的间隔和空行能提高可读性）</p>
+</li>
+<li>
+<p><strong>Readability counts.</strong></p>
+<p>可读性很重要</p>
+</li>
+<li>
+<p><strong>Special cases aren't special enough to break the rules.</strong></p>
+</li>
+<li>
+<p><strong>Although practicality beats purity.</strong></p>
+<p>规则至高无上，虽然有时候实用性比代码的纯净更重要，但是也不要打破规则</p>
+</li>
+<li>
+<p><strong>Errors should never pass silently.</strong></p>
+</li>
+<li>
+<p><strong>Unless explicitly silenced.</strong></p>
+<p>不要默许任何错误，除非你确定要这么做</p>
+</li>
+<li>
+<p><strong>In the face of ambiguity, refuse the temptation to guess.</strong></p>
+</li>
+<li>
+<p><strong>There should be one-- and preferably only one --obvious way to do it.</strong></p>
+</li>
+<li>
+<p><strong>Although that way may not be obvious at first unless you're Dutch.</strong></p>
+<p>当存在多种实现时，不要尝试去猜测，而是应该有且只有一个最优解决方案 &mdash;&mdash; 最显而易见的实现方
+案，虽然这样一开始并不容易，除非你是 Pyhton 之父</p>
+</li>
+<li>
+<p><strong>Now is better than never.</strong></p>
+</li>
+<li>
+<p><strong>Although never is often better than <em>right</em> now.</strong></p>
+<p>行动比拖延更好，但是 不假思索地的行动还不如拖延（行动前要仔细思考）</p>
+</li>
+<li>
+<p><strong>If the implementation is hard to explain, it's a bad idea.</strong></p>
+</li>
+<li>
+<p><strong>If the implementation is easy to explain, it may be a good idea.</strong></p>
+<p>如果实现方案很难向别人解释，那么它就是个坏方案，反之亦然</p>
+</li>
+<li>
+<p><strong>Namespaces are one honking great idea -- let's do more of those!</strong></p>
+<p>命名空间是一个绝妙的理念，我们要多加利用</p>
+</li>
+</ol>
+<h2 id="easter egg">Easter Egg</h2>
+<p>在解释器中用下面的命令就可以看到原文。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">this</span>
+</pre></div>
+</td></tr></table>
+<h2 id="ref">Ref</h2>
+<p><a href="https://liuwynn.github.io/2019/04/24/Python%E4%B9%8B%E7%A6%85/">Python之禅</a></p>
+<p><a href="https://blog.csdn.net/lanphaday/article/details/2151918">《Python之禅》的翻译和解释</a></p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/pep.html">PEP</a>
+      <a href="https://qiangu.cool/tag/python.html">python</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/python/pep8_in_practice.html" title="PEP8 实践">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+  </div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/python/peps_translate_project_pep8.html">PEP 翻译计划系列 —— PEP8</a></li>
+      <li><a href="https://qiangu.cool/posts/python/peps_translate_project_pep0.html">PEP 翻译计划系列 —— PEP0</a></li>
+      <li><a href="https://qiangu.cool/posts/python/pep8_in_practice.html">PEP8 实践</a></li>
+    </ul>
+  </div>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "https://qiangu.cool/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>
