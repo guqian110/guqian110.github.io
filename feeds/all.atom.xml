@@ -1,5 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog</title><link href="https://qiangu.cool/" rel="alternate"></link><link href="https://qiangu.cool/feeds/all.atom.xml" rel="self"></link><id>https://qiangu.cool/</id><updated>2020-05-10T14:36:00+08:00</updated><subtitle>路漫漫其修远兮，吾将上下而求索</subtitle><entry><title>PEP 翻译计划系列 —— PEP20</title><link href="https://qiangu.cool/posts/python/peps_translate_project_pep20.html" rel="alternate"></link><published>2020-05-10T14:36:00+08:00</published><updated>2020-05-10T14:36:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-05-10:/posts/python/peps_translate_project_pep20.html</id><summary type="html">&lt;p&gt;PEPs 翻译系列 PEP20&lt;/p&gt;</summary><content type="html">&lt;p&gt;著名的 python 之禅，&lt;a href="https://www.python.org/dev/peps/pep-0020/"&gt;PEP 20 -- The Zen of Python 原文链接&lt;/a&gt;。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog</title><link href="https://qiangu.cool/" rel="alternate"></link><link href="https://qiangu.cool/feeds/all.atom.xml" rel="self"></link><id>https://qiangu.cool/</id><updated>2020-05-10T19:15:00+08:00</updated><subtitle>路漫漫其修远兮，吾将上下而求索</subtitle><entry><title>PEP 翻译计划系列 —— PEP202</title><link href="https://qiangu.cool/posts/python/peps_translate_project_pep202.html" rel="alternate"></link><published>2020-05-10T19:15:00+08:00</published><updated>2020-05-10T19:15:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-05-10:/posts/python/peps_translate_project_pep202.html</id><summary type="html">&lt;p&gt;PEPs 翻译系列 PEP202&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-00202/"&gt;PEP 202 -- List Comprehensions 原文链接&lt;/a&gt;。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;item&lt;/th&gt;
+&lt;th&gt;detail&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;PEP&lt;/td&gt;
+&lt;td&gt;202&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Title&lt;/td&gt;
+&lt;td&gt;List Comprehensions&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Author&lt;/td&gt;
+&lt;td&gt;barry at python.org (Barry Warsaw)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Status&lt;/td&gt;
+&lt;td&gt;Final&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Type&lt;/td&gt;
+&lt;td&gt;Standards Track&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Created&lt;/td&gt;
+&lt;td&gt;13-Jul-2000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Python-Version&lt;/td&gt;
+&lt;td&gt;2.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Post-History&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;本文描述了一种 python 语法扩展 proposal：列表解析式（list comprehensions）。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="the proposed solution"&gt;The Proposed Solution&lt;/h2&gt;
+&lt;p&gt;本文提议允许程序员可以用 &lt;code&gt;for&lt;/code&gt; 和 &lt;code&gt;if&lt;/code&gt; 关键字来有条件地构造一个 list，就像在 &lt;code&gt;for&lt;/code&gt; 和 
+&lt;code&gt;if&lt;/code&gt; 语句中的做法一样。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;如果想用从一个 list 中挑选出一部分满足条件的元素组成一个新的 list，该怎么做？最简单的方法
+是写一个 &lt;code&gt;for&lt;/code&gt; 循环，然后从中挨个挑选出符合条件的元素。但是这种写法很臃肿，所以出现了 
+&lt;code&gt;list comprehensions&lt;/code&gt;。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="rationale"&gt;Rationale&lt;/h2&gt;
+&lt;p&gt;list comprehensions 提供了另外一种更加简洁的选择，以实现当前使用 &lt;code&gt;map()&lt;/code&gt;/&lt;code&gt;filter()&lt;/code&gt; 或
+者是嵌套循环的效果。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="examples"&gt;Examples&lt;/h2&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt;&amp;gt;&amp;gt; print &lt;span class="o"&gt;[&lt;/span&gt;i &lt;span class="k"&gt;for&lt;/span&gt; i in range&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;)]&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;, &lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="m"&gt;3&lt;/span&gt;, &lt;span class="m"&gt;4&lt;/span&gt;, &lt;span class="m"&gt;5&lt;/span&gt;, &lt;span class="m"&gt;6&lt;/span&gt;, &lt;span class="m"&gt;7&lt;/span&gt;, &lt;span class="m"&gt;8&lt;/span&gt;, &lt;span class="m"&gt;9&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+
+&amp;gt;&amp;gt;&amp;gt; print &lt;span class="o"&gt;[&lt;/span&gt;i &lt;span class="k"&gt;for&lt;/span&gt; i in range&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;20&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; i%2 &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;, &lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="m"&gt;4&lt;/span&gt;, &lt;span class="m"&gt;6&lt;/span&gt;, &lt;span class="m"&gt;8&lt;/span&gt;, &lt;span class="m"&gt;10&lt;/span&gt;, &lt;span class="m"&gt;12&lt;/span&gt;, &lt;span class="m"&gt;14&lt;/span&gt;, &lt;span class="m"&gt;16&lt;/span&gt;, &lt;span class="m"&gt;18&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+
+&amp;gt;&amp;gt;&amp;gt; &lt;span class="nv"&gt;nums&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="m"&gt;3&lt;/span&gt;, &lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&amp;gt;&amp;gt;&amp;gt; &lt;span class="nv"&gt;fruit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;"Apples"&lt;/span&gt;, &lt;span class="s2"&gt;"Peaches"&lt;/span&gt;, &lt;span class="s2"&gt;"Pears"&lt;/span&gt;, &lt;span class="s2"&gt;"Bananas"&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&amp;gt;&amp;gt;&amp;gt; print &lt;span class="o"&gt;[(&lt;/span&gt;i, f&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; i in nums &lt;span class="k"&gt;for&lt;/span&gt; f in fruit&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;[(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="s1"&gt;'Apples'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="s1"&gt;'Pears'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="s1"&gt;'Bananas'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;,
+ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="s1"&gt;'Apples'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="s1"&gt;'Pears'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="s1"&gt;'Bananas'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;,
+ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;, &lt;span class="s1"&gt;'Apples'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;, &lt;span class="s1"&gt;'Pears'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;, &lt;span class="s1"&gt;'Bananas'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;,
+ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;, &lt;span class="s1"&gt;'Apples'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;, &lt;span class="s1"&gt;'Pears'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;, &lt;span class="s1"&gt;'Bananas'&lt;/span&gt;&lt;span class="o"&gt;)]&lt;/span&gt;
+&amp;gt;&amp;gt;&amp;gt;&amp;gt; print &lt;span class="o"&gt;[(&lt;/span&gt;i, f&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; i in nums &lt;span class="k"&gt;for&lt;/span&gt; f in fruit &lt;span class="k"&gt;if&lt;/span&gt; f&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;"P"&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;[(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="s1"&gt;'Pears'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;,
+ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="s1"&gt;'Pears'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;,
+ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;, &lt;span class="s1"&gt;'Pears'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;,
+ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;, &lt;span class="s1"&gt;'Pears'&lt;/span&gt;&lt;span class="o"&gt;)]&lt;/span&gt;
+&amp;gt;&amp;gt;&amp;gt; print &lt;span class="o"&gt;[(&lt;/span&gt;i, f&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; i in nums &lt;span class="k"&gt;for&lt;/span&gt; f in fruit &lt;span class="k"&gt;if&lt;/span&gt; f&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;"P"&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; i%2 &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;[(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="s1"&gt;'Pears'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;, &lt;span class="s1"&gt;'Pears'&lt;/span&gt;&lt;span class="o"&gt;)]&lt;/span&gt;
+&amp;gt;&amp;gt;&amp;gt; print &lt;span class="o"&gt;[&lt;/span&gt;i &lt;span class="k"&gt;for&lt;/span&gt; i in zip&lt;span class="o"&gt;(&lt;/span&gt;nums, fruit&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; i&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;%2&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;[(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;, &lt;span class="s1"&gt;'Bananas'&lt;/span&gt;&lt;span class="o"&gt;)]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="reference implementation"&gt;Reference Implementation&lt;/h2&gt;
+&lt;p&gt;list comprehensions 在 Python release2.0 中变成了语法中的一部分。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="bdfl pronouncements"&gt;BDFL Pronouncements&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;上面的语法只适用于一个元素（the Right One）&lt;/li&gt;
+&lt;li&gt;不允许写成 &lt;code&gt;[x, y for ...]&lt;/code&gt; 形式，但是可以写成一个 tuple 元素的形式 &lt;code&gt;[(x, y) for ...]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;允许嵌套形式 &lt;code&gt;[...  for x... for y...]&lt;/code&gt;，就像嵌套循环一样，最后一个 index 是变化最快的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="shi yao shi  list comprehensions"&gt;什么是 list comprehensions&lt;/h2&gt;
+&lt;p&gt;list comprehensions 是 python 中的一种语法糖（&lt;code&gt;syntactis suger&lt;/code&gt;），它可以将一个 list 
+按照一定的条件转换成另外一个 list。可以把它看成是函数式编程中 &lt;code&gt;map()&lt;/code&gt; 和 &lt;code&gt;filter()&lt;/code&gt; 的语法
+糖，&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt;&amp;gt;&amp;gt; &lt;span class="nv"&gt;doubled_odds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; map&lt;span class="o"&gt;(&lt;/span&gt;lambda n: n * &lt;span class="m"&gt;2&lt;/span&gt;, filter&lt;span class="o"&gt;(&lt;/span&gt;lambda n: n % &lt;span class="nv"&gt;2&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;, umbers&lt;span class="o"&gt;))&lt;/span&gt;
+&amp;gt;&amp;gt;&amp;gt; &lt;span class="nv"&gt;doubled_odds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;n * &lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; n in numbers &lt;span class="k"&gt;if&lt;/span&gt; n % &lt;span class="nv"&gt;2&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;h3 id="yi shu xue de jiao du li jie  list comprehensions"&gt;以数学的角度理解 list comprehensions&lt;/h3&gt;
+&lt;p&gt;下面这个集合表示从自然数中挑选出符合条件 &lt;code&gt;x &amp;gt; 5&lt;/code&gt; 且 &lt;code&gt;x &amp;lt; 10&lt;/code&gt; 的所有元素，&lt;/p&gt;
+&lt;div class="math"&gt;$$new\_list = \{x | x \in N, x &amp;gt; 0, x &amp;lt; 10\}$$&lt;/div&gt;
+&lt;p&gt;对比一下 python 版本的代码就可以知道两者非常相似，只不过 python 用 if 语句来描述数学中的
+条件表达式。&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;new_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;尤其是 python 中有集合 &lt;code&gt;set&lt;/code&gt; 的概念，set 也是可以写成 comprehensions 形式的，这个和数学
+就完全等价了。&lt;/p&gt;
+&lt;h2 id="ru he xie  list comprehensions_1"&gt;如何写 list comprehensions&lt;/h2&gt;
+&lt;h3 id="mo ban"&gt;模板&lt;/h3&gt;
+&lt;p&gt;因为 list comprehensions 本质是 for 和 if 的简洁写法，所以我们可以总结出一个模板，只要满
+足这个模板的 for 循环就可以改成写 list comprehensions。&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nv"&gt;item&lt;/span&gt; &lt;span class="nv"&gt;in&lt;/span&gt; &lt;span class="nv"&gt;old_list&lt;/span&gt;:
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nv"&gt;condition&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;item&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;:
+        &lt;span class="nv"&gt;new_list&lt;/span&gt;.&lt;span class="nv"&gt;append&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;func&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;item&lt;/span&gt;&lt;span class="ss"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;可以改写成下面的形式&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;new_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;old_list&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;h3 id="xun huan qian tao de  list comprehensions"&gt;循环嵌套的 list comprehensions&lt;/h3&gt;
+&lt;p&gt;循环嵌套的 list comprehensions 例子：将矩阵展平，&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;matrix&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;flattened&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;可以写成&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;flattend&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;matrix&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;总结：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;无论是单层还是嵌套的 for 循环，改成 list comprehensions 的方法其实方法非常简单，就是把普
+通的 for 循环调整了顺序，将循环核心的语句写在了最前面，剩余部分按原顺序写就可以了。&lt;/p&gt;
+&lt;h3 id="ti gao  list comprehensions de ke du xing"&gt;提高 list comprehensions 的可读性&lt;/h3&gt;
+&lt;p&gt;因为 python 支持在括号之间断行，所以前面的例子，可以该写成下面的形式以提高可读性：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;new_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;itme&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;old_list&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;itme&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;flattend&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+    &lt;span class="n"&gt;n&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;matrix&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt;
+&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="ref_1"&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://treyhunner.com/2015/12/python-list-comprehensions-now-in-color/"&gt;Python List Comprehensions: Explained Visually&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.jianshu.com/p/dd85d2cd89d1"&gt;用数学思维理解Comprehension&lt;/a&gt;&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP 翻译计划系列 —— PEP20</title><link href="https://qiangu.cool/posts/python/peps_translate_project_pep20.html" rel="alternate"></link><published>2020-05-10T14:36:00+08:00</published><updated>2020-05-10T14:36:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-05-10:/posts/python/peps_translate_project_pep20.html</id><summary type="html">&lt;p&gt;PEPs 翻译系列 PEP20&lt;/p&gt;</summary><content type="html">&lt;p&gt;著名的 python 之禅，&lt;a href="https://www.python.org/dev/peps/pep-0020/"&gt;PEP 20 -- The Zen of Python 原文链接&lt;/a&gt;。&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -39,8 +294,9 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h2 id="abstract"&gt;Abstract&lt;/h2&gt;
-&lt;p&gt;很久之前，Python 先驱 Tim Peters 将 BDFL 的 guide 以 20 条格言的方式简洁地引入到了 
-Python 之中，但是只下写了其中的 19 条。&lt;/p&gt;
+&lt;p&gt;很久之前，Python 先驱 Tim Peters 将 BDFL（Benevolent director for life，仁慈的终身独
+裁者，特指 Python 之父 Guido van Rossum）的 Python 设计指导原则总结成 20 条格言，只记录
+下了其中的 19 条。&lt;/p&gt;
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="the zen of python"&gt;The Zen of Python&lt;/h2&gt;
 &lt;p&gt;网上有很多不同版本的翻译，有些语言风趣幽默，有些正经严肃。我个人更喜欢严肃的翻译，因为幽默的
@@ -50,74 +306,119 @@ Python 之中，但是只下写了其中的 19 条。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Beautiful is better than ugly.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;优美胜于丑陋（Pyhton 以编写 &lt;code&gt;优美&lt;/code&gt; 的代码为目标）&lt;/p&gt;
+&lt;p&gt;优美胜于丑陋&lt;/p&gt;
+&lt;p&gt;PEP8 中提到，Python 的理念是代码更多时候是用来读的，所以以编写 &lt;code&gt;优美&lt;/code&gt; 的代码为目标，
+&lt;code&gt;if a == 0 and b == 1 or c == True:&lt;/code&gt; 要比 &lt;code&gt;if a == 0 &amp;amp;&amp;amp; b == 1 || c == True:&lt;/code&gt;
+ 更加优美。优美的代码包含的内容非常广泛，PEP8 提供了一些如何写出优美代码的建议。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Explicit is better than implicit.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;显式胜于隐式（代码应该是明了的）&lt;/p&gt;
+&lt;p&gt;显式胜于隐式&lt;/p&gt;
+&lt;p&gt;代码应该清晰易懂，比如良好的命名可以提高代码的可读性。几个不好的例子，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;太宽泛： &lt;code&gt;my_list&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;太冗长： &lt;code&gt;list_of_machine_learning_data_set&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;太模糊： &lt;code&gt;I&lt;/code&gt;, &lt;code&gt;o&lt;/code&gt;, &lt;code&gt;O&lt;/code&gt;, &lt;code&gt;a&lt;/code&gt;, &lt;code&gt;b&lt;/code&gt;, &lt;code&gt;c&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;关于命名可以参考 PEP8.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Simple is better than complex.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;简单胜于复杂（选择最简单实现方案/接口）&lt;/p&gt;
+&lt;p&gt;简单胜于复杂&lt;/p&gt;
+&lt;p&gt;选择最简单实现方案，python 有很多功能强大的内置 method，合理利用它们可以减少你的代码量，
+删繁就简只保留核心代码。一个直观例子是用 &lt;code&gt;enumerate()&lt;/code&gt; 来迭代容器，另外一个例子是用
+&lt;code&gt;zip()&lt;/code&gt; 来快速创建字典。减少代码量不仅仅可以提高可读性，还意味着出错的概率更低，而且代码
+的性能更好（因为通常库实现更加高效）。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Complex is better than complicated.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;复杂胜于凌乱（如果复杂不可避免，也要避免令人费解的实现）&lt;/p&gt;
+&lt;p&gt;复杂胜于凌乱&lt;/p&gt;
+&lt;p&gt;如果复杂不可避免，也要避免晦涩的实现。复杂和晦涩的区别，我理解就是复杂是可以通过分解来理解
+，但是晦涩特指那种非常难理解的语法、不符合常规思维的实现方式。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Flat is better than nested.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;扁平胜于嵌套（代码尽量少嵌套，降低理解难度）&lt;/p&gt;
+&lt;p&gt;扁平胜于嵌套&lt;/p&gt;
+&lt;p&gt;代码尽量少嵌套，降低理解难度。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Sparse is better than dense.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;间隔胜于紧凑（适当的间隔和空行能提高可读性）&lt;/p&gt;
+&lt;p&gt;间隔胜于紧凑&lt;/p&gt;
+&lt;p&gt;适当的间隔和空行能提高可读性，同参考 PEP8.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Readability counts.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;可读性很重要&lt;/p&gt;
+&lt;p&gt;同参考 PEP8，两个例子：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用下划线对很长的数字分组，&lt;code&gt;money = 1_000_000&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;f-string 可以大幅提高代码的可读性， &lt;code&gt;print(f"I have {money} dollars.")&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Special cases aren't special enough to break the rules.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;规则至高无上，没有什么特例可以打破规则&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Although practicality beats purity.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;规则至高无上，虽然有时候实用性比代码的纯净更重要，但是也不要打破规则&lt;/p&gt;
+&lt;p&gt;但是实用性胜过代码的纯粹性&lt;/p&gt;
+&lt;p&gt;与前一句相矛盾，提醒我们掌握它们之间的平衡。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Errors should never pass silently.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不要默许任何错误&lt;/p&gt;
+&lt;p&gt;默许的错误会导致隐患，使用异常处理以尽量写出健壮的代码。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Unless explicitly silenced.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;不要默许任何错误，除非你确定要这么做&lt;/p&gt;
+&lt;p&gt;除非你确定要这么做&lt;/p&gt;
+&lt;p&gt;在某些情况下，小错误是可以容忍的，和前一条组合在一起，避免走极端。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;In the face of ambiguity, refuse the temptation to guess.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;面对歧义，拒绝猜测的诱惑&lt;/p&gt;
+&lt;p&gt;避免写含糊不清的代码。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;There should be one-- and preferably only one --obvious way to do it.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;应该有且只有一个最优解决方案 &amp;mdash;&amp;mdash; 最显而易见的实现方案&lt;/p&gt;
+&lt;p&gt;python 的语法非常灵活，库也非常强大，所以同一个问题可以有非常多种不同实现方式，那么最优
+方案应该是那个最直观的解决方案。不要走标新立异的路线，用最显而易见的方法，花费最少的时间
+解决问题，珍惜自己的生命，也珍惜读者（代码维护者）的生命。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;life is short, you need pyhton.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Although that way may not be obvious at first unless you're Dutch.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;当存在多种实现时，不要尝试去猜测，而是应该有且只有一个最优解决方案 &amp;mdash;&amp;mdash; 最显而易见的实现方
-案，虽然这样一开始并不容易，除非你是 Pyhton 之父&lt;/p&gt;
+&lt;p&gt;虽然一开始并不容易，除非你是 Pyhton 之父&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Now is better than never.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;现在开始做胜过永远拖延&lt;/p&gt;
+&lt;p&gt;拒绝拖延症！&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Although never is often better than &lt;em&gt;right&lt;/em&gt; now.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;行动比拖延更好，但是 不假思索地的行动还不如拖延（行动前要仔细思考）&lt;/p&gt;
+&lt;p&gt;但是不假思索地的行动还不如拖延&lt;/p&gt;
+&lt;p&gt;行动前要仔细思考，制定计划。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;If the implementation is hard to explain, it's a bad idea.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果实现方案很难向别人解释，那么它就是个坏方案&lt;/p&gt;
+&lt;p&gt;小黄鸭调试法。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;If the implementation is easy to explain, it may be a good idea.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;如果实现方案很难向别人解释，那么它就是个坏方案，反之亦然&lt;/p&gt;
+&lt;p&gt;反之亦然，良好的实现方案应该清晰容易理解&lt;/p&gt;
+&lt;p&gt;好方案的一个共同特点就是清晰易懂，因为它们抓住了问题的关键点，从而可以用简单的方法高效地
+解决问题 &amp;mdash;&amp;mdash; &lt;code&gt;奥卡姆剃刀&lt;/code&gt;。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Namespaces are one honking great idea -- let's do more of those!&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;命名空间是一个绝妙的理念，我们要多加利用&lt;/p&gt;
+&lt;p&gt;给变量起名字是一门艺术，尤其是大工程多人协同工作时，难免会有命名冲突，因为好名字是大家有
+共识的，使用命名空间可以让你不再有命名冲突的烦恼。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id="easter egg"&gt;Easter Egg&lt;/h2&gt;
@@ -127,7 +428,8 @@ Python 之中，但是只下写了其中的 19 条。&lt;/p&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;h2 id="ref"&gt;Ref&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://liuwynn.github.io/2019/04/24/Python%E4%B9%8B%E7%A6%85/"&gt;Python之禅&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://blog.csdn.net/lanphaday/article/details/2151918"&gt;《Python之禅》的翻译和解释&lt;/a&gt;&lt;/p&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP8 实践</title><link href="https://qiangu.cool/posts/python/pep8_in_practice.html" rel="alternate"></link><published>2020-04-19T14:56:00+08:00</published><updated>2020-04-19T14:56:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-04-19:/posts/python/pep8_in_practice.html</id><summary type="html">&lt;p&gt;总结实际 coding 中遵循 PEP8 时用到的工具和插件。&lt;/p&gt;</summary><content type="html">&lt;h2 id="pep8 &amp;amp; pcqa"&gt;PEP8 &amp;amp; PCQA&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://blog.csdn.net/lanphaday/article/details/2151918"&gt;《Python之禅》的翻译和解释&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.infoq.cn/article/e5FEa0D6JFADgKkHVyuE"&gt;怎样让你写的 Python 代码更优雅？&lt;/a&gt;&lt;/p&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP8 实践</title><link href="https://qiangu.cool/posts/python/pep8_in_practice.html" rel="alternate"></link><published>2020-04-19T14:56:00+08:00</published><updated>2020-04-19T14:56:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-04-19:/posts/python/pep8_in_practice.html</id><summary type="html">&lt;p&gt;总结实际 coding 中遵循 PEP8 时用到的工具和插件。&lt;/p&gt;</summary><content type="html">&lt;h2 id="pep8 &amp;amp; pcqa"&gt;PEP8 &amp;amp; PCQA&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0008/"&gt;PEP8&lt;/a&gt; 之前已经介绍过了，这里有&lt;a href="http://guqian110.github.io/posts/python/peps_translate_project_pep8.html"&gt;中文翻译（前一篇博客）&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://meta.pycqa.org/en/latest/code-of-conduct.html"&gt;PCQA&lt;/a&gt; 是 Python Code Quality Authority 的缩写，它是一个松散的组织，聚集了各地的开发者，大家以在线协作的方式，为广大 python 码农提供各种 automatic style and quality reporting 工具，方便大家做项目时可以在不同项目都能保持代码风格一致。&lt;/p&gt;
 &lt;p&gt;PCQA 源自于 &lt;code&gt;Ian Cordasco&lt;/code&gt; 在把 &lt;code&gt;Flake8&lt;/code&gt; 迁移到 Git 时发出的一封邮件，大家积极提议把项目迁移到 &lt;code&gt;GitLab&lt;/code&gt; 上，所以他在 &lt;code&gt;GitLab&lt;/code&gt; 和 &lt;code&gt;GitHub&lt;/code&gt; 上都建了一个 group 来专门维护 &lt;code&gt;Flake8&lt;/code&gt; 和 &lt;code&gt;flake8-docstrings&lt;/code&gt;。后来其他人开发维护的各种 lint 工具也源源不断地加入，PCQA 逐渐壮大。&lt;/p&gt;
@@ -1590,7 +1892,7 @@ Python 之中，但是只下写了其中的 19 条。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/peps_translate_project_pep0.html"&gt;PEP 0 -- Index of Python Enhancement Proposals&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/peps_translate_project_pep8.html"&gt;PEP 8 -- Style Guide for Python Code&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;PEP 20 -- The Zen of Python&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/peps_translate_project_pep20.html"&gt;PEP 20 -- The Zen of Python&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;PEP 202 -- List Comprehensions&lt;/li&gt;
 &lt;li&gt;PEP 274 -- Dict Comprehensions&lt;/li&gt;
 &lt;li&gt;PEP 234 -- Iterators&lt;/li&gt;
