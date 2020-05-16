@@ -173,14 +173,13 @@
     <p>
       Posted on 2015-04-15 15:50 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 6 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="Verilog 的 case 小结">Verilog 的 case 小结</a><ul><li><a class="toc-href" href="#def" title="Def">Def</a><ul><li><a class="toc-href" href="#syntax:" title="Syntax:">Syntax:</a></li><li><a class="toc-href" href="#case statement header" title="Case statement header">Case statement header</a></li><li><a class="toc-href" href="#case expression" title="Case expression">Case expression</a></li><li><a class="toc-href" href="#case item" title="Case item">Case item</a></li><li><a class="toc-href" href="#case item statement" title="Case item statement">Case item statement</a></li><li><a class="toc-href" href="#case default" title="Case default">Case default</a></li><li><a class="toc-href" href="#casez" title="Casez">Casez</a></li><li><a class="toc-href" href="#casex" title="casex">casex</a></li><li><a class="toc-href" href="#process" title="Process">Process</a></li><li><a class="toc-href" href="#reverse case" title="reverse case">reverse case</a></li></ul></li><li><a class="toc-href" href='#"full" case statement_1' title='"full" case statement'>"full" case statement</a><ul><li><a class="toc-href" href="#hdl full case" title="HDL full case">HDL full case</a></li><li><a class="toc-href" href="#synthesis full case" title="Synthesis full case">Synthesis full case</a></li><li><a class="toc-href" href="#xst full case" title="XST full case">XST full case</a></li></ul></li><li><a class="toc-href" href='#"parallel" case statement_1' title='"parallel" case statement'>"parallel" case statement</a><ul><li><a class="toc-href" href="#non-parallel case statements" title="Non-parallel case statements">Non-parallel case statements</a></li><li><a class="toc-href" href="#parallel case statements" title="Parallel case statements">Parallel case statements</a></li><li><a class="toc-href" href="#xst parallel case" title="XST parallel case">XST parallel case</a></li></ul></li><li><a class="toc-href" href="#synthesis coding styles_1" title="Synthesis coding styles">Synthesis coding styles</a></li><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>学习了 Cummings 大神 的 paper：<a href="http://www.sunburst-design.com/papers/CummingsSNUG1999Boston_FullParallelCase.pdf">"full_case parallel_case", the Evil Twins of Verilog Synthesis</a> 和 <a href="http://www.phei.com.cn/module/goods/wssd_content.jsp?bookid=38848">Verilog 编程艺术</a></p>
@@ -264,7 +263,7 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 </li>
 </ul>
 </blockquote>
-<p>然而这些理由都不够准确或者说是危险的，因为这两个综合指令有时候完全不影响设计，有时候反而会使设计速度变慢、面积变大，有时候甚至会改变设计的功能。<strong>通常，这些指令都很危险。</strong> 所以，Cummings 给他的 paper 起了如下的别名...</p>
+<p>然而这些理由都不够准确或者说是危险的，因为这两个综合指令有时候完全不影响设计，有时候反而会使设计速度变慢、面积变大，有时候甚至会改变设计的功能。<strong>通常，这些指令都很危险。</strong> 所以，Cummings 给他的 paper 起了如下的别名 ...</p>
 <blockquote>
 <p>An alternate title for this paper could be: "How to add $200,000 to the cost and 3-6 months to the schedule of your ASIC design without trying!"</p>
 </blockquote>
@@ -343,7 +342,7 @@ and use "?" characters instead of "z" characters in the case items to indicate "
 <span class="k">endmodule</span>
 </pre></div>
 </td></tr></table>
-<p>在这个例子中，因为有了 default 分支，所以它是一个 full case。在仿真时，如果 sel 是 2'b11，那么 y 取值为 x（不确定，unknown），而综合器会把 x 当作 &ldquo;不关心&rdquo;（don't care，有可能为 1，也有可能为 0）。这就导致了仿真和综合不一致。解决这个问题的方法就是给 y 赋值一个常数 or 像其他 item 一样赋值一个输入。</p>
+<p>在这个例子中，因为有了 default 分支，所以它是一个 full case。在仿真时，如果 sel 是 2'b11，那么 y 取值为 x（不确定，unknown），而综合器会把 x 当作 &ldquo; 不关心 &rdquo;（don't care，有可能为 1，也有可能为 0）。这就导致了仿真和综合不一致。解决这个问题的方法就是给 y 赋值一个常数 or 像其他 item 一样赋值一个输入。</p>
 <p>（基于 Virtex-4 器件，XST 的 synthesis report 给出的结果是 1 bit 3-to-1 multiplexers）</p>
 <p>P.S. 我们可以利用前后仿真不同这一点来帮助我们调试。在设计 FSM 时，default 分支处，next_state 赋值为 x，这样如果存在错误转换，next_state 就会保持为 x，在波形上很方便看到。</p>
 <p>还有一种方法是在所有的 item 之前，给输出赋一个默认值，这样即使不是 full，也不会产生 latch：</p>
@@ -460,7 +459,7 @@ behavior of the case statement.</p>
 <p>有时候使用指令，会适得其反，导致结果面积变大、速度变慢</p>
 </li>
 <li>
-<p>一般有迷信的说法：&ldquo;使用 full case 指令，可以消除 latch。&rdquo; 这个说法太绝对了，事实上并不总是这样。如果有多个输出需要赋值，而有些分支只忽略了一些赋值，那么即使使用 full_case 指令，也不能避免 latch 的产生。</p>
+<p>一般有迷信的说法：&ldquo; 使用 full case 指令，可以消除 latch。&rdquo; 这个说法太绝对了，事实上并不总是这样。如果有多个输出需要赋值，而有些分支只忽略了一些赋值，那么即使使用 full_case 指令，也不能避免 latch 的产生。</p>
 <p>举例，在下面的例子中，仍然会产生 latch</p>
 <div class="highlight"><pre><span></span><span class="nv">always</span> @<span class="o">*</span> <span class="nv">begin</span>
     <span class="nv">casez</span> <span class="ss">(</span><span class="nv">sel</span><span class="ss">)</span> <span class="o">//</span> <span class="nv">synthesis</span> <span class="nv">full_case</span>
@@ -524,7 +523,7 @@ design of medical diagnostic equipment, medical implants, or detonation logic fo
 devices!</p>
 <p>Guideline: only use full_case parallel_case to optimize onehot FSM designs.</p>
 </blockquote>
-<p>甚至建议要开除写 full_parallel_case 的员工...</p>
+<p>甚至建议要开除写 full_parallel_case 的员工 ...</p>
 <p><br/></p>
 <h2 id="summary">Summary</h2>
 <hr/>

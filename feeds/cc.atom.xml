@@ -43,7 +43,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;The variable bufSize is still an lvalue&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性&amp;ldquo;&lt;/p&gt;
+&lt;p&gt;这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性 &amp;ldquo;&lt;/p&gt;
 &lt;h3 id="wen jian de ju bu bian liang"&gt;文件的局部变量&lt;/h3&gt;
 &lt;p&gt;const 限定符修同时也改变了变量的作用范围 。普通非 const 变量的默认是具有 &lt;em&gt;外部连接（external linkage）&lt;/em&gt;的，在全局作用域内定义非 const 变量时，它在整个程序中都可以被访问 。比如&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
@@ -79,7 +79,7 @@
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;定义在头文件中 inlcude&lt;/p&gt;
-&lt;p&gt;如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 &amp;rdquo;重定义&amp;ldquo;  的问题 。&lt;/p&gt;
+&lt;p&gt;如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 &amp;rdquo; 重定义 &amp;ldquo;  的问题 。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
@@ -185,7 +185,7 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;hr/&gt;
 &lt;p&gt;Scott Meyers 大神的经典著作 &lt;a href="http://book.douban.com/subject/1842426/"&gt;Effective C++&lt;/a&gt; 里面提到的关于 const 的使用 。&lt;/p&gt;
 &lt;h3 id="effective c++ tiao kuan  02:jin liang yi  const, enum, inline ti huan  #define(prefer consts,enums,and inline to #define)"&gt;Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）&lt;/h3&gt;
-&lt;p&gt;使用const 代替 #define，事实上 &lt;code&gt;const&lt;/code&gt; 的最初动机就是取代预处理器 &lt;code&gt;#define&lt;/code&gt; 来进行值替代 。因为 #define 不被视为语言的一部分，这就是它的问题所在 。&lt;/p&gt;
+&lt;p&gt;使用 const 代替 #define，事实上 &lt;code&gt;const&lt;/code&gt; 的最初动机就是取代预处理器 &lt;code&gt;#define&lt;/code&gt; 来进行值替代 。因为 #define 不被视为语言的一部分，这就是它的问题所在 。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#define ASPECT_RATIO 1.653;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
@@ -201,7 +201,7 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1459728/"&gt;Thinking in C++&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1842426/"&gt;Effective C++&lt;/a&gt;&lt;/p&gt;</content><category term="C/C++"></category><category term="const"></category></entry><entry><title>C/C++ 内置数据类型</title><link href="https://qiangu.cool/posts/cc/built_in_types.html" rel="alternate"></link><published>2014-03-31T13:37:00+08:00</published><updated>2014-03-31T13:37:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2014-03-31:/posts/cc/built_in_types.html</id><summary type="html">&lt;p&gt;重读经典 C++ Primer，总结 C++ 内置数据类型。&lt;/p&gt;</summary><content type="html">&lt;p&gt;类型是程序设计的基础。一些程序设计语言，比如 Smalltalk 和 Python，在运行的时候才检查预计中的对象的类型，想反，C++ 是静态类型（statically typed）语言，在编译时执行类型检查。导致的结果是：&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;变量和函数在使用前必须先声明&lt;/em&gt; 。&lt;/p&gt;
-&lt;p&gt;每种类型都定义了其存储空间要求和可以在该类型的所有对象上执行的操作。C++ 是 在 C 的基础上扩充得到的，为了和 C 兼容， C++ 在必要时必须能够直接处理硬件，所以 C++ 提供的一组基本内置类型，如int、char等，这些类型与它们在机器硬件上的标示方式紧密相关。（所以，C++ 可以称为 &amp;ldquo;具有高级语言库的低级语言&amp;rdquo;）&lt;/p&gt;
+&lt;p&gt;每种类型都定义了其存储空间要求和可以在该类型的所有对象上执行的操作。C++ 是 在 C 的基础上扩充得到的，为了和 C 兼容， C++ 在必要时必须能够直接处理硬件，所以 C++ 提供的一组基本内置类型，如 int、char 等，这些类型与它们在机器硬件上的标示方式紧密相关。（所以，C++ 可以称为 &amp;ldquo; 具有高级语言库的低级语言 &amp;rdquo;）&lt;/p&gt;
 &lt;p&gt;本文只限于总结 C++ 的内置类型（Built-in Types），不讨论自定义类型 。&lt;/p&gt;
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="ji ben nei zhi lei xing"&gt;基本内置类型&lt;/h2&gt;
@@ -237,10 +237,10 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;p&gt;Unlike the other integral types, there are three distinct types for char: plain char, signed char, and unsigned char. Although there are three distinct types, there are only two ways a char can be represented. The char type is respresented using either the signed char or unsigned char version. Which representation is used for char varies by compiler.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;为什么会有这么奇怪的事呢？上网搜索了一下，按照自己的理解总结了一下：&lt;/p&gt;
-&lt;p&gt;signed/unsigned 可以描述的类型有 int 和 char 两种，在 C 的标准里面规定：对于 int 类型，如果没有在类型前显式地声明，默认 int 是 signed 类型，而对于 char 类型，则是 &lt;em&gt;Implementation Defined&lt;/em&gt; 。也就是说由编译器在编译的时候决定具体使用哪一种 。而为什么要作出这么奇怪的规定呢？是因为 char 类型本来就是用来表示字符而非数字的， ASCII 码字只使用 7 bit，所以使用 signed/unsigned 对其没有影响，但是如果使用 char 类型来表示一个 8 bit 的数字（有时候空间不够用时不得不这样做，比如嵌入式系统中），为了可移植性，必须写明 signed/unsigned 。所以，如果用来表示字符，则直接使用 char 就行，如果用来表示整数，则声明是signed/unsigned 。&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://book.51cto.com/art/200912/166574.htm"&gt;Linux C编程一站式学习：整型&lt;/a&gt; 中进一步解释：&lt;/p&gt;
+&lt;p&gt;signed/unsigned 可以描述的类型有 int 和 char 两种，在 C 的标准里面规定：对于 int 类型，如果没有在类型前显式地声明，默认 int 是 signed 类型，而对于 char 类型，则是 &lt;em&gt;Implementation Defined&lt;/em&gt; 。也就是说由编译器在编译的时候决定具体使用哪一种 。而为什么要作出这么奇怪的规定呢？是因为 char 类型本来就是用来表示字符而非数字的， ASCII 码字只使用 7 bit，所以使用 signed/unsigned 对其没有影响，但是如果使用 char 类型来表示一个 8 bit 的数字（有时候空间不够用时不得不这样做，比如嵌入式系统中），为了可移植性，必须写明 signed/unsigned 。所以，如果用来表示字符，则直接使用 char 就行，如果用来表示整数，则声明是 signed/unsigned 。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://book.51cto.com/art/200912/166574.htm"&gt;Linux C 编程一站式学习：整型&lt;/a&gt; 中进一步解释：&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;编译器可以定义char型是无符号的，也可以定义char型是有符号的，在该编译器所对应的体系结构上哪种实现效率高就可以采用哪种，x86平台的gcc定义char型是有符号的。这也是C标准的Rationale之一： &lt;em&gt;优先考虑效率，而可移植性尚在其次。&lt;/em&gt; 这就要求程序员非常清楚这些规则，如果你要写可移植的代码，就必须清楚哪些写法是不可移植的，应该避免使用。另一方面，写不可移植的代码有时候也是必要的，比如Linux内核代码使用了很多只有gcc支持的语法特性以得到最佳的执行效率，在写这些代码的时候就没打算用别的编译器编译，也就没考虑可移植性的问题。如果要写不可移植的代码，你也必须清楚代码中的哪些部分是不可移植的，以及为什么要这样写。如果不是为了效率，一般来说就没有理由故意编写不可移植的代码。&lt;/p&gt;
+&lt;p&gt;编译器可以定义 char 型是无符号的，也可以定义 char 型是有符号的，在该编译器所对应的体系结构上哪种实现效率高就可以采用哪种，x86 平台的 gcc 定义 char 型是有符号的。这也是 C 标准的 Rationale 之一： &lt;em&gt;优先考虑效率，而可移植性尚在其次。&lt;/em&gt; 这就要求程序员非常清楚这些规则，如果你要写可移植的代码，就必须清楚哪些写法是不可移植的，应该避免使用。另一方面，写不可移植的代码有时候也是必要的，比如 Linux 内核代码使用了很多只有 gcc 支持的语法特性以得到最佳的执行效率，在写这些代码的时候就没打算用别的编译器编译，也就没考虑可移植性的问题。如果要写不可移植的代码，你也必须清楚代码中的哪些部分是不可移植的，以及为什么要这样写。如果不是为了效率，一般来说就没有理由故意编写不可移植的代码。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;网上有&lt;a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx"&gt;博客&lt;/a&gt;说：&lt;/p&gt;
 &lt;blockquote&gt;
@@ -274,7 +274,7 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;hr/&gt;
 &lt;h3 id="chu shi hua  &amp;amp; fu zhi"&gt;初始化 &amp;amp; 赋值&lt;/h3&gt;
 &lt;p&gt;首先是初始化的必要性：&lt;/p&gt;
-&lt;p&gt;在 C++ 中，初始化是一个非常重要的概念，给变量一个初始值几乎总是正确的，但不要求必须这么做。定义变量时，应该给变量赋初始值，除非确定将变量用于其他意图之前会覆盖这个初值。如果不能保证读取变量前重置变量，就应该初始化变量。变量没有初始化是很常见的导致程序崩溃/结果错误的原因，而且有时候很难像 Debug 一样找到这个错误（bug 导致程序一定不对，但是没有初始化的变量的结果是随机的）。所以，良好的习惯是对每个变量都进行初始化 。&lt;/p&gt;
+&lt;p&gt;在 C++ 中，初始化是一个非常重要的概念，给变量一个初始值几乎总是正确的，但不要求必须这么做。定义变量时，应该给变量赋初始值，除非确定将变量用于其他意图之前会覆盖这个初值。如果不能保证读取变量前重置变量，就应该初始化变量。变量没有初始化是很常见的导致程序崩溃 / 结果错误的原因，而且有时候很难像 Debug 一样找到这个错误（bug 导致程序一定不对，但是没有初始化的变量的结果是随机的）。所以，良好的习惯是对每个变量都进行初始化 。&lt;/p&gt;
 &lt;p&gt;其次是初始化和赋值的区别：&lt;/p&gt;
 &lt;p&gt;初始化 &lt;code&gt;Initialization&lt;/code&gt;：创建变量并且给它赋初始值&lt;/p&gt;
 &lt;p&gt;赋值 &lt;code&gt;Assigment&lt;/code&gt;：擦除变量的当前值并用新值代替&lt;/p&gt;
@@ -352,7 +352,7 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;p&gt;举个栗子：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;short 类型 与 int 类型 。在我的机器上，short 类型所占用的宽度为半字（2 Byte），int 类型占用的宽度为 1个字（4 Byte）。所有的 unsigned short 的值都包含在 int 之中，所以，unsigned short 转换为 int 。&lt;/p&gt;
+&lt;p&gt;short 类型 与 int 类型 。在我的机器上，short 类型所占用的宽度为半字（2 Byte），int 类型占用的宽度为 1 个字（4 Byte）。所有的 unsigned short 的值都包含在 int 之中，所以，unsigned short 转换为 int 。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;下面程序&lt;/p&gt;
@@ -377,5 +377,5 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="references_1"&gt;references&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://book.douban.com/subject/1767741/"&gt;c++ Primer&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx"&gt;C++之char , signed char , unsigned char，以及Integral Promotion&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://book.51cto.com/art/200912/166574.htm"&gt;Linux C编程一站式学习：整型&lt;/a&gt;&lt;/p&gt;</content><category term="C/C++"></category><category term="data type"></category></entry></feed>
+&lt;p&gt;&lt;a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx"&gt;C++ 之 char , signed char , unsigned char，以及 Integral Promotion&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://book.51cto.com/art/200912/166574.htm"&gt;Linux C 编程一站式学习：整型&lt;/a&gt;&lt;/p&gt;</content><category term="C/C++"></category><category term="data type"></category></entry></feed>

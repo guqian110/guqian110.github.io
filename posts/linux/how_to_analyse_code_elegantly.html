@@ -174,14 +174,13 @@
     <p>
       Posted on 2015-01-11 18:49 in <a href="../../category/linux.html">Linux</a>
 
-        &#8226; 6 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="如何优雅的分析代码">如何优雅的分析代码</a><ul><li><a class="toc-href" href="#graphviz" title="Graphviz">Graphviz</a><ul><li><a class="toc-href" href="#what is graphviz?" title="What is Graphviz?">What is Graphviz?</a></li><li><a class="toc-href" href="#installation" title="Installation">Installation</a></li><li><a class="toc-href" href="#more" title="More">More</a></li></ul></li><li><a class="toc-href" href="#doxygen_1" title="Doxygen">Doxygen</a><ul><li><a class="toc-href" href="#what is doxygen" title="What is Doxygen">What is Doxygen</a></li><li><a class="toc-href" href="#installation_1" title="Installation">Installation</a></li><li><a class="toc-href" href="#getting started" title="Getting Started">Getting Started</a></li><li><a class="toc-href" href="#documenting the code" title="Documenting the code">Documenting the code</a><ul><li><a class="toc-href" href="#putting documentation after members" title="Putting documentation after members">Putting documentation after members</a></li><li><a class="toc-href" href="#examples" title="Examples">Examples</a></li><li><a class="toc-href" href="#documentation at other places" title="Documentation at other places">Documentation at other places</a></li><li><a class="toc-href" href="#anatomy of a comment block" title="Anatomy of a comment block">Anatomy of a comment block</a></li></ul></li></ul></li><li><a class="toc-href" href="#ref._2" title="Ref.">Ref.</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>当我们来接手一个别人的工程时，阅读别人的代码是一件很痛苦的事。成千上百的函数，糟糕的代码风格，不知所云的注释，这些都是让人抓狂。那么，问题就来了：<strong>如何优雅地分析别人的代码？</strong></p>
@@ -249,7 +248,7 @@
 </li>
 <li>
 <p>创建一个配置文件</p>
-<p>Doxygen 使用一个配置文件来工作，，每个项目都应该有一个自己对应的配置文件。我们可以使用 <code>doxygen -g</code> 来让 Doxygen 自动生成一个参考配置文件，然后修改其中个别配置即可.</p>
+<p>Doxygen 使用一个配置文件来工作，，每个项目都应该有一个自己对应的配置文件。我们可以使用 <code>doxygen -g</code> 来让 Doxygen 自动生成一个参考配置文件，然后修改其中个别配置即可 .</p>
 <div class="highlight"><pre><span></span><span class="n">doxygen</span> <span class="o">-</span><span class="k">g</span> <span class="o">&lt;</span><span class="n">config</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
 </pre></div>
 <p><strong>常用配置：</strong></p>
@@ -356,7 +355,7 @@
 </pre></div>
 </li>
 <li>
-<p>如果选择 JavaDoc 的风格，并且在配置文件中设置 <code>JAVADOC_AUTOBRIEF = YES</code> 的话，Doxygen 会自动将第一句话作为 brief description，这个句子以 <code>. + 空格/空行</code> 结束。</p>
+<p>如果选择 JavaDoc 的风格，并且在配置文件中设置 <code>JAVADOC_AUTOBRIEF = YES</code> 的话，Doxygen 会自动将第一句话作为 brief description，这个句子以 <code>. + 空格 / 空行</code> 结束。</p>
 <div class="highlight"><pre><span></span><span class="cm">/** Brief description which ends at this dot. Details follow</span>
 <span class="cm">*   here.</span>
 <span class="cm">*/</span><span class="w"></span>
@@ -400,7 +399,7 @@
 <div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">var</span><span class="p">;</span> <span class="o">///&lt;</span> <span class="n">Brief</span> <span class="n">description</span> <span class="k">after</span> <span class="n">the</span> <span class="n">member</span>
 </pre></div>
 <p><strong>Warning:</strong></p>
-<p>这种添加 <code>&lt;</code> 的方法只能用在 成员（<code>member</code>）和 参数（<code>parameter</code>）中，不能用在描述文件、类、联合体、名字空间和枚举本身。此外, 在后面提到的结构化命令（如<code>\class</code>）在这种注释段中是无效的。</p>
+<p>这种添加 <code>&lt;</code> 的方法只能用在 成员（<code>member</code>）和 参数（<code>parameter</code>）中，不能用在描述文件、类、联合体、名字空间和枚举本身。此外 , 在后面提到的结构化命令（如<code>\class</code>）在这种注释段中是无效的。</p>
 <h4 id="examples">Examples</h4>
 <p>官网上提供了一个例子，分别用 Qt 和 JavaDoc 的风格注释一段相同的 C++ 代码：</p>
 <p><strong>Qt style:</strong></p>
@@ -654,7 +653,7 @@
 </td></tr></table>
 <p>生成的 HTML 网页：http://www.stack.nl/~dimitri/doxygen/manual/examples/jdstyle/html/class_test.html</p>
 <h4 id="documentation at other places">Documentation at other places</h4>
-<p>我们之前的例子中注释都是在文件、命名空间、类的声明或者定义之前，或者在它们的成员的前/后。虽然一般来说这是很正常的，但是有时候我们需要把代码写在在文档的其他地方。对于文件的注释更是如此，因为对于文件来说，根本就不存在在它之前的地方（"in front of a file"）。</p>
+<p>我们之前的例子中注释都是在文件、命名空间、类的声明或者定义之前，或者在它们的成员的前 / 后。虽然一般来说这是很正常的，但是有时候我们需要把代码写在在文档的其他地方。对于文件的注释更是如此，因为对于文件来说，根本就不存在在它之前的地方（"in front of a file"）。</p>
 <p>Doxygen 允许你把注释写在任何地方（例外情况是在函数体内 or 在 C 风格注释块内）。你需要付出的代价就是要在注释块内部多写一些结构化命令（<code>structural command</code>）来标明。所以，<strong>一般来说，我们应该尽量避免使用结构化命令，除非是有其他的特殊要求这样做。</strong></p>
 <p>结构化命令以一个 <code>\</code> 或者 <code>@</code>（JavaDoc 风格）开始，后面接一个命令名字 + 一个（多个）参数。举例如下：</p>
 <div class="highlight"><pre><span></span><span class="cm">/*! \class Test</span>
@@ -819,7 +818,7 @@
 <p>Doxygen 支持很多种格式的注释，最简单的就是文本文件，适用于比较短的注释。对于比较长的注释，我们需要清单、表格等更加结构化的元素，对于这种情况，Doxygen 支持 Markdown 语法，可以直接读取 Markdown 文件，详细内容看这里：<a href="http://www.stack.nl/~dimitri/doxygen/manual/markdown.html">Markdown Support</a>。</p>
 <p>(Markdown 源自邮件的文本格式，语法非常简洁，并且功能很强大，这篇文章本书就是用 Markdown 语法写的，语法细节见官网，这里不再赘述。)</p>
 <p>P.S.</p>
-<p>找到一篇博客，详细介绍了基于 Doxygen 的 C++ 注释风格：<a href="http://blog.csdn.net/czyt1988/article/details/8901191">C++标准注释原则 - 基于doxygen的C++注释</a></p>
+<p>找到一篇博客，详细介绍了基于 Doxygen 的 C++ 注释风格：<a href="http://blog.csdn.net/czyt1988/article/details/8901191">C++ 标准注释原则 - 基于 doxygen 的 C++ 注释</a></p>
 <p><br/></p>
 <p>最后展示一张我的效果图：</p>
 <p><img alt="image" src="/images/how-to-analyse-code-elegantly/result.png"/></p>
@@ -828,7 +827,7 @@
 <p><a href="http://blog.csdn.net/blood008/article/details/6567169">linux doxygen 的安装和使用</a></p>
 <p><a href="http://www.stack.nl/~dimitri/doxygen/index.html">Doxygen</a></p>
 <p><a href="http://www.graphviz.org/">Graphviz</a></p>
-<p><a href="http://www.cnblogs.com/wishma/archive/2008/07/24/1250339.html">doxygen 使用简介（C,C++为代码作注释）</a></p>
+<p><a href="http://www.cnblogs.com/wishma/archive/2008/07/24/1250339.html">doxygen 使用简介（C,C++ 为代码作注释）</a></p>
   </div>
   <div class="tag-cloud">
     <p>
@@ -850,8 +849,8 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../../posts/telecom/signed_number_representations.html">原码、反码、补码</a></li>
       <li><a href="../../posts/ic/doxygen_for_verilog.html">针对 Verilog 的 Doxygen</a></li>
+      <li><a href="../../posts/telecom/signed_number_representations.html">原码、反码、补码</a></li>
       <li><a href="../../posts/book/code_review.html">Code 书评</a></li>
     </ul>
   </div>

@@ -174,14 +174,13 @@
     <p>
       Posted on 2014-10-13 22:26 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 2 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="时钟分频器">时钟分频器</a><ul><li><a class="toc-href" href="#counter" title="Counter">Counter</a></li><li><a class="toc-href" href="#clock divider" title="Clock divider">Clock divider</a><ul><li><a class="toc-href" href="#even clock divider" title="even clock divider">even clock divider</a></li><li><a class="toc-href" href="#odd clock divider" title="odd clock divider">odd clock divider</a></li><li><a class="toc-href" href="#half integer clock divider" title="half integer clock divider">half integer clock divider</a><ul><li><a class="toc-href" href="#50% duty cycle" title="50% Duty Cycle">50% Duty Cycle</a></li><li><a class="toc-href" href="#non 50% duty cycle" title="Non 50% Duty Cycle">Non 50% Duty Cycle</a></li></ul></li><li><a class="toc-href" href="#fraction divider_1" title="fraction divider">fraction divider</a></li></ul></li><li><a class="toc-href" href="#summary_1" title="Summary">Summary</a></li><li><a class="toc-href" href="#reference" title="Reference">Reference</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>在 <a href="http://guqian110.github.io/pages/2014/09/12/the_clock_design_in_fpga_2_clock_design.html">时钟设计</a> 中提到过：</p>
@@ -191,7 +190,7 @@
 <ol>
 <li>
 <p>对于资源比较丰富的 FPGA</p>
-<p>使用内部提供的 PLL/DLL，输出时钟信号可以配置成不同的频率（倍频/分频）和相位，这样的分频时钟是最稳定的。</p>
+<p>使用内部提供的 PLL/DLL，输出时钟信号可以配置成不同的频率（倍频 / 分频）和相位，这样的分频时钟是最稳定的。</p>
 </li>
 <li>
 <p>对于无法使用 PLL/DLL 的 FPGA</p>
@@ -270,7 +269,7 @@
 <p>Timing:</p>
 <p><img alt="1.5 timing" src="/images/clock-dividers/divide_1_5_timing.png"/></p>
 <p>这种方法在仿真的时候是没有问题的，但是综合时可能会产生致命的问题：在切换时钟时，如果两路时钟信号的时延不相等，那么切换的时候就会产生毛刺。</p>
-<p>(Xilinx 提供的原语 <code>BUFGMUX</code> 有去除切换时钟时候的毛刺的功能，但是它只适用于全局时钟网络)</p>
+<p>(Xilinx 提供的原语 <code>BUFGMUX</code> 有去除切换时钟时候的毛刺的功能，但是它只适用于全局时钟网络 )</p>
 <h4 id="non 50% duty cycle">Non 50% Duty Cycle</h4>
 <p>如果占空比不是 50%，则可以通过以下的方法得到：</p>
 <p>从</p>
@@ -281,7 +280,7 @@
 <p>其次，两个脉冲可以从这个移位寄存器中选取两个作为输出，但是不能简单地直接使用，因为无论怎样选择，这两个脉冲都不是等间隔分布的（一共 2N+1 个计数，抽取 2 个，剩余 2N-1 个计数，那么 2N-1 是个奇数，无法平分为两部分，所以不是等间隔的）。所以难点就在于如何得到两个等间隔的分布。The Art 的解决方法如下，以 4.5 分频为例：</p>
 <p>Timing:</p>
 <p><img alt="4.5 timing" src="/images/clock-dividers/divide_4_5_timing.png"/></p>
-<p>从图中可以看到，当选择了两个连续的寄存器 (A, B)相或作为第一个脉冲输出之后，再选取相隔 N 的两个连续的寄存器 (C, D)，把它们移动半个时钟周期后，和原始的 D 相或，作为第二个脉冲输出，容易分析，它们是等间隔的。</p>
+<p>从图中可以看到，当选择了两个连续的寄存器 (A, B) 相或作为第一个脉冲输出之后，再选取相隔 N 的两个连续的寄存器 (C, D)，把它们移动半个时钟周期后，和原始的 D 相或，作为第二个脉冲输出，容易分析，它们是等间隔的。</p>
 <h3 id="fraction divider_1">fraction divider</h3>
 <p>大概有两种方法吧：</p>
 <ol>
@@ -293,7 +292,7 @@
 </li>
 </ol>
 <p><strong>方法一：</strong></p>
-<p>小数分频，最普通的方法是采用整数分频逼近法，比如 50 MHz 的时钟分频为 880 Hz，那么分频计数器:</p>
+<p>小数分频，最普通的方法是采用整数分频逼近法，比如 50 MHz 的时钟分频为 880 Hz，那么分频计数器 :</p>
 <div class="highlight"><pre><span></span><span class="mi">50000000</span><span class="o">/</span><span class="mi">880</span> <span class="o">=</span> <span class="mi">56818</span><span class="p">.</span><span class="mi">18182</span>
 </pre></div>
 <p>那么就用 56818 来近似，但是这种方法只有在分频系数很大时才比较好，分频系数越小，则误差越大。</p>
@@ -304,9 +303,9 @@
 <p>由</p>
 <div class="highlight"><pre><span></span><span class="n">NB</span><span class="o">+</span><span class="n">A</span> <span class="o">=</span> <span class="n">N</span><span class="o">*</span><span class="p">(</span><span class="n">B</span><span class="o">-</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">A</span>
 </pre></div>
-<p>可知，通过 (B-A) 次 N 分频 + A次 (N+1) 分频即可得到 N+A/B 分频。</p>
-<p>到此还没有结束，还需要对这两种分频方式进行均匀的放置。可以借助一个计数器到达这个目的：每进行一次分频，计数值为10减去分频系数的小数部分，各次计数值累加。若累加结果小于10，则进行 N +1 分频，若大于或等于10，则进行 Ｎ 分频。</p>
-<p>不同时钟分频组合时，&ldquo;按照累积量和 10 比较&rdquo; 原理： 当采用一种分频比，小数部分累积量大于 10，则表示小数部分累积达到了可以向整数部分进位的大小，这时候就应该插入另外一种分频比将小数部分积累的误差去掉，否则结果就不是均匀周期的时钟信号了。</p>
+<p>可知，通过 (B-A) 次 N 分频 + A 次 (N+1) 分频即可得到 N+A/B 分频。</p>
+<p>到此还没有结束，还需要对这两种分频方式进行均匀的放置。可以借助一个计数器到达这个目的：每进行一次分频，计数值为 10 减去分频系数的小数部分，各次计数值累加。若累加结果小于 10，则进行 N +1 分频，若大于或等于 10，则进行 Ｎ 分频。</p>
+<p>不同时钟分频组合时，&ldquo; 按照累积量和 10 比较 &rdquo; 原理： 当采用一种分频比，小数部分累积量大于 10，则表示小数部分累积达到了可以向整数部分进位的大小，这时候就应该插入另外一种分频比将小数部分积累的误差去掉，否则结果就不是均匀周期的时钟信号了。</p>
 <p>举个例子：</p>
 <p>比如 8.7 分频</p>
 <div class="highlight"><pre><span></span><span class="mi">87</span> <span class="o">=</span> <span class="mi">8</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">9</span><span class="o">*</span><span class="mi">7</span>
@@ -320,10 +319,10 @@
 <p><br/></p>
 <h2 id="reference">Reference</h2>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art of Hardware Architecture</a></p>
-<p><a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG">FPGA高手设计实战真经100则</a></p>
+<p><a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG">FPGA 高手设计实战真经 100 则</a></p>
 <p><a href="http://read.pudn.com/downloads126/sourcecode/embed/533229/VHDL%E5%88%86%E9%A2%91%E5%99%A8%E8%AE%BE%E8%AE%A1.pdf">使用 VHDL 进行分频器设计</a></p>
 <p><a href="http://blog.sina.com.cn/s/blog_6840802c0100izey.html">verilog 实现小数分频（小数分频器）</a></p>
-<p><a href="http://www.eetop.cn/blog/html/11/317611-13680.html">任意分频的verilog语言实现</a></p>
+<p><a href="http://www.eetop.cn/blog/html/11/317611-13680.html">任意分频的 verilog 语言实现</a></p>
   </div>
   <div class="tag-cloud">
     <p>
@@ -345,8 +344,8 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../../posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
       <li><a href="../../posts/ic/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
+      <li><a href="../../posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
       <li><a href="../../posts/ic/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
     </ul>
   </div>

@@ -174,32 +174,31 @@
     <p>
       Posted on 2014-07-04 23:31 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 2 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="Sublime Text 2 和 Verilog HDL">Sublime Text 2 和 Verilog HDL</a><ul><li><a class="toc-href" href="#sublime text" title="Sublime Text">Sublime Text</a></li><li><a class="toc-href" href="#vim mode" title="Vim Mode">Vim Mode</a></li><li><a class="toc-href" href="#package control" title="Package Control">Package Control</a><ul><li><a class="toc-href" href="#installation" title="Installation">Installation</a></li><li><a class="toc-href" href="#using" title="Using">Using</a></li></ul></li><li><a class="toc-href" href="#verilog hdl_1" title="Verilog HDL">Verilog HDL</a><ul><li><a class="toc-href" href="#always" title="always">always</a></li><li><a class="toc-href" href="#if-else" title="if-else">if-else</a></li><li><a class="toc-href" href="#parameter" title="parameter">parameter</a></li><li><a class="toc-href" href="#case" title="case">case</a></li></ul></li><li><a class="toc-href" href="#sublimetext in vivado_1" title="SublimeText in Vivado">SublimeText in Vivado</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <h2 id="sublime text">Sublime Text</h2>
 <hr/>
-<p>代码编辑器之于程序员，就如同剑之于战士。程序员关于代码编辑器的争论从来就没有停止过，每个程序员都有自己熟悉的编辑器，他们热爱自己的 &ldquo;武器&rdquo;，甚至可以形成 &ldquo;宗教&rdquo;，比如 Vim 和 Emac 的战争。</p>
-<p>如今，这个无休止的争论中要加入一个新成员了，她就是 <a href="http://www.sublimetext.com/">Sublime Text</a> 。其实她也不是 &ldquo;新&rdquo; 成员了，早在 2011 年她就诞生了，不过经过不断的改进，终于人们不得不正视这个新人，不仅仅因为漂亮的外在美，还有强大的内在美 :-P</p>
+<p>代码编辑器之于程序员，就如同剑之于战士。程序员关于代码编辑器的争论从来就没有停止过，每个程序员都有自己熟悉的编辑器，他们热爱自己的 &ldquo; 武器 &rdquo;，甚至可以形成 &ldquo; 宗教 &rdquo;，比如 Vim 和 Emac 的战争。</p>
+<p>如今，这个无休止的争论中要加入一个新成员了，她就是 <a href="http://www.sublimetext.com/">Sublime Text</a> 。其实她也不是 &ldquo; 新 &rdquo; 成员了，早在 2011 年她就诞生了，不过经过不断的改进，终于人们不得不正视这个新人，不仅仅因为漂亮的外在美，还有强大的内在美 :-P</p>
 <p>个人感觉，ST 的出现恰到好处，她兼具了 Vim 的强大功能和普通编辑器的易用性。虽然 Vim 轻巧、强大，但是 Vim 的门槛比较高，要想用好 Vim 是需要长期练习的，而 ST 可以说是老少皆宜，你是小白，不会用 Vim？没关系，她可以像普通的编辑器一样，即使你 0 基础也可以使用；你是老手，习惯 Vim？也没关系，她可以 <strong>开启 Vim 模式</strong>，还是原来的配方，还是熟悉的味道～</p>
 <p>虽然她不是开源项目，有收费，但是我们有免费无限制无限期的试用权，而且她绿色小巧，不用安装，解压即可使用，跨平台，支持各种编程语言的代码补全和语法高亮。如果对现有的插件不满意，我们甚至可以自己定制插件。</p>
 <p><br/></p>
 <p>简单说一下我在使用过程中的一些问题，更加详细的使用官方和非官方的网站上都有详细的说明，还有别人总结的技巧请自行 Google。</p>
 <p><a href="https://www.sublimetext.com/docs/2/index.html">Official docs</a></p>
 <p><a href="http://sublime-text-unofficial-documentation.readthedocs.org/en/sublime-text-2/">Unofficial docs</a></p>
-<p><a href="http://www.iplaysoft.com/sublimetext.html">Others: Sublime Text 2 - 性感无比的代码编辑器！程序员必备神器！跨平台支持Win/Mac/Linux</a></p>
+<p><a href="http://www.iplaysoft.com/sublimetext.html">Others: Sublime Text 2 - 性感无比的代码编辑器！程序员必备神器！跨平台支持 Win/Mac/Linux</a></p>
 <p>P.S. 我使用的是 Sublime Text 2，虽然已经有 3 了，但是 3 还在 Beta 阶段，大家貌似对 3 不是很满意</p>
 <p><br/></p>
 <h2 id="vim mode">Vim Mode</h2>
 <hr/>
-<p>ST 是自带 Vim 模式的（Vintage Mode），但是这个模式默认是没有开启的，毕竟对于大多数普通人来说， Vim 实在是不太友好...</p>
+<p>ST 是自带 Vim 模式的（Vintage Mode），但是这个模式默认是没有开启的，毕竟对于大多数普通人来说， Vim 实在是不太友好 ...</p>
 <p>打开 ST 的 <code>Preferences/Setting - Defalut</code>，在最后一行有句</p>
 <div class="highlight"><pre><span></span><span class="ss">"ignored_packages"</span><span class="p">:</span> <span class="p">[</span><span class="ss">"Vintage"</span><span class="p">]</span>
 </pre></div>
@@ -348,7 +347,7 @@ end<span class="nt">&lt;/string&gt;</span>
 <p>修改后的结果如下图：</p>
 <p><img alt="if-else" src="/images/sublime-text-2-and-verilog/if-else.gif"/></p>
 <h3 id="parameter">parameter</h3>
-<p>原来是没有 parameter 的snippets 的，拷贝一份其他的 snippet，修改其中的一些设置，即可</p>
+<p>原来是没有 parameter 的 snippets 的，拷贝一份其他的 snippet，修改其中的一些设置，即可</p>
 <p><strong>parameter.tmSnippet</strong></p>
 <div class="highlight"><pre><span></span><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;</span>

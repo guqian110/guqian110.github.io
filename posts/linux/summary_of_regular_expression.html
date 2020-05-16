@@ -173,14 +173,13 @@
     <p>
       Posted on 2015-04-27 00:00 in <a href="../../category/linux.html">Linux</a>
 
-        &#8226; 3 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="Regular Expression 小结">Regular Expression 小结</a><ul><li><a class="toc-href" href="#what is a re?" title="What Is a RE?">What Is a RE?</a></li><li><a class="toc-href" href="#basic" title="Basic">Basic</a></li><li><a class="toc-href" href="#simple match patterns" title="Simple Match Patterns">Simple Match Patterns</a></li><li><a class="toc-href" href="#boundaries" title="Boundaries">Boundaries</a></li><li><a class="toc-href" href="#alternation, groups, and backreferences" title="Alternation, Groups, and Backreferences">Alternation, Groups, and Backreferences</a></li><li><a class="toc-href" href="#character classes" title="Character Classes">Character Classes</a></li><li><a class="toc-href" href="#matching unicode and other characters" title="Matching Unicode and Other Characters">Matching Unicode and Other Characters</a></li><li><a class="toc-href" href="#quantifiers" title="Quantifiers">Quantifiers</a><ul><li><a class="toc-href" href="#greedy, lazy, and possessive" title="Greedy, Lazy, and Possessive">Greedy, Lazy, and Possessive</a></li><li><a class="toc-href" href="#basic quantifiers" title="Basic Quantifiers">Basic Quantifiers</a></li><li><a class="toc-href" href="#range syntax" title="Range Syntax">Range Syntax</a></li><li><a class="toc-href" href="#lazy quantifiers" title="Lazy Quantifiers">Lazy Quantifiers</a></li><li><a class="toc-href" href="#possessive quantifiers" title="Possessive Quantifiers">Possessive Quantifiers</a></li></ul></li><li><a class="toc-href" href="#lookarounds_1" title="Lookarounds">Lookarounds</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>看完了 <a href="http://book.douban.com/subject/6959486/">Introducing Regular Expressions</a>，记录一下学习笔记。这本书是非常简单的入门书，一天时间就能看完。作者还推荐了基本进阶书：</p>
@@ -218,7 +217,7 @@ to match certain strings.</p>
 </li>
 <li>
 <p>character shorthand</p>
-<p>也叫做 character escape，中文翻译成：&ldquo;字符组简写&rdquo; / &ldquo;转义字符&rdquo;，常用简写：</p>
+<p>也叫做 character escape，中文翻译成：&ldquo; 字符组简写 &rdquo; / &ldquo; 转义字符 &rdquo;，常用简写：</p>
 <div class="highlight"><pre><span></span><span class="err">\</span><span class="n">d</span>      <span class="o">//</span> <span class="err">数字字符，</span><span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
 <span class="err">\</span><span class="n">D</span>      <span class="o">//</span> <span class="err">非数字字符，</span> <span class="o">=</span> <span class="p">[</span><span class="o">^</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
 <span class="err">\</span><span class="n">w</span>      <span class="o">//</span> <span class="err">单词字符</span>
@@ -326,7 +325,7 @@ to match certain strings.</p>
 </li>
 <li>
 <p>Capturing Groups and Backreferences</p>
-<p>对于括号()内的模式进行捕获，将其存储在临时内存中，然后可以通过后向引用重用已捕获的内容。</p>
+<p>对于括号 () 内的模式进行捕获，将其存储在临时内存中，然后可以通过后向引用重用已捕获的内容。</p>
 <p>重引用时 <code>\1</code>、<code>$1</code> 表示对第一个分组的引用；<code>\2</code>、<code>$2</code> 表示对第二个分组的引用；依次类推。</p>
 </li>
 <li>
@@ -414,9 +413,9 @@ to match certain strings.</p>
 <ul>
 <li>
 <p>Greedy</p>
-<p>所谓 &ldquo;贪婪&rdquo; 就是说 在匹配前会选定尽可能多的内容，也就是整个输入。然后开始匹配时，会首先匹配整个字符串，如果失败，则回退一个字符，重新匹配（这个过程叫做回溯 backtracking），直到找到匹配的内容或者没有字符可以尝试为止。</p>
+<p>所谓 &ldquo; 贪婪 &rdquo; 就是说 在匹配前会选定尽可能多的内容，也就是整个输入。然后开始匹配时，会首先匹配整个字符串，如果失败，则回退一个字符，重新匹配（这个过程叫做回溯 backtracking），直到找到匹配的内容或者没有字符可以尝试为止。</p>
 <p>量词的默认属性是贪婪的。</p>
-<p>形象的描述是：它先 &ldquo;吃&rdquo; 进所有的字符，然后每次 &ldquo;吐&rdquo; 出一点，慢慢咀嚼消化...</p>
+<p>形象的描述是：它先 &ldquo; 吃 &rdquo; 进所有的字符，然后每次 &ldquo; 吐 &rdquo; 出一点，慢慢咀嚼消化 ...</p>
 <blockquote>
 <p>It takes a mouthful, then spits back a little at a time, chewing on what it just ate.</p>
 </blockquote>
@@ -432,7 +431,7 @@ to match certain strings.</p>
 <li>
 <p>Possessive</p>
 <p>占有量词会抓取整个目标，然后尝试寻找匹配。不过它只尝试一次，不会回溯。</p>
-<p>形象的描述是：它不 &ldquo;咀嚼&rdquo; 而是直接 &ldquo;吞咽&rdquo;，然后才想知道 &ldquo;吃&rdquo; 的是什么。</p>
+<p>形象的描述是：它不 &ldquo; 咀嚼 &rdquo; 而是直接 &ldquo; 吞咽 &rdquo;，然后才想知道 &ldquo; 吃 &rdquo; 的是什么。</p>
 <blockquote>
 <p>It doesn&rsquo;t chew; it just swallows, then wonders what it just ate. </p>
 </blockquote>
@@ -445,7 +444,7 @@ to match certain strings.</p>
 <li><code>*</code>    匹配 0 或 多次</li>
 </ul>
 <p>这些量词默认是贪心的，也就是说第一次尝试时会尽可能多地匹配字符。</p>
-<p><code>.*</code> 叫做 <code>Kleene star</code>，以纪念 RE 的发明人Stephen Kleene。</p>
+<p><code>.*</code> 叫做 <code>Kleene star</code>，以纪念 RE 的发明人 Stephen Kleene。</p>
 <h3 id="range syntax">Range Syntax</h3>
 <ul>
 <li><code>{n}</code>   精确匹配 n 次</li>
@@ -456,7 +455,7 @@ to match certain strings.</p>
 <li><code>{0,}</code>  与 <code>*</code> 相同（0 或 多次）</li>
 </ul>
 <h3 id="lazy quantifiers">Lazy Quantifiers</h3>
-<p>懒惰的意思就是匹配尽可能少的字符，它就是个懒虫！它总会找到匹配下限。比如 5*?，它不会匹配任何内容，因为 * 的下限是 0 次；再比如 5+?，它只会匹配 1 个5，因为 + 的下限是 1 次；再比如 5{2,5}?，它只会匹配 2 个 5，因为下限是 2。</p>
+<p>懒惰的意思就是匹配尽可能少的字符，它就是个懒虫！它总会找到匹配下限。比如 5*?，它不会匹配任何内容，因为 * 的下限是 0 次；再比如 5+?，它只会匹配 1 个 5，因为 + 的下限是 1 次；再比如 5{2,5}?，它只会匹配 2 个 5，因为下限是 2。</p>
 <ul>
 <li>?? </li>
 <li>+?</li>
@@ -480,7 +479,7 @@ to match certain strings.</p>
 <p><br/></p>
 <h2 id="lookarounds_1">Lookarounds</h2>
 <hr/>
-<p>环视 是一种非捕获分组，它的作用是检查模式的前/后的内容来匹配，也成为 零宽度断言 <code>zero-width
+<p>环视 是一种非捕获分组，它的作用是检查模式的前 / 后的内容来匹配，也成为 零宽度断言 <code>zero-width
 assertions</code>。</p>
 <ul>
 <li>
@@ -513,7 +512,7 @@ assertions</code>。</p>
 </li>
 </ul>
 <p>关于正、反；前瞻、后顾可以用下面的规律记：</p>
-<p><strong>前瞻/后顾：</strong>以 lookarounds 为原点，</p>
+<p><strong>前瞻 / 后顾：</strong>以 lookarounds 为原点，</p>
 <ul>
 <li>
 <p>pattern 在 lookarounds 之前就是 前瞻</p>
@@ -522,7 +521,7 @@ assertions</code>。</p>
 <p>pattern 在 lookarounds 之后就是 后顾</p>
 </li>
 </ul>
-<p><strong>正/反：</strong></p>
+<p><strong>正 / 反：</strong></p>
 <ul>
 <li>
 <p>如果条件是 lookarounds   存在，就是 正</p>

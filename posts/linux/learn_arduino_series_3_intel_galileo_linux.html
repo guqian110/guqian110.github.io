@@ -174,19 +174,18 @@
     <p>
       Posted on 2014-06-13 20:31 in <a href="../../category/linux.html">Linux</a>
 
-        &#8226; 3 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Arduino #3 Intel Galileo Linux">学习 Arduino #3 Intel Galileo Linux</a><ul><li><a class="toc-href" href="#linux on galileo board" title="Linux on Galileo Board">Linux on Galileo Board</a></li><li><a class="toc-href" href="#using ethernet" title="Using Ethernet">Using Ethernet</a><ul><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li><li><a class="toc-href" href="#setp 1: write sketch" title="Setp 1: Write sketch">Setp 1: Write sketch</a></li><li><a class="toc-href" href="#step 2: connect,upload" title="Step 2: Connect，Upload">Step 2: Connect，Upload</a></li><li><a class="toc-href" href="#step 3: login" title="Step 3: Login">Step 3: Login</a></li></ul></li><li><a class="toc-href" href="#using uart_1" title="Using UART">Using UART</a><ul><li><a class="toc-href" href="#about serial port" title="About serial port">About serial port</a></li><li><a class="toc-href" href="#linux platform" title="Linux Platform">Linux Platform</a><ul><li><a class="toc-href" href="#step 1: burn the full-linux sytem" title="Step 1: Burn the full-linux sytem">Step 1: Burn the full-linux sytem</a></li><li><a class="toc-href" href="#step 2: connect" title="Step 2: Connect">Step 2: Connect</a></li><li><a class="toc-href" href="#step 3: login_1" title="Step 3: Login">Step 3: Login</a></li></ul></li><li><a class="toc-href" href="#windows platform_1" title="Windows Platform">Windows Platform</a><ul><li><a class="toc-href" href="#step 1: burn the full-linux system" title="Step 1: Burn the full-linux system">Step 1: Burn the full-linux system</a></li><li><a class="toc-href" href="#step 2: connect_1" title="Step 2: Connect">Step 2: Connect</a></li><li><a class="toc-href" href="#step 3: login_2" title="Step 3: Login">Step 3: Login</a></li></ul></li></ul></li><li><a class="toc-href" href="#another method_2" title="Another method">Another method</a></li><li><a class="toc-href" href="#reference" title="Reference">Reference</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <h2 id="linux on galileo board">Linux on Galileo Board</h2>
 <hr/>
-<p>Galileo 不是简单的 Arduino 板子，实际上它运行着一个 Linux 操作系统。把它看作是 &ldquo;兼容 Arduibo 接口的板子&rdquo; 或许更合适一些。</p>
+<p>Galileo 不是简单的 Arduino 板子，实际上它运行着一个 Linux 操作系统。把它看作是 &ldquo; 兼容 Arduibo 接口的板子 &rdquo; 或许更合适一些。</p>
 <p>Galileo 板子上容量为 8 MB 的 SPI Flash 中已经烧写了一个精简版的 Linux 系统，因为容量的限制，这个系统去掉了一些不常用的模块，比如 wi-fi 驱动，python 支持等。</p>
 <p>Galileo 也支持从 SD 卡启动系统，并且 Intel 提供了一个基于 Yocto 项目，已经制作好的完整版 Linux 系统。当精简版系统不能满足我们的要求时（添加外设等），我们可以下载这个完整版系统镜像，烧录到 SD 卡中，并从 SD 卡中启动即可。（也可以自己基于 Yocto 项目按照自己的需求制作系统镜像）</p>
 <p><br/></p>
@@ -318,7 +317,7 @@
 <hr/>
 <h3 id="about serial port">About serial port</h3>
 <p>如果有串口线的话，我们也可以通过串口来登录，包括 SPI 和 SD 卡上的系统。</p>
-<p>关于串口线，说明一下。估计是为了节省板子的面积，Intel 在板子上设置的是音频接口(AV jack)，所以，这里需要额外的一个将音频接口转接为串口的器件。有两种方法：</p>
+<p>关于串口线，说明一下。估计是为了节省板子的面积，Intel 在板子上设置的是音频接口 (AV jack)，所以，这里需要额外的一个将音频接口转接为串口的器件。有两种方法：</p>
 <ol>
 <li>
 <p>上网买一个</p>
@@ -335,10 +334,10 @@
 <h4 id="step 1: burn the full-linux sytem">Step 1: Burn the full-linux sytem</h4>
 <ol>
 <li>
-<p>Intel 官网提供的完整版 Linux 镜像是基于 <code>Yocto</code> 项目裁剪出来的，取名叫 <code>Claton</code>，目前(2014-6-13)的版本号为 <code>1.0.0</code>，但是这个版本在我的SD卡中是无法启动的，浪费了大量时间，最后终于发现 <code>0.7.5</code> 版本可以...</p>
+<p>Intel 官网提供的完整版 Linux 镜像是基于 <code>Yocto</code> 项目裁剪出来的，取名叫 <code>Claton</code>，目前 (2014-6-13) 的版本号为 <code>1.0.0</code>，但是这个版本在我的 SD 卡中是无法启动的，浪费了大量时间，最后终于发现 <code>0.7.5</code> 版本可以 ...</p>
 </li>
 <li>
-<p>还有就是 Get Started 中推荐不要使用 PC 操作系统提供的格式化功能，更好的选择应该是专业格式化软件，比如 <code>SDFormatter</code>。但是我实际使用时，发现反而是 <code>SDFormatter</code> 制作的不能启动...</p>
+<p>还有就是 Get Started 中推荐不要使用 PC 操作系统提供的格式化功能，更好的选择应该是专业格式化软件，比如 <code>SDFormatter</code>。但是我实际使用时，发现反而是 <code>SDFormatter</code> 制作的不能启动 ...</p>
 </li>
 </ol>
 <h4 id="step 2: connect">Step 2: Connect</h4>
@@ -412,10 +411,10 @@
 <p><br/></p>
 <h2 id="another method_2">Another method</h2>
 <hr/>
-<p>如果你觉得插网线、配置 IP 地址太麻烦，甚至懒得自己 DIY 串口线，也没有钱去买一个，别担心，因为 &ldquo;天空飘来五个字，这都不是事～&rdquo; 因为你可以借鉴下面这位大神的方法，只需要像下载普通 sketch 一样，将他提供的 sketch 下载到 Galileo 中就可以了，然后通过 IDE 的 serial monitor 就可以登录到 Linux 系统中：</p>
+<p>如果你觉得插网线、配置 IP 地址太麻烦，甚至懒得自己 DIY 串口线，也没有钱去买一个，别担心，因为 &ldquo; 天空飘来五个字，这都不是事～&rdquo; 因为你可以借鉴下面这位大神的方法，只需要像下载普通 sketch 一样，将他提供的 sketch 下载到 Galileo 中就可以了，然后通过 IDE 的 serial monitor 就可以登录到 Linux 系统中：</p>
 <p><a href="(https://communities.intel.com/message/222211)">Poor man's telnet for Galileo</a></p>
 <p>他的 sketch 的原理就是使用 <code>system()</code> 函数将我们在 serial monitor 中的命令传到到 Linux shell 中 ，并将命令的结果返回到 serial monitor 中 。</p>
-<p>不过这种方法的缺点是每个命令传递到 Galileo 后会开辟一个新的进程，当命令执行完返回结果时，这个进程自动结束，所以会产生一些 &ldquo;问题&rdquo;：当我们 <code>cd</code> 到某个子目录后，返回结果之后，我们又回到的之前的目录，举例</p>
+<p>不过这种方法的缺点是每个命令传递到 Galileo 后会开辟一个新的进程，当命令执行完返回结果时，这个进程自动结束，所以会产生一些 &ldquo; 问题 &rdquo;：当我们 <code>cd</code> 到某个子目录后，返回结果之后，我们又回到的之前的目录，举例</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -460,10 +459,10 @@ $ <span class="nb">pwd</span>
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../../posts/ic/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & Modelsim</a></li>
-      <li><a href="../../posts/linux/learn_arduino_series_2_intel_galileo_development_board.html">学习 Arduino #2 初识 Intel Galileo 开发板</a></li>
-      <li><a href="../../posts/linux/learn_arduino_series_1_getting_started.html">学习 Arduino #1 Arduino 入门</a></li>
       <li><a href="../../posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
+      <li><a href="../../posts/ic/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & Modelsim</a></li>
+      <li><a href="../../posts/linux/learn_arduino_series_1_getting_started.html">学习 Arduino #1 Arduino 入门</a></li>
+      <li><a href="../../posts/linux/learn_arduino_series_2_intel_galileo_development_board.html">学习 Arduino #2 初识 Intel Galileo 开发板</a></li>
       <li><a href="../../posts/linux/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
     </ul>
   </div>

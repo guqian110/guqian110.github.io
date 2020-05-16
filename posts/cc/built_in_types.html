@@ -173,19 +173,18 @@
     <p>
       Posted on 2014-03-31 13:37 in <a href="../../category/cc.html">C/C++</a>
 
-        &#8226; 3 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="C/C++ 内置数据类型">C/C++ 内置数据类型</a><ul><li><a class="toc-href" href="#ji ben nei zhi lei xing" title="基本内置类型">基本内置类型</a><ul><li><a class="toc-href" href="#suan zhu lei xing" title="算术类型">算术类型</a></li><li><a class="toc-href" href="#void" title="void">void</a></li></ul></li><li><a class="toc-href" href="#chu shi hua  initialize_1" title="初始化 Initialize">初始化 Initialize</a><ul><li><a class="toc-href" href="#chu shi hua  &amp; fu zhi" title="初始化 &amp; 赋值">初始化 &amp; 赋值</a></li><li><a class="toc-href" href="#nei zhi lei xing chu shi hua" title="内置类型初始化">内置类型初始化</a></li></ul></li><li><a class="toc-href" href="#suan zhu lei xing zhuan huan_1" title="算术类型转换">算术类型转换</a><ul><li><a class="toc-href" href="#yin shi lei xing zhuan huan" title="隐式类型转换">隐式类型转换</a></li><li><a class="toc-href" href="#suan zhu lei xing zhuan huan_2" title="算术类型转换">算术类型转换</a></li></ul></li><li><a class="toc-href" href="#references_1" title="references">references</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>类型是程序设计的基础。一些程序设计语言，比如 Smalltalk 和 Python，在运行的时候才检查预计中的对象的类型，想反，C++ 是静态类型（statically typed）语言，在编译时执行类型检查。导致的结果是：</p>
 <p><em>变量和函数在使用前必须先声明</em> 。</p>
-<p>每种类型都定义了其存储空间要求和可以在该类型的所有对象上执行的操作。C++ 是 在 C 的基础上扩充得到的，为了和 C 兼容， C++ 在必要时必须能够直接处理硬件，所以 C++ 提供的一组基本内置类型，如int、char等，这些类型与它们在机器硬件上的标示方式紧密相关。（所以，C++ 可以称为 &ldquo;具有高级语言库的低级语言&rdquo;）</p>
+<p>每种类型都定义了其存储空间要求和可以在该类型的所有对象上执行的操作。C++ 是 在 C 的基础上扩充得到的，为了和 C 兼容， C++ 在必要时必须能够直接处理硬件，所以 C++ 提供的一组基本内置类型，如 int、char 等，这些类型与它们在机器硬件上的标示方式紧密相关。（所以，C++ 可以称为 &ldquo; 具有高级语言库的低级语言 &rdquo;）</p>
 <p>本文只限于总结 C++ 的内置类型（Built-in Types），不讨论自定义类型 。</p>
 <p><br/></p>
 <h2 id="ji ben nei zhi lei xing">基本内置类型</h2>
@@ -221,10 +220,10 @@
 <p>Unlike the other integral types, there are three distinct types for char: plain char, signed char, and unsigned char. Although there are three distinct types, there are only two ways a char can be represented. The char type is respresented using either the signed char or unsigned char version. Which representation is used for char varies by compiler.</p>
 </blockquote>
 <p>为什么会有这么奇怪的事呢？上网搜索了一下，按照自己的理解总结了一下：</p>
-<p>signed/unsigned 可以描述的类型有 int 和 char 两种，在 C 的标准里面规定：对于 int 类型，如果没有在类型前显式地声明，默认 int 是 signed 类型，而对于 char 类型，则是 <em>Implementation Defined</em> 。也就是说由编译器在编译的时候决定具体使用哪一种 。而为什么要作出这么奇怪的规定呢？是因为 char 类型本来就是用来表示字符而非数字的， ASCII 码字只使用 7 bit，所以使用 signed/unsigned 对其没有影响，但是如果使用 char 类型来表示一个 8 bit 的数字（有时候空间不够用时不得不这样做，比如嵌入式系统中），为了可移植性，必须写明 signed/unsigned 。所以，如果用来表示字符，则直接使用 char 就行，如果用来表示整数，则声明是signed/unsigned 。</p>
-<p><a href="http://book.51cto.com/art/200912/166574.htm">Linux C编程一站式学习：整型</a> 中进一步解释：</p>
+<p>signed/unsigned 可以描述的类型有 int 和 char 两种，在 C 的标准里面规定：对于 int 类型，如果没有在类型前显式地声明，默认 int 是 signed 类型，而对于 char 类型，则是 <em>Implementation Defined</em> 。也就是说由编译器在编译的时候决定具体使用哪一种 。而为什么要作出这么奇怪的规定呢？是因为 char 类型本来就是用来表示字符而非数字的， ASCII 码字只使用 7 bit，所以使用 signed/unsigned 对其没有影响，但是如果使用 char 类型来表示一个 8 bit 的数字（有时候空间不够用时不得不这样做，比如嵌入式系统中），为了可移植性，必须写明 signed/unsigned 。所以，如果用来表示字符，则直接使用 char 就行，如果用来表示整数，则声明是 signed/unsigned 。</p>
+<p><a href="http://book.51cto.com/art/200912/166574.htm">Linux C 编程一站式学习：整型</a> 中进一步解释：</p>
 <blockquote>
-<p>编译器可以定义char型是无符号的，也可以定义char型是有符号的，在该编译器所对应的体系结构上哪种实现效率高就可以采用哪种，x86平台的gcc定义char型是有符号的。这也是C标准的Rationale之一： <em>优先考虑效率，而可移植性尚在其次。</em> 这就要求程序员非常清楚这些规则，如果你要写可移植的代码，就必须清楚哪些写法是不可移植的，应该避免使用。另一方面，写不可移植的代码有时候也是必要的，比如Linux内核代码使用了很多只有gcc支持的语法特性以得到最佳的执行效率，在写这些代码的时候就没打算用别的编译器编译，也就没考虑可移植性的问题。如果要写不可移植的代码，你也必须清楚代码中的哪些部分是不可移植的，以及为什么要这样写。如果不是为了效率，一般来说就没有理由故意编写不可移植的代码。</p>
+<p>编译器可以定义 char 型是无符号的，也可以定义 char 型是有符号的，在该编译器所对应的体系结构上哪种实现效率高就可以采用哪种，x86 平台的 gcc 定义 char 型是有符号的。这也是 C 标准的 Rationale 之一： <em>优先考虑效率，而可移植性尚在其次。</em> 这就要求程序员非常清楚这些规则，如果你要写可移植的代码，就必须清楚哪些写法是不可移植的，应该避免使用。另一方面，写不可移植的代码有时候也是必要的，比如 Linux 内核代码使用了很多只有 gcc 支持的语法特性以得到最佳的执行效率，在写这些代码的时候就没打算用别的编译器编译，也就没考虑可移植性的问题。如果要写不可移植的代码，你也必须清楚代码中的哪些部分是不可移植的，以及为什么要这样写。如果不是为了效率，一般来说就没有理由故意编写不可移植的代码。</p>
 </blockquote>
 <p>网上有<a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx">博客</a>说：</p>
 <blockquote>
@@ -258,7 +257,7 @@
 <hr/>
 <h3 id="chu shi hua  &amp; fu zhi">初始化 &amp; 赋值</h3>
 <p>首先是初始化的必要性：</p>
-<p>在 C++ 中，初始化是一个非常重要的概念，给变量一个初始值几乎总是正确的，但不要求必须这么做。定义变量时，应该给变量赋初始值，除非确定将变量用于其他意图之前会覆盖这个初值。如果不能保证读取变量前重置变量，就应该初始化变量。变量没有初始化是很常见的导致程序崩溃/结果错误的原因，而且有时候很难像 Debug 一样找到这个错误（bug 导致程序一定不对，但是没有初始化的变量的结果是随机的）。所以，良好的习惯是对每个变量都进行初始化 。</p>
+<p>在 C++ 中，初始化是一个非常重要的概念，给变量一个初始值几乎总是正确的，但不要求必须这么做。定义变量时，应该给变量赋初始值，除非确定将变量用于其他意图之前会覆盖这个初值。如果不能保证读取变量前重置变量，就应该初始化变量。变量没有初始化是很常见的导致程序崩溃 / 结果错误的原因，而且有时候很难像 Debug 一样找到这个错误（bug 导致程序一定不对，但是没有初始化的变量的结果是随机的）。所以，良好的习惯是对每个变量都进行初始化 。</p>
 <p>其次是初始化和赋值的区别：</p>
 <p>初始化 <code>Initialization</code>：创建变量并且给它赋初始值</p>
 <p>赋值 <code>Assigment</code>：擦除变量的当前值并用新值代替</p>
@@ -336,7 +335,7 @@
 <p>举个栗子：</p>
 <ol>
 <li>
-<p>short 类型 与 int 类型 。在我的机器上，short 类型所占用的宽度为半字（2 Byte），int 类型占用的宽度为 1个字（4 Byte）。所有的 unsigned short 的值都包含在 int 之中，所以，unsigned short 转换为 int 。</p>
+<p>short 类型 与 int 类型 。在我的机器上，short 类型所占用的宽度为半字（2 Byte），int 类型占用的宽度为 1 个字（4 Byte）。所有的 unsigned short 的值都包含在 int 之中，所以，unsigned short 转换为 int 。</p>
 </li>
 <li>
 <p>下面程序</p>
@@ -361,8 +360,8 @@
 <p><br/></p>
 <h2 id="references_1">references</h2>
 <p><a href="http://book.douban.com/subject/1767741/">c++ Primer</a></p>
-<p><a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx">C++之char , signed char , unsigned char，以及Integral Promotion</a></p>
-<p><a href="http://book.51cto.com/art/200912/166574.htm">Linux C编程一站式学习：整型</a></p>
+<p><a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx">C++ 之 char , signed char , unsigned char，以及 Integral Promotion</a></p>
+<p><a href="http://book.51cto.com/art/200912/166574.htm">Linux C 编程一站式学习：整型</a></p>
   </div>
   <div class="tag-cloud">
     <p>

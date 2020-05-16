@@ -173,14 +173,13 @@
     <p>
       Posted on 2014-04-09 11:13 in <a href="../../category/cc.html">C/C++</a>
 
-        &#8226; 4 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="C++ const 限定符">C++ const 限定符</a><ul><li><a class="toc-href" href="#wei shi yao yao shi yong  const xian ding fu" title="为什么要使用 const 限定符">为什么要使用 const 限定符</a><ul><li><a class="toc-href" href="#yi ge xu yao shi yong  const de jian dan li zi" title="一个需要使用 const 的简单例子">一个需要使用 const 的简单例子</a></li></ul></li><li><a class="toc-href" href="#ru he shi yong  const xian ding fu_1" title="如何使用 const 限定符">如何使用 const 限定符</a><ul><li><a class="toc-href" href="#wen jian de ju bu bian liang" title="文件的局部变量">文件的局部变量</a></li><li><a class="toc-href" href="#shi yong  const de fang fa" title="使用 const 的方法">使用 const 的方法</a></li><li><a class="toc-href" href="#const yin yong  &amp; const dui xiang" title="const 引用 &amp; const 对象">const 引用 &amp; const 对象</a></li></ul></li><li><a class="toc-href" href="#he shi ying gai shi yong  const_1" title="何时应该使用 const">何时应该使用 const</a><ul><li><a class="toc-href" href="#effective c++ tiao kuan  02:jin liang yi  const, enum, inline ti huan  #define(prefer consts,enums,and inline to #define)" title="Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）">Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</a></li><li><a class="toc-href" href="#effective c++ tiao kuan  03:jin ke neng shi yong  const(use const whenever possile)" title="Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）">Effective C++ 条款 03：尽可能使用 const（Use const whenever possile）</a></li></ul></li><li><a class="toc-href" href="#can kao_1" title="参考">参考</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <h2 id="wei shi yao yao shi yong  const xian ding fu">为什么要使用 const 限定符</h2>
@@ -227,7 +226,7 @@
 <blockquote>
 <p>The variable bufSize is still an lvalue</p>
 </blockquote>
-<p>这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性&ldquo;</p>
+<p>这是矛盾的，因为常量是不能当左值的 。个人感觉严谨的说法应该是 "cosnt 使变量具有了常量的属性 &ldquo;</p>
 <h3 id="wen jian de ju bu bian liang">文件的局部变量</h3>
 <p>const 限定符修同时也改变了变量的作用范围 。普通非 const 变量的默认是具有 <em>外部连接（external linkage）</em>的，在全局作用域内定义非 const 变量时，它在整个程序中都可以被访问 。比如</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -263,7 +262,7 @@
 <ul>
 <li>
 <p>定义在头文件中 inlcude</p>
-<p>如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 &rdquo;重定义&ldquo;  的问题 。</p>
+<p>如果 const 变量是用常量表达式初始化的，那么就可以把它的定义放在头文件中，即使多次包含这个头文件也不会产生 &rdquo; 重定义 &ldquo;  的问题 。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -369,7 +368,7 @@ because it doesn&rsquo;t know the value.</p>
 <hr/>
 <p>Scott Meyers 大神的经典著作 <a href="http://book.douban.com/subject/1842426/">Effective C++</a> 里面提到的关于 const 的使用 。</p>
 <h3 id="effective c++ tiao kuan  02:jin liang yi  const, enum, inline ti huan  #define(prefer consts,enums,and inline to #define)">Effective C++ 条款 02：尽量以 const、enum、inline 替换 #define（Prefer consts,enums,and inline to #define）</h3>
-<p>使用const 代替 #define，事实上 <code>const</code> 的最初动机就是取代预处理器 <code>#define</code> 来进行值替代 。因为 #define 不被视为语言的一部分，这就是它的问题所在 。</p>
+<p>使用 const 代替 #define，事实上 <code>const</code> 的最初动机就是取代预处理器 <code>#define</code> 来进行值替代 。因为 #define 不被视为语言的一部分，这就是它的问题所在 。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#define ASPECT_RATIO 1.653;</span>
 </pre></div>
 </td></tr></table>

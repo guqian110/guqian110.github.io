@@ -10,32 +10,32 @@
 
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    <link rel="stylesheet/less" type="text/css" href="../../theme/stylesheet/style.less">
+    <link rel="stylesheet/less" type="text/css" href="../theme/stylesheet/style.less">
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js" type="text/javascript"></script>
 
     <link id="dark-theme-style" rel="stylesheet" type="text/css"
           media="(prefers-color-scheme: dark)"
-    href="../../theme/stylesheet/dark-theme.min.css">
+    href="../theme/stylesheet/dark-theme.min.css">
 
     <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
               media="(prefers-color-scheme: dark)"
-          href="../../theme/pygments/monokai.min.css">
+          href="../theme/pygments/monokai.min.css">
     <link id="pygments-light-theme" rel="stylesheet" type="text/css"
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
-          href="../../theme/pygments/monokai.min.css">
+          href="../theme/pygments/monokai.min.css">
 
-    <script src="../../theme/tipuesearch/jquery.min.js"></script>
-    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
-    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
-    <script src="../../theme/tipuesearch/tipuesearch_set.min.js"></script>
-    <script src="../../tipuesearch_content.js"></script>
-    <link rel="stylesheet" href="../../theme/tipuesearch/tipuesearch.min.css" />
+    <script src="../theme/tipuesearch/jquery.min.js"></script>
+    <script src="../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="../tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="../theme/tipuesearch/tipuesearch.min.css" />
 
-  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/fontawesome.css">
-  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
-  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
+  <link rel="stylesheet" type="text/css" href="../theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="../theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="../theme/font-awesome/css/solid.css">
 
-    <link href="../../static/custom.css" rel="stylesheet">
+    <link href="../static/custom.css" rel="stylesheet">
 
     <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
@@ -65,25 +65,25 @@
     <meta name="msapplication-TileColor" content="#333333">
 
 <meta name="author" content="Qian Gu" />
-<meta name="description" content="PEPs 翻译系列 PEP0" />
-<meta name="keywords" content="PEP, python">
+<meta name="description" content="chisel 学习系列汇总" />
+<meta name="keywords" content="chisel, scala">
 
 
 <meta property="og:site_name" content="Qian's Blog"/>
-<meta property="og:title" content="PEP 翻译计划系列 —— PEP0"/>
-<meta property="og:description" content="PEPs 翻译系列 PEP0"/>
+<meta property="og:title" content="学习 chisel 系列之 0： Chisel 简介及学习路线"/>
+<meta property="og:description" content="chisel 学习系列汇总"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="../../posts/python/peps_translate_project_pep0.html"/>
+<meta property="og:url" content="../drafts/learning_chisel_series_0_intro_and_roadmap.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2020-04-05 23:56:00+08:00"/>
+<meta property="article:published_time" content="2020-05-10 14:56:00+08:00"/>
 <meta property="article:modified_time" content=""/>
-<meta property="article:author" content="../../author/qian-gu.html">
-<meta property="article:section" content="Python"/>
-<meta property="article:tag" content="PEP"/>
-<meta property="article:tag" content="python"/>
+<meta property="article:author" content="../author/qian-gu.html">
+<meta property="article:section" content="RISC-V"/>
+<meta property="article:tag" content="chisel"/>
+<meta property="article:tag" content="scala"/>
 <meta property="og:image" content="https://qiangu.cool/images/logo.png">
 
-  <title>Qian's Blog &ndash; PEP 翻译计划系列 —— PEP0</title>
+  <title>Qian's Blog &ndash; 学习 chisel 系列之 0： Chisel 简介及学习路线</title>
 
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
@@ -96,12 +96,12 @@
 <body >
   <aside>
     <div>
-      <a href="../..">
+      <a href="..">
         <img src="https://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
-        <a href="../..">Qian Gu</a>
+        <a href="..">Qian Gu</a>
       </h1>
 
 <p>路漫漫其修远兮，吾将上下而求索</p>
@@ -115,7 +115,7 @@
 
               <li>
                 <a target="_self"
-                   href="../../pages/guan-yu-wo.html#guan-yu-wo">
+                   href="../pages/guan-yu-wo.html#guan-yu-wo">
                   关于我
                 </a>
               </li>
@@ -156,7 +156,7 @@
   <main>
 
     <nav>
-      <a href="../..">Home</a>
+      <a href="..">Home</a>
 
       <a href="/authors.html">Authors</a>
       <a href="/archives.html">Archives</a>
@@ -170,100 +170,39 @@
 <article class="single">
   <header>
       
-    <h1 id="peps_translate_project_pep0">PEP 翻译计划系列 —— PEP0</h1>
+    <h1 id="learning_chisel_series_0_intro_and_roadmap">学习 chisel 系列之 0： Chisel 简介及学习路线</h1>
     <p>
-      Posted on 2020-04-05 23:56 in <a href="../../category/python.html">Python</a>
+      Posted on 2020-05-10 14:56 in <a href="../category/risc-v.html">RISC-V</a>
 
-        &#8226; 1 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="PEP 翻译计划系列 &mdash;&mdash; PEP0">PEP 翻译计划系列 &mdash;&mdash; PEP0</a><ul><li><a class="toc-href" href="#pep jian jie" title="PEP 简介">PEP 简介</a></li><li><a class="toc-href" href="#fan yi ji hua" title="翻译计划">翻译计划</a></li><li><a class="toc-href" href="#can kao" title="参考">参考</a></li></ul></li></ul></div>
-    </div>
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 chisel 系列之 0： Chisel 简介及学习路线">学习 chisel 系列之 0： Chisel 简介及学习路线</a><ul><li><a class="toc-href" href="#chisel intro" title="Chisel Intro">Chisel Intro</a></li><li><a class="toc-href" href="#learning roadmap" title="Learning Roadmap">Learning Roadmap</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+  </div>
 
   <div>
-    <h2 id="pep jian jie">PEP 简介</h2>
-<hr/>
-<p><a href="https://www.python.org/dev/peps/">PEPs</a> 是 Python Enhancement Proposals 的缩写，它源自于 Python 核心开发者的邮件列表所讨论的问题、提议，最终汇总成了正式文档，为众多 Python 用户提供指导。</p>
-<p><a href="https://www.python.org/dev/peps/">PEP0</a> 是所有 PEP 的目录，<a href="https://www.python.org/dev/peps/pep-0001/">PEP1</a> 说明了 PEP 的目的以及 Guidelines，这里不再赘述。</p>
-<p>从 <a href="https://www.python.org/dev/peps/">PEP0</a> 中可以知道，PEP 一共分为 3 类：</p>
-<blockquote>
-<ol>
-<li>I - Informational PEP</li>
-<li>P - Process PEP</li>
-<li>S - Standards Track PEP</li>
-</ol>
-</blockquote>
-<p>PEP 根据状态可以分为下面几种：</p>
-<blockquote>
-<ol>
-<li>A - Accepted(Standards Track only) or Active proposal</li>
-<li>D - Deferred proposal</li>
-<li>F - Final proposal</li>
-<li>P - Provisional proposal</li>
-<li>R - Rejected proposal</li>
-<li>S - Superseded proposal</li>
-<li>W - Withdrawn proposal</li>
-</ol>
-</blockquote>
+    <p><em>学习 risc-v 的过程中，接触到 Berkeley 的 Chisel，感觉是个非常有希望的语言，能解救广大硅
+农于水火之中，下面记录一下自己的学习笔记。</em></p>
+<h2 id="chisel intro">Chisel Intro</h2>
 <p><br/></p>
-<h2 id="fan yi ji hua">翻译计划</h2>
-<hr/>
-<p>网上已经有很多人都翻译过了经典 PEP 章节，为了督促自己有计划地完成 PEP 的学习，也是为了以后可以温故而知新，在这里又自己重新翻译一遍。从 PEP0 中可以知道，各种各类的 PEP 加起来目前一共有几百篇，参考网上其他介绍，翻译计划中暂时选择了下面几篇，以后再持续更新。</p>
-<ul>
-<li><a href="https://qiangu.cool/posts/python/peps_translate_project_pep0.html">PEP 0 -- Index of Python Enhancement Proposals</a></li>
-<li><a href="https://qiangu.cool/posts/python/peps_translate_project_pep8.html">PEP 8 -- Style Guide for Python Code</a></li>
-<li><a href="https://qiangu.cool/posts/python/peps_translate_project_pep20.html">PEP 20 -- The Zen of Python</a></li>
-<li>PEP 202 -- List Comprehensions</li>
-<li>PEP 274 -- Dict Comprehensions</li>
-<li>PEP 234 -- Iterators</li>
-<li>PEP 257 -- Docstring Conventions</li>
-<li>PEP 279 -- The enumerate() built-in function</li>
-<li>PEP 282 -- A Logging System</li>
-<li>PEP 285 -- Adding a bool type</li>
-<li>PEP 289 -- Generator Expressions</li>
-<li>PEP 318 -- Decorators for Functions and Methods</li>
-<li>PEP 343 -- The "with" Statement</li>
-<li>PEP 380 -- Syntax for Delegating to a Subgenerator</li>
-<li>PEP 405 -- Python Virtual Environments</li>
-<li>PEP 484 -- Type Hints</li>
-<li>PEP 3115 -- Metaclasses in Python 3000</li>
-<li>PEP 3120 -- Using UTF-8 as the default source encoding</li>
-</ul>
+<h2 id="learning roadmap">Learning Roadmap</h2>
+<p>简单做了个 mind map。（由于我还没有学习完，所以以后再更新上来）</p>
 <p><br/></p>
-<h2 id="can kao">参考</h2>
-<p><a href="https://www.python.org/dev/peps/">PEP0</a></p>
-<p><a href="https://www.python.org/dev/peps/pep-0001/">PEP1</a></p>
-<p><a href="https://www.cnblogs.com/abella/p/10056875.html">python中的PEP是什么？怎么理解？（转）</a></p>
+<h2 id="ref">Ref</h2>
   </div>
   <div class="tag-cloud">
     <p>
-      <a href="../../tag/pep.html">PEP</a>
-      <a href="../../tag/python.html">python</a>
+      <a href="../tag/chisel.html">chisel</a>
+      <a href="../tag/scala.html">scala</a>
     </p>
   </div>
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="../../posts/ic/fifo_design_notes.html" title="FIFO 设计笔记">
-      <i class="fa fa-angle-left"></i> Previous Post
-    </a>
-    <a class="btn float-right" href="../../posts/python/peps_translate_project_pep8.html" title="PEP 翻译计划系列 —— PEP8">
-      Next Post <i class="fa fa-angle-right"></i>
-    </a>
   </div>
 
-  <div class="related-posts">
-    <h4>You might enjoy</h4>
-    <ul class="related-posts">
-      <li><a href="../../posts/python/peps_translate_project_pep20.html">PEP 翻译计划系列 —— PEP20</a></li>
-      <li><a href="../../posts/python/peps_translate_project_pep202.html">PEP 翻译计划系列 —— PEP202</a></li>
-      <li><a href="../../posts/python/peps_translate_project_pep8.html">PEP 翻译计划系列 —— PEP8</a></li>
-      <li><a href="../../posts/python/pep8_in_practice.html">PEP8 实践</a></li>
-    </ul>
-  </div>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <ins class="adsbygoogle ads-responsive"
@@ -298,7 +237,7 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   <span class="footer-separator">|</span>
   Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
   <script id="dark-theme-script"
-          src="../../theme/dark-theme/dark-theme.min.js"
+          src="../theme/dark-theme/dark-theme.min.js"
           data-enable-auto-detect-theme="True"
           data-default-theme="ligtht"
           type="text/javascript">
@@ -325,7 +264,7 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@context" : "http://schema.org",
   "@type" : "Blog",
   "name": " Qian's Blog ",
-  "url" : "../..",
+  "url" : "..",
   "image": "https://qiangu.cool/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }

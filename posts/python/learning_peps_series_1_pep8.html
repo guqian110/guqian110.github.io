@@ -65,15 +65,15 @@
     <meta name="msapplication-TileColor" content="#333333">
 
 <meta name="author" content="Qian Gu" />
-<meta name="description" content="PEPs 翻译系列 PEP8" />
+<meta name="description" content="翻译 PEP8" />
 <meta name="keywords" content="PEP, python">
 
 
 <meta property="og:site_name" content="Qian's Blog"/>
-<meta property="og:title" content="PEP 翻译计划系列 —— PEP8"/>
-<meta property="og:description" content="PEPs 翻译系列 PEP8"/>
+<meta property="og:title" content="PEP 学习系列之 1 —— PEP8"/>
+<meta property="og:description" content="翻译 PEP8"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="../../posts/python/peps_translate_project_pep8.html"/>
+<meta property="og:url" content="../../posts/python/learning_peps_series_1_pep8.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2020-04-12 13:55:00+08:00"/>
 <meta property="article:modified_time" content=""/>
@@ -83,7 +83,7 @@
 <meta property="article:tag" content="python"/>
 <meta property="og:image" content="https://qiangu.cool/images/logo.png">
 
-  <title>Qian's Blog &ndash; PEP 翻译计划系列 —— PEP8</title>
+  <title>Qian's Blog &ndash; PEP 学习系列之 1 —— PEP8</title>
 
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
@@ -170,18 +170,17 @@
 <article class="single">
   <header>
       
-    <h1 id="peps_translate_project_pep8">PEP 翻译计划系列 —— PEP8</h1>
+    <h1 id="learning_peps_series_1_pep8">PEP 学习系列之 1 —— PEP8</h1>
     <p>
       Posted on 2020-04-12 13:55 in <a href="../../category/python.html">Python</a>
 
-        &#8226; 11 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="PEP 翻译计划系列 &mdash;&mdash; PEP8">PEP 翻译计划系列 &mdash;&mdash; PEP8</a><ul><li><a class="toc-href" href="#jie shao" title="介绍">介绍</a></li><li><a class="toc-href" href="#jin xin shu ,bu ru wu shu" title="尽信书，不如无书">尽信书，不如无书</a></li><li><a class="toc-href" href="#dai ma bu ju" title="代码布局">代码布局</a><ul><li><a class="toc-href" href="#suo jin" title="缩进">缩进</a></li><li><a class="toc-href" href="#tabs huan shi  spaces?" title="Tabs 还是 Spaces？">Tabs 还是 Spaces？</a></li><li><a class="toc-href" href="#zui da xing chang du" title="最大行长度">最大行长度</a></li><li><a class="toc-href" href="#ying gai zai er yuan cao zuo fu de qian huan shi hou duan xing ?" title="应该在二元操作符的前还是后断行？">应该在二元操作符的前还是后断行？</a></li><li><a class="toc-href" href="#kong xing" title="空行">空行</a></li><li><a class="toc-href" href="#yuan wen jian de bian ma ge shi" title="源文件的编码格式">源文件的编码格式</a></li><li><a class="toc-href" href="#imports" title="Imports">Imports</a></li><li><a class="toc-href" href="#mo kuai ji bie de  dunber name" title="模块级别的 dunber name">模块级别的 dunber name</a></li></ul></li><li><a class="toc-href" href="#string yin yong_1" title="string 引用">string 引用</a></li><li><a class="toc-href" href="#biao da shi he yu ju zhong de kong ge" title="表达式和语句中的空格">表达式和语句中的空格</a><ul><li><a class="toc-href" href="#yi xie xiao wen ti" title="一些小问题">一些小问题</a></li><li><a class="toc-href" href="#bie de jian yi" title="别的建议">别的建议</a></li></ul></li><li><a class="toc-href" href="#shi yao shi hou shi yong wei bu dou hao_1" title="什么时候使用尾部逗号">什么时候使用尾部逗号</a></li><li><a class="toc-href" href="#zhu shi" title="注释">注释</a><ul><li><a class="toc-href" href="#kuai zhu shi" title="块注释">块注释</a></li><li><a class="toc-href" href="#xing nei zhu shi" title="行内注释">行内注释</a></li><li><a class="toc-href" href="#docstring" title="docstring">docstring</a></li></ul></li><li><a class="toc-href" href="#ming ming gui fan_1" title="命名规范">命名规范</a><ul><li><a class="toc-href" href="#zui zhong yao de gui ze" title="最重要的规则">最重要的规则</a></li><li><a class="toc-href" href="#miao shu xing de :ming ming feng ge" title="描述性的：命名风格">描述性的：命名风格</a></li><li><a class="toc-href" href="#gui fan xing de :ming ming guan li" title="规范性的：命名惯例">规范性的：命名惯例</a><ul><li><a class="toc-href" href="#bi mian shi yong de ming zi" title="避免使用的名字">避免使用的名字</a></li><li><a class="toc-href" href="#jian rong  ascii" title="兼容 ASCII">兼容 ASCII</a></li><li><a class="toc-href" href="#package he  module de ming zi" title="package 和 module 的名字">package 和 module 的名字</a></li><li><a class="toc-href" href="#class de ming zi" title="class 的名字">class 的名字</a></li><li><a class="toc-href" href="#lei xing bian liang de ming zi" title="类型变量的名字">类型变量的名字</a></li><li><a class="toc-href" href="#exception de ming zi" title="Exception 的名字">Exception 的名字</a></li><li><a class="toc-href" href="#quan ju bian liang ming" title="全局变量名">全局变量名</a></li><li><a class="toc-href" href="#function he  bian liang  ming" title="Function 和 变量 名">Function 和 变量 名</a></li><li><a class="toc-href" href="#function he  method de can shu" title="Function 和 Method 的参数">Function 和 Method 的参数</a></li><li><a class="toc-href" href="#mehtod he  instance de ming zi" title="Mehtod 和 Instance 的名字">Mehtod 和 Instance 的名字</a></li><li><a class="toc-href" href="#chang liang" title="常量">常量</a></li><li><a class="toc-href" href="#ji cheng de she ji" title="继承的设计">继承的设计</a></li></ul></li><li><a class="toc-href" href="#public he  internal jie kou_1" title="public 和 internal 接口">public 和 internal 接口</a></li></ul></li><li><a class="toc-href" href="#bian cheng jian yi_1" title="编程建议">编程建议</a><ul><li><a class="toc-href" href="#han shu zhu jie" title="函数注解">函数注解</a></li><li><a class="toc-href" href="#bian liang zhu jie" title="变量注解">变量注解</a></li></ul></li><li><a class="toc-href" href="#fan yi can kao_1" title="翻译参考">翻译参考</a></li><li><a class="toc-href" href="#fu" title="附">附</a></li></ul></li></ul></div>
-    </div>
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="PEP 学习系列之 1 &mdash;&mdash; PEP8">PEP 学习系列之 1 &mdash;&mdash; PEP8</a><ul><li><a class="toc-href" href="#jie shao" title="介绍">介绍</a></li><li><a class="toc-href" href="#jin xin shu ,bu ru wu shu" title="尽信书，不如无书">尽信书，不如无书</a></li><li><a class="toc-href" href="#dai ma bu ju" title="代码布局">代码布局</a><ul><li><a class="toc-href" href="#suo jin" title="缩进">缩进</a></li><li><a class="toc-href" href="#tabs huan shi  spaces?" title="Tabs 还是 Spaces？">Tabs 还是 Spaces？</a></li><li><a class="toc-href" href="#zui da xing chang du" title="最大行长度">最大行长度</a></li><li><a class="toc-href" href="#ying gai zai er yuan cao zuo fu de qian huan shi hou duan xing ?" title="应该在二元操作符的前还是后断行？">应该在二元操作符的前还是后断行？</a></li><li><a class="toc-href" href="#kong xing" title="空行">空行</a></li><li><a class="toc-href" href="#yuan wen jian de bian ma ge shi" title="源文件的编码格式">源文件的编码格式</a></li><li><a class="toc-href" href="#imports" title="Imports">Imports</a></li><li><a class="toc-href" href="#mo kuai ji bie de  dunber name" title="模块级别的 dunber name">模块级别的 dunber name</a></li></ul></li><li><a class="toc-href" href="#string yin yong_1" title="string 引用">string 引用</a></li><li><a class="toc-href" href="#biao da shi he yu ju zhong de kong ge" title="表达式和语句中的空格">表达式和语句中的空格</a><ul><li><a class="toc-href" href="#yi xie xiao wen ti" title="一些小问题">一些小问题</a></li><li><a class="toc-href" href="#bie de jian yi" title="别的建议">别的建议</a></li></ul></li><li><a class="toc-href" href="#shi yao shi hou shi yong wei bu dou hao_1" title="什么时候使用尾部逗号">什么时候使用尾部逗号</a></li><li><a class="toc-href" href="#zhu shi" title="注释">注释</a><ul><li><a class="toc-href" href="#kuai zhu shi" title="块注释">块注释</a></li><li><a class="toc-href" href="#xing nei zhu shi" title="行内注释">行内注释</a></li><li><a class="toc-href" href="#docstring" title="docstring">docstring</a></li></ul></li><li><a class="toc-href" href="#ming ming gui fan_1" title="命名规范">命名规范</a><ul><li><a class="toc-href" href="#zui zhong yao de gui ze" title="最重要的规则">最重要的规则</a></li><li><a class="toc-href" href="#miao shu xing de :ming ming feng ge" title="描述性的：命名风格">描述性的：命名风格</a></li><li><a class="toc-href" href="#gui fan xing de :ming ming guan li" title="规范性的：命名惯例">规范性的：命名惯例</a><ul><li><a class="toc-href" href="#bi mian shi yong de ming zi" title="避免使用的名字">避免使用的名字</a></li><li><a class="toc-href" href="#jian rong  ascii" title="兼容 ASCII">兼容 ASCII</a></li><li><a class="toc-href" href="#package he  module de ming zi" title="package 和 module 的名字">package 和 module 的名字</a></li><li><a class="toc-href" href="#class de ming zi" title="class 的名字">class 的名字</a></li><li><a class="toc-href" href="#lei xing bian liang de ming zi" title="类型变量的名字">类型变量的名字</a></li><li><a class="toc-href" href="#exception de ming zi" title="Exception 的名字">Exception 的名字</a></li><li><a class="toc-href" href="#quan ju bian liang ming" title="全局变量名">全局变量名</a></li><li><a class="toc-href" href="#function he  bian liang  ming" title="Function 和 变量 名">Function 和 变量 名</a></li><li><a class="toc-href" href="#function he  method de can shu" title="Function 和 Method 的参数">Function 和 Method 的参数</a></li><li><a class="toc-href" href="#mehtod he  instance de ming zi" title="Mehtod 和 Instance 的名字">Mehtod 和 Instance 的名字</a></li><li><a class="toc-href" href="#chang liang" title="常量">常量</a></li><li><a class="toc-href" href="#ji cheng de she ji" title="继承的设计">继承的设计</a></li></ul></li><li><a class="toc-href" href="#public he  internal jie kou_1" title="public 和 internal 接口">public 和 internal 接口</a></li></ul></li><li><a class="toc-href" href="#bian cheng jian yi_1" title="编程建议">编程建议</a><ul><li><a class="toc-href" href="#han shu zhu jie" title="函数注解">函数注解</a></li><li><a class="toc-href" href="#bian liang zhu jie" title="变量注解">变量注解</a></li></ul></li><li><a class="toc-href" href="#fan yi can kao_1" title="翻译参考">翻译参考</a></li><li><a class="toc-href" href="#fu" title="附">附</a></li></ul></li></ul></div>
+  </div>
 
   <div>
     <p><a href="https://www.python.org/dev/peps/pep-0008/">PEP 8 -- Style Guide for Python Code 原文链接</a></p>
@@ -223,17 +222,13 @@
 </tr>
 </tbody>
 </table>
-<p><br/></p>
 <h2 id="jie shao">介绍</h2>
-<hr/>
 <p>本文介绍 Python 主要发布版本中标准库的 code style，对于 CPython 中的 C 代码的 style guide 请查看相关文档 <a href="https://www.python.org/dev/peps/pep-0007/">PEP7</a>。</p>
-<p>本文和 <a href="https://www.python.org/dev/peps/pep-0257/">PEP257(docstring 规范)</a> 来源于 Guido 写的原始文章：《python code style》，部分来自于 Barry 的 <a href="http://barry.warsaw.us/software/STYLEGUIDE.txt">GNU Mailman style guide</a>。</p>
+<p>本文和 <a href="https://www.python.org/dev/peps/pep-0257/">PEP257(docstring 规范 )</a> 来源于 Guido 写的原始文章：《python code style》，部分来自于 Barry 的 <a href="http://barry.warsaw.us/software/STYLEGUIDE.txt">GNU Mailman style guide</a>。</p>
 <p>本文随着语言本身的变化不断进化，舍弃了部分规则的同时新加了一些规则。</p>
 <p>许多项目都有自己的 coding style guide，如果和本文有任何冲突，应该以该项目自己的 guide 为准。</p>
-<p><br/></p>
 <h2 id="jin xin shu ,bu ru wu shu">尽信书，不如无书</h2>
-<hr/>
-<p>Guido 的一个重要见解是：代码更多是用来读而不是写。本文提供的 guideline 的目的是提高代码的可读性，使得广泛的 python 代码保持一致性。正如 <a href="https://www.python.org/dev/peps/pep-0020/">PEP20</a> 所述，&ldquo;可读性非常重要&rdquo;。</p>
+<p>Guido 的一个重要见解是：代码更多是用来读而不是写。本文提供的 guideline 的目的是提高代码的可读性，使得广泛的 python 代码保持一致性。正如 <a href="https://www.python.org/dev/peps/pep-0020/">PEP20</a> 所述，&ldquo; 可读性非常重要 &rdquo;。</p>
 <p>一篇 style guide 主要内容是一致性。虽然本文的一致性很重要，但是一个项目内的一致性更重要，最重要的是一个 module 或者 function 内部的一致性。</p>
 <p>但最重要的是，要知道什么时候不保持一致性，在实际应用时候有些 guide 并不适用，如果有疑问，根据自己的最佳判断，看看其他代码例子然后决定怎么写代码看起来最好。不要羞于发问。</p>
 <p>特别注意：不要为了遵守本文而破坏向后的兼容性！</p>
@@ -252,9 +247,7 @@
 <p>代码需要和不支持本规范的旧版本 Python 代码保持一致</p>
 </li>
 </ol>
-<p><br/></p>
 <h2 id="dai ma bu ju">代码布局</h2>
-<hr/>
 <h3 id="suo jin">缩进</h3>
 <p>每级缩进为 4 个空格。</p>
 <p>连续行应该按照包围的元素对齐，要么使用 python 圆括号、方括号、花括号的隐式行连接在垂直方向对齐，要么使用 <code>hanging indent</code>。使用 hanging indent 的时候应该注意，第一行不应该有任何参数，后续行多一级缩进以便和其他行能清晰地区分开。</p>
@@ -405,11 +398,11 @@
 <p>如果 python 2 的命令行解释器带了 <code>-t</code> 选项，如果有 tab 和 space 混合使用的情况，它会报告 warning，如果带了 <code>-tt</code> 选项，则会报告 error。强烈推荐使用这些选项。</p>
 <h3 id="zui da xing chang du">最大行长度</h3>
 <p>所有行的最大行长是 79 个字符。</p>
-<p>对于基本没有结构化约束的长的文本（docstring和注释），其长度不能超过 72 个字符。</p>
+<p>对于基本没有结构化约束的长的文本（docstring 和注释），其长度不能超过 72 个字符。</p>
 <p>限制编辑器的宽度的好处是可以并列打开多个文件，在 code review 的时候比较两个版本的代码时很方便。</p>
 <p>许多工具的默认 warp 功能会破坏代码的视觉结构，使得代码难以理解。选择这些限制的目的就是为了防止 warp 功能设置为 80 个字符的编辑器自动 warp，即使有些编辑器在最后一列放了一个标记来提醒。一些基于 web 的工具甚至都不提供 warp 功能。</p>
 <p>一些团队强烈希望更长的行长，如果代码由一个可以达成一致的团队维护，那么可以把限制放宽到 99 个字符，但是注释和 docstring 仍然不超过 72 个字符。</p>
-<p>Python 标准库是保守主义，所以要求行长不超过 79（docstring和注释不超过 72）。</p>
+<p>Python 标准库是保守主义，所以要求行长不超过 79（docstring 和注释不超过 72）。</p>
 <p>对于很长的行，优先选择的方式应该是使用括号隐式的断行，而不是使用 <code>\</code> 来断行。</p>
 <p>反斜线 <code>\</code> 有时候还是有用的，比如较长的 <code>with</code> 语句不能使用括号的方式，所以只能选择反斜线。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -439,7 +432,7 @@
           <span class="n">student_loan_interest</span><span class="p">)</span>
 </pre></div>
 </td></tr></table>
-<p>为了解决这个可读性的问题，数学家和出版商遵循了相反的约定。Donald Knuth 在他的 <em><code>Computer and Typesetting</code></em> 系列中解释了传统的规则：&ldquo;虽然段落中的公式总是在二元操作符、关系操作符的后面断开，但是单独显示出来的公式却总是在二元操作符的前面断开。&rdquo;</p>
+<p>为了解决这个可读性的问题，数学家和出版商遵循了相反的约定。Donald Knuth 在他的 <em><code>Computer and Typesetting</code></em> 系列中解释了传统的规则：&ldquo; 虽然段落中的公式总是在二元操作符、关系操作符的后面断开，但是单独显示出来的公式却总是在二元操作符的前面断开。&rdquo;</p>
 <p>遵循数学家的传统通常可以得到可读性更好的代码：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -503,7 +496,7 @@
 </td></tr></table>
 </li>
 <li>
-<p>import 必须放在文件的顶部，位于 module 注释和 docstring 的后面，在模块的全局变量/常量的前面。</p>
+<p>import 必须放在文件的顶部，位于 module 注释和 docstring 的后面，在模块的全局变量 / 常量的前面。</p>
 <p>import 应该按照下面的顺序分组：</p>
 <ol>
 <li>
@@ -513,7 +506,7 @@
 <p>相关的第三方库 import</p>
 </li>
 <li>
-<p>本地应用/库的特定 import</p>
+<p>本地应用 / 库的特定 import</p>
 </li>
 </ol>
 <p>在每组之间插入一个空行。</p>
@@ -591,14 +584,10 @@
 <blockquote>
 <p>An awkward thing about programming in Python: there are lots of double underscores. [snip] My problem with the double underscore is that it's hard to say. How do you pronounce <strong>init</strong>? "underscore underscore init underscore underscore"? "under under init under under"? Just plain "init" seems to leave out something important. I have a solution: double underscore should be pronounced "dunder". So <strong>init</strong> is "dunder init dunder", or just "dunder init".</p>
 </blockquote>
-<p><br/></p>
 <h2 id="string yin yong_1">string 引用</h2>
-<hr/>
 <p>在 python 中，单引号和双引号字符串是一样的，本文关于这个不会给出建议。选择一个规则并且坚持下去即可。当一个 string 包含单引号或者是双引号时，在内部使用另外一种引号，这样可以避免在代码内部使用反斜线 <code>\</code>，提高代码的可读性。</p>
 <p>根据 <a href="https://www.python.org/dev/peps/pep-0257/">PEP257</a>，对于三引号 string，永远使用双引号。</p>
-<p><br/></p>
 <h2 id="biao da shi he yu ju zhong de kong ge">表达式和语句中的空格</h2>
-<hr/>
 <h3 id="yi xie xiao wen ti">一些小问题</h3>
 <p>避免下面情况中出现的无关空格，</p>
 <ul>
@@ -875,9 +864,7 @@
 </td></tr></table>
 </li>
 </ul>
-<p><br/></p>
 <h2 id="shi yao shi hou shi yong wei bu dou hao_1">什么时候使用尾部逗号</h2>
-<hr/>
 <p>尾部逗号一般是可选的，除非是在构造单元素的 <code>tuple</code> 时它是强制性必须存在的，在 python2 的 <code>print</code> 中逗号是语法的一部分。为了清晰起见，推荐用（冗余的）圆括号包围起来：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
@@ -914,9 +901,7 @@
 <span class="n">initialize</span><span class="p">(</span><span class="n">FILES</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="bp">True</span><span class="p">,)</span>
 </pre></div>
 </td></tr></table>
-<p><br/></p>
 <h2 id="zhu shi">注释</h2>
-<hr/>
 <p>和代码相冲突的注释比没有注释更糟糕，在代码改变之后永远第一时间更新相关注释。</p>
 <p>注释应该是完整的句子，除非是用标识符开头的语句（永远不要改变标识符的大小写！），其他情况下第一个单词的首字母应该大写。</p>
 <p>块注释一般由一段或者是多段的完整句子组成，并且每句都带一个句号。</p>
@@ -959,9 +944,7 @@
 <p>对于单行的 docstring，把结尾的 <code>"""</code> 放在该行内</p>
 </li>
 </ul>
-<p><br/></p>
 <h2 id="ming ming gui fan_1">命名规范</h2>
-<hr/>
 <p>python 库的命名规则有点混乱，我们一直没有完全统一，然而，这里列了一些当前推荐的命名标准。新写的 <code>module</code> 和 <code>package</code>（包括第三方的 framework）应该遵守下面的标注，但是如果一个已经存在的库有其他的 style，只要内部保持一致性即可。</p>
 <h3 id="zui zhong yao de gui ze">最重要的规则</h3>
 <p>API 中那些对用户可见的公共接口的名字，应该遵循反映用法而不是内部实现的原则。</p>
@@ -1003,7 +986,7 @@
 <p>除此之外，下面的这种带前缀或后缀下划线 <code>_</code> 的格式是可以的（通常和一些惯例结合在一起使用）：</p>
 <ul>
 <li>
-<p><code>_single_leading_underscore_</code>，弱&ldquo;内部使用&rdquo;标志。比如，<code>from M import *</code> 不会导入类似以 <code>_</code> 开头的对象</p>
+<p><code>_single_leading_underscore_</code>，弱 &ldquo; 内部使用 &rdquo; 标志。比如，<code>from M import *</code> 不会导入类似以 <code>_</code> 开头的对象</p>
 </li>
 <li>
 <p><code>single_trailing_underscore_</code>，用来避免和 python 内部的关键字相冲突</p>
@@ -1015,7 +998,7 @@
 <p><code>__double_leading_underscore</code>，用来给 class 的 attribute 命名，调用它时会被矫正（在 class FooBar 中，<code>__boo</code> 会变成 <code>_FooBar_boo</code>）</p>
 </li>
 <li>
-<p><code>__double_leading_and_trailing_underscore__</code>，&ldquo;magic&rdquo; 对象/attribute，存在于用户控制的 <code>namespcae</code>，比如，<code>__init__</code>，<code>__import__</code>，或者 <code>__file__</code>。仅仅像文档说明的这样用，永远不要自己发明这种名字。</p>
+<p><code>__double_leading_and_trailing_underscore__</code>，&ldquo;magic&rdquo; 对象 /attribute，存在于用户控制的 <code>namespcae</code>，比如，<code>__init__</code>，<code>__import__</code>，或者 <code>__file__</code>。仅仅像文档说明的这样用，永远不要自己发明这种名字。</p>
 </li>
 </ul>
 <h3 id="gui fan xing de :ming ming guan li">规范性的：命名惯例</h3>
@@ -1071,31 +1054,30 @@
 <ul>
 <li>public attrbute 不应该有前缀下划线</li>
 <li>
-<p>如果你的 public attribute 的名字和保留的关键字冲突了，在属性的最后缀上一个下划线。优先选择这种方法而不是采用缩写或者是错误拼写（但是尽管有这样的规则，对于 class method 作为第一个参数的情况，优先选择用 'cls' 表示 class 类型的变量/参数）</p>
-<p>注意1：对于 class 的 method 的参数命令参考前面的讨论。</p>
+<p>如果你的 public attribute 的名字和保留的关键字冲突了，在属性的最后缀上一个下划线。优先选择这种方法而不是采用缩写或者是错误拼写（但是尽管有这样的规则，对于 class method 作为第一个参数的情况，优先选择用 'cls' 表示 class 类型的变量 / 参数）</p>
+<p>注意 1：对于 class 的 method 的参数命令参考前面的讨论。</p>
 </li>
 <li>
 <p>对于简单的 public data attribute，最好直接暴露它的名字，而不是再写一个复杂的 accessor/mutator method。如果一个 data attribute 需要增加功能，python 提供了一个方便的途径。这种情况下，使用 property 来隐藏简单的数据访问背后的 功能实现。</p>
-<p>注意1：property 应该只在 new-style 的 class 中实现。</p>
-<p>注意2：虽然有些副作用（比如caching）是可以接受的，但是要尽量尝试让 function 的行为没有副作用</p>
-<p>注意3：property 会让调用者认为访问开销相对较小，所以尽量避免使用 property 来做大开销的计算</p>
+<p>注意 1：property 应该只在 new-style 的 class 中实现。</p>
+<p>注意 2：虽然有些副作用（比如 caching）是可以接受的，但是要尽量尝试让 function 的行为没有副作用</p>
+<p>注意 3：property 会让调用者认为访问开销相对较小，所以尽量避免使用 property 来做大开销的计算</p>
 </li>
 <li>
 <p>如果你的 class 可能会被扩展出 subclass，并且你不希望 subclass 使用一些 attribute，那么考虑用两个下划线前缀、没有下划线后缀的方式给这些 property 命名。这样会触发 python 的命名矫正算法，这个 attribute 的名字前会加上 class 的名字。这样可以避免 subclass 意外使用相同名字时的冲突。</p>
-<p>注意1：只有 class 的名字才会合入到 attribute 名字中，所以如果 subclass 的名字和其 attribute 的名字和父类名字相同，那么还是会有冲突</p>
-<p>注意2：命名矫正在某些情况下很不方便，比如 debug 或者是 <code>__getattr__()</code>。但是命名矫正算法的文档很完善，使用起来也很方便。</p>
-<p>注意3：并不是每个人都喜欢命名矫正，尽量避免和潜在的高级调用者产生命名冲突。</p>
+<p>注意 1：只有 class 的名字才会合入到 attribute 名字中，所以如果 subclass 的名字和其 attribute 的名字和父类名字相同，那么还是会有冲突</p>
+<p>注意 2：命名矫正在某些情况下很不方便，比如 debug 或者是 <code>__getattr__()</code>。但是命名矫正算法的文档很完善，使用起来也很方便。</p>
+<p>注意 3：并不是每个人都喜欢命名矫正，尽量避免和潜在的高级调用者产生命名冲突。</p>
 </li>
 </ul>
 <h3 id="public he  internal jie kou_1">public 和 internal 接口</h3>
 <p>任何的向后兼容只适用于 public 接口，因此，让用户能清晰地区分出 public 和 内部接口非常重要。</p>
-<p>文档化的接口可以认为是 public 接口，除非文档中明确说明该接口是拥有向后兼容豁免权的临时/内部接口。所有没有文档化的接口都应该视为内部接口。</p>
+<p>文档化的接口可以认为是 public 接口，除非文档中明确说明该接口是拥有向后兼容豁免权的临时 / 内部接口。所有没有文档化的接口都应该视为内部接口。</p>
 <p>为了更好地支持 introspection，module 应该用 <code>__all__</code> 明确声明 public API 的名字。如果没有 public API，那么就把 <code>__all__</code> 设置为空 list。</p>
 <p>即使合理地设置了 <code>__all__</code>，内部接口（package、module、class、function、attribute 或其他名字）还是应该加上单下划线前缀。</p>
 <p>如果 namespace（package、module、class）被认为是内部的，那么包含在内的接口也会被认为是内部的。</p>
 <p>import 的名字应该永远被认为是实现细节。除非是 module API 的一部分，否则别的 module 不能间接访问这些名字。比如，<code>os.path</code> 或者是一个 package 的 <code>__init__</code> module。</p>
 <h2 id="bian cheng jian yi_1">编程建议</h2>
-<hr/>
 <ul>
 <li>
 <p>代码不能伤害其他 python 的实现（比如 PyPy、Jython、IronPython、Cython、Psyco 等等）</p>
@@ -1103,7 +1085,7 @@
 </li>
 <li>
 <p>和类似 <code>None</code> 这样的单例对象的比较，应该永远使用 <code>is</code> 或者是 <code>is not</code>，永远不要使用等号操作符。</p>
-<p>此外，如果你的目的是 <code>if x is not None</code> 那么要小心别写成 <code>if x</code>。举例：判断一个默认值是 None 的变量/参数是否被设置成其他值，这个值（比如容器）的类型在 boolean 表达式中可能会是 false！</p>
+<p>此外，如果你的目的是 <code>if x is not None</code> 那么要小心别写成 <code>if x</code>。举例：判断一个默认值是 None 的变量 / 参数是否被设置成其他值，这个值（比如容器）的类型在 boolean 表达式中可能会是 false！</p>
 </li>
 <li>
 <p>使用 <code>is not</code> 而不是 <code>not ... is</code>。虽然两个表达式的功能相同，但是前一种写法的可读性更强：</p>
@@ -1141,7 +1123,7 @@
 </li>
 <li>
 <p>从 <code>Exception</code> 而不是 <code>BaseException</code> 中继承 exception，直接从 <code>BaseException</code> 中继承得到的 exception 是保留的，捕捉这些异常是大部分情况下一件错误的事情。</p>
-<p>基于需要捕捉 exception 的代码，而不是抛出 exception 的位置代码来设计 exception hierarchies。以编程的角度回答&ldquo;发生了什么错误?&rdquo;这个问题，而不是只是说&ldquo;发生了错误&rdquo;（内置 exception hierarchies 的例子见 <a href="https://www.python.org/dev/peps/pep-3151">PEP3151</a>） </p>
+<p>基于需要捕捉 exception 的代码，而不是抛出 exception 的位置代码来设计 exception hierarchies。以编程的角度回答 &ldquo; 发生了什么错误 ?&rdquo; 这个问题，而不是只是说 &ldquo; 发生了错误 &rdquo;（内置 exception hierarchies 的例子见 <a href="https://www.python.org/dev/peps/pep-3151">PEP3151</a>） </p>
 <p>应该遵守 class 的命名规则，除非你的 exception 本身就是一个 error，那么就给这个 exception class 名字加上 <code>Error</code> 后缀。用于非本地控制或其他形式的非 error exception 不需要特殊的后缀。</p>
 </li>
 <li>
@@ -1231,7 +1213,7 @@
 <p>特定代码的局部资源，使用 <code>with</code> 语句来确保这个资源使用完成后被清理干净，下次还能继续使用。也可以用 <code>try</code>/<code>finally</code> 语句。</p>
 </li>
 <li>
-<p>除了获取/释放资源，其他时候都应该通过独立的 function 或 method 来调用上下文管理器</p>
+<p>除了获取 / 释放资源，其他时候都应该通过独立的 function 或 method 来调用上下文管理器</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -1305,7 +1287,7 @@
 <p>string mothod 总是速度更快，而且和 unicode string 共享相同的 API，如果要求兼容 python2.0 以前的版本则可以忽略这条规则。</p>
 </li>
 <li>
-<p>使用 <code>''.startswith()</code> 和 <code>''.endswith()</code> 而不是 string 切片来检查前缀/后缀。</p>
+<p>使用 <code>''.startswith()</code> 和 <code>''.endswith()</code> 而不是 string 切片来检查前缀 / 后缀。</p>
 <p><code>startwith()</code> 和 <code>endswith()</code> 更加清晰，而且不易出错：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1357,7 +1339,7 @@
 </td></tr></table>
 </li>
 <li>
-<p>写 string 时不要依赖结尾的空格，这种空格在视觉上难以区分，而且一些编辑器（比如reindent.py）会删掉他们。</p>
+<p>写 string 时不要依赖结尾的空格，这种空格在视觉上难以区分，而且一些编辑器（比如 reindent.py）会删掉他们。</p>
 </li>
 <li>
 <p>不要使用 <code>==</code> 来比较 boolean 值和 <code>True</code>/<code>False</code>：</p>
@@ -1406,7 +1388,7 @@
 <p>不再鼓励使用本文以前推荐的实验性注释风格</p>
 </li>
 <li>
-<p>但是，除了标准库，鼓励使用 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 中的实验性规则。比如，使用 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 中的 style 为一个大型第三方库/应用添加注解，检查添加这些注解的容易程度，观察这些注解的出现是否提高了可读性。</p>
+<p>但是，除了标准库，鼓励使用 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 中的实验性规则。比如，使用 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 中的 style 为一个大型第三方库 / 应用添加注解，检查添加这些注解的容易程度，观察这些注解的出现是否提高了可读性。</p>
 </li>
 <li>
 <p>python 的标准库应该保守地使用这些注解，但是新代码和大型的重构可以使用这种注解。</p>
@@ -1475,15 +1457,13 @@
 <p>虽然 python 3 可以使用 <a href="https://www.python.org/dev/peps/pep-0526/">PEP526</a>，但是对于所有版本的 python，首先以 stub 文件的语法优先选择变量注解。（细节见 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a>） </p>
 </li>
 </ul>
-<p><br/></p>
 <h2 id="fan yi can kao_1">翻译参考</h2>
-<hr/>
 <p><a href="https://www.python.org/dev/peps/pep-0008/">PEP8</a></p>
 <p><a href="https://blog.csdn.net/ratsniper/article/details/78954852">Python PEP8 编码规范中文版</a></p>
 <h2 id="fu">附</h2>
 <p>Google 推出过开源项目的 coding style 规范，包含了常见编程语言，如 <code>C++</code>,  <code>java</code>, <code>Python</code>, <code>Shell</code> 等。因为已经有国内程序员凭热情创建和维护的中文版本，所以就不再翻译了。</p>
 <p><a href="https://github.com/google/styleguide">Google Style Guide</a></p>
-<p><a href="https://zh-google-styleguide.readthedocs.io/en/latest/">Google 开源项目风格指南 (中文版)</a></p>
+<p><a href="https://zh-google-styleguide.readthedocs.io/en/latest/">Google 开源项目风格指南 ( 中文版 )</a></p>
   </div>
   <div class="tag-cloud">
     <p>
@@ -1494,7 +1474,7 @@
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="../../posts/python/peps_translate_project_pep0.html" title="PEP 翻译计划系列 —— PEP0">
+    <a class="btn float-left" href="../../posts/python/learning_peps_series_0_pep0.html" title="PEP 学习系列之 0 —— PEP0">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
     <a class="btn float-right" href="../../posts/python/pep8_in_practice.html" title="PEP8 实践">
@@ -1505,9 +1485,9 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../../posts/python/peps_translate_project_pep0.html">PEP 翻译计划系列 —— PEP0</a></li>
-      <li><a href="../../posts/python/peps_translate_project_pep20.html">PEP 翻译计划系列 —— PEP20</a></li>
-      <li><a href="../../posts/python/peps_translate_project_pep202.html">PEP 翻译计划系列 —— PEP202</a></li>
+      <li><a href="../../posts/python/learning_peps_series_3_pep202_and_pep274.html">PEP 学习系列之 3 —— PEP202 & PEP274</a></li>
+      <li><a href="../../posts/python/learning_peps_series_0_pep0.html">PEP 学习系列之 0 —— PEP0</a></li>
+      <li><a href="../../posts/python/learning_peps_series_2_pep20.html">PEP 学习系列之 2 —— PEP20</a></li>
       <li><a href="../../posts/python/pep8_in_practice.html">PEP8 实践</a></li>
     </ul>
   </div>

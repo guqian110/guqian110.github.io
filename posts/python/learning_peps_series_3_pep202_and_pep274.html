@@ -65,17 +65,17 @@
     <meta name="msapplication-TileColor" content="#333333">
 
 <meta name="author" content="Qian Gu" />
-<meta name="description" content="PEPs 翻译系列 PEP202" />
+<meta name="description" content="List &amp; Dict Comprehensions 学习笔记" />
 <meta name="keywords" content="PEP, python">
 
 
 <meta property="og:site_name" content="Qian's Blog"/>
-<meta property="og:title" content="PEP 翻译计划系列 —— PEP202"/>
-<meta property="og:description" content="PEPs 翻译系列 PEP202"/>
+<meta property="og:title" content="PEP 学习系列之 3 —— PEP202 &amp; PEP274"/>
+<meta property="og:description" content="List &amp; Dict Comprehensions 学习笔记"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="../../posts/python/peps_translate_project_pep202.html"/>
+<meta property="og:url" content="../../posts/python/learning_peps_series_3_pep202_and_pep274.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2020-05-10 19:15:00+08:00"/>
+<meta property="article:published_time" content="2020-05-16 20:58:00+08:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="../../author/qian-gu.html">
 <meta property="article:section" content="Python"/>
@@ -83,7 +83,7 @@
 <meta property="article:tag" content="python"/>
 <meta property="og:image" content="https://qiangu.cool/images/logo.png">
 
-  <title>Qian's Blog &ndash; PEP 翻译计划系列 —— PEP202</title>
+  <title>Qian's Blog &ndash; PEP 学习系列之 3 —— PEP202 &amp; PEP274</title>
 
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
@@ -170,78 +170,30 @@
 <article class="single">
   <header>
       
-    <h1 id="peps_translate_project_pep202">PEP 翻译计划系列 —— PEP202</h1>
+    <h1 id="learning_peps_series_3_pep202_and_pep274">PEP 学习系列之 3 —— PEP202 & PEP274</h1>
     <p>
-      Posted on 2020-05-10 19:15 in <a href="../../category/python.html">Python</a>
+      Posted on 2020-05-16 20:58 in <a href="../../category/python.html">Python</a>
 
-        &#8226; 3 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="PEP 翻译计划系列 &mdash;&mdash; PEP202">PEP 翻译计划系列 &mdash;&mdash; PEP202</a><ul><li><a class="toc-href" href="#introduction" title="Introduction">Introduction</a></li><li><a class="toc-href" href="#the proposed solution" title="The Proposed Solution">The Proposed Solution</a></li><li><a class="toc-href" href="#rationale" title="Rationale">Rationale</a></li><li><a class="toc-href" href="#examples" title="Examples">Examples</a></li><li><a class="toc-href" href="#reference implementation" title="Reference Implementation">Reference Implementation</a></li><li><a class="toc-href" href="#bdfl pronouncements" title="BDFL Pronouncements">BDFL Pronouncements</a></li><li><a class="toc-href" href="#shi yao shi  list comprehensions" title="什么是 list comprehensions">什么是 list comprehensions</a><ul><li><a class="toc-href" href="#yi shu xue de jiao du li jie  list comprehensions" title="以数学的角度理解 list comprehensions">以数学的角度理解 list comprehensions</a></li></ul></li><li><a class="toc-href" href="#ru he xie  list comprehensions_1" title="如何写 list comprehensions">如何写 list comprehensions</a><ul><li><a class="toc-href" href="#mo ban" title="模板">模板</a></li><li><a class="toc-href" href="#xun huan qian tao de  list comprehensions" title="循环嵌套的 list comprehensions">循环嵌套的 list comprehensions</a></li><li><a class="toc-href" href="#ti gao  list comprehensions de ke du xing" title="提高 list comprehensions 的可读性">提高 list comprehensions 的可读性</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
-    </div>
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="PEP 学习系列之 3 &mdash;&mdash; PEP202 &amp; PEP274">PEP 学习系列之 3 &mdash;&mdash; PEP202 &amp; PEP274</a><ul><li><a class="toc-href" href="#wei shi yao xu yao  comprehensions" title="为什么需要 Comprehensions">为什么需要 Comprehensions</a></li><li><a class="toc-href" href="#list comprehensions" title="List Comprehensions">List Comprehensions</a><ul><li><a class="toc-href" href="#examples" title="Examples">Examples</a></li><li><a class="toc-href" href="#yi shu xue de jiao du li jie  list comprehensions" title="以数学的角度理解 list comprehensions">以数学的角度理解 list comprehensions</a></li><li><a class="toc-href" href="#ru he xie  list comprehensions" title="如何写 list comprehensions">如何写 list comprehensions</a></li><li><a class="toc-href" href="#xun huan qian tao de  list comprehensions" title="循环嵌套的 list comprehensions">循环嵌套的 list comprehensions</a></li><li><a class="toc-href" href="#ti gao  list comprehensions de ke du xing" title="提高 list comprehensions 的可读性">提高 list comprehensions 的可读性</a></li><li><a class="toc-href" href="#xiao jie" title="小结">小结</a></li></ul></li><li><a class="toc-href" href="#dict comprehensions_1" title="Dict Comprehensions">Dict Comprehensions</a><ul><li><a class="toc-href" href="#examples_1" title="Examples">Examples</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
+  </div>
 
   <div>
-    <p><a href="https://www.python.org/dev/peps/pep-00202/">PEP 202 -- List Comprehensions 原文链接</a>。</p>
-<table>
-<thead>
-<tr>
-<th>item</th>
-<th>detail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PEP</td>
-<td>202</td>
-</tr>
-<tr>
-<td>Title</td>
-<td>List Comprehensions</td>
-</tr>
-<tr>
-<td>Author</td>
-<td>barry at python.org (Barry Warsaw)</td>
-</tr>
-<tr>
-<td>Status</td>
-<td>Final</td>
-</tr>
-<tr>
-<td>Type</td>
-<td>Standards Track</td>
-</tr>
-<tr>
-<td>Created</td>
-<td>13-Jul-2000</td>
-</tr>
-<tr>
-<td>Python-Version</td>
-<td>2.0</td>
-</tr>
-<tr>
-<td>Post-History</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="introduction">Introduction</h2>
-<p>本文描述了一种 python 语法扩展 proposal：列表解析式（list comprehensions）。</p>
-<p><br/></p>
-<h2 id="the proposed solution">The Proposed Solution</h2>
-<p>本文提议允许程序员可以用 <code>for</code> 和 <code>if</code> 关键字来有条件地构造一个 list，就像在 <code>for</code> 和 
-<code>if</code> 语句中的做法一样。</p>
-<p><em>如果想用从一个 list 中挑选出一部分满足条件的元素组成一个新的 list，该怎么做？最简单的方法
-是写一个 <code>for</code> 循环，然后从中挨个挑选出符合条件的元素。但是这种写法很臃肿，所以出现了 
-<code>list comprehensions</code>。</em></p>
-<p><br/></p>
-<h2 id="rationale">Rationale</h2>
-<p>list comprehensions 提供了另外一种更加简洁的选择，以实现当前使用 <code>map()</code>/<code>filter()</code> 或
-者是嵌套循环的效果。</p>
-<p><br/></p>
-<h2 id="examples">Examples</h2>
+    <h2 id="wei shi yao xu yao  comprehensions">为什么需要 Comprehensions</h2>
+<p>如果想用从一个 list 中挑选出一部分满足条件的元素组成一个新的 list，该怎么做？</p>
+<ul>
+<li>方法一：最直观简单的方法，写一个 <code>for</code> 循环，然后从中挨个挑选出符合条件的元素</li>
+<li>方法二：使用函数式编程中的 <code>map()</code>/<code>filter()</code></li>
+</ul>
+<p>方法一虽然简单但是很臃肿，方法二在 FP 世界里面可能是最优写法，但是不适合混合到指令式编程的世界中，所以出现了 <code>list comprehensions</code>， 它提供了另外一种更加简洁的实现方法。（<strong>Simple is better than complex.</strong>）</p>
+<h2 id="list comprehensions">List Comprehensions</h2>
+<p><a href="https://www.python.org/dev/peps/pep-00202/">PEP 202 -- List Comprehensions 原文链接</a>。</p>
+<p>List Comprehensions 就是运用于 List 对象的 Comprehensions。</p>
+<h3 id="examples">Examples</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -287,42 +239,16 @@
 <span class="o">[(</span><span class="m">2</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">4</span>, <span class="s1">'Bananas'</span><span class="o">)]</span>
 </pre></div>
 </td></tr></table>
-<p><br/></p>
-<h2 id="reference implementation">Reference Implementation</h2>
-<p>list comprehensions 在 Python release2.0 中变成了语法中的一部分。</p>
-<p><br/></p>
-<h2 id="bdfl pronouncements">BDFL Pronouncements</h2>
-<ul>
-<li>上面的语法只适用于一个元素（the Right One）</li>
-<li>不允许写成 <code>[x, y for ...]</code> 形式，但是可以写成一个 tuple 元素的形式 <code>[(x, y) for ...]</code></li>
-<li>允许嵌套形式 <code>[...  for x... for y...]</code>，就像嵌套循环一样，最后一个 index 是变化最快的</li>
-</ul>
-<p><br/></p>
-<hr/>
-<p><br/></p>
-<h2 id="shi yao shi  list comprehensions">什么是 list comprehensions</h2>
-<p>list comprehensions 是 python 中的一种语法糖（<code>syntactis suger</code>），它可以将一个 list 
-按照一定的条件转换成另外一个 list。可以把它看成是函数式编程中 <code>map()</code> 和 <code>filter()</code> 的语法
-糖，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>&gt;&gt;&gt; <span class="nv">doubled_odds</span> <span class="o">=</span> map<span class="o">(</span>lambda n: n * <span class="m">2</span>, filter<span class="o">(</span>lambda n: n % <span class="nv">2</span> <span class="o">==</span> <span class="m">1</span>, umbers<span class="o">))</span>
-&gt;&gt;&gt; <span class="nv">doubled_odds</span> <span class="o">=</span> <span class="o">[</span>n * <span class="m">2</span> <span class="k">for</span> n in numbers <span class="k">if</span> n % <span class="nv">2</span> <span class="o">==</span> <span class="m">1</span><span class="o">]</span>
-</pre></div>
-</td></tr></table>
 <h3 id="yi shu xue de jiao du li jie  list comprehensions">以数学的角度理解 list comprehensions</h3>
 <p>下面这个集合表示从自然数中挑选出符合条件 <code>x &gt; 5</code> 且 <code>x &lt; 10</code> 的所有元素，</p>
 <div class="math">$$new\_list = \{x | x \in N, x &gt; 0, x &lt; 10\}$$</div>
-<p>对比一下 python 版本的代码就可以知道两者非常相似，只不过 python 用 if 语句来描述数学中的
-条件表达式。</p>
+<p>下面是 Python 的实现版本，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">new_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">N</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
-<p>尤其是 python 中有集合 <code>set</code> 的概念，set 也是可以写成 comprehensions 形式的，这个和数学
-就完全等价了。</p>
-<h2 id="ru he xie  list comprehensions_1">如何写 list comprehensions</h2>
-<h3 id="mo ban">模板</h3>
-<p>因为 list comprehensions 本质是 for 和 if 的简洁写法，所以我们可以总结出一个模板，只要满
-足这个模板的 for 循环就可以改成写 list comprehensions。</p>
+<p>对比一下 python 版本的代码就可以知道两者非常相似，只不过 python 用 for 和 if 语句来描述数学中的条件表达式。尤其是 python 中有集合 <code>set</code> 的概念，set 也是可以写成 comprehensions 形式的，这个时候就和数学就完全等价了。</p>
+<h3 id="ru he xie  list comprehensions">如何写 list comprehensions</h3>
+<p>因为 list comprehensions 本质是 for 和 if 的简洁写法，所以我们可以总结出一个模板，只要满足这个模板的 for 循环就可以改成写 list comprehensions。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="nv">item</span> <span class="nv">in</span> <span class="nv">old_list</span>:
@@ -347,9 +273,6 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flattend</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
 </pre></div>
 </td></tr></table>
-<p><strong>总结：</strong></p>
-<p>无论是单层还是嵌套的 for 循环，改成 list comprehensions 的方法其实方法非常简单，就是把普
-通的 for 循环调整了顺序，将循环核心的语句写在了最前面，剩余部分按原顺序写就可以了。</p>
 <h3 id="ti gao  list comprehensions de ke du xing">提高 list comprehensions 的可读性</h3>
 <p>因为 python 支持在括号之间断行，所以前面的例子，可以该写成下面的形式以提高可读性：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -374,10 +297,59 @@
 <span class="p">]</span>
 </pre></div>
 </td></tr></table>
-<p><br/></p>
+<h3 id="xiao jie">小结</h3>
+<p>无论是单层还是嵌套的 for 循环，改成 list comprehensions 的方法其实方法非常简单，就是把普通的 for 循环调整了顺序，将循环内的语句写在了最前面，剩余部分按原顺序写就可以了。</p>
+<ul>
+<li>上面的语法只适用于一个元素（the Right One）</li>
+<li>不允许写成 <code>[x, y for ...]</code> 形式，但是可以写成一个 tuple 元素的形式 <code>[(x, y) for ...]</code></li>
+<li>允许嵌套形式 <code>[...  for x... for y...]</code>，就像嵌套循环一样，最后一个 index 是变化最快的</li>
+</ul>
+<h2 id="dict comprehensions_1">Dict Comprehensions</h2>
+<p><a href="https://www.python.org/dev/peps/pep-00274/">PEP 274 -- Dict Comprehensions 原文链接</a>。</p>
+<p>dict comprehensions 和 list comprehensions 非常相似，不同之处是用 <code>{}</code> 而不是 <code>[]</code>。同时，关键字 <code>for</code> 前面的部分表达式改成了用冒号隔开的 key-value 对。</p>
+<h3 id="examples_1">Examples</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="p">{</span><span class="n">i</span> <span class="p">:</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="o">+</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)}</span>
+<span class="p">{</span><span class="mi">0</span> <span class="p">:</span> <span class="s1">'A'</span><span class="p">,</span> <span class="mi">1</span> <span class="p">:</span> <span class="s1">'B'</span><span class="p">,</span> <span class="mi">2</span> <span class="p">:</span> <span class="s1">'C'</span><span class="p">,</span> <span class="mi">3</span> <span class="p">:</span> <span class="s1">'D'</span><span class="p">}</span>
+</pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">someDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()}</span> <span class="o">==</span> <span class="n">someDict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="mi">1</span>
+</pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">list_of_email_addrs</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">'barry@zope.com'</span>   <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'barry@python.org'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'guido@python.org'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">invert</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">return</span> <span class="p">{</span><span class="n">v</span> <span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()}</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span> <span class="p">:</span> <span class="s1">'A'</span><span class="p">,</span> <span class="mi">1</span> <span class="p">:</span> <span class="s1">'B'</span><span class="p">,</span> <span class="mi">2</span> <span class="p">:</span> <span class="s1">'C'</span><span class="p">,</span> <span class="mi">3</span> <span class="p">:</span> <span class="s1">'D'</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">invert</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="p">{</span><span class="s1">'A'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'B'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'C'</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'D'</span> <span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+</pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">{(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> <span class="n">k</span><span class="o">+</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)}</span>
+<span class="o">...</span> <span class="p">{(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">6</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">3</span><span class="p">,</span>
+   <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span>
+   <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span>
+   <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">5</span><span class="p">}</span>
+</pre></div>
+</td></tr></table>
 <h2 id="ref_1">Ref</h2>
 <p><a href="https://treyhunner.com/2015/12/python-list-comprehensions-now-in-color/">Python List Comprehensions: Explained Visually</a></p>
-<p><a href="https://www.jianshu.com/p/dd85d2cd89d1">用数学思维理解Comprehension</a></p>
+<p><a href="https://www.jianshu.com/p/dd85d2cd89d1">用数学思维理解 Comprehension</a></p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -415,7 +387,7 @@
         "    'HTML-CSS': { " +
         "        availableFonts: ['STIX', 'TeX']," +
         "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'blue ! important'} }," +
         "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
         "    }, " +
         "}); " +
@@ -450,7 +422,7 @@
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="../../posts/python/peps_translate_project_pep20.html" title="PEP 翻译计划系列 —— PEP20">
+    <a class="btn float-left" href="../../posts/python/learning_peps_series_2_pep20.html" title="PEP 学习系列之 2 —— PEP20">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
   </div>
@@ -458,9 +430,9 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../../posts/python/peps_translate_project_pep0.html">PEP 翻译计划系列 —— PEP0</a></li>
-      <li><a href="../../posts/python/peps_translate_project_pep20.html">PEP 翻译计划系列 —— PEP20</a></li>
-      <li><a href="../../posts/python/peps_translate_project_pep8.html">PEP 翻译计划系列 —— PEP8</a></li>
+      <li><a href="../../posts/python/learning_peps_series_0_pep0.html">PEP 学习系列之 0 —— PEP0</a></li>
+      <li><a href="../../posts/python/learning_peps_series_1_pep8.html">PEP 学习系列之 1 —— PEP8</a></li>
+      <li><a href="../../posts/python/learning_peps_series_2_pep20.html">PEP 学习系列之 2 —— PEP20</a></li>
       <li><a href="../../posts/python/pep8_in_practice.html">PEP8 实践</a></li>
     </ul>
   </div>

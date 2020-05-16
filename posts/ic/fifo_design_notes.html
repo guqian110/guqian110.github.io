@@ -173,14 +173,13 @@
     <p>
       Posted on 2015-10-02 22:13 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 2 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="FIFO 设计笔记">FIFO 设计笔记</a><ul><li><a class="toc-href" href="#sync fifo" title="Sync FIFO">Sync FIFO</a></li><li><a class="toc-href" href="#async fifo" title="Async FIFO">Async FIFO</a><ul><li><a class="toc-href" href="#gray code" title="Gray Code">Gray Code</a></li><li><a class="toc-href" href="#wr_ptr / rd_ptr sync lag" title="wr_ptr / rd_ptr Sync Lag">wr_ptr / rd_ptr Sync Lag</a></li><li><a class="toc-href" href="#full / empty generation" title="Full / Empty Generation">Full / Empty Generation</a></li><li><a class="toc-href" href="#dual clock fifo design" title="Dual Clock FIFO Design">Dual Clock FIFO Design</a></li></ul></li><li><a class="toc-href" href="#summary_1" title="Summary">Summary</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>FIFO 的重要性就不用再重复了，在笔试面试的时候也常常被问到，总结一下设计 FIFO 需要注意的问题。</p>
@@ -228,7 +227,7 @@
 </li>
 </ol>
 <h3 id="gray code">Gray Code</h3>
-<p>在异步 FIFO 中，因为一些内部的信号要从写/读时钟域传递到读/写时钟域，所以必须要解决异步信号同步的问题，而且有的信号不止 1 bit，如果使用&ldquo;同步桥&rdquo;，则因为各个 bit 的同步时延不一定（1~2T），所以不能用同步桥。</p>
+<p>在异步 FIFO 中，因为一些内部的信号要从写 / 读时钟域传递到读 / 写时钟域，所以必须要解决异步信号同步的问题，而且有的信号不止 1 bit，如果使用 &ldquo; 同步桥 &rdquo;，则因为各个 bit 的同步时延不一定（1~2T），所以不能用同步桥。</p>
 <p>这个问题可以使用 gray code 解决：gray code 是循环码，每次只有 1 bit 变化，这样就避免了多 bits 变化的数据同步问题。如下图：</p>
 <p><img alt="sync" src="/images/fifo-design-notes/sync.png"/></p>
 <p>gray code 与 binary code 的相互想换见另<a href="">外一篇 blog</a>。</p>
@@ -264,7 +263,7 @@
 <p>借助这多余的 1 bit，可以区分出是 wr_ptr 太快，将 rd_ptr 套圈了（wr_ptr = <code>1000</code>，rd_ptr = <code>0000</code>， 即 full），还是 rd_ptr 更快，追上了 wr_ptr（rd_ptr = wr_ptr = <code>1000</code>）。</p>
 <p>框图如下：</p>
 <p><img alt="full empty gen" src="/images/fifo-design-notes/full_empty_gen.png"/></p>
-<p>这种 wr_ptr / rd_ptr 用 gray code 保存，比较/+1 用 binary 保存的方式，使得 design / debug 变得很简单，但是需要的资源比较多。如果全部使用 gray code，虽然可以降低资源占用，但是需要其他逻辑。</p>
+<p>这种 wr_ptr / rd_ptr 用 gray code 保存，比较 /+1 用 binary 保存的方式，使得 design / debug 变得很简单，但是需要的资源比较多。如果全部使用 gray code，虽然可以降低资源占用，但是需要其他逻辑。</p>
 <h3 id="dual clock fifo design">Dual Clock FIFO Design</h3>
 <p>下图是使用 Dual port RAM 的异步 FIFO 框图，其中 wr_ptr 和 rd_ptr 直接使用 gray code，节省了 gray code 和 binary code 之间的转换逻辑。</p>
 <p><img alt="dual clock fifo" src="/images/fifo-design-notes/dual_port_fifo.png"/></p>
@@ -277,7 +276,7 @@
 </li>
 <li>
 <p>FIFO full</p>
-<p>如上图，FIFO 初始状态为 empty，然后连续写入 8 个数据，再读出 8 个数据，此时 wr_ptr = rd_ptr = 7，FIFO 又变为 empty。此时如果再写入一个数据，wr_ptr = 8，rd_ptr = 7，如果仍然使用前面介绍的方法（MSB不同，剩余位相同)，则会得出 FIFO full 的错误结论，实际上 FIFO 并没有满。</p>
+<p>如上图，FIFO 初始状态为 empty，然后连续写入 8 个数据，再读出 8 个数据，此时 wr_ptr = rd_ptr = 7，FIFO 又变为 empty。此时如果再写入一个数据，wr_ptr = 8，rd_ptr = 7，如果仍然使用前面介绍的方法（MSB 不同，剩余位相同 )，则会得出 FIFO full 的错误结论，实际上 FIFO 并没有满。</p>
 <p>仔细观察 gray code 的对称性，就可以知道，当 full 时（wr_ptr 将 rd_ptr 套圈时），MSB 不同，wr_ptr 的 2nd MSB 要先翻转，才和 rd_ptr 相同。所以，当下面 3 个条件都满足时，FIFO full：</p>
 <ol>
 <li>
@@ -312,7 +311,7 @@
     <a class="btn float-left" href="../../posts/telecom/summary_of_frequency_in_digital_signal_processing.html" title="数字信号处理中的各种频率">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
-    <a class="btn float-right" href="../../posts/python/peps_translate_project_pep0.html" title="PEP 翻译计划系列 —— PEP0">
+    <a class="btn float-right" href="../../posts/python/learning_peps_series_0_pep0.html" title="PEP 学习系列之 0 —— PEP0">
       Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>

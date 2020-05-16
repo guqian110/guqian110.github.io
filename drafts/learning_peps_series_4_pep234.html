@@ -65,15 +65,15 @@
     <meta name="msapplication-TileColor" content="#333333">
 
 <meta name="author" content="Qian Gu" />
-<meta name="description" content="PEPs 翻译系列 PEP234" />
+<meta name="description" content="Iterator 学习笔记" />
 <meta name="keywords" content="PEP, python">
 
 
 <meta property="og:site_name" content="Qian's Blog"/>
-<meta property="og:title" content="PEP 翻译计划系列 —— PEP234"/>
-<meta property="og:description" content="PEPs 翻译系列 PEP234"/>
+<meta property="og:title" content="PEP 学习系列之 4 —— PEP234"/>
+<meta property="og:description" content="Iterator 学习笔记"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="../drafts/peps_translate_project_pep234.html"/>
+<meta property="og:url" content="../drafts/learning_peps_series_4_pep234.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2020-05-10 23:51:00+08:00"/>
 <meta property="article:modified_time" content=""/>
@@ -83,7 +83,7 @@
 <meta property="article:tag" content="python"/>
 <meta property="og:image" content="https://qiangu.cool/images/logo.png">
 
-  <title>Qian's Blog &ndash; PEP 翻译计划系列 —— PEP234</title>
+  <title>Qian's Blog &ndash; PEP 学习系列之 4 —— PEP234</title>
 
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
@@ -170,21 +170,17 @@
 <article class="single">
   <header>
       
-    <h1 id="peps_translate_project_pep234">PEP 翻译计划系列 —— PEP234</h1>
+    <h1 id="learning_peps_series_4_pep234">PEP 学习系列之 4 —— PEP234</h1>
     <p>
       Posted on 2020-05-10 23:51 in <a href="../category/python.html">Python</a>
 
-        &#8226; 2 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="PEP 翻译计划系列 &mdash;&mdash; PEP234">PEP 翻译计划系列 &mdash;&mdash; PEP234</a><ul><li><a class="toc-href" href="#abstract" title="Abstract">Abstract</a></li><li><a class="toc-href" href="#resolution" title="Resolution">Resolution</a></li><li><a class="toc-href" href="#proposed solution" title="Proposed Solution">Proposed Solution</a></li><li><a class="toc-href" href="#rationale" title="Rationale">Rationale</a></li><li><a class="toc-href" href="#semantics" title="Semantics">Semantics</a></li><li><a class="toc-href" href="#examples" title="Examples">Examples</a></li><li><a class="toc-href" href="#implementation" title="Implementation">Implementation</a></li></ul></li></ul></div>
-    </div>
 
   <div>
-    <p>[PEP 234 -- Iterators 原文链接][PEP234]。</p>
+    <p>[PEP 234 -- Iterators 原文链接 ][PEP234]。</p>
 <table>
 <thead>
 <tr>
@@ -227,73 +223,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="abstract">Abstract</h2>
-<p>PEP202 介绍一种叫做 list comprehensions 的语法扩展，本文提出了一种类似的扩展叫做 
-<code>dictionary comprehension</code>，简称为 <code>dict comprehension</code>，用法也和 list comprehension
-类似，只是结果是一个 dictionary 对象而不是 list 对象。</p>
-<p><br/></p>
-<h2 id="resolution">Resolution</h2>
-<p>本文本来是为 Python2.3 所写，但是后来因为 <code>dict()</code> 的构造函数部分已经包含了相关内容，所以
-最后就撤销了。</p>
-<p>然而，Python2.7 和 3.0 引入了这个 feature，同时还有 <code>set comprehensions</code>。在 
-2012-04-19，本文的状态更新为 Accepted，同时更新了 Python-Version 字段。因为现在的版本已
-经解决了所有问题，所以 Open Questions 章节被删除了。</p>
-<p><br/></p>
-<h2 id="proposed solution">Proposed Solution</h2>
-<p>dict comprehensions 和 list comprehensions 非常相似，不同之处是用 <code>{}</code> 而不是 <code>[]</code>。
-同时，关键字 <code>for</code> 前面的部分表达式改成了用逗号隔开的 key-value 对，这种表示方法是为了提醒
-你 list comprehensions 也适用于 dictionaries。</p>
-<p><br/></p>
-<h2 id="rationale">Rationale</h2>
-<p>有时候你有些按照元素对的形式排列的数据，而且你想把他们变成一个 dict。在 Python2.2 中，
-<code>dict()</code> 构造函数可以接受 <code>(key, value)</code> 形式的参数 sequence 来构造出一个 dict。但是有
-时候这么做很不方便或者性能不高。对于一些常用操作，把一个 list 转换成一个 set 时，可以
-用一种更好的语法来使得代码清晰。</p>
-<p>就像 list comprehensions，可以用一个 for 循环来实现，dict comprehensions 可以提供比传
-统 for 循环更加简洁的语法。</p>
-<p><br/></p>
-<h2 id="semantics">Semantics</h2>
-<p>dict comprehensions 的语法实际上可以用 python2.2 来证明，把一个 list comprehensions 
-传参给一个 dict 的构造函数，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="o">+</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)])</span>
-</pre></div>
-</td></tr></table>
-<p>在语法上它和下面是等价的，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="o">+</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)}</span>
-</pre></div>
-</td></tr></table>
-<p>但是用 dict 构造函数的方式有两个缺点。第一，它没有 dict comprehensions 方式清晰；第二，
-它要求程序员先构造一个 list，代价可能比较大。</p>
-<p><br/></p>
-<h2 id="examples">Examples</h2>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="p">{</span><span class="n">i</span> <span class="p">:</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="o">+</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)}</span>
-<span class="p">{</span><span class="mi">0</span> <span class="p">:</span> <span class="s1">'A'</span><span class="p">,</span> <span class="mi">1</span> <span class="p">:</span> <span class="s1">'B'</span><span class="p">,</span> <span class="mi">2</span> <span class="p">:</span> <span class="s1">'C'</span><span class="p">,</span> <span class="mi">3</span> <span class="p">:</span> <span class="s1">'D'</span><span class="p">}</span>
-</pre></div>
-</td></tr></table>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">someDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()}</span> <span class="o">==</span> <span class="n">someDict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="mi">1</span>
-</pre></div>
-</td></tr></table>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">list_of_email_addrs</span><span class="p">}</span>
-<span class="p">{</span><span class="s1">'barry@zope.com'</span>   <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'barry@python.org'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'guido@python.org'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
-</pre></div>
-</td></tr></table>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">invert</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-<span class="o">...</span>     <span class="k">return</span> <span class="p">{</span><span class="n">v</span> <span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()}</span>
-<span class="o">...</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span> <span class="p">:</span> <span class="s1">'A'</span><span class="p">,</span> <span class="mi">1</span> <span class="p">:</span> <span class="s1">'B'</span><span class="p">,</span> <span class="mi">2</span> <span class="p">:</span> <span class="s1">'C'</span><span class="p">,</span> <span class="mi">3</span> <span class="p">:</span> <span class="s1">'D'</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">invert</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="p">{</span><span class="s1">'A'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'B'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'C'</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'D'</span> <span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
-</pre></div>
-</td></tr></table>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -305,9 +234,6 @@
    <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">5</span><span class="p">}</span>
 </pre></div>
 </td></tr></table>
-<p><br/></p>
-<h2 id="implementation">Implementation</h2>
-<p>所有实现细节都在 Python2.7 和 3.0 中解决了。</p>
   </div>
   <div class="tag-cloud">
     <p>
@@ -323,10 +249,10 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../posts/python/peps_translate_project_pep0.html">PEP 翻译计划系列 —— PEP0</a></li>
-      <li><a href="../posts/python/peps_translate_project_pep20.html">PEP 翻译计划系列 —— PEP20</a></li>
-      <li><a href="../posts/python/peps_translate_project_pep202.html">PEP 翻译计划系列 —— PEP202</a></li>
-      <li><a href="../posts/python/peps_translate_project_pep8.html">PEP 翻译计划系列 —— PEP8</a></li>
+      <li><a href="../posts/python/learning_peps_series_3_pep202_and_pep274.html">PEP 学习系列之 3 —— PEP202 & PEP274</a></li>
+      <li><a href="../posts/python/learning_peps_series_0_pep0.html">PEP 学习系列之 0 —— PEP0</a></li>
+      <li><a href="../posts/python/learning_peps_series_1_pep8.html">PEP 学习系列之 1 —— PEP8</a></li>
+      <li><a href="../posts/python/learning_peps_series_2_pep20.html">PEP 学习系列之 2 —— PEP20</a></li>
       <li><a href="../posts/python/pep8_in_practice.html">PEP8 实践</a></li>
     </ul>
   </div>

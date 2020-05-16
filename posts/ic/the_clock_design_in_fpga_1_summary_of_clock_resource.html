@@ -174,14 +174,13 @@
     <p>
       Posted on 2014-08-28 22:45 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 4 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 时钟设计 1 &mdash;&mdash; 时钟资源总结">FPGA 时钟设计 1 &mdash;&mdash; 时钟资源总结</a><ul><li><a class="toc-href" href="#three types of clock resource" title="Three Types of clock resource">Three Types of clock resource</a><ul><li><a class="toc-href" href="#global clocks" title="Global Clocks">Global Clocks</a></li><li><a class="toc-href" href="#regional clocks" title="Regional Clocks">Regional Clocks</a></li><li><a class="toc-href" href="#i/o clocks" title="I/O clocks">I/O clocks</a></li></ul></li><li><a class="toc-href" href="#global clocking resources_1" title="Global Clocking Resources">Global Clocking Resources</a><ul><li><a class="toc-href" href="#global clock inputs" title="Global Clock Inputs">Global Clock Inputs</a></li><li><a class="toc-href" href="#global clock buffers" title="Global Clock Buffers">Global Clock Buffers</a></li><li><a class="toc-href" href="#clock tree and nets - gclk" title="Clock Tree and Nets - GCLK">Clock Tree and Nets - GCLK</a></li><li><a class="toc-href" href="#clock regions" title="Clock Regions">Clock Regions</a></li><li><a class="toc-href" href="#how to use global clock_1" title="How to use global clock">How to use global clock</a></li><li><a class="toc-href" href="#principle in using global clock" title="Principle in Using global clock">Principle in Using global clock</a></li><li><a class="toc-href" href="#p.s. di er quan ju shi zhong zi yuan" title="P.S. 第二全局时钟资源">P.S. 第二全局时钟资源</a></li></ul></li><li><a class="toc-href" href="#regional clocking resources_1" title="Regional Clocking Resources">Regional Clocking Resources</a><ul><li><a class="toc-href" href="#clock capable i/o" title="Clock Capable I/O">Clock Capable I/O</a></li><li><a class="toc-href" href="#i/o clock buffer - bufio" title="I/O Clock Buffer - BUFIO">I/O Clock Buffer - BUFIO</a></li><li><a class="toc-href" href="#regional clock buffer - bufr" title="Regional Clock Buffer - BUFR">Regional Clock Buffer - BUFR</a></li><li><a class="toc-href" href="#regional clock nets" title="Regional Clock Nets">Regional Clock Nets</a></li></ul></li><li><a class="toc-href" href="#clock management technology_1" title="Clock Management Technology">Clock Management Technology</a><ul><li><a class="toc-href" href="#dcm" title="DCM">DCM</a></li><li><a class="toc-href" href="#pll" title="PLL">PLL</a></li><li><a class="toc-href" href="#mmcm" title="MMCM">MMCM</a></li></ul></li><li><a class="toc-href" href="#other tips_1" title="Other Tips">Other Tips</a></li><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li><li><a class="toc-href" href="#reference" title="Reference">Reference</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>关于一款芯片，最权威、最新的资料当然是厂家的官方文件。很多大牛都推荐直接阅读原厂的 datasheet 和 user guide。根据我的体验，这确实是最好的途径。原因有两个：</p>
@@ -203,7 +202,7 @@
 <p>为了时钟目的，每个 Virtex-5 系列的器件内部都被分成不同的区域（regions），随着器件的尺寸不同，最小的有 8 个区域，最大的有 24 个区域。</p>
 </li>
 <li>
-<p>全局时钟资源（Global I/O）和局部时钟资源可以完成所有的复杂的/简单的时钟要求。</p>
+<p>全局时钟资源（Global I/O）和局部时钟资源可以完成所有的复杂的 / 简单的时钟要求。</p>
 </li>
 <li>
 <p>不推荐使用其他的非时钟资源（比如局部布线资源）来完成时钟功能。</p>
@@ -239,7 +238,7 @@
 </ul>
 <h3 id="i/o clocks">I/O clocks</h3>
 <ul>
-<li>第三种时钟资源是 I/O clocks，可以达到非常高的速度，用于局部的 I/O 串行器/解串器。
+<li>第三种时钟资源是 I/O clocks，可以达到非常高的速度，用于局部的 I/O 串行器 / 解串器。
 <br/></li>
 </ul>
 <h2 id="global clocking resources_1">Global Clocking Resources</h2>
@@ -423,8 +422,8 @@
 <p>比较简单，按照需求例化上面 5 种组合方式即可。</p>
 </li>
 <li>
-<p>在综合阶段/实现阶段通过约束文件的方式实现</p>
-<p>随着综合工具/布局布线工具的不同而变化，大多数综合工具会自动分析时钟信号的扇出数目，在全局时钟资源富裕的情况下，使扇出数目最大的信号自动指定使用全局时钟资源。这时候我们必须保证满足下面的原则，否则会报错。如果不能满足，则必须在约束文件中明确声明该信号不使用全局时钟资源。</p>
+<p>在综合阶段 / 实现阶段通过约束文件的方式实现</p>
+<p>随着综合工具 / 布局布线工具的不同而变化，大多数综合工具会自动分析时钟信号的扇出数目，在全局时钟资源富裕的情况下，使扇出数目最大的信号自动指定使用全局时钟资源。这时候我们必须保证满足下面的原则，否则会报错。如果不能满足，则必须在约束文件中明确声明该信号不使用全局时钟资源。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="no">NET</span> <span class="s">"CLK"</span> <span class="no">CLOCK_DEDICATED_ROUTE</span> <span class="o">=</span> <span class="no">FALSE</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
@@ -444,11 +443,11 @@
 <p>在设计中，一般将高频率、高扇出的时钟使能信号以及高速路径上的关键信号指定为全局第二时钟信号。</p>
 </li>
 <li>
-<p>使用全局时钟资源并不占用逻辑资源，也不影响其他布线资源；第二时钟资源占用的是芯片内部的资源，占用部分逻辑资源，各个部分的布线会相互影响，所以建议在设计中逻辑占用资源不超过70%时使用。</p>
+<p>使用全局时钟资源并不占用逻辑资源，也不影响其他布线资源；第二时钟资源占用的是芯片内部的资源，占用部分逻辑资源，各个部分的布线会相互影响，所以建议在设计中逻辑占用资源不超过 70% 时使用。</p>
 </li>
 <li>
 <p><strong>使用方法</strong></p>
-<p>可以在约束编辑器中的专用约束Misc选项中，指定所选信号使用低抖动延迟资源&ldquo;Low Skew&rdquo;来指定，也可以在ucf文件中添加&ldquo;USELOWSKEWLINES"约束命令。</p>
+<p>可以在约束编辑器中的专用约束 Misc 选项中，指定所选信号使用低抖动延迟资源 &ldquo;Low Skew&rdquo; 来指定，也可以在 ucf 文件中添加 &ldquo;USELOWSKEWLINES" 约束命令。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="no">NET</span> <span class="s">"s1"</span> <span class="no">USELOWSKEWLINES</span><span class="p">;</span>
@@ -602,10 +601,10 @@
 <p>两个原语都有各自的输入输出端口、属性设置和状态标识</p>
 </li>
 <li>
-<p>DCM 可以连接到芯片上的其他时钟资源，包括专用时钟 I/O，时钟缓冲器和PLL</p>
+<p>DCM 可以连接到芯片上的其他时钟资源，包括专用时钟 I/O，时钟缓冲器和 PLL</p>
 </li>
 </ul>
-<p>==================Update (09/12/2014) 看到一篇介绍 DCM 的<a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=88967&amp;page=1">文章</a>，很有意思=================================</p>
+<p>==================Update (09/12/2014) 看到一篇介绍 DCM 的<a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=88967&amp;page=1">文章</a>，很有意思 =================================</p>
 <p><strong>About DCM</strong></p>
 <p>DCM 的内部是 DLL (Delay Lock Loop) 结构，对时钟偏移量的调节是通过长达延时线形成的。</p>
 <p>DCM 会把输入时钟 <code>clkin</code> 和 反馈时钟 <code>clkfb</code> 相比较，调节 <code>clkin</code> 和 <code>clk_1x</code> 之间的延时线的数目，直到 <code>clkin</code> 和 <code>clkfb</code> 之间的相位差等于所设置的参数 <code>PHASESHIFT</code>。如果 <code>clk_1x</code> 和 <code>clkfb</code> 不相关的话，那么就永远不能锁定了。</p>
@@ -618,29 +617,29 @@
 <p>DCM 的输出开始走线到达寄存器，这段路程导致的 skew 是永远存在的，DCM 为什么可以消除呢？</p>
 <p>答案：</p>
 <blockquote>
-<p>为说明方便起见,我们将BUFG的输出引脚叫做 <code>clk_o</code>,从 clk_o 走全局时钟布线到寄存器时叫做 <code>clk_o_reg</code>,从 clk_o 走线到 DCM 的反馈引脚 CLKFB 上时叫 <code>clkfb</code>,如上图所示。实际上 clk_o, clk_o_reg, clkfb 全部是用导线连在一起的。</p>
-<p>所谓时钟 skew,指的就是 clk_o 到 clk_o_reg 之间的延时。如果打开 FPGA_Editor 看底层的结构,就可以发现虽然 DCM 和 BUFG 离得很近,但是从 clk_o 到 clkfb 却绕了很长一段才走回来,从而导致从 clk_o 到 clk_o_reg 和 clkfb 的延时大致相等。</p>
-<p>总之就是 clk_o_reg 和 clkfb 的相位应该相等。所以当 DCM 调节 clkin 和 clkfb 的相位相等时,实际上就调节了 clkin 和 clk_o_reg 相等。而至于 clk_1x 和 clk_o 的相位必然是超前于 clkin, clkfb, clk_o_reg 的,而 clk_1x 和 clk_o 之间的延时就很明显,就是经过那个 BUFG 的延迟时间。</p>
+<p>为说明方便起见 , 我们将 BUFG 的输出引脚叫做 <code>clk_o</code>, 从 clk_o 走全局时钟布线到寄存器时叫做 <code>clk_o_reg</code>, 从 clk_o 走线到 DCM 的反馈引脚 CLKFB 上时叫 <code>clkfb</code>, 如上图所示。实际上 clk_o, clk_o_reg, clkfb 全部是用导线连在一起的。</p>
+<p>所谓时钟 skew, 指的就是 clk_o 到 clk_o_reg 之间的延时。如果打开 FPGA_Editor 看底层的结构 , 就可以发现虽然 DCM 和 BUFG 离得很近 , 但是从 clk_o 到 clkfb 却绕了很长一段才走回来 , 从而导致从 clk_o 到 clk_o_reg 和 clkfb 的延时大致相等。</p>
+<p>总之就是 clk_o_reg 和 clkfb 的相位应该相等。所以当 DCM 调节 clkin 和 clkfb 的相位相等时 , 实际上就调节了 clkin 和 clk_o_reg 相等。而至于 clk_1x 和 clk_o 的相位必然是超前于 clkin, clkfb, clk_o_reg 的 , 而 clk_1x 和 clk_o 之间的延时就很明显 , 就是经过那个 BUFG 的延迟时间。</p>
 </blockquote>
 <p><strong>对时钟 skew 的进一步讨论</strong></p>
 <blockquote>
-<p>最后,说一说时钟 skew 的概念。</p>
-<p>时钟 skew 实际上指的是时钟驱动不同的寄存器时,由于寄存器之间可能会隔得比较远,所以时钟到达不同的寄存器的时间可能会不一样,这个时间差称为 <code>时钟 skew</code> 。这种时钟 skew 可以通过 <code>时钟树</code> 来解决,也就是使时钟布线形成一种树状结构,使得时钟到每一个寄存器的距离是一样的。很多 FPGA 芯片里就布了这样的时钟树结构。也就是说,在这种芯片里,时钟 skew 基本上是不存在的。</p>
-<p>说到这里,似乎有了一个矛盾,既然时钟 skew 的问题用时钟树就解决了,</p>
+<p>最后 , 说一说时钟 skew 的概念。</p>
+<p>时钟 skew 实际上指的是时钟驱动不同的寄存器时 , 由于寄存器之间可能会隔得比较远 , 所以时钟到达不同的寄存器的时间可能会不一样 , 这个时间差称为 <code>时钟 skew</code> 。这种时钟 skew 可以通过 <code>时钟树</code> 来解决 , 也就是使时钟布线形成一种树状结构 , 使得时钟到每一个寄存器的距离是一样的。很多 FPGA 芯片里就布了这样的时钟树结构。也就是说 , 在这种芯片里 , 时钟 skew 基本上是不存在的。</p>
+<p>说到这里 , 似乎有了一个矛盾 , 既然时钟 skew 的问题用时钟树就解决了 ,</p>
 <ul>
 <li>
 <p>那么为什么还需要 DCM + BUFG 来解决这个问题？</p>
 </li>
 <li>
-<p>另外,既然时钟skew指的时时钟驱动不同寄存器之间的延时,那么上面所说的 clk_o 到 clk_o_reg 岂非不能称为时钟 skew？</p>
+<p>另外 , 既然时钟 skew 指的时时钟驱动不同寄存器之间的延时 , 那么上面所说的 clk_o 到 clk_o_reg 岂非不能称为时钟 skew？</p>
 </li>
 </ul>
-<p>先说后一个问题。在一块 FPGA 内部,时钟 skew 问题确实已经被 FPGA 的时钟方案树解决,在这个前提下 clk_o 到 clk_o_reg 充其量只能叫做 <code>时钟延时 delay</code>,而不能称之为时钟skew。</p>
+<p>先说后一个问题。在一块 FPGA 内部 , 时钟 skew 问题确实已经被 FPGA 的时钟方案树解决 , 在这个前提下 clk_o 到 clk_o_reg 充其量只能叫做 <code>时钟延时 delay</code>, 而不能称之为时钟 skew。</p>
 </blockquote>
 <p>至于第一个问题，个人不认同原博主的答案：</p>
 <blockquote>
-<p>可惜的是FPGA的设计不可能永远只在内部做事情,它必然和外部交换数据。例如从外部传过来一个32位的数据以及随路时钟,数据和随路时钟之间满足建立保持时间关系(Setup Hold time),你如何将这32位的数据接收进来？如果你不使用DCM,直接将clkin接在BUFG的输入引脚上,那么从你的clk_o_reg就必然和clkin之间有个延时,那么你的clk_o_reg还能保持和进来的数据之间的建立保持关系吗？显然不能。相反,如果你采用了DCM,接上反馈时钟,那么clk_o_reg和clkin同相,就可以利用它去锁存进来的数据。可见,DCM
-+ BUFG的方案就是为了解决这个问题。而这个时候clk_o到clk_o_reg的延时,我们可以看到做内部寄存器和其他芯片传过来的数据之间的时钟skew。</p>
+<p>可惜的是 FPGA 的设计不可能永远只在内部做事情 , 它必然和外部交换数据。例如从外部传过来一个 32 位的数据以及随路时钟 , 数据和随路时钟之间满足建立保持时间关系 (Setup Hold time), 你如何将这 32 位的数据接收进来？如果你不使用 DCM, 直接将 clkin 接在 BUFG 的输入引脚上 , 那么从你的 clk_o_reg 就必然和 clkin 之间有个延时 , 那么你的 clk_o_reg 还能保持和进来的数据之间的建立保持关系吗？显然不能。相反 , 如果你采用了 DCM, 接上反馈时钟 , 那么 clk_o_reg 和 clkin 同相 , 就可以利用它去锁存进来的数据。可见 ,DCM
++ BUFG 的方案就是为了解决这个问题。而这个时候 clk_o 到 clk_o_reg 的延时 , 我们可以看到做内部寄存器和其他芯片传过来的数据之间的时钟 skew。</p>
 </blockquote>
 <p>我认为这个答案有两个问题：</p>
 <ol>
@@ -667,7 +666,7 @@
 <h3 id="pll">PLL</h3>
 <ul>
 <li>
-<p>Virtex-5 芯片最多包含了 6 个 CMT 模块，每个 CMT 模块包含一个 PLL，PLL 主要用来广谱频率的合成，并且与 DCM 配合最为外部/内部时钟的抖动滤波器。</p>
+<p>Virtex-5 芯片最多包含了 6 个 CMT 模块，每个 CMT 模块包含一个 PLL，PLL 主要用来广谱频率的合成，并且与 DCM 配合最为外部 / 内部时钟的抖动滤波器。</p>
 </li>
 <li>
 <p>PLL 也有两个原语：PLL_BASE、PLL_ADV</p>
@@ -679,13 +678,13 @@
 <h3 id="mmcm">MMCM</h3>
 <p>不同系列的芯片内部的时钟管理模块是不同的，比如在 Virtex-5 系列后的芯片就含有了 混合模式时钟管理器 MMCM 。</p>
 <p>具体实现时该如何选择 DCM、DLL、PLL、MMCM ？找到一篇介绍 Xilinx 时钟资源的文章：</p>
-<p><a href="http://www.ednchina.com/ART_8800512846_18_20010_TA_25f01c24.HTM">如何正确使用FPGA的时钟资源</a></p>
+<p><a href="http://www.ednchina.com/ART_8800512846_18_20010_TA_25f01c24.HTM">如何正确使用 FPGA 的时钟资源</a></p>
 <p><br/></p>
 <h2 id="other tips_1">Other Tips</h2>
 <hr/>
 <ol>
 <li>
-<p>一般来说，外部提供的时钟信号都需要进行倍频/分频才可以使用，这时候需要组合各种时钟缓冲器和 DCM、PLL 等模块，我们有两种方法：</p>
+<p>一般来说，外部提供的时钟信号都需要进行倍频 / 分频才可以使用，这时候需要组合各种时钟缓冲器和 DCM、PLL 等模块，我们有两种方法：</p>
 <ol>
 <li>
 <p>代码中例化原语，手动组合各种时钟缓冲器和 DCM、PLL</p>
@@ -694,7 +693,7 @@
 <p>使用 IP core 向导，创建时钟管理器（可以发现 IP core 生成的代码就是上面 5 种组合方式）</p>
 </li>
 </ol>
-<p>个人感觉使用第二种方法应该更加简洁、方便，不容易出错吧。（如果在代码中没有明确声明使用buffer，ISE 综合属性、IP core 属性设置里面默认会给所有的输入输出自动加上缓冲器）</p>
+<p>个人感觉使用第二种方法应该更加简洁、方便，不容易出错吧。（如果在代码中没有明确声明使用 buffer，ISE 综合属性、IP core 属性设置里面默认会给所有的输入输出自动加上缓冲器）</p>
 </li>
 <li>
 <p>对 FPGA 设计而言，全局时钟是最简单最可预测的时钟，最好的时钟方案是：由专用的全局时钟输入引脚驱动单个全局时钟，并用后者去控制设计中的每个触发器。全局时钟资源是专用布线资源，存在与全铜布线层上，使用全局时钟资源不影响芯片的其他布线资源，因此在可以使用全局时钟的时候尽可能使用。</p>
@@ -711,8 +710,8 @@
 <p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发使用教程</a></p>
 <p><a href="http://book.douban.com/subject/10593491/">Xilinx FPGA 高级设计及应用</a></p>
 <p><a href="http://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B00FW1RTZG">FPGA 高手设计实战真经 100 则</a> </p>
-<p><a href="http://www.ednchina.com/ART_8800512846_18_20010_TA_25f01c24.HTM">如何正确使用FPGA的时钟资源</a></p>
-<p><a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=88967&amp;page=1">FPGA DCM时钟管理单元的理解</a></p>
+<p><a href="http://www.ednchina.com/ART_8800512846_18_20010_TA_25f01c24.HTM">如何正确使用 FPGA 的时钟资源</a></p>
+<p><a href="http://bbs.eeworld.com.cn/forum.php?mod=viewthread&amp;tid=88967&amp;page=1">FPGA DCM 时钟管理单元的理解</a></p>
   </div>
   <div class="tag-cloud">
     <p>

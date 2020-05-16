@@ -174,14 +174,13 @@
     <p>
       Posted on 2014-09-02 23:12 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 3 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="Xilinx FFT IP core 笔记">Xilinx FFT IP core 笔记</a><ul><li><a class="toc-href" href="#timing" title="Timing">Timing</a><ul><li><a class="toc-href" href="#start / rfd port" title="START / RFD port">START / RFD port</a></li><li><a class="toc-href" href="#rfd / dv port" title="RFD / DV port">RFD / DV port</a></li></ul></li><li><a class="toc-href" href="#port_1" title="Port">Port</a><ul><li><a class="toc-href" href="#nfft port" title="NFFT port">NFFT port</a></li><li><a class="toc-href" href="#cp port" title="CP port">CP port</a></li><li><a class="toc-href" href="#fft/ ifft" title="FFT/ IFFT">FFT/ IFFT</a></li></ul></li><li><a class="toc-href" href="#p.s. test program_1" title="P.S. Test program">P.S. Test program</a><ul><li><a class="toc-href" href="#fft ip core" title="FFT IP core">FFT IP core</a></li><li><a class="toc-href" href="#matlab" title="Matlab">Matlab</a></li><li><a class="toc-href" href="#conclusion" title="Conclusion">Conclusion</a></li></ul></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>关于 FFT 的背景介绍就不再赘述，通原书和网上的教程、课件很多；关于这个 IP 核的介绍也就不再粘贴复制了，原版的 datasheet 必然是最全面的，仅记录我的使用时遇到的问题和需要注意到细节。</p>
@@ -264,7 +263,7 @@
 <h3 id="cp port"><code>CP</code> port</h3>
 <p>这个 FFT core 专门提供了一个端口可以设置循环前缀的长度，循环前缀 (cyclic prefix) 在通信中（尤其是 OFDM）是很有用的。</p>
 <p>在向导中设置了 cyclic prefix insertion，并且在程序重配置时设置了 CP length = 10，但是仿真结果却没有出现 CP，和 CP = 0 时的结果相同。</p>
-<p><strong>仔细看了两遍程序和 datasheet，没有发现问题...待解决！</strong></p>
+<p><strong>仔细看了两遍程序和 datasheet，没有发现问题 ... 待解决！</strong></p>
 <p><strong>Update 09/03/2014</strong></p>
 <p>又仔细看了两遍 datasheet，终于发现了原因所在。在关于 CP length 部分，最有一小段话一直被我匆匆忽略了：</p>
 <blockquote>
@@ -281,7 +280,7 @@
 <p>datasheet 中介绍，控制正反变换的信号一共有两个：<code>fwd_inv</code> 和 <code>fwd_inv_we</code>。前者取 1 时为 FFT，取 0 为 IFFT；后者是前者的写使能信号。</p>
 <p>因为 FFT 的程序可以正常工作，说明程序逻辑是没有问题的。但是只配置这两个端口，就是有问题。自己研究无果，只能 Google，还真的找到以前有人也遇到同样的问题，并且给出了解决方法（不得不说，还是 Google 好，某度搜出来的结果都是广告和没有用的链接）</p>
 <p><a href="http://forums.xilinx.com/t5/Digital-Signal-Processing-IP-and/IFFT-of-FFT-module-does-not-work/td-p/71555">IFFT of FFT module does not work</a></p>
-<p><a href="http://myfpgablog.blogspot.com/2009/11/ifft-in-system-generator.html">IFFT in System Generator (blogspot 需翻墙)</a></p>
+<p><a href="http://myfpgablog.blogspot.com/2009/11/ifft-in-system-generator.html">IFFT in System Generator (blogspot 需翻墙 )</a></p>
 <p>转原博客部分内容：</p>
 <blockquote>
 <p>By default, the FFT block is configured to calculate DFT. The setup and timing of control/data signals for IDFT are the same as DFT except for two things:</p>

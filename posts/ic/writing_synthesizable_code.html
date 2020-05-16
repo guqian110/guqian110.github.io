@@ -174,32 +174,31 @@
     <p>
       Posted on 2014-04-04 01:35 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 2 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="编写可综合的 Verilog HDL 代码">编写可综合的 Verilog HDL 代码</a><ul><li><a class="toc-href" href="#hdl" title="HDL">HDL</a></li><li><a class="toc-href" href="#ke zong he dai ma" title="可综合代码">可综合代码</a><ul><li><a class="toc-href" href="#suo you zong he gong ju du zhi chi de yu fa :" title="所有综合工具都支持的语法：">所有综合工具都支持的语法：</a></li><li><a class="toc-href" href="#you xie gong ju zhi chi ,you xie gong ju bu zhi chi de yu fa :" title="有些工具支持，有些工具不支持的语法：">有些工具支持，有些工具不支持的语法：</a></li><li><a class="toc-href" href="#jian li ke zong he mo kuai de yuan ze" title="建立可综合模块的原则">建立可综合模块的原则</a></li></ul></li><li><a class="toc-href" href="#bu ke zong he dai ma_1" title="不可综合代码">不可综合代码</a><ul><li><a class="toc-href" href="#bu ke zong he yu fa :" title="不可综合语法：">不可综合语法：</a></li></ul></li><li><a class="toc-href" href="#pan duan shi fou ke zong he_1" title="判断是否可综合">判断是否可综合</a></li><li><a class="toc-href" href="#can kao" title="参考">参考</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>对电路建模方法有很多种，可以用绘制原理图，也可以用 <em>硬件描述语言（Hardware Description Language）</em> 建模 。硬件描述语言中最常用的就是 Verlilog 和 VHDL 。</p>
-<p>Verilog HDL和VHDL相比有很多优点，有C语言基础的话很容易上手。搜集了一些网上大神的经验总结和书上的例子，所以对于和我一样的初学者，这篇博客应该还是很有提高作用的，至于具体语法，任何一本书都讲的很详细。</p>
+<p>Verilog HDL 和 VHDL 相比有很多优点，有 C 语言基础的话很容易上手。搜集了一些网上大神的经验总结和书上的例子，所以对于和我一样的初学者，这篇博客应该还是很有提高作用的，至于具体语法，任何一本书都讲的很详细。</p>
 <h2 id="hdl">HDL</h2>
 <hr/>
 <p>从网上找到一篇文章，把 HDL 的历史说的非常清楚。</p>
 <p>作者 董培良 </p>
-<p>题目： <a href="http://www.dzkf.cn/html/EDAjishu/2006/0720/9.html">浅谈VHDL/Verilog的可综合性以及对初学者的一些建议</a></p>
-<p>首先要明确的是 VHDL 和 Verilog 并非是针对硬件设计而开发的语言，只不过目前被我们用来设计硬件。HDL 是 Hardware <strong>Description</strong> Language 的缩写，正式中文名称是 &ldquo;硬件描述语言&rdquo;。也就是说，HDL 并不是 &ldquo;硬件设计语言（Hardware <strong>Design</strong> Language）&rdquo;。别看只差这一个单词，正是这一个单词才决定了绝大部分电路设计必须遵循RTL的模式来编写代码，而不能随心所欲得写仅仅符合语法的 HDL 代码。</p>
+<p>题目： <a href="http://www.dzkf.cn/html/EDAjishu/2006/0720/9.html">浅谈 VHDL/Verilog 的可综合性以及对初学者的一些建议</a></p>
+<p>首先要明确的是 VHDL 和 Verilog 并非是针对硬件设计而开发的语言，只不过目前被我们用来设计硬件。HDL 是 Hardware <strong>Description</strong> Language 的缩写，正式中文名称是 &ldquo; 硬件描述语言 &rdquo;。也就是说，HDL 并不是 &ldquo; 硬件设计语言（Hardware <strong>Design</strong> Language）&rdquo;。别看只差这一个单词，正是这一个单词才决定了绝大部分电路设计必须遵循 RTL 的模式来编写代码，而不能随心所欲得写仅仅符合语法的 HDL 代码。</p>
 <p>VHDL 于 1980 年开始在美国国防部的指导下开发，完成于 1983 年，并于 1987 年成为 IEEE 的标准。当初开发这种语言，是出于美国国防部采购电子设备的需要。美军的装备采购自私人企业，时常要面对这样一种风险：如果某种武器大量装备部队，而其中某个零件的供应商却在几年后倒闭了，那这种武器的再生产、维修和保养都会出现大问题。而电子设备、尤其是集成电路的内部结构较为复杂，若出现前面所说的情况要找其他公司生产代用品非常困难。于是美国防部希望供应商能以某种形式留下其产品的信息，以保证一旦其破产后能由其他厂商迅速生产出代用品。</p>
-<p>显然，当初的设计文档显然是不能交出来的，这在美国会涉及商业机密和知识产权问题。于是美国防部就想出了一种折衷的方法&mdash;&mdash;描述硬件的语言，也就是 VHDL 。通过 VHDL，供应商要把自己生产的集成电路芯片的行为描述出来：比如说，加了什么样的信号后过多少时间它能输出什么等等。这样，如果有必要让其他厂商生产代用品，他们只需照着 VHDL 文档，设计出行为与其相同的芯片即可。这样的代用品相当于是新厂商在不了解原产品结构的情况下独立设计的，所以不太会涉及知识侵权。</p>
+<p>显然，当初的设计文档显然是不能交出来的，这在美国会涉及商业机密和知识产权问题。于是美国防部就想出了一种折衷的方法 &mdash;&mdash; 描述硬件的语言，也就是 VHDL 。通过 VHDL，供应商要把自己生产的集成电路芯片的行为描述出来：比如说，加了什么样的信号后过多少时间它能输出什么等等。这样，如果有必要让其他厂商生产代用品，他们只需照着 VHDL 文档，设计出行为与其相同的芯片即可。这样的代用品相当于是新厂商在不了解原产品结构的情况下独立设计的，所以不太会涉及知识侵权。</p>
 <p>Verilog HDL 也形成于差不多的年代，是由 Gateway Design Automation 公司大约在 1983 年左右开发的。其架构同 VHDL 相似，但主要被用来进行硬件仿真。或许私人公司更注重实用，Verilog 要比 VHDL 简洁得多。</p>
-<p>由此可见，这两种最流行的用于电路设计的语言，没有一种是为了设计硬件而开发的（更何况 80 年代还没有现在的那些功能强大的EDA软件呢）。因此，当初制订 HDL 语言标准的时候，并没有考虑这些代码如何用硬件来实现。换句话说，有些代码写起来简单，实现起来却可能非常复杂，或者几乎不可能实现。</p>
+<p>由此可见，这两种最流行的用于电路设计的语言，没有一种是为了设计硬件而开发的（更何况 80 年代还没有现在的那些功能强大的 EDA 软件呢）。因此，当初制订 HDL 语言标准的时候，并没有考虑这些代码如何用硬件来实现。换句话说，有些代码写起来简单，实现起来却可能非常复杂，或者几乎不可能实现。</p>
 <p><br/></p>
 <h2 id="ke zong he dai ma">可综合代码</h2>
 <hr/>
-<p>任何符合 HDL 语法标准的代码都是对硬件行为的一种描述，但不一定是可直接对应成电路的设计信息。行为描述可以基于不同的层次，如系统级，算法级，寄存器传输级(RTL)、门级等等。以目前大部分EDA软件的综合能力来说，<strong>只有RTL或更低层次的行为描述才能保证是可综合的</strong>。而众多初学者试图做的，却是想让软件去综合 <em>算法级或者更加抽象的硬件行为描述</em>。</p>
+<p>任何符合 HDL 语法标准的代码都是对硬件行为的一种描述，但不一定是可直接对应成电路的设计信息。行为描述可以基于不同的层次，如系统级，算法级，寄存器传输级 (RTL)、门级等等。以目前大部分 EDA 软件的综合能力来说，<strong>只有 RTL 或更低层次的行为描述才能保证是可综合的</strong>。而众多初学者试图做的，却是想让软件去综合 <em>算法级或者更加抽象的硬件行为描述</em>。</p>
 <h3 id="suo you zong he gong ju du zhi chi de yu fa :">所有综合工具都支持的语法：</h3>
 <div class="highlight"><pre><span></span>    <span class="k">always</span><span class="p">,</span> <span class="k">assign</span><span class="p">,</span> <span class="k">begin</span><span class="p">,</span> <span class="k">end</span><span class="p">,</span> 
     <span class="kt">wire</span><span class="p">,</span> <span class="kt">tri</span><span class="p">,</span> <span class="k">inout</span><span class="p">,</span> <span class="n">aupply0</span><span class="p">,</span> <span class="kt">supply1</span><span class="p">,</span> <span class="k">input</span><span class="p">,</span> <span class="kt">reg</span><span class="p">,</span> <span class="k">integer</span><span class="p">,</span> <span class="k">default</span><span class="p">,</span> 
@@ -312,7 +311,7 @@
 <p>所以，正确的判断仍然要靠实践来积累经验。当你可以较准确判断代码的可综合性的时候，你对 HDL 的掌握就算完全入门了。</p>
 <p><br/></p>
 <h2 id="can kao">参考</h2>
-<p><a href="http://www.dzkf.cn/html/EDAjishu/2006/0720/9.html">浅谈VHDL/Verilog的可综合性以及对初学者的一些建议</a></p>
+<p><a href="http://www.dzkf.cn/html/EDAjishu/2006/0720/9.html">浅谈 VHDL/Verilog 的可综合性以及对初学者的一些建议</a></p>
   </div>
   <div class="tag-cloud">
     <p>
@@ -334,9 +333,9 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../../posts/ic/fsm_design.html">有限状态机 FSM 设计</a></li>
-      <li><a href="../../posts/ic/verilog_hdl_coding_style_guide.html">Verilog HDL coding style</a></li>
       <li><a href="../../posts/ic/doxygen_for_verilog.html">针对 Verilog 的 Doxygen</a></li>
+      <li><a href="../../posts/ic/verilog_hdl_coding_style_guide.html">Verilog HDL coding style</a></li>
+      <li><a href="../../posts/ic/fsm_design.html">有限状态机 FSM 设计</a></li>
     </ul>
   </div>
 

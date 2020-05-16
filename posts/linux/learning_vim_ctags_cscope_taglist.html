@@ -176,14 +176,13 @@
     <p>
       Posted on 2015-01-25 21:32 in <a href="../../category/linux.html">Linux</a>
 
-        &#8226; 5 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Vim 之 Ctags/Cscope/Taglist">学习 Vim 之 Ctags/Cscope/Taglist</a><ul><li><a class="toc-href" href="#background" title="Background">Background</a></li><li><a class="toc-href" href="#ctags" title="Ctags">Ctags</a><ul><li><a class="toc-href" href="#intro" title="Intro">Intro</a></li><li><a class="toc-href" href="#install" title="Install">Install</a></li><li><a class="toc-href" href="#config" title="Config">Config</a></li><li><a class="toc-href" href="#usage" title="Usage">Usage</a></li></ul></li><li><a class="toc-href" href="#cscope_1" title="Cscope">Cscope</a><ul><li><a class="toc-href" href="#intro_1" title="Intro">Intro</a></li><li><a class="toc-href" href="#install_1" title="Install">Install</a></li><li><a class="toc-href" href="#usage_1" title="Usage">Usage</a></li><li><a class="toc-href" href="#config_1" title="Config">Config</a></li></ul></li><li><a class="toc-href" href="#taglist_1" title="Taglist">Taglist</a><ul><li><a class="toc-href" href="#intro_2" title="Intro">Intro</a></li><li><a class="toc-href" href="#install_2" title="Install">Install</a></li><li><a class="toc-href" href="#config_2" title="Config">Config</a></li><li><a class="toc-href" href="#usage_2" title="Usage">Usage</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <h2 id="background">Background</h2>
@@ -195,7 +194,7 @@
 <p>使用 tags 文件的步骤：</p>
 <ol>
 <li>
-<p>首先使用 tag 工具（ctags、cscope等）生成 tags 文件</p>
+<p>首先使用 tag 工具（ctags、cscope 等）生成 tags 文件</p>
 </li>
 <li>
 <p>其次，将 tags 文件路径导入到 Vim 中，让 Vim 知道从哪个 tags 文件中查找。</p>
@@ -228,7 +227,7 @@
 </pre></div>
 <h3 id="config">Config</h3>
 <p>我们要使用 tags，第一步就是生成 tags 文件。生成 tags 文件时，ex-ctags 提供了很多参数供我们控制生成结果，详细内容可以查看其 manpage，这里有 easwy 大神翻译的中文版：</p>
-<p><a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/">Exuberant Ctags中文手册</a></p>
+<p><a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/">Exuberant Ctags 中文手册</a></p>
 <p>我们可以将配置写在 .vimrc 中：</p>
 <div class="highlight"><pre><span></span> <span class="k">set</span> <span class="n">tags</span> <span class="o">=</span><span class="n">tags</span><span class="p">;</span>
  <span class="k">map</span> <span class="o">&lt;</span><span class="k">C</span><span class="o">-</span><span class="n">F12</span><span class="o">&gt;</span> <span class="p">:</span><span class="o">!</span><span class="n">ctags</span> <span class="o">-</span><span class="n">R</span> <span class="c1">--c++-kinds=+p --fields=+iaS --extra=+q .&lt;CR&gt;</span>
@@ -399,7 +398,7 @@
 </ol>
 <h3 id="config_1">Config</h3>
 <p>Vim 的 cscope 接口提供了一些参数，可以让我们更加灵活地使用 cscope，可以用 <code>help if_cscop</code> 来查看完整的说明，这里有一份前辈翻译的中文版</p>
-<p><a href="http://blog.csdn.net/dengxiayehu/article/details/6330200">Cscope的使用（领略Vim + Cscope的强大魅力）</a></p>
+<p><a href="http://blog.csdn.net/dengxiayehu/article/details/6330200">Cscope 的使用（领略 Vim + Cscope 的强大魅力）</a></p>
 <p>下面我找了几个常用的选项：</p>
 <ol>
 <li>
@@ -508,7 +507,7 @@ you to efficiently browse through source code files for different programming la
 <p><code>+</code> 打开一个折叠</p>
 </li>
 <li>
-<p><code>x</code> taglist 窗口放大/缩小，方便查看 tag</p>
+<p><code>x</code> taglist 窗口放大 / 缩小，方便查看 tag</p>
 </li>
 <li>
 <p><code>u</code> 更新 taglist</p>
@@ -521,14 +520,14 @@ you to efficiently browse through source code files for different programming la
 <p>配合另外一个窗口管理插件 winmanager，我们可以将我们的 Vim 打造成一个伪 IDE :D</p>
 <p><br/></p>
 <h2 id="ref_1">Ref</h2>
-<p><a href="http://blog.csdn.net/alexdboy/article/details/3871707">ctags的使用及相关参数介绍</a></p>
-<p><a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/">Exuberant Ctags中文手册</a></p>
-<p><a href="http://easwy.com/blog/archives/advanced-vim-skills-use-ctags-tag-file/">vi/vim使用进阶: 使用标签(tag)文件</a></p>
+<p><a href="http://blog.csdn.net/alexdboy/article/details/3871707">ctags 的使用及相关参数介绍</a></p>
+<p><a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/">Exuberant Ctags 中文手册</a></p>
+<p><a href="http://easwy.com/blog/archives/advanced-vim-skills-use-ctags-tag-file/">vi/vim 使用进阶 : 使用标签 (tag) 文件</a></p>
 <p><a href="http://cscope.sourceforge.net/">cscope 官网</a></p>
 <p><a href="http://en.wikipedia.org/wiki/Cscope">cscope wiki</a></p>
-<p><a href="http://blog.csdn.net/dengxiayehu/article/details/6330200">Cscope的使用（领略Vim + Cscope的强大魅力）</a></p>
+<p><a href="http://blog.csdn.net/dengxiayehu/article/details/6330200">Cscope 的使用（领略 Vim + Cscope 的强大魅力）</a></p>
 <p><a href="http://www.vim.org/scripts/script.php?script_id=273">Taglist 官网</a></p>
-<p><a href="http://easwy.com/blog/archives/advanced-vim-skills-taglist-plugin/">vi/vim使用进阶: 使用taglist插件</a></p>
+<p><a href="http://easwy.com/blog/archives/advanced-vim-skills-taglist-plugin/">vi/vim 使用进阶 : 使用 taglist 插件</a></p>
   </div>
   <div class="tag-cloud">
     <p>
@@ -552,11 +551,11 @@ you to efficiently browse through source code files for different programming la
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../../posts/linux/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
+      <li><a href="../../posts/linux/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
       <li><a href="../../posts/linux/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
+      <li><a href="../../posts/linux/learning_vim_save_project_configuration.html">学习 Vim 保存项目设置</a></li>
+      <li><a href="../../posts/linux/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="../../posts/linux/learning_vim_vundle.html">学习 Vim 使用 Vundle 管理插件</a></li>
-      <li><a href="../../posts/linux/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-      <li><a href="../../posts/linux/learning_vim_bufexplorer_nerdtree_winmanager_powerline.html">学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件</a></li>
     </ul>
   </div>
 

@@ -174,14 +174,13 @@
     <p>
       Posted on 2014-06-05 17:55 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 5 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="有限状态机 FSM 设计">有限状态机 FSM 设计</a><ul><li><a class="toc-href" href="#what is fsm" title="What is FSM">What is FSM</a></li><li><a class="toc-href" href="#how to design a fsm" title="How to Design a FSM">How to Design a FSM</a></li><li><a class="toc-href" href="#how to implement a fsm" title="How to implement a FSM">How to implement a FSM</a><ul><li><a class="toc-href" href="#coding goals" title="Coding goals">Coding goals</a></li><li><a class="toc-href" href="#template" title="Template">Template</a></li><li><a class="toc-href" href="#always block" title="Always Block">Always Block</a></li><li><a class="toc-href" href="#localparam" title="localparam">localparam</a></li><li><a class="toc-href" href="#reset" title="Reset">Reset</a></li><li><a class="toc-href" href="#state encode" title="State encode">State encode</a></li><li><a class="toc-href" href="#safe fsm" title="Safe FSM">Safe FSM</a></li><li><a class="toc-href" href="#case(cs)" title="case(CS)">case(CS)</a></li><li><a class="toc-href" href="#ouput" title="Ouput">Ouput</a></li><li><a class="toc-href" href="#case (ns) vs case (cs)" title="case (NS) vs case (CS)">case (NS) vs case (CS)</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>有限状态机是数字电路中经常出现、非常重要的电路，设计一个安全、高效的状态机有一套程序化的方法，我们在数字电路课中就学习过了。搬运以前写的博客，总结一下相关知识，温故而知新～</p>
@@ -192,7 +191,7 @@
 <hr/>
 <p><a href="http://en.wikipedia.org/wiki/Finite-state_machine">FSM on wiki</a></p>
 <p><strong>有限状态机 (Finite State Machine, FSM)</strong> 有时候也简称为<strong>状态机 (state machine)</strong>，它是一种数学模型，通常用来设计电脑程序或者时序电路。它被构思设计为一个抽象的机器，并且某个时刻只能处于一个有限数字代表的状态之下。</p>
-<p>有限状态自动机在很多不同领域中是重要的，包括电子工程、语言学、计算机科学、哲学、生物学、数学和逻辑学。有限状态机是在自动机理论和计算理论中研究的一类自动机。在计算机科学中，有限状态机被广泛用于建模应用行为、硬件电路系统设计、软件工程，编译器、网络协议、和计算与语言的研究。(这里讨论的只限于电子工程里的状态机)</p>
+<p>有限状态自动机在很多不同领域中是重要的，包括电子工程、语言学、计算机科学、哲学、生物学、数学和逻辑学。有限状态机是在自动机理论和计算理论中研究的一类自动机。在计算机科学中，有限状态机被广泛用于建模应用行为、硬件电路系统设计、软件工程，编译器、网络协议、和计算与语言的研究。( 这里讨论的只限于电子工程里的状态机 )</p>
 <p><strong>组成元素：</strong>输入、状态、状态转移条件、输出</p>
 <p><strong>描述方式：</strong></p>
 <ul>
@@ -220,8 +219,8 @@
 <p>关于如何设计一个状态机，这在数字电路和逻辑设计的书里有详细介绍。简单地总结一下步骤：</p>
 <ol>
 <li>逻辑抽象，建立原始状态转移图：确定输入、输出、状态变量、画状态转移图</li>
-<li>状态简化，得到最简的状态转移图(卡诺图)</li>
-<li>状态分配，选择编码方案(Binary、Gray、One-Hot)</li>
+<li>状态简化，得到最简的状态转移图 ( 卡诺图 )</li>
+<li>状态分配，选择编码方案 (Binary、Gray、One-Hot)</li>
 <li>画逻辑图，检查能否自启动，得到了最终的状态机模型</li>
 </ol>
 <p><br/></p>
@@ -415,7 +414,7 @@
 <p>下面逐个讨论为什么这么写，以及需要注意的问题。</p>
 <h3 id="always block">Always Block</h3>
 <p>状态机一般有三种写法，他们在速度、面积、代码可维护性等各个方面互有优劣。</p>
-<p><strong>一段式：</strong> 只有一个always block，把所有的逻辑（输入、输出、状态）都在一个always block中实现</p>
+<p><strong>一段式：</strong> 只有一个 always block，把所有的逻辑（输入、输出、状态）都在一个 always block 中实现</p>
 <ul>
 <li>
 <p>优点：看起来很简洁</p>
@@ -425,7 +424,7 @@
 </li>
 </ul>
 <p>不推荐这种方法，但是在简单的状态机可以使用。</p>
-<p><strong>二段式：</strong> 有两个always block，把时序逻辑和组合逻辑分隔开来。时序逻辑里进行当前状态和下一状态的切换，组合逻辑实现各个输入、输出以及状态判断。</p>
+<p><strong>二段式：</strong> 有两个 always block，把时序逻辑和组合逻辑分隔开来。时序逻辑里进行当前状态和下一状态的切换，组合逻辑实现各个输入、输出以及状态判断。</p>
 <ul>
 <li>
 <p>优点：便于阅读、理解、维护，而且利于综合器优化代码，利于用户添加合适的时序约束条件，利于布局布线器实现设计</p>
@@ -435,7 +434,7 @@
 </li>
 </ul>
 <p>解决输出毛刺的问题，最简单的方法就是用寄存器打一拍，但很多情况不允许插入寄存器节拍，此时使用三段式描述。其优势在于能够根据状态转移规律，在上一状态根据输入条件判断出当前状态的输出，从而不需要额外插入时钟节拍。</p>
-<p><strong>三段式：</strong> 有三个always block，一个时序逻辑采用同步时序的方式描述状态转移，一个采用组合逻辑的方式判断状态转移条件、描述状态转移规律，第三个模块使用同步时序的方式描述每个状态的输出。这 3 个 always block 正好对应图示的 3 个子模块，更加容易理解。</p>
+<p><strong>三段式：</strong> 有三个 always block，一个时序逻辑采用同步时序的方式描述状态转移，一个采用组合逻辑的方式判断状态转移条件、描述状态转移规律，第三个模块使用同步时序的方式描述每个状态的输出。这 3 个 always block 正好对应图示的 3 个子模块，更加容易理解。</p>
 <ul>
 <li>
 <p>优点：代码容易维护，时序逻辑的输出解决了两段式组合逻辑的毛刺问题</p>
@@ -445,7 +444,7 @@
 </li>
 </ul>
 <p><strong>一段 or 三段？</strong></p>
-<p>一般来说，三段式的效果更好，唯一的缺点是占用的资源稍微多一点(对于拥有丰富的触发器资源的 FPGA 来说，这个缺点可以忽略吧)。所以除非是非常简单的状态机用一段式实现，其他情况下三段式更简单。</p>
+<p>一般来说，三段式的效果更好，唯一的缺点是占用的资源稍微多一点 ( 对于拥有丰富的触发器资源的 FPGA 来说，这个缺点可以忽略吧 )。所以除非是非常简单的状态机用一段式实现，其他情况下三段式更简单。</p>
 <h3 id="localparam">localparam</h3>
 <p>尽量使用 <code>localparam</code> 而不是 <code>define</code> 和 <code>parameter</code>。这个原则不仅仅限于 FSM，其他模块也应该遵守。</p>
 <p><strong>Reason</strong></p>
@@ -459,11 +458,11 @@
 </ul>
 <p>综上，使用 <code>localparam</code> 是更好的选择。</p>
 <h3 id="reset">Reset</h3>
-<p>FPGA 上电时，GSR(Global Set/Reset) 拉高，对所有 寄存器/RAM 进行复位，此时配置于 FPGA 的逻辑并未生效，所以不能保证 FSM 进入正确的初始化状态。</p>
+<p>FPGA 上电时，GSR(Global Set/Reset) 拉高，对所有 寄存器 /RAM 进行复位，此时配置于 FPGA 的逻辑并未生效，所以不能保证 FSM 进入正确的初始化状态。</p>
 <p><strong>解决方法：</strong></p>
 <ol>
 <li>
-<p>一般，FSM 使用用户定义的复位(同步 or 异步)。</p>
+<p>一般，FSM 使用用户定义的复位 ( 同步 or 异步 )。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -485,7 +484,7 @@
 </td></tr></table>
 </li>
 <li>
-<p>还有一种方法，是将初始状态编码为全 0 (带 0 的 One-Hot 编码方式)，这样当 GSR 复位后，状态机自动进入初始状态。</p>
+<p>还有一种方法，是将初始状态编码为全 0 ( 带 0 的 One-Hot 编码方式 )，这样当 GSR 复位后，状态机自动进入初始状态。</p>
 </li>
 </ol>
 <h3 id="state encode">State encode</h3>
@@ -532,7 +531,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>non-index one-hot style:</p>
 <p><a href="https://github.com/guqian110/guqian110.github.io/blob/master/files/fsm_non_index.v">non-index.v</a></p>
 <p><img alt="non-index" src="/images/fsm-design/non_index_summary.png"/></p>
-<p>========================分割线=============================</p>
+<p>======================== 分割线 =============================</p>
 <p>使用 XST 综合上面的 index one-hot + reverse case 风格的 FSM，结果 XST 并没有识别出 FSM，而 Synplify 我没有破解版本，只能作罢 =.=</p>
 <p>虽然 XST 没有识别出 non-index 的 FSM，但是 Modelsim 是可以识别出来的，可以在 Modelsim 中查看最终综合出来的 FSM 如下：</p>
 <p><img alt="diagram" src="/images/fsm-design/state_diagram.png"/></p>
@@ -684,11 +683,11 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <span class="k">end</span>
 </pre></div>
 </td></tr></table>
-<p>========================分割线=============================</p>
+<p>======================== 分割线 =============================</p>
 <h3 id="safe fsm">Safe FSM</h3>
-<p>所谓 &ldquo;安全&rdquo; 的状态机，就是说即使因为某些意外原因，状态机跑飞了，仍然可以自动回复到正常状态。</p>
+<p>所谓 &ldquo; 安全 &rdquo; 的状态机，就是说即使因为某些意外原因，状态机跑飞了，仍然可以自动回复到正常状态。</p>
 <p><strong>举例：可能出现的不安全情况</strong></p>
-<p>比如，我们采用 One-Hot 编码方式，对于 8 个状态，总共使用了 8 bit 的寄存器，那么这个状态寄存器向量可以取到的值一共有 <code>2^8 = 256</code> 种。如果我们只对需要的 8 种状态进行了说明，而忽略了剩余的 248 种，此时综合工具(Synplify、XST)会对设计进行 &ldquo;优化&rdquo;，将没有用到的状态去掉。但是，有时候这种 &ldquo;优化&rdquo; 反而不好，如果状态机进入未定义的全 0 状态，那么它就会卡在这个未定义的状态，无法自动回复正常工作状态。</p>
+<p>比如，我们采用 One-Hot 编码方式，对于 8 个状态，总共使用了 8 bit 的寄存器，那么这个状态寄存器向量可以取到的值一共有 <code>2^8 = 256</code> 种。如果我们只对需要的 8 种状态进行了说明，而忽略了剩余的 248 种，此时综合工具 (Synplify、XST) 会对设计进行 &ldquo; 优化 &rdquo;，将没有用到的状态去掉。但是，有时候这种 &ldquo; 优化 &rdquo; 反而不好，如果状态机进入未定义的全 0 状态，那么它就会卡在这个未定义的状态，无法自动回复正常工作状态。</p>
 <p><strong>解决方法</strong></p>
 <p>有两种方法：</p>
 <ol>
@@ -705,12 +704,12 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>这里应该赋值 <code>8'bx</code> 更合理，因为状态机上电时处于未知状态，所以应该赋值 <code>x</code> 更符合实际，但是这样赋值必须有个条件，就是必须所有的状态编码都全部被使用了，不然就会出现锁死现象，FSM 无法返回工作状态。我们前面使用的是 One-Hot 编码方式，有大量无效状态，所以这里不能赋值为 <code>x</code>。</p>
 </li>
 <li>
-<p>XST支持状态机编码的完备属性 &mdash;&mdash; <code>case implementation style</code></p>
+<p>XST 支持状态机编码的完备属性 &mdash;&mdash; <code>case implementation style</code></p>
 <p>但是这个设置可能会导致前后仿真不一致的问题，一般不使用。我们应该在代码中满足条件，而不是依靠综合工具。</p>
 <p>XST 的选项 <code>safe implementation</code> 值默认为 <code>None</code>，如果应用环境要求 FSM 必须能恢复任何错误，比如航天、医疗、汽车等，这时我们可以打开这个设置，这时综合工具会添加额外的逻辑，保证 FSM 可以从无效状态恢复过来。</p>
 </li>
 </ol>
-<p>即使使用第一种方法，似乎我们的状态机已经是 perfect 了，但是真的是这样么？考虑这种情况：一个状态机有 8 个状态，采用 One-Hot 编码方式，代码含有 <code>default</code> 分支处理未定义的状态向量可能取到的值。现在把这个状态机放在卫星中，接受宇宙射线的辐射，导致状态向量的值发生了变化，进入了无效状态，然后状态机自动恢复到正常状态(Good Job)，但是！状态机的外围电路并没有随着状态机恢复，它还在等 FSM 输出某个信号呢。</p>
+<p>即使使用第一种方法，似乎我们的状态机已经是 perfect 了，但是真的是这样么？考虑这种情况：一个状态机有 8 个状态，采用 One-Hot 编码方式，代码含有 <code>default</code> 分支处理未定义的状态向量可能取到的值。现在把这个状态机放在卫星中，接受宇宙射线的辐射，导致状态向量的值发生了变化，进入了无效状态，然后状态机自动恢复到正常状态 (Good Job)，但是！状态机的外围电路并没有随着状态机恢复，它还在等 FSM 输出某个信号呢。</p>
 <p><strong>所以，仅仅是回到正常状态并不够，最好的设计应该有个错误状态专门来与外围电路通信，当 FSM 进入错误状态时，外围电路会检测到这个错误状态，并采取合适的措施（如重启、复位 FSM）。</strong></p>
 <p>结合上面讨论的 index one-hot 编码方式，就有了两种方案：</p>
 <ol>
@@ -751,7 +750,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>下面根据状态编码方案分类讨论：</p>
 <ol>
 <li>
-<p>如果使用 &ldquo;非 index one-hot + 非 reverse case&rdquo; 的方法，那么在第二个 always block 中，在 case 前给 NS 一个默认值（如下）</p>
+<p>如果使用 &ldquo; 非 index one-hot + 非 reverse case&rdquo; 的方法，那么在第二个 always block 中，在 case 前给 NS 一个默认值（如下）</p>
 <div class="highlight"><pre><span></span><span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">'</span><span class="n">bx</span><span class="p">;</span>
 </pre></div>
 <p>这是个很有用的小技巧，它可以帮助我们在综合前发现状态是否完备：如果状态完备，则在下面的 <code>case</code> 中会给 <code>NS</code> 合适的值；如果状态不完备，则状态机会进入错误状态，输出不定，仿真时可以很快的发现。而且，综合工具对于 <code>x</code> 采取的态度是 <code>don't care</code>，综合时会自动将其忽略，生成的电路最简洁。</p>
@@ -832,7 +831,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>就可以提前判断下一状态的输出，节省了一个节拍，使输出和状态变化同步。</p>
 <p><strong>example</strong></p>
 <p>设计一个简单的 FSM，测试使用 <code>case(CS)</code> 和 <code>case(NS)</code> 的结果：</p>
-<p>FSM 设计：一共有 4 个状态(IDLE、S1、S2、S3)，只有一个输入(<code>jump</code> 信号)，两个输出(<code>dout_p</code>、<code>dout_q</code>)。</p>
+<p>FSM 设计：一共有 4 个状态 (IDLE、S1、S2、S3)，只有一个输入 (<code>jump</code> 信号 )，两个输出 (<code>dout_p</code>、<code>dout_q</code>)。</p>
 <p>跳转规律：状态机开始处于 IDLE 状态，当 jump 变高时，从 IDLE 跳转到 S1 状态，同时内部的一个 4 bit 计数器开始计数，当计数到 <code>4'b1111</code> 时，跳转到 S2，当再次计数到 <code>4'b1111</code> 时跳转到 S3，当再次计数到 <code>4'b1111</code> 时，跳转到 IDLE，等待 jump 再次变高。状态转移图：</p>
 <p><img alt="diagram" src="/images/fsm-design/diagram.png"/></p>
 <p>程序：</p>
@@ -848,7 +847,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p><a href="http://www.sunburst-design.com/papers/CummingsICU2002_FSMFundamentals.pdf">Clifford E. Cumming The Fundamentals of Efficient Synthesizable Finite State Machine
 Design using NC-Verilog and BuildGates</a></p>
 <p><a href="http://www.trilobyte.com/pdf/golson_snug94.pdf">Steve Golson State machine design techniques for Verilog and VHDL</a></p>
-<p><a href="http://www.cnblogs.com/freeny/archive/2012/04/14/2447612.html">Verilog HDL学习心得</a></p>
+<p><a href="http://www.cnblogs.com/freeny/archive/2012/04/14/2447612.html">Verilog HDL 学习心得</a></p>
 <p>foreveryoung 《状态机设计》</p>
 <p>云创工作室《 Verilog HDL 程序设计与实践》</p>
   </div>
@@ -873,8 +872,8 @@ Design using NC-Verilog and BuildGates</a></p>
     <h4>You might enjoy</h4>
     <ul class="related-posts">
       <li><a href="../../posts/ic/doxygen_for_verilog.html">针对 Verilog 的 Doxygen</a></li>
-      <li><a href="../../posts/ic/drawing_fsm_state_diagram_using_graphviz.html">利用 Graphviz 画 FSM 状态图</a></li>
       <li><a href="../../posts/ic/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
+      <li><a href="../../posts/ic/drawing_fsm_state_diagram_using_graphviz.html">利用 Graphviz 画 FSM 状态图</a></li>
       <li><a href="../../posts/ic/verilog_hdl_coding_style_guide.html">Verilog HDL coding style</a></li>
     </ul>
   </div>

@@ -173,14 +173,13 @@
     <p>
       Posted on 2014-09-12 12:45 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 1 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 时钟设计 2 &mdash;&mdash; 时钟设计">FPGA 时钟设计 2 &mdash;&mdash; 时钟设计</a><ul><li><a class="toc-href" href="#clock design" title="Clock Design">Clock Design</a><ul><li><a class="toc-href" href="#gloabl clock" title="Gloabl Clock">Gloabl Clock</a></li><li><a class="toc-href" href="#gated clock" title="Gated Clock">Gated Clock</a></li><li><a class="toc-href" href="#logic clock" title="Logic Clock">Logic Clock</a></li><li><a class="toc-href" href="#divide/multiplied clock" title="Divide/Multiplied Clock">Divide/Multiplied Clock</a></li></ul></li><li><a class="toc-href" href="#other tips_1" title="Other Tips">Other Tips</a></li><li><a class="toc-href" href="#reference" title="Reference">Reference</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <blockquote>
@@ -221,7 +220,7 @@
 <p>逻辑时钟 Logic Clock</p>
 </li>
 <li>
-<p>分频/倍频时钟 Divied/Multiplied Clock</p>
+<p>分频 / 倍频时钟 Divied/Multiplied Clock</p>
 </li>
 </ol>
 <h3 id="gloabl clock">Gloabl Clock</h3>
@@ -283,7 +282,7 @@
 </li>
 </ol>
 <p>这些条件的目的就是为了避免组合逻辑中的竞争带来的毛刺。</p>
-<p>根据数字电路的知识，我们知道可以通过添加&ldquo;冗余逻辑&rdquo;的方法来消除组合逻辑的冒险，但是，FPGA 的编译器在 综合时会去掉这些冗余逻辑，所以不能采用这种方法。</p>
+<p>根据数字电路的知识，我们知道可以通过添加 &ldquo; 冗余逻辑 &rdquo; 的方法来消除组合逻辑的冒险，但是，FPGA 的编译器在 综合时会去掉这些冗余逻辑，所以不能采用这种方法。</p>
 <h3 id="logic clock">Logic Clock</h3>
 <p>有时候会用到组合逻辑的输出作为时钟信号或者复位信号，但是这种时钟信号有两个非常重要的缺陷：</p>
 <ol>
@@ -303,7 +302,7 @@
 <ol>
 <li>
 <p>对于资源比较丰富的 FPGA</p>
-<p>使用内部提供的 PLL/DLL，输出时钟信号可以配置成不同的频率（倍频/分频）和相位，这样的分频时钟是最稳定的。</p>
+<p>使用内部提供的 PLL/DLL，输出时钟信号可以配置成不同的频率（倍频 / 分频）和相位，这样的分频时钟是最稳定的。</p>
 </li>
 <li>
 <p>对于无法使用 PLL/DLL 的 FPGA</p>
@@ -316,7 +315,7 @@
 <ul>
 <li>
 <p><strong>只使用时钟的单个边沿</strong></p>
-<p>除了一些特殊的电路（如DDR）外，设计应该只使用单个边沿（上/下边沿）。使用两个边沿的问题是时钟占空比不一定是 50%，这会对电路的正常工作产生影响。</p>
+<p>除了一些特殊的电路（如 DDR）外，设计应该只使用单个边沿（上 / 下边沿）。使用两个边沿的问题是时钟占空比不一定是 50%，这会对电路的正常工作产生影响。</p>
 </li>
 <li>
 <p><strong>使用差分时钟</strong></p>
@@ -353,8 +352,8 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../../posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
       <li><a href="../../posts/ic/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
+      <li><a href="../../posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
       <li><a href="../../posts/ic/clock_dividers.html">时钟分频器</a></li>
     </ul>
   </div>

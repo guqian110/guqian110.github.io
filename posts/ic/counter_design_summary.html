@@ -172,14 +172,13 @@
     <p>
       Posted on 2014-11-04 20:40 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 4 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="计数器设计小结">计数器设计小结</a><ul><li><a class="toc-href" href="#introduction" title="Introduction">Introduction</a></li><li><a class="toc-href" href="#type" title="Type">Type</a></li><li><a class="toc-href" href="#implement" title="Implement">Implement</a><ul><li><a class="toc-href" href="#binary counter" title="Binary Counter">Binary Counter</a></li><li><a class="toc-href" href="#bcd counter (mod-m counter)" title="BCD Counter (mod-m counter)">BCD Counter (mod-m counter)</a></li><li><a class="toc-href" href="#ring counter" title="Ring Counter">Ring Counter</a></li><li><a class="toc-href" href="#johnson counter" title="Johnson Counter">Johnson Counter</a></li><li><a class="toc-href" href="#ripple counter" title="Ripple Counter">Ripple Counter</a></li><li><a class="toc-href" href="#gray code counter" title="Gray Code Counter">Gray Code Counter</a></li></ul></li><li><a class="toc-href" href="#reference_1" title="Reference">Reference</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <h2 id="introduction">Introduction</h2>
@@ -305,7 +304,7 @@
 </pre></div>
 </td></tr></table>
 <h3 id="bcd counter (mod-m counter)">BCD Counter (mod-m counter)</h3>
-<p>人类更习惯使用十进制进行计数，十进制一共有 10 个符号，我们只需要从 4 bit 的二进制计数器中选取 10 个数字，只使用这 10 个数字进行计数即可，通常去掉 1010 ~ 1111 这 6 个数字，即使用 8421BCD码 来对十进制数进行编码、计数，即 BCD Counter。</p>
+<p>人类更习惯使用十进制进行计数，十进制一共有 10 个符号，我们只需要从 4 bit 的二进制计数器中选取 10 个数字，只使用这 10 个数字进行计数即可，通常去掉 1010 ~ 1111 这 6 个数字，即使用 8421BCD 码 来对十进制数进行编码、计数，即 BCD Counter。</p>
 <p>将十进制进行推广，我们就可以写出任意的 模 m 的计数器，在下面的例子中，M 表示计数器的模值（默认为 10），N 表示计数器需要的位数（默认为 4）。在例化时如果要修改，则需要手动计算这两个参数进行赋值。</p>
 <p><strong>Code</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -551,7 +550,7 @@
 <p><a href="http://www.sunburst-design.com/papers/CummingsSNUG2001SJ_AsyncClk.pdf">synthesis and scripting techniques for designing multi-asynchronous clock designs</a></p>
 <p>中有详细介绍如何设计一个 Gray Code Counter 的过程，其基本思想就是利用一个 binary counter 来实现目的，计数器的计数功能由内部的 binary counter 实现，将 binary 的计数结果通过一个 binary2gray 的转换电路转化为 gray code 后再输出；输出的 gray code 反馈回计数器之前，再通过一个 gray2bianry 的电路转化回 binary 形式，以供内部的 binary counter 使用。模块示意图如下：</p>
 <p><img alt="gray code counter" src="/images/counter-design-summary/gray_code_counter.png"/></p>
-<p>代码略...</p>
+<p>代码略 ...</p>
 <p><br/></p>
 <h2 id="reference_1">Reference</h2>
 <p><a href="http://www.amazon.com/FPGA-Prototyping-Verilog-Examples-Spartan-3/dp/0470185325">FPGA Prototyping By Verilog Examples: Xilinx Spartan-3 Version</a></p>

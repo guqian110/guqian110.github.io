@@ -173,21 +173,20 @@
     <p>
       Posted on 2014-07-09 23:03 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 3 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="Verilog 中的参数化建模">Verilog 中的参数化建模</a><ul><li><a class="toc-href" href="#define macro substitution" title="Define Macro Substitution">Define Macro Substitution</a><ul><li><a class="toc-href" href="#guideline" title="Guideline">Guideline</a></li></ul></li><li><a class="toc-href" href="#parameter_1" title="Parameter">Parameter</a><ul><li><a class="toc-href" href="#parameter_2" title="Parameter">Parameter</a></li><li><a class="toc-href" href="#localparam" title="Localparam">Localparam</a></li><li><a class="toc-href" href="#parameter redefinition" title="Parameter Redefinition">Parameter Redefinition</a><ul><li><a class="toc-href" href="#1. uisng #" title="1. Uisng #">1. Uisng #</a></li><li><a class="toc-href" href="#2. using defparam" title="2. Using defparam">2. Using defparam</a></li><li><a class="toc-href" href="#3. using named parameter redefinition" title="3. Using named parameter redefinition">3. Using named parameter redefinition</a></li></ul></li><li><a class="toc-href" href="#guideline_2" title="Guideline">Guideline</a></li><li><a class="toc-href" href="#example" title="Example">Example</a></li></ul></li><li><a class="toc-href" href="#conditional compilation_1" title="Conditional Compilation">Conditional Compilation</a></li><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li><li><a class="toc-href" href="#reference" title="Reference">Reference</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
-    <p>和写软件程序一样，我们也希望 Verilog 的模块也可以重利用。要使模块可以重复利用，关键就在于避免硬编码(hard literal)，使模块参数化。</p>
+    <p>和写软件程序一样，我们也希望 Verilog 的模块也可以重利用。要使模块可以重复利用，关键就在于避免硬编码 (hard literal)，使模块参数化。</p>
 <p>参数化建模的好处是可以使代码清晰，便于后续维护和修改。</p>
 <p>Verilog 的参数化建模是有一定限制的，它的参数值是编译时计算的，不会引入任何实际的硬件电路。参数必须在编译时确定值。也就是说只能达到动态编译，固态运行，而非软件的动态编译，动态运行。</p>
-<p>这主要是因为它是描述(Description)硬件的语言，而非软件设计(Design)语言。</p>
-<p>比如一个计数器，我们可以设置一个参数来指定它的计数周期(动态编译)，但是这个计数周期在综合之后就是固定值了(固态运行)，不能在运行的时候动态地改为另外一个值(除非电路综合时同时产生了多个计数器，这种情况不算真正意义上的动态运行，而且也达不到真正意义上的动态运行，因为不可能把所有可能的计数器都实现了备用，耗费资源而且没有实际意义)。</p>
+<p>这主要是因为它是描述 (Description) 硬件的语言，而非软件设计 (Design) 语言。</p>
+<p>比如一个计数器，我们可以设置一个参数来指定它的计数周期 ( 动态编译 )，但是这个计数周期在综合之后就是固定值了 ( 固态运行 )，不能在运行的时候动态地改为另外一个值 ( 除非电路综合时同时产生了多个计数器，这种情况不算真正意义上的动态运行，而且也达不到真正意义上的动态运行，因为不可能把所有可能的计数器都实现了备用，耗费资源而且没有实际意义 )。</p>
 <p>参数化建模的主要目的是：</p>
 <p><strong>提高模块的通用性，只需要修改参数，不用修改其他代码就可以适用于不同的环境中。</strong></p>
 <p>总结一下我找到的资料，具体的参数化建模方法一共就 3 种：</p>
@@ -347,7 +346,7 @@
 <p><strong>Pro</strong></p>
 <p>可以放在任何文件的任何地方，不用再重复没有修改的参数值</p>
 <p><strong>Con</strong></p>
-<p>因为 defparam 有这么 "强" 的功能，反而会导致一系列的问题</p>
+<p>因为 defparam 有这么 " 强 " 的功能，反而会导致一系列的问题</p>
 <ol>
 <li>
 <p>Hierarchical deparam. </p>
@@ -520,9 +519,9 @@ the IEEE Verilog-2001 standard."</p>
 <p>IEEE Std 1364-1995</p>
 <p>IEEE Std 1364-2001</p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsHDLCON2002_Parameters_rev1_2.pdf">New Verilog-2001 Techniques for Creating Parameterized Models</a></p>
-<p><a href="http://www.cnblogs.com/oomusou/archive/2008/07/09/verilog_parameter.html">(原创) 如何使用参数式模组? (SOC) (Verilog) (C/C++) (template)</a></p>
+<p><a href="http://www.cnblogs.com/oomusou/archive/2008/07/09/verilog_parameter.html">( 原创 ) 如何使用参数式模组 ? (SOC) (Verilog) (C/C++) (template)</a></p>
 <p><a href="http://blog.chinaaet.com/detail/14875">艾米电子 - 参数与常量，Verilog</a></p>
-<p><a href="http://www.eefocus.com/ilove314/blog/2012-03/231583_52a1d.html">Verilog代码可移植性设计</a></p>
+<p><a href="http://www.eefocus.com/ilove314/blog/2012-03/231583_52a1d.html">Verilog 代码可移植性设计</a></p>
   </div>
   <div class="tag-cloud">
     <p>

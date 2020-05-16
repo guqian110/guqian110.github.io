@@ -174,31 +174,30 @@
     <p>
       Posted on 2014-05-29 23:27 in <a href="../../category/linux.html">Linux</a>
 
-        &#8226; 2 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Arduino #2 初识 Intel Galileo 开发板">学习 Arduino #2 初识 Intel Galileo 开发板</a><ul><li><a class="toc-href" href="#preface" title="Preface">Preface</a></li><li><a class="toc-href" href="#official arduino boards" title="Official Arduino Boards">Official Arduino Boards</a></li><li><a class="toc-href" href="#intel galileo board" title="Intel Galileo Board">Intel Galileo Board</a><ul><li><a class="toc-href" href="#arduinco.cc" title="Arduinco.cc">Arduinco.cc</a></li><li><a class="toc-href" href="#intel official introduction" title="Intel Official Introduction">Intel Official Introduction</a></li><li><a class="toc-href" href="#other introductions" title="Other Introductions">Other Introductions</a></li></ul></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <h2 id="preface">Preface</h2>
 <hr/>
 <p>Arduino 有很多开发板，分别针对不同的应用环境含有不同的模块。学习一款 Intel 推出的开发板 &mdash;&mdash; <em>Intel Galileo Development Board</em> 。</p>
-<p>Intel Gailileo Development Board 是 Intel 进入 Arduino 领域的试水产品，它含有一颗 Quark Soc X1000 CPU，这是一款 32 位、x86 构架、低功耗的 SoC 芯片，它的主频可以达到 400 MHz，内部有 512 KB 的 SRAM，同时 Galileo 有丰富的接口(USB, JTag, RS232, Ethernet, mPCIE...)，支持很多外围设备。</p>
-<p>Galileo 试图达到的目标是融合 Arduino 对硬件操作的便利和 Linux 系统对硬件操作完整支持。所以，Galileo 也兼容 Arduino 接口，你可以很方便的把 Arduino 项目移植到 Galileo 上运行，使用常用的一些 Arduino 库(Ethernet, Wi-Fi, SD, EEPROM...)也可以获得内部 Linux 系统的完整功能(Python, SSH, Telnet， OpenCV...)。</p>
-<p>总结一下我学习这块板子的知识，不仅仅为 Arduino 开发做准备，也为后面的一个竞赛(基于Yocto 项目)开发积累知识～</p>
+<p>Intel Gailileo Development Board 是 Intel 进入 Arduino 领域的试水产品，它含有一颗 Quark Soc X1000 CPU，这是一款 32 位、x86 构架、低功耗的 SoC 芯片，它的主频可以达到 400 MHz，内部有 512 KB 的 SRAM，同时 Galileo 有丰富的接口 (USB, JTag, RS232, Ethernet, mPCIE...)，支持很多外围设备。</p>
+<p>Galileo 试图达到的目标是融合 Arduino 对硬件操作的便利和 Linux 系统对硬件操作完整支持。所以，Galileo 也兼容 Arduino 接口，你可以很方便的把 Arduino 项目移植到 Galileo 上运行，使用常用的一些 Arduino 库 (Ethernet, Wi-Fi, SD, EEPROM...) 也可以获得内部 Linux 系统的完整功能 (Python, SSH, Telnet， OpenCV...)。</p>
+<p>总结一下我学习这块板子的知识，不仅仅为 Arduino 开发做准备，也为后面的一个竞赛 ( 基于 Yocto 项目 ) 开发积累知识～</p>
 <p><br/></p>
 <h2 id="official arduino boards">Official Arduino Boards</h2>
 <hr/>
-<p>Arduino 官网上列出所有了官方开发板，其中也包含了官方认证过的开发板(Intel Galileo)，和一些推荐的第三方产品</p>
+<p>Arduino 官网上列出所有了官方开发板，其中也包含了官方认证过的开发板 (Intel Galileo)，和一些推荐的第三方产品</p>
 <p><a href="http://arduino.cc/en/Main/Products">Arduino Products</a></p>
 <p>还详细列出了这些开发板上的微控制器的区别</p>
 <p><a href="http://arduino.cc/en/Products.Compare">Compare boards specs</a></p>
 <p><br/></p>
-<p><em>官方的开发板的核心都是 Atmel 的微控制器，基于市场战略的需求，看到数莓派、Arduino发展的热火朝天，Intel 也坐不住了(瞎猜的 =.=)，推出了新的基于 Intel 架构(x86)、可以和 Arduino 兼容的开发板。Galileo 是这个家族中的第一款，目前 Intel 又推出了一款新的开发板，取名叫 Edison。(Intel 这是要把所有科学家的名字都取个遍么)</em></p>
+<p><em>官方的开发板的核心都是 Atmel 的微控制器，基于市场战略的需求，看到数莓派、Arduino 发展的热火朝天，Intel 也坐不住了 ( 瞎猜的 =.=)，推出了新的基于 Intel 架构 (x86)、可以和 Arduino 兼容的开发板。Galileo 是这个家族中的第一款，目前 Intel 又推出了一款新的开发板，取名叫 Edison。(Intel 这是要把所有科学家的名字都取个遍么 )</em></p>
 <p><br/></p>
 <h2 id="intel galileo board">Intel Galileo Board</h2>
 <hr/>
@@ -226,7 +225,7 @@
 </li>
 <li>
 <p>IDE 解压路径</p>
-<p>Windows 下的解压路径 <em>必须是顶层目录</em>，比如 <code>D:\arduino-1.5.3</code>，否则在 <code>Verify</code> 时会提示找不到特定的文件/目录。Linux 下无此问题。</p>
+<p>Windows 下的解压路径 <em>必须是顶层目录</em>，比如 <code>D:\arduino-1.5.3</code>，否则在 <code>Verify</code> 时会提示找不到特定的文件 / 目录。Linux 下无此问题。</p>
 </li>
 <li>
 <p>Linux 连接板子和 PC</p>
@@ -238,7 +237,7 @@
 </li>
 <li>
 <p>Linux 下 disable modem manager</p>
-<p>前面的教程中提到，在大多数 Linux 发行版下，都需要 disable modem manager 才能 <code>Upload</code> 成功，不过我在 Ubuntu 下没有遇到这个问题...</p>
+<p>前面的教程中提到，在大多数 Linux 发行版下，都需要 disable modem manager 才能 <code>Upload</code> 成功，不过我在 Ubuntu 下没有遇到这个问题 ...</p>
 </li>
 </ol>
 <p><strong>然后</strong> 扯几句</p>
@@ -256,13 +255,13 @@
 </li>
 <li>
 <p>软件构架</p>
-<p>Galileo 不仅仅是硬件上按照 PC 设计的，事实上，它的软件构架也和 PC 一样。和普通的单片机不同，它并不是简单的运行用户开发的程序那么简单。它实际上运行着一个操作系统 &mdash;&mdash; 包含 UEFI(BIOS 的替代者)、Grub、嵌入式 Linux 系统，用户编写的 <code>Sketch</code> 只是一个在 Linux 上面运行的应用而已。</p>
+<p>Galileo 不仅仅是硬件上按照 PC 设计的，事实上，它的软件构架也和 PC 一样。和普通的单片机不同，它并不是简单的运行用户开发的程序那么简单。它实际上运行着一个操作系统 &mdash;&mdash; 包含 UEFI(BIOS 的替代者 )、Grub、嵌入式 Linux 系统，用户编写的 <code>Sketch</code> 只是一个在 Linux 上面运行的应用而已。</p>
 <p>Galileo 启动时可以从 ISP Flash 中启动一个微型的 Linux 系统，也可以从 MicroSD 卡中启动一个完整版的 Linux 系统。我们 <code>Upload</code> 时，Arduino IDE 将程序编译链接成一个标准的 Linux ELF 文件，并且下载到 Arduino 板子上运行，如图所示</p>
 <p><img alt="target_software" src="/images/learning-arduino-series-2-intel-galileo-development-board/target_software.png"/></p>
 </li>
 <li>
 <p>开发嵌入式 Linux 设备</p>
-<p>或许这才是 Galileo 的 "正经" 用途吧...基于 Yocto Project，我们可以开发属于自己的 Linux 系统。</p>
+<p>或许这才是 Galileo 的 " 正经 " 用途吧 ... 基于 Yocto Project，我们可以开发属于自己的 Linux 系统。</p>
 </li>
 </ol>
 <p>最后，送上一个别人的 Galileo 开箱视频</p>

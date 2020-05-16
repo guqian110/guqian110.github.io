@@ -173,14 +173,13 @@
     <p>
       Posted on 2014-11-23 14:03 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 6 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 中的延时">FPGA 中的延时</a><ul><li><a class="toc-href" href="#delay in circuits" title="Delay in circuits">Delay in circuits</a></li><li><a class="toc-href" href="#models in verilog hdl" title="Models in Verilog HDL">Models in Verilog HDL</a></li><li><a class="toc-href" href="#implement" title="Implement">Implement</a><ul><li><a class="toc-href" href="#in asics" title="in ASICs">in ASICs</a></li><li><a class="toc-href" href="#in fpgas" title="in FPGAs">in FPGAs</a></li></ul></li><li><a class="toc-href" href="#simulation_1" title="Simulation">Simulation</a><ul><li><a class="toc-href" href="#blocking assignment" title="Blocking assignment">Blocking assignment</a></li><li><a class="toc-href" href="#non-blocking assignment" title="Non-blocking assignment">Non-blocking assignment</a></li><li><a class="toc-href" href="#continuous assignment" title="Continuous assignment">Continuous assignment</a></li><li><a class="toc-href" href="#conclusions" title="Conclusions">Conclusions</a></li></ul></li><li><a class="toc-href" href="#reference_1" title="Reference">Reference</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <h2 id="delay in circuits">Delay in circuits</h2>
@@ -247,8 +246,8 @@ interval is the fact that the switches in the output stage of a digital componen
 <span class="k">assign</span> <span class="p">#(</span><span class="mh">1</span><span class="p">,</span> <span class="mh">2</span><span class="p">,</span> <span class="mh">3</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-<p>第一句表示一个异或门上升时延为 1，下降时延为 2，关闭和X时延为两者中的最小值，即 1；</p>
-<p>第二句表示一个异或门的上升、下降、关闭时延分别是 1，2，3，X时延为 3 者中的最小值，即 1。</p>
+<p>第一句表示一个异或门上升时延为 1，下降时延为 2，关闭和 X 时延为两者中的最小值，即 1；</p>
+<p>第二句表示一个异或门的上升、下降、关闭时延分别是 1，2，3，X 时延为 3 者中的最小值，即 1。</p>
 </li>
 <li>
 <p>对于最小值、典型值、最大值可以使用分号按照 min:typ:max 的顺序，将 3 者分开：</p>
@@ -304,14 +303,14 @@ chains can cause various design problems, including an increase in a design&rsqu
 <p>虽然可以在代码中添加约束，防止综合器将其优化掉，但是不推荐这种方法，理由见前两条。</p>
 </li>
 </ol>
-<p><a href="http://www.amazon.cn/Xilinx-FPGA%E9%AB%98%E7%BA%A7%E8%AE%BE%E8%AE%A1%E5%8F%8A%E5%BA%94%E7%94%A8-%E6%B1%A4%E7%90%A6/dp/B007TLVUT8">Xilinx FPGA高级设计及应用</a> 介绍了 FPGA 中应该采用的方法：</p>
+<p><a href="http://www.amazon.cn/Xilinx-FPGA%E9%AB%98%E7%BA%A7%E8%AE%BE%E8%AE%A1%E5%8F%8A%E5%BA%94%E7%94%A8-%E6%B1%A4%E7%90%A6/dp/B007TLVUT8">Xilinx FPGA 高级设计及应用</a> 介绍了 FPGA 中应该采用的方法：</p>
 <ol>
 <li>
 <p><strong>专门的延时器件</strong></p>
-<p>在 FPGA/CPLD 内部延时电路结构由一种标准的宏单元描述。虽然各家芯片的宏单元描述不同，但总的来说都是 <strong>一些逻辑 + 一个/两个触发器构成</strong>。</p>
-<p>Altera FPGA 中可以对信号加一个或多个 LCELL 来产生一个延时。（Xilinx 的没有查到...）</p>
+<p>在 FPGA/CPLD 内部延时电路结构由一种标准的宏单元描述。虽然各家芯片的宏单元描述不同，但总的来说都是 <strong>一些逻辑 + 一个 / 两个触发器构成</strong>。</p>
+<p>Altera FPGA 中可以对信号加一个或多个 LCELL 来产生一个延时。（Xilinx 的没有查到 ...）</p>
 <p>虽然厂家提供了延时单元，但是这种延时并不稳定，会随着外界环境（比如温度）的变化而变化，所以并不提倡这种方法。</p>
-<p>网上有人讨论这种方法的应用：<a href="http://bbs.eccn.com/viewthread.php?tid=181856">fpga内部的延时单元</a></p>
+<p>网上有人讨论这种方法的应用：<a href="http://bbs.eccn.com/viewthread.php?tid=181856">fpga 内部的延时单元</a></p>
 </li>
 <li>
 <p><strong>触发器 or 计数器</strong></p>
@@ -323,7 +322,7 @@ chains can cause various design problems, including an increase in a design&rsqu
 <p>====================== Update 01/31/2015 ========================</p>
 <h2 id="simulation_1">Simulation</h2>
 <hr/>
-<p>我们知道，仿真器使用 &ldquo; 事件&rdquo; (<code>event</code>) 来模拟实际的电路行为，但是毕竟软件和硬件还是不同的，而 Verilog 语言又是很灵活的，如果不加注意，很可能不能对电路进行正确的建模。Clifford E. Cummings 大神写了一篇 paper 介绍了 Verilog HDL 中应该如何正确使用延时，才能保证建模的正确性：</p>
+<p>我们知道，仿真器使用 &ldquo; 事件 &rdquo; (<code>event</code>) 来模拟实际的电路行为，但是毕竟软件和硬件还是不同的，而 Verilog 语言又是很灵活的，如果不加注意，很可能不能对电路进行正确的建模。Clifford E. Cummings 大神写了一篇 paper 介绍了 Verilog HDL 中应该如何正确使用延时，才能保证建模的正确性：</p>
 <p><a href="http://www.sunburst-design.com/papers/CummingsHDLCON1999_BehavioralDelays_Rev1_1.pdf">Correct Methods For Adding Delays To Verilog Behavioral Models</a></p>
 <p>下面我的笔记，摘录一部分内容和结论：</p>
 <p>要讨论正确的延时的代码风格，首先要了解仿真器在对延时进行建模时，通常使用的两种不同类型的 Delay 模型：</p>
@@ -454,12 +453,12 @@ chains can cause various design problems, including an increase in a design&rsqu
 </blockquote>
 <h3 id="conclusions">Conclusions</h3>
 <p>always 块中的任何延时都无法准确对真实硬件的行为进行准确建模，应该避免这种延时建模。有一个例外：在非阻塞复制的右边添加延时，来描述 transport delay，但是这种方式是以仿真性能的下降为代价的。</p>
-<p>在 连续赋值语句 / 无延时的always + 连续赋值语句 中添加延时，这两种方式都会对 inertial delays 建模，推荐使用这种方式来对组合逻辑建模。</p>
+<p>在 连续赋值语句 / 无延时的 always + 连续赋值语句 中添加延时，这两种方式都会对 inertial delays 建模，推荐使用这种方式来对组合逻辑建模。</p>
 <h2 id="reference_1">Reference</h2>
 <p><a href="http://www.amazon.cn/Digital-Design-An-Embedded-Systems-Approach-Using-Verilog-Ashenden-Peter-J/dp/0123695279">Digital Design (Verilog): An Embedded Systems Approach Using Verilog</a></p>
 <p><a href="http://www.amazon.com/FPGA-Based-System-paperback-Prentice-Semiconductor/dp/0137033486">FPGA-Based System Design</a></p>
-<p><a href="http://book.douban.com/subject/1882474/">设计与验证Verilog HDL</a></p>
-<p><a href="http://www.amazon.cn/Xilinx-FPGA%E9%AB%98%E7%BA%A7%E8%AE%BE%E8%AE%A1%E5%8F%8A%E5%BA%94%E7%94%A8-%E6%B1%A4%E7%90%A6/dp/B007TLVUT8">Xilinx FPGA高级设计及应用</a></p>
+<p><a href="http://book.douban.com/subject/1882474/">设计与验证 Verilog HDL</a></p>
+<p><a href="http://www.amazon.cn/Xilinx-FPGA%E9%AB%98%E7%BA%A7%E8%AE%BE%E8%AE%A1%E5%8F%8A%E5%BA%94%E7%94%A8-%E6%B1%A4%E7%90%A6/dp/B007TLVUT8">Xilinx FPGA 高级设计及应用</a></p>
 <p><a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">The Art of Hardware Architecture: Design Methods and Techniques for Digital Circuits</a></p>
   </div>
   <div class="tag-cloud">

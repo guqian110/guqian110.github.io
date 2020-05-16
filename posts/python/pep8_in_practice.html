@@ -65,13 +65,13 @@
     <meta name="msapplication-TileColor" content="#333333">
 
 <meta name="author" content="Qian Gu" />
-<meta name="description" content="总结实际 coding 中遵循 PEP8 时用到的工具和插件。" />
+<meta name="description" content="总结实际 coding 中遵循 PEP8 时用到的工具和插件" />
 <meta name="keywords" content="PEP8, python, Sublime Text">
 
 
 <meta property="og:site_name" content="Qian's Blog"/>
 <meta property="og:title" content="PEP8 实践"/>
-<meta property="og:description" content="总结实际 coding 中遵循 PEP8 时用到的工具和插件。"/>
+<meta property="og:description" content="总结实际 coding 中遵循 PEP8 时用到的工具和插件"/>
 <meta property="og:locale" content="en"/>
 <meta property="og:url" content="../../posts/python/pep8_in_practice.html"/>
 <meta property="og:type" content="article"/>
@@ -175,14 +175,13 @@
     <p>
       Posted on 2020-04-19 14:56 in <a href="../../category/python.html">Python</a>
 
-        &#8226; 2 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="PEP8 实践">PEP8 实践</a><ul><li><a class="toc-href" href="#pep8 &amp; pcqa" title="PEP8 &amp; PCQA">PEP8 &amp; PCQA</a></li><li><a class="toc-href" href="#linter" title="Linter">Linter</a><ul><li><a class="toc-href" href="#pycodestyle" title="pycodestyle">pycodestyle</a></li><li><a class="toc-href" href="#pyflakes" title="pyflakes">pyflakes</a></li><li><a class="toc-href" href="#flake8" title="flake8">flake8</a></li><li><a class="toc-href" href="#pylint" title="pylint">pylint</a></li></ul></li><li><a class="toc-href" href="#formatter_1" title="Formatter">Formatter</a><ul><li><a class="toc-href" href="#autopep8" title="autopep8">autopep8</a></li><li><a class="toc-href" href="#yapf" title="yapf">yapf</a></li><li><a class="toc-href" href="#black" title="black">black</a></li></ul></li><li><a class="toc-href" href="#practice in sublime_1" title="Practice in Sublime">Practice in Sublime</a><ul><li><a class="toc-href" href="#sublimelinter" title="SublimeLinter">SublimeLinter</a></li><li><a class="toc-href" href="#sublime linter-pep 8 / sublime linter-pycodestyle" title="Sublime​Linter-pep​8 / Sublime​Linter-pycodestyle">Sublime​Linter-pep​8 / Sublime​Linter-pycodestyle</a></li><li><a class="toc-href" href="#sublime linter-pyflakes" title="Sublime​Linter-pyflakes">Sublime​Linter-pyflakes</a></li><li><a class="toc-href" href="#sublimelinter-flake8" title="SublimeLinter-flake8">SublimeLinter-flake8</a></li><li><a class="toc-href" href="#autopep8_1" title="AutoPEP8">AutoPEP8</a></li><li><a class="toc-href" href="#py yapf python formatter" title="Py​Yapf Python Formatter">Py​Yapf Python Formatter</a></li></ul></li><li><a class="toc-href" href="#summary_1" title="Summary">Summary</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <h2 id="pep8 &amp; pcqa">PEP8 &amp; PCQA</h2>
@@ -190,7 +189,6 @@
 <p><a href="https://meta.pycqa.org/en/latest/code-of-conduct.html">PCQA</a> 是 Python Code Quality Authority 的缩写，它是一个松散的组织，聚集了各地的开发者，大家以在线协作的方式，为广大 python 码农提供各种 automatic style and quality reporting 工具，方便大家做项目时可以在不同项目都能保持代码风格一致。</p>
 <p>PCQA 源自于 <code>Ian Cordasco</code> 在把 <code>Flake8</code> 迁移到 Git 时发出的一封邮件，大家积极提议把项目迁移到 <code>GitLab</code> 上，所以他在 <code>GitLab</code> 和 <code>GitHub</code> 上都建了一个 group 来专门维护 <code>Flake8</code> 和 <code>flake8-docstrings</code>。后来其他人开发维护的各种 lint 工具也源源不断地加入，PCQA 逐渐壮大。</p>
 <p>在 <a href="https://github.com/PyCQA">PCQA 的 GitHub 主页</a> 上可以看到很多工具，很多常见的 linter 和 formatter 工具大部分来自于 PCQA，下文会经常看到 PCQA 的身影。</p>
-<p><br/></p>
 <h2 id="linter">Linter</h2>
 <h3 id="pycodestyle">pycodestyle</h3>
 <p>PCQA 荣誉出品，<a href="https://github.com/PyCQA/pycodestyle">pycodestyle</a> 原名叫 <code>pep8</code>，后应 python 之父的<a href="https://github.com/PyCQA/pycodestyle/issues/466">要求</a>，后来改名为 <code>pycodestyle</code>。</p>
@@ -264,7 +262,6 @@
 <p>安装和使用方法见官方主页。</p>
 <h3 id="black">black</h3>
 <p>查看资料说 <a href="https://github.com/psf/black">black</a> 和 yapf 类似，但是限制条件比较多，没有太多的自定义选项，所以优点是省心。因为基于 python3，目前我还在使用 python 2.7，所以暂时记录一下，以后切换成 python 3 了再补坑。</p>
-<p><br/></p>
 <h2 id="practice in sublime_1">Practice in Sublime</h2>
 <p>sublime 有很多 linter 和 formater 插件，下面总结一下。</p>
 <h3 id="sublimelinter">SublimeLinter</h3>
@@ -294,7 +291,6 @@
 </ul>
 <h3 id="py yapf python formatter">Py​Yapf Python Formatter</h3>
 <p><a href="https://packagecontrol.io/packages/PyYapf%20Python%20Formatter">PyYapf</a> 为 sublime 提供与 yapf 集成的接口，安装之后可以通过快捷键或者是 <code>ctrl + shift + p</code> 在 sublime 内调用 yapf。</p>
-<p><br/></p>
 <h2 id="summary_1">Summary</h2>
 <p>综上，python 有众多 linter 和 formatter 工具，很多工具之间的功能大部分都是重复的，选择一个用着顺手的即可。因为我使用 sublime text 作为主力编辑器，所以 PEP8 实践的最佳方案是：</p>
 <table>
@@ -330,10 +326,10 @@
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="../../posts/python/peps_translate_project_pep8.html" title="PEP 翻译计划系列 —— PEP8">
+    <a class="btn float-left" href="../../posts/python/learning_peps_series_1_pep8.html" title="PEP 学习系列之 1 —— PEP8">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
-    <a class="btn float-right" href="../../posts/python/peps_translate_project_pep20.html" title="PEP 翻译计划系列 —— PEP20">
+    <a class="btn float-right" href="../../posts/python/learning_peps_series_2_pep20.html" title="PEP 学习系列之 2 —— PEP20">
       Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
@@ -341,11 +337,11 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../../posts/python/peps_translate_project_pep0.html">PEP 翻译计划系列 —— PEP0</a></li>
-      <li><a href="../../posts/python/peps_translate_project_pep202.html">PEP 翻译计划系列 —— PEP202</a></li>
-      <li><a href="../../posts/python/peps_translate_project_pep8.html">PEP 翻译计划系列 —— PEP8</a></li>
       <li><a href="../../posts/ic/sublime_text_2_and_verilog.html">Sublime Text 2 和 Verilog HDL</a></li>
-      <li><a href="../../posts/python/peps_translate_project_pep20.html">PEP 翻译计划系列 —— PEP20</a></li>
+      <li><a href="../../posts/python/learning_peps_series_3_pep202_and_pep274.html">PEP 学习系列之 3 —— PEP202 & PEP274</a></li>
+      <li><a href="../../posts/python/learning_peps_series_2_pep20.html">PEP 学习系列之 2 —— PEP20</a></li>
+      <li><a href="../../posts/python/learning_peps_series_0_pep0.html">PEP 学习系列之 0 —— PEP0</a></li>
+      <li><a href="../../posts/python/learning_peps_series_1_pep8.html">PEP 学习系列之 1 —— PEP8</a></li>
     </ul>
   </div>
 

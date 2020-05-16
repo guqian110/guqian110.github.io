@@ -174,14 +174,13 @@
     <p>
       Posted on 2014-09-23 23:02 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 6 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="锁存器 Latch v.s. 触发器 Flip-Flop">锁存器 Latch v.s. 触发器 Flip-Flop</a><ul><li><a class="toc-href" href="#history" title="History">History</a></li><li><a class="toc-href" href="#implementation" title="Implementation">Implementation</a><ul><li><a class="toc-href" href="#latch" title="Latch">Latch</a><ul><li><a class="toc-href" href="#sr latch" title="SR Latch">SR Latch</a></li><li><a class="toc-href" href="#d latch" title="D Latch">D Latch</a></li></ul></li><li><a class="toc-href" href="#flip-flop_1" title="Flip-Flop">Flip-Flop</a><ul><li><a class="toc-href" href="#d flip-flop" title="D flip-flop">D flip-flop</a></li><li><a class="toc-href" href="#jk flip-flop" title="JK flip-flop">JK flip-flop</a></li><li><a class="toc-href" href="#t flip-flop" title="T flip-flop">T flip-flop</a></li></ul></li></ul></li><li><a class="toc-href" href="#timing considerations_2" title="Timing considerations">Timing considerations</a><ul><li><a class="toc-href" href="#metastability" title="Metastability">Metastability</a></li><li><a class="toc-href" href="#setup, hold, recovery, removal times" title="Setup, hold, recovery, removal times">Setup, hold, recovery, removal times</a></li><li><a class="toc-href" href="#propagation delay" title="Propagation delay">Propagation delay</a></li></ul></li><li><a class="toc-href" href="#in fpga_1" title="in FPGA">in FPGA</a><ul><li><a class="toc-href" href="#reason &amp; solution to unexpected latch" title="Reason &amp; Solution to unexpected latch">Reason &amp; Solution to unexpected latch</a><ul><li><a class="toc-href" href="#reason" title="Reason">Reason</a></li><li><a class="toc-href" href="#solution" title="Solution">Solution</a></li></ul></li><li><a class="toc-href" href="#application_1" title="Application">Application</a></li><li><a class="toc-href" href="#conclusion" title="Conclusion">Conclusion</a></li></ul></li><li><a class="toc-href" href="#reference_1" title="Reference">Reference</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>根据 <a href="http://en.wikipedia.org/wiki/Flip-flop_(electronics">Wiki: Flip-flop (electronics)</a> 上的介绍</p>
@@ -193,30 +192,30 @@
 <p>Flip-flops can be either simple (transparent or opaque) or clocked (synchronous or edge-triggered). Although the term flip-flop has historically referred generically to both simple and clocked circuits, in modern usage it is common to reserve the term flip-flop exclusively for discussing clocked circuits; the simple ones are commonly called latches.</p>
 <p>Using this terminology, a latch is level-sensitive, whereas a flip-flop is edge-sensitive. That is, when a latch is enabled it becomes transparent, while a flip flop's output only changes on a single type (positive going or negative going) of clock edge.</p>
 </blockquote>
-<p>所以按照现在的约定习惯区分，latch 指的是电平触发的触发器，翻译为 &ldquo;锁存器&rdquo;；flip-flop 指边沿触发的触发器，就叫 &ldquo;触发器&rdquo;。</p>
+<p>所以按照现在的约定习惯区分，latch 指的是电平触发的触发器，翻译为 &ldquo; 锁存器 &rdquo;；flip-flop 指边沿触发的触发器，就叫 &ldquo; 触发器 &rdquo;。</p>
 <p><br/></p>
 <p>[TOC]</p>
 <h2 id="history">History</h2>
 <hr/>
 <p><em>翻译自 <a href="http://en.wikipedia.org/wiki/Flip-flop_(electronics">wiki</a>:</em></p>
-<p>第一个电子触发器(electronic flip-flop) 由  William Eccles 和 F. W. Jordan 于 1918 年发明的。它最早被称为 ：  <code>Eccles&ndash;Jordan trigger circuit</code>，由两个真空管组成。虽然现在由逻辑门 (logic gates)组成的触发器很常见，但是在集成电路(intergrated circuits)中，这种元件及它的晶体管版本仍然也很常见。早期的触发器常用来构成触发电路或者多谐振荡器(multivibrators)。</p>
+<p>第一个电子触发器 (electronic flip-flop) 由  William Eccles 和 F. W. Jordan 于 1918 年发明的。它最早被称为 ：  <code>Eccles&ndash;Jordan trigger circuit</code>，由两个真空管组成。虽然现在由逻辑门 (logic gates) 组成的触发器很常见，但是在集成电路 (intergrated circuits) 中，这种元件及它的晶体管版本仍然也很常见。早期的触发器常用来构成触发电路或者多谐振荡器 (multivibrators)。</p>
 <p><img alt="flip-flop" src="http://upload.wikimedia.org/wikipedia/commons/9/98/Eccles-Jordan_trigger_circuit_flip-flip_drawings.png"/></p>
-<p>根据一个 JPL 的工程师，P. L. Lindley介绍，Montgomery Phister 于 1954 年在 UCLA 的 computer design 的课程上第一次对触发器进行了分类的讨论（RS、D、T、JK），然后在他的书 Logical Design of Digital Computers 中也进行了讨论。Lindley 当时在 Hughes Aircraft 的 Eldred Nelson 手下工作，而Nelson 命名了 JK 触发器。其他的名字则是 Phister 命名的。Lindley 解释说他是从 Nelson 口中得知 JK 触发器的故事的，当时 Hughes Aircraft 使用的触发器都是 JK 触发器。在设计逻辑系统时，Nelson 给触发器的输入命名为 A&amp;B、C&amp;D、E&amp;F、G&amp;H、J&amp;K。在 1953 年 Nelson 申请专利时，采用了 J&amp;K 的命名方案。</p>
+<p>根据一个 JPL 的工程师，P. L. Lindley 介绍，Montgomery Phister 于 1954 年在 UCLA 的 computer design 的课程上第一次对触发器进行了分类的讨论（RS、D、T、JK），然后在他的书 Logical Design of Digital Computers 中也进行了讨论。Lindley 当时在 Hughes Aircraft 的 Eldred Nelson 手下工作，而 Nelson 命名了 JK 触发器。其他的名字则是 Phister 命名的。Lindley 解释说他是从 Nelson 口中得知 JK 触发器的故事的，当时 Hughes Aircraft 使用的触发器都是 JK 触发器。在设计逻辑系统时，Nelson 给触发器的输入命名为 A&amp;B、C&amp;D、E&amp;F、G&amp;H、J&amp;K。在 1953 年 Nelson 申请专利时，采用了 J&amp;K 的命名方案。</p>
 <p><br/></p>
 <h2 id="implementation">Implementation</h2>
 <hr/>
 <blockquote>
 <p>Flip-flops can be either simple (transparent or asynchronous) or clocked (synchronous); the transparent ones are commonly called latches. The word latch is mainly used for storage elements, while clocked devices are described as flip-flops.</p>
 </blockquote>
-<p>不会翻译了...大意就是说 flip-flop 可以分为两类：</p>
+<p>不会翻译了 ... 大意就是说 flip-flop 可以分为两类：</p>
 <ul>
 <li>
 <p>simple</p>
-<p>也可以说是 透明的(transparent) 或者是 异步的(asynchronous)，通常称为 <code>锁存器Latch</code></p>
+<p>也可以说是 透明的 (transparent) 或者是 异步的 (asynchronous)，通常称为 <code>锁存器 Latch</code></p>
 </li>
 <li>
 <p>clocked</p>
-<p>也可以说是 同步的(synchronous)，称为 <code>触发器flip-flop</code></p>
+<p>也可以说是 同步的 (synchronous)，称为 <code>触发器 flip-flop</code></p>
 </li>
 </ul>
 <p>下面分类讨论：</p>
@@ -242,7 +241,7 @@
 </li>
 </ul>
 <h4 id="d latch">D Latch</h4>
-<p>Latch 是 <code>透明的(transparent)</code>，就是说输入的变换立即就能传递到输出端口，当几个透明的 latch 级联时，输入端的信号也能立即传递到输出端。当给 latch 添加额外的逻辑电路（比如使能信号 enable 无效时），就会使它变为 <code>不透明的(non-transparent)</code>。下面的 D latch 就是这样的例子。</p>
+<p>Latch 是 <code>透明的 (transparent)</code>，就是说输入的变换立即就能传递到输出端口，当几个透明的 latch 级联时，输入端的信号也能立即传递到输出端。当给 latch 添加额外的逻辑电路（比如使能信号 enable 无效时），就会使它变为 <code>不透明的 (non-transparent)</code>。下面的 D latch 就是这样的例子。</p>
 <p>仔细观察 SR latch 的功能表，就可以发现，R 的取值为 S 的补。D latch 利用了这一特点，而且避免了 SR latch 中的禁止状态的出现。</p>
 <p>因为 SR latch 的实现有两种，所以 <code>D latch</code> 的实现也对应有两种：</p>
 <ul>
@@ -297,7 +296,7 @@
 <h2 id="timing considerations_2">Timing considerations</h2>
 <hr/>
 <h3 id="metastability">Metastability</h3>
-<p>伴随着 flip-flop 的一个问题是 <code>亚稳态 Metastability</code>。当两个输入端口 (比如 data 和 clk，或者 reset 和 clk)同时变化时，就会发生亚稳态的问题，需要消耗更长的时间来使输出达到稳定状态，而且这个稳定状态是不可预测的，有可能是 1，也有可能是 0。</p>
+<p>伴随着 flip-flop 的一个问题是 <code>亚稳态 Metastability</code>。当两个输入端口 ( 比如 data 和 clk，或者 reset 和 clk) 同时变化时，就会发生亚稳态的问题，需要消耗更长的时间来使输出达到稳定状态，而且这个稳定状态是不可预测的，有可能是 1，也有可能是 0。</p>
 <p>在计算机系统中，如果发生亚稳态，如果在下一个时钟使用数据时，还没有达到稳定状态，会导致数据传输错误或者程序崩溃。如果有两条路径同时用到了这个数据，有可能一条将它当作 1，另一条把它当作 0，这样会导致系统进入不一致的状态。</p>
 <h3 id="setup, hold, recovery, removal times">Setup, hold, recovery, removal times</h3>
 <blockquote>
@@ -306,7 +305,7 @@
 <p>Synchronous signals (like Data) should be held steady from the set-up time to the hold time, where both times are relative to the clock signal.</p>
 </blockquote>
 <p><img alt="meta" src="http://upload.wikimedia.org/wikipedia/en/thumb/d/d9/FF_Tsetup_Thold_Toutput.svg/500px-FF_Tsetup_Thold_Toutput.svg.png"/></p>
-<p>如图所示，对于同步信号 (同步信号的意思是想对于时钟信号而言，它的变化和时钟是同步的，比如 data)，必须满足 <code>setup time</code> 和 <code>hold time</code> 要求。</p>
+<p>如图所示，对于同步信号 ( 同步信号的意思是想对于时钟信号而言，它的变化和时钟是同步的，比如 data)，必须满足 <code>setup time</code> 和 <code>hold time</code> 要求。</p>
 <p>在有效时钟沿到来之前的 setup time 时间段内，同步信号必须保持稳定，在有效时钟沿到来之后的 hold time 时间段内，同步信号也必须保持稳定，也就是说从 setup time 到 hold time 之间，它必须保持稳定不变化，这样才能让时钟信号采样到正确的值。</p>
 <p>同理，对于异步信号，有类似的要求：</p>
 <blockquote>
@@ -322,13 +321,13 @@
 </blockquote>
 <p>也就是说 Recovery / Removal time 类似于 Setup / Hold Time，不过是用于异步信号，比如 set，reset 信号。</p>
 <p><img alt="recovery-removal" src="/images/latch_versus_flip_flop/recovery-removal.jpg"/></p>
-<p>如图所示，在时钟沿到来之前的 recovery time 之前，异步信号必须释放 (变无效)，在时钟沿到来之后的 removal time 之后，异步信号才能变有效，也就是说在从 recovery time 到 removal time 这段时间内，异步信号是不能有效的。</p>
+<p>如图所示，在时钟沿到来之前的 recovery time 之前，异步信号必须释放 ( 变无效 )，在时钟沿到来之后的 removal time 之后，异步信号才能变有效，也就是说在从 recovery time 到 removal time 这段时间内，异步信号是不能有效的。</p>
 <p>如果使 flip-flop 的输入满足 setup time 和 hold time，那么就可以避免亚稳态的出现，一般器件的手册上都会标明这些参数，从几 ns 到几百 ps 之间。根据 flip-flop 内的组织情况而定，有时候可以将 setup time 或者 hold time 两者中的一个（只能是其中之一）变为 0 甚至是负数。</p>
 <p>但是，并不是总能满足这一标准，因为有可能 flip-flop 的输入端连到了外界的，设计者无法控制的一个不断变化的信号，这时候设计者所能做的事就是根据电路要求，将发生错误的概率降低到一个确定的水平。通常使用的方法就是将信号通过一条链在一起的 flip-flop 组，这样子可以将发生亚稳态的概率降低到一个可以忽略的程度，但是还是不等于 0。链中的 flip-flop 越多，这个概率就越趋近于 0，通常的情况是采用 1 个或者两个 flip-flop。</p>
 <p>即使现在出现了所谓的 <code>metastable-hardened flip-flops</code>，它可以尽可能地减小 setup time 和 hold time，但是仍然无法完全避免问题的出现。<strong>这是因为亚稳态并不是简单的设计方法上的问题。</strong>当时钟信号和其他信号在相隔很近的时间内变化，flip-flop 必须判断哪一个先发生变化，哪一个后发生变化，无论我们的器件速度有多快，仍然有可能出现两者相隔的太近，以至于无法判断。所以理论上是不可能造出一个完美避免亚稳态的 flip-flop。</p>
 <h3 id="propagation delay">Propagation delay</h3>
-<p>flip-flop 还有一个参数叫做 clock-to-output delay (common symbol in data sheets: <code>tco</code>) 或者是 propagation delay (<code>tp</code>)，表示的是 flip-flop 从有效时钟沿开始到输出发生变化所消耗的时间。有时候从高电平变为低电平的时间 (high-to-low transition, tPHL))和从低电平变为高电平的时间 (low-to-high transition, tPLH) 不相等。</p>
-<p>当用同一时钟来驱动级联的 flip-flop (比如移位寄存器 shift register)时，必须保证前一级的 tco 要大于后一级的 th。这是因为必须要保证前一级的数据能够正确移位到后一级中。当有效时钟沿到来时，前后两级的 ff 在同时变化，采样前一级的输出作为本级的输入，然后经过 tco 输出更新的值。当后一级 ff 在 tsu 到 th 段内采样时，必须保证前一级的输出保持不变，也就是说前一级 ff 的响应速度不能太快，至少要等后一级正确采样完成之后才能变化，即 <code>tco &gt; th</code>。如果采用物理构造完全相同的 ff，那么通常是可以保证这一条件的。</p>
+<p>flip-flop 还有一个参数叫做 clock-to-output delay (common symbol in data sheets: <code>tco</code>) 或者是 propagation delay (<code>tp</code>)，表示的是 flip-flop 从有效时钟沿开始到输出发生变化所消耗的时间。有时候从高电平变为低电平的时间 (high-to-low transition, tPHL)) 和从低电平变为高电平的时间 (low-to-high transition, tPLH) 不相等。</p>
+<p>当用同一时钟来驱动级联的 flip-flop ( 比如移位寄存器 shift register) 时，必须保证前一级的 tco 要大于后一级的 th。这是因为必须要保证前一级的数据能够正确移位到后一级中。当有效时钟沿到来时，前后两级的 ff 在同时变化，采样前一级的输出作为本级的输入，然后经过 tco 输出更新的值。当后一级 ff 在 tsu 到 th 段内采样时，必须保证前一级的输出保持不变，也就是说前一级 ff 的响应速度不能太快，至少要等后一级正确采样完成之后才能变化，即 <code>tco &gt; th</code>。如果采用物理构造完全相同的 ff，那么通常是可以保证这一条件的。</p>
 <p><br/></p>
 <h2 id="in fpga_1">in FPGA</h2>
 <hr/>
@@ -337,11 +336,11 @@
 <ol>
 <li>
 <p>面积比 ff 小</p>
-<p>门电路是构建组合逻辑电路的基础，而锁存器和触发器是构建时序逻辑电路的基础。门电路是由晶体管构成的，锁存器是由门电路构成的，而触发器是由锁存器构成的。也就是 晶体管-&gt;门电路-&gt;锁存器-&gt;触发器，前一级是后一级的基础。latch完成同一个功能所需要的门较触发器要少，所以在asic中用的较多。</p>
+<p>门电路是构建组合逻辑电路的基础，而锁存器和触发器是构建时序逻辑电路的基础。门电路是由晶体管构成的，锁存器是由门电路构成的，而触发器是由锁存器构成的。也就是 晶体管 -&gt; 门电路 -&gt; 锁存器 -&gt; 触发器，前一级是后一级的基础。latch 完成同一个功能所需要的门较触发器要少，所以在 asic 中用的较多。</p>
 </li>
 <li>
 <p>速度比 ff 快</p>
-<p>用在地址锁存是很合适的，不过一定要保证所有的latch信号源的质量，锁存器在CPU设计中很常见，正是由于它的应用使得CPU的速度比外部IO部件逻辑快许多。</p>
+<p>用在地址锁存是很合适的，不过一定要保证所有的 latch 信号源的质量，锁存器在 CPU 设计中很常见，正是由于它的应用使得 CPU 的速度比外部 IO 部件逻辑快许多。</p>
 </li>
 </ol>
 <p><strong>latch 的缺点：</strong></p>
@@ -350,7 +349,7 @@
 <p>电平触发，非同步设计，受布线延迟影响较大，很难保证输出没有毛刺产生</p>
 </li>
 <li>
-<p>latch将静态时序分析变得极为复杂</p>
+<p>latch 将静态时序分析变得极为复杂</p>
 </li>
 </ol>
 <p><strong>flip-flop 的优点：</strong></p>
@@ -370,7 +369,7 @@
 <p><strong>一般的设计规则是：</strong></p>
 <p>在绝大多数设计中避免产生 latch。它会让您设计的时序完蛋，并且它的隐蔽性很强，非老手不能查出。latch 最大的危害在于不能过滤毛刺。这对于下一级电路是极其危险的。所以，只要能用 DFF 的地方，就不用 latch。</p>
 <h3 id="reason &amp; solution to unexpected latch">Reason &amp; Solution to unexpected latch</h3>
-<p>在电路设计中，要对Latch特别谨慎，如果综合出和设计意图不一致的 Latch，会导致设计错误，包括仿真和综合。因此，要避免产生意外的 Latch。</p>
+<p>在电路设计中，要对 Latch 特别谨慎，如果综合出和设计意图不一致的 Latch，会导致设计错误，包括仿真和综合。因此，要避免产生意外的 Latch。</p>
 <h4 id="reason">Reason</h4>
 <p>如果组合逻辑完全不使用 always 语句，那么就不会产生 latch，比如</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">dout</span> <span class="o">=</span> <span class="n">din</span> <span class="o">?</span> <span class="n">x</span> <span class="o">:</span> <span class="n">y</span><span class="p">;</span>
@@ -467,10 +466,10 @@
 <h3 id="application_1">Application</h3>
 <p><a href="http://book.douban.com/subject/3522845/">《Verilog HDL 程序设计与实践》</a> 笔记：</p>
 <blockquote>
-<p>latch 作为一种电路单元,必然有其存在的理由以及应用场景,并不像目前的很多书籍简单地将锁存器列为&ldquo;头等敌人&rdquo;。其实在实际中,有些设计是不可避免地要用到锁存器,特别是在总线应用上,锁存器能提高驱动能力、隔离前后级。例如,常见的应用包括地址锁存器、数据锁存器以及复位信号锁存器等。但在更多的情况下,很容易在代码中产生未预料到的锁存器,使得逻辑功能不满足要求,浪费了大量的调试时间,从而使得大多数设计人员&ldquo;闻虎色变&rdquo;。</p>
-<p>因此较好的应用规则是:<strong>要学会分析是否需要锁存器以及代码是否会产生意想不到的锁存器。只有这样才能灵活运用锁存器。</strong></p>
+<p>latch 作为一种电路单元 , 必然有其存在的理由以及应用场景 , 并不像目前的很多书籍简单地将锁存器列为 &ldquo; 头等敌人 &rdquo;。其实在实际中 , 有些设计是不可避免地要用到锁存器 , 特别是在总线应用上 , 锁存器能提高驱动能力、隔离前后级。例如 , 常见的应用包括地址锁存器、数据锁存器以及复位信号锁存器等。但在更多的情况下 , 很容易在代码中产生未预料到的锁存器 , 使得逻辑功能不满足要求 , 浪费了大量的调试时间 , 从而使得大多数设计人员 &ldquo; 闻虎色变 &rdquo;。</p>
+<p>因此较好的应用规则是 :<strong>要学会分析是否需要锁存器以及代码是否会产生意想不到的锁存器。只有这样才能灵活运用锁存器。</strong></p>
 <p>下面通过实例来给予说明。</p>
-<p><strong>example1</strong>: 通过Verilog HDL实现序列最大值搜索程序，并保持检测到的最大值</p>
+<p><strong>example1</strong>: 通过 Verilog HDL 实现序列最大值搜索程序，并保持检测到的最大值</p>
 <div class="highlight"><pre><span></span>  <span class="nv">module</span> <span class="nv">latch_demo</span><span class="ss">(</span>  
           <span class="nv">din</span>,<span class="nv">dout</span>  
       <span class="ss">)</span><span class="c1">;  </span>
@@ -486,15 +485,15 @@
 
   <span class="nv">endmodule</span>
 </pre></div>
-<p>上述代码在ISE中的综合结果会给出设计中包含Latch的警告。但实际上，abmax_tmp锁存器正是我们需要的，所以，虽然有警告，但是代码设计是没有问题的。将上述代码的if语句补全：</p>
+<p>上述代码在 ISE 中的综合结果会给出设计中包含 Latch 的警告。但实际上，abmax_tmp 锁存器正是我们需要的，所以，虽然有警告，但是代码设计是没有问题的。将上述代码的 if 语句补全：</p>
 <div class="highlight"><pre><span></span> <span class="k">if</span> <span class="ss">(</span><span class="nv">a</span> <span class="o">&gt;</span> <span class="nv">abmax_tmp</span><span class="ss">)</span>  
       <span class="nv">abmax_tmp</span> <span class="o">=</span> <span class="nv">a</span><span class="c1">;  </span>
   <span class="k">else</span>  
       <span class="nv">abmax_tmp</span> <span class="o">=</span> <span class="nv">abmax_tmp</span><span class="c1">;</span>
 </pre></div>
-<p>经过综合后，仍然有Latch的警告。无论Latch是否是用户需要的，ISE都会给出警告，主要原因就是Latch对整个设计的时序性能影响较大。所以，在设计中要尽量避免Latch，但是确实需要使用的情况，也可以使用。</p>
-<p><strong>example2:</strong> 用Verilog HDL实现一个锁存器，当输入数据大于127时，将输入数据输出，否则输出0</p>
-<p>不期望的 latch 指的是与设计意图不符，产生的 Latch。主要问题在于设计人员没有合理使用Verilog HDL语言，常见的原因是对条件语句（if、casse）的分支描述不完整，导致电路的功能不是预期的，发生了错误。</p>
+<p>经过综合后，仍然有 Latch 的警告。无论 Latch 是否是用户需要的，ISE 都会给出警告，主要原因就是 Latch 对整个设计的时序性能影响较大。所以，在设计中要尽量避免 Latch，但是确实需要使用的情况，也可以使用。</p>
+<p><strong>example2:</strong> 用 Verilog HDL 实现一个锁存器，当输入数据大于 127 时，将输入数据输出，否则输出 0</p>
+<p>不期望的 latch 指的是与设计意图不符，产生的 Latch。主要问题在于设计人员没有合理使用 Verilog HDL 语言，常见的原因是对条件语句（if、casse）的分支描述不完整，导致电路的功能不是预期的，发生了错误。</p>
 <div class="highlight"><pre><span></span>  <span class="nv">module</span> <span class="nv">latch_demo</span><span class="ss">(</span>  
       <span class="nv">din</span>,<span class="nv">dout</span>  
   <span class="ss">)</span><span class="c1">;  </span>
@@ -510,16 +509,16 @@
 
   <span class="nv">endmodule</span>
 </pre></div>
-<p>综合后的结果，在比较器后面级联了锁存器，这是因为if语句缺少else分支造成的。查看仿真结果，当输入小于127时，输出保持了上次的127，不是0，没有达到设计要求。修改方法很简单，就是将if-else补全。</p>
+<p>综合后的结果，在比较器后面级联了锁存器，这是因为 if 语句缺少 else 分支造成的。查看仿真结果，当输入小于 127 时，输出保持了上次的 127，不是 0，没有达到设计要求。修改方法很简单，就是将 if-else 补全。</p>
 <div class="highlight"><pre><span></span>   <span class="k">if</span> <span class="ss">(</span><span class="nv">din</span> <span class="o">&gt;</span> <span class="mi">127</span> <span class="ss">)</span>
        <span class="nv">dout</span> <span class="o">=</span> <span class="nv">din</span><span class="c1">;  </span>
    <span class="k">else</span>  
        <span class="nv">dout</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
 </pre></div>
-<p>在ISE中综合后的结果中，可以看到补全if-else后，在比较器后面级联了与门，代替原来的锁存器，仿真结果也正确。</p>
+<p>在 ISE 中综合后的结果中，可以看到补全 if-else 后，在比较器后面级联了与门，代替原来的锁存器，仿真结果也正确。</p>
 </blockquote>
 <h3 id="conclusion">Conclusion</h3>
-<p>锁存器 latch 是一种基本电路单元,会影响到电路的时序性能,应该尽量避免使用,但出现锁存器造成设计和原始意图不符的情况,则是由于设计人员代码输入不正确造成的。</p>
+<p>锁存器 latch 是一种基本电路单元 , 会影响到电路的时序性能 , 应该尽量避免使用 , 但出现锁存器造成设计和原始意图不符的情况 , 则是由于设计人员代码输入不正确造成的。</p>
 <p><br/></p>
 <h2 id="reference_1">Reference</h2>
 <p><a href="http://en.wikipedia.org/wiki/Flip-flop_(electronics">Flip-flop (electronics) --wikipedia</a></p>

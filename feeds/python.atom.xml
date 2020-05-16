@@ -1,62 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog - Python</title><link href="https://qiangu.cool/" rel="alternate"></link><link href="https://qiangu.cool/feeds/python.atom.xml" rel="self"></link><id>https://qiangu.cool/</id><updated>2020-05-10T19:15:00+08:00</updated><subtitle>路漫漫其修远兮，吾将上下而求索</subtitle><entry><title>PEP 翻译计划系列 —— PEP202</title><link href="https://qiangu.cool/posts/python/peps_translate_project_pep202.html" rel="alternate"></link><published>2020-05-10T19:15:00+08:00</published><updated>2020-05-10T19:15:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-05-10:/posts/python/peps_translate_project_pep202.html</id><summary type="html">&lt;p&gt;PEPs 翻译系列 PEP202&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-00202/"&gt;PEP 202 -- List Comprehensions 原文链接&lt;/a&gt;。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;item&lt;/th&gt;
-&lt;th&gt;detail&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;PEP&lt;/td&gt;
-&lt;td&gt;202&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Title&lt;/td&gt;
-&lt;td&gt;List Comprehensions&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Author&lt;/td&gt;
-&lt;td&gt;barry at python.org (Barry Warsaw)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Status&lt;/td&gt;
-&lt;td&gt;Final&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Type&lt;/td&gt;
-&lt;td&gt;Standards Track&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Created&lt;/td&gt;
-&lt;td&gt;13-Jul-2000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Python-Version&lt;/td&gt;
-&lt;td&gt;2.0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Post-History&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;本文描述了一种 python 语法扩展 proposal：列表解析式（list comprehensions）。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
-&lt;h2 id="the proposed solution"&gt;The Proposed Solution&lt;/h2&gt;
-&lt;p&gt;本文提议允许程序员可以用 &lt;code&gt;for&lt;/code&gt; 和 &lt;code&gt;if&lt;/code&gt; 关键字来有条件地构造一个 list，就像在 &lt;code&gt;for&lt;/code&gt; 和 
-&lt;code&gt;if&lt;/code&gt; 语句中的做法一样。&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;如果想用从一个 list 中挑选出一部分满足条件的元素组成一个新的 list，该怎么做？最简单的方法
-是写一个 &lt;code&gt;for&lt;/code&gt; 循环，然后从中挨个挑选出符合条件的元素。但是这种写法很臃肿，所以出现了 
-&lt;code&gt;list comprehensions&lt;/code&gt;。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
-&lt;h2 id="rationale"&gt;Rationale&lt;/h2&gt;
-&lt;p&gt;list comprehensions 提供了另外一种更加简洁的选择，以实现当前使用 &lt;code&gt;map()&lt;/code&gt;/&lt;code&gt;filter()&lt;/code&gt; 或
-者是嵌套循环的效果。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
-&lt;h2 id="examples"&gt;Examples&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog - Python</title><link href="https://qiangu.cool/" rel="alternate"></link><link href="https://qiangu.cool/feeds/python.atom.xml" rel="self"></link><id>https://qiangu.cool/</id><updated>2020-05-16T20:58:00+08:00</updated><subtitle>路漫漫其修远兮，吾将上下而求索</subtitle><entry><title>PEP 学习系列之 3 —— PEP202 &amp; PEP274</title><link href="https://qiangu.cool/posts/python/learning_peps_series_3_pep202_and_pep274.html" rel="alternate"></link><published>2020-05-16T20:58:00+08:00</published><updated>2020-05-16T20:58:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-05-16:/posts/python/learning_peps_series_3_pep202_and_pep274.html</id><summary type="html">&lt;p&gt;List &amp;amp; Dict Comprehensions 学习笔记&lt;/p&gt;</summary><content type="html">&lt;h2 id="wei shi yao xu yao  comprehensions"&gt;为什么需要 Comprehensions&lt;/h2&gt;
+&lt;p&gt;如果想用从一个 list 中挑选出一部分满足条件的元素组成一个新的 list，该怎么做？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;方法一：最直观简单的方法，写一个 &lt;code&gt;for&lt;/code&gt; 循环，然后从中挨个挑选出符合条件的元素&lt;/li&gt;
+&lt;li&gt;方法二：使用函数式编程中的 &lt;code&gt;map()&lt;/code&gt;/&lt;code&gt;filter()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;方法一虽然简单但是很臃肿，方法二在 FP 世界里面可能是最优写法，但是不适合混合到指令式编程的世界中，所以出现了 &lt;code&gt;list comprehensions&lt;/code&gt;， 它提供了另外一种更加简洁的实现方法。（&lt;strong&gt;Simple is better than complex.&lt;/strong&gt;）&lt;/p&gt;
+&lt;h2 id="list comprehensions"&gt;List Comprehensions&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-00202/"&gt;PEP 202 -- List Comprehensions 原文链接&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;List Comprehensions 就是运用于 List 对象的 Comprehensions。&lt;/p&gt;
+&lt;h3 id="examples"&gt;Examples&lt;/h3&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
  2
  3
@@ -102,42 +55,16 @@
 &lt;span class="o"&gt;[(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="s1"&gt;'Peaches'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;, &lt;span class="s1"&gt;'Bananas'&lt;/span&gt;&lt;span class="o"&gt;)]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
-&lt;h2 id="reference implementation"&gt;Reference Implementation&lt;/h2&gt;
-&lt;p&gt;list comprehensions 在 Python release2.0 中变成了语法中的一部分。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
-&lt;h2 id="bdfl pronouncements"&gt;BDFL Pronouncements&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;上面的语法只适用于一个元素（the Right One）&lt;/li&gt;
-&lt;li&gt;不允许写成 &lt;code&gt;[x, y for ...]&lt;/code&gt; 形式，但是可以写成一个 tuple 元素的形式 &lt;code&gt;[(x, y) for ...]&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;允许嵌套形式 &lt;code&gt;[...  for x... for y...]&lt;/code&gt;，就像嵌套循环一样，最后一个 index 是变化最快的&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
-&lt;hr/&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
-&lt;h2 id="shi yao shi  list comprehensions"&gt;什么是 list comprehensions&lt;/h2&gt;
-&lt;p&gt;list comprehensions 是 python 中的一种语法糖（&lt;code&gt;syntactis suger&lt;/code&gt;），它可以将一个 list 
-按照一定的条件转换成另外一个 list。可以把它看成是函数式编程中 &lt;code&gt;map()&lt;/code&gt; 和 &lt;code&gt;filter()&lt;/code&gt; 的语法
-糖，&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
-2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt;&amp;gt;&amp;gt; &lt;span class="nv"&gt;doubled_odds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; map&lt;span class="o"&gt;(&lt;/span&gt;lambda n: n * &lt;span class="m"&gt;2&lt;/span&gt;, filter&lt;span class="o"&gt;(&lt;/span&gt;lambda n: n % &lt;span class="nv"&gt;2&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;, umbers&lt;span class="o"&gt;))&lt;/span&gt;
-&amp;gt;&amp;gt;&amp;gt; &lt;span class="nv"&gt;doubled_odds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;n * &lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; n in numbers &lt;span class="k"&gt;if&lt;/span&gt; n % &lt;span class="nv"&gt;2&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;h3 id="yi shu xue de jiao du li jie  list comprehensions"&gt;以数学的角度理解 list comprehensions&lt;/h3&gt;
 &lt;p&gt;下面这个集合表示从自然数中挑选出符合条件 &lt;code&gt;x &amp;gt; 5&lt;/code&gt; 且 &lt;code&gt;x &amp;lt; 10&lt;/code&gt; 的所有元素，&lt;/p&gt;
 &lt;div class="math"&gt;$$new\_list = \{x | x \in N, x &amp;gt; 0, x &amp;lt; 10\}$$&lt;/div&gt;
-&lt;p&gt;对比一下 python 版本的代码就可以知道两者非常相似，只不过 python 用 if 语句来描述数学中的
-条件表达式。&lt;/p&gt;
+&lt;p&gt;下面是 Python 的实现版本，&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;new_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;N&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;p&gt;尤其是 python 中有集合 &lt;code&gt;set&lt;/code&gt; 的概念，set 也是可以写成 comprehensions 形式的，这个和数学
-就完全等价了。&lt;/p&gt;
-&lt;h2 id="ru he xie  list comprehensions_1"&gt;如何写 list comprehensions&lt;/h2&gt;
-&lt;h3 id="mo ban"&gt;模板&lt;/h3&gt;
-&lt;p&gt;因为 list comprehensions 本质是 for 和 if 的简洁写法，所以我们可以总结出一个模板，只要满
-足这个模板的 for 循环就可以改成写 list comprehensions。&lt;/p&gt;
+&lt;p&gt;对比一下 python 版本的代码就可以知道两者非常相似，只不过 python 用 for 和 if 语句来描述数学中的条件表达式。尤其是 python 中有集合 &lt;code&gt;set&lt;/code&gt; 的概念，set 也是可以写成 comprehensions 形式的，这个时候就和数学就完全等价了。&lt;/p&gt;
+&lt;h3 id="ru he xie  list comprehensions"&gt;如何写 list comprehensions&lt;/h3&gt;
+&lt;p&gt;因为 list comprehensions 本质是 for 和 if 的简洁写法，所以我们可以总结出一个模板，只要满足这个模板的 for 循环就可以改成写 list comprehensions。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nv"&gt;item&lt;/span&gt; &lt;span class="nv"&gt;in&lt;/span&gt; &lt;span class="nv"&gt;old_list&lt;/span&gt;:
@@ -162,9 +89,6 @@
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;flattend&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;matrix&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;p&gt;&lt;strong&gt;总结：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;无论是单层还是嵌套的 for 循环，改成 list comprehensions 的方法其实方法非常简单，就是把普
-通的 for 循环调整了顺序，将循环核心的语句写在了最前面，剩余部分按原顺序写就可以了。&lt;/p&gt;
 &lt;h3 id="ti gao  list comprehensions de ke du xing"&gt;提高 list comprehensions 的可读性&lt;/h3&gt;
 &lt;p&gt;因为 python 支持在括号之间断行，所以前面的例子，可以该写成下面的形式以提高可读性：&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
@@ -189,10 +113,59 @@
 &lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h3 id="xiao jie"&gt;小结&lt;/h3&gt;
+&lt;p&gt;无论是单层还是嵌套的 for 循环，改成 list comprehensions 的方法其实方法非常简单，就是把普通的 for 循环调整了顺序，将循环内的语句写在了最前面，剩余部分按原顺序写就可以了。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;上面的语法只适用于一个元素（the Right One）&lt;/li&gt;
+&lt;li&gt;不允许写成 &lt;code&gt;[x, y for ...]&lt;/code&gt; 形式，但是可以写成一个 tuple 元素的形式 &lt;code&gt;[(x, y) for ...]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;允许嵌套形式 &lt;code&gt;[...  for x... for y...]&lt;/code&gt;，就像嵌套循环一样，最后一个 index 是变化最快的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="dict comprehensions_1"&gt;Dict Comprehensions&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-00274/"&gt;PEP 274 -- Dict Comprehensions 原文链接&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;dict comprehensions 和 list comprehensions 非常相似，不同之处是用 &lt;code&gt;{}&lt;/code&gt; 而不是 &lt;code&gt;[]&lt;/code&gt;。同时，关键字 &lt;code&gt;for&lt;/code&gt; 前面的部分表达式改成了用冒号隔开的 key-value 对。&lt;/p&gt;
+&lt;h3 id="examples_1"&gt;Examples&lt;/h3&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;chr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;65&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'A'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'B'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'C'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'D'&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;someDict&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iteritems&lt;/span&gt;&lt;span class="p"&gt;()}&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;someDict&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;list_of_email_addrs&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'barry@zope.com'&lt;/span&gt;   &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'barry@python.org'&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'guido@python.org'&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;invert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iteritems&lt;/span&gt;&lt;span class="p"&gt;()}&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'A'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'B'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'C'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'D'&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;invert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'A'&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'B'&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'C'&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'D'&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{(&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="p"&gt;{(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+   &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;h2 id="ref_1"&gt;Ref&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://treyhunner.com/2015/12/python-list-comprehensions-now-in-color/"&gt;Python List Comprehensions: Explained Visually&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://www.jianshu.com/p/dd85d2cd89d1"&gt;用数学思维理解Comprehension&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.jianshu.com/p/dd85d2cd89d1"&gt;用数学思维理解 Comprehension&lt;/a&gt;&lt;/p&gt;
 &lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -230,7 +203,7 @@
         "    'HTML-CSS': { " +
         "        availableFonts: ['STIX', 'TeX']," +
         "        preferredFont: 'STIX'," +
-        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'blue ! important'} }," +
         "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
         "    }, " +
         "}); " +
@@ -254,7 +227,7 @@
     (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP 翻译计划系列 —— PEP20</title><link href="https://qiangu.cool/posts/python/peps_translate_project_pep20.html" rel="alternate"></link><published>2020-05-10T14:36:00+08:00</published><updated>2020-05-10T14:36:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-05-10:/posts/python/peps_translate_project_pep20.html</id><summary type="html">&lt;p&gt;PEPs 翻译系列 PEP20&lt;/p&gt;</summary><content type="html">&lt;p&gt;著名的 python 之禅，&lt;a href="https://www.python.org/dev/peps/pep-0020/"&gt;PEP 20 -- The Zen of Python 原文链接&lt;/a&gt;。&lt;/p&gt;
+&lt;/script&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP 学习系列之 2 —— PEP20</title><link href="https://qiangu.cool/posts/python/learning_peps_series_2_pep20.html" rel="alternate"></link><published>2020-05-10T14:36:00+08:00</published><updated>2020-05-10T14:36:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-05-10:/posts/python/learning_peps_series_2_pep20.html</id><summary type="html">&lt;p&gt;学习 Python 之禅&lt;/p&gt;</summary><content type="html">&lt;p&gt;著名的 python 之禅，&lt;a href="https://www.python.org/dev/peps/pep-0020/"&gt;PEP 20 -- The Zen of Python 原文链接&lt;/a&gt;。&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -294,22 +267,14 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h2 id="abstract"&gt;Abstract&lt;/h2&gt;
-&lt;p&gt;很久之前，Python 先驱 Tim Peters 将 BDFL（Benevolent director for life，仁慈的终身独
-裁者，特指 Python 之父 Guido van Rossum）的 Python 设计指导原则总结成 20 条格言，只记录
-下了其中的 19 条。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;很久之前，Python 先驱 Tim Peters 将 BDFL（Benevolent director for life，仁慈的终身独裁者，特指 Python 之父 Guido van Rossum）的 Python 设计指导原则总结成 20 条格言，只记录下了其中的 19 条。&lt;/p&gt;
 &lt;h2 id="the zen of python"&gt;The Zen of Python&lt;/h2&gt;
-&lt;p&gt;网上有很多不同版本的翻译，有些语言风趣幽默，有些正经严肃。我个人更喜欢严肃的翻译，因为幽默的
-翻译有时候需要特定的语境和背景只是才能理解，反而增加了理解难度。下面的翻译一些是我按照自己的
-理解写的，有些是网上别人的翻译（因为出处已经无法找到了，所以只能感谢原作者的分析了）。文学水平
-太低做不到 &lt;code&gt;达雅&lt;/code&gt;，只能争取做到 &lt;code&gt;信&lt;/code&gt;，尽量不要误导大家。&lt;/p&gt;
+&lt;p&gt;网上有很多不同版本的翻译，有些语言风趣幽默，有些正经严肃。我个人更喜欢严肃的翻译，因为幽默的翻译有时候需要特定的语境和背景只是才能理解，反而增加了理解难度。下面的翻译一些是我按照自己的理解写的，有些是网上别人的翻译（因为出处已经无法找到了，所以只能感谢原作者的分享了）。文学水平太低做不到 &lt;code&gt;达雅&lt;/code&gt;，只能争取做到 &lt;code&gt;信&lt;/code&gt;，尽量不要误导大家。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Beautiful is better than ugly.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;优美胜于丑陋&lt;/p&gt;
-&lt;p&gt;PEP8 中提到，Python 的理念是代码更多时候是用来读的，所以以编写 &lt;code&gt;优美&lt;/code&gt; 的代码为目标，
-&lt;code&gt;if a == 0 and b == 1 or c == True:&lt;/code&gt; 要比 &lt;code&gt;if a == 0 &amp;amp;&amp;amp; b == 1 || c == True:&lt;/code&gt;
- 更加优美。优美的代码包含的内容非常广泛，PEP8 提供了一些如何写出优美代码的建议。&lt;/p&gt;
+&lt;p&gt;PEP8 中提到，Python 的理念是代码更多时候是用来读的，所以以编写 &lt;code&gt;优美&lt;/code&gt; 的代码为目标，&lt;code&gt;if a == 0 and b == 1 or c == True:&lt;/code&gt; 要比 &lt;code&gt;if a == 0 &amp;amp;&amp;amp; b == 1 || c == True:&lt;/code&gt; 更加优美。优美的代码包含的内容非常广泛，PEP8 提供了一些如何写出优美代码的建议。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Explicit is better than implicit.&lt;/strong&gt;&lt;/p&gt;
@@ -325,16 +290,12 @@
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Simple is better than complex.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;简单胜于复杂&lt;/p&gt;
-&lt;p&gt;选择最简单实现方案，python 有很多功能强大的内置 method，合理利用它们可以减少你的代码量，
-删繁就简只保留核心代码。一个直观例子是用 &lt;code&gt;enumerate()&lt;/code&gt; 来迭代容器，另外一个例子是用
-&lt;code&gt;zip()&lt;/code&gt; 来快速创建字典。减少代码量不仅仅可以提高可读性，还意味着出错的概率更低，而且代码
-的性能更好（因为通常库实现更加高效）。&lt;/p&gt;
+&lt;p&gt;选择最简单实现方案，python 有很多功能强大的内置 method，合理利用它们可以减少你的代码量，删繁就简只保留核心代码。一个直观例子是用 &lt;code&gt;enumerate()&lt;/code&gt; 来迭代容器，另外一个例子是用 &lt;code&gt;zip()&lt;/code&gt; 快速创建字典。减少代码量不仅仅可以提高可读性，还意味着出错的概率更低，而且代码的性能更好（因为通常库实现更加高效）。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Complex is better than complicated.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;复杂胜于凌乱&lt;/p&gt;
-&lt;p&gt;如果复杂不可避免，也要避免晦涩的实现。复杂和晦涩的区别，我理解就是复杂是可以通过分解来理解
-，但是晦涩特指那种非常难理解的语法、不符合常规思维的实现方式。&lt;/p&gt;
+&lt;p&gt;如果复杂不可避免，也要避免晦涩的实现。复杂和晦涩的区别，我理解就是复杂是可以通过分解来理解，但是晦涩特指那种非常难理解的语法、不符合常规思维的实现方式。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Flat is better than nested.&lt;/strong&gt;&lt;/p&gt;
@@ -382,9 +343,7 @@
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;There should be one-- and preferably only one --obvious way to do it.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;应该有且只有一个最优解决方案 &amp;mdash;&amp;mdash; 最显而易见的实现方案&lt;/p&gt;
-&lt;p&gt;python 的语法非常灵活，库也非常强大，所以同一个问题可以有非常多种不同实现方式，那么最优
-方案应该是那个最直观的解决方案。不要走标新立异的路线，用最显而易见的方法，花费最少的时间
-解决问题，珍惜自己的生命，也珍惜读者（代码维护者）的生命。&lt;/p&gt;
+&lt;p&gt;python 的语法非常灵活，库也非常强大，所以同一个问题可以有非常多种不同实现方式，那么最优方案应该是那个最直观的解决方案。不要走标新立异的路线，用最显而易见的方法，花费最少的时间解决问题，珍惜自己的生命，也珍惜读者（代码维护者）的生命。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;life is short, you need pyhton.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -411,14 +370,12 @@
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;If the implementation is easy to explain, it may be a good idea.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;反之亦然，良好的实现方案应该清晰容易理解&lt;/p&gt;
-&lt;p&gt;好方案的一个共同特点就是清晰易懂，因为它们抓住了问题的关键点，从而可以用简单的方法高效地
-解决问题 &amp;mdash;&amp;mdash; &lt;code&gt;奥卡姆剃刀&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;好方案的一个共同特点就是清晰易懂，因为它们抓住了问题的关键点，从而可以用简单的方法高效地解决问题 &amp;mdash;&amp;mdash; &lt;code&gt;奥卡姆剃刀&lt;/code&gt;。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Namespaces are one honking great idea -- let's do more of those!&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;命名空间是一个绝妙的理念，我们要多加利用&lt;/p&gt;
-&lt;p&gt;给变量起名字是一门艺术，尤其是大工程多人协同工作时，难免会有命名冲突，因为好名字是大家有
-共识的，使用命名空间可以让你不再有命名冲突的烦恼。&lt;/p&gt;
+&lt;p&gt;给变量起名字是一门艺术，尤其是大工程多人协同工作时，难免会有命名冲突，因为好名字是大家有共识的，使用命名空间可以让你不再有命名冲突的烦恼。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id="easter egg"&gt;Easter Egg&lt;/h2&gt;
@@ -427,14 +384,13 @@
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;h2 id="ref"&gt;Ref&lt;/h2&gt;
-&lt;p&gt;&lt;a href="https://liuwynn.github.io/2019/04/24/Python%E4%B9%8B%E7%A6%85/"&gt;Python之禅&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://blog.csdn.net/lanphaday/article/details/2151918"&gt;《Python之禅》的翻译和解释&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://www.infoq.cn/article/e5FEa0D6JFADgKkHVyuE"&gt;怎样让你写的 Python 代码更优雅？&lt;/a&gt;&lt;/p&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP8 实践</title><link href="https://qiangu.cool/posts/python/pep8_in_practice.html" rel="alternate"></link><published>2020-04-19T14:56:00+08:00</published><updated>2020-04-19T14:56:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-04-19:/posts/python/pep8_in_practice.html</id><summary type="html">&lt;p&gt;总结实际 coding 中遵循 PEP8 时用到的工具和插件。&lt;/p&gt;</summary><content type="html">&lt;h2 id="pep8 &amp;amp; pcqa"&gt;PEP8 &amp;amp; PCQA&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://liuwynn.github.io/2019/04/24/Python%E4%B9%8B%E7%A6%85/"&gt;Python 之禅&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://blog.csdn.net/lanphaday/article/details/2151918"&gt;《Python 之禅》的翻译和解释&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.infoq.cn/article/e5FEa0D6JFADgKkHVyuE"&gt;怎样让你写的 Python 代码更优雅？&lt;/a&gt;&lt;/p&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP8 实践</title><link href="https://qiangu.cool/posts/python/pep8_in_practice.html" rel="alternate"></link><published>2020-04-19T14:56:00+08:00</published><updated>2020-04-19T14:56:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-04-19:/posts/python/pep8_in_practice.html</id><summary type="html">&lt;p&gt;总结实际 coding 中遵循 PEP8 时用到的工具和插件&lt;/p&gt;</summary><content type="html">&lt;h2 id="pep8 &amp;amp; pcqa"&gt;PEP8 &amp;amp; PCQA&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0008/"&gt;PEP8&lt;/a&gt; 之前已经介绍过了，这里有&lt;a href="http://guqian110.github.io/posts/python/peps_translate_project_pep8.html"&gt;中文翻译（前一篇博客）&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://meta.pycqa.org/en/latest/code-of-conduct.html"&gt;PCQA&lt;/a&gt; 是 Python Code Quality Authority 的缩写，它是一个松散的组织，聚集了各地的开发者，大家以在线协作的方式，为广大 python 码农提供各种 automatic style and quality reporting 工具，方便大家做项目时可以在不同项目都能保持代码风格一致。&lt;/p&gt;
 &lt;p&gt;PCQA 源自于 &lt;code&gt;Ian Cordasco&lt;/code&gt; 在把 &lt;code&gt;Flake8&lt;/code&gt; 迁移到 Git 时发出的一封邮件，大家积极提议把项目迁移到 &lt;code&gt;GitLab&lt;/code&gt; 上，所以他在 &lt;code&gt;GitLab&lt;/code&gt; 和 &lt;code&gt;GitHub&lt;/code&gt; 上都建了一个 group 来专门维护 &lt;code&gt;Flake8&lt;/code&gt; 和 &lt;code&gt;flake8-docstrings&lt;/code&gt;。后来其他人开发维护的各种 lint 工具也源源不断地加入，PCQA 逐渐壮大。&lt;/p&gt;
 &lt;p&gt;在 &lt;a href="https://github.com/PyCQA"&gt;PCQA 的 GitHub 主页&lt;/a&gt; 上可以看到很多工具，很多常见的 linter 和 formatter 工具大部分来自于 PCQA，下文会经常看到 PCQA 的身影。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="linter"&gt;Linter&lt;/h2&gt;
 &lt;h3 id="pycodestyle"&gt;pycodestyle&lt;/h3&gt;
 &lt;p&gt;PCQA 荣誉出品，&lt;a href="https://github.com/PyCQA/pycodestyle"&gt;pycodestyle&lt;/a&gt; 原名叫 &lt;code&gt;pep8&lt;/code&gt;，后应 python 之父的&lt;a href="https://github.com/PyCQA/pycodestyle/issues/466"&gt;要求&lt;/a&gt;，后来改名为 &lt;code&gt;pycodestyle&lt;/code&gt;。&lt;/p&gt;
@@ -508,7 +464,6 @@
 &lt;p&gt;安装和使用方法见官方主页。&lt;/p&gt;
 &lt;h3 id="black"&gt;black&lt;/h3&gt;
 &lt;p&gt;查看资料说 &lt;a href="https://github.com/psf/black"&gt;black&lt;/a&gt; 和 yapf 类似，但是限制条件比较多，没有太多的自定义选项，所以优点是省心。因为基于 python3，目前我还在使用 python 2.7，所以暂时记录一下，以后切换成 python 3 了再补坑。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="practice in sublime_1"&gt;Practice in Sublime&lt;/h2&gt;
 &lt;p&gt;sublime 有很多 linter 和 formater 插件，下面总结一下。&lt;/p&gt;
 &lt;h3 id="sublimelinter"&gt;SublimeLinter&lt;/h3&gt;
@@ -538,7 +493,6 @@
 &lt;/ul&gt;
 &lt;h3 id="py yapf python formatter"&gt;Py​Yapf Python Formatter&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://packagecontrol.io/packages/PyYapf%20Python%20Formatter"&gt;PyYapf&lt;/a&gt; 为 sublime 提供与 yapf 集成的接口，安装之后可以通过快捷键或者是 &lt;code&gt;ctrl + shift + p&lt;/code&gt; 在 sublime 内调用 yapf。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="summary_1"&gt;Summary&lt;/h2&gt;
 &lt;p&gt;综上，python 有众多 linter 和 formatter 工具，很多工具之间的功能大部分都是重复的，选择一个用着顺手的即可。因为我使用 sublime text 作为主力编辑器，所以 PEP8 实践的最佳方案是：&lt;/p&gt;
 &lt;table&gt;
@@ -562,7 +516,7 @@
 &lt;td&gt;PyYapf&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;</content><category term="Python"></category><category term="PEP8"></category><category term="python"></category><category term="Sublime Text"></category></entry><entry><title>PEP 翻译计划系列 —— PEP8</title><link href="https://qiangu.cool/posts/python/peps_translate_project_pep8.html" rel="alternate"></link><published>2020-04-12T13:55:00+08:00</published><updated>2020-04-12T13:55:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-04-12:/posts/python/peps_translate_project_pep8.html</id><summary type="html">&lt;p&gt;PEPs 翻译系列 PEP8&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0008/"&gt;PEP 8 -- Style Guide for Python Code 原文链接&lt;/a&gt;&lt;/p&gt;
+&lt;/table&gt;</content><category term="Python"></category><category term="PEP8"></category><category term="python"></category><category term="Sublime Text"></category></entry><entry><title>PEP 学习系列之 1 —— PEP8</title><link href="https://qiangu.cool/posts/python/learning_peps_series_1_pep8.html" rel="alternate"></link><published>2020-04-12T13:55:00+08:00</published><updated>2020-04-12T13:55:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-04-12:/posts/python/learning_peps_series_1_pep8.html</id><summary type="html">&lt;p&gt;翻译 PEP8&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0008/"&gt;PEP 8 -- Style Guide for Python Code 原文链接&lt;/a&gt;&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -601,17 +555,13 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="jie shao"&gt;介绍&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;p&gt;本文介绍 Python 主要发布版本中标准库的 code style，对于 CPython 中的 C 代码的 style guide 请查看相关文档 &lt;a href="https://www.python.org/dev/peps/pep-0007/"&gt;PEP7&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;本文和 &lt;a href="https://www.python.org/dev/peps/pep-0257/"&gt;PEP257(docstring 规范)&lt;/a&gt; 来源于 Guido 写的原始文章：《python code style》，部分来自于 Barry 的 &lt;a href="http://barry.warsaw.us/software/STYLEGUIDE.txt"&gt;GNU Mailman style guide&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;本文和 &lt;a href="https://www.python.org/dev/peps/pep-0257/"&gt;PEP257(docstring 规范 )&lt;/a&gt; 来源于 Guido 写的原始文章：《python code style》，部分来自于 Barry 的 &lt;a href="http://barry.warsaw.us/software/STYLEGUIDE.txt"&gt;GNU Mailman style guide&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;本文随着语言本身的变化不断进化，舍弃了部分规则的同时新加了一些规则。&lt;/p&gt;
 &lt;p&gt;许多项目都有自己的 coding style guide，如果和本文有任何冲突，应该以该项目自己的 guide 为准。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="jin xin shu ,bu ru wu shu"&gt;尽信书，不如无书&lt;/h2&gt;
-&lt;hr/&gt;
-&lt;p&gt;Guido 的一个重要见解是：代码更多是用来读而不是写。本文提供的 guideline 的目的是提高代码的可读性，使得广泛的 python 代码保持一致性。正如 &lt;a href="https://www.python.org/dev/peps/pep-0020/"&gt;PEP20&lt;/a&gt; 所述，&amp;ldquo;可读性非常重要&amp;rdquo;。&lt;/p&gt;
+&lt;p&gt;Guido 的一个重要见解是：代码更多是用来读而不是写。本文提供的 guideline 的目的是提高代码的可读性，使得广泛的 python 代码保持一致性。正如 &lt;a href="https://www.python.org/dev/peps/pep-0020/"&gt;PEP20&lt;/a&gt; 所述，&amp;ldquo; 可读性非常重要 &amp;rdquo;。&lt;/p&gt;
 &lt;p&gt;一篇 style guide 主要内容是一致性。虽然本文的一致性很重要，但是一个项目内的一致性更重要，最重要的是一个 module 或者 function 内部的一致性。&lt;/p&gt;
 &lt;p&gt;但最重要的是，要知道什么时候不保持一致性，在实际应用时候有些 guide 并不适用，如果有疑问，根据自己的最佳判断，看看其他代码例子然后决定怎么写代码看起来最好。不要羞于发问。&lt;/p&gt;
 &lt;p&gt;特别注意：不要为了遵守本文而破坏向后的兼容性！&lt;/p&gt;
@@ -630,9 +580,7 @@
 &lt;p&gt;代码需要和不支持本规范的旧版本 Python 代码保持一致&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="dai ma bu ju"&gt;代码布局&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;h3 id="suo jin"&gt;缩进&lt;/h3&gt;
 &lt;p&gt;每级缩进为 4 个空格。&lt;/p&gt;
 &lt;p&gt;连续行应该按照包围的元素对齐，要么使用 python 圆括号、方括号、花括号的隐式行连接在垂直方向对齐，要么使用 &lt;code&gt;hanging indent&lt;/code&gt;。使用 hanging indent 的时候应该注意，第一行不应该有任何参数，后续行多一级缩进以便和其他行能清晰地区分开。&lt;/p&gt;
@@ -783,11 +731,11 @@
 &lt;p&gt;如果 python 2 的命令行解释器带了 &lt;code&gt;-t&lt;/code&gt; 选项，如果有 tab 和 space 混合使用的情况，它会报告 warning，如果带了 &lt;code&gt;-tt&lt;/code&gt; 选项，则会报告 error。强烈推荐使用这些选项。&lt;/p&gt;
 &lt;h3 id="zui da xing chang du"&gt;最大行长度&lt;/h3&gt;
 &lt;p&gt;所有行的最大行长是 79 个字符。&lt;/p&gt;
-&lt;p&gt;对于基本没有结构化约束的长的文本（docstring和注释），其长度不能超过 72 个字符。&lt;/p&gt;
+&lt;p&gt;对于基本没有结构化约束的长的文本（docstring 和注释），其长度不能超过 72 个字符。&lt;/p&gt;
 &lt;p&gt;限制编辑器的宽度的好处是可以并列打开多个文件，在 code review 的时候比较两个版本的代码时很方便。&lt;/p&gt;
 &lt;p&gt;许多工具的默认 warp 功能会破坏代码的视觉结构，使得代码难以理解。选择这些限制的目的就是为了防止 warp 功能设置为 80 个字符的编辑器自动 warp，即使有些编辑器在最后一列放了一个标记来提醒。一些基于 web 的工具甚至都不提供 warp 功能。&lt;/p&gt;
 &lt;p&gt;一些团队强烈希望更长的行长，如果代码由一个可以达成一致的团队维护，那么可以把限制放宽到 99 个字符，但是注释和 docstring 仍然不超过 72 个字符。&lt;/p&gt;
-&lt;p&gt;Python 标准库是保守主义，所以要求行长不超过 79（docstring和注释不超过 72）。&lt;/p&gt;
+&lt;p&gt;Python 标准库是保守主义，所以要求行长不超过 79（docstring 和注释不超过 72）。&lt;/p&gt;
 &lt;p&gt;对于很长的行，优先选择的方式应该是使用括号隐式的断行，而不是使用 &lt;code&gt;\&lt;/code&gt; 来断行。&lt;/p&gt;
 &lt;p&gt;反斜线 &lt;code&gt;\&lt;/code&gt; 有时候还是有用的，比如较长的 &lt;code&gt;with&lt;/code&gt; 语句不能使用括号的方式，所以只能选择反斜线。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
@@ -817,7 +765,7 @@
           &lt;span class="n"&gt;student_loan_interest&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;p&gt;为了解决这个可读性的问题，数学家和出版商遵循了相反的约定。Donald Knuth 在他的 &lt;em&gt;&lt;code&gt;Computer and Typesetting&lt;/code&gt;&lt;/em&gt; 系列中解释了传统的规则：&amp;ldquo;虽然段落中的公式总是在二元操作符、关系操作符的后面断开，但是单独显示出来的公式却总是在二元操作符的前面断开。&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;为了解决这个可读性的问题，数学家和出版商遵循了相反的约定。Donald Knuth 在他的 &lt;em&gt;&lt;code&gt;Computer and Typesetting&lt;/code&gt;&lt;/em&gt; 系列中解释了传统的规则：&amp;ldquo; 虽然段落中的公式总是在二元操作符、关系操作符的后面断开，但是单独显示出来的公式却总是在二元操作符的前面断开。&amp;rdquo;&lt;/p&gt;
 &lt;p&gt;遵循数学家的传统通常可以得到可读性更好的代码：&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
@@ -881,7 +829,7 @@
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;import 必须放在文件的顶部，位于 module 注释和 docstring 的后面，在模块的全局变量/常量的前面。&lt;/p&gt;
+&lt;p&gt;import 必须放在文件的顶部，位于 module 注释和 docstring 的后面，在模块的全局变量 / 常量的前面。&lt;/p&gt;
 &lt;p&gt;import 应该按照下面的顺序分组：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -891,7 +839,7 @@
 &lt;p&gt;相关的第三方库 import&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;本地应用/库的特定 import&lt;/p&gt;
+&lt;p&gt;本地应用 / 库的特定 import&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;在每组之间插入一个空行。&lt;/p&gt;
@@ -969,14 +917,10 @@
 &lt;blockquote&gt;
 &lt;p&gt;An awkward thing about programming in Python: there are lots of double underscores. [snip] My problem with the double underscore is that it's hard to say. How do you pronounce &lt;strong&gt;init&lt;/strong&gt;? "underscore underscore init underscore underscore"? "under under init under under"? Just plain "init" seems to leave out something important. I have a solution: double underscore should be pronounced "dunder". So &lt;strong&gt;init&lt;/strong&gt; is "dunder init dunder", or just "dunder init".&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="string yin yong_1"&gt;string 引用&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;p&gt;在 python 中，单引号和双引号字符串是一样的，本文关于这个不会给出建议。选择一个规则并且坚持下去即可。当一个 string 包含单引号或者是双引号时，在内部使用另外一种引号，这样可以避免在代码内部使用反斜线 &lt;code&gt;\&lt;/code&gt;，提高代码的可读性。&lt;/p&gt;
 &lt;p&gt;根据 &lt;a href="https://www.python.org/dev/peps/pep-0257/"&gt;PEP257&lt;/a&gt;，对于三引号 string，永远使用双引号。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="biao da shi he yu ju zhong de kong ge"&gt;表达式和语句中的空格&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;h3 id="yi xie xiao wen ti"&gt;一些小问题&lt;/h3&gt;
 &lt;p&gt;避免下面情况中出现的无关空格，&lt;/p&gt;
 &lt;ul&gt;
@@ -1253,9 +1197,7 @@
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="shi yao shi hou shi yong wei bu dou hao_1"&gt;什么时候使用尾部逗号&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;p&gt;尾部逗号一般是可选的，除非是在构造单元素的 &lt;code&gt;tuple&lt;/code&gt; 时它是强制性必须存在的，在 python2 的 &lt;code&gt;print&lt;/code&gt; 中逗号是语法的一部分。为了清晰起见，推荐用（冗余的）圆括号包围起来：&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Correct:&lt;/span&gt;
@@ -1292,9 +1234,7 @@
 &lt;span class="n"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;FILES&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="zhu shi"&gt;注释&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;p&gt;和代码相冲突的注释比没有注释更糟糕，在代码改变之后永远第一时间更新相关注释。&lt;/p&gt;
 &lt;p&gt;注释应该是完整的句子，除非是用标识符开头的语句（永远不要改变标识符的大小写！），其他情况下第一个单词的首字母应该大写。&lt;/p&gt;
 &lt;p&gt;块注释一般由一段或者是多段的完整句子组成，并且每句都带一个句号。&lt;/p&gt;
@@ -1337,9 +1277,7 @@
 &lt;p&gt;对于单行的 docstring，把结尾的 &lt;code&gt;"""&lt;/code&gt; 放在该行内&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="ming ming gui fan_1"&gt;命名规范&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;p&gt;python 库的命名规则有点混乱，我们一直没有完全统一，然而，这里列了一些当前推荐的命名标准。新写的 &lt;code&gt;module&lt;/code&gt; 和 &lt;code&gt;package&lt;/code&gt;（包括第三方的 framework）应该遵守下面的标注，但是如果一个已经存在的库有其他的 style，只要内部保持一致性即可。&lt;/p&gt;
 &lt;h3 id="zui zhong yao de gui ze"&gt;最重要的规则&lt;/h3&gt;
 &lt;p&gt;API 中那些对用户可见的公共接口的名字，应该遵循反映用法而不是内部实现的原则。&lt;/p&gt;
@@ -1381,7 +1319,7 @@
 &lt;p&gt;除此之外，下面的这种带前缀或后缀下划线 &lt;code&gt;_&lt;/code&gt; 的格式是可以的（通常和一些惯例结合在一起使用）：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;_single_leading_underscore_&lt;/code&gt;，弱&amp;ldquo;内部使用&amp;rdquo;标志。比如，&lt;code&gt;from M import *&lt;/code&gt; 不会导入类似以 &lt;code&gt;_&lt;/code&gt; 开头的对象&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;_single_leading_underscore_&lt;/code&gt;，弱 &amp;ldquo; 内部使用 &amp;rdquo; 标志。比如，&lt;code&gt;from M import *&lt;/code&gt; 不会导入类似以 &lt;code&gt;_&lt;/code&gt; 开头的对象&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;code&gt;single_trailing_underscore_&lt;/code&gt;，用来避免和 python 内部的关键字相冲突&lt;/p&gt;
@@ -1393,7 +1331,7 @@
 &lt;p&gt;&lt;code&gt;__double_leading_underscore&lt;/code&gt;，用来给 class 的 attribute 命名，调用它时会被矫正（在 class FooBar 中，&lt;code&gt;__boo&lt;/code&gt; 会变成 &lt;code&gt;_FooBar_boo&lt;/code&gt;）&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;__double_leading_and_trailing_underscore__&lt;/code&gt;，&amp;ldquo;magic&amp;rdquo; 对象/attribute，存在于用户控制的 &lt;code&gt;namespcae&lt;/code&gt;，比如，&lt;code&gt;__init__&lt;/code&gt;，&lt;code&gt;__import__&lt;/code&gt;，或者 &lt;code&gt;__file__&lt;/code&gt;。仅仅像文档说明的这样用，永远不要自己发明这种名字。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;__double_leading_and_trailing_underscore__&lt;/code&gt;，&amp;ldquo;magic&amp;rdquo; 对象 /attribute，存在于用户控制的 &lt;code&gt;namespcae&lt;/code&gt;，比如，&lt;code&gt;__init__&lt;/code&gt;，&lt;code&gt;__import__&lt;/code&gt;，或者 &lt;code&gt;__file__&lt;/code&gt;。仅仅像文档说明的这样用，永远不要自己发明这种名字。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id="gui fan xing de :ming ming guan li"&gt;规范性的：命名惯例&lt;/h3&gt;
@@ -1449,31 +1387,30 @@
 &lt;ul&gt;
 &lt;li&gt;public attrbute 不应该有前缀下划线&lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;如果你的 public attribute 的名字和保留的关键字冲突了，在属性的最后缀上一个下划线。优先选择这种方法而不是采用缩写或者是错误拼写（但是尽管有这样的规则，对于 class method 作为第一个参数的情况，优先选择用 'cls' 表示 class 类型的变量/参数）&lt;/p&gt;
-&lt;p&gt;注意1：对于 class 的 method 的参数命令参考前面的讨论。&lt;/p&gt;
+&lt;p&gt;如果你的 public attribute 的名字和保留的关键字冲突了，在属性的最后缀上一个下划线。优先选择这种方法而不是采用缩写或者是错误拼写（但是尽管有这样的规则，对于 class method 作为第一个参数的情况，优先选择用 'cls' 表示 class 类型的变量 / 参数）&lt;/p&gt;
+&lt;p&gt;注意 1：对于 class 的 method 的参数命令参考前面的讨论。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;对于简单的 public data attribute，最好直接暴露它的名字，而不是再写一个复杂的 accessor/mutator method。如果一个 data attribute 需要增加功能，python 提供了一个方便的途径。这种情况下，使用 property 来隐藏简单的数据访问背后的 功能实现。&lt;/p&gt;
-&lt;p&gt;注意1：property 应该只在 new-style 的 class 中实现。&lt;/p&gt;
-&lt;p&gt;注意2：虽然有些副作用（比如caching）是可以接受的，但是要尽量尝试让 function 的行为没有副作用&lt;/p&gt;
-&lt;p&gt;注意3：property 会让调用者认为访问开销相对较小，所以尽量避免使用 property 来做大开销的计算&lt;/p&gt;
+&lt;p&gt;注意 1：property 应该只在 new-style 的 class 中实现。&lt;/p&gt;
+&lt;p&gt;注意 2：虽然有些副作用（比如 caching）是可以接受的，但是要尽量尝试让 function 的行为没有副作用&lt;/p&gt;
+&lt;p&gt;注意 3：property 会让调用者认为访问开销相对较小，所以尽量避免使用 property 来做大开销的计算&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;如果你的 class 可能会被扩展出 subclass，并且你不希望 subclass 使用一些 attribute，那么考虑用两个下划线前缀、没有下划线后缀的方式给这些 property 命名。这样会触发 python 的命名矫正算法，这个 attribute 的名字前会加上 class 的名字。这样可以避免 subclass 意外使用相同名字时的冲突。&lt;/p&gt;
-&lt;p&gt;注意1：只有 class 的名字才会合入到 attribute 名字中，所以如果 subclass 的名字和其 attribute 的名字和父类名字相同，那么还是会有冲突&lt;/p&gt;
-&lt;p&gt;注意2：命名矫正在某些情况下很不方便，比如 debug 或者是 &lt;code&gt;__getattr__()&lt;/code&gt;。但是命名矫正算法的文档很完善，使用起来也很方便。&lt;/p&gt;
-&lt;p&gt;注意3：并不是每个人都喜欢命名矫正，尽量避免和潜在的高级调用者产生命名冲突。&lt;/p&gt;
+&lt;p&gt;注意 1：只有 class 的名字才会合入到 attribute 名字中，所以如果 subclass 的名字和其 attribute 的名字和父类名字相同，那么还是会有冲突&lt;/p&gt;
+&lt;p&gt;注意 2：命名矫正在某些情况下很不方便，比如 debug 或者是 &lt;code&gt;__getattr__()&lt;/code&gt;。但是命名矫正算法的文档很完善，使用起来也很方便。&lt;/p&gt;
+&lt;p&gt;注意 3：并不是每个人都喜欢命名矫正，尽量避免和潜在的高级调用者产生命名冲突。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id="public he  internal jie kou_1"&gt;public 和 internal 接口&lt;/h3&gt;
 &lt;p&gt;任何的向后兼容只适用于 public 接口，因此，让用户能清晰地区分出 public 和 内部接口非常重要。&lt;/p&gt;
-&lt;p&gt;文档化的接口可以认为是 public 接口，除非文档中明确说明该接口是拥有向后兼容豁免权的临时/内部接口。所有没有文档化的接口都应该视为内部接口。&lt;/p&gt;
+&lt;p&gt;文档化的接口可以认为是 public 接口，除非文档中明确说明该接口是拥有向后兼容豁免权的临时 / 内部接口。所有没有文档化的接口都应该视为内部接口。&lt;/p&gt;
 &lt;p&gt;为了更好地支持 introspection，module 应该用 &lt;code&gt;__all__&lt;/code&gt; 明确声明 public API 的名字。如果没有 public API，那么就把 &lt;code&gt;__all__&lt;/code&gt; 设置为空 list。&lt;/p&gt;
 &lt;p&gt;即使合理地设置了 &lt;code&gt;__all__&lt;/code&gt;，内部接口（package、module、class、function、attribute 或其他名字）还是应该加上单下划线前缀。&lt;/p&gt;
 &lt;p&gt;如果 namespace（package、module、class）被认为是内部的，那么包含在内的接口也会被认为是内部的。&lt;/p&gt;
 &lt;p&gt;import 的名字应该永远被认为是实现细节。除非是 module API 的一部分，否则别的 module 不能间接访问这些名字。比如，&lt;code&gt;os.path&lt;/code&gt; 或者是一个 package 的 &lt;code&gt;__init__&lt;/code&gt; module。&lt;/p&gt;
 &lt;h2 id="bian cheng jian yi_1"&gt;编程建议&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;代码不能伤害其他 python 的实现（比如 PyPy、Jython、IronPython、Cython、Psyco 等等）&lt;/p&gt;
@@ -1481,7 +1418,7 @@
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;和类似 &lt;code&gt;None&lt;/code&gt; 这样的单例对象的比较，应该永远使用 &lt;code&gt;is&lt;/code&gt; 或者是 &lt;code&gt;is not&lt;/code&gt;，永远不要使用等号操作符。&lt;/p&gt;
-&lt;p&gt;此外，如果你的目的是 &lt;code&gt;if x is not None&lt;/code&gt; 那么要小心别写成 &lt;code&gt;if x&lt;/code&gt;。举例：判断一个默认值是 None 的变量/参数是否被设置成其他值，这个值（比如容器）的类型在 boolean 表达式中可能会是 false！&lt;/p&gt;
+&lt;p&gt;此外，如果你的目的是 &lt;code&gt;if x is not None&lt;/code&gt; 那么要小心别写成 &lt;code&gt;if x&lt;/code&gt;。举例：判断一个默认值是 None 的变量 / 参数是否被设置成其他值，这个值（比如容器）的类型在 boolean 表达式中可能会是 false！&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;使用 &lt;code&gt;is not&lt;/code&gt; 而不是 &lt;code&gt;not ... is&lt;/code&gt;。虽然两个表达式的功能相同，但是前一种写法的可读性更强：&lt;/p&gt;
@@ -1519,7 +1456,7 @@
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;从 &lt;code&gt;Exception&lt;/code&gt; 而不是 &lt;code&gt;BaseException&lt;/code&gt; 中继承 exception，直接从 &lt;code&gt;BaseException&lt;/code&gt; 中继承得到的 exception 是保留的，捕捉这些异常是大部分情况下一件错误的事情。&lt;/p&gt;
-&lt;p&gt;基于需要捕捉 exception 的代码，而不是抛出 exception 的位置代码来设计 exception hierarchies。以编程的角度回答&amp;ldquo;发生了什么错误?&amp;rdquo;这个问题，而不是只是说&amp;ldquo;发生了错误&amp;rdquo;（内置 exception hierarchies 的例子见 &lt;a href="https://www.python.org/dev/peps/pep-3151"&gt;PEP3151&lt;/a&gt;） &lt;/p&gt;
+&lt;p&gt;基于需要捕捉 exception 的代码，而不是抛出 exception 的位置代码来设计 exception hierarchies。以编程的角度回答 &amp;ldquo; 发生了什么错误 ?&amp;rdquo; 这个问题，而不是只是说 &amp;ldquo; 发生了错误 &amp;rdquo;（内置 exception hierarchies 的例子见 &lt;a href="https://www.python.org/dev/peps/pep-3151"&gt;PEP3151&lt;/a&gt;） &lt;/p&gt;
 &lt;p&gt;应该遵守 class 的命名规则，除非你的 exception 本身就是一个 error，那么就给这个 exception class 名字加上 &lt;code&gt;Error&lt;/code&gt; 后缀。用于非本地控制或其他形式的非 error exception 不需要特殊的后缀。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -1609,7 +1546,7 @@
 &lt;p&gt;特定代码的局部资源，使用 &lt;code&gt;with&lt;/code&gt; 语句来确保这个资源使用完成后被清理干净，下次还能继续使用。也可以用 &lt;code&gt;try&lt;/code&gt;/&lt;code&gt;finally&lt;/code&gt; 语句。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;除了获取/释放资源，其他时候都应该通过独立的 function 或 method 来调用上下文管理器&lt;/p&gt;
+&lt;p&gt;除了获取 / 释放资源，其他时候都应该通过独立的 function 或 method 来调用上下文管理器&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
@@ -1683,7 +1620,7 @@
 &lt;p&gt;string mothod 总是速度更快，而且和 unicode string 共享相同的 API，如果要求兼容 python2.0 以前的版本则可以忽略这条规则。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;使用 &lt;code&gt;''.startswith()&lt;/code&gt; 和 &lt;code&gt;''.endswith()&lt;/code&gt; 而不是 string 切片来检查前缀/后缀。&lt;/p&gt;
+&lt;p&gt;使用 &lt;code&gt;''.startswith()&lt;/code&gt; 和 &lt;code&gt;''.endswith()&lt;/code&gt; 而不是 string 切片来检查前缀 / 后缀。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;startwith()&lt;/code&gt; 和 &lt;code&gt;endswith()&lt;/code&gt; 更加清晰，而且不易出错：&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
@@ -1735,7 +1672,7 @@
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;写 string 时不要依赖结尾的空格，这种空格在视觉上难以区分，而且一些编辑器（比如reindent.py）会删掉他们。&lt;/p&gt;
+&lt;p&gt;写 string 时不要依赖结尾的空格，这种空格在视觉上难以区分，而且一些编辑器（比如 reindent.py）会删掉他们。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;不要使用 &lt;code&gt;==&lt;/code&gt; 来比较 boolean 值和 &lt;code&gt;True&lt;/code&gt;/&lt;code&gt;False&lt;/code&gt;：&lt;/p&gt;
@@ -1784,7 +1721,7 @@
 &lt;p&gt;不再鼓励使用本文以前推荐的实验性注释风格&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;但是，除了标准库，鼓励使用 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 中的实验性规则。比如，使用 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 中的 style 为一个大型第三方库/应用添加注解，检查添加这些注解的容易程度，观察这些注解的出现是否提高了可读性。&lt;/p&gt;
+&lt;p&gt;但是，除了标准库，鼓励使用 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 中的实验性规则。比如，使用 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt; 中的 style 为一个大型第三方库 / 应用添加注解，检查添加这些注解的容易程度，观察这些注解的出现是否提高了可读性。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;python 的标准库应该保守地使用这些注解，但是新代码和大型的重构可以使用这种注解。&lt;/p&gt;
@@ -1853,16 +1790,13 @@
 &lt;p&gt;虽然 python 3 可以使用 &lt;a href="https://www.python.org/dev/peps/pep-0526/"&gt;PEP526&lt;/a&gt;，但是对于所有版本的 python，首先以 stub 文件的语法优先选择变量注解。（细节见 &lt;a href="https://www.python.org/dev/peps/pep-0484"&gt;PEP484&lt;/a&gt;） &lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="fan yi can kao_1"&gt;翻译参考&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0008/"&gt;PEP8&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://blog.csdn.net/ratsniper/article/details/78954852"&gt;Python PEP8 编码规范中文版&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id="fu"&gt;附&lt;/h2&gt;
 &lt;p&gt;Google 推出过开源项目的 coding style 规范，包含了常见编程语言，如 &lt;code&gt;C++&lt;/code&gt;,  &lt;code&gt;java&lt;/code&gt;, &lt;code&gt;Python&lt;/code&gt;, &lt;code&gt;Shell&lt;/code&gt; 等。因为已经有国内程序员凭热情创建和维护的中文版本，所以就不再翻译了。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/google/styleguide"&gt;Google Style Guide&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://zh-google-styleguide.readthedocs.io/en/latest/"&gt;Google 开源项目风格指南 (中文版)&lt;/a&gt;&lt;/p&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP 翻译计划系列 —— PEP0</title><link href="https://qiangu.cool/posts/python/peps_translate_project_pep0.html" rel="alternate"></link><published>2020-04-05T23:56:00+08:00</published><updated>2020-04-05T23:56:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-04-05:/posts/python/peps_translate_project_pep0.html</id><summary type="html">&lt;p&gt;PEPs 翻译系列 PEP0&lt;/p&gt;</summary><content type="html">&lt;h2 id="pep jian jie"&gt;PEP 简介&lt;/h2&gt;
-&lt;hr/&gt;
+&lt;p&gt;&lt;a href="https://zh-google-styleguide.readthedocs.io/en/latest/"&gt;Google 开源项目风格指南 ( 中文版 )&lt;/a&gt;&lt;/p&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP 学习系列之 0 —— PEP0</title><link href="https://qiangu.cool/posts/python/learning_peps_series_0_pep0.html" rel="alternate"></link><published>2020-04-05T23:56:00+08:00</published><updated>2020-04-05T23:56:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-04-05:/posts/python/learning_peps_series_0_pep0.html</id><summary type="html">&lt;p&gt;PEP0 学习笔记汇总&lt;/p&gt;</summary><content type="html">&lt;h2 id="pep jian jie"&gt;PEP 简介&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/"&gt;PEPs&lt;/a&gt; 是 Python Enhancement Proposals 的缩写，它源自于 Python 核心开发者的邮件列表所讨论的问题、提议，最终汇总成了正式文档，为众多 Python 用户提供指导。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/"&gt;PEP0&lt;/a&gt; 是所有 PEP 的目录，&lt;a href="https://www.python.org/dev/peps/pep-0001/"&gt;PEP1&lt;/a&gt; 说明了 PEP 的目的以及 Guidelines，这里不再赘述。&lt;/p&gt;
 &lt;p&gt;从 &lt;a href="https://www.python.org/dev/peps/"&gt;PEP0&lt;/a&gt; 中可以知道，PEP 一共分为 3 类：&lt;/p&gt;
@@ -1885,14 +1819,12 @@
 &lt;li&gt;W - Withdrawn proposal&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="fan yi ji hua"&gt;翻译计划&lt;/h2&gt;
-&lt;hr/&gt;
-&lt;p&gt;网上已经有很多人都翻译过了经典 PEP 章节，为了督促自己有计划地完成 PEP 的学习，也是为了以后可以温故而知新，在这里又自己重新翻译一遍。从 PEP0 中可以知道，各种各类的 PEP 加起来目前一共有几百篇，参考网上其他介绍，翻译计划中暂时选择了下面几篇，以后再持续更新。&lt;/p&gt;
+&lt;p&gt;为了督促自己有计划地完成 PEP 的学习，也是为了以后可以温故而知新，在这里记录一下自己的学习笔记。从 PEP0 中可以知道，各种各类的 PEP 加起来目前一共有几百篇，参考网上其他介绍，学习计划中暂时选择了下面几篇，以后再持续更新。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/peps_translate_project_pep0.html"&gt;PEP 0 -- Index of Python Enhancement Proposals&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/peps_translate_project_pep8.html"&gt;PEP 8 -- Style Guide for Python Code&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/peps_translate_project_pep20.html"&gt;PEP 20 -- The Zen of Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/learning_peps_series_0_pep0.html"&gt;PEP 0 -- Index of Python Enhancement Proposals&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/learning_peps_series_1_pep8.html"&gt;PEP 8 -- Style Guide for Python Code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/learning_peps_series_2_pep20.html"&gt;PEP 20 -- The Zen of Python&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;PEP 202 -- List Comprehensions&lt;/li&gt;
 &lt;li&gt;PEP 274 -- Dict Comprehensions&lt;/li&gt;
 &lt;li&gt;PEP 234 -- Iterators&lt;/li&gt;
@@ -1909,8 +1841,7 @@
 &lt;li&gt;PEP 3115 -- Metaclasses in Python 3000&lt;/li&gt;
 &lt;li&gt;PEP 3120 -- Using UTF-8 as the default source encoding&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="can kao"&gt;参考&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/"&gt;PEP0&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0001/"&gt;PEP1&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://www.cnblogs.com/abella/p/10056875.html"&gt;python中的PEP是什么？怎么理解？（转）&lt;/a&gt;&lt;/p&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry></feed>
+&lt;p&gt;&lt;a href="https://www.cnblogs.com/abella/p/10056875.html"&gt;python 中的 PEP 是什么？怎么理解？（转）&lt;/a&gt;&lt;/p&gt;</content><category term="Python"></category><category term="PEP"></category><category term="python"></category></entry></feed>

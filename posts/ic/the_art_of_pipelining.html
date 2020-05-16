@@ -173,14 +173,13 @@
     <p>
       Posted on 2015-05-19 00:00 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 2 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="流水线 pipeline 的艺术">流水线 pipeline 的艺术</a><ul><li><a class="toc-href" href="#pipeline intro" title="Pipeline Intro">Pipeline Intro</a></li><li><a class="toc-href" href="#a simple example" title="A Simple Example">A Simple Example</a></li><li><a class="toc-href" href="#performance increase from pipelining" title="Performance Increase from Pipelining">Performance Increase from Pipelining</a></li><li><a class="toc-href" href="#dxl instruction" title="DXL Instruction">DXL Instruction</a></li><li><a class="toc-href" href="#pipelining principles" title="Pipelining Principles">Pipelining Principles</a></li><li><a class="toc-href" href="#another example" title="Another Example">Another Example</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>PC 世界永恒不变的信条就是提高性能，其中一个方法就是提高系统的时钟频率。</p>
@@ -337,13 +336,13 @@
 <p>控制冒险，分支点流水线和其他指令改变程序的计数器的值</p>
 </li>
 </ol>
-<p>解决以上问题的方法就是停止流水线直至风险解除，在流水线中插入多个 &ldquo;气泡&rdquo;（缺口）。</p>
+<p>解决以上问题的方法就是停止流水线直至风险解除，在流水线中插入多个 &ldquo; 气泡 &rdquo;（缺口）。</p>
 </li>
 </ol>
 <p><br/></p>
 <h2 id="another example">Another Example</h2>
 <hr/>
-<p>将前面总结的 &ldquo;在组合逻辑路径中插入 DFF，形成流水&rdquo; 的思路进一步扩展，可以得到更加上层的流水思想。<a href="http://www.amazon.com/Advanced-FPGA-Design-Architecture-Implementation/dp/0470054379/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1432020884&amp;sr=1-1&amp;keywords=advanced+fpga+design">Advanced FPGA Design: Architecture, Implementation, and Optimization</a> 中介绍了一个算法中使用流水的例子，其关键在于 &ldquo;拆开环路&rdquo;：</p>
+<p>将前面总结的 &ldquo; 在组合逻辑路径中插入 DFF，形成流水 &rdquo; 的思路进一步扩展，可以得到更加上层的流水思想。<a href="http://www.amazon.com/Advanced-FPGA-Design-Architecture-Implementation/dp/0470054379/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1432020884&amp;sr=1-1&amp;keywords=advanced+fpga+design">Advanced FPGA Design: Architecture, Implementation, and Optimization</a> 中介绍了一个算法中使用流水的例子，其关键在于 &ldquo; 拆开环路 &rdquo;：</p>
 <p>假设要计算 x^3 这个值，下面这段软件的代码</p>
 <div class="highlight"><pre><span></span><span class="nv">Xpower</span> <span class="o">=</span> <span class="mi">1</span><span class="c1">;</span>
 <span class="k">for</span> <span class="ss">(</span><span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">; i &lt; 3; i++)</span>

@@ -173,14 +173,13 @@
     <p>
       Posted on 2014-07-07 23:28 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 3 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 数字处理基础 (2)">FPGA 数字处理基础 (2)</a><ul><li><a class="toc-href" href="#basic knowledge" title="Basic Knowledge">Basic Knowledge</a></li><li><a class="toc-href" href="#(un)signed in verilog" title="(un)signed in Verilog">(un)signed in Verilog</a><ul><li><a class="toc-href" href="#integer" title="Integer">Integer</a></li><li><a class="toc-href" href="#register" title="Register">Register</a><ul><li><a class="toc-href" href="#1. unsigned reg &amp; unsigned value" title="1. unsigned reg &amp; unsigned value">1. unsigned reg &amp; unsigned value</a></li><li><a class="toc-href" href="#2. unsigned reg &amp; signed value" title="2. unsigned reg &amp; signed value">2. unsigned reg &amp; signed value</a></li><li><a class="toc-href" href="#3. signed reg &amp; signed value" title="3. signed reg &amp; signed value">3. signed reg &amp; signed value</a></li><li><a class="toc-href" href="#4. signed reg &amp; unsigned value" title="4. signed reg &amp; unsigned value">4. signed reg &amp; unsigned value</a></li><li><a class="toc-href" href="#5. signed reg &amp; unsigned reg" title="5. signed reg &amp; unsigned reg">5. signed reg &amp; unsigned reg</a></li></ul></li></ul></li><li><a class="toc-href" href="#conclusion_2" title="Conclusion">Conclusion</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>讨论 FPGA 中无符号数 unsigned 和有符号数 signed 的问题。</p>
@@ -238,7 +237,7 @@
 </td></tr></table>
 <h3 id="register">Register</h3>
 <p>Verilog 中数据的基本类型： <code>wire</code>、<code>reg</code>、<code>integer</code></p>
-<p>在 Verilog-1995 中，规定所有的 wire、reg 都是 unsigned 类型，只有 integer 是 signed 类型。但是 integer 的宽度是固定的(与宿主机的字是一样的，最小为 32 位)，这样子，造成了很大的不方便和浪费。</p>
+<p>在 Verilog-1995 中，规定所有的 wire、reg 都是 unsigned 类型，只有 integer 是 signed 类型。但是 integer 的宽度是固定的 ( 与宿主机的字是一样的，最小为 32 位 )，这样子，造成了很大的不方便和浪费。</p>
 <p>在 Verilog-2001 中，添加了 wire、reg 也可以是 signed 类型了。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">reg</span>             <span class="p">[</span><span class="mh">8</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">a</span><span class="p">;</span>  <span class="c1">// unsigned</span>
@@ -256,15 +255,15 @@
 <ol>
 <li>
 <p><em>以变量类型为准</em></p>
-<p>即 reg/wire 为哪种，那么综合时就以这个为标准进行综合。比如当 reg 为 unsigned 类型，当我们给它赋值为 signed 类型的数据 <code>-5</code>(<code>-4&rsquo;d5</code>) 时，综合出来的结果为 reg 存储的是 <code>-5</code> 的补码 <code>1011</code>,但是解释为 unsigned 类型的 <code>+11</code>。这时候就结果和我们的预期是不一样的，出现了误差，一定要注意！另一种情况类似。</p>
+<p>即 reg/wire 为哪种，那么综合时就以这个为标准进行综合。比如当 reg 为 unsigned 类型，当我们给它赋值为 signed 类型的数据 <code>-5</code>(<code>-4&rsquo;d5</code>) 时，综合出来的结果为 reg 存储的是 <code>-5</code> 的补码 <code>1011</code>, 但是解释为 unsigned 类型的 <code>+11</code>。这时候就结果和我们的预期是不一样的，出现了误差，一定要注意！另一种情况类似。</p>
 </li>
 <li>
-<p>如果参与运算的变量混合有 signed 和 unsigned 类型，那么会将 signed 转换为 unsigned 类型。(应该避免这种情况)</p>
+<p>如果参与运算的变量混合有 signed 和 unsigned 类型，那么会将 signed 转换为 unsigned 类型。( 应该避免这种情况 )</p>
 </li>
 </ol>
 </blockquote>
 <p><br/></p>
-<p>=========================================以下为详细的分类讨论==================================</p>
+<p>========================================= 以下为详细的分类讨论 ==================================</p>
 <p>编写一个简单的测试程序，查看综合结果和仿真波形，就可以知道综合时的策略。</p>
 <p><strong>module: <a href="http://guqian110.github.io/files/test_signed.v">test_signed.v</a></strong></p>
 <p><strong>testbench: <a href="http://guqian110.github.io/files/tb_test_signed.v">tb_test_signed.v</a></strong></p>
@@ -329,9 +328,9 @@
 </pre></div>
 </td></tr></table>
 <p>综合出来的比较器为 unsigned 类型。</p>
-<p><strong>P.S.</strong> 变量 integer 也是也可综合的。在上例中，如果将 flag 的类型改为 integer 也是可综合的，但是，因为只用到了低 8 位，所以在综合时会提示高 24 位是未连接 unconnected，但是因为 integer 是一个整体，所以即使未连接也不能优化掉，这就是在 Verilog-1995 中 integer 不够灵活的体现，好在 Verilog-2001 中已经添加了支持 reg/wire 为 signed 的类型，而且综合工具(XST)也是支持的。</p>
-<p>=======================================分割线结束==========================================</p>
-<p>以前只知道硬件上最基本的一些运算单元，比如加法器(adder)、减法器(subtractor)、比较器(comparator) 等，完成的功能是固定的，电路是不会检查输入数据的类型的。涉及到 signed 和 unsigned 类型，就出现一个问题：对于基本运算单元(比如加法器)，运算单元并不知道输入的数据是哪种数据，对于 unsigned 和 signed 类型，必然出现适合一种时不适合另外一种的问题。</p>
+<p><strong>P.S.</strong> 变量 integer 也是也可综合的。在上例中，如果将 flag 的类型改为 integer 也是可综合的，但是，因为只用到了低 8 位，所以在综合时会提示高 24 位是未连接 unconnected，但是因为 integer 是一个整体，所以即使未连接也不能优化掉，这就是在 Verilog-1995 中 integer 不够灵活的体现，好在 Verilog-2001 中已经添加了支持 reg/wire 为 signed 的类型，而且综合工具 (XST) 也是支持的。</p>
+<p>======================================= 分割线结束 ==========================================</p>
+<p>以前只知道硬件上最基本的一些运算单元，比如加法器 (adder)、减法器 (subtractor)、比较器 (comparator) 等，完成的功能是固定的，电路是不会检查输入数据的类型的。涉及到 signed 和 unsigned 类型，就出现一个问题：对于基本运算单元 ( 比如加法器 )，运算单元并不知道输入的数据是哪种数据，对于 unsigned 和 signed 类型，必然出现适合一种时不适合另外一种的问题。</p>
 <p>所以可以推断出 <strong>对于不同的数据类型，同样是个加法器，底层的硬件电路是不一样的</strong>。</p>
 <p>如果我在程序中定义了 signed 和 unsigned 类型的数据，那么综合工具是否足够智能，能够根据数据的类型综合出正确适合的电路？</p>
 <p>答案是肯定的，即<strong>综合器足够智能</strong>。</p>
@@ -371,10 +370,10 @@ Help
 <p>Verilog-2001 已经支持 signed 类型的 wire 和 reg，所以我们代码中如果涉及到有符号数，那么像 C 语言一样直接定义、赋值、使用即可，综合工具会综合出正确的有符号数的运算电路。不必再像以前一样手动进行补码转换，自己来处理有符号数的补码计算的细节。</p>
 </li>
 <li>
-<p>综合时的原则是按照寄存器的类型进行综合(即上面的分类讨论的结论)。</p>
+<p>综合时的原则是按照寄存器的类型进行综合 ( 即上面的分类讨论的结论 )。</p>
 </li>
 <li>
-<p>仔细对比 signed 和 unsigned 类型的综合结果，可以发现 Technology Schematic 是一样的，之所以和 &ldquo;理论上硬件电路是应该不一样&rdquo; 矛盾，我认为原因在于 FPGA 的实现是基于查找表的。以上面的例子来说明，这个比较器的功能最终是在一个 LUT6 的查找表上实现的，所以，ASIC 上硬件电路的不同映射到 FPGA 中就是 LUT 的内容不同。</p>
+<p>仔细对比 signed 和 unsigned 类型的综合结果，可以发现 Technology Schematic 是一样的，之所以和 &ldquo; 理论上硬件电路是应该不一样 &rdquo; 矛盾，我认为原因在于 FPGA 的实现是基于查找表的。以上面的例子来说明，这个比较器的功能最终是在一个 LUT6 的查找表上实现的，所以，ASIC 上硬件电路的不同映射到 FPGA 中就是 LUT 的内容不同。</p>
 </li>
 </ol>
   </div>

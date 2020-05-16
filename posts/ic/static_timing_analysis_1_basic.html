@@ -173,14 +173,13 @@
     <p>
       Posted on 2015-03-18 00:00 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 4 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="静态时序分析 STA 1 &mdash;&mdash; 基础知识">静态时序分析 STA 1 &mdash;&mdash; 基础知识</a><ul><li><a class="toc-href" href="#clock" title="Clock">Clock</a><ul><li><a class="toc-href" href="#skew" title="Skew">Skew</a></li><li><a class="toc-href" href="#jitter" title="Jitter">Jitter</a></li><li><a class="toc-href" href="#duty cycle distortion" title="Duty Cycle Distortion">Duty Cycle Distortion</a></li></ul></li><li><a class="toc-href" href="#ohters_1" title="Ohters">Ohters</a><ul><li><a class="toc-href" href="#fan-out/fan-out" title="Fan-out/Fan-out">Fan-out/Fan-out</a></li><li><a class="toc-href" href="#setup/hold/recovery/removal time" title="Setup/Hold/Recovery/Removal Time">Setup/Hold/Recovery/Removal Time</a></li></ul></li><li><a class="toc-href" href="#sta intro_1" title="STA Intro">STA Intro</a><ul><li><a class="toc-href" href="#definitions" title="Definitions">Definitions</a></li><li><a class="toc-href" href="#purpose" title="Purpose">Purpose</a></li><li><a class="toc-href" href="#theory" title="Theory">Theory</a></li><li><a class="toc-href" href="#setup time failure" title="Setup Time Failure">Setup Time Failure</a></li><li><a class="toc-href" href="#hold time failure" title="Hold Time Failure">Hold Time Failure</a></li><li><a class="toc-href" href="#summary" title="summary">summary</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>静态时序分析（Static Timing）是数字 IC 设计中不可避免的话题，也是一个菜鸟成长必须掌握的技术。本文先总结 STA 中常见的定义、名词等。</p>
@@ -200,7 +199,7 @@
 </ol>
 <p>对于低速设计，基本不用考虑这些特征，但是对于高速设计，由于时钟本身造成的问题越来越普遍，因此有必要关注高速设计中的时序特性。</p>
 <h3 id="skew">Skew</h3>
-<p>时钟信号要提供给整个电路的时序单元，所以时钟信号线非常长，并构成分布式的RC网路。它的延时与时钟线的长度、时序单元的负载电容、个数有关，由于时钟线长度及负载不同，会导致时钟信号到达相邻两个时序单元的时间不同，这个时间上的偏差就是 时钟偏移 <code>Skew</code>。如下图所示：</p>
+<p>时钟信号要提供给整个电路的时序单元，所以时钟信号线非常长，并构成分布式的 RC 网路。它的延时与时钟线的长度、时序单元的负载电容、个数有关，由于时钟线长度及负载不同，会导致时钟信号到达相邻两个时序单元的时间不同，这个时间上的偏差就是 时钟偏移 <code>Skew</code>。如下图所示：</p>
 <p><img alt="skew" src="/images/static-timing-analysis-1-basic/skew.jpg"/></p>
 <p>假设时钟信号达到两个 DFF 的延时分别为 Tc1 和 Tc2，用 Tskew 来表示它们之间的时钟偏移，则计算公式如下：</p>
 <div class="highlight"><pre><span></span><span class="n">Tskew</span> <span class="o">=</span> <span class="n">Tc2</span> <span class="o">-</span> <span class="n">Tc1</span>
@@ -246,7 +245,7 @@
 <p>时钟抖动的原因就是噪声。<strong>时钟抖动是永远存在的</strong>，当其大到可以和时钟周期相比拟的时候，会影响到设计，这样的抖动是不可接受的。</p>
 <h3 id="duty cycle distortion">Duty Cycle Distortion</h3>
 <p><img alt="dcd" src="/images/static-timing-analysis-1-basic/dcd.jpg"/></p>
-<p>占空比失真，即时钟不对称，有脉冲的时间和无脉冲的时间发生了变化。DCD 会吞噬大量的时序裕量，造成数字信号的失真，使过零区间偏离理想的位置。DCD通常是由信号的上升沿和下降沿之间时序不同而造成的。</p>
+<p>占空比失真，即时钟不对称，有脉冲的时间和无脉冲的时间发生了变化。DCD 会吞噬大量的时序裕量，造成数字信号的失真，使过零区间偏离理想的位置。DCD 通常是由信号的上升沿和下降沿之间时序不同而造成的。</p>
 <p><br/></p>
 <h2 id="ohters_1">Ohters</h2>
 <hr/>
@@ -263,12 +262,12 @@
 <p><strong>Fan-in</strong></p>
 <p>与扇出相对的概念是 扇入 <code>Fan-in</code>，它描述的是一个逻辑门能够处理的外部输入的能力。扇入大的逻辑门的速度要比扇入小的慢，原因是增加扇入相当于增加逻辑门的输入电容。我们可以用使用多级逻辑门来代替高扇入的设计。</p>
 <h3 id="setup/hold/recovery/removal time">Setup/Hold/Recovery/Removal Time</h3>
-<p>建立/保持时间是在同步设计中的概念：</p>
+<p>建立 / 保持时间是在同步设计中的概念：</p>
 <p>建立时间 <code>setup time</code> ：触发器在时钟信号上升沿到来以前，要求输入数据必须保持稳定不变一段时间，这段时间就是器件需要的建立时间。如不满足 setup time，这个数据就不能被这一时钟打入触发器。</p>
 <p>保持时间 <code>hold time</code> ：触发器在时钟信号上升沿到来以后，要求数据保持稳定不变一段时间，以便能够稳定读取，这段时间就是器件需要的保持时间。如果不满足 hold time，数据同样不能被打入触发器。</p>
-<p>恢复/撤销时间是在异步设计中的概念：</p>
-<p>恢复时间 <code>recovery time</code> : 对于异步信号（比如异步复位/置位），信号变无效的边沿和下一个时钟沿之间必须满足一个最小的间隔。其意义在于，如果保证不了这个最小时间，也就是异步信号无效边离时钟边沿太近了，异步信号解除（无效）之后，没有给 DFF 足够的时间来恢复（recovery）到正常状态，那么就不能保证在时钟沿到来时 DFF 可以正常工作。</p>
-<p>撤销时间 <code>removal time</code> : 对于异步信号（比如异步复位/置位），信号变有效的边沿和前一个时钟沿之间必须满足一个最小的间隔。其意义在于，如果保证不了这个最小时间，也就是异步信号的有效沿离时钟太近了，在时钟信号去除（无效）之前，异步信号提前有效了，可能会造成 DFF 处于不确定状态。</p>
+<p>恢复 / 撤销时间是在异步设计中的概念：</p>
+<p>恢复时间 <code>recovery time</code> : 对于异步信号（比如异步复位 / 置位），信号变无效的边沿和下一个时钟沿之间必须满足一个最小的间隔。其意义在于，如果保证不了这个最小时间，也就是异步信号无效边离时钟边沿太近了，异步信号解除（无效）之后，没有给 DFF 足够的时间来恢复（recovery）到正常状态，那么就不能保证在时钟沿到来时 DFF 可以正常工作。</p>
+<p>撤销时间 <code>removal time</code> : 对于异步信号（比如异步复位 / 置位），信号变有效的边沿和前一个时钟沿之间必须满足一个最小的间隔。其意义在于，如果保证不了这个最小时间，也就是异步信号的有效沿离时钟太近了，在时钟信号去除（无效）之前，异步信号提前有效了，可能会造成 DFF 处于不确定状态。</p>
 <p><a href="http://blog.sina.cn/dpool/blog/s/blog_72c14a3d01013tpi.html?type=-1">更加详细的总结：锁存器 Latch v.s. 触发器 Flip-Flop</a>。</p>
 <p><br/></p>
 <h2 id="sta intro_1">STA Intro</h2>
@@ -283,7 +282,7 @@
 <ul>
 <li>
 <p><code>timing path</code></p>
-<p><a href="http://blog.sina.cn/dpool/blog/s/blog_72c14a3d01013tpi.html?type=-1">FPGA STA(三) --- STA的基本概念</a> 中说的很明白：</p>
+<p><a href="http://blog.sina.cn/dpool/blog/s/blog_72c14a3d01013tpi.html?type=-1">FPGA STA( 三 ) --- STA 的基本概念</a> 中说的很明白：</p>
 <blockquote>
 <p>在做 STA 时，首先要把电路分解为一条条的 timing path。实际上我们也可以把 timing path 称为 data path，其本质就是指信号传播的途径。每一条 timing path 都具有一个起始点和一个终点。起始点是指电路中信号被时钟沿锁存的点；而信号经过一系列的组合逻辑的通道或者走线后被另外一个时钟沿捕获，这个点被称为终点。信号从起始点到终点所经过的通道就被称为 timing path。</p>
 <p>起点有两种：</p>
@@ -307,13 +306,13 @@
 <p>输入和输出排列组合一共就有 4 种 path：</p>
 <ol>
 <li>
-<p>电路输入端口  -&gt;  触发器的数据D端 (Pad-to-Setup)</p>
+<p>电路输入端口  -&gt;  触发器的数据 D 端 (Pad-to-Setup)</p>
 </li>
 <li>
-<p>触发器的clk端  -&gt;  触发器的数据D端 (Clock-to-Setup)</p>
+<p>触发器的 clk 端  -&gt;  触发器的数据 D 端 (Clock-to-Setup)</p>
 </li>
 <li>
-<p>触发器的clk端  -&gt;  电路输出端口 (Clock-to-Pad)</p>
+<p>触发器的 clk 端  -&gt;  电路输出端口 (Clock-to-Pad)</p>
 </li>
 <li>
 <p>电路输入端口  -&gt;  电路输出端口 (Pad-to-Pad)</p>
@@ -356,16 +355,16 @@
 </ul>
 <p>导致数据和时钟不同步的原因很多，比如数据本身和时钟不同步、或者是电路进行了不同的操作，器件的温度、电压、制造工艺等因素也会产生影响。</p>
 <p><strong>静态时序分析 STA 的主要目的是在上述可能的电路偏移情况存在的情况下，验证所有信号能够准时到达，并保证电路的正常功能。</strong></p>
-<p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA开发实用教程</a>：</p>
+<p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发实用教程</a>：</p>
 <blockquote>
-<p>工作频率对数字电路而言至关重要。提高工作频率意味着更强大的处理能力，但是也带来了时序瓶颈：时序冲突的概率变大，电路的稳定性降低。所以为了使电路的性能达到设计的预期目标，并满足电路工作环境的要求，必须对一个电路设计进行时序、面积、负载等多方面的约束，并自始至终使用这些约束来驱动EDA软件工作。</p>
-<p>ISE 具有一定的自动优化能力，对于一般的低速设计（处理时钟不超过100MHz），基本上不需要时序方面的任何手动分析和处理；但是对于高速和大规模设计，需要设计人员自行添加时序方面的控制和处理，通过多次反复操作，根据反馈结果逐步调整设定，直到满足要求为止。</p>
-<p>以前小规模FPGA设计，只需要做动态的门级时序仿真就课同时完成逻辑功能验证和时序验证；随着FPGA设计规模和速度的提升，有必要将逻辑功能验证和时序验证分开：首先，逻辑功能的正确性，可以通过RTL级或者门级的功能仿真来验证；其次，时序分析通过STA（Static Timing Analysis，静态时序分析）验证。</p>
-<p>时序分析的主要作用就是查看FPGA内部逻辑和布线的延迟，验证其是否满足设计者的约束。</p>
+<p>工作频率对数字电路而言至关重要。提高工作频率意味着更强大的处理能力，但是也带来了时序瓶颈：时序冲突的概率变大，电路的稳定性降低。所以为了使电路的性能达到设计的预期目标，并满足电路工作环境的要求，必须对一个电路设计进行时序、面积、负载等多方面的约束，并自始至终使用这些约束来驱动 EDA 软件工作。</p>
+<p>ISE 具有一定的自动优化能力，对于一般的低速设计（处理时钟不超过 100MHz），基本上不需要时序方面的任何手动分析和处理；但是对于高速和大规模设计，需要设计人员自行添加时序方面的控制和处理，通过多次反复操作，根据反馈结果逐步调整设定，直到满足要求为止。</p>
+<p>以前小规模 FPGA 设计，只需要做动态的门级时序仿真就课同时完成逻辑功能验证和时序验证；随着 FPGA 设计规模和速度的提升，有必要将逻辑功能验证和时序验证分开：首先，逻辑功能的正确性，可以通过 RTL 级或者门级的功能仿真来验证；其次，时序分析通过 STA（Static Timing Analysis，静态时序分析）验证。</p>
+<p>时序分析的主要作用就是查看 FPGA 内部逻辑和布线的延迟，验证其是否满足设计者的约束。</p>
 <ul>
 <li>确定芯片最高工作频率</li>
 </ul>
-<p>控制工程的综合、映射、布局布线等关键环节，减少逻辑和布线的延迟，从而尽可能提高工作频率。一般情况下，处理时钟高于100MHz的时候，必须添加合理的时序约束文件。</p>
+<p>控制工程的综合、映射、布局布线等关键环节，减少逻辑和布线的延迟，从而尽可能提高工作频率。一般情况下，处理时钟高于 100MHz 的时候，必须添加合理的时序约束文件。</p>
 <ul>
 <li>检查时序约束是否满足</li>
 </ul>
@@ -377,19 +376,19 @@
 <ul>
 <li>确定分配引脚的特性</li>
 </ul>
-<p>通过时序分析可以指定I/O引脚所支持的接口标准、接口速率和其他电气特性。</p>
-<p><strong>STA的目的就是要保证 DUT（Device Under Test）中所有的路径满足内部时序单位对 setup time 和 hold
+<p>通过时序分析可以指定 I/O 引脚所支持的接口标准、接口速率和其他电气特性。</p>
+<p><strong>STA 的目的就是要保证 DUT（Device Under Test）中所有的路径满足内部时序单位对 setup time 和 hold
  time 的要求。信号可以及时的从任一时序路径的起点传递到终点，同时要求在电路正常工作所需的时间内保持恒定。</strong></p>
 </blockquote>
 <h3 id="theory">Theory</h3>
 <p>STA 是基于前面介绍的时序路径的，在分析时，计算时序路径上数据信号的到达时间和要求时间的差值，以判断是否存在违反设计规则的错误。</p>
 <div class="highlight"><pre><span></span><span class="n">Slack</span> <span class="o">=</span> <span class="n">Trequired_time</span> <span class="o">-</span> <span class="n">Tarrival_time</span>
 </pre></div>
-<p>如果时序裕量 Slack 为正，表示满足时序，负值表示不满足时序。STA 按照上式分析设计中所有路径，如果 Slack为负值，则该路径为影响设计的关键路径，需要修改设计以达到时序要求。</p>
-<p>STA 是通过&ldquo;穷举法&rdquo;抽取整个设计电路的所有时序路径，按照约束条件分析电路中是否有违反设计规则的问题，并计算出设计的最高频率。</p>
+<p>如果时序裕量 Slack 为正，表示满足时序，负值表示不满足时序。STA 按照上式分析设计中所有路径，如果 Slack 为负值，则该路径为影响设计的关键路径，需要修改设计以达到时序要求。</p>
+<p>STA 是通过 &ldquo; 穷举法 &rdquo; 抽取整个设计电路的所有时序路径，按照约束条件分析电路中是否有违反设计规则的问题，并计算出设计的最高频率。</p>
 <p><br/></p>
 <p>========= Update 05/18/2015===========================</p>
-<p>很多笔试题里面都有考计算最大时钟频率的题，看到几篇文章:</p>
+<p>很多笔试题里面都有考计算最大时钟频率的题，看到几篇文章 :</p>
 <p><a href="http://www.vlsiinterviewquestions.org/2011/12/17/static-timing-analysis-101/">Static Timing Analysis 101</a></p>
 <p><a href="http://www.vlsiinterviewquestions.org/2011/12/17/static-timing-analysis-102-setup-failures/">Static Timing Analysis 102 : Setup Failures.</a></p>
 <p><a href="http://www.vlsiinterviewquestions.org/2011/12/17/static-timing-analysis-103-hold-failures/">Static Timing Analysis 103 : Hold Failures.</a></p>
@@ -450,7 +449,7 @@
 </pre></div>
 <p>上一级 DFF 的输出数据不能传输太快，侵占了下一级 DFF 正在锁存的 hold time，也就是说限制了数据的传输速度的上限。</p>
 <p>有了前面的 3 个公式，就可以解决大部分问题了。比如华为某年的笔试题：</p>
-<p>下图中时钟周期为T,触发器D1的建立时间最大为T1max，最小为T1min。组合逻辑电路最大延迟为T2max,最小为T2min。问，触发器D2的建立时间T3和保持时间应满足什么条件?</p>
+<p>下图中时钟周期为 T, 触发器 D1 的建立时间最大为 T1max，最小为 T1min。组合逻辑电路最大延迟为 T2max, 最小为 T2min。问，触发器 D2 的建立时间 T3 和保持时间应满足什么条件 ?</p>
 <p><img alt="huawei" src="/images/static-timing-analysis-1-basic/huawei.png"/></p>
 <p>答：</p>
 <p>题目中 Tco = 0，Tskew = 0</p>
@@ -463,15 +462,15 @@
 <p><br/></p>
 <h2 id="ref_1">Ref</h2>
 <p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发实用教程</a></p>
-<p><a href="http://www.ictest8.com/debug/rf_pcb.htm">RF类IC demo 板loadboard设计参考资料之时钟部分</a></p>
+<p><a href="http://www.ictest8.com/debug/rf_pcb.htm">RF 类 IC demo 板 loadboard 设计参考资料之时钟部分</a></p>
 <p><a href="http://www.ti.com.cn/cn/lit/an/zhca492/zhca492.pdf">正确理解时钟器件的抖动性能</a></p>
 <p><a href="http://m.ee.ofweek.com/2014-10/ART-11000-2813-28889698.html">技术解析：详解各种抖动技术规范</a></p>
-<p><a href="http://www.elecfans.com/article/85/126/2008/2008112718522.html">时间抖动(jitter)的概念及其分析方法</a></p>
+<p><a href="http://www.elecfans.com/article/85/126/2008/2008112718522.html">时间抖动 (jitter) 的概念及其分析方法</a></p>
 <p><a href="http://blog.sina.cn/dpool/blog/s/blog_72c14a3d01013tpi.html?type=-1">锁存器 Latch v.s. 触发器 Flip-Flop</a></p>
-<p><a href="http://blog.csdn.net/shanghaiqianlun/article/details/8685047">TimeQuest定时分析的基本概念</a></p>
+<p><a href="http://blog.csdn.net/shanghaiqianlun/article/details/8685047">TimeQuest 定时分析的基本概念</a></p>
 <p><a href="http://en.wikipedia.org/wiki/Static_timing_analysis">Static timing analysis</a></p>
-<p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA开发实用教程</a></p>
-<p><a href="http://blog.sina.cn/dpool/blog/s/blog_72c14a3d01013tpi.html?type=-1">FPGA STA(三) --- STA的基本概念</a></p>
+<p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发实用教程</a></p>
+<p><a href="http://blog.sina.cn/dpool/blog/s/blog_72c14a3d01013tpi.html?type=-1">FPGA STA( 三 ) --- STA 的基本概念</a></p>
 <p><a href="http://www.vlsiinterviewquestions.org/2011/12/17/static-timing-analysis-101/">Static Timing Analysis 101</a></p>
 <p><a href="http://www.vlsiinterviewquestions.org/2011/12/17/static-timing-analysis-102-setup-failures/">Static Timing Analysis 102 : Setup Failures.</a></p>
 <p><a href="http://www.vlsiinterviewquestions.org/2011/12/17/static-timing-analysis-103-hold-failures/">Static Timing Analysis 103 : Hold Failures.</a></p>

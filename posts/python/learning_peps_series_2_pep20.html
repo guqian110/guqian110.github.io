@@ -65,24 +65,25 @@
     <meta name="msapplication-TileColor" content="#333333">
 
 <meta name="author" content="Qian Gu" />
-<meta name="description" content="总结时钟生成" />
-<meta name="keywords" content="clock generate unit">
+<meta name="description" content="学习 Python 之禅" />
+<meta name="keywords" content="PEP, python">
 
 
 <meta property="og:site_name" content="Qian's Blog"/>
-<meta property="og:title" content="时钟生成"/>
-<meta property="og:description" content="总结时钟生成"/>
+<meta property="og:title" content="PEP 学习系列之 2 —— PEP20"/>
+<meta property="og:description" content="学习 Python 之禅"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="../../posts/ic/clock_generate_unit.html"/>
+<meta property="og:url" content="../../posts/python/learning_peps_series_2_pep20.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2015-04-19 00:00:00+08:00"/>
+<meta property="article:published_time" content="2020-05-10 14:36:00+08:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="../../author/qian-gu.html">
-<meta property="article:section" content="IC"/>
-<meta property="article:tag" content="clock generate unit"/>
+<meta property="article:section" content="Python"/>
+<meta property="article:tag" content="PEP"/>
+<meta property="article:tag" content="python"/>
 <meta property="og:image" content="https://qiangu.cool/images/logo.png">
 
-  <title>Qian's Blog &ndash; 时钟生成</title>
+  <title>Qian's Blog &ndash; PEP 学习系列之 2 —— PEP20</title>
 
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
@@ -169,122 +170,206 @@
 <article class="single">
   <header>
       
-    <h1 id="clock_generate_unit">时钟生成</h1>
+    <h1 id="learning_peps_series_2_pep20">PEP 学习系列之 2 —— PEP20</h1>
     <p>
-      Posted on 2015-04-19 00:00 in <a href="../../category/ic.html">IC</a>
+      Posted on 2020-05-10 14:36 in <a href="../../category/python.html">Python</a>
 
     </p>
   </header>
 
 
   <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="时钟生成">时钟生成</a><ul><li><a class="toc-href" href="#clock" title="Clock">Clock</a></li><li><a class="toc-href" href="#design principle" title="Design Principle">Design Principle</a></li><li><a class="toc-href" href="#clock divider" title="Clock Divider">Clock Divider</a></li><li><a class="toc-href" href="#clock switch" title="Clock Switch">Clock Switch</a></li><li><a class="toc-href" href="#clock generation" title="Clock Generation">Clock Generation</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="PEP 学习系列之 2 &mdash;&mdash; PEP20">PEP 学习系列之 2 &mdash;&mdash; PEP20</a><ul><li><a class="toc-href" href="#abstract" title="Abstract">Abstract</a></li><li><a class="toc-href" href="#the zen of python" title="The Zen of Python">The Zen of Python</a></li><li><a class="toc-href" href="#easter egg" title="Easter Egg">Easter Egg</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
   </div>
 
   <div>
-    <p><em><a href="http://www.amazon.cn/EDA%E7%B2%BE%E5%93%81%E6%99%BA%E6%B1%87%E9%A6%86-Verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF-%E9%AD%8F%E5%AE%B6%E6%98%8E/dp/B00HNVY3SY/ref=sr_1_1?ie=UTF8&amp;qid=1429188978&amp;sr=8-1&amp;keywords=verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF">Verilog 编程艺术</a> 时钟生成 笔记，内容基本上都是书上的内容，还有我自己的总结，混合在一起，就不加引用符号了。</em></p>
-<p><br/></p>
-<p>如果说总线互连（Bus Matrix）是系统各骨架，CPU 是系统的大脑，那么时钟生成模块（CGM）就是系统的心脏，整个系统就是在时钟的脉搏下有序协调地工作。</p>
-<p>我们在设计时钟生成模块时，我们需要考虑下面这些问题。</p>
+    <p>著名的 python 之禅，<a href="https://www.python.org/dev/peps/pep-0020/">PEP 20 -- The Zen of Python 原文链接</a>。</p>
+<table>
+<thead>
+<tr>
+<th>item</th>
+<th>detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PEP</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>The Zen of Python</td>
+</tr>
+<tr>
+<td>Author</td>
+<td>tim.peters at gmail.com (Tim Peters)</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>Informational</td>
+</tr>
+<tr>
+<td>Created</td>
+<td>19-Aug-2004</td>
+</tr>
+<tr>
+<td>Post-History</td>
+<td>22-Aug-2004</td>
+</tr>
+</tbody>
+</table>
+<h2 id="abstract">Abstract</h2>
+<p>很久之前，Python 先驱 Tim Peters 将 BDFL（Benevolent director for life，仁慈的终身独裁者，特指 Python 之父 Guido van Rossum）的 Python 设计指导原则总结成 20 条格言，只记录下了其中的 19 条。</p>
+<h2 id="the zen of python">The Zen of Python</h2>
+<p>网上有很多不同版本的翻译，有些语言风趣幽默，有些正经严肃。我个人更喜欢严肃的翻译，因为幽默的翻译有时候需要特定的语境和背景只是才能理解，反而增加了理解难度。下面的翻译一些是我按照自己的理解写的，有些是网上别人的翻译（因为出处已经无法找到了，所以只能感谢原作者的分享了）。文学水平太低做不到 <code>达雅</code>，只能争取做到 <code>信</code>，尽量不要误导大家。</p>
 <ol>
 <li>
-<p>芯片需要多少时钟？它们之间的关系是同步到还是异步的？</p>
+<p><strong>Beautiful is better than ugly.</strong></p>
+<p>优美胜于丑陋</p>
+<p>PEP8 中提到，Python 的理念是代码更多时候是用来读的，所以以编写 <code>优美</code> 的代码为目标，<code>if a == 0 and b == 1 or c == True:</code> 要比 <code>if a == 0 &amp;&amp; b == 1 || c == True:</code> 更加优美。优美的代码包含的内容非常广泛，PEP8 提供了一些如何写出优美代码的建议。</p>
 </li>
 <li>
-<p>芯片需要几个时钟源？时钟源是在芯片内还是芯片外？</p>
+<p><strong>Explicit is better than implicit.</strong></p>
+<p>显式胜于隐式</p>
+<p>代码应该清晰易懂，比如良好的命名可以提高代码的可读性。几个不好的例子，</p>
+<ul>
+<li>太宽泛： <code>my_list</code></li>
+<li>太冗长： <code>list_of_machine_learning_data_set</code></li>
+<li>太模糊： <code>I</code>, <code>o</code>, <code>O</code>, <code>a</code>, <code>b</code>, <code>c</code></li>
+</ul>
+<p>关于命名可以参考 PEP8.</p>
 </li>
 <li>
-<p>需要使用 PLL 吗？需要几个 PLL？PLL 最高工作频率是多少？</p>
+<p><strong>Simple is better than complex.</strong></p>
+<p>简单胜于复杂</p>
+<p>选择最简单实现方案，python 有很多功能强大的内置 method，合理利用它们可以减少你的代码量，删繁就简只保留核心代码。一个直观例子是用 <code>enumerate()</code> 来迭代容器，另外一个例子是用 <code>zip()</code> 快速创建字典。减少代码量不仅仅可以提高可读性，还意味着出错的概率更低，而且代码的性能更好（因为通常库实现更加高效）。</p>
 </li>
 <li>
-<p>如何分频生成各个模块所需要的时钟频率？</p>
+<p><strong>Complex is better than complicated.</strong></p>
+<p>复杂胜于凌乱</p>
+<p>如果复杂不可避免，也要避免晦涩的实现。复杂和晦涩的区别，我理解就是复杂是可以通过分解来理解，但是晦涩特指那种非常难理解的语法、不符合常规思维的实现方式。</p>
 </li>
 <li>
-<p>为了节省功耗需要几种工作模式？它们之间如何切换？</p>
+<p><strong>Flat is better than nested.</strong></p>
+<p>扁平胜于嵌套</p>
+<p>代码尽量少嵌套，降低理解难度。</p>
 </li>
 <li>
-<p>测试模式下如何处理时钟信号？综合时如何插入扫描链？</p>
+<p><strong>Sparse is better than dense.</strong></p>
+<p>间隔胜于紧凑</p>
+<p>适当的间隔和空行能提高可读性，同参考 PEP8.</p>
 </li>
 <li>
-<p>代码如何编写才能方便后端做时钟树综合？后端如何做时钟树综合？</p>
+<p><strong>Readability counts.</strong></p>
+<p>可读性很重要</p>
+<p>同参考 PEP8，两个例子：</p>
+<ul>
+<li>使用下划线对很长的数字分组，<code>money = 1_000_000</code></li>
+<li>f-string 可以大幅提高代码的可读性， <code>print(f"I have {money} dollars.")</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Special cases aren't special enough to break the rules.</strong></p>
+<p>规则至高无上，没有什么特例可以打破规则</p>
+</li>
+<li>
+<p><strong>Although practicality beats purity.</strong></p>
+<p>但是实用性胜过代码的纯粹性</p>
+<p>与前一句相矛盾，提醒我们掌握它们之间的平衡。</p>
+</li>
+<li>
+<p><strong>Errors should never pass silently.</strong></p>
+<p>不要默许任何错误</p>
+<p>默许的错误会导致隐患，使用异常处理以尽量写出健壮的代码。</p>
+</li>
+<li>
+<p><strong>Unless explicitly silenced.</strong></p>
+<p>除非你确定要这么做</p>
+<p>在某些情况下，小错误是可以容忍的，和前一条组合在一起，避免走极端。</p>
+</li>
+<li>
+<p><strong>In the face of ambiguity, refuse the temptation to guess.</strong></p>
+<p>面对歧义，拒绝猜测的诱惑</p>
+<p>避免写含糊不清的代码。</p>
+</li>
+<li>
+<p><strong>There should be one-- and preferably only one --obvious way to do it.</strong></p>
+<p>应该有且只有一个最优解决方案 &mdash;&mdash; 最显而易见的实现方案</p>
+<p>python 的语法非常灵活，库也非常强大，所以同一个问题可以有非常多种不同实现方式，那么最优方案应该是那个最直观的解决方案。不要走标新立异的路线，用最显而易见的方法，花费最少的时间解决问题，珍惜自己的生命，也珍惜读者（代码维护者）的生命。</p>
+<blockquote>
+<p>life is short, you need pyhton.</p>
+</blockquote>
+</li>
+<li>
+<p><strong>Although that way may not be obvious at first unless you're Dutch.</strong></p>
+<p>虽然一开始并不容易，除非你是 Pyhton 之父</p>
+</li>
+<li>
+<p><strong>Now is better than never.</strong></p>
+<p>现在开始做胜过永远拖延</p>
+<p>拒绝拖延症！</p>
+</li>
+<li>
+<p><strong>Although never is often better than <em>right</em> now.</strong></p>
+<p>但是不假思索地的行动还不如拖延</p>
+<p>行动前要仔细思考，制定计划。</p>
+</li>
+<li>
+<p><strong>If the implementation is hard to explain, it's a bad idea.</strong></p>
+<p>如果实现方案很难向别人解释，那么它就是个坏方案</p>
+<p>小黄鸭调试法。</p>
+</li>
+<li>
+<p><strong>If the implementation is easy to explain, it may be a good idea.</strong></p>
+<p>反之亦然，良好的实现方案应该清晰容易理解</p>
+<p>好方案的一个共同特点就是清晰易懂，因为它们抓住了问题的关键点，从而可以用简单的方法高效地解决问题 &mdash;&mdash; <code>奥卡姆剃刀</code>。</p>
+</li>
+<li>
+<p><strong>Namespaces are one honking great idea -- let's do more of those!</strong></p>
+<p>命名空间是一个绝妙的理念，我们要多加利用</p>
+<p>给变量起名字是一门艺术，尤其是大工程多人协同工作时，难免会有命名冲突，因为好名字是大家有共识的，使用命名空间可以让你不再有命名冲突的烦恼。</p>
 </li>
 </ol>
-<h2 id="clock">Clock</h2>
-<hr/>
-<p>我们都知道，电路设计可以分为 <strong>同步设计</strong> 和 <strong>异步设计</strong> 两种，两者的优缺点就不再赘述。由于同步设计的一些优点，一般推荐使用同步设计，即使有异步信号，也将其转化为同步信号，来避免异步信号导致的问题。</p>
-<p>虽然同步电路有很多优点，但是它也有一些缺点：</p>
-<ol>
-<li>
-<p>首要问题是 <strong>时序收敛问题</strong></p>
-<p>也就是要保证所有的 flip-flop 的输入端和时钟端之间满足 setup/hold time 的要求，否则就会出现亚稳态，导致电路无法正常工作。</p>
-<p>不满足 setup time 的要求，可以通过降低工作频率的方法解决，但是不满足 hold time 时，芯片根本就无法工作。</p>
-<p>时序收敛点工作都是由 EDA 工具自动完成的，我们只要设置合理的时间约束，综合及布局布线工具就可以实现时钟平衡，时序分析工具就可以检查电路是否满足时序收敛。</p>
-</li>
-<li>
-<p>其次，对时钟信号要求高</p>
-<p>同步设计的基础是时钟信号。关于时钟信号，另外一篇博客 <a href="http://guqian110.github.io/pages/2015/03/18/static_timing_analysis_1_basic.html">静态时序分析 STA 1 &mdash;&mdash; 基础知识</a> 有一些总结，比如时钟偏斜 skew、时钟抖动 jitter、占空比失真 Duty Cycle Distortion。</p>
-<p>时钟偏斜 skew 的解决方法是采用 EDA 工具进行时钟树综合，它的原理就是按照时钟树的最大长度去平衡其他的时钟路径。但是这种方法会引入大量延迟单元的插入，使得电路的面积和功耗大大增加。</p>
-</li>
-</ol>
-<p><br/></p>
-<h2 id="design principle">Design Principle</h2>
-<hr/>
-<p>下面是设计时钟生成模块（CGM）时要遵守的一些原则：</p>
-<ol>
-<li>
-<p>CGM 要独立于系统的其他模块，其他模块所使用的时钟都要从 CGM 中引出</p>
-</li>
-<li>
-<p>CGM 要有很好的层次结构，既便于前端定义时钟和分析时序，又便于后端做时钟树综合</p>
-</li>
-<li>
-<p>为了调整性能和功耗，CGM 应该支持分频器和停时钟，而且软件能灵活控制</p>
-</li>
-<li>
-<p>在时钟切换和启停时钟时，一定不能出现毛刺，否则电路不能正常工作</p>
-</li>
-</ol>
-<p><br/></p>
-<h2 id="clock divider">Clock Divider</h2>
-<hr/>
-<p>在一个系统中，各个模块可能需要不同的工作频率，这就需要通过 PLL 把时钟源的频率提高到高频，然后通过不同的分频器为每个模块分出不同的工作频率。</p>
-<p>以前总结一篇关于 <a href="http://guqian110.github.io/pages/2014/10/13/clock_dividers.html">时钟分频器</a> 的博客。</p>
-<p><br/></p>
-<h2 id="clock switch">Clock Switch</h2>
-<hr/>
-<p>有时候，我们需要在模块运行的过程中切换时钟，切换时钟最简单的方法就是使用 MUX。但是这种方法会造成毛刺（glitch）。如下：</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">clk_a</span> <span class="k">or</span> <span class="n">clk_b</span> <span class="k">or</span> <span class="n">sel</span><span class="p">)</span> <span class="k">begin</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">sel</span><span class="p">)</span>    <span class="n">out_clk</span> <span class="o">&lt;=</span> <span class="n">clk_a</span><span class="p">;</span>
-    <span class="k">else</span>        <span class="n">out_clk</span> <span class="o">&lt;=</span> <span class="n">clk_b</span><span class="p">;</span>
+<h2 id="easter egg">Easter Egg</h2>
+<p>在解释器中用下面的命令就可以看到原文。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">this</span>
 </pre></div>
 </td></tr></table>
-<p>书上提供了一个通用的没有 glitch 的时钟切换模块，支持多个时钟的切换，其中 select 信号必须使用 one-hot 编码。（代码略 ...）</p>
-<p><br/></p>
-<h2 id="clock generation">Clock Generation</h2>
-<hr/>
-<p>有了上面的基础，就可以设计时钟生成模块了。书里面以一个 时钟切换 + 时钟分频 的组合来说明如何设计。</p>
-<p>书后面一章还提供了一个实际项目中的 CGM 的设计文档，以供参考。</p>
 <h2 id="ref">Ref</h2>
-<p><a href="http://www.amazon.cn/EDA%E7%B2%BE%E5%93%81%E6%99%BA%E6%B1%87%E9%A6%86-Verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF-%E9%AD%8F%E5%AE%B6%E6%98%8E/dp/B00HNVY3SY/ref=sr_1_1?ie=UTF8&amp;qid=1429188978&amp;sr=8-1&amp;keywords=verilog%E7%BC%96%E7%A8%8B%E8%89%BA%E6%9C%AF">Verilog 编程艺术</a></p>
+<p><a href="https://liuwynn.github.io/2019/04/24/Python%E4%B9%8B%E7%A6%85/">Python 之禅</a></p>
+<p><a href="https://blog.csdn.net/lanphaday/article/details/2151918">《Python 之禅》的翻译和解释</a></p>
+<p><a href="https://www.infoq.cn/article/e5FEa0D6JFADgKkHVyuE">怎样让你写的 Python 代码更优雅？</a></p>
   </div>
   <div class="tag-cloud">
     <p>
-      <a href="../../tag/clock-generate-unit.html">clock generate unit</a>
+      <a href="../../tag/pep.html">PEP</a>
+      <a href="../../tag/python.html">python</a>
     </p>
   </div>
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="../../posts/ic/configurable_design.html" title="可配置设计">
+    <a class="btn float-left" href="../../posts/python/pep8_in_practice.html" title="PEP8 实践">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
-    <a class="btn float-right" href="../../posts/ic/verilog_project_setting.html" title="Verilog 项目配置">
+    <a class="btn float-right" href="../../posts/python/learning_peps_series_3_pep202_and_pep274.html" title="PEP 学习系列之 3 —— PEP202 & PEP274">
       Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
 
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="../../posts/python/learning_peps_series_3_pep202_and_pep274.html">PEP 学习系列之 3 —— PEP202 & PEP274</a></li>
+      <li><a href="../../posts/python/learning_peps_series_0_pep0.html">PEP 学习系列之 0 —— PEP0</a></li>
+      <li><a href="../../posts/python/learning_peps_series_1_pep8.html">PEP 学习系列之 1 —— PEP8</a></li>
+      <li><a href="../../posts/python/pep8_in_practice.html">PEP8 实践</a></li>
+    </ul>
+  </div>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <ins class="adsbygoogle ads-responsive"

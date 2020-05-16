@@ -174,19 +174,18 @@
     <p>
       Posted on 2015-03-13 21:44 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 2 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="关于冒险和毛刺">关于冒险和毛刺</a><ul><li><a class="toc-href" href="#hazards &amp; glitch" title="Hazards &amp; Glitch">Hazards &amp; Glitch</a></li><li><a class="toc-href" href="#solution" title="Solution">Solution</a><ul><li><a class="toc-href" href="#static hazards" title="Static hazards">Static hazards</a></li><li><a class="toc-href" href="#dynamic hazards" title="Dynamic hazards">Dynamic hazards</a></li></ul></li><li><a class="toc-href" href="#in fpga design_1" title="in FPGA Design">in FPGA Design</a><ul><li><a class="toc-href" href="#clock" title="clock">clock</a></li><li><a class="toc-href" href="#set/clear" title="set/clear">set/clear</a></li><li><a class="toc-href" href="#combinational output" title="combinational output">combinational output</a></li><li><a class="toc-href" href="#asynchronous input" title="asynchronous input">asynchronous input</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <h2 id="hazards &amp; glitch">Hazards &amp; Glitch</h2>
 <hr/>
-<p>所谓 &ldquo;冒险&rdquo; <code>Hazard</code>，是指一种数字电路中由于设计或者是外部因素，造成的数字信号错误的现象，而这个错误的信号就叫做毛刺 <code>Glitch</code>。</p>
+<p>所谓 &ldquo; 冒险 &rdquo; <code>Hazard</code>，是指一种数字电路中由于设计或者是外部因素，造成的数字信号错误的现象，而这个错误的信号就叫做毛刺 <code>Glitch</code>。</p>
 <p><a href="http://en.wikipedia.org/wiki/Hazard_(logic)">Hazard on wiki</a>:</p>
 <blockquote>
 <p>In digital logic, a hazard in a system is an undesirable effect caused by either a deficiency in the system or external influences. Logic hazards are manifestations of a problem in which changes in the input variables do not change the output correctly due to some form of delay caused by logic elements (NOT, AND, OR gates, etc.) This results in the logic not performing its function properly. The three different most common kinds of hazards are usually referred to as static, dynamic and function hazards.</p>
@@ -244,7 +243,7 @@
 <p>函数表达式中的积项或和项是和卡诺图中的合并圈一一对应的，由此可知，<strong>函数的最简不一定是最佳的，必要的冗余反而可增加电路工作的可靠性。</strong></p>
 </li>
 <li>
-<p>解决冒险（<strong>增加冗余项/冗余圈</strong>）</p>
+<p>解决冒险（<strong>增加冗余项 / 冗余圈</strong>）</p>
 </li>
 </ol>
 </li>
@@ -269,7 +268,7 @@
 <li>
 <p>解决冒险（<strong>选通脉冲</strong> or <strong>滤波电路</strong>）</p>
 <p>只要输入信号不是按照循环码的方式变化，就会产生功能冒险。功能冒险是函数的逻辑功能决定的，所以不能在设计中消除，需要加额外的选通脉冲。</p>
-<p>选通脉冲的思路：一般说来，冒险出现在信号发生电平转换的时刻，也就是说在输出信号的建立时间内会发生冒险，而在输出信号的保持时间内是不会有毛刺信号出现的。如果在输出信号的保持时间内对其进行"采样"，就可以消除毛刺信号的影响。</p>
+<p>选通脉冲的思路：一般说来，冒险出现在信号发生电平转换的时刻，也就是说在输出信号的建立时间内会发生冒险，而在输出信号的保持时间内是不会有毛刺信号出现的。如果在输出信号的保持时间内对其进行 " 采样 "，就可以消除毛刺信号的影响。</p>
 <p>需要注意的是必须对选通脉冲的宽度及产生时间有严格的要求。加上选通脉冲之后，电路的输出就不再是电平信号，而是变为脉冲信号。</p>
 <p>还有另外一种方法：在对输出波形要求不高的时候，可以在输出端接一个滤波电容来消除冒险，但是这种方法会破坏波形的边沿，所以只适用于低速电路。</p>
 </li>
@@ -288,16 +287,16 @@
 <p><br/></p>
 <h2 id="in fpga design_1">in FPGA Design</h2>
 <hr/>
-<p>本部分来自：<a href="http://www.fpga.com.cn/advance/glitch/giltch.htm">关于毛刺问题的探讨</a> 和 <a href="http://book.douban.com/subject/3522845/">Verilog HDL程序设计与实践</a></p>
-<p>信号在 FPGA 器件内部通过连线和逻辑单元时，都有一定的延时。延时的大小与连线的长短和逻辑单元的数目有关，同时还受器件的制造工艺、工作电压、温度等条件的影响。信号的高低电平转换也需要一定的过渡时间。由于存在这两方面因素，多路信号的电平值发生变化时，在信号变化的瞬间，组合逻辑的输出有先后顺序，并不是同时变化,往往会出现一些不正确的尖峰信号，即毛刺信号。与分立元件不同，由于PLD内部不存在寄生电容电感，这些毛刺将被完整的保留并向下一级传递，因此毛刺现象在PLD、FPGA设计中尤为突出。</p>
+<p>本部分来自：<a href="http://www.fpga.com.cn/advance/glitch/giltch.htm">关于毛刺问题的探讨</a> 和 <a href="http://book.douban.com/subject/3522845/">Verilog HDL 程序设计与实践</a></p>
+<p>信号在 FPGA 器件内部通过连线和逻辑单元时，都有一定的延时。延时的大小与连线的长短和逻辑单元的数目有关，同时还受器件的制造工艺、工作电压、温度等条件的影响。信号的高低电平转换也需要一定的过渡时间。由于存在这两方面因素，多路信号的电平值发生变化时，在信号变化的瞬间，组合逻辑的输出有先后顺序，并不是同时变化 , 往往会出现一些不正确的尖峰信号，即毛刺信号。与分立元件不同，由于 PLD 内部不存在寄生电容电感，这些毛刺将被完整的保留并向下一级传递，因此毛刺现象在 PLD、FPGA 设计中尤为突出。</p>
 <p>可以概括的讲，<strong>只要输入信号同时变化，（经过内部走线）组合逻辑必将产生毛刺。将它们的输出直接连接到时钟输入端、清零或置位端口的设计方法是错误的，这可能会导致严重的后果。所以我们必须检查设计中所有时钟、清零和置位等对毛刺敏感的输入端口，确保输入不会含有任何毛刺。</strong></p>
 <p>如前所述，优秀的设计方案，如采用格雷码计数器，同步电路等，可以大大减少毛刺，但它并不能完全消除毛刺。 毛刺并不是对所有输入都有危害，例如 D 触发器的 D 输入端，只要毛刺不出现在时钟的上升沿并且满足数据的建立和保持时间，就不会对系统造成危害。因此我们可以说 D 触发器的 D 输入端对毛刺不敏感。但对于 D 触发器的时钟端，置位端，清零端，则都是对毛刺敏感的输入端，任何一点毛刺就会使系统出错，但只要认真处理，我们可以把危害降到最低直至消除。下面我们就对几种具体的信号进行探讨。</p>
 <h3 id="clock">clock</h3>
 <p>时钟信号是系统中非常关键的信号，参见其他<a href="http://guqian110.github.io/tag/clock-design.html">几篇博客</a>。</p>
 <h3 id="set/clear">set/clear</h3>
-<p>清除和置位信号要求象对待时钟那样小心地考虑它们，因为这些信号对毛刺也是非常敏感的。正如使用时钟那样，最好的清除和置位是从器件的引脚单直接地驱动。有一个主复位Reset引脚是常用的最好方法，主复位引脚给设计项目中每个触发器馈送清除或置位信号。几乎所有PLD器件都有专门的全局清零脚和全局置位。如果必须从器件内产生清除或置位信号，则要按照&ldquo;门控时钟&rdquo;的设计原则去建立这些信号，确保输入无毛刺。 </p>
+<p>清除和置位信号要求象对待时钟那样小心地考虑它们，因为这些信号对毛刺也是非常敏感的。正如使用时钟那样，最好的清除和置位是从器件的引脚单直接地驱动。有一个主复位 Reset 引脚是常用的最好方法，主复位引脚给设计项目中每个触发器馈送清除或置位信号。几乎所有 PLD 器件都有专门的全局清零脚和全局置位。如果必须从器件内产生清除或置位信号，则要按照 &ldquo; 门控时钟 &rdquo; 的设计原则去建立这些信号，确保输入无毛刺。 </p>
 <h3 id="combinational output">combinational output</h3>
-<p>当PLD输出引脚给出系统内其它部分的边沿敏感信号或电平敏感信号时，这些出信号必须象内部时钟、清除和置位信号一样小心地对待。只要可能就应在PLD输出端寄存那些对险象敏感的组合输出。如果你不能寄存险象敏感的输出，则应符合&ldquo;门控时钟&rdquo;中讨论的门控时钟的条件。决不能用多级逻辑驱动毛刺敏感的输出。</p>
+<p>当 PLD 输出引脚给出系统内其它部分的边沿敏感信号或电平敏感信号时，这些出信号必须象内部时钟、清除和置位信号一样小心地对待。只要可能就应在 PLD 输出端寄存那些对险象敏感的组合输出。如果你不能寄存险象敏感的输出，则应符合 &ldquo; 门控时钟 &rdquo; 中讨论的门控时钟的条件。决不能用多级逻辑驱动毛刺敏感的输出。</p>
 <h3 id="asynchronous input">asynchronous input</h3>
 <p>对于异步输入信号导致的毛刺，解决思想就是 同步化。参见<a href="http://guqian110.github.io/pages/2014/10/09/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">这篇博客</a>。</p>
 <p><br/></p>
@@ -305,7 +304,7 @@
 <p><a href="http://en.wikipedia.org/wiki/Hazard_(logic)">Hazard on wiki</a></p>
 <p><a href="http://book.douban.com/subject/3575520/">数字电路与逻辑设计</a></p>
 <p><a href="http://book.douban.com/subject/2883561/">Digital Design (4th Edition)</a></p>
-<p><a href="http://book.douban.com/subject/3522845/">Verilog HDL程序设计与实践</a></p>
+<p><a href="http://book.douban.com/subject/3522845/">Verilog HDL 程序设计与实践</a></p>
 <p><a href="http://www.fpga.com.cn/advance/glitch/giltch.htm">关于毛刺问题的探讨</a></p>
   </div>
   <div class="tag-cloud">

@@ -174,14 +174,13 @@
     <p>
       Posted on 2015-03-22 00:00 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 5 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="静态时序分析 STA 2 &mdash;&mdash; Xilinx STA">静态时序分析 STA 2 &mdash;&mdash; Xilinx STA</a><ul><li><a class="toc-href" href="#xilinx sta" title="Xilinx STA">Xilinx STA</a></li><li><a class="toc-href" href="#input paths" title="Input paths">Input paths</a><ul><li><a class="toc-href" href="#system synchronous inputs" title="System Synchronous Inputs">System Synchronous Inputs</a></li><li><a class="toc-href" href="#source synchronous inputs" title="Source Synchronous Inputs">Source Synchronous Inputs</a></li></ul></li><li><a class="toc-href" href="#register-to-register paths_1" title="Register-to-register paths">Register-to-register paths</a><ul><li><a class="toc-href" href="#automatically related synchronous dll, dcm, pll, and mmcm clock domains" title="Automatically Related Synchronous DLL, DCM, PLL, and MMCM Clock Domains">Automatically Related Synchronous DLL, DCM, PLL, and MMCM Clock Domains</a></li><li><a class="toc-href" href="#manually related synchronous clock domains" title="Manually Related Synchronous Clock Domains">Manually Related Synchronous Clock Domains</a></li><li><a class="toc-href" href="#asynchronous clock domains" title="Asynchronous Clock Domains">Asynchronous Clock Domains</a></li></ul></li><li><a class="toc-href" href="#output paths_1" title="Output paths">Output paths</a><ul><li><a class="toc-href" href="#system synchronous output" title="System Synchronous Output">System Synchronous Output</a></li><li><a class="toc-href" href="#source synchronous output" title="Source Synchronous Output">Source Synchronous Output</a></li></ul></li><li><a class="toc-href" href="#path specific exceptions_1" title="Path specific exceptions">Path specific exceptions</a><ul><li><a class="toc-href" href="#false paths (paths between registers that do not affect timing)" title="False Paths (Paths Between Registers That Do Not Affect Timing)">False Paths (Paths Between Registers That Do Not Affect Timing)</a></li><li><a class="toc-href" href="#multi-cycle paths" title="Multi-Cycle Paths">Multi-Cycle Paths</a></li></ul></li><li><a class="toc-href" href="#summary_1" title="Summary">Summary</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>*<em>总结 Xilinx 时序约束的一些基本内容，基本上是 <a href="http://www.xilinx.com/support/documentation/sw_manuals/xilinx14_2/ug612.pdf">UG612 Timing Closure User Guide</a> 的翻译和概括。</em></p>
@@ -204,11 +203,11 @@
 </li>
 </ol>
 <p><strong>添加约束最有效的方法就是先添加全局约束，然后根据需求考虑是否添加指定路径上的特殊约束。在很多案例中，只需要添加全局约束就可以了。</strong></p>
-<p>FPGA器件执行工具都是由指定的时序要求驱动的。如果时序约束过头的话，就会导致内存使用增加，工具运行时间增加。更重要的是，过约束还会导致性能下降。因此，推荐使用实际设计要求的约束值。</p>
+<p>FPGA 器件执行工具都是由指定的时序要求驱动的。如果时序约束过头的话，就会导致内存使用增加，工具运行时间增加。更重要的是，过约束还会导致性能下降。因此，推荐使用实际设计要求的约束值。</p>
 <p>下面分别讨论每种路径上的约束。</p>
 <p><br/></p>
 <h2 id="input paths">Input paths</h2>
-<p>所谓 &ldquo;输入路径 <code>input paths</code>&rdquo;，指的是从 &ldquo;FPGA 外部引脚 ---&gt; 内部读取这个数的寄存器&rdquo; 之间的路径。</p>
+<p>所谓 &ldquo; 输入路径 <code>input paths</code>&rdquo;，指的是从 &ldquo;FPGA 外部引脚 ---&gt; 内部读取这个数的寄存器 &rdquo; 之间的路径。</p>
 <p>在输入路径模型中，发送端是一个外部设备（当然也可以是 FPGA），接收端是 FPGA 芯片，输入路径讨论的就是以接收端的 FPGA 为视角，如何正确接收输入的数据。</p>
 <p>依据接口类型，可以将输入路径的时序分为 2 类：</p>
 <ol>
@@ -222,7 +221,7 @@
 <p>而对于输入路径的约束方法就是使用 <code>OFFSET IN</code> 来约束，它约束了 输入数据 和 用于捕获这个数据的时钟沿 之间的关系。（顾名思义，输入路径约束的是方向为 IN 的数据和时钟的相对偏移 OFFSET 的关系）</p>
 <p>下面分别对两类输入路径进行讨论：</p>
 <h3 id="system synchronous inputs">System Synchronous Inputs</h3>
-<p>所谓 System Synchronous Inputs 其实就是指 &ldquo;发送端 和 接收端 使用同一个系统（system）时钟&rdquo;。布线延时和时钟倾斜会限制这种接口的工作时钟频率，由于这个原因，这种接口一般应用在 SDR 中。</p>
+<p>所谓 System Synchronous Inputs 其实就是指 &ldquo; 发送端 和 接收端 使用同一个系统（system）时钟 &rdquo;。布线延时和时钟倾斜会限制这种接口的工作时钟频率，由于这个原因，这种接口一般应用在 SDR 中。</p>
 <p>system synchronous SDR 应用示例如下图：</p>
 <p><img alt="system synchronous SDR" src="/images/static-timing-analysis-2-xilinx-sta/system_synchronous_in_sdr.png"/></p>
 <p>其时序为：</p>
@@ -250,7 +249,7 @@
 </li>
 </ul>
 <p>举例：</p>
-<p>例1. 在下面理想的 system synchronous SDR interface 时序图中：</p>
+<p>例 1. 在下面理想的 system synchronous SDR interface 时序图中：</p>
 <p><img alt="example1" src="/images/static-timing-analysis-2-xilinx-sta/example1.png"/></p>
 <p>数据在时钟沿的前 5 ns 变为有效，并且保持了 5 ns 时间，所以在这个实例中的时序约束应该如下：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"SysClk"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="ss">"SysClk"</span><span class="p">;</span>
@@ -258,13 +257,13 @@
 <span class="k">OFFSET</span> <span class="o">=</span> <span class="k">IN</span> <span class="mi">5</span> <span class="n">ns</span> <span class="k">VALID</span> <span class="mi">5</span> <span class="n">ns</span> <span class="k">BEFORE</span> <span class="ss">"SysClk"</span><span class="p">;</span>
 </pre></div>
 <p>而且这个约束对于 data1 和 data2 共同有效。</p>
-<p>例2. 不是理想的 system synchronous SDR interface 中，假设时钟周期为 5 ns，并且占空比为 50%，数据在发送时钟上升沿之后的 500 ps 之后变有效，并且持续 4 ns。则时序约束应该如下：</p>
+<p>例 2. 不是理想的 system synchronous SDR interface 中，假设时钟周期为 5 ns，并且占空比为 50%，数据在发送时钟上升沿之后的 500 ps 之后变有效，并且持续 4 ns。则时序约束应该如下：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"clock"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">CLK</span><span class="p">;</span> 
 <span class="n">TIMESPEC</span> <span class="n">TS_CLK</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="n">CLK</span> <span class="mi">5</span><span class="p">.</span><span class="mi">0</span> <span class="n">ns</span> <span class="n">HIGH</span> <span class="mi">50</span><span class="o">%</span><span class="p">;</span> 
 <span class="k">OFFSET</span> <span class="o">=</span> <span class="k">IN</span> <span class="mi">4</span><span class="p">.</span><span class="mi">5</span> <span class="n">ns</span> <span class="k">VALID</span> <span class="mi">4</span> <span class="n">ns</span> <span class="k">BEFORE</span> <span class="n">clock</span><span class="p">;</span>
 </pre></div>
 <h3 id="source synchronous inputs">Source Synchronous Inputs</h3>
-<p>所谓 Source Synchronous Inputs 其实就是指 &ldquo;发送端重新生成一个时钟信号，并且将数据和时钟信号有着相似的布线，两者的延时基本相同，在接收数据的 FPGA 端，使用这个时钟来捕获这个数据&rdquo;。布线延时和时钟倾斜不再是限制这种接口工作速度的因素，所以这种接口一般应用在双倍数据速率的 DDR 中。</p>
+<p>所谓 Source Synchronous Inputs 其实就是指 &ldquo; 发送端重新生成一个时钟信号，并且将数据和时钟信号有着相似的布线，两者的延时基本相同，在接收数据的 FPGA 端，使用这个时钟来捕获这个数据 &rdquo;。布线延时和时钟倾斜不再是限制这种接口工作速度的因素，所以这种接口一般应用在双倍数据速率的 DDR 中。</p>
 <p>source synchronous DDR 应用示例如下图：</p>
 <p><img alt="source synchronous SDR" src="/images/static-timing-analysis-2-xilinx-sta/source_synchronous_in_ddr.png"/></p>
 <p>其时序为：</p>
@@ -286,7 +285,7 @@
 <span class="k">OFFSET</span> <span class="o">=</span> <span class="k">IN</span> <span class="n">value</span> <span class="k">VALID</span> <span class="n">value</span> <span class="k">BEFORE</span> <span class="n">clock</span> <span class="n">FALLING</span><span class="p">;</span>
 </pre></div>
 <p>举例： </p>
-<p>例3. 在下面理想的 source synchronous DDR interface 时序图中：</p>
+<p>例 3. 在下面理想的 source synchronous DDR interface 时序图中：</p>
 <p><img alt="example3" src="/images/static-timing-analysis-2-xilinx-sta/example3.png"/></p>
 <p>输入时钟的周期为 5 ns，并且占空比为 50%，两 bit 的数据的有效时间都为 1/2 时钟周期，所以在这个实例中的时序约束应该如下：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"SysClk"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="ss">"SysClk"</span><span class="p">;</span>
@@ -295,14 +294,14 @@
 <span class="k">OFFSET</span> <span class="o">=</span> <span class="k">IN</span> <span class="mi">1</span><span class="p">.</span><span class="mi">25</span> <span class="n">ns</span> <span class="k">VALID</span> <span class="mi">2</span><span class="p">.</span><span class="mi">5</span> <span class="n">ns</span> <span class="k">BEFORE</span> <span class="ss">"SysClk"</span> <span class="n">RISING</span><span class="p">;</span>
 <span class="k">OFFSET</span> <span class="o">=</span> <span class="k">IN</span> <span class="mi">1</span><span class="p">.</span><span class="mi">25</span> <span class="n">ns</span> <span class="k">VALID</span> <span class="mi">2</span><span class="p">.</span><span class="mi">5</span> <span class="n">ns</span> <span class="k">BEFORE</span> <span class="ss">"SysClk"</span> <span class="n">FALLING</span><span class="p">;</span>
 </pre></div>
-<p>例4. 不是理想的 source synchronous DDR（数据和时钟的边沿对齐），假设时钟周期为 5 ns，并且占空比为 50%，上升沿和下降沿的数据都保持有效 2ns，并且位于时钟波形的高低电平的中间位置，也就是说，在数据有效的前后各有 250 ps 的空白。</p>
-<p>对于上升沿，因为数据相对于捕获它的时钟沿后了 250 ps，并且有效时间持续了 2 ns；对于下降沿，数据也沿后了 250 ps， 并且有效时间持续了2 ns，所以时序约束如下：</p>
+<p>例 4. 不是理想的 source synchronous DDR（数据和时钟的边沿对齐），假设时钟周期为 5 ns，并且占空比为 50%，上升沿和下降沿的数据都保持有效 2ns，并且位于时钟波形的高低电平的中间位置，也就是说，在数据有效的前后各有 250 ps 的空白。</p>
+<p>对于上升沿，因为数据相对于捕获它的时钟沿后了 250 ps，并且有效时间持续了 2 ns；对于下降沿，数据也沿后了 250 ps， 并且有效时间持续了 2 ns，所以时序约束如下：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"clock"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">CLK</span><span class="p">;</span> 
 <span class="n">TIMESPEC</span> <span class="n">TS_CLK</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="n">CLK</span> <span class="mi">5</span><span class="p">.</span><span class="mi">0</span> <span class="n">ns</span> <span class="n">HIGH</span> <span class="mi">50</span><span class="o">%</span><span class="p">;</span> 
 <span class="k">OFFSET</span> <span class="o">=</span> <span class="k">IN</span> <span class="o">-</span><span class="mi">250</span> <span class="n">ps</span> <span class="k">VALID</span> <span class="mi">2</span> <span class="n">ns</span> <span class="k">BEFORE</span> <span class="n">clock</span> <span class="n">RISING</span><span class="p">;</span> 
 <span class="k">OFFSET</span> <span class="o">=</span> <span class="k">IN</span> <span class="o">-</span><span class="mi">250</span> <span class="n">ps</span> <span class="k">VALID</span> <span class="mi">2</span> <span class="n">ns</span> <span class="k">BEFORE</span> <span class="n">clock</span> <span class="n">FALLING</span>
 </pre></div>
-<p>例5. 不是理想的 source synchronous DDR（数据和时钟的中间位置对齐），假设时钟周期为 5 ns，并且占空比为 50%，上升沿和下降沿的数据都保持有效 2 ns，并且时钟沿对齐数据的中间位置，可以得出结论，在数据有效的前后各有 250 ps 的空白。</p>
+<p>例 5. 不是理想的 source synchronous DDR（数据和时钟的中间位置对齐），假设时钟周期为 5 ns，并且占空比为 50%，上升沿和下降沿的数据都保持有效 2 ns，并且时钟沿对齐数据的中间位置，可以得出结论，在数据有效的前后各有 250 ps 的空白。</p>
 <p>对于上升沿，因为数据相对于捕获它的时钟提前了 1 ns，并且有效时间持续了 2 ns；对于下降沿，数据也提前了 1 ns，并且有效时间持续了 2 ns，所以时序约束如下：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"clock"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">CLK</span><span class="p">;</span> 
 <span class="n">TIMESPEC</span> <span class="n">TS_CLK</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="n">CLK</span> <span class="mi">5</span><span class="p">.</span><span class="mi">0</span> <span class="n">ns</span> <span class="n">HIGH</span> <span class="mi">50</span><span class="o">%</span><span class="p">;</span> 
@@ -311,7 +310,7 @@
 </pre></div>
 <p><br/></p>
 <h2 id="register-to-register paths_1">Register-to-register paths</h2>
-<p>这部分讨论寄存器-寄存器之间同步路径上的周期约束（period constraint）。</p>
+<p>这部分讨论寄存器 - 寄存器之间同步路径上的周期约束（period constraint）。</p>
 <p>period constraint</p>
 <ul>
 <li>
@@ -379,7 +378,7 @@
 </li>
 </ul>
 <p>举例：</p>
-<p>例6. 在下图的例子中</p>
+<p>例 6. 在下图的例子中</p>
 <p><img alt="example6" src="/images/static-timing-analysis-2-xilinx-sta/example6.png"/></p>
 <p>输入时钟连接到 DCM 的输入端，因为输入时钟的时钟周期为 5 ns，并且占空比为 50%，所以添加的约束为：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"ClkIn"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="ss">"ClkIn"</span><span class="p">;</span>
@@ -404,9 +403,9 @@
 </pre></div>
 <p>在 related PERIOD 的约束中，PERIOD 的值定义了相关时钟和主时钟之间的关系（以时钟周期为单位），这种关系用主时钟的 TIMESPEC 形式来定义；PHASE 的值定义了主时钟和相关时钟的上升沿之间的关系。</p>
 <p>举例：</p>
-<p>例7. 如下图所示</p>
+<p>例 7. 如下图所示</p>
 <p><img alt="example7" src="/images/static-timing-analysis-2-xilinx-sta/example7.png"/></p>
-<p>CLK2X180 的频率是 CLK1X 的 2 倍，所以 PERIOD 的值为 1/2；CLK2X180 的相位相比于主时钟，偏移了 180度，所以它的上升沿比主时钟的上升沿晚了 1.25 ns；所以这个例子的约束如下：</p>
+<p>CLK2X180 的频率是 CLK1X 的 2 倍，所以 PERIOD 的值为 1/2；CLK2X180 的相位相比于主时钟，偏移了 180 度，所以它的上升沿比主时钟的上升沿晚了 1.25 ns；所以这个例子的约束如下：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"Clk1X"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="ss">"Clk1X"</span><span class="p">;</span>
 <span class="n">NET</span> <span class="ss">"Clk2X180"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="ss">"Clk2X180"</span><span class="p">;</span>
 <span class="n">TIMESPEC</span> <span class="ss">"TS_Clk1X"</span> <span class="o">=</span> <span class="n">PERIOD</span> <span class="ss">"Clk1X7 5 ns HIGH 50%;</span>
@@ -425,18 +424,18 @@
 <span class="n">TIMESPEC</span> <span class="n">TS_Example</span> <span class="o">=</span> <span class="k">FROM</span> <span class="ss">"GRP_A"</span> <span class="k">TO</span> <span class="ss">"GRP_B"</span> <span class="n">Delay</span> <span class="n">DATAPATHONLY</span>
 </pre></div>
 <p>举例：</p>
-<p>例8. 以前面的图为例，假设 CLKA 输入到第一个寄存器 R1，CLKB 输入到第二个寄存器 R2，R1 的输出连接到 R2 的输入，能忍受的最大的数据时延为 5 ns，则约束为：</p>
+<p>例 8. 以前面的图为例，假设 CLKA 输入到第一个寄存器 R1，CLKB 输入到第二个寄存器 R2，R1 的输出连接到 R2 的输入，能忍受的最大的数据时延为 5 ns，则约束为：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"CLKA"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">FFS</span> <span class="ss">"GRP_A"</span><span class="p">;</span>
 <span class="n">NET</span> <span class="ss">"CLKB"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">FFS</span> <span class="ss">"GRP_B"</span><span class="p">;</span>
 <span class="n">TIMESPEC</span> <span class="n">TS_Example</span> <span class="o">=</span> <span class="k">FROM</span> <span class="ss">"GRP_A"</span> <span class="k">TO</span> <span class="ss">"GRP_B"</span> <span class="mi">5</span> <span class="n">ns</span> <span class="n">DATAPATHONLY</span>
 </pre></div>
 <p><br/></p>
 <h2 id="output paths_1">Output paths</h2>
-<p>这部分讨论如何为输出路径添加约束。输出约束覆盖了从 &ldquo;内部同步单元/寄存器 ---&gt; FPGA 输出管脚&rdquo; 之间的所有路径。如下图所示：</p>
+<p>这部分讨论如何为输出路径添加约束。输出约束覆盖了从 &ldquo; 内部同步单元 / 寄存器 ---&gt; FPGA 输出管脚 &rdquo; 之间的所有路径。如下图所示：</p>
 <p><img alt="output example" src="/images/static-timing-analysis-2-xilinx-sta/output_example.png"/></p>
 <p>在输出路径模型中，发送端是 FPGA 芯片，接收端是一个外部设备（当然也可以是 FPGA），输入路径讨论的就是以发送端的 FPGA 为视角，如何将待发送定数据正确发送出去。</p>
 <p>和输入路径对应，输出路径使用 <code>OFFSET OUT</code> 来约束以达到时序要求。</p>
-<p>OFFET OUT 定义了输出数据和将该数据发送到输出管脚的时钟之间的关系。OFFSET OUT 的分析会自动将影响输出数据/输出时钟的内部因素考虑在内：</p>
+<p>OFFET OUT 定义了输出数据和将该数据发送到输出管脚的时钟之间的关系。OFFSET OUT 的分析会自动将影响输出数据 / 输出时钟的内部因素考虑在内：</p>
 <ol>
 <li>
 <p>时钟的频率和相位畸变</p>
@@ -459,9 +458,9 @@
 <p><strong>语法如下：</strong></p>
 <div class="highlight"><pre><span></span><span class="k">OFFSET</span> <span class="o">=</span> <span class="k">OUT</span> <span class="n">value</span> <span class="k">AFTER</span> <span class="n">clock</span><span class="p">;</span>
 </pre></div>
-<p>其中 <code>OFFSET = OUT &lt;value&gt;</code> 规定了 &ldquo;接收器件的输入时钟（=发送端 FPGA 的时钟）上升沿 ---&gt; 发送端 FPGA 输出数据变有效&rdquo; 直接的最大时延。</p>
+<p>其中 <code>OFFSET = OUT &lt;value&gt;</code> 规定了 &ldquo; 接收器件的输入时钟（= 发送端 FPGA 的时钟）上升沿 ---&gt; 发送端 FPGA 输出数据变有效 &rdquo; 直接的最大时延。</p>
 <p>举例：</p>
-<p>例9. 如下图所示的 System Synchronous SDR output interface</p>
+<p>例 9. 如下图所示的 System Synchronous SDR output interface</p>
 <p><img alt="example9" src="/images/static-timing-analysis-2-xilinx-sta/example9.png"/></p>
 <p>假设发送端的输出数据必须在时钟上升沿之后的 5 ns 内变为有效，则约束如下：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"ClkIn"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="ss">"ClkIn"</span><span class="p">;</span>
@@ -478,14 +477,14 @@
 <p><strong>语法如下：</strong></p>
 <ul>
 <li>
-<p><code>OFFSET = OUT &lt;value&gt;</code> 约束了从 &ldquo;输入时钟的上升沿 ---&gt; 发送端 FPGA 输出端口数据变为有效&rdquo; 的最大时延。</p>
+<p><code>OFFSET = OUT &lt;value&gt;</code> 约束了从 &ldquo; 输入时钟的上升沿 ---&gt; 发送端 FPGA 输出端口数据变为有效 &rdquo; 的最大时延。</p>
 </li>
 <li>
 <p>关键词 <code>REFERENCE_PIN</code> 约定以重新生成的时钟作为参考，输出数据的 skew 报告就是以这个时钟作为参考生成的。</p>
 </li>
 </ul>
 <p>举例：</p>
-<p>例10. 下图是一个理想的 Source Synchronous DDR interface 时序图</p>
+<p>例 10. 下图是一个理想的 Source Synchronous DDR interface 时序图</p>
 <p><img alt="example10" src="/images/static-timing-analysis-2-xilinx-sta/example10.png"/></p>
 <p>时钟周期为 5 ns，并且占空比为 50%，数据保持有效的时间为 1/2 时钟周期。所以，这个示例的约束如下：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"ClkIn"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="ss">"ClkIn"</span><span class="p">;</span>
@@ -494,7 +493,7 @@
 </pre></div>
 <p><br/></p>
 <h2 id="path specific exceptions_1">Path specific exceptions</h2>
-<p>通过前面的 3 节的讨论，对输入、寄存器-寄存器、输出路径进行约束，大部分时序路径都得到了正确约束，然后在一些情况中，存在少数不适应于全局约束的少数路径，这些例外最常见的就是：</p>
+<p>通过前面的 3 节的讨论，对输入、寄存器 - 寄存器、输出路径进行约束，大部分时序路径都得到了正确约束，然后在一些情况中，存在少数不适应于全局约束的少数路径，这些例外最常见的就是：</p>
 <ul>
 <li>
 <p>False Paths (Paths Between Registers That Do Not Affect Timing)</p>
@@ -525,7 +524,7 @@
 <div class="highlight"><pre><span></span><span class="n">TIMESPEC</span> <span class="ss">"TSid"</span> <span class="o">=</span> <span class="k">FROM</span> <span class="ss">"SRC_GRP"</span> <span class="k">TO</span> <span class="ss">"DST_GRP"</span> <span class="n">TIG</span><span class="p">;</span>
 </pre></div>
 <p>举例：</p>
-<p>例11. 假设下图中的两个寄存器之间的路径并不影响设计的时序，希望将这条路径从时序约束中移除</p>
+<p>例 11. 假设下图中的两个寄存器之间的路径并不影响设计的时序，希望将这条路径从时序约束中移除</p>
 <p><img alt="example11" src="/images/static-timing-analysis-2-xilinx-sta/example11.png"/></p>
 <p>则本例的约束如下：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"CLK1"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="n">FFS</span> <span class="ss">"GRP_1"</span><span class="p">;</span>
@@ -552,7 +551,7 @@
 </li>
 </ul>
 <p>举例：</p>
-<p>例12. 如下图所示的假设情形中</p>
+<p>例 12. 如下图所示的假设情形中</p>
 <p><img alt="example12" src="/images/static-timing-analysis-2-xilinx-sta/example12.png"/></p>
 <p>两个寄存器直接的路径被一个共同点 clock enable 控制，并且 clock enable 的变化速率是时钟频率的一半。则本例的时序约束如下：</p>
 <div class="highlight"><pre><span></span><span class="n">NET</span> <span class="ss">"CLK1"</span> <span class="n">TNM_NET</span> <span class="o">=</span> <span class="ss">"CLK1"</span><span class="p">;</span>

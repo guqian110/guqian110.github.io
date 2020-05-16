@@ -174,14 +174,13 @@
     <p>
       Posted on 2014-09-16 14:56 in <a href="../../category/ic.html">IC</a>
 
-        &#8226; 5 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="VHDL 笔记 1 &mdash;&mdash; 电路设计">VHDL 笔记 1 &mdash;&mdash; 电路设计</a><ul><li><a class="toc-href" href="#code structure" title="Code Structure">Code Structure</a></li><li><a class="toc-href" href="#data types" title="Data Types">Data Types</a><ul><li><a class="toc-href" href="#pre-defined data types" title="Pre-defined Data Types">Pre-defined Data Types</a><ul><li><a class="toc-href" href="#bit &amp; bit_vector" title="bit &amp; bit_vector">bit &amp; bit_vector</a></li><li><a class="toc-href" href="#std_logic &amp; std_logic_vector" title="std_logic &amp; std_logic_vector">std_logic &amp; std_logic_vector</a></li><li><a class="toc-href" href="#std_ulogic &amp; std_ulogic_vector" title="std_ulogic &amp; std_ulogic_vector">std_ulogic &amp; std_ulogic_vector</a></li><li><a class="toc-href" href="#boolean" title="boolean">boolean</a></li><li><a class="toc-href" href="#integer" title="integer">integer</a></li><li><a class="toc-href" href="#natural" title="natural">natural</a></li><li><a class="toc-href" href="#real" title="real">real</a></li><li><a class="toc-href" href="#physical literal" title="physical literal">physical literal</a></li><li><a class="toc-href" href="#character" title="character">character</a></li><li><a class="toc-href" href="#signed &amp; unsigned" title="signed &amp; unsigned">signed &amp; unsigned</a></li></ul></li><li><a class="toc-href" href="#user-defined data types_1" title="User-defined Data Types">User-defined Data Types</a></li><li><a class="toc-href" href="#subtypes" title="Subtypes">Subtypes</a></li><li><a class="toc-href" href="#arrays" title="Arrays">Arrays</a></li><li><a class="toc-href" href="#port array" title="Port Array">Port Array</a></li><li><a class="toc-href" href="#signed and unsigned data types" title="Signed and Unsigned Data Types">Signed and Unsigned Data Types</a></li><li><a class="toc-href" href="#data conversion" title="Data Conversion">Data Conversion</a></li></ul></li><li><a class="toc-href" href="#operators and attributes_1" title="Operators and Attributes">Operators and Attributes</a><ul><li><a class="toc-href" href="#opreators" title="Opreators">Opreators</a><ul><li><a class="toc-href" href="#assignment" title="assignment">assignment</a></li><li><a class="toc-href" href="#logical" title="logical">logical</a></li><li><a class="toc-href" href="#arithmetic" title="arithmetic">arithmetic</a></li><li><a class="toc-href" href="#comparison" title="comparison">comparison</a></li><li><a class="toc-href" href="#shift" title="shift">shift</a></li><li><a class="toc-href" href="#concatenation" title="concatenation">concatenation</a></li></ul></li><li><a class="toc-href" href="#attributes_1" title="Attributes">Attributes</a><ul><li><a class="toc-href" href="#pre-defined" title="Pre-defined">Pre-defined</a></li><li><a class="toc-href" href="#user-defined" title="User-defined">User-defined</a></li></ul></li><li><a class="toc-href" href="#operator overloading_1" title="Operator Overloading">Operator Overloading</a></li><li><a class="toc-href" href="#generic" title="GENERIC">GENERIC</a></li></ul></li><li><a class="toc-href" href="#concurrent code_1" title="Concurrent Code">Concurrent Code</a><ul><li><a class="toc-href" href="#when" title="when">when</a></li><li><a class="toc-href" href="#generate" title="generate">generate</a></li><li><a class="toc-href" href="#block" title="block">block</a></li></ul></li><li><a class="toc-href" href="#sequential code_1" title="Sequential Code">Sequential Code</a><ul><li><a class="toc-href" href="#process" title="process">process</a></li><li><a class="toc-href" href="#if" title="if">if</a></li><li><a class="toc-href" href="#wait" title="wait">wait</a></li><li><a class="toc-href" href="#case" title="case">case</a></li><li><a class="toc-href" href="#loop" title="loop">loop</a></li></ul></li><li><a class="toc-href" href="#signals &amp; variables_1" title="Signals &amp; Variables">Signals &amp; Variables</a><ul><li><a class="toc-href" href="#constant" title="constant">constant</a></li><li><a class="toc-href" href="#signal" title="signal">signal</a></li><li><a class="toc-href" href="#variable" title="variable">variable</a></li></ul></li><li><a class="toc-href" href="#reference_1" title="Reference">Reference</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <h2 id="code structure">Code Structure</h2>
@@ -207,7 +206,7 @@
 </ul>
 </li>
 <li>
-<p>Entity 描述电路的输入/输出引脚</p>
+<p>Entity 描述电路的输入 / 输出引脚</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -270,12 +269,12 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">variable</span> <span class="n">name</span> <span class="o">:</span> <span class="k">type</span> <span class="p">[</span><span class="k">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
 </pre></div>
 </td></tr></table>
-<p>这些声明中都包含了数据类型字段。一个信号/常量/变量的数据类型决定了它能取到什么样的值，还有可以进行什么样的操作。</p>
+<p>这些声明中都包含了数据类型字段。一个信号 / 常量 / 变量的数据类型决定了它能取到什么样的值，还有可以进行什么样的操作。</p>
 <h3 id="pre-defined data types">Pre-defined Data Types</h3>
 <p>IEEE 1164 标准中包含了一些预先定义的数据类型。</p>
 <ul>
 <li>
-<p><code>std</code> 库中的 <code>standard</code> 包集(package) 定义了：<code>bit</code>、<code>boolean</code>、<code>integer</code>、<code>real</code> 类型</p>
+<p><code>std</code> 库中的 <code>standard</code> 包集 (package) 定义了：<code>bit</code>、<code>boolean</code>、<code>integer</code>、<code>real</code> 类型</p>
 </li>
 <li>
 <p><code>ieee</code> 库中的 <code>std_logic_1164</code> 包集定义了：<code>std_logic</code>、<code>std_ulogic</code> 类型</p>
@@ -342,7 +341,7 @@
 </ul>
 <h4 id="character"><code>character</code></h4>
 <ul>
-<li>单一/一串 ASCII 字符</li>
+<li>单一 / 一串 ASCII 字符</li>
 </ul>
 <h4 id="signed &amp; unsigned"><code>signed</code> &amp; <code>unsigned</code></h4>
 <ul>
@@ -428,7 +427,7 @@
 </td></tr></table>
 </li>
 <li>
-<p>使用它们主要是为了进行算术运算，但是它们不支持逻辑运算。( std_logic_vector 不支持算术运算，但是支持逻辑运算)</p>
+<p>使用它们主要是为了进行算术运算，但是它们不支持逻辑运算。( std_logic_vector 不支持算术运算，但是支持逻辑运算 )</p>
 </li>
 <li>
 <p>如果信号的类型只能是 std_logic_vector，那么通过其他方法也是可以进行算术运算的，解决方案就是声明使用 <code>ieee</code> 的 <code>std_logic_unsigned</code> 和 <code>std_logic_signed</code> 两个包集，声明之后，std_logic_vector 就可以像 signed/unsigned 一样进行算术运算了。</p>
@@ -459,7 +458,7 @@
 <h3 id="data conversion">Data Conversion</h3>
 <ul>
 <li>
-<p>在 VHDL 中，不同类型的数据是不能直接进行算术/逻辑运算的，所以必要时必须进行类型转换操作。</p>
+<p>在 VHDL 中，不同类型的数据是不能直接进行算术 / 逻辑运算的，所以必要时必须进行类型转换操作。</p>
 </li>
 <li>
 <p>有两种方法实现类型转换：</p>
@@ -516,7 +515,7 @@
 <p><code>:=</code> 用于给 <code>variable</code>, <code>constant</code>, <code>generic</code> 赋值，还可用于赋初值</p>
 </li>
 <li>
-<p><code>=&gt;</code> 用于给矢量(vector)对象的某些位赋值，常和 <code>others</code> 一起使用</p>
+<p><code>=&gt;</code> 用于给矢量 (vector) 对象的某些位赋值，常和 <code>others</code> 一起使用</p>
 </li>
 </ul>
 <h4 id="logical"><code>logical</code></h4>
@@ -563,7 +562,7 @@
 </li>
 </ul>
 <h3 id="attributes_1">Attributes</h3>
-<p>VHDL 中的属性语句可以获得相关数据/对象 的信息，使代码更加灵活。</p>
+<p>VHDL 中的属性语句可以获得相关数据 / 对象 的信息，使代码更加灵活。</p>
 <h4 id="pre-defined">Pre-defined</h4>
 <p>内置的预定义属性可以分为两大类：数值类属性 和 信号类属性。</p>
 <ul>
@@ -593,12 +592,12 @@
 <span class="n">input</span> <span class="o">&lt;=</span> <span class="n">nand3</span><span class="na">'number_of_inputs</span><span class="p">;</span>
 </pre></div>
 </td></tr></table>
-<p>首先定义了一个新的属性，名字叫 <code>number_of_inputs</code>，表示输入端口的个数，然后针对对象 nand3 (3输入的与非门) 这个对象，描述它的这个属性的类型为 signal 类型，取值为 3；最后，使用这个属性，将 nand3 的这个属性的值赋值给 input 对象。</p>
+<p>首先定义了一个新的属性，名字叫 <code>number_of_inputs</code>，表示输入端口的个数，然后针对对象 nand3 (3 输入的与非门 ) 这个对象，描述它的这个属性的类型为 signal 类型，取值为 3；最后，使用这个属性，将 nand3 的这个属性的值赋值给 input 对象。</p>
 <h3 id="operator overloading_1">Operator Overloading</h3>
 <p>用户不仅可以自定义属性，还可以自定义操作符。预定义的操作符的操作数必须是特定的类型，对于某些类型，我们可以自定义操作符对应的操作。</p>
 <p>VHDL 中的自定义操作符作用和 C++ 中的操作符重载 方法、目的都很类似。首先构造一个函数，然后调用这个函数即可。</p>
 <h3 id="generic">GENERIC</h3>
-<p><code>generic</code> 必须在 ENTITY 中声明，它可以指定常规参数，所指定的参数是<strong>静态的</strong>，<strong>全局的</strong>。感觉类似于 Verilog 中的 <code>define</code> 吧，但是显然 Verilog 中的 <code>parameter</code> 是更好的设计，因为全局变量/常量很不安全。</p>
+<p><code>generic</code> 必须在 ENTITY 中声明，它可以指定常规参数，所指定的参数是<strong>静态的</strong>，<strong>全局的</strong>。感觉类似于 Verilog 中的 <code>define</code> 吧，但是显然 Verilog 中的 <code>parameter</code> 是更好的设计，因为全局变量 / 常量很不安全。</p>
 <p><strong>syntax</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">GENERIC</span> <span class="p">(</span><span class="n">parameter_name</span><span class="o">:</span> <span class="n">parameter_type</span> <span class="o">:=</span> <span class="n">parameter_value</span><span class="p">);</span>
 </pre></div>
@@ -777,7 +776,7 @@
 <h2 id="signals &amp; variables_1">Signals &amp; Variables</h2>
 <hr/>
 <p>VHDL 提供了 <code>signal</code> 和 <code>variable</code> 两种对象来处理非静态数据；提供了 <code>constant</code> 和 <code>generic</code> 来处理静态数据。</p>
-<p><code>constant</code> 和 <code>signal</code> 是全局的，可以在顺序执行的代码中，也可以在并发执行的代码中；<code>variable</code> 是局部的，只能值顺序代码中，并且它们的值是不能向外传递的(如果想传递出去，必须先把这个变量值传递给一个信号，再由这个信号传递出去)。</p>
+<p><code>constant</code> 和 <code>signal</code> 是全局的，可以在顺序执行的代码中，也可以在并发执行的代码中；<code>variable</code> 是局部的，只能值顺序代码中，并且它们的值是不能向外传递的 ( 如果想传递出去，必须先把这个变量值传递给一个信号，再由这个信号传递出去 )。</p>
 <h3 id="constant"><code>constant</code></h3>
 <p>constant 可以定义在 package, entity, architecture 中，对应的作用域也不同。</p>
 <ul>
@@ -796,7 +795,7 @@
 </pre></div>
 </td></tr></table>
 <h3 id="signal"><code>signal</code></h3>
-<p>VHDL 中的 <code>signal</code> 代表的是逻辑电路中的 &ldquo;硬&rdquo;连线，既可以用于电路的输入输出端口，也可以用于 内部单元之间的连接。</p>
+<p>VHDL 中的 <code>signal</code> 代表的是逻辑电路中的 &ldquo; 硬 &rdquo; 连线，既可以用于电路的输入输出端口，也可以用于 内部单元之间的连接。</p>
 <p><strong>syntax</strong></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">SIGNAL</span> <span class="n">name</span> <span class="o">:</span> <span class="k">type</span> <span class="p">[</span><span class="k">range</span><span class="p">]</span> <span class="p">[</span><span class="o">:=</span> <span class="n">initial_value</span><span class="p">];</span>
 </pre></div>
@@ -806,7 +805,7 @@
 <p>和 Verilog HDL 的 always 中的 reg 类似，VHDL 的 process 中的 signal 也是在进程结束时更新值。</p>
 </li>
 <li>
-<p>对同一个信号多次重复赋值，结果取决于编译器。(Xilinx XST 不报错，认为最后一次赋值是有效的)</p>
+<p>对同一个信号多次重复赋值，结果取决于编译器。(Xilinx XST 不报错，认为最后一次赋值是有效的 )</p>
 </li>
 </ul>
 <h3 id="variable"><code>variable</code></h3>

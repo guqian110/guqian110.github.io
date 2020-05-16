@@ -174,19 +174,18 @@
     <p>
       Posted on 2014-09-03 23:16 in <a href="../../category/telecom.html">Telecom</a>
 
-        &#8226; 2 min read
     </p>
   </header>
 
 
-    <div class="col-lg-3 hidden-xs hidden-sm">
+  <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="数字信号处理和相关matlab函数总结">数字信号处理和相关matlab函数总结</a><ul><li><a class="toc-href" href="#signal processing" title="Signal Processing">Signal Processing</a></li><li><a class="toc-href" href="#matlab" title="Matlab">Matlab</a><ul><li><a class="toc-href" href="#basic" title="basic">basic</a></li><li><a class="toc-href" href="#adv" title="adv">adv</a></li></ul></li><li><a class="toc-href" href="#reference_1" title="Reference">Reference</a></li></ul></li></ul></div>
-    </div>
+  </div>
 
   <div>
     <p>学了这么多年的通信，却还是对信号处理的知识一知半解，应付考试还可以，但在实际应用中还是感到力不从心，很多知识都忘了。翻了一下午的 《信号与系统》、《数字信号处理》，简单总结一下。</p>
 <p>《信号与系统》算是通信专业最基础的专业课了。</p>
-<p>信号部分主要介绍信号的相关定义、分类、常用信号和三大变换：傅立叶变换、拉普拉斯变换和z 变换。</p>
+<p>信号部分主要介绍信号的相关定义、分类、常用信号和三大变换：傅立叶变换、拉普拉斯变换和 z 变换。</p>
 <p>系统部分主要从时域和频域使用不同的方法分析线性时不变系统（LTI）的性质。</p>
 <p>《数字信号处理》算是前一门课的深入，现在利用计算机处理信号，首先就是要将模拟信号数字化，然后进行处理。这门课也就是讲相关的知识。</p>
 <p>一般教材就讲两大部分：第一部分首先承接《信号与系统》，时域的连续信号要在计算机中处理就必须采样，变为时域离散信号，这部分就讲离散时间信号的处理，比如 z 变换 和离散傅立叶变换。第二部分讲数字滤波器的设计，包括 FIR 和 IIR 两种。</p>
@@ -210,13 +209,13 @@
 <p>时域连续信号经过采样，得到离散时间信号，对于离散时间信号，可以从 z 变换中引出 DTFT 的定义。</p>
 <p>DTFT 是一种特殊的傅立叶变换（FT），它满足所有的傅立叶变换的性质。</p>
 <p><strong>离散傅立叶变换 （DFT）</strong></p>
-<p>虽然 DTFT 解决了信号在时域的连续问题，但是变换结果仍然是连续信号，也就是说在频域仍然是连续的，这样计算机仍然是无法处理的。所以，就引出了离散傅立叶级数（DFS)和离散傅立叶变换（DFT）。</p>
+<p>虽然 DTFT 解决了信号在时域的连续问题，但是变换结果仍然是连续信号，也就是说在频域仍然是连续的，这样计算机仍然是无法处理的。所以，就引出了离散傅立叶级数（DFS) 和离散傅立叶变换（DFT）。</p>
 <p>时域信号的周期性对应着频域的离散化，而且时域信号的离散化对应着频域的周期性。由这两点，可以知道周期的离散信号具有离散的、周期的频谱，也就是离散傅立叶级数（DFS）。</p>
 <p>把时域和频域的数据长度都限定在主周期，那么就得到了标准的离散傅立叶变换（DFT）。</p>
 <p>经过分析，可以知道，DFT 是 z 变换的取样，也是 DTFT 的取样结果。</p>
 <p>DFT 因为是离散的，长度有限，所以很适合计算机计算，而且人们发明了高效地计算 DFT 的方法 &mdash;&mdash; FFT 。</p>
 <p>知乎上还有一篇专栏的文章，得到了非常多人的赞同，可以进一步参考。</p>
-<p><a href="http://zhuanlan.zhihu.com/wille/19763358">傅里叶分析之掐死教程（完整版）更新于2014.06.06</a></p>
+<p><a href="http://zhuanlan.zhihu.com/wille/19763358">傅里叶分析之掐死教程（完整版）更新于 2014.06.06</a></p>
 <p><br/></p>
 <h2 id="matlab">Matlab</h2>
 <hr/>
@@ -247,7 +246,7 @@
 <ol>
 <li>
 <p>非周期信号</p>
-<p>假设我们要分析 tau = 1 的矩形窗函数，我们知道它的频谱，且取第一零点 1/tau = 1 为最高频，假设 8 倍采样，即 Fs = 8 Hz，假设频谱分辨率小于 0.1 Hz 即达到需求，则可以得到 N = 128，此时验证 L = 16 满足条件。由 tau 和 Fs 得到采样点包含 8 个 1 和 120 个0，所以：</p>
+<p>假设我们要分析 tau = 1 的矩形窗函数，我们知道它的频谱，且取第一零点 1/tau = 1 为最高频，假设 8 倍采样，即 Fs = 8 Hz，假设频谱分辨率小于 0.1 Hz 即达到需求，则可以得到 N = 128，此时验证 L = 16 满足条件。由 tau 和 Fs 得到采样点包含 8 个 1 和 120 个 0，所以：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -304,13 +303,13 @@
 <p>综上，我们就有分析一个信号的<strong>通用步骤</strong>：</p>
 <ol>
 <li>
-<p><strong>首先确定Fs</strong>：信号的频率信息对于我们是未知的，我们最多只知道信号的带宽，根据信号带宽，我们就可以确定一个采样率 Fs，比如 8 倍采样</p>
+<p><strong>首先确定 Fs</strong>：信号的频率信息对于我们是未知的，我们最多只知道信号的带宽，根据信号带宽，我们就可以确定一个采样率 Fs，比如 8 倍采样</p>
 </li>
 <li>
-<p>确定了 Fs，实际上的 w 就已经确定了，只是我们是不知道它的具体值（因为不知道fm）</p>
+<p>确定了 Fs，实际上的 w 就已经确定了，只是我们是不知道它的具体值（因为不知道 fm）</p>
 </li>
 <li>
-<p><strong>下一步应该确定 N</strong>：由公式1和公式2可以推出 <code>N = Fs/fm*k</code>。当Fs最小为奈奎斯特采样速率，k = 1 时，N 取到最小值 2，这种情况下虽然没有混叠，但是 fdelta 太大了，不利于观察频谱，应该由 <code>fdelta = Fs/N</code> 决定 N 的最小值</p>
+<p><strong>下一步应该确定 N</strong>：由公式 1 和公式 2 可以推出 <code>N = Fs/fm*k</code>。当 Fs 最小为奈奎斯特采样速率，k = 1 时，N 取到最小值 2，这种情况下虽然没有混叠，但是 fdelta 太大了，不利于观察频谱，应该由 <code>fdelta = Fs/N</code> 决定 N 的最小值</p>
 </li>
 </ol>
 <p>====================================== 补充一下 FFT 补零 ========================================</p>
@@ -338,14 +337,14 @@
 <p>时域补零实际上改变了采样序列的，所以频域结果和原始信号不同，</p>
 </li>
 <li>
-<p>补零无法提高频率分辨率，内插出的新分量不是真正物理意义上的频率，是 &ldquo;假频&rdquo;，真正的频率分辨率并没有提高。频率分辨率只能由提高采样点数来提高。</p>
+<p>补零无法提高频率分辨率，内插出的新分量不是真正物理意义上的频率，是 &ldquo; 假频 &rdquo;，真正的频率分辨率并没有提高。频率分辨率只能由提高采样点数来提高。</p>
 </li>
 </ol>
 <p><br/></p>
 <h2 id="reference_1">Reference</h2>
 <p><a href="http://book.douban.com/subject/3712794/">信号与系统引论</a></p>
 <p><a href="http://book.douban.com/subject/4025528/">数字信号处理</a></p>
-<p><a href="http://book.douban.com/subject/24868505/">数字信号处理教程&mdash;&mdash;MATLAB释义与实现</a></p>
+<p><a href="http://book.douban.com/subject/24868505/">数字信号处理教程 &mdash;&mdash;MATLAB 释义与实现</a></p>
   </div>
   <div class="tag-cloud">
     <p>
