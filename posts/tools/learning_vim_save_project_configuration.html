@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet/less" type="text/css" href="../../theme/stylesheet/style.less">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js" type="text/javascript"></script>
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="../../theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="../../theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="../../theme/pygments/monokai.min.css">
+
+    <script src="../../theme/tipuesearch/jquery.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="../../tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="../../theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
+
+
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="总结将 Vim 配置为 IDE 的过程之一，保存项目设置 。" />
+<meta name="keywords" content="Vim">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="学习 Vim 保存项目设置"/>
+<meta property="og:description" content="总结将 Vim 配置为 IDE 的过程之一，保存项目设置 。"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="../../posts/tools/learning_vim_save_project_configuration.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-04-20 14:32:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../../author/qian-gu.html">
+<meta property="article:section" content="Tools"/>
+<meta property="article:tag" content="Vim"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; 学习 Vim 保存项目设置</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="../..">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="../..">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="../../pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="../..">Home</a>
+
+      <a href="authors.html">Authors</a>
+      <a href="archives.html">Archives</a>
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
+
+      <a href="/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="learning_vim_save_project_configuration">学习 Vim 保存项目设置</h1>
+    <p>
+      Posted on 2014-04-20 14:32 in <a href="../../category/tools.html">Tools</a>
+
+    </p>
+  </header>
+
+
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Vim 保存项目设置">学习 Vim 保存项目设置</a><ul><li><a class="toc-href" href="#session" title="Session">Session</a><ul><li><a class="toc-href" href="#intro" title="Intro">Intro</a></li><li><a class="toc-href" href="#config" title="Config">Config</a></li><li><a class="toc-href" href="#save" title="Save">Save</a></li><li><a class="toc-href" href="#load" title="Load">Load</a></li></ul></li><li><a class="toc-href" href="#viminfo_1" title="Viminfo">Viminfo</a><ul><li><a class="toc-href" href="#intro_1" title="Intro">Intro</a></li><li><a class="toc-href" href="#save_1" title="Save">Save</a></li><li><a class="toc-href" href="#zai ru  viminfo wen jian" title="载入 viminfo 文件">载入 viminfo 文件</a></li></ul></li><li><a class="toc-href" href="#zong jie_1" title="总结">总结</a></li><li><a class="toc-href" href="#can kao" title="参考">参考</a></li></ul></li></ul></div>
+    </div>
+
+  <div>
+    <blockquote>
+<ul>
+<li>
+<p>关于 Vim 和 IDE 的争论，这是程序猿的圣战，不再浪费时间 :-D</p>
+</li>
+<li>
+<p>在参考了很多人分享的博客和教程之后，终于把 Vim 搭建成为一个自己定制的 IDE（这种说法严格意义上说，是不对的，应该是 &ldquo; 组合一组工具成为一个 IDE &rdquo;），总结一下～</p>
+</li>
+<li>
+<p>本系列的内容很多都是参考别人的博客写的，也包含部分自己摸索的结果 。虽然部分内容和参考文章相同，但是总结一下自己的学习过程还是一件有必要的事 :-P</p>
+</li>
+</ul>
+</blockquote>
+<p><br/></p>
+<p>很多编辑器都有一个功能是以前打开过的文档会有记忆，再次打开时会直接跳转到上次编辑的地方，比如  <a href="http://www.sublimetext.com/2"><code>Sublime Text 2</code></a>，强大的 Vim 当然也有这个功能，<strong>我们的目标就是让 Vim 和其他 IDE 一样，可以记住上次的编辑状态 。</strong></p>
+<p>Vim 要实现这个功能，涉及到两个地方的配置：<code>session</code> &amp; <code>viminfo</code> 。</p>
+<p><br/></p>
+<h2 id="session">Session</h2>
+<hr/>
+<h3 id="intro">Intro</h3>
+<p>在 Vim 中输入</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:help session
+</pre></div>
+</td></tr></table>
+<p>就可以看到关于 <code>session</code> 的介绍：</p>
+<blockquote>
+<p>A Session keeps the Views for all windows, plus the global settings.  You can save a Session and when you restore it later the window layout looks the same. You can use a Session to quickly switch between different projects, automatically loading the files you were last working on in that project.</p>
+</blockquote>
+<p>在我使用的 Vim 7.3 中， <code>help</code> 中的 <code>usr_21.txt</code> 的主题是 <code>Go away and come back</code>，其中 <code>21.4</code>  节保存的就是关于 session 的说明，在 Vim 中输入</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:help <span class="m">21</span>.4
+</pre></div>
+</td></tr></table>
+<p>就可以看到关于 session 的详细介绍 。</p>
+<h3 id="config">Config</h3>
+<p>Session 保存的信息由 <code>sessionoptions</code> 确定，详细用法可以查看 help</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:help <span class="s1">'sessionoption'</span>
+</pre></div>
+</td></tr></table>
+<blockquote>
+<ul>
+<li>
+<p>'sessionoptions' 'ssop' string  (default: <strong>"blank,buffers,curdir,folds,help,options,tabpages,winsize"</strong>)</p>
+</li>
+<li>
+<p>It is a comma separated list of words.  Each word enables saving and restoring something</p>
+</li>
+</ul>
+</blockquote>
+<p>也就是说 session 保存的会话的属性默认的有 8 个 ：<strong>当前编辑的空窗口、缓冲区、当前目录、折叠信息、帮助信息、选项、标签页、窗口大小信息 。</strong></p>
+<p>在上面的设置中，不要同时包含 <code>curdir</code> 和 <code>sesdir</code> 两个选项，若两个选项都不包含，则保存 session 时，会保存绝路径 。添加 <code>sesdir</code> 可以将当前目录设置为 <code>session-file</code>  所在的目录，这个设置有个很有用的地方就是，当我们通过网络访问我们的工程或者有很多个工程版本，这时候只需要每个工程下保存一个 session-file 即可 。</p>
+<p>删除 / 加入 某个选项的方法</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:set sessionoptions-<span class="o">=</span>curdir
+:set <span class="nv">sessionoptions</span><span class="o">+=</span>sesdir
+</pre></div>
+</td></tr></table>
+<h3 id="save">Save</h3>
+<p>详细的语法可以在 help 中查看</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:help mksession
+</pre></div>
+</td></tr></table>
+<p>使用 <code>mksession</code> 命令保存会话</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:set sessionoptopms-<span class="o">=</span>curdir
+:set <span class="nv">sessionoptions</span><span class="o">+=</span>sesdir
+:mksession project.vim
+</pre></div>
+</td></tr></table>
+<p>如果 session-file 已经存在，则使用</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:mksession! project.vim
+</pre></div>
+</td></tr></table>
+<h3 id="load">Load</h3>
+<p>然后退出 Vim，在别的目录下打开，干点别的事，这时候我们想起刚才的工程里面有个小 bug，想恢复过去，这时候就是只需要使用 <code>source</code> 命令即可 。</p>
+<p>使用 <code>source</code> 命令</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">source</span> PATHto/project.vim
+</pre></div>
+</td></tr></table>
+<p>这时候可以看到，已经恢复了之前的状态 。</p>
+<p><br/></p>
+<p><em>只使用 session 就可以恢复一些上次编辑的信息，但是这还不够，我们还可以配合使用 <code>viminfo</code> 来恢复更多的信息 。在 Vim 的 <code>:help 21.4</code> 中有介绍两者的关系</em></p>
+<blockquote>
+<ul>
+<li><strong>Sessions store many things, but not the position of marks, contents of registers and the command line history.</strong>  You need to use the viminfo feature for these things.</li>
+<li>In most situations you will want to use sessions separately from viminfo. This can be used to switch to another session, but keep the command line history.  And yank text into registers in one session, and paste it back in another session.</li>
+<li>You might prefer to keep the info with the session.  You will have to do this yourself then.</li>
+<li>You could also use a Session file.  <strong>The difference is that the viminfo file does not depend on what you are working on.</strong>  There normally is only one viminfo file.  Session files are used to save the state of a specific editing Session.  You could have several Session files, one for each project you are working on.  Viminfo and Session files together can be used to effectively
+enter Vim and directly start working in your desired setup.</li>
+</ul>
+</blockquote>
+<p><br/></p>
+<h2 id="viminfo_1">Viminfo</h2>
+<hr/>
+<h3 id="intro_1">Intro</h3>
+<p>在 Vim 中输入</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:help viminfo
+</pre></div>
+</td></tr></table>
+<p>就可以看到关于 <code>viminfo</code> 的介绍：</p>
+<blockquote>
+<p>If you exit Vim and later start it again, you would normally lose a lot of information.  The viminfo file can be used to remember that information, which enables you to continue where you left off.</p>
+</blockquote>
+<p>在 Vim 7.3 中， <code>help</code> 中的 <code>usr_21.txt</code> 的主题是 <code>Go away and come back</code>，其中 <code>21.3</code>  节保存的就是关于 viminfo 的说明，在 Vim 中输入</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:help <span class="m">21</span>.3
+</pre></div>
+</td></tr></table>
+<p>就可以看到关于 viminfo 的详细介绍 。</p>
+<p>viminfo 文件可以保存的内容有：</p>
+<ul>
+<li>The command line history 命令行历史</li>
+<li>The search string history 字符串搜寻历史</li>
+<li>The input-line history 输入行历史</li>
+<li>Contents of non-empty register 非空寄存器内容</li>
+<li>Marks for serval files 文件位置标记</li>
+<li>Last search/substitute pattern 最近模式匹配搜索历史</li>
+<li>The buffer list 缓冲区列表</li>
+<li>Global variables 全局变量</li>
+</ul>
+<h3 id="save_1">Save</h3>
+<p>其实 Vim 每次退出时都会在 <code>～/</code> 目录下保存一个 <code>.viminfo</code> 的文件，但是每次打开关闭一个文件都会覆盖上次的记录，所以我们需要为工程手动保存一个 viminfo 文件，并且保存在工程目录下，防止被覆盖 。</p>
+<p>保存命令 <code>:wviminfo</code> 的帮助</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:help :wviminfo
+</pre></div>
+</td></tr></table>
+<p>使用 <code>wviminfo</code> 保存</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:wviminfo project.viminfo
+</pre></div>
+</td></tr></table>
+<h3 id="zai ru  viminfo wen jian">载入 viminfo 文件</h3>
+<p>载入命令 <code>rviminfo</code> 帮助</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:help :rviminfo
+</pre></div>
+</td></tr></table>
+<p>载入 viminfo 文件</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:rviminfo path/to/project.viminfo
+</pre></div>
+</td></tr></table>
+<p><br/></p>
+<h2 id="zong jie_1">总结</h2>
+<p>为了节省每次都要手动输入一些设置命令，我们可以把部分相同的设置放在 <code>.vimrc</code> 文件中</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">set</span> sessionoptions-<span class="o">=</span>curdir
+<span class="nb">set</span> <span class="nv">sessionoptions</span><span class="o">+=</span>sesdir
+</pre></div>
+</td></tr></table>
+<p>每次退出 Vim 时保存</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:mksession project.vim
+:wviminfo project.viminfo
+</pre></div>
+</td></tr></table>
+<p>进入 Vim 想恢复项目设置时</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:source projetc.vim
+:rviminfo projetc.viminfo
+</pre></div>
+</td></tr></table>
+<p><br/></p>
+<h2 id="can kao">参考</h2>
+<p><a href="http://easwy.com/blog/archives/advanced-vim-skills-session-file-and-viminfo/">vi/vim 使用进阶 : 使用会话和 viminfo</a></p>
+<p><a href="http://easwy.com/blog/archives/advanced-vim-skills-save-project-configuration/">vi/vim 使用进阶 : 保存项目相关配置</a></p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="../../tag/vim.html">Vim</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="../../posts/tools/learning_vim_vundle.html" title="学习 Vim 使用 Vundle 管理插件">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="../../posts/cs/learning_linux_package_management.html" title="学习 Linux 软件包依赖管理">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="../../posts/tools/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
+      <li><a href="../../posts/tools/learning_vim_bufexplorer_nerdtree_winmanager_powerline.html">学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件</a></li>
+      <li><a href="../../posts/tools/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
+      <li><a href="../../posts/tools/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+      <li><a href="../../posts/tools/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
+    </ul>
+  </div>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="../../theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "../..",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

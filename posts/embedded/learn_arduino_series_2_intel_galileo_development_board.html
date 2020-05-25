@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet/less" type="text/css" href="../../theme/stylesheet/style.less">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js" type="text/javascript"></script>
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="../../theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="../../theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="../../theme/pygments/monokai.min.css">
+
+    <script src="../../theme/tipuesearch/jquery.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="../../tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="../../theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
+
+
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="学习 Arduino，#2 初识 Intel Galileo 开发板" />
+<meta name="keywords" content="Intel Galileo, Arduino">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="学习 Arduino #2 初识 Intel Galileo 开发板"/>
+<meta property="og:description" content="学习 Arduino，#2 初识 Intel Galileo 开发板"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="../../posts/embedded/learn_arduino_series_2_intel_galileo_development_board.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-05-29 23:27:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../../author/qian-gu.html">
+<meta property="article:section" content="Embedded"/>
+<meta property="article:tag" content="Intel Galileo"/>
+<meta property="article:tag" content="Arduino"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; 学习 Arduino #2 初识 Intel Galileo 开发板</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="../..">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="../..">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="../../pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="../..">Home</a>
+
+      <a href="authors.html">Authors</a>
+      <a href="archives.html">Archives</a>
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
+
+      <a href="/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="learn_arduino_series_2_intel_galileo_development_board">学习 Arduino #2 初识 Intel Galileo 开发板</h1>
+    <p>
+      Posted on 2014-05-29 23:27 in <a href="../../category/embedded.html">Embedded</a>
+
+    </p>
+  </header>
+
+
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Arduino #2 初识 Intel Galileo 开发板">学习 Arduino #2 初识 Intel Galileo 开发板</a><ul><li><a class="toc-href" href="#preface" title="Preface">Preface</a></li><li><a class="toc-href" href="#official arduino boards" title="Official Arduino Boards">Official Arduino Boards</a></li><li><a class="toc-href" href="#intel galileo board" title="Intel Galileo Board">Intel Galileo Board</a><ul><li><a class="toc-href" href="#arduinco.cc" title="Arduinco.cc">Arduinco.cc</a></li><li><a class="toc-href" href="#intel official introduction" title="Intel Official Introduction">Intel Official Introduction</a></li><li><a class="toc-href" href="#other introductions" title="Other Introductions">Other Introductions</a></li></ul></li></ul></li></ul></div>
+    </div>
+
+  <div>
+    <h2 id="preface">Preface</h2>
+<hr/>
+<p>Arduino 有很多开发板，分别针对不同的应用环境含有不同的模块。学习一款 Intel 推出的开发板 &mdash;&mdash; <em>Intel Galileo Development Board</em> 。</p>
+<p>Intel Gailileo Development Board 是 Intel 进入 Arduino 领域的试水产品，它含有一颗 Quark Soc X1000 CPU，这是一款 32 位、x86 构架、低功耗的 SoC 芯片，它的主频可以达到 400 MHz，内部有 512 KB 的 SRAM，同时 Galileo 有丰富的接口 (USB, JTag, RS232, Ethernet, mPCIE...)，支持很多外围设备。</p>
+<p>Galileo 试图达到的目标是融合 Arduino 对硬件操作的便利和 Linux 系统对硬件操作完整支持。所以，Galileo 也兼容 Arduino 接口，你可以很方便的把 Arduino 项目移植到 Galileo 上运行，使用常用的一些 Arduino 库 (Ethernet, Wi-Fi, SD, EEPROM...) 也可以获得内部 Linux 系统的完整功能 (Python, SSH, Telnet， OpenCV...)。</p>
+<p>总结一下我学习这块板子的知识，不仅仅为 Arduino 开发做准备，也为后面的一个竞赛 ( 基于 Yocto 项目 ) 开发积累知识～</p>
+<p><br/></p>
+<h2 id="official arduino boards">Official Arduino Boards</h2>
+<hr/>
+<p>Arduino 官网上列出所有了官方开发板，其中也包含了官方认证过的开发板 (Intel Galileo)，和一些推荐的第三方产品</p>
+<p><a href="http://arduino.cc/en/Main/Products">Arduino Products</a></p>
+<p>还详细列出了这些开发板上的微控制器的区别</p>
+<p><a href="http://arduino.cc/en/Products.Compare">Compare boards specs</a></p>
+<p><br/></p>
+<p><em>官方的开发板的核心都是 Atmel 的微控制器，基于市场战略的需求，看到数莓派、Arduino 发展的热火朝天，Intel 也坐不住了 ( 瞎猜的 =.=)，推出了新的基于 Intel 架构 (x86)、可以和 Arduino 兼容的开发板。Galileo 是这个家族中的第一款，目前 Intel 又推出了一款新的开发板，取名叫 Edison。(Intel 这是要把所有科学家的名字都取个遍么 )</em></p>
+<p><br/></p>
+<h2 id="intel galileo board">Intel Galileo Board</h2>
+<hr/>
+<h3 id="arduinco.cc">Arduinco.cc</h3>
+<p>在 Arduino 官网上有一篇简单介绍 Galileo 的网页</p>
+<p><a href="http://arduino.cc/en/ArduinoCertified/IntelGalileo">Intel Galileo on arduino.cc</a></p>
+<h3 id="intel official introduction">Intel Official Introduction</h3>
+<p>Arduino 官网上的介绍只是非常简单的介绍，Intel 自己的官网上有关于 Galileo 全部的详细资料</p>
+<p><a href="http://www.intel.cn/content/www/cn/zh/do-it-yourself/galileo-maker-quark-board.html">Galileo Maker Quark Board</a></p>
+<p>关于 Galileo 的全部文档，包括 Datasheet、Schematic、Quick Start、User Guide 等：</p>
+<p><a href="https://communities.intel.com/community/makers/documentation/galileodocuments">Intel Galileo Development Board Documents</a></p>
+<h3 id="other introductions">Other Introductions</h3>
+<p><strong>首先</strong> 送上一篇非常好的介绍文章（来自 Ifanr.com），介绍了在 Maker 眼中，这个板子到底可以 hack 到什么程度～</p>
+<p><a href="http://www.ifanr.com/388835">x86 版的 Arduino 来了，Intel Galileo 开发板的体验、分析和应用【超长文多图】</a></p>
+<p><strong>再</strong> 附上一篇完爆我的总结的教程～</p>
+<p><a href="https://learn.sparkfun.com/tutorials/galileo-getting-started-guide">Galileo Getting Started Guide</a></p>
+<p>这篇教程基本就是按照 Intel 官方的 Getting Started 流程写的，总结一下我遇到的问题 (Windows 7 &amp; Linux Ubuntu)。</p>
+<p>Arduino 官方的 IDE 中 <code>Board</code> 选项中没有 Galileo，所以我们应该从 Intel 下载定制过的 IDE。</p>
+<ol>
+<li>
+<p>Windows IDE 闪退</p>
+<p>这个 IDE 在部分 Windows 下有闪退的现象。</p>
+<p>原因 是 Intel 的 IDE 版本采用的是未发布的 1.5.3, 它会检测系统的语言设置，当系统不是 En/US 时，就会退出。</p>
+<p>解决方法 更改系统语言设置 或者 使用一款名为 Locale Emulator 的软件。</p>
+</li>
+<li>
+<p>IDE 解压路径</p>
+<p>Windows 下的解压路径 <em>必须是顶层目录</em>，比如 <code>D:\arduino-1.5.3</code>，否则在 <code>Verify</code> 时会提示找不到特定的文件 / 目录。Linux 下无此问题。</p>
+</li>
+<li>
+<p>Linux 连接板子和 PC</p>
+<p>在 Windows 下第一次连接系统自动安装驱动肯定会失败的，需要我们手动指定驱动文件的路径。</p>
+<p>在 Linux 终端下，必须以 <code>sudo</code> 权限运行 IDE，否则即使板子已经连接了 PC，在 IDE 下的 <code>Tools\Serial Port</code> 是 disable 的，不能选择端口</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ sudo ./arduino <span class="p">&amp;</span>
+</pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Linux 下 disable modem manager</p>
+<p>前面的教程中提到，在大多数 Linux 发行版下，都需要 disable modem manager 才能 <code>Upload</code> 成功，不过我在 Ubuntu 下没有遇到这个问题 ...</p>
+</li>
+</ol>
+<p><strong>然后</strong> 扯几句</p>
+<ol>
+<li>
+<p>硬件配置</p>
+<p>从 Board Guide 中找到的截图如下</p>
+<p><img alt="key_componets_1" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_1.png"/></p>
+<p><img alt="key_componets_2" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_2.png"/></p>
+<p>从它的配置中可以看到，Galileo 并不是一款简单的 Arduino 开发板，它的硬件系统其实是按照 PC 来设计的，如果我们只是简单的把它当作 Arduino 开发板来应用，有点大材小用了，这样子完全没有体现出 Galileo 的优势，只是一个速度更快的 Arduino 罢了。</p>
+<p>事实上，如果功能上没有比传统的 Arduino 更强大的功能，估计 Intel 也不会推出这个产品了～Galileo 的真正强大的地方在于：</p>
+<blockquote>
+<p>背后基于 UEFI/Linux 的软件平台以及 Galileo 自身的硬件配置。为此，Intel 提供了丰富的开发文档、软件代码支持，方便开发人员真正的发挥出 Galileo 的所有潜力。</p>
+</blockquote>
+</li>
+<li>
+<p>软件构架</p>
+<p>Galileo 不仅仅是硬件上按照 PC 设计的，事实上，它的软件构架也和 PC 一样。和普通的单片机不同，它并不是简单的运行用户开发的程序那么简单。它实际上运行着一个操作系统 &mdash;&mdash; 包含 UEFI(BIOS 的替代者 )、Grub、嵌入式 Linux 系统，用户编写的 <code>Sketch</code> 只是一个在 Linux 上面运行的应用而已。</p>
+<p>Galileo 启动时可以从 ISP Flash 中启动一个微型的 Linux 系统，也可以从 MicroSD 卡中启动一个完整版的 Linux 系统。我们 <code>Upload</code> 时，Arduino IDE 将程序编译链接成一个标准的 Linux ELF 文件，并且下载到 Arduino 板子上运行，如图所示</p>
+<p><img alt="target_software" src="/images/learning-arduino-series-2-intel-galileo-development-board/target_software.png"/></p>
+</li>
+<li>
+<p>开发嵌入式 Linux 设备</p>
+<p>或许这才是 Galileo 的 " 正经 " 用途吧 ... 基于 Yocto Project，我们可以开发属于自己的 Linux 系统。</p>
+</li>
+</ol>
+<p>最后，送上一个别人的 Galileo 开箱视频</p>
+<p><embed align="middle" allowfullscreen="true" allowscriptaccess="always" height="400" quality="high" src="http://player.youku.com/player.php/sid/XNjQ0NTMzMjYw/v.swf" type="application/x-shockwave-flash" width="480"/></p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="../../tag/intel-galileo.html">Intel Galileo</a>
+      <a href="../../tag/arduino.html">Arduino</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="../../posts/embedded/learn_arduino_series_1_getting_started.html" title="学习 Arduino #1 Arduino 入门">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="../../posts/ic/fsm_design.html" title="有限状态机 FSM 设计">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="../../posts/embedded/learn_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
+      <li><a href="../../posts/embedded/learn_arduino_series_1_getting_started.html">学习 Arduino #1 Arduino 入门</a></li>
+    </ul>
+  </div>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="../../theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "../..",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

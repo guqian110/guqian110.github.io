@@ -1,0 +1,555 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet/less" type="text/css" href="../../theme/stylesheet/style.less">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js" type="text/javascript"></script>
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="../../theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="../../theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="../../theme/pygments/monokai.min.css">
+
+    <script src="../../theme/tipuesearch/jquery.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="../../tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="../../theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
+
+
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="学习 Arduino，#3 通过 Ethernet &amp; Serial Port 登录到 Galileo 上的 Linux 系统" />
+<meta name="keywords" content="Arduino, Linux">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="学习 Arduino #3 Intel Galileo Linux"/>
+<meta property="og:description" content="学习 Arduino，#3 通过 Ethernet &amp; Serial Port 登录到 Galileo 上的 Linux 系统"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="../../posts/embedded/learn_arduino_series_3_intel_galileo_linux.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-06-13 20:31:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../../author/qian-gu.html">
+<meta property="article:section" content="Embedded"/>
+<meta property="article:tag" content="Arduino"/>
+<meta property="article:tag" content="Linux"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; 学习 Arduino #3 Intel Galileo Linux</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="../..">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="../..">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_self"
+                   href="../../pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="../..">Home</a>
+
+      <a href="authors.html">Authors</a>
+      <a href="archives.html">Archives</a>
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
+
+      <a href="/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="learn_arduino_series_3_intel_galileo_linux">学习 Arduino #3 Intel Galileo Linux</h1>
+    <p>
+      Posted on 2014-06-13 20:31 in <a href="../../category/embedded.html">Embedded</a>
+
+    </p>
+  </header>
+
+
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Arduino #3 Intel Galileo Linux">学习 Arduino #3 Intel Galileo Linux</a><ul><li><a class="toc-href" href="#linux on galileo board" title="Linux on Galileo Board">Linux on Galileo Board</a></li><li><a class="toc-href" href="#using ethernet" title="Using Ethernet">Using Ethernet</a><ul><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li><li><a class="toc-href" href="#setp 1: write sketch" title="Setp 1: Write sketch">Setp 1: Write sketch</a></li><li><a class="toc-href" href="#step 2: connect,upload" title="Step 2: Connect，Upload">Step 2: Connect，Upload</a></li><li><a class="toc-href" href="#step 3: login" title="Step 3: Login">Step 3: Login</a></li></ul></li><li><a class="toc-href" href="#using uart_1" title="Using UART">Using UART</a><ul><li><a class="toc-href" href="#about serial port" title="About serial port">About serial port</a></li><li><a class="toc-href" href="#linux platform" title="Linux Platform">Linux Platform</a><ul><li><a class="toc-href" href="#step 1: burn the full-linux sytem" title="Step 1: Burn the full-linux sytem">Step 1: Burn the full-linux sytem</a></li><li><a class="toc-href" href="#step 2: connect" title="Step 2: Connect">Step 2: Connect</a></li><li><a class="toc-href" href="#step 3: login_1" title="Step 3: Login">Step 3: Login</a></li></ul></li><li><a class="toc-href" href="#windows platform_1" title="Windows Platform">Windows Platform</a><ul><li><a class="toc-href" href="#step 1: burn the full-linux system" title="Step 1: Burn the full-linux system">Step 1: Burn the full-linux system</a></li><li><a class="toc-href" href="#step 2: connect_1" title="Step 2: Connect">Step 2: Connect</a></li><li><a class="toc-href" href="#step 3: login_2" title="Step 3: Login">Step 3: Login</a></li></ul></li></ul></li><li><a class="toc-href" href="#another method_2" title="Another method">Another method</a></li><li><a class="toc-href" href="#reference" title="Reference">Reference</a></li></ul></li></ul></div>
+    </div>
+
+  <div>
+    <h2 id="linux on galileo board">Linux on Galileo Board</h2>
+<hr/>
+<p>Galileo 不是简单的 Arduino 板子，实际上它运行着一个 Linux 操作系统。把它看作是 &ldquo; 兼容 Arduibo 接口的板子 &rdquo; 或许更合适一些。</p>
+<p>Galileo 板子上容量为 8 MB 的 SPI Flash 中已经烧写了一个精简版的 Linux 系统，因为容量的限制，这个系统去掉了一些不常用的模块，比如 wi-fi 驱动，python 支持等。</p>
+<p>Galileo 也支持从 SD 卡启动系统，并且 Intel 提供了一个基于 Yocto 项目，已经制作好的完整版 Linux 系统。当精简版系统不能满足我们的要求时（添加外设等），我们可以下载这个完整版系统镜像，烧录到 SD 卡中，并从 SD 卡中启动即可。（也可以自己基于 Yocto 项目按照自己的需求制作系统镜像）</p>
+<p><br/></p>
+<p><em>我们并不仅仅满足于通过 Arduino IDE 对 Galileo 进行操作，放着一个操作系统，为什么不去使用呢：-P 那么怎么才能登录到这个 Linux 系统中呢？</em></p>
+<p><br/></p>
+<h2 id="using ethernet">Using Ethernet</h2>
+<hr/>
+<p>Intel 论坛的一个帖子列举了几种登录到 Galileo Linux 的方法</p>
+<p><a href="https://communities.intel.com/thread/46335">Connecting to Galileo via Linux Console</a></p>
+<ul>
+<li>Use the UART connector</li>
+<li>Use the LAN connection direct to your PC</li>
+<li>Use the LAN connection and connect to your local network </li>
+<li>You can also connect using WiFi</li>
+</ul>
+<p>考虑到我们目前有的材料</p>
+<ul>
+<li>Galileo 开发板</li>
+<li>Galileo 电源</li>
+<li>micro USB 线</li>
+<li>5 类网线</li>
+<li>运行着 Linux (Ubuntu) 的 PC</li>
+</ul>
+<p>因为没有串口线，所以我们采用第 2 种方案，即直接连接 PC 和 Galileo，通过 Ethernet 登录。</p>
+<h3 id="summary">Summary</h3>
+<p>Galileo 默认是不开启 <code>Lan</code> 的，也不开启 <code>Telnet</code> 服务，所以我们需要做的事就是写一个 <code>sketch</code>，启动 Lan 连接服务和 Telnet 服务，然后分别给 PC 和 Galileo 一个属于同一子网的静态 IP 地址，这样就可以使用 PC 通过 Telnet 协议登录到 Galileo 上的 Linux 系统中。</p>
+<h3 id="setp 1: write sketch">Setp 1: Write sketch</h3>
+<p>代码需要完成的功能一共有 3 个：</p>
+<ol>
+<li>
+<p>开启 telnet 服务</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>system<span class="o">(</span><span class="s2">"telnetd -l /bin/sh"</span><span class="o">)</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>设置 IP 地址</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>system<span class="o">(</span><span class="s2">"ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up"</span><span class="o">)</span><span class="p">;</span>
+</pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>将板子的以太网配置状态显示在 serial monitor 中</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>system<span class="o">(</span><span class="s2">"ifconfig eth0 &gt; /dev/ttyACM0"</span><span class="o">)</span>
+</pre></div>
+</td></tr></table>
+</li>
+</ol>
+<p>全部代码如下</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kr">void</span> <span class="nb">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// put your setup code here, to run once:</span>
+  <span class="c1">// Initial serial prot</span>
+  <span class="nf">Serial</span><span class="p">.</span><span class="nf">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+  <span class="c1">// Start telnet service on board</span>
+  <span class="n">system</span><span class="p">(</span><span class="s">"telnetd -l /bin/sh"</span><span class="p">);</span>
+  <span class="c1">// Assign the IP address '169.254.1.1' to it</span>
+  <span class="n">system</span><span class="p">(</span><span class="s">"ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up"</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+<span class="kr">void</span> <span class="nb">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// put your main code here, to run repeatedly: </span>
+  <span class="c1">// Show the IP detial in the serial monitor of IDE</span>
+  <span class="n">system</span><span class="p">(</span><span class="s">"ifconfig eth0 &amp;&gt; /dev/ttyGS0 &amp;"</span><span class="p">);</span>
+
+  <span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+<h3 id="step 2: connect,upload">Step 2: Connect，Upload</h3>
+<ol>
+<li>
+<p>网线直连 PC 和 Galileo，设置 PC 的 IP 地址为 <code>link-local only</code></p>
+<p><img alt="pc_ethernet_config" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_config.png"/> </p>
+</li>
+<li>
+<p>给 Galileo 供电</p>
+</li>
+<li>
+<p>连接 USB</p>
+</li>
+<li>
+<p>打开 Arduino IDE，<code>Upload</code> 上面的 sketch</p>
+</li>
+</ol>
+<h3 id="step 3: login">Step 3: Login</h3>
+<ol>
+<li>
+<p>打开 IDE 的 serial monitor，可以看到 Galileo 的 ethernet 配置信息</p>
+<p><img alt="galileo_ethernet_quary" src="/images/learning-arduino-series-3-intel-galileo-linux/galileo_ethernet_quary.png"/></p>
+</li>
+<li>
+<p>查看 PC 的网络配置</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ifconfig eth0
+</pre></div>
+</td></tr></table>
+<p>查询结果</p>
+<p><img alt="pc_ethernet_quary" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_quary.png"/></p>
+</li>
+<li>
+<p>打开 PC 的终端 Terminal，使用 telnet 登录</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>telnet <span class="m">169</span>.254.1.1
+</pre></div>
+</td></tr></table>
+<p>登录结果，如图</p>
+<p><img alt="pc_ethernet_login" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_telnet_login.png"/></p>
+<p>可以看到，这个精简版的 Linux 系统是不支持 Python 的。</p>
+</li>
+</ol>
+<p><br/></p>
+<h2 id="using uart_1">Using UART</h2>
+<hr/>
+<h3 id="about serial port">About serial port</h3>
+<p>如果有串口线的话，我们也可以通过串口来登录，包括 SPI 和 SD 卡上的系统。</p>
+<p>关于串口线，说明一下。估计是为了节省板子的面积，Intel 在板子上设置的是音频接口 (AV jack)，所以，这里需要额外的一个将音频接口转接为串口的器件。有两种方法：</p>
+<ol>
+<li>
+<p>上网买一个</p>
+</li>
+<li>
+<p>自己 DIY 一个</p>
+</li>
+</ol>
+<p>如果上网买的话，注意 Galileo 用的是 RS232 电平，不要买错成 TTL 电平的。如果是自己 DIY 的话，Intel Galileo Get Started 里面有介绍串口线的接法，他们的论坛上也有相关的讨论：</p>
+<p><a href="https://communities.intel.com/message/208448#208448">UART cable pin-out</a></p>
+<p><a href="http://pinouts.ru/SerialPorts/Serial9_pinout.shtml">RS 232 DE-9 port</a></p>
+<h3 id="linux platform">Linux Platform</h3>
+<p>我在 Ubuntu 下使用的终端软件是 <code>gtkterm</code>。</p>
+<h4 id="step 1: burn the full-linux sytem">Step 1: Burn the full-linux sytem</h4>
+<ol>
+<li>
+<p>Intel 官网提供的完整版 Linux 镜像是基于 <code>Yocto</code> 项目裁剪出来的，取名叫 <code>Claton</code>，目前 (2014-6-13) 的版本号为 <code>1.0.0</code>，但是这个版本在我的 SD 卡中是无法启动的，浪费了大量时间，最后终于发现 <code>0.7.5</code> 版本可以 ...</p>
+</li>
+<li>
+<p>还有就是 Get Started 中推荐不要使用 PC 操作系统提供的格式化功能，更好的选择应该是专业格式化软件，比如 <code>SDFormatter</code>。但是我实际使用时，发现反而是 <code>SDFormatter</code> 制作的不能启动 ...</p>
+</li>
+</ol>
+<h4 id="step 2: connect">Step 2: Connect</h4>
+<ol>
+<li>
+<p>插入 SD 卡</p>
+</li>
+<li>
+<p>配置串口</p>
+<p>选择正确的端口（因为我使用的串口线是 <code>AV-RS232-USB</code>，所以下面选择的端口是 <code>ttyUSB0</code>）；<code>Baud Rate = 115200</code>，<code>Bits =8</code>，<code>Stopbits = 1</code>，<code>Parity = none</code>，<code>Flow control = none</code></p>
+</li>
+<li>
+<p>先不要接 USB 下载线，给板子上电</p>
+</li>
+</ol>
+<h4 id="step 3: login_1">Step 3: Login</h4>
+<ol>
+<li>
+<p>这时候我们应该就可以从串口看到板子上电后 <code>grub</code> 程序和系统启动的相关信息了。</p>
+<p>上电后，<code>grub</code> 引导启动哪个系统</p>
+<p><img alt="gtkterm boot information" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_boot_information.png"/></p>
+<p><img alt="gtkterm grub" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_grub.png"/></p>
+</li>
+<li>
+<p>登录到 SPI Flash 中的 Linux 中</p>
+<p>如图，这个精简版的系统不支持 <code>python</code></p>
+<p><img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_login_spi.png"/></p>
+</li>
+<li>
+<p>登录到 mirco-SD card 中的 Linux 中</p>
+<p>如图，SD 卡中的系统是支持 <code>python</code> 的</p>
+<p><img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_login_sd_card.png"/></p>
+</li>
+</ol>
+<h3 id="windows platform_1">Windows Platform</h3>
+<p>我在 Windows 下使用的终端软件是 <code>Putty</code>。</p>
+<h4 id="step 1: burn the full-linux system">Step 1: Burn the full-linux system</h4>
+<p>与 Linux 平台下相同。</p>
+<h4 id="step 2: connect_1">Step 2: Connect</h4>
+<ol>
+<li>
+<p>插入 SD 卡</p>
+</li>
+<li>
+<p>配置串口</p>
+<p>同样，选择正确的端口和波特率。</p>
+</li>
+<li>
+<p>先不要接 USB 下载线，给板子上电</p>
+</li>
+</ol>
+<h4 id="step 3: login_2">Step 3: Login</h4>
+<ol>
+<li>
+<p>这时候我们应该就可以从串口看到板子上电后 <code>grub</code> 程序和系统启动的相关信息了。</p>
+<p>上电后，<code>grub</code> 引导启动哪个系统</p>
+<p><img alt="gtkterm boot information" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_boot_information.png"/></p>
+<p><img alt="gtkterm grub" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_grub.png"/></p>
+</li>
+<li>
+<p>登录到 SPI Flash 中的 Linux 中</p>
+<p>如图，这个精简版的系统不支持 <code>python</code></p>
+<p><img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_login_spi.png"/></p>
+</li>
+<li>
+<p>登录到 mirco-SD card 中的 Linux 中</p>
+<p>如图，SD 卡中的系统是支持 <code>python</code> 的</p>
+<p><img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_login_sd_card.png"/></p>
+</li>
+</ol>
+<p><br/></p>
+<h2 id="another method_2">Another method</h2>
+<hr/>
+<p>如果你觉得插网线、配置 IP 地址太麻烦，甚至懒得自己 DIY 串口线，也没有钱去买一个，别担心，因为 &ldquo; 天空飘来五个字，这都不是事～&rdquo; 因为你可以借鉴下面这位大神的方法，只需要像下载普通 sketch 一样，将他提供的 sketch 下载到 Galileo 中就可以了，然后通过 IDE 的 serial monitor 就可以登录到 Linux 系统中：</p>
+<p><a href="(https://communities.intel.com/message/222211)">Poor man's telnet for Galileo</a></p>
+<p>他的 sketch 的原理就是使用 <code>system()</code> 函数将我们在 serial monitor 中的命令传到到 Linux shell 中 ，并将命令的结果返回到 serial monitor 中 。</p>
+<p>不过这种方法的缺点是每个命令传递到 Galileo 后会开辟一个新的进程，当命令执行完返回结果时，这个进程自动结束，所以会产生一些 &ldquo; 问题 &rdquo;：当我们 <code>cd</code> 到某个子目录后，返回结果之后，我们又回到的之前的目录，举例</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> home
+$ <span class="nb">pwd</span>
+
+// result is root dirctory
+</pre></div>
+</td></tr></table>
+<p>解决方法就是将命令写在一行</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> home<span class="p">;</span> <span class="nb">pwd</span>
+
+// result is home directory
+</pre></div>
+</td></tr></table>
+<p><br/></p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://communities.intel.com/thread/46335">Connecting to Galileo via Linux Console</a></p>
+<p><a href="https://communities.intel.com/docs/DOC-22293">Tutorial 3: Connecting to Linux through telnet</a></p>
+<p><a href="https://communities.intel.com/message/208564#208564">Using Galileo Linux over Ethernet(Telnet)</a></p>
+<p><a href="(https://communities.intel.com/message/222211)">Poor man's telnet for Galileo</a></p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="../../tag/arduino.html">Arduino</a>
+      <a href="../../tag/linux.html">Linux</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="../../posts/ic/fsm_design.html" title="有限状态机 FSM 设计">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="../../posts/ic/the_art_of_reset_design_in_fpga.html" title="FPGA 中的复位设计">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="../../posts/embedded/learn_arduino_series_2_intel_galileo_development_board.html">学习 Arduino #2 初识 Intel Galileo 开发板</a></li>
+      <li><a href="../../posts/tools/learning_vim_survival.html">学习 Vim 存活</a></li>
+      <li><a href="../../posts/tools/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & Modelsim</a></li>
+      <li><a href="../../posts/tools/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+      <li><a href="../../posts/embedded/learn_arduino_series_1_getting_started.html">学习 Arduino #1 Arduino 入门</a></li>
+    </ul>
+  </div>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="../../theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "../..",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

@@ -35,13 +35,12 @@
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
 
-    <link href="../../static/custom.css" rel="stylesheet">
 
-    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
-    <link rel="shortcut icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
 
 <!-- Google Analytics -->
 <script type="text/javascript">
@@ -81,7 +80,7 @@
 <meta property="article:section" content="IC"/>
 <meta property="article:tag" content="STA"/>
 <meta property="article:tag" content="Xilinx"/>
-<meta property="og:image" content="https://qiangu.cool/images/logo.png">
+<meta property="og:image" content="/images/logo.png">
 
   <title>Qian's Blog &ndash; 静态时序分析 STA 2 —— Xilinx STA</title>
 
@@ -97,14 +96,14 @@
   <aside>
     <div>
       <a href="../..">
-        <img src="https://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
         <a href="../..">Qian Gu</a>
       </h1>
 
-<p>路漫漫其修远兮，吾将上下而求索</p>
+<p>Read >> Think >> Write</p>
         <form class="navbar-search" action="/search.html" role="search">
           <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
         </form>
@@ -115,8 +114,8 @@
 
               <li>
                 <a target="_self"
-                   href="../../pages/guan-yu-wo.html#guan-yu-wo">
-                  关于我
+                   href="../../pages/about-me.html#about-me">
+                  About Me
                 </a>
               </li>
 
@@ -132,11 +131,6 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
-            </a>
-          </li>
-          <li>
-            <a  class="sc-weibo" href="https://weibo.com/guqian110" target="_blank">
-              <i class="fab fa-weibo"></i>
             </a>
           </li>
           <li>
@@ -158,12 +152,12 @@
     <nav>
       <a href="../..">Home</a>
 
-      <a href="/authors.html">Authors</a>
-      <a href="/archives.html">Archives</a>
-      <a href="/categories.html">Categories</a>
-      <a href="/tags.html">Tags</a>
+      <a href="authors.html">Authors</a>
+      <a href="archives.html">Archives</a>
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
 
-      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+      <a href="/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
@@ -178,9 +172,9 @@
   </header>
 
 
-  <div class="col-lg-3 hidden-xs hidden-sm">
+    <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="静态时序分析 STA 2 &mdash;&mdash; Xilinx STA">静态时序分析 STA 2 &mdash;&mdash; Xilinx STA</a><ul><li><a class="toc-href" href="#xilinx sta" title="Xilinx STA">Xilinx STA</a></li><li><a class="toc-href" href="#input paths" title="Input paths">Input paths</a><ul><li><a class="toc-href" href="#system synchronous inputs" title="System Synchronous Inputs">System Synchronous Inputs</a></li><li><a class="toc-href" href="#source synchronous inputs" title="Source Synchronous Inputs">Source Synchronous Inputs</a></li></ul></li><li><a class="toc-href" href="#register-to-register paths_1" title="Register-to-register paths">Register-to-register paths</a><ul><li><a class="toc-href" href="#automatically related synchronous dll, dcm, pll, and mmcm clock domains" title="Automatically Related Synchronous DLL, DCM, PLL, and MMCM Clock Domains">Automatically Related Synchronous DLL, DCM, PLL, and MMCM Clock Domains</a></li><li><a class="toc-href" href="#manually related synchronous clock domains" title="Manually Related Synchronous Clock Domains">Manually Related Synchronous Clock Domains</a></li><li><a class="toc-href" href="#asynchronous clock domains" title="Asynchronous Clock Domains">Asynchronous Clock Domains</a></li></ul></li><li><a class="toc-href" href="#output paths_1" title="Output paths">Output paths</a><ul><li><a class="toc-href" href="#system synchronous output" title="System Synchronous Output">System Synchronous Output</a></li><li><a class="toc-href" href="#source synchronous output" title="Source Synchronous Output">Source Synchronous Output</a></li></ul></li><li><a class="toc-href" href="#path specific exceptions_1" title="Path specific exceptions">Path specific exceptions</a><ul><li><a class="toc-href" href="#false paths (paths between registers that do not affect timing)" title="False Paths (Paths Between Registers That Do Not Affect Timing)">False Paths (Paths Between Registers That Do Not Affect Timing)</a></li><li><a class="toc-href" href="#multi-cycle paths" title="Multi-Cycle Paths">Multi-Cycle Paths</a></li></ul></li><li><a class="toc-href" href="#summary_1" title="Summary">Summary</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
-  </div>
+    </div>
 
   <div>
     <p>*<em>总结 Xilinx 时序约束的一些基本内容，基本上是 <a href="http://www.xilinx.com/support/documentation/sw_manuals/xilinx14_2/ug612.pdf">UG612 Timing Closure User Guide</a> 的翻译和概括。</em></p>
@@ -651,7 +645,7 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@type" : "Blog",
   "name": " Qian's Blog ",
   "url" : "../..",
-  "image": "https://qiangu.cool/images/logo.png",
+  "image": "/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }
 </script>

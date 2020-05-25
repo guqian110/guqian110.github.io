@@ -35,13 +35,12 @@
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
 
-    <link href="../../static/custom.css" rel="stylesheet">
 
-    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
-    <link rel="shortcut icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
 
 <!-- Google Analytics -->
 <script type="text/javascript">
@@ -81,7 +80,7 @@
 <meta property="article:section" content="IC"/>
 <meta property="article:tag" content="VHDL"/>
 <meta property="article:tag" content="syntax"/>
-<meta property="og:image" content="https://qiangu.cool/images/logo.png">
+<meta property="og:image" content="/images/logo.png">
 
   <title>Qian's Blog &ndash; VHDL 笔记 1 —— 电路设计</title>
 
@@ -97,14 +96,14 @@
   <aside>
     <div>
       <a href="../..">
-        <img src="https://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
         <a href="../..">Qian Gu</a>
       </h1>
 
-<p>路漫漫其修远兮，吾将上下而求索</p>
+<p>Read >> Think >> Write</p>
         <form class="navbar-search" action="/search.html" role="search">
           <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
         </form>
@@ -115,8 +114,8 @@
 
               <li>
                 <a target="_self"
-                   href="../../pages/guan-yu-wo.html#guan-yu-wo">
-                  关于我
+                   href="../../pages/about-me.html#about-me">
+                  About Me
                 </a>
               </li>
 
@@ -132,11 +131,6 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
-            </a>
-          </li>
-          <li>
-            <a  class="sc-weibo" href="https://weibo.com/guqian110" target="_blank">
-              <i class="fab fa-weibo"></i>
             </a>
           </li>
           <li>
@@ -158,12 +152,12 @@
     <nav>
       <a href="../..">Home</a>
 
-      <a href="/authors.html">Authors</a>
-      <a href="/archives.html">Archives</a>
-      <a href="/categories.html">Categories</a>
-      <a href="/tags.html">Tags</a>
+      <a href="authors.html">Authors</a>
+      <a href="archives.html">Archives</a>
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
 
-      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+      <a href="/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
@@ -178,9 +172,9 @@
   </header>
 
 
-  <div class="col-lg-3 hidden-xs hidden-sm">
+    <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="VHDL 笔记 1 &mdash;&mdash; 电路设计">VHDL 笔记 1 &mdash;&mdash; 电路设计</a><ul><li><a class="toc-href" href="#code structure" title="Code Structure">Code Structure</a></li><li><a class="toc-href" href="#data types" title="Data Types">Data Types</a><ul><li><a class="toc-href" href="#pre-defined data types" title="Pre-defined Data Types">Pre-defined Data Types</a><ul><li><a class="toc-href" href="#bit &amp; bit_vector" title="bit &amp; bit_vector">bit &amp; bit_vector</a></li><li><a class="toc-href" href="#std_logic &amp; std_logic_vector" title="std_logic &amp; std_logic_vector">std_logic &amp; std_logic_vector</a></li><li><a class="toc-href" href="#std_ulogic &amp; std_ulogic_vector" title="std_ulogic &amp; std_ulogic_vector">std_ulogic &amp; std_ulogic_vector</a></li><li><a class="toc-href" href="#boolean" title="boolean">boolean</a></li><li><a class="toc-href" href="#integer" title="integer">integer</a></li><li><a class="toc-href" href="#natural" title="natural">natural</a></li><li><a class="toc-href" href="#real" title="real">real</a></li><li><a class="toc-href" href="#physical literal" title="physical literal">physical literal</a></li><li><a class="toc-href" href="#character" title="character">character</a></li><li><a class="toc-href" href="#signed &amp; unsigned" title="signed &amp; unsigned">signed &amp; unsigned</a></li></ul></li><li><a class="toc-href" href="#user-defined data types_1" title="User-defined Data Types">User-defined Data Types</a></li><li><a class="toc-href" href="#subtypes" title="Subtypes">Subtypes</a></li><li><a class="toc-href" href="#arrays" title="Arrays">Arrays</a></li><li><a class="toc-href" href="#port array" title="Port Array">Port Array</a></li><li><a class="toc-href" href="#signed and unsigned data types" title="Signed and Unsigned Data Types">Signed and Unsigned Data Types</a></li><li><a class="toc-href" href="#data conversion" title="Data Conversion">Data Conversion</a></li></ul></li><li><a class="toc-href" href="#operators and attributes_1" title="Operators and Attributes">Operators and Attributes</a><ul><li><a class="toc-href" href="#opreators" title="Opreators">Opreators</a><ul><li><a class="toc-href" href="#assignment" title="assignment">assignment</a></li><li><a class="toc-href" href="#logical" title="logical">logical</a></li><li><a class="toc-href" href="#arithmetic" title="arithmetic">arithmetic</a></li><li><a class="toc-href" href="#comparison" title="comparison">comparison</a></li><li><a class="toc-href" href="#shift" title="shift">shift</a></li><li><a class="toc-href" href="#concatenation" title="concatenation">concatenation</a></li></ul></li><li><a class="toc-href" href="#attributes_1" title="Attributes">Attributes</a><ul><li><a class="toc-href" href="#pre-defined" title="Pre-defined">Pre-defined</a></li><li><a class="toc-href" href="#user-defined" title="User-defined">User-defined</a></li></ul></li><li><a class="toc-href" href="#operator overloading_1" title="Operator Overloading">Operator Overloading</a></li><li><a class="toc-href" href="#generic" title="GENERIC">GENERIC</a></li></ul></li><li><a class="toc-href" href="#concurrent code_1" title="Concurrent Code">Concurrent Code</a><ul><li><a class="toc-href" href="#when" title="when">when</a></li><li><a class="toc-href" href="#generate" title="generate">generate</a></li><li><a class="toc-href" href="#block" title="block">block</a></li></ul></li><li><a class="toc-href" href="#sequential code_1" title="Sequential Code">Sequential Code</a><ul><li><a class="toc-href" href="#process" title="process">process</a></li><li><a class="toc-href" href="#if" title="if">if</a></li><li><a class="toc-href" href="#wait" title="wait">wait</a></li><li><a class="toc-href" href="#case" title="case">case</a></li><li><a class="toc-href" href="#loop" title="loop">loop</a></li></ul></li><li><a class="toc-href" href="#signals &amp; variables_1" title="Signals &amp; Variables">Signals &amp; Variables</a><ul><li><a class="toc-href" href="#constant" title="constant">constant</a></li><li><a class="toc-href" href="#signal" title="signal">signal</a></li><li><a class="toc-href" href="#variable" title="variable">variable</a></li></ul></li><li><a class="toc-href" href="#reference_1" title="Reference">Reference</a></li></ul></li></ul></div>
-  </div>
+    </div>
 
   <div>
     <h2 id="code structure">Code Structure</h2>
@@ -903,7 +897,7 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@type" : "Blog",
   "name": " Qian's Blog ",
   "url" : "../..",
-  "image": "https://qiangu.cool/images/logo.png",
+  "image": "/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }
 </script>

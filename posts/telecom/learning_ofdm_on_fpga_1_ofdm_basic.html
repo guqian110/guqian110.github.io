@@ -35,13 +35,12 @@
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
 
-    <link href="../../static/custom.css" rel="stylesheet">
 
-    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
-    <link rel="shortcut icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
 
 <!-- Google Analytics -->
 <script type="text/javascript">
@@ -80,7 +79,7 @@
 <meta property="article:author" content="../../author/qian-gu.html">
 <meta property="article:section" content="Telecom"/>
 <meta property="article:tag" content="OFDM"/>
-<meta property="og:image" content="https://qiangu.cool/images/logo.png">
+<meta property="og:image" content="/images/logo.png">
 
   <title>Qian's Blog &ndash; 学习 OFDM 及其 FPGA 实现 1 —— OFDM Basic</title>
 
@@ -96,14 +95,14 @@
   <aside>
     <div>
       <a href="../..">
-        <img src="https://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
         <a href="../..">Qian Gu</a>
       </h1>
 
-<p>路漫漫其修远兮，吾将上下而求索</p>
+<p>Read >> Think >> Write</p>
         <form class="navbar-search" action="/search.html" role="search">
           <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
         </form>
@@ -114,8 +113,8 @@
 
               <li>
                 <a target="_self"
-                   href="../../pages/guan-yu-wo.html#guan-yu-wo">
-                  关于我
+                   href="../../pages/about-me.html#about-me">
+                  About Me
                 </a>
               </li>
 
@@ -131,11 +130,6 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
-            </a>
-          </li>
-          <li>
-            <a  class="sc-weibo" href="https://weibo.com/guqian110" target="_blank">
-              <i class="fab fa-weibo"></i>
             </a>
           </li>
           <li>
@@ -157,12 +151,12 @@
     <nav>
       <a href="../..">Home</a>
 
-      <a href="/authors.html">Authors</a>
-      <a href="/archives.html">Archives</a>
-      <a href="/categories.html">Categories</a>
-      <a href="/tags.html">Tags</a>
+      <a href="authors.html">Authors</a>
+      <a href="archives.html">Archives</a>
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
 
-      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+      <a href="/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
@@ -177,9 +171,9 @@
   </header>
 
 
-  <div class="col-lg-3 hidden-xs hidden-sm">
+    <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 OFDM 及其 FPGA 实现 1 &mdash;&mdash; OFDM Basic">学习 OFDM 及其 FPGA 实现 1 &mdash;&mdash; OFDM Basic</a><ul><li><a class="toc-href" href="#why ofdm" title="Why OFDM">Why OFDM</a><ul><li><a class="toc-href" href="#background" title="Background">Background</a></li><li><a class="toc-href" href="#problem" title="Problem">Problem</a><ul><li><a class="toc-href" href="#xu qiu" title="需求">需求</a></li><li><a class="toc-href" href="#ping jing" title="瓶颈">瓶颈</a></li></ul></li><li><a class="toc-href" href="#solution_1" title="Solution">Solution</a></li></ul></li><li><a class="toc-href" href="#ofdm history_1" title="OFDM History">OFDM History</a></li><li><a class="toc-href" href="#ofdm theory" title="OFDM Theory">OFDM Theory</a><ul><li><a class="toc-href" href="#ofdm ji dai shu zi shi xian" title="OFDM 基带数字实现">OFDM 基带数字实现</a><ul><li><a class="toc-href" href="#fa song duan  transmitter" title="发送端 Transmitter">发送端 Transmitter</a></li><li><a class="toc-href" href="#jie shou duan  receiver" title="接收端 Receiver">接收端 Receiver</a></li></ul></li><li><a class="toc-href" href="#xun huan qian zhui  cyclic prefix_1" title="循环前缀 cyclic prefix">循环前缀 cyclic prefix</a></li><li><a class="toc-href" href="#jia chuang ji zhu" title="加窗技术">加窗技术</a></li><li><a class="toc-href" href="#ofdm xi tong she ji" title="OFDM 系统设计">OFDM 系统设计</a></li></ul></li><li><a class="toc-href" href="#can kao_1" title="参考">参考</a></li></ul></li></ul></div>
-  </div>
+    </div>
 
   <div>
     <h2 id="why ofdm">Why OFDM</h2>
@@ -261,7 +255,7 @@
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="../../posts/linux/learning_yocto_from_zero_1_getting_started.html" title="Yocto 从零单排 1 —— 入门">
+    <a class="btn float-left" href="../../posts/embedded/learning_yocto_from_zero_1_getting_started.html" title="Yocto 从零单排 1 —— 入门">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
     <a class="btn float-right" href="../../posts/book/the_catcher_in_the_rye_review.html" title="麦田里的守望者 书评">
@@ -337,7 +331,7 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@type" : "Blog",
   "name": " Qian's Blog ",
   "url" : "../..",
-  "image": "https://qiangu.cool/images/logo.png",
+  "image": "/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }
 </script>

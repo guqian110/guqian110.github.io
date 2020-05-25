@@ -35,13 +35,12 @@
   <link rel="stylesheet" type="text/css" href="../theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="../theme/font-awesome/css/solid.css">
 
-    <link href="../static/custom.css" rel="stylesheet">
 
-    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
-    <link rel="shortcut icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
 
 <!-- Google Analytics -->
 <script type="text/javascript">
@@ -66,11 +65,11 @@
 
 <meta name="author" content="Qian Gu" />
 <meta name="description" content="chisel 学习系列汇总" />
-<meta name="keywords" content="chisel, scala">
+<meta name="keywords" content="chisel">
 
 
 <meta property="og:site_name" content="Qian's Blog"/>
-<meta property="og:title" content="学习 chisel 系列之 0： Chisel 简介及学习路线"/>
+<meta property="og:title" content="学习 chisel 系列 #0： Chisel 简介及学习路线"/>
 <meta property="og:description" content="chisel 学习系列汇总"/>
 <meta property="og:locale" content="en"/>
 <meta property="og:url" content="../drafts/learning_chisel_series_0_intro_and_roadmap.html"/>
@@ -78,12 +77,11 @@
 <meta property="article:published_time" content="2020-05-10 14:56:00+08:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="../author/qian-gu.html">
-<meta property="article:section" content="RISC-V"/>
+<meta property="article:section" content="IC"/>
 <meta property="article:tag" content="chisel"/>
-<meta property="article:tag" content="scala"/>
-<meta property="og:image" content="https://qiangu.cool/images/logo.png">
+<meta property="og:image" content="/images/logo.png">
 
-  <title>Qian's Blog &ndash; 学习 chisel 系列之 0： Chisel 简介及学习路线</title>
+  <title>Qian's Blog &ndash; 学习 chisel 系列 #0： Chisel 简介及学习路线</title>
 
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
@@ -97,14 +95,14 @@
   <aside>
     <div>
       <a href="..">
-        <img src="https://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
         <a href="..">Qian Gu</a>
       </h1>
 
-<p>路漫漫其修远兮，吾将上下而求索</p>
+<p>Read >> Think >> Write</p>
         <form class="navbar-search" action="/search.html" role="search">
           <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
         </form>
@@ -115,8 +113,8 @@
 
               <li>
                 <a target="_self"
-                   href="../pages/guan-yu-wo.html#guan-yu-wo">
-                  关于我
+                   href="../pages/about-me.html#about-me">
+                  About Me
                 </a>
               </li>
 
@@ -132,11 +130,6 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
-            </a>
-          </li>
-          <li>
-            <a  class="sc-weibo" href="https://weibo.com/guqian110" target="_blank">
-              <i class="fab fa-weibo"></i>
             </a>
           </li>
           <li>
@@ -158,44 +151,51 @@
     <nav>
       <a href="..">Home</a>
 
-      <a href="/authors.html">Authors</a>
-      <a href="/archives.html">Archives</a>
-      <a href="/categories.html">Categories</a>
-      <a href="/tags.html">Tags</a>
+      <a href="authors.html">Authors</a>
+      <a href="archives.html">Archives</a>
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
 
-      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+      <a href="/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
 <article class="single">
   <header>
       
-    <h1 id="learning_chisel_series_0_intro_and_roadmap">学习 chisel 系列之 0： Chisel 简介及学习路线</h1>
+    <h1 id="learning_chisel_series_0_intro_and_roadmap">学习 chisel 系列 #0： Chisel 简介及学习路线</h1>
     <p>
-      Posted on 2020-05-10 14:56 in <a href="../category/risc-v.html">RISC-V</a>
+      Posted on 2020-05-10 14:56 in <a href="../category/ic.html">IC</a>
 
     </p>
   </header>
 
 
-  <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 chisel 系列之 0： Chisel 简介及学习路线">学习 chisel 系列之 0： Chisel 简介及学习路线</a><ul><li><a class="toc-href" href="#chisel intro" title="Chisel Intro">Chisel Intro</a></li><li><a class="toc-href" href="#learning roadmap" title="Learning Roadmap">Learning Roadmap</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
-  </div>
+    <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 chisel 系列 #0： Chisel 简介及学习路线">学习 chisel 系列 #0： Chisel 简介及学习路线</a><ul><li><a class="toc-href" href="#chisel intro" title="Chisel Intro">Chisel Intro</a></li><li><a class="toc-href" href="#learning roadmap" title="Learning Roadmap">Learning Roadmap</a></li><li><a class="toc-href" href="#resource" title="Resource">Resource</a></li></ul></li></ul></div>
+    </div>
 
   <div>
-    <p><em>学习 risc-v 的过程中，接触到 Berkeley 的 Chisel，感觉是个非常有希望的语言，能解救广大硅
-农于水火之中，下面记录一下自己的学习笔记。</em></p>
+    <p><em>学习 risc-v 的过程中，接触到 Berkeley 的 Chisel，感觉是个非常有希望的语言，能解救广大硅农于水火之中，下面记录一下自己的学习笔记。</em></p>
 <h2 id="chisel intro">Chisel Intro</h2>
-<p><br/></p>
 <h2 id="learning roadmap">Learning Roadmap</h2>
-<p>简单做了个 mind map。（由于我还没有学习完，所以以后再更新上来）</p>
-<p><br/></p>
-<h2 id="ref">Ref</h2>
+<ol>
+<li><a href="https://mybinder.org/v2/gh/freechipsproject/chisel-bootcamp/master">Online Bootcamp</a></li>
+<li><a href="https://github.com/ucb-bar/chisel-tutorial">Chisel Tutorial</a></li>
+<li><a href="https://github.com/freechipsproject/chisel3/wiki">Chisel3 wiki: A Short users Guide to Chisel</a></li>
+<li>Chisel3</li>
+</ol>
+<p>简单做了个 mind map。</p>
+<h2 id="resource">Resource</h2>
+<p>有用的资源，大部分官网也都列出来了，</p>
+<ul>
+<li>[cheet sheet][cheet sheet]</li>
+<li>[ScalaDoc][scala doc]</li>
+</ul>
   </div>
   <div class="tag-cloud">
     <p>
       <a href="../tag/chisel.html">chisel</a>
-      <a href="../tag/scala.html">scala</a>
     </p>
   </div>
 
@@ -265,7 +265,7 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@type" : "Blog",
   "name": " Qian's Blog ",
   "url" : "..",
-  "image": "https://qiangu.cool/images/logo.png",
+  "image": "/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }
 </script>

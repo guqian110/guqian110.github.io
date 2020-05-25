@@ -35,13 +35,12 @@
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
 
-    <link href="../../static/custom.css" rel="stylesheet">
 
-    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
-    <link rel="shortcut icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
 
 <!-- Google Analytics -->
 <script type="text/javascript">
@@ -80,7 +79,7 @@
 <meta property="article:author" content="../../author/qian-gu.html">
 <meta property="article:section" content="IC"/>
 <meta property="article:tag" content="clock design"/>
-<meta property="og:image" content="https://qiangu.cool/images/logo.png">
+<meta property="og:image" content="/images/logo.png">
 
   <title>Qian's Blog &ndash; FPGA 时钟设计 3 —— 跨时钟域设计</title>
 
@@ -96,14 +95,14 @@
   <aside>
     <div>
       <a href="../..">
-        <img src="https://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
         <a href="../..">Qian Gu</a>
       </h1>
 
-<p>路漫漫其修远兮，吾将上下而求索</p>
+<p>Read >> Think >> Write</p>
         <form class="navbar-search" action="/search.html" role="search">
           <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
         </form>
@@ -114,8 +113,8 @@
 
               <li>
                 <a target="_self"
-                   href="../../pages/guan-yu-wo.html#guan-yu-wo">
-                  关于我
+                   href="../../pages/about-me.html#about-me">
+                  About Me
                 </a>
               </li>
 
@@ -131,11 +130,6 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
-            </a>
-          </li>
-          <li>
-            <a  class="sc-weibo" href="https://weibo.com/guqian110" target="_blank">
-              <i class="fab fa-weibo"></i>
             </a>
           </li>
           <li>
@@ -157,12 +151,12 @@
     <nav>
       <a href="../..">Home</a>
 
-      <a href="/authors.html">Authors</a>
-      <a href="/archives.html">Archives</a>
-      <a href="/categories.html">Categories</a>
-      <a href="/tags.html">Tags</a>
+      <a href="authors.html">Authors</a>
+      <a href="archives.html">Archives</a>
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
 
-      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+      <a href="/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
@@ -177,9 +171,9 @@
   </header>
 
 
-  <div class="col-lg-3 hidden-xs hidden-sm">
+    <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 时钟设计 3 &mdash;&mdash; 跨时钟域设计">FPGA 时钟设计 3 &mdash;&mdash; 跨时钟域设计</a><ul><li><a class="toc-href" href="#problem" title="Problem">Problem</a></li><li><a class="toc-href" href="#synchronous design" title="Synchronous Design">Synchronous Design</a></li><li><a class="toc-href" href="#solution" title="Solution">Solution</a><ul><li><a class="toc-href" href="#solution 1: daul rank synchronizer" title="Solution 1: Daul Rank Synchronizer">Solution 1: Daul Rank Synchronizer</a><ul><li><a class="toc-href" href="#level synchronizer" title="level synchronizer">level synchronizer</a></li><li><a class="toc-href" href="#edge-detecting synchronizer" title="edge-detecting synchronizer">edge-detecting synchronizer</a></li><li><a class="toc-href" href="#pulse synchronizer" title="pulse synchronizer">pulse synchronizer</a></li><li><a class="toc-href" href="#timing" title="Timing">Timing</a></li><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li></ul></li><li><a class="toc-href" href="#solution 2: handshaking_1" title="Solution 2: Handshaking">Solution 2: Handshaking</a><ul><li><a class="toc-href" href="#full handshaking" title="full handshaking">full handshaking</a></li><li><a class="toc-href" href="#partial handshaking" title="partial handshaking">partial handshaking</a></li><li><a class="toc-href" href="#summary_1" title="summary">summary</a></li></ul></li><li><a class="toc-href" href="#solution 3: datapath design_1" title="Solution 3: Datapath Design">Solution 3: Datapath Design</a><ul><li><a class="toc-href" href="#problem_1" title="problem">problem</a></li><li><a class="toc-href" href="#solution_1" title="solution">solution</a></li></ul></li><li><a class="toc-href" href="#solution 4: advanced datapath design_1" title="Solution 4: Advanced Datapath Design">Solution 4: Advanced Datapath Design</a></li><li><a class="toc-href" href="#design partitioning" title="Design Partitioning">Design Partitioning</a></li><li><a class="toc-href" href="#clock name conventions" title="Clock Name Conventions">Clock Name Conventions</a></li></ul></li><li><a class="toc-href" href="#gated clock_1" title="Gated Clock">Gated Clock</a></li><li><a class="toc-href" href="#summary_2" title="Summary">Summary</a></li><li><a class="toc-href" href="#reference" title="Reference">Reference</a></li></ul></li></ul></div>
-  </div>
+    </div>
 
   <div>
     <h2 id="problem">Problem</h2>
@@ -822,8 +816,8 @@ enable signal in order to load a data value into the register. If both the load 
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../../posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
       <li><a href="../../posts/ic/clock_dividers.html">时钟分频器</a></li>
+      <li><a href="../../posts/ic/the_clock_design_in_fpga_1_summary_of_clock_resource.html">FPGA 时钟设计 1 —— 时钟资源总结</a></li>
       <li><a href="../../posts/ic/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
     </ul>
   </div>
@@ -889,7 +883,7 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@type" : "Blog",
   "name": " Qian's Blog ",
   "url" : "../..",
-  "image": "https://qiangu.cool/images/logo.png",
+  "image": "/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }
 </script>

@@ -35,13 +35,12 @@
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
 
-    <link href="../../static/custom.css" rel="stylesheet">
 
-    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
-    <link rel="shortcut icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
 
 <!-- Google Analytics -->
 <script type="text/javascript">
@@ -81,7 +80,7 @@
 <meta property="article:section" content="IC"/>
 <meta property="article:tag" content="clock design"/>
 <meta property="article:tag" content="clock resource"/>
-<meta property="og:image" content="https://qiangu.cool/images/logo.png">
+<meta property="og:image" content="/images/logo.png">
 
   <title>Qian's Blog &ndash; FPGA 时钟设计 1 —— 时钟资源总结</title>
 
@@ -97,14 +96,14 @@
   <aside>
     <div>
       <a href="../..">
-        <img src="https://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
         <a href="../..">Qian Gu</a>
       </h1>
 
-<p>路漫漫其修远兮，吾将上下而求索</p>
+<p>Read >> Think >> Write</p>
         <form class="navbar-search" action="/search.html" role="search">
           <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
         </form>
@@ -115,8 +114,8 @@
 
               <li>
                 <a target="_self"
-                   href="../../pages/guan-yu-wo.html#guan-yu-wo">
-                  关于我
+                   href="../../pages/about-me.html#about-me">
+                  About Me
                 </a>
               </li>
 
@@ -132,11 +131,6 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
-            </a>
-          </li>
-          <li>
-            <a  class="sc-weibo" href="https://weibo.com/guqian110" target="_blank">
-              <i class="fab fa-weibo"></i>
             </a>
           </li>
           <li>
@@ -158,12 +152,12 @@
     <nav>
       <a href="../..">Home</a>
 
-      <a href="/authors.html">Authors</a>
-      <a href="/archives.html">Archives</a>
-      <a href="/categories.html">Categories</a>
-      <a href="/tags.html">Tags</a>
+      <a href="authors.html">Authors</a>
+      <a href="archives.html">Archives</a>
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
 
-      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+      <a href="/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
@@ -178,9 +172,9 @@
   </header>
 
 
-  <div class="col-lg-3 hidden-xs hidden-sm">
+    <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="FPGA 时钟设计 1 &mdash;&mdash; 时钟资源总结">FPGA 时钟设计 1 &mdash;&mdash; 时钟资源总结</a><ul><li><a class="toc-href" href="#three types of clock resource" title="Three Types of clock resource">Three Types of clock resource</a><ul><li><a class="toc-href" href="#global clocks" title="Global Clocks">Global Clocks</a></li><li><a class="toc-href" href="#regional clocks" title="Regional Clocks">Regional Clocks</a></li><li><a class="toc-href" href="#i/o clocks" title="I/O clocks">I/O clocks</a></li></ul></li><li><a class="toc-href" href="#global clocking resources_1" title="Global Clocking Resources">Global Clocking Resources</a><ul><li><a class="toc-href" href="#global clock inputs" title="Global Clock Inputs">Global Clock Inputs</a></li><li><a class="toc-href" href="#global clock buffers" title="Global Clock Buffers">Global Clock Buffers</a></li><li><a class="toc-href" href="#clock tree and nets - gclk" title="Clock Tree and Nets - GCLK">Clock Tree and Nets - GCLK</a></li><li><a class="toc-href" href="#clock regions" title="Clock Regions">Clock Regions</a></li><li><a class="toc-href" href="#how to use global clock_1" title="How to use global clock">How to use global clock</a></li><li><a class="toc-href" href="#principle in using global clock" title="Principle in Using global clock">Principle in Using global clock</a></li><li><a class="toc-href" href="#p.s. di er quan ju shi zhong zi yuan" title="P.S. 第二全局时钟资源">P.S. 第二全局时钟资源</a></li></ul></li><li><a class="toc-href" href="#regional clocking resources_1" title="Regional Clocking Resources">Regional Clocking Resources</a><ul><li><a class="toc-href" href="#clock capable i/o" title="Clock Capable I/O">Clock Capable I/O</a></li><li><a class="toc-href" href="#i/o clock buffer - bufio" title="I/O Clock Buffer - BUFIO">I/O Clock Buffer - BUFIO</a></li><li><a class="toc-href" href="#regional clock buffer - bufr" title="Regional Clock Buffer - BUFR">Regional Clock Buffer - BUFR</a></li><li><a class="toc-href" href="#regional clock nets" title="Regional Clock Nets">Regional Clock Nets</a></li></ul></li><li><a class="toc-href" href="#clock management technology_1" title="Clock Management Technology">Clock Management Technology</a><ul><li><a class="toc-href" href="#dcm" title="DCM">DCM</a></li><li><a class="toc-href" href="#pll" title="PLL">PLL</a></li><li><a class="toc-href" href="#mmcm" title="MMCM">MMCM</a></li></ul></li><li><a class="toc-href" href="#other tips_1" title="Other Tips">Other Tips</a></li><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li><li><a class="toc-href" href="#reference" title="Reference">Reference</a></li></ul></li></ul></div>
-  </div>
+    </div>
 
   <div>
     <p>关于一款芯片，最权威、最新的资料当然是厂家的官方文件。很多大牛都推荐直接阅读原厂的 datasheet 和 user guide。根据我的体验，这确实是最好的途径。原因有两个：</p>
@@ -733,9 +727,9 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="../../posts/ic/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
       <li><a href="../../posts/ic/clock_dividers.html">时钟分频器</a></li>
       <li><a href="../../posts/ic/the_clock_design_in_fpga_2_clock_design.html">FPGA 时钟设计 2 —— 时钟设计</a></li>
+      <li><a href="../../posts/ic/the_clock_design_in_fpga_3_multiasynchronous_clock_design.html">FPGA 时钟设计 3 —— 跨时钟域设计</a></li>
     </ul>
   </div>
 
@@ -800,7 +794,7 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@type" : "Blog",
   "name": " Qian's Blog ",
   "url" : "../..",
-  "image": "https://qiangu.cool/images/logo.png",
+  "image": "/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }
 </script>

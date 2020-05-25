@@ -35,13 +35,12 @@
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
 
-    <link href="../../static/custom.css" rel="stylesheet">
 
-    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
-    <link rel="shortcut icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
-    <link rel="icon" href="https://qiangu.cool/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
 
 <!-- Google Analytics -->
 <script type="text/javascript">
@@ -79,7 +78,7 @@
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="../../author/qian-gu.html">
 <meta property="article:section" content="IC"/>
-<meta property="og:image" content="https://qiangu.cool/images/logo.png">
+<meta property="og:image" content="/images/logo.png">
 
   <title>Qian's Blog &ndash; 低功耗设计</title>
 
@@ -95,14 +94,14 @@
   <aside>
     <div>
       <a href="../..">
-        <img src="https://qiangu.cool/images/logo.png" alt="Qian Gu" title="Qian Gu">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
         <a href="../..">Qian Gu</a>
       </h1>
 
-<p>路漫漫其修远兮，吾将上下而求索</p>
+<p>Read >> Think >> Write</p>
         <form class="navbar-search" action="/search.html" role="search">
           <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
         </form>
@@ -113,8 +112,8 @@
 
               <li>
                 <a target="_self"
-                   href="../../pages/guan-yu-wo.html#guan-yu-wo">
-                  关于我
+                   href="../../pages/about-me.html#about-me">
+                  About Me
                 </a>
               </li>
 
@@ -130,11 +129,6 @@
           <li>
             <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
               <i class="fab fa-github"></i>
-            </a>
-          </li>
-          <li>
-            <a  class="sc-weibo" href="https://weibo.com/guqian110" target="_blank">
-              <i class="fab fa-weibo"></i>
             </a>
           </li>
           <li>
@@ -156,12 +150,12 @@
     <nav>
       <a href="../..">Home</a>
 
-      <a href="/authors.html">Authors</a>
-      <a href="/archives.html">Archives</a>
-      <a href="/categories.html">Categories</a>
-      <a href="/tags.html">Tags</a>
+      <a href="authors.html">Authors</a>
+      <a href="archives.html">Archives</a>
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
 
-      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+      <a href="/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
@@ -176,9 +170,9 @@
   </header>
 
 
-  <div class="col-lg-3 hidden-xs hidden-sm">
+    <div class="col-lg-3 hidden-xs hidden-sm">
         <div id="toc"><ul><li><a class="toc-href" href="#" title="低功耗设计">低功耗设计</a><ul><li><a class="toc-href" href="#sources of power consumption" title="Sources of Power Consumption">Sources of Power Consumption</a></li><li><a class="toc-href" href="#power reduction power reduction" title="Power Reduction Power Reduction">Power Reduction Power Reduction</a></li><li><a class="toc-href" href="#system level" title="System Level">System Level</a><ul><li><a class="toc-href" href="#soc approach" title="SoC Approach">SoC Approach</a></li><li><a class="toc-href" href="#hw/sw partitioning" title="HW/SW Partitioning">HW/SW Partitioning</a></li><li><a class="toc-href" href="#low power software" title="Low Power Software">Low Power Software</a></li><li><a class="toc-href" href="#choice of processor" title="Choice of Processor">Choice of Processor</a></li></ul></li><li><a class="toc-href" href="#architecture level power reduction_1" title="Architecture Level Power Reduction">Architecture Level Power Reduction</a><ul><li><a class="toc-href" href="#advanced clock gating" title="Advanced Clock Gating">Advanced Clock Gating</a></li><li><a class="toc-href" href="#dynamic voltage and frequency scaling (dvfs)" title="Dynamic Voltage and Frequency Scaling (DVFS)">Dynamic Voltage and Frequency Scaling (DVFS)</a></li><li><a class="toc-href" href="#cache based architecture" title="Cache Based Architecture">Cache Based Architecture</a></li><li><a class="toc-href" href="#log fft architecture" title="Log FFT Architecture">Log FFT Architecture</a></li><li><a class="toc-href" href="#asynchronous (clockless) design" title="Asynchronous (Clockless) Design">Asynchronous (Clockless) Design</a></li><li><a class="toc-href" href="#power gating" title="Power Gating">Power Gating</a></li><li><a class="toc-href" href="#multi-threshold voltage" title="Multi-threshold Voltage">Multi-threshold Voltage</a></li><li><a class="toc-href" href="#multi-supply voltage" title="Multi-supply Voltage">Multi-supply Voltage</a></li><li><a class="toc-href" href="#gate memory power" title="Gate Memory Power">Gate Memory Power</a></li></ul></li><li><a class="toc-href" href="#register transfer level (rtl) power reduction_1" title="Register Transfer Level (RTL) Power Reduction">Register Transfer Level (RTL) Power Reduction</a><ul><li><a class="toc-href" href="#state machine encoding and decomposition" title="State Machine Encoding and Decomposition">State Machine Encoding and Decomposition</a></li><li><a class="toc-href" href="#binary number representation" title="Binary Number Representation">Binary Number Representation</a></li><li><a class="toc-href" href="#basic gated clock" title="Basic Gated Clock">Basic Gated Clock</a></li><li><a class="toc-href" href="#one hot encoded multiplexer" title="One Hot Encoded Multiplexer">One Hot Encoded Multiplexer</a></li><li><a class="toc-href" href="#removing redundant transactions" title="Removing Redundant Transactions">Removing Redundant Transactions</a></li><li><a class="toc-href" href="#resource sharing" title="Resource Sharing">Resource Sharing</a></li><li><a class="toc-href" href="#using ripple counters for low power" title="Using Ripple Counters for Low Power">Using Ripple Counters for Low Power</a></li><li><a class="toc-href" href="#bus inversion" title="Bus Inversion">Bus Inversion</a></li></ul></li><li><a class="toc-href" href="#transistor level power reduction_1" title="Transistor Level Power Reduction">Transistor Level Power Reduction</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
-  </div>
+    </div>
 
   <div>
     <p>在一些情况下，是不需要考虑低功耗设计的，但是更多的情况下，低功耗是必须考虑的，总结一下 <a href="http://www.amazon.com/The-Art-Hardware-Architecture-Techniques/dp/1461403960">THE ART OF HARDWARE ARCHITECTURE</a> 中介绍的低功耗设计的方法。</p>
@@ -465,7 +459,7 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@type" : "Blog",
   "name": " Qian's Blog ",
   "url" : "../..",
-  "image": "https://qiangu.cool/images/logo.png",
+  "image": "/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }
 </script>
