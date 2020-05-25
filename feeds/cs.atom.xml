@@ -1,5 +1,351 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog - CS</title><link href="/" rel="alternate"></link><link href="feeds/cs.atom.xml" rel="self"></link><id>/</id><updated>2020-05-16T20:58:00+08:00</updated><subtitle>Read &gt;&gt; Think &gt;&gt; Write</subtitle><entry><title>PEP 学习系列 #3 —— PEP202 &amp; PEP274</title><link href="posts/cs/learning_peps_series_3_pep202_and_pep274.html" rel="alternate"></link><published>2020-05-16T20:58:00+08:00</published><updated>2020-05-16T20:58:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:None,2020-05-16:posts/cs/learning_peps_series_3_pep202_and_pep274.html</id><summary type="html">&lt;p&gt;List &amp;amp; Dict Comprehensions 学习笔记&lt;/p&gt;</summary><content type="html">&lt;h2 id="what is list comprehensions"&gt;What is List Comprehensions&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog - CS</title><link href="/" rel="alternate"></link><link href="feeds/cs.atom.xml" rel="self"></link><id>/</id><updated>2020-05-24T22:47:00+08:00</updated><subtitle>Read &gt;&gt; Think &gt;&gt; Write</subtitle><entry><title>PEP 学习系列 #4 —— PEP234 &amp; PEP 279</title><link href="posts/cs/learning_peps_series_4_pep234_and_pep279.html" rel="alternate"></link><published>2020-05-24T22:47:00+08:00</published><updated>2020-05-24T22:47:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:None,2020-05-24:posts/cs/learning_peps_series_4_pep234_and_pep279.html</id><summary type="html">&lt;p&gt;Iterator 学习笔记&lt;/p&gt;</summary><content type="html">&lt;h2 id="what is iterator"&gt;What is Iterator&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0234/"&gt;PEP 234 -- Iterators 原文链接&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;Sequence 是 python 中的一种数据结构，它们的成员是有序排列的，可以通过下标来访问特定元素，比如字符串、list、tuple 等都是 sequence。很多时候我们需要对 sequence 进行顺序访问，最简单的方法是写一个 for 循环，通过计数的方式实现迭代。但是计数的方式很原始也不高效，所以 python 提供了 iterator 来迭代 sequence。&lt;/p&gt;
+&lt;p&gt;Iterator 实际上是一个实现了工厂模式的对象，它通过 &lt;code&gt;next()&lt;/code&gt; 方法来获取元素，而不是通过 index 计数来实现。for 循环只要调用 iterator 的 next 方法，就能获得 sequence 中的下一项，当迭代完所有的 item 后，再次调用会返回一个 &lt;code&gt;StopIteration&lt;/code&gt; 的异常，这个异常并不代表发生了错误，而是告诉调用者，迭代已经完成了。&lt;/p&gt;
+&lt;p&gt;Iterator 对 sequence 的支持是无缝的，除此之外它还能迭代那些具有 sequence 的行为但实际上并不是 sequence 的对象，比如 dict 的 keys 以及 file。&lt;/p&gt;
+&lt;h3 id="iteratable vs iterator"&gt;Iteratable vs Iterator&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;含有 &lt;code&gt;__iter__()&lt;/code&gt; 或 &lt;code&gt;__getitem__()&lt;/code&gt; 方法的对象称为 &amp;ldquo; 可迭代对象 &amp;rdquo;：&lt;code&gt;Iteratable&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;可以用 &lt;code&gt;isinstance()&lt;/code&gt; 判断一个对象是否为 &lt;code&gt;Iteratable&lt;/code&gt; 对象，&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Iterable&lt;/span&gt;
+
+&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;([],&lt;/span&gt; &lt;span class="n"&gt;Iterable&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# True&lt;/span&gt;
+&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;({},&lt;/span&gt; &lt;span class="n"&gt;Iterable&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# True&lt;/span&gt;
+&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'abc'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Iterable&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# True&lt;/span&gt;
+&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Iterable&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# False&lt;/span&gt;
+&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;Iterable&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# True&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;实现了 &lt;code&gt;next()&lt;/code&gt; 方法的对象称为迭代器：&lt;code&gt;Iterator&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;可以用 &lt;code&gt;isinstance()&lt;/code&gt; 判断一个对象是否为 &lt;code&gt;Iterator&lt;/code&gt; 对象，&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Iterator&lt;/span&gt;
+
+&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;([],&lt;/span&gt; &lt;span class="n"&gt;Iterator&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# False&lt;/span&gt;
+&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;({},&lt;/span&gt; &lt;span class="n"&gt;Iterator&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# False&lt;/span&gt;
+&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'abc'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Iterator&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# False&lt;/span&gt;
+&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Iterator&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# False&lt;/span&gt;
+&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;Iterator&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# True&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;lsit&lt;/code&gt;, &lt;code&gt;dict&lt;/code&gt;, &lt;code&gt;str&lt;/code&gt; 等都是 &lt;code&gt;Iterable&lt;/code&gt;，但不是 &lt;code&gt;Iterator&lt;/code&gt;，可以用 &lt;code&gt;iter()&lt;/code&gt; 得到其对应的 &lt;code&gt;Iterator&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;实际上，python 的 for 循环作用于 Iterable 时，会自动调用 &lt;code&gt;iter()&lt;/code&gt; 来得到对应的 Iterator，然后不断调用 next 获取其中的元素，&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;do_something_to&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;Python 在底层实现时，会自动替换成下面的方式，&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;fetch&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;iter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fetch&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;StopIteration&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;break&lt;/span&gt;
+    &lt;span class="n"&gt;do_something_to&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;结论：&lt;strong&gt;对于 &lt;code&gt;Iterable&lt;/code&gt; 对象，我们可以直接用 for 循环来迭代。&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="why iterator_1"&gt;Why Iterator&lt;/h2&gt;
+&lt;p&gt;翻译自 PEP234：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;提供了一种可扩展的 iterator 接口&lt;/li&gt;
+&lt;li&gt;加强了 list 的迭代性能&lt;/li&gt;
+&lt;li&gt;dict 的迭代性能巨大提升&lt;/li&gt;
+&lt;li&gt;迭代功能的底层实现是真正的迭代，而不是用随机访问来模拟&lt;/li&gt;
+&lt;li&gt;兼容目前已有的所有用户自定义的 class、模拟 sequence 和 dict 的扩展对象、甚至那些只实现了 &lt;code&gt;{__getitee__, keys, valus, itmes}&lt;/code&gt; 的 mappings&lt;/li&gt;
+&lt;li&gt;迭代那些非 sequence 对象的代码可以更加简洁，可读性更高&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="construct iterator"&gt;Construct Iterator&lt;/h2&gt;
+&lt;p&gt;如何得到一个迭代器呢？&lt;/p&gt;
+&lt;h3 id="using iter"&gt;Using &lt;code&gt;iter&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;只需要调用内建函数 &lt;code&gt;iter()&lt;/code&gt; 即可，有两种调用方式：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;iter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obj&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;iter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sentinel&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;iter(obj)&lt;/code&gt;，iter 会检查 obj 是否为 sequence，如果是，则返回一个迭代器&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iter(func, sentinel)&lt;/code&gt;，iter 会重复调用 func，直到迭代的值为 sentinel&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="using itertools"&gt;Using &lt;code&gt;itertools&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Python 内建的工具包，可以产生一系列各种各样的 iterator，比如无穷迭代器 &lt;code&gt;count()&lt;/code&gt;, &lt;code&gt;cycle()&lt;/code&gt;, &lt;code&gt;repeat()&lt;/code&gt;，有限长度的 &lt;code&gt;accumulate()&lt;/code&gt;, &lt;code&gt;compress()&lt;/code&gt;, &lt;code&gt;chain()&lt;/code&gt; 等。&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;itertools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;count&lt;/span&gt;
+
+&lt;span class="n"&gt;counter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;next&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;counter&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# 10&lt;/span&gt;
+&lt;span class="nb"&gt;next&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;counter&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# 11&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;&lt;code&gt;itertools&lt;/code&gt; 常见的 iterator 有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;生成切片： &lt;code&gt;itertools.islice()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;丢弃部分数据： &lt;code&gt;itertools.dropwhile()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;产生所有排列组合： &lt;code&gt;itertools.permutations()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;一次性迭代不同容器内的元素： &lt;code&gt;itertools.chain()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;总结：遇到看似复杂的迭代任务，不要着急自己写复杂的 for index 循环，也不要自己尝试写一个 iterator，而是应该首先看看 &lt;code&gt;itertools&lt;/code&gt; 里面是否提供了相关功能，往往有惊喜。&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id="user define class"&gt;User Define Class&lt;/h3&gt;
+&lt;p&gt;只要一个 class 实现了下面两个方法，就可以当作迭代器来使用，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个 &lt;code&gt;__iter()__&lt;/code&gt; 方法，返回值是 &lt;code&gt;self&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;一个 &lt;code&gt;next()&lt;/code&gt; 方法，返回一个 item 或者是 StopIteration 异常&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这两个方法分别对应了前面区分过的两种协议，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;任意一个实现了 &lt;code&gt;__iter()__&lt;/code&gt; 或 &lt;code&gt;__getitme__()&lt;/code&gt; 的对象，都可以用 for 循环来迭代 &amp;mdash;&amp;mdash; &lt;strong&gt;Iterable 对象&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;任意一个实现了 &lt;code&gt;next()&lt;/code&gt; 的对象都可以当作是 iterator &amp;mdash;&amp;mdash; &lt;strong&gt;Iterator 协议&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;迭代的概念本身只涉及第二种协议，容器类的对象一般都支持第一种协议。目前 iterator 要求这两种协议都支持，支持第一种协议的目的是为了让 iterator 同时也是一个 Iterable，这样它的行为和 sequence 类似，特别是在用 for 循环中使用 iterator 的场景。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;example：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;定义一个产生随机 sequence 的 class（存储在 randSeq.py），&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#! /usr/bin/env python&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;random&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;choice&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RandSeq&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;seq&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__iter__&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;next&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;choice&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;使用 for 循环调用该 class 对象，&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;ranSeq&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;RandSeq&lt;/span&gt;
+
+&lt;span class="n"&gt;seq&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;RandSeq&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s1"&gt;'rock'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'paper'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'scissors'&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;也可以像前面介绍的一样，用 &lt;code&gt;isinstance()&lt;/code&gt; 来检查，说明我们的 RandSeq 类既是一个 Iterable 也是一个 Iterator。&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Iterable&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# True&lt;/span&gt;
+&lt;span class="nb"&gt;isinstance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Iterator&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# True&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;h2 id="using iterator_1"&gt;Using Iterator&lt;/h2&gt;
+&lt;h3 id="sequence"&gt;Sequence&lt;/h3&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;myTuple&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;123&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'xyz'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;45.67&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;iter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;myTuple&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="mi"&gt;123&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="s1"&gt;'xyz'&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;netx&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="mf"&gt;45.67&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;Traceback&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;most&lt;/span&gt; &lt;span class="n"&gt;recent&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;last&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="s2"&gt;"&amp;lt;stdin&amp;gt;, line 1, in &amp;lt;module&amp;gt;&lt;/span&gt;
+&lt;span class="ne"&gt;StopIteration&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;h3 id="dict"&gt;Dict&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;dict 内部实现了一个 &lt;code&gt;sq_contaisn&lt;/code&gt; 的函数，它实现了 &lt;code&gt;has_key()&lt;/code&gt; 相同的功能，所以可以这么写，&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;
+
+&lt;span class="c1"&gt;# equivalent to&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;has_key&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;dict 内部还实现了一个 &lt;code&gt;tp_iter&lt;/code&gt; 的函数，可以产生一个针对所有 keys 的高效迭代器。所以可以这么写，&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;
+
+&lt;span class="c1"&gt;# equivalent to, but much faster than&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;只要不违反 &amp;ldquo; 禁止修改 dict 内容 &amp;rdquo; 的约束，就可以这么用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;dict 实际上有 3 种 iterator，&lt;code&gt;for x in dict&lt;/code&gt; 实际上是 &lt;code&gt;for x in dict.iterkeys()&lt;/code&gt; 的缩写&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iterkeys&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;itervalues&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iteritems&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;h3 id="file"&gt;File&lt;/h3&gt;
+&lt;p&gt;file 对象内部实现了 &lt;code&gt;tp_iter&lt;/code&gt; 方法，所以访问文件内容的代码可以写得更简洁，&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;myFile&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;
+
+&lt;span class="c1"&gt;# as a shorthand for&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;iter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;readline&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;""&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;
+
+&lt;span class="c1"&gt;# equivalent, but faster than&lt;/span&gt;
+&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;readline&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;break&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;h3 id="restrictions"&gt;Restrictions&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;在用 iterator 时，sequence/dict 的内容是不能被修改的。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;sequence 中除了 list，其它（tuple 和 string）都是不可变的，所以只需要注意 list 的情况即可。对于 dict，只允许对一个已经存在的 key 设置它的值，其他操作（增加 / 删除 /&lt;code&gt;update()&lt;/code&gt;）都是不允许的。原因就是 iterator 和实际对象是绑定在一起的，一旦修改了原对象，效果会马上体现出来。&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# legal&lt;/span&gt;
+&lt;span class="n"&gt;myDict&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'b'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'c'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;myDict&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;myDict&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;myDict&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="c1"&gt;# illegal&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;myDict&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;del&lt;/span&gt; &lt;span class="n"&gt;myDict&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;实际上，在 python 的迭代器出现之前，这个限制就已经存在了，比如 C++ 也有类似的约束。&lt;/p&gt;
+&lt;h2 id="special iterator_1"&gt;Special Iterator&lt;/h2&gt;
+&lt;h3 id="enumerate()"&gt;&lt;code&gt;enumerate()&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;如果想在迭代对象时，同时知道对应的索引，该怎么办？&lt;/p&gt;
+&lt;p&gt;或许你会想在 iterator 的基础上，再加一个计数器，在每次 for 循环中不断自增，类似这样，&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'b'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'c'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;idx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;val&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;my_list&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;val&lt;/span&gt;
+    &lt;span class="n"&gt;idx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;但是这种写法很丑陋，最优雅的答案是用内建函数 &lt;code&gt;enumerate()&lt;/code&gt;，它的返回值是一个 &lt;code&gt;enumerate&lt;/code&gt; 对象，本质上就是个迭代器，返回一个由 index 和 value 组成的 tuple。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0234/"&gt;PEP 279&lt;/a&gt; 介绍了这个函数的实现原理，如下&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;enumerate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;collection&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="s1"&gt;'Generates an indexed series: (0, coll[0]), (1, coll[1]) ...'&lt;/span&gt;
+    &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+    &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;iter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;collection&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+        &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;使用方法：&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;val&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;enumerate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;my_list&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;val&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;h3 id="zip()"&gt;&lt;code&gt;zip()&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;如果想同时迭代多个对象，每次迭代分别从中取出一个元素，应该怎么办？&lt;/p&gt;
+&lt;p&gt;最优雅的方式是用 &lt;code&gt;zip()&lt;/code&gt; 函数，zip 函数的返回值是一个 iterator，所以可以直接在 for 循环中使用，&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'b'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'c'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;h2 id="ref_1"&gt;Ref&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0234/"&gt;PEP 234 -- Iterator&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0234/"&gt;PEP 279 -- The enumerate() built-in function&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://book.douban.com/subject/3112503/"&gt;Python 核心编程&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017323698112640"&gt;迭代器 - 廖雪峰的官方网站&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://nvie.com/posts/iterators-vs-generators/"&gt;Iterables vs. Iterators vs. Generators&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://foofish.net/iterators-vs-generators.html"&gt;完全理解 Python 迭代对象、迭代器、生成器&lt;/a&gt;&lt;/p&gt;</content><category term="CS"></category><category term="PEP"></category><category term="python"></category></entry><entry><title>PEP 学习系列 #3 —— PEP202 &amp; PEP274</title><link href="posts/cs/learning_peps_series_3_pep202_and_pep274.html" rel="alternate"></link><published>2020-05-16T20:58:00+08:00</published><updated>2020-05-16T20:58:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:None,2020-05-16:posts/cs/learning_peps_series_3_pep202_and_pep274.html</id><summary type="html">&lt;p&gt;List &amp;amp; Dict Comprehensions 学习笔记&lt;/p&gt;</summary><content type="html">&lt;h2 id="what is list comprehensions"&gt;What is List Comprehensions&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0202/"&gt;PEP 202 -- List Comprehensions 原文链接&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;List Comprehensions 是一种 python 语法扩展，它可以实现用 for 和 if 语句直接构建 list。&lt;/p&gt;
 &lt;h3 id="examples"&gt;Examples&lt;/h3&gt;
@@ -123,6 +469,11 @@
 &lt;li&gt;不允许写成 &lt;code&gt;[x, y for ...]&lt;/code&gt; 形式，但是可以写成一个 tuple 元素的形式 &lt;code&gt;[(x, y) for ...]&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;允许嵌套形式 &lt;code&gt;[...  for x... for y...]&lt;/code&gt;，就像嵌套循环一样，最后一个 index 是变化最快的&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;GvR 也说 &lt;code&gt;map()&lt;/code&gt; / &lt;code&gt;filter()&lt;/code&gt; 函数用起来实在太繁琐了，我们应该多使用 comprehensions。但是我们应该记住，谨防滥用。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;filter and map should die and be subsumed into list comprehensions, not grow more variants. I'd rather introduce built-ins that do iterator algebra (e.g. the iterzip that I've often used as an example).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;（关于 &lt;code&gt;iterator&lt;/code&gt;，后面的学习笔记中会有介绍。）&lt;/em&gt;&lt;/p&gt;
 &lt;h2 id="dict comprehensions_1"&gt;Dict Comprehensions&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0274/"&gt;PEP 274 -- Dict Comprehensions 原文链接&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;dict comprehensions 和 list comprehensions 非常相似，不同之处是用 &lt;code&gt;{}&lt;/code&gt; 而不是 &lt;code&gt;[]&lt;/code&gt;。同时，关键字 &lt;code&gt;for&lt;/code&gt; 前面的部分表达式改成了用冒号隔开的 key-value 对。&lt;/p&gt;
@@ -1825,15 +2176,15 @@
 &lt;h2 id="fan yi ji hua"&gt;翻译计划&lt;/h2&gt;
 &lt;p&gt;为了督促自己有计划地完成 PEP 的学习，也是为了以后可以温故而知新，在这里记录一下自己的学习笔记。从 PEP0 中可以知道，各种各类的 PEP 加起来目前一共有几百篇，参考网上其他介绍，学习计划中暂时选择了下面几篇，以后再持续更新。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/learning_peps_series_0_pep0.html"&gt;PEP 0 -- Index of Python Enhancement Proposals&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/learning_peps_series_1_pep8.html"&gt;PEP 8 -- Style Guide for Python Code&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/learning_peps_series_2_pep20.html"&gt;PEP 20 -- The Zen of Python&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/learning_peps_series_3_pep202_and_pep274.html"&gt;PEP 202 -- List Comprehensions&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/learning_peps_series_3_pep202_and_pep274.html"&gt;PEP 274 -- Dict Comprehensions&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/learning_peps_series_4_pep234.html"&gt;PEP 234 -- Iterators&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/learning_peps_series_5_pep255_and_pep289.html"&gt;PEP 255 -- Simple Generators&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://qiangu.cool/posts/python/learning_peps_series_5_pep255_and_pep289.html"&gt;PEP 289 -- Generator Expressions&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;PEP 279 -- The enumerate() built-in function&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/cs/learning_peps_series_0_pep0.html"&gt;PEP 0 -- Index of Python Enhancement Proposals&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/cs/learning_peps_series_1_pep8.html"&gt;PEP 8 -- Style Guide for Python Code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/cs/learning_peps_series_2_pep20.html"&gt;PEP 20 -- The Zen of Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/cs/learning_peps_series_3_pep202_and_pep274.html"&gt;PEP 202 -- List Comprehensions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/cs/learning_peps_series_3_pep202_and_pep274.html"&gt;PEP 274 -- Dict Comprehensions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/cs/learning_peps_series_4_pep234_and_pep279.html"&gt;PEP 234 -- Iterators&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/cs/learning_peps_series_5_pep255_and_pep289.html"&gt;PEP 255 -- Simple Generators&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/cs/learning_peps_series_5_pep255_and_pep289.html"&gt;PEP 289 -- Generator Expressions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://qiangu.cool/posts/cs/learning_peps_series_4_pep234_and_pep279.html"&gt;PEP 279 -- The enumerate() built-in function&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;PEP 343 -- The "with" Statement&lt;/li&gt;
 &lt;li&gt;PEP 380 -- Syntax for Delegating to a Subgenerator&lt;/li&gt;
 &lt;li&gt;PEP 3120 -- Using UTF-8 as the default source encoding&lt;/li&gt;
@@ -2896,45 +3247,47 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.cppblog.com/wuzimian/archive/2012/05/28/176427.aspx"&gt;C++ 之 char , signed char , unsigned char，以及 Integral Promotion&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://book.51cto.com/art/200912/166574.htm"&gt;Linux C 编程一站式学习：整型&lt;/a&gt;&lt;/p&gt;</content><category term="CS"></category><category term="C++"></category><category term="data type"></category></entry><entry><title>原码、反码、补码</title><link href="posts/cs/signed_number_representations.html" rel="alternate"></link><published>2014-03-19T14:31:00+08:00</published><updated>2014-03-19T14:31:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:None,2014-03-19:posts/cs/signed_number_representations.html</id><summary type="html">&lt;p&gt;最近找到一本好书——《编码: 隐匿在计算机软硬件背后的语言》 。作者是大名鼎鼎的 Charles Petzold 。看到用继电器搭建加法器、减法器，讨论二进制编码方式那章，想起一直不是很清楚的原码、反码、补码等，果断 Google、Wiki，于是总结出下文 。&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近找到一本好书 &amp;mdash;&amp;mdash;&lt;a href="http://book.douban.com/subject/4822685/"&gt;《编码 : 隐匿在计算机软硬件背后的语言》&lt;/a&gt;。作者是大名鼎鼎的 &lt;a href="http://en.wikipedia.org/wiki/Charles_Petzold"&gt;Charles Petzold&lt;/a&gt; (&lt;a href="http://charlespetzold.com/"&gt;个人网站&lt;/a&gt;)。书的介绍也很有意思，据说完全不懂计算机的人也能看懂 ... 于是买了本来拜读一下（这种文章当然是英文版最好了，只是学生党没银子，只好买翻译版了）&lt;/p&gt;
 &lt;p&gt;看到用继电器搭建加法器、减法器，讨论二进制编码方式那章，想起一直不是很清楚的原码、反码、补码等，果断 &lt;a href="https://www.google.com.hk/"&gt;Google&lt;/a&gt;、&lt;a href="http://en.wikipedia.org/wiki/Main_Page"&gt;Wiki&lt;/a&gt;，于是总结出下文。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="ji ben gai nian"&gt;基本概念&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;h3 id="ji qi shu"&gt;机器数&lt;/h3&gt;
 &lt;p&gt;顾名思义，一个数字在机器中的存储方式，&amp;ldquo;&lt;em&gt;数&lt;/em&gt; &amp;rdquo; 是指 有符号数（&lt;code&gt;signed number&lt;/code&gt;），即包含了正负号的数，&amp;ldquo;&lt;em&gt;机器&lt;/em&gt; &amp;rdquo; 当然是指计算机（&lt;code&gt;Computer&lt;/code&gt;）了。&lt;/p&gt;
 &lt;p&gt;从小学毕业，刚进入初中，我们就知道数字是有符号的：&lt;em&gt;正数&lt;/em&gt; &amp;amp; &lt;em&gt;负数&lt;/em&gt;。但是在计算机的哲学体系中，整个世界只有两个元素：0 &amp;amp; 1 ，没有额外的专门表示正负号的符号。怎么办呢？解决方法就是添加一位来表示符号。于是，人们约定把符号位放在一个数字的 &lt;em&gt;最高有效位&lt;/em&gt;（Most significant bit, &lt;code&gt;MSB&lt;/code&gt;），在&lt;a href="http://zh.wikipedia.org/wiki/%E5%AD%97%E8%8A%82%E5%BA%8F#.E5.A4.A7.E7.AB.AF.E5.BA.8F"&gt;大端序&lt;/a&gt;中，&lt;code&gt;MSB&lt;/code&gt; 指的是一个二进制数的最左边的一位。一般，&lt;code&gt;MSB&lt;/code&gt; 等于 0  表示正数，1 表示负数。&lt;/p&gt;
 &lt;h3 id="zhen zhi"&gt;真值&lt;/h3&gt;
 &lt;p&gt;因为机器数中有一位表示符号，所以机器数的形式值不等于真正的数值，机器数对应的数值称为机器数的 &lt;em&gt;真值&lt;/em&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;
-举个栗子：&lt;/p&gt;
+&lt;p&gt;举个栗子：&lt;/p&gt;
 &lt;p&gt;用 8 bit 表示一个数字，因为有符号位的存在，可以表示的范围为 (-127, -0, +0, +127) 。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="err"&gt;的&lt;/span&gt; &lt;span class="err"&gt;机器数&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0000&lt;/span&gt;&lt;span class="n"&gt;_0101&lt;/span&gt; &lt;span class="err"&gt;；真值&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;000&lt;/span&gt;&lt;span class="n"&gt;_0101&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;+5 的 机器数 = 0000_0101 ；真值 = + 000_0101
 
-&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="err"&gt;的&lt;/span&gt; &lt;span class="err"&gt;机器数&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="n"&gt;_0101&lt;/span&gt; &lt;span class="err"&gt;；真值&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;000&lt;/span&gt;&lt;span class="n"&gt;_0101&lt;/span&gt;
+-5 的 机器数 = 1000_0101 ；真值 = - 000_0101
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;这种机器数的编码方式称为 &lt;a href="http://en.wikipedia.org/wiki/Signed_magnitude#Signed_magnitude_representation"&gt;&lt;em&gt;原码&lt;/em&gt;&lt;/a&gt; (&lt;code&gt;signed-magnitude&lt;/code&gt;) ，是机器数编码方式中的一种。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;em&gt;The four best-known methods of extending the binary numeral system to represent signed numbers are: sign-and-magnitude, Ones' complement, two's complement, and excess-K.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;There is no definitive criterion by which any of the representations is universally superior. The representation used in most current computing devices is two's complement, although the Unisys ClearPath Dorado series mainframes use Ones' complement.&lt;/em&gt;
 （&lt;a href="http://en.wikipedia.org/wiki/Signed_number_representations"&gt;Wikipeida&lt;/a&gt;）&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;p&gt;下面分别讨论：&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="ji qi shu biao shi fa_1"&gt;机器数表示法&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;h3 id="yuan ma (sign and magnitude)"&gt;原码（sign and magnitude）&lt;/h3&gt;
 &lt;h4 id="bian ma gui ze"&gt;编码规则&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="err"&gt;正数：&lt;/span&gt;  &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="n"&gt;_xxxxxxx&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;正数：  0_xxxxxxx
 
-&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="err"&gt;负数：&lt;/span&gt;  &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="n"&gt;_xxxxxxx&lt;/span&gt;
+负数：  1_xxxxxxx
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;8 bit 的原码可以表示的范围是 [ -127, -0, +0, +127 ]，共 255 个数&lt;/p&gt;
 &lt;h4 id="ji suan fa ze"&gt;计算法则&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="err"&gt;两数符号相同：&lt;/span&gt;  &lt;span class="err"&gt;低位相加，最高位的符号位不变（当低位相加产生进位时，溢出&lt;/span&gt; &lt;span class="n"&gt;Overflow&lt;/span&gt;&lt;span class="err"&gt;）&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# 两数符号相同：  低位相加，最高位的符号位不变（当低位相加产生进位时，溢出 Overflow）
 
-&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="err"&gt;两数符号不同：&lt;/span&gt;  &lt;span class="err"&gt;比较绝对值的大小，差的绝对值&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;大数&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="err"&gt;小数&lt;/span&gt; &lt;span class="err"&gt;，符号位和大数的符号位相同&lt;/span&gt;
+# 两数符号不同：  比较绝对值的大小，差的绝对值 = 大数 - 小数 ，符号位和大数的符号位相同
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;h4 id="que dian"&gt;缺点&lt;/h4&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -2952,13 +3305,10 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h4 id="zong jie"&gt;总结&lt;/h4&gt;
-&lt;p&gt;This approach is directly comparable to the common way of showing a sign (placing a "+" or "&amp;minus;" next to the number's magnitude). Some early binary computers (e.g., &lt;a href="http://en.wikipedia.org/wiki/IBM_7090"&gt;IBM 7090&lt;/a&gt;) used this representation, perhaps because of its natural relation to common usage. Signed magnitude is the most common way of representing the significand in floating point values.
-（&lt;a href="http://en.wikipedia.org/wiki/Signed_magnitude#Signed_magnitude_representation"&gt;Wiki&lt;/a&gt;）&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;虽然 &lt;code&gt;原码&lt;/code&gt; 的编码方式最接近人类的习惯，但是，并不适合在计算机中使用，为了解决原码计算中的一些问题，于是 &lt;code&gt;反码&lt;/code&gt; 就出现了&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This approach is directly comparable to the common way of showing a sign (placing a "+" or "&amp;minus;" next to the number's magnitude). Some early binary computers (e.g., &lt;a href="http://en.wikipedia.org/wiki/IBM_7090"&gt;IBM 7090&lt;/a&gt;) used this representation, perhaps because of its natural relation to common usage. Signed magnitude is the most common way of representing the significand in floating point values.（&lt;a href="http://en.wikipedia.org/wiki/Signed_magnitude#Signed_magnitude_representation"&gt;Wiki&lt;/a&gt;）&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;虽然 &lt;code&gt;原码&lt;/code&gt; 的编码方式最接近人类的习惯，但是，并不适合在计算机中使用，为了解决原码计算中的一些问题，于是 &lt;code&gt;反码&lt;/code&gt; 就出现了&lt;/em&gt;&lt;/p&gt;
 &lt;h3 id="fan ma (ones' complement)_1"&gt;反码（Ones' complement）&lt;/h3&gt;
 &lt;p&gt;首先，来看看 &lt;a href="http://www.charlespetzold.com/code/"&gt;Code&lt;/a&gt; 中介绍了基于 10 进制的补码：&lt;/p&gt;
 &lt;p&gt;实现一个减法&lt;/p&gt;
@@ -2970,10 +3320,13 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;p&gt;把减数从一串 1 当中减去，结果就称为这个数的 &amp;ldquo;1 的补数 &amp;rdquo;，在求 1 的补数的时候，其实并不需要做减法，因为求 1 的补数，只需要将原来的 1 变为 0 ，0 变为 1 即可，也就是取反，在电路中只需要一个反向器就可以实现，所以 &lt;code&gt;1 的补数&lt;/code&gt; 也称为 &lt;code&gt;反码&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;从上面的描述就可以很容易写出反码的编码规则&lt;/p&gt;
 &lt;h4 id="bian ma gui ze_1"&gt;编码规则&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="err"&gt;正数&lt;/span&gt;    &lt;span class="err"&gt;反码&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;原码&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;正数    反码 = 原码
 
-&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="err"&gt;负数&lt;/span&gt;    &lt;span class="err"&gt;反码&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;符号位不变，其他位取反&lt;/span&gt;
+负数    反码 = 符号位不变，其他位取反
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;8 bit 的反码可以表示的范围是 [ -127, -0, +0, +127 ]，共 255 个数&lt;/p&gt;
 &lt;h4 id="ji suan fa ze_1"&gt;计算法则&lt;/h4&gt;
 &lt;p&gt;反码的计算不用区分符号和绝对值，直接进行计算，计算结果若有溢出，需要将溢出加到最低位，这种操作称为 &amp;ldquo; 循环进位 &amp;rdquo;（end-around carry）&lt;/p&gt;
@@ -2994,14 +3347,11 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h4 id="zong jie_1"&gt;总结&lt;/h4&gt;
-&lt;p&gt;The &lt;a href="http://en.wikipedia.org/wiki/PDP-1"&gt;PDP-1&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/CDC_160_series"&gt;CDC 160 series&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/CDC_6000_series"&gt;CDC 6000 series&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/UNIVAC_1100"&gt;UNIVAC 1100 series&lt;/a&gt;, and the &lt;a href="http://en.wikipedia.org/wiki/LINC"&gt;LINC&lt;/a&gt; computer used Ones' complement representation.（&lt;a href="http://en.wikipedia.org/wiki/Signed_number_representations#Ones.27_complement"&gt;Wiki&lt;/a&gt;）&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;&lt;code&gt;反码&lt;/code&gt; 中仍然没有避免 0 有两种编码方式的问题，虽然对于人来说，+0 和 -0 没有区别，但是对于计算机来说，判断一个数是否为 0，要进行两次判断。为了解决 0 的表示问题和硬件上的 &amp;ldquo; 循环进位 &amp;rdquo;，于是人们又发明了 &lt;code&gt;补码&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The &lt;a href="http://en.wikipedia.org/wiki/PDP-1"&gt;PDP-1&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/CDC_160_series"&gt;CDC 160 series&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/CDC_6000_series"&gt;CDC 6000 series&lt;/a&gt;, &lt;a href="http://en.wikipedia.org/wiki/UNIVAC_1100"&gt;UNIVAC 1100 series&lt;/a&gt;, and the &lt;a href="http://en.wikipedia.org/wiki/LINC"&gt;LINC&lt;/a&gt; computer used Ones' complement representation.（&lt;a href="http://en.wikipedia.org/wiki/Signed_number_representations#Ones.27_complement"&gt;Wiki&lt;/a&gt;）&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;code&gt;反码&lt;/code&gt; 中仍然没有避免 0 有两种编码方式的问题，虽然对于人来说，+0 和 -0 没有区别，但是对于计算机来说，判断一个数是否为 0，要进行两次判断。为了解决 0 的表示问题和硬件上的 &amp;ldquo; 循环进位 &amp;rdquo;，于是人们又发明了 &lt;code&gt;补码&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;h3 id="bu ma (two's complement)_1"&gt;补码（Two's complement）&lt;/h3&gt;
 &lt;p&gt;前面介绍的&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;253 - 176 =？&lt;/code&gt;&lt;/p&gt;
@@ -3015,10 +3365,13 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;p&gt;举例说明，要表示 -4 ，需要对 &lt;code&gt;0000_0100&lt;/code&gt;取补码，&lt;code&gt;1111_1111 - 0000_0100 + 1 = 1_0000_0000 - 0000_0100&lt;/code&gt;，相当于从 2^8 里面减去 4 。&lt;/p&gt;
 &lt;p&gt;从上面的计算过程可以很容易写出补码的编码规则&lt;/p&gt;
 &lt;h4 id="bian ma gui ze_2"&gt;编码规则&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="err"&gt;正数&lt;/span&gt;    &lt;span class="err"&gt;补码&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;原码&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;正数    补码 = 原码
 
-&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="err"&gt;负数&lt;/span&gt;    &lt;span class="err"&gt;补码&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;反码&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+负数    补码 = 反码 + 1
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;8 bit 补码可以表示的范围是 [ -128, -1, +0, +127 ]，共 256 个数 。&lt;/p&gt;
 &lt;p&gt;目前大多数计算机内部使用的都是补码，所以对于编程中的 32 位 &lt;code&gt;int&lt;/code&gt; 型变量，它可以表示的范围就是 [ -2^32, +2^32 - 1] 。&lt;/p&gt;
 &lt;p&gt;P.S. -128 没有对应的 原码 和反码，它的补码为 &lt;code&gt;1000_0000&lt;/code&gt; 。&lt;/p&gt;
@@ -3032,19 +3385,27 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;h4 id="bu ma zhong de shu xue yuan li"&gt;补码中的数学原理&lt;/h4&gt;
 &lt;p&gt;补码能将减法转化为加法，其数学原理就是 &lt;em&gt;模&lt;/em&gt; 。&lt;/p&gt;
 &lt;p&gt;举个栗子：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="err"&gt;如果有个手表的时间为&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="err"&gt;点，实际时间为&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="err"&gt;点，那么如何校准呢？&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;如果有个手表的时间为 6 点，实际时间为 4 点，那么如何校准呢？
 
-&lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="err"&gt;答案有两种方法：&lt;/span&gt;
+答案有两种方法：
 
-&lt;span class="o"&gt;#&lt;/span&gt;   &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="err"&gt;逆时针转动&lt;/span&gt;  &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="err"&gt;，也就是做&lt;/span&gt; &lt;span class="err"&gt;减法&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;
-&lt;span class="o"&gt;#&lt;/span&gt;   &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="err"&gt;顺时针转动&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;也就是做&lt;/span&gt; &lt;span class="err"&gt;加法&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;mod&lt;/span&gt; &lt;span class="mi"&gt;12&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;
+1. 逆时针转动  2，也就是做 减法 6 - 2 = 4
+2. 顺时针转动 10, 也就是做 加法 (6 + 10) mod 12 = 4
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;从这个例子中就可以很明白的看到 &lt;em&gt;减法&lt;/em&gt; 是如何转化为 &lt;em&gt;加法&lt;/em&gt; 的，也就是如何将一个 &lt;em&gt;负数&lt;/em&gt; 转化为 &lt;em&gt;正数&lt;/em&gt;的 。&lt;/p&gt;
 &lt;p&gt;即有公式：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;A - B = A + (-B + M)&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;这个式子中的 &lt;code&gt;-B + M&lt;/code&gt; 即为 &lt;code&gt;B&lt;/code&gt; 的 &lt;em&gt;补数&lt;/em&gt; （类似于几何中的&lt;em&gt;补角&lt;/em&gt;） 。&lt;/p&gt;
 &lt;h4 id="yi chu wen ti (zhai zi  bai du bai ke )"&gt;溢出问题（摘自 &lt;a href="http://baike.baidu.com/view/60437.htm"&gt;百度百科&lt;/a&gt;）&lt;/h4&gt;
+&lt;blockquote&gt;
 &lt;p&gt;无论采用何种机器数，只要运算的结果大于数值设备所能表示数的范围，就会产生溢出。 溢出现象应当作一种故障来处理，因为它使结果数发生错误。异号两数相加时，实际是两数的绝对值相减，不可能产生溢出，但有可能出现正常进位；同号两数相加时，实际上是两数的绝对值相加，既可能产生溢出，也可能出现正常进位。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;由于补码运算存在符号位进位自然丢失而运算结果正确的问题，因此，应区分补码的溢出与正常进位。&lt;/p&gt;
 &lt;p&gt;详细论证过程不再复制粘贴了 ... 直接给出结论&lt;/p&gt;
 &lt;p&gt;结论：在相加过程中最高位产生的进位和次高位产生的进位如果相同则没有溢出，如果不同则表示有溢出。逻辑电路的实现可以把这两个进位连接到一个异或门，把异或门的输出连接到溢出标志位。&lt;/p&gt;
@@ -3055,26 +3416,28 @@ because it doesn&amp;rsquo;t know the value.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;em&gt;Two's complement is the easiest to implement in hardware, which may be the ultimate reason for its widespread popularity. Processors on the early mainframes often consisted of thousands of transistors &amp;ndash; eliminating a significant number of transistors was a significant cost savings. Mainframes such as the IBM System/360, the GE-600 series, and the PDP-6 and PDP-10 used two's complement, as did minicomputers such as the PDP-5 and PDP-8 and the PDP-11 and VAX. The architects of the early integrated circuit-based CPUs (Intel 8080, etc.) chose to use two's complement math. As IC technology advanced, virtually all adopted two's complement technology. x86, m68k, Power Architecture, MIPS, SPARC, ARM, Itanium, PA-RISC, and DEC Alpha processors are all two's complement.&lt;/em&gt;(&lt;a href="http://en.wikipedia.org/wiki/Signed_number_representations#Two.27s_complement"&gt;Wiki&lt;/a&gt;)&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="you fu hao shu he wu fu hao shu (zhai zi  zheng shu de jia jian yun suan )_2"&gt;有符号数和无符号数（摘自 &lt;a href="http://learn.akae.cn/media/ch14s03.html"&gt;整数的加减运算&lt;/a&gt;）&lt;/h2&gt;
-&lt;hr/&gt;
 &lt;p&gt;如果把所有的位数都用来表示数值的大小，那么 8 bit 二进制数可以表示的范围是 [0, 255] ，这种称为无符号数 。其实计算机做加法时并不区分操作数是有符号数还是无符号数，计算过程都一样 。&lt;/p&gt;
 &lt;p&gt;举个栗子：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="o"&gt;#&lt;/span&gt;   &lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="n"&gt;_0010&lt;/span&gt;              &lt;span class="mi"&gt;130&lt;/span&gt;                  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;126&lt;/span&gt;
-    &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1111&lt;/span&gt;&lt;span class="n"&gt;_1000&lt;/span&gt;     &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;   &lt;span class="o"&gt;+&lt;/span&gt;   &lt;span class="mi"&gt;256&lt;/span&gt;          &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;  &lt;span class="o"&gt;+&lt;/span&gt;   &lt;span class="o"&gt;-&lt;/span&gt;  &lt;span class="mi"&gt;8&lt;/span&gt;
-    &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="c1"&gt;--------------      ---------------      -----------&lt;/span&gt;
-    &lt;span class="o"&gt;#&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="n"&gt;_0111_1010&lt;/span&gt;              &lt;span class="mi"&gt;122&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;256&lt;/span&gt;             &lt;span class="mi"&gt;122&lt;/span&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  1000_0010              130                  -126
++ 1111_1000     =&amp;gt;   +   256          =&amp;gt;  +   -  8
+--------------      ---------------      -----------
+1_0111_1010              122 + 256             122
 
-    &lt;span class="o"&gt;#&lt;/span&gt;                        &lt;span class="err"&gt;无符号数（&lt;/span&gt;&lt;span class="n"&gt;ok&lt;/span&gt;&lt;span class="err"&gt;）&lt;/span&gt;        &lt;span class="err"&gt;有符号数（&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="err"&gt;）&lt;/span&gt;
+                       无符号数（ok）        有符号数（error）
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;计算机的加法器在做完计算之后，根据最高位产生的进位设置 &lt;em&gt;进位标志&lt;/em&gt; ，同时根据最高位和次高位产生的进位的异或设置 &lt;em&gt;溢出标志&lt;/em&gt; 。&lt;/p&gt;
 &lt;p&gt;如果看作无符号数 130 和 248 相加，计算结果是 122 进 1，也就是 122+256，这个结果是对的 ; 如果把这两个操作数看作有符号数 -126 和 -8 相加，计算结果是错的，因为产生了溢出 。&lt;/p&gt;
 &lt;p&gt;至于这个加法到底是有符号数加法还是无符号数加法则取决于程序怎么理解了，如果程序把它理解成有符号数加法，下一步就要检查溢出标志，如果程序把它理解成无符号数加法，下一步就要检查进位标志。&lt;/p&gt;
 &lt;p&gt;通常计算机在做算术运算之后还可能设置另外两个标志，如果计算结果的所有 bit 都是零则设置零标志，如果计算结果的最高位是 1 则设置负数标志，如果程序把计算结果理解成有符号数，也可以检查负数标志判断结果是正是负。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;hr/&gt;
 &lt;p&gt;从 &lt;code&gt;原码&lt;/code&gt; 到 &lt;code&gt;反码&lt;/code&gt;，再到 &lt;code&gt;补码&lt;/code&gt;，可以清楚看到为了解决问题而改进的技术路线，虽然这些是非常基础知识，可能对我们对写程序没有很大的帮助，但是搞清楚这些不仅让你对计算机底层更加了解，更加关键的是 &lt;em&gt;这个学习过程&lt;/em&gt; 和 &lt;em&gt;解决编码问题的思路&lt;/em&gt; 。&lt;/p&gt;
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="can kao wen xian"&gt;参考文献&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Signed_number_representations"&gt;Signed number representations&amp;mdash;&amp;mdash;Wiki&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Ones'_complement"&gt;Ones' complement&lt;/a&gt;&lt;/p&gt;

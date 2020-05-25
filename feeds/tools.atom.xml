@@ -7,7 +7,6 @@
 &lt;p class="last"&gt;Git 的工作流程有很多中，git-flow 是之前最流行的做法。就像作者自己所说，git-flow 非常适合传统的软件开发，但是对于 CI/CD 的项目，则显得太繁琐，推荐使用 Github FLow 和 GitLab FLow，这里有相关的翻译和介绍：&lt;a class="reference external" href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html"&gt;Git 工作流程&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;hr class="docutils"/&gt;
-&lt;p&gt;下面正式开始。&lt;/p&gt;
 &lt;img alt="GitFlow Diagram" src="https://nvie.com/img/git-model@2x.png"/&gt;
 &lt;div class="section" id="why-git"&gt;
 &lt;h2 id="why git"&gt;Why Git&lt;/h2&gt;
@@ -55,15 +54,12 @@
 &lt;p&gt;Feature 分支一般只存在于相关开发者的本地 repo 中，并不会存在 origin 上，除非是多和协作共同完成一个大 feature 的情况。&lt;/p&gt;
 &lt;ol class="arabic"&gt;
 &lt;li&gt;&lt;p class="first"&gt;创建 feature 分支&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;// creating a new feature branch
 git checkout -b feature-xxx develop
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;结束 feature 分支&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
@@ -74,8 +70,10 @@ git merge --no-ff feature-xxx
 git branch -d feature-xxx
 git push origin develop
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;注意：用 &lt;cite&gt;--no-ff&lt;/cite&gt; 来保留 branch 信息。&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;div class="admonition note"&gt;
+&lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
+&lt;p class="last"&gt;用 &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--no-ff&lt;/span&gt;&lt;/tt&gt; 来保留 branch 信息。&lt;/p&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
@@ -105,13 +103,6 @@ git commit -a -m &lt;span class="s2"&gt;"Bumped version number to 1.2"&lt;/span&
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;创建好的 release 分支可能会存在一段时间，这段时间内如果有 bug 修改，应该在 release 分支上，而不是 develop 上。新 feature 禁止直接加到 release 分支上，而是应该加到 develop 上，等待下一次的 release。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;结束 release 分支&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;当 release 分支最终达到可以 release 状态的时候，需要做的事情有&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;把 release 分支 merge 回 master（前面描述过，master 的每个结点都是一个 release 版本）&lt;/li&gt;
-&lt;li&gt;给 master 分支打 tag，方便以后回溯版本&lt;/li&gt;
-&lt;li&gt;把 release 分支 merge 回 develop 分支（保存 release 分支上的 bug 修改）&lt;/li&gt;
-&lt;/ul&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
@@ -124,7 +115,12 @@ git checkout develop
 git merge -no-ff release-1.2
 git branch -d release-1.2
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;当 release 分支最终达到可以 release 状态的时候，需要做的事情有&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;把 release 分支 merge 回 master（前面描述过，master 的每个结点都是一个 release 版本）&lt;/li&gt;
+&lt;li&gt;给 master 分支打 tag，方便以后回溯版本&lt;/li&gt;
+&lt;li&gt;把 release 分支 merge 回 develop 分支（保存 release 分支上的 bug 修改）&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
@@ -141,7 +137,6 @@ git branch -d release-1.2
 &lt;p&gt;由上面的例子可以看出，hotfix 分支存在的意义是让团队中的一部分人来进行快速的产品 fix，另外一部分人仍然按照计划进行开发，相互不影响。&lt;/p&gt;
 &lt;ol class="arabic"&gt;
 &lt;li&gt;&lt;p class="first"&gt;创建一个 hotfix 分支&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git checkout -b hotfix-1.2.1 master
@@ -151,10 +146,8 @@ git commit -a -m &lt;span class="s2"&gt;"Bumped version number to 1.2.1"&lt;/spa
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;在修改完 bug 之后，把修改结果 commit&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git commit -m &lt;span class="s2"&gt;"FIxed severe production problem"&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;结束 hotfix 分支&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;p&gt;最后 bugfix 的内容除了要 merge 回 master，还要 merge 回 develop，以保证下一次 release 的时候这个 bug 已经被修复了。这个过程和结束 release  分支很类似。&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
@@ -169,7 +162,6 @@ git merge --no-ff hotfix-1.2.1
 git branch -d hotfix-1.2.1
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;有个特殊情况：&lt;strong&gt;如果存在一个 release 分支，那么应该将 hotfix 分支 merge 到 release 分支，而不是 develop 分支&lt;/strong&gt;。Merge 到 release 的 bugfix 代码最终会随着 release 代码一起合入到 develop 分支中，不需要担心丢失。（如果 develop 分支需要马上就合入这个 bugfix，等不到 release  分支结束，那么也可以将 bugfix 合入到 develop 中。）&lt;/p&gt;
-&lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
@@ -196,16 +188,13 @@ git branch -d hotfix-1.2.1
 &lt;h3 id="features"&gt;Features&lt;/h3&gt;
 &lt;ol class="arabic"&gt;
 &lt;li&gt;&lt;p class="first"&gt;创建一个 feature 分支：&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;基于 develop 创建了一个新 feature 分支，并切换过去&lt;/li&gt;
 &lt;/ul&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git flow feature start MYFEATURE
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;结束一个 feature 分支：&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;把 MYFEATURE 分支 merge 回 develop 分支&lt;/li&gt;
 &lt;li&gt;删除该 feature 分支&lt;/li&gt;
@@ -213,41 +202,31 @@ git branch -d hotfix-1.2.1
 &lt;/ul&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git flow feature finish MYFEATURE
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;发布一个 feature&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git flow feature publish MYFEATURE
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;把 feature 分支发布到 remote 服务器，方便其他人使用&lt;/p&gt;
-&lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;获取一个其他人发布的 feature&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git flow feature pull origin MYFEATURE
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;div class="section" id="release"&gt;
 &lt;h3 id="release"&gt;Release&lt;/h3&gt;
 &lt;ol class="arabic"&gt;
 &lt;li&gt;&lt;p class="first"&gt;创建一个 release 分支&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git flow release start RELEASE &lt;span class="o"&gt;[&lt;/span&gt;BASE&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;通过一个可选项 [BASE] 来制定 develop 上的某个特定节点&lt;/p&gt;
-&lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;把 release 分支的结果发布给其他开发者&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git flow release publish RELEASE
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;结束一个 release 分支&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;把 release 分支 merge 回 master 分支&lt;/li&gt;
 &lt;li&gt;用 release 分支的名字给 master 打 tag&lt;/li&gt;
@@ -260,7 +239,6 @@ git branch -d hotfix-1.2.1
 &lt;p class="first admonition-title"&gt;Note&lt;/p&gt;
 &lt;p class="last"&gt;别忘了把你的 tag push 到远程 repo：git push origin --tags&lt;/p&gt;
 &lt;/div&gt;
-&lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
@@ -268,21 +246,17 @@ git branch -d hotfix-1.2.1
 &lt;h3 id="hotfix"&gt;Hotfix&lt;/h3&gt;
 &lt;ol class="arabic"&gt;
 &lt;li&gt;&lt;p class="first"&gt;创建一个 hotfix 分支&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git flow hotfix start VERSION &lt;span class="o"&gt;[&lt;/span&gt;BASENAME&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;结束一个 hotfix 分支&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;把 hotfix 分支 merge 回 develop 和 master 分支&lt;/li&gt;
 &lt;li&gt;用 hotfix 的 version 给 master 分支打 tag&lt;/li&gt;
 &lt;/ul&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git flow hotfix finish VERSION
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;div class="section" id="zsh-extension"&gt;
@@ -295,17 +269,13 @@ git branch -d hotfix-1.2.1
 &lt;p&gt;给 zsh 安装 &lt;a class="reference external" href="https://github.com/bobthecow/git-flow-completion"&gt;git flow completion&lt;/a&gt; 插件的步骤，&lt;/p&gt;
 &lt;ol class="arabic"&gt;
 &lt;li&gt;&lt;p class="first"&gt;下载插件&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/bobthecow/git-flow-completion ~/.oh-my-zsh/custom/plugins/git-flow-completion
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;更新 &lt;tt class="docutils literal"&gt;.zshrc&lt;/tt&gt; 文件&lt;/p&gt;
-&lt;blockquote&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;plugins&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;&amp;lt;some-plugin&amp;gt; &amp;lt;another-plugin&amp;gt; git-flow-completion&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;重新 source 之后就可以看到自动补全的效果了&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;

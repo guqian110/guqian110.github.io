@@ -10,8 +10,7 @@
 
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    <link rel="stylesheet/less" type="text/css" href="../../theme/stylesheet/style.less">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="../../theme/stylesheet/style.min.css">
 
     <link id="dark-theme-style" rel="stylesheet" type="text/css"
           media="(prefers-color-scheme: dark)"
@@ -113,7 +112,7 @@
 
 
               <li>
-                <a target="_self"
+                <a target="_blank"
                    href="../../pages/about-me.html#about-me">
                   About Me
                 </a>
@@ -152,10 +151,10 @@
     <nav>
       <a href="../..">Home</a>
 
-      <a href="authors.html">Authors</a>
-      <a href="archives.html">Archives</a>
-      <a href="categories.html">Categories</a>
-      <a href="tags.html">Tags</a>
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
 
       <a href="/feeds/all.atom.xml">Atom</a>
 
@@ -184,7 +183,6 @@
 <p class="last">Git 的工作流程有很多中，git-flow 是之前最流行的做法。就像作者自己所说，git-flow 非常适合传统的软件开发，但是对于 CI/CD 的项目，则显得太繁琐，推荐使用 Github FLow 和 GitLab FLow，这里有相关的翻译和介绍：<a class="reference external" href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html">Git 工作流程</a></p>
 </div>
 <hr class="docutils"/>
-<p>下面正式开始。</p>
 <img alt="GitFlow Diagram" src="https://nvie.com/img/git-model@2x.png"/>
 <div class="section" id="why-git">
 <h2 id="why git">Why Git</h2>
@@ -232,15 +230,12 @@
 <p>Feature 分支一般只存在于相关开发者的本地 repo 中，并不会存在 origin 上，除非是多和协作共同完成一个大 feature 的情况。</p>
 <ol class="arabic">
 <li><p class="first">创建 feature 分支</p>
-<blockquote>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>// creating a new feature branch
 git checkout -b feature-xxx develop
 </pre></div>
-</td></tr></table></blockquote>
-</li>
+</td></tr></table></li>
 <li><p class="first">结束 feature 分支</p>
-<blockquote>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -251,8 +246,10 @@ git merge --no-ff feature-xxx
 git branch -d feature-xxx
 git push origin develop
 </pre></div>
-</td></tr></table><p>注意：用 <cite>--no-ff</cite> 来保留 branch 信息。</p>
-</blockquote>
+</td></tr></table><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">用 <tt class="docutils literal"><span class="pre">--no-ff</span></tt> 来保留 branch 信息。</p>
+</div>
 </li>
 </ol>
 </div>
@@ -282,13 +279,6 @@ git commit -a -m <span class="s2">"Bumped version number to 1.2"</span>
 </td></tr></table><p>创建好的 release 分支可能会存在一段时间，这段时间内如果有 bug 修改，应该在 release 分支上，而不是 develop 上。新 feature 禁止直接加到 release 分支上，而是应该加到 develop 上，等待下一次的 release。</p>
 </li>
 <li><p class="first">结束 release 分支</p>
-<blockquote>
-<p>当 release 分支最终达到可以 release 状态的时候，需要做的事情有</p>
-<ul class="simple">
-<li>把 release 分支 merge 回 master（前面描述过，master 的每个结点都是一个 release 版本）</li>
-<li>给 master 分支打 tag，方便以后回溯版本</li>
-<li>把 release 分支 merge 回 develop 分支（保存 release 分支上的 bug 修改）</li>
-</ul>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -301,7 +291,12 @@ git checkout develop
 git merge -no-ff release-1.2
 git branch -d release-1.2
 </pre></div>
-</td></tr></table></blockquote>
+</td></tr></table><p>当 release 分支最终达到可以 release 状态的时候，需要做的事情有</p>
+<ul class="simple">
+<li>把 release 分支 merge 回 master（前面描述过，master 的每个结点都是一个 release 版本）</li>
+<li>给 master 分支打 tag，方便以后回溯版本</li>
+<li>把 release 分支 merge 回 develop 分支（保存 release 分支上的 bug 修改）</li>
+</ul>
 </li>
 </ol>
 </div>
@@ -318,7 +313,6 @@ git branch -d release-1.2
 <p>由上面的例子可以看出，hotfix 分支存在的意义是让团队中的一部分人来进行快速的产品 fix，另外一部分人仍然按照计划进行开发，相互不影响。</p>
 <ol class="arabic">
 <li><p class="first">创建一个 hotfix 分支</p>
-<blockquote>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git checkout -b hotfix-1.2.1 master
@@ -328,10 +322,8 @@ git commit -a -m <span class="s2">"Bumped version number to 1.2.1"</span>
 </td></tr></table><p>在修改完 bug 之后，把修改结果 commit</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git commit -m <span class="s2">"FIxed severe production problem"</span>
 </pre></div>
-</td></tr></table></blockquote>
-</li>
+</td></tr></table></li>
 <li><p class="first">结束 hotfix 分支</p>
-<blockquote>
 <p>最后 bugfix 的内容除了要 merge 回 master，还要 merge 回 develop，以保证下一次 release 的时候这个 bug 已经被修复了。这个过程和结束 release  分支很类似。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -346,7 +338,6 @@ git merge --no-ff hotfix-1.2.1
 git branch -d hotfix-1.2.1
 </pre></div>
 </td></tr></table><p>有个特殊情况：<strong>如果存在一个 release 分支，那么应该将 hotfix 分支 merge 到 release 分支，而不是 develop 分支</strong>。Merge 到 release 的 bugfix 代码最终会随着 release 代码一起合入到 develop 分支中，不需要担心丢失。（如果 develop 分支需要马上就合入这个 bugfix，等不到 release  分支结束，那么也可以将 bugfix 合入到 develop 中。）</p>
-</blockquote>
 </li>
 </ol>
 </div>
@@ -373,16 +364,13 @@ git branch -d hotfix-1.2.1
 <h3 id="features">Features</h3>
 <ol class="arabic">
 <li><p class="first">创建一个 feature 分支：</p>
-<blockquote>
 <ul class="simple">
 <li>基于 develop 创建了一个新 feature 分支，并切换过去</li>
 </ul>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow feature start MYFEATURE
 </pre></div>
-</td></tr></table></blockquote>
-</li>
+</td></tr></table></li>
 <li><p class="first">结束一个 feature 分支：</p>
-<blockquote>
 <ul class="simple">
 <li>把 MYFEATURE 分支 merge 回 develop 分支</li>
 <li>删除该 feature 分支</li>
@@ -390,41 +378,31 @@ git branch -d hotfix-1.2.1
 </ul>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow feature finish MYFEATURE
 </pre></div>
-</td></tr></table></blockquote>
-</li>
+</td></tr></table></li>
 <li><p class="first">发布一个 feature</p>
-<blockquote>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow feature publish MYFEATURE
 </pre></div>
 </td></tr></table><p>把 feature 分支发布到 remote 服务器，方便其他人使用</p>
-</blockquote>
 </li>
 <li><p class="first">获取一个其他人发布的 feature</p>
-<blockquote>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow feature pull origin MYFEATURE
 </pre></div>
-</td></tr></table></blockquote>
-</li>
+</td></tr></table></li>
 </ol>
 </div>
 <div class="section" id="release">
 <h3 id="release">Release</h3>
 <ol class="arabic">
 <li><p class="first">创建一个 release 分支</p>
-<blockquote>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow release start RELEASE <span class="o">[</span>BASE<span class="o">]</span>
 </pre></div>
 </td></tr></table><p>通过一个可选项 [BASE] 来制定 develop 上的某个特定节点</p>
-</blockquote>
 </li>
 <li><p class="first">把 release 分支的结果发布给其他开发者</p>
-<blockquote>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow release publish RELEASE
 </pre></div>
-</td></tr></table></blockquote>
-</li>
+</td></tr></table></li>
 <li><p class="first">结束一个 release 分支</p>
-<blockquote>
 <ul class="simple">
 <li>把 release 分支 merge 回 master 分支</li>
 <li>用 release 分支的名字给 master 打 tag</li>
@@ -437,7 +415,6 @@ git branch -d hotfix-1.2.1
 <p class="first admonition-title">Note</p>
 <p class="last">别忘了把你的 tag push 到远程 repo：git push origin --tags</p>
 </div>
-</blockquote>
 </li>
 </ol>
 </div>
@@ -445,21 +422,17 @@ git branch -d hotfix-1.2.1
 <h3 id="hotfix">Hotfix</h3>
 <ol class="arabic">
 <li><p class="first">创建一个 hotfix 分支</p>
-<blockquote>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow hotfix start VERSION <span class="o">[</span>BASENAME<span class="o">]</span>
 </pre></div>
-</td></tr></table></blockquote>
-</li>
+</td></tr></table></li>
 <li><p class="first">结束一个 hotfix 分支</p>
-<blockquote>
 <ul class="simple">
 <li>把 hotfix 分支 merge 回 develop 和 master 分支</li>
 <li>用 hotfix 的 version 给 master 分支打 tag</li>
 </ul>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow hotfix finish VERSION
 </pre></div>
-</td></tr></table></blockquote>
-</li>
+</td></tr></table></li>
 </ol>
 </div>
 <div class="section" id="zsh-extension">
@@ -472,17 +445,13 @@ git branch -d hotfix-1.2.1
 <p>给 zsh 安装 <a class="reference external" href="https://github.com/bobthecow/git-flow-completion">git flow completion</a> 插件的步骤，</p>
 <ol class="arabic">
 <li><p class="first">下载插件</p>
-<blockquote>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git clone https://github.com/bobthecow/git-flow-completion ~/.oh-my-zsh/custom/plugins/git-flow-completion
 </pre></div>
-</td></tr></table></blockquote>
-</li>
+</td></tr></table></li>
 <li><p class="first">更新 <tt class="docutils literal">.zshrc</tt> 文件</p>
-<blockquote>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nv">plugins</span><span class="o">=(</span>&lt;some-plugin&gt; &lt;another-plugin&gt; git-flow-completion<span class="o">)</span>
 </pre></div>
-</td></tr></table></blockquote>
-</li>
+</td></tr></table></li>
 <li><p class="first">重新 source 之后就可以看到自动补全的效果了</p>
 </li>
 </ol>
@@ -506,6 +475,9 @@ git branch -d hotfix-1.2.1
   <div class="neighbors">
     <a class="btn float-left" href="../../posts/cs/learning_peps_series_3_pep202_and_pep274.html" title="PEP 学习系列 #3 —— PEP202 & PEP274">
       <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="../../posts/cs/learning_peps_series_4_pep234_and_pep279.html" title="PEP 学习系列 #4 —— PEP234 & PEP 279">
+      Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
 
