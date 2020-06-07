@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog - Embedded</title><link href="https://qiangu.cool/" rel="alternate"></link><link href="https://qiangu.cool/feeds/embedded.atom.xml" rel="self"></link><id>https://qiangu.cool/</id><updated>2014-06-13T20:31:00+08:00</updated><subtitle>Read &gt;&gt; Think &gt;&gt; Write</subtitle><entry><title>学习 Arduino #3 Intel Galileo Linux</title><link href="https://qiangu.cool/posts/embedded/learn_arduino_series_3_intel_galileo_linux.html" rel="alternate"></link><published>2014-06-13T20:31:00+08:00</published><updated>2014-06-13T20:31:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2014-06-13:/posts/embedded/learn_arduino_series_3_intel_galileo_linux.html</id><summary type="html">&lt;p&gt;学习 Arduino，#3 通过 Ethernet &amp;amp; Serial Port 登录到 Galileo 上的 Linux 系统&lt;/p&gt;</summary><content type="html">&lt;h2 id="linux on galileo board"&gt;Linux on Galileo Board&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;Galileo 不是简单的 Arduino 板子，实际上它运行着一个 Linux 操作系统。把它看作是 &amp;ldquo; 兼容 Arduibo 接口的板子 &amp;rdquo; 或许更合适一些。&lt;/p&gt;
+&lt;p&gt;Galileo 板子上容量为 8 MB 的 SPI Flash 中已经烧写了一个精简版的 Linux 系统，因为容量的限制，这个系统去掉了一些不常用的模块，比如 wi-fi 驱动，python 支持等。&lt;/p&gt;
+&lt;p&gt;Galileo 也支持从 SD 卡启动系统，并且 Intel 提供了一个基于 Yocto 项目，已经制作好的完整版 Linux 系统。当精简版系统不能满足我们的要求时（添加外设等），我们可以下载这个完整版系统镜像，烧录到 SD 卡中，并从 SD 卡中启动即可。（也可以自己基于 Yocto 项目按照自己的需求制作系统镜像）&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;我们并不仅仅满足于通过 Arduino IDE 对 Galileo 进行操作，放着一个操作系统，为什么不去使用呢：-P 那么怎么才能登录到这个 Linux 系统中呢？&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="using ethernet"&gt;Using Ethernet&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;Intel 论坛的一个帖子列举了几种登录到 Galileo Linux 的方法&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://communities.intel.com/thread/46335"&gt;Connecting to Galileo via Linux Console&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use the UART connector&lt;/li&gt;
+&lt;li&gt;Use the LAN connection direct to your PC&lt;/li&gt;
+&lt;li&gt;Use the LAN connection and connect to your local network &lt;/li&gt;
+&lt;li&gt;You can also connect using WiFi&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;考虑到我们目前有的材料&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Galileo 开发板&lt;/li&gt;
+&lt;li&gt;Galileo 电源&lt;/li&gt;
+&lt;li&gt;micro USB 线&lt;/li&gt;
+&lt;li&gt;5 类网线&lt;/li&gt;
+&lt;li&gt;运行着 Linux (Ubuntu) 的 PC&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;因为没有串口线，所以我们采用第 2 种方案，即直接连接 PC 和 Galileo，通过 Ethernet 登录。&lt;/p&gt;
+&lt;h3 id="summary"&gt;Summary&lt;/h3&gt;
+&lt;p&gt;Galileo 默认是不开启 &lt;code&gt;Lan&lt;/code&gt; 的，也不开启 &lt;code&gt;Telnet&lt;/code&gt; 服务，所以我们需要做的事就是写一个 &lt;code&gt;sketch&lt;/code&gt;，启动 Lan 连接服务和 Telnet 服务，然后分别给 PC 和 Galileo 一个属于同一子网的静态 IP 地址，这样就可以使用 PC 通过 Telnet 协议登录到 Galileo 上的 Linux 系统中。&lt;/p&gt;
+&lt;h3 id="setp 1: write sketch"&gt;Setp 1: Write sketch&lt;/h3&gt;
+&lt;p&gt;代码需要完成的功能一共有 3 个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;开启 telnet 服务&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;system&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"telnetd -l /bin/sh"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置 IP 地址&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;system&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;将板子的以太网配置状态显示在 serial monitor 中&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;system&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"ifconfig eth0 &amp;gt; /dev/ttyACM0"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;全部代码如下&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;void&lt;/span&gt; &lt;span class="nb"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// put your setup code here, to run once:&lt;/span&gt;
+  &lt;span class="c1"&gt;// Initial serial prot&lt;/span&gt;
+  &lt;span class="nf"&gt;Serial&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;begin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;9600&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;// Start telnet service on board&lt;/span&gt;
+  &lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"telnetd -l /bin/sh"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="c1"&gt;// Assign the IP address '169.254.1.1' to it&lt;/span&gt;
+  &lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="kr"&gt;void&lt;/span&gt; &lt;span class="nb"&gt;loop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// put your main code here, to run repeatedly: &lt;/span&gt;
+  &lt;span class="c1"&gt;// Show the IP detial in the serial monitor of IDE&lt;/span&gt;
+  &lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"ifconfig eth0 &amp;amp;&amp;gt; /dev/ttyGS0 &amp;amp;"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+  &lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;h3 id="step 2: connect,upload"&gt;Step 2: Connect，Upload&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;网线直连 PC 和 Galileo，设置 PC 的 IP 地址为 &lt;code&gt;link-local only&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pc_ethernet_config" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_config.png"/&gt; &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;给 Galileo 供电&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;连接 USB&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;打开 Arduino IDE，&lt;code&gt;Upload&lt;/code&gt; 上面的 sketch&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="step 3: login"&gt;Step 3: Login&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;打开 IDE 的 serial monitor，可以看到 Galileo 的 ethernet 配置信息&lt;/p&gt;
+&lt;p&gt;&lt;img alt="galileo_ethernet_quary" src="/images/learning-arduino-series-3-intel-galileo-linux/galileo_ethernet_quary.png"/&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查看 PC 的网络配置&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ifconfig eth0
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;查询结果&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pc_ethernet_quary" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_quary.png"/&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;打开 PC 的终端 Terminal，使用 telnet 登录&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;telnet &lt;span class="m"&gt;169&lt;/span&gt;.254.1.1
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;登录结果，如图&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pc_ethernet_login" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_telnet_login.png"/&gt;&lt;/p&gt;
+&lt;p&gt;可以看到，这个精简版的 Linux 系统是不支持 Python 的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="using uart_1"&gt;Using UART&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;h3 id="about serial port"&gt;About serial port&lt;/h3&gt;
+&lt;p&gt;如果有串口线的话，我们也可以通过串口来登录，包括 SPI 和 SD 卡上的系统。&lt;/p&gt;
+&lt;p&gt;关于串口线，说明一下。估计是为了节省板子的面积，Intel 在板子上设置的是音频接口 (AV jack)，所以，这里需要额外的一个将音频接口转接为串口的器件。有两种方法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;上网买一个&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;自己 DIY 一个&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果上网买的话，注意 Galileo 用的是 RS232 电平，不要买错成 TTL 电平的。如果是自己 DIY 的话，Intel Galileo Get Started 里面有介绍串口线的接法，他们的论坛上也有相关的讨论：&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://communities.intel.com/message/208448#208448"&gt;UART cable pin-out&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://pinouts.ru/SerialPorts/Serial9_pinout.shtml"&gt;RS 232 DE-9 port&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="linux platform"&gt;Linux Platform&lt;/h3&gt;
+&lt;p&gt;我在 Ubuntu 下使用的终端软件是 &lt;code&gt;gtkterm&lt;/code&gt;。&lt;/p&gt;
+&lt;h4 id="step 1: burn the full-linux sytem"&gt;Step 1: Burn the full-linux sytem&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Intel 官网提供的完整版 Linux 镜像是基于 &lt;code&gt;Yocto&lt;/code&gt; 项目裁剪出来的，取名叫 &lt;code&gt;Claton&lt;/code&gt;，目前 (2014-6-13) 的版本号为 &lt;code&gt;1.0.0&lt;/code&gt;，但是这个版本在我的 SD 卡中是无法启动的，浪费了大量时间，最后终于发现 &lt;code&gt;0.7.5&lt;/code&gt; 版本可以 ...&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;还有就是 Get Started 中推荐不要使用 PC 操作系统提供的格式化功能，更好的选择应该是专业格式化软件，比如 &lt;code&gt;SDFormatter&lt;/code&gt;。但是我实际使用时，发现反而是 &lt;code&gt;SDFormatter&lt;/code&gt; 制作的不能启动 ...&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="step 2: connect"&gt;Step 2: Connect&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;插入 SD 卡&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;配置串口&lt;/p&gt;
+&lt;p&gt;选择正确的端口（因为我使用的串口线是 &lt;code&gt;AV-RS232-USB&lt;/code&gt;，所以下面选择的端口是 &lt;code&gt;ttyUSB0&lt;/code&gt;）；&lt;code&gt;Baud Rate = 115200&lt;/code&gt;，&lt;code&gt;Bits =8&lt;/code&gt;，&lt;code&gt;Stopbits = 1&lt;/code&gt;，&lt;code&gt;Parity = none&lt;/code&gt;，&lt;code&gt;Flow control = none&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;先不要接 USB 下载线，给板子上电&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="step 3: login_1"&gt;Step 3: Login&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;这时候我们应该就可以从串口看到板子上电后 &lt;code&gt;grub&lt;/code&gt; 程序和系统启动的相关信息了。&lt;/p&gt;
+&lt;p&gt;上电后，&lt;code&gt;grub&lt;/code&gt; 引导启动哪个系统&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gtkterm boot information" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_boot_information.png"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gtkterm grub" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_grub.png"/&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;登录到 SPI Flash 中的 Linux 中&lt;/p&gt;
+&lt;p&gt;如图，这个精简版的系统不支持 &lt;code&gt;python&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_login_spi.png"/&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;登录到 mirco-SD card 中的 Linux 中&lt;/p&gt;
+&lt;p&gt;如图，SD 卡中的系统是支持 &lt;code&gt;python&lt;/code&gt; 的&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/gtkterm_login_sd_card.png"/&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="windows platform_1"&gt;Windows Platform&lt;/h3&gt;
+&lt;p&gt;我在 Windows 下使用的终端软件是 &lt;code&gt;Putty&lt;/code&gt;。&lt;/p&gt;
+&lt;h4 id="step 1: burn the full-linux system"&gt;Step 1: Burn the full-linux system&lt;/h4&gt;
+&lt;p&gt;与 Linux 平台下相同。&lt;/p&gt;
+&lt;h4 id="step 2: connect_1"&gt;Step 2: Connect&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;插入 SD 卡&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;配置串口&lt;/p&gt;
+&lt;p&gt;同样，选择正确的端口和波特率。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;先不要接 USB 下载线，给板子上电&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="step 3: login_2"&gt;Step 3: Login&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;这时候我们应该就可以从串口看到板子上电后 &lt;code&gt;grub&lt;/code&gt; 程序和系统启动的相关信息了。&lt;/p&gt;
+&lt;p&gt;上电后，&lt;code&gt;grub&lt;/code&gt; 引导启动哪个系统&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gtkterm boot information" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_boot_information.png"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gtkterm grub" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_grub.png"/&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;登录到 SPI Flash 中的 Linux 中&lt;/p&gt;
+&lt;p&gt;如图，这个精简版的系统不支持 &lt;code&gt;python&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_login_spi.png"/&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;登录到 mirco-SD card 中的 Linux 中&lt;/p&gt;
+&lt;p&gt;如图，SD 卡中的系统是支持 &lt;code&gt;python&lt;/code&gt; 的&lt;/p&gt;
+&lt;p&gt;&lt;img alt="gtkterm login spi" src="/images/learning-arduino-series-3-intel-galileo-linux/putty_login_sd_card.png"/&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="another method_2"&gt;Another method&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;如果你觉得插网线、配置 IP 地址太麻烦，甚至懒得自己 DIY 串口线，也没有钱去买一个，别担心，因为 &amp;ldquo; 天空飘来五个字，这都不是事～&amp;rdquo; 因为你可以借鉴下面这位大神的方法，只需要像下载普通 sketch 一样，将他提供的 sketch 下载到 Galileo 中就可以了，然后通过 IDE 的 serial monitor 就可以登录到 Linux 系统中：&lt;/p&gt;
+&lt;p&gt;&lt;a href="(https://communities.intel.com/message/222211)"&gt;Poor man's telnet for Galileo&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;他的 sketch 的原理就是使用 &lt;code&gt;system()&lt;/code&gt; 函数将我们在 serial monitor 中的命令传到到 Linux shell 中 ，并将命令的结果返回到 serial monitor 中 。&lt;/p&gt;
+&lt;p&gt;不过这种方法的缺点是每个命令传递到 Galileo 后会开辟一个新的进程，当命令执行完返回结果时，这个进程自动结束，所以会产生一些 &amp;ldquo; 问题 &amp;rdquo;：当我们 &lt;code&gt;cd&lt;/code&gt; 到某个子目录后，返回结果之后，我们又回到的之前的目录，举例&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; home
+$ &lt;span class="nb"&gt;pwd&lt;/span&gt;
+
+// result is root dirctory
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;解决方法就是将命令写在一行&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; home&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;pwd&lt;/span&gt;
+
+// result is home directory
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="reference"&gt;Reference&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://communities.intel.com/thread/46335"&gt;Connecting to Galileo via Linux Console&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://communities.intel.com/docs/DOC-22293"&gt;Tutorial 3: Connecting to Linux through telnet&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://communities.intel.com/message/208564#208564"&gt;Using Galileo Linux over Ethernet(Telnet)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="(https://communities.intel.com/message/222211)"&gt;Poor man's telnet for Galileo&lt;/a&gt;&lt;/p&gt;</content><category term="Embedded"></category><category term="Arduino"></category><category term="Linux"></category></entry><entry><title>学习 Arduino #2 初识 Intel Galileo 开发板</title><link href="https://qiangu.cool/posts/embedded/learn_arduino_series_2_intel_galileo_development_board.html" rel="alternate"></link><published>2014-05-29T23:27:00+08:00</published><updated>2014-05-29T23:27:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2014-05-29:/posts/embedded/learn_arduino_series_2_intel_galileo_development_board.html</id><summary type="html">&lt;p&gt;学习 Arduino，#2 初识 Intel Galileo 开发板&lt;/p&gt;</summary><content type="html">&lt;h2 id="preface"&gt;Preface&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;Arduino 有很多开发板，分别针对不同的应用环境含有不同的模块。学习一款 Intel 推出的开发板 &amp;mdash;&amp;mdash; &lt;em&gt;Intel Galileo Development Board&lt;/em&gt; 。&lt;/p&gt;
+&lt;p&gt;Intel Gailileo Development Board 是 Intel 进入 Arduino 领域的试水产品，它含有一颗 Quark Soc X1000 CPU，这是一款 32 位、x86 构架、低功耗的 SoC 芯片，它的主频可以达到 400 MHz，内部有 512 KB 的 SRAM，同时 Galileo 有丰富的接口 (USB, JTag, RS232, Ethernet, mPCIE...)，支持很多外围设备。&lt;/p&gt;
+&lt;p&gt;Galileo 试图达到的目标是融合 Arduino 对硬件操作的便利和 Linux 系统对硬件操作完整支持。所以，Galileo 也兼容 Arduino 接口，你可以很方便的把 Arduino 项目移植到 Galileo 上运行，使用常用的一些 Arduino 库 (Ethernet, Wi-Fi, SD, EEPROM...) 也可以获得内部 Linux 系统的完整功能 (Python, SSH, Telnet， OpenCV...)。&lt;/p&gt;
+&lt;p&gt;总结一下我学习这块板子的知识，不仅仅为 Arduino 开发做准备，也为后面的一个竞赛 ( 基于 Yocto 项目 ) 开发积累知识～&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="official arduino boards"&gt;Official Arduino Boards&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;Arduino 官网上列出所有了官方开发板，其中也包含了官方认证过的开发板 (Intel Galileo)，和一些推荐的第三方产品&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://arduino.cc/en/Main/Products"&gt;Arduino Products&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;还详细列出了这些开发板上的微控制器的区别&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://arduino.cc/en/Products.Compare"&gt;Compare boards specs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;官方的开发板的核心都是 Atmel 的微控制器，基于市场战略的需求，看到数莓派、Arduino 发展的热火朝天，Intel 也坐不住了 ( 瞎猜的 =.=)，推出了新的基于 Intel 架构 (x86)、可以和 Arduino 兼容的开发板。Galileo 是这个家族中的第一款，目前 Intel 又推出了一款新的开发板，取名叫 Edison。(Intel 这是要把所有科学家的名字都取个遍么 )&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="intel galileo board"&gt;Intel Galileo Board&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;h3 id="arduinco.cc"&gt;Arduinco.cc&lt;/h3&gt;
+&lt;p&gt;在 Arduino 官网上有一篇简单介绍 Galileo 的网页&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://arduino.cc/en/ArduinoCertified/IntelGalileo"&gt;Intel Galileo on arduino.cc&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="intel official introduction"&gt;Intel Official Introduction&lt;/h3&gt;
+&lt;p&gt;Arduino 官网上的介绍只是非常简单的介绍，Intel 自己的官网上有关于 Galileo 全部的详细资料&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.intel.cn/content/www/cn/zh/do-it-yourself/galileo-maker-quark-board.html"&gt;Galileo Maker Quark Board&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;关于 Galileo 的全部文档，包括 Datasheet、Schematic、Quick Start、User Guide 等：&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://communities.intel.com/community/makers/documentation/galileodocuments"&gt;Intel Galileo Development Board Documents&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id="other introductions"&gt;Other Introductions&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;首先&lt;/strong&gt; 送上一篇非常好的介绍文章（来自 Ifanr.com），介绍了在 Maker 眼中，这个板子到底可以 hack 到什么程度～&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.ifanr.com/388835"&gt;x86 版的 Arduino 来了，Intel Galileo 开发板的体验、分析和应用【超长文多图】&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;再&lt;/strong&gt; 附上一篇完爆我的总结的教程～&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://learn.sparkfun.com/tutorials/galileo-getting-started-guide"&gt;Galileo Getting Started Guide&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这篇教程基本就是按照 Intel 官方的 Getting Started 流程写的，总结一下我遇到的问题 (Windows 7 &amp;amp; Linux Ubuntu)。&lt;/p&gt;
+&lt;p&gt;Arduino 官方的 IDE 中 &lt;code&gt;Board&lt;/code&gt; 选项中没有 Galileo，所以我们应该从 Intel 下载定制过的 IDE。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Windows IDE 闪退&lt;/p&gt;
+&lt;p&gt;这个 IDE 在部分 Windows 下有闪退的现象。&lt;/p&gt;
+&lt;p&gt;原因 是 Intel 的 IDE 版本采用的是未发布的 1.5.3, 它会检测系统的语言设置，当系统不是 En/US 时，就会退出。&lt;/p&gt;
+&lt;p&gt;解决方法 更改系统语言设置 或者 使用一款名为 Locale Emulator 的软件。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;IDE 解压路径&lt;/p&gt;
+&lt;p&gt;Windows 下的解压路径 &lt;em&gt;必须是顶层目录&lt;/em&gt;，比如 &lt;code&gt;D:\arduino-1.5.3&lt;/code&gt;，否则在 &lt;code&gt;Verify&lt;/code&gt; 时会提示找不到特定的文件 / 目录。Linux 下无此问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Linux 连接板子和 PC&lt;/p&gt;
+&lt;p&gt;在 Windows 下第一次连接系统自动安装驱动肯定会失败的，需要我们手动指定驱动文件的路径。&lt;/p&gt;
+&lt;p&gt;在 Linux 终端下，必须以 &lt;code&gt;sudo&lt;/code&gt; 权限运行 IDE，否则即使板子已经连接了 PC，在 IDE 下的 &lt;code&gt;Tools\Serial Port&lt;/code&gt; 是 disable 的，不能选择端口&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo ./arduino &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Linux 下 disable modem manager&lt;/p&gt;
+&lt;p&gt;前面的教程中提到，在大多数 Linux 发行版下，都需要 disable modem manager 才能 &lt;code&gt;Upload&lt;/code&gt; 成功，不过我在 Ubuntu 下没有遇到这个问题 ...&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;然后&lt;/strong&gt; 扯几句&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;硬件配置&lt;/p&gt;
+&lt;p&gt;从 Board Guide 中找到的截图如下&lt;/p&gt;
+&lt;p&gt;&lt;img alt="key_componets_1" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_1.png"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="key_componets_2" src="/images/learning-arduino-series-2-intel-galileo-development-board/key_components_2.png"/&gt;&lt;/p&gt;
+&lt;p&gt;从它的配置中可以看到，Galileo 并不是一款简单的 Arduino 开发板，它的硬件系统其实是按照 PC 来设计的，如果我们只是简单的把它当作 Arduino 开发板来应用，有点大材小用了，这样子完全没有体现出 Galileo 的优势，只是一个速度更快的 Arduino 罢了。&lt;/p&gt;
+&lt;p&gt;事实上，如果功能上没有比传统的 Arduino 更强大的功能，估计 Intel 也不会推出这个产品了～Galileo 的真正强大的地方在于：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;背后基于 UEFI/Linux 的软件平台以及 Galileo 自身的硬件配置。为此，Intel 提供了丰富的开发文档、软件代码支持，方便开发人员真正的发挥出 Galileo 的所有潜力。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;软件构架&lt;/p&gt;
+&lt;p&gt;Galileo 不仅仅是硬件上按照 PC 设计的，事实上，它的软件构架也和 PC 一样。和普通的单片机不同，它并不是简单的运行用户开发的程序那么简单。它实际上运行着一个操作系统 &amp;mdash;&amp;mdash; 包含 UEFI(BIOS 的替代者 )、Grub、嵌入式 Linux 系统，用户编写的 &lt;code&gt;Sketch&lt;/code&gt; 只是一个在 Linux 上面运行的应用而已。&lt;/p&gt;
+&lt;p&gt;Galileo 启动时可以从 ISP Flash 中启动一个微型的 Linux 系统，也可以从 MicroSD 卡中启动一个完整版的 Linux 系统。我们 &lt;code&gt;Upload&lt;/code&gt; 时，Arduino IDE 将程序编译链接成一个标准的 Linux ELF 文件，并且下载到 Arduino 板子上运行，如图所示&lt;/p&gt;
+&lt;p&gt;&lt;img alt="target_software" src="/images/learning-arduino-series-2-intel-galileo-development-board/target_software.png"/&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;开发嵌入式 Linux 设备&lt;/p&gt;
+&lt;p&gt;或许这才是 Galileo 的 " 正经 " 用途吧 ... 基于 Yocto Project，我们可以开发属于自己的 Linux 系统。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;最后，送上一个别人的 Galileo 开箱视频&lt;/p&gt;
+&lt;p&gt;&lt;embed align="middle" allowfullscreen="true" allowscriptaccess="always" height="400" quality="high" src="http://player.youku.com/player.php/sid/XNjQ0NTMzMjYw/v.swf" type="application/x-shockwave-flash" width="480"/&gt;&lt;/p&gt;</content><category term="Embedded"></category><category term="Intel Galileo"></category><category term="Arduino"></category></entry><entry><title>学习 Arduino #1 Arduino 入门</title><link href="https://qiangu.cool/posts/embedded/learn_arduino_series_1_getting_started.html" rel="alternate"></link><published>2014-05-27T12:34:00+08:00</published><updated>2014-05-27T12:34:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2014-05-27:/posts/embedded/learn_arduino_series_1_getting_started.html</id><summary type="html">&lt;p&gt;学习 Arduino，#1 Arduino 入门&lt;/p&gt;</summary><content type="html">&lt;h2 id="what is arduino"&gt;What is Arduino&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;img alt="logo" src="/images/learning-arduino-series-1-getting-started/logo.png"/&gt;&lt;/p&gt;
+&lt;p&gt;版权所有：Arduino.cc&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://arduino.cc/"&gt;Arduino 官网&lt;/a&gt; 首页的介绍：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ARDUINO IS AN OPEN-SOURCE ELECTRONICS PROTOTYPING PLATFORM BASED ON FLEXIBLE, EASY-TO-USE HARDWARE AND SOFTWARE. IT'S INTENDED FOR ARTISTS, DESIGNERS, HOBBYISTS AND ANYONE INTERESTED IN CREATING INTERACTIVE OBJECTS OR ENVIRONMENTS.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="http://arduino.cc/en/Guide/Introduction"&gt;官方网站最权威的答案：&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Arduino is a tool for making computers that can sense and control more of the physical world than your desktop computer. &lt;strong&gt;It's an open-source physical computing platform based on a simple microcontroller board, and a development environment for writing software for the board.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Arduino can be used to develop interactive objects, taking inputs from a variety of switches or sensors, and controlling a variety of lights, motors, and other physical outputs. Arduino projects can be stand-alone, or they can communicate with software running on your computer (e.g. Flash, Processing, MaxMSP.) The boards can be assembled by hand or purchased preassembled; the open-source IDE can be downloaded for free.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Development Language：&lt;/strong&gt; &lt;a href="http://arduino.cc/en/Reference/HomePage"&gt;Arduino programming language&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;IDE：&lt;/strong&gt; &lt;a href="http://arduino.cc/en/Main/Software"&gt;Arduino IDE&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;补充：&lt;/strong&gt; &lt;a href="http://en.wikipedia.org/wiki/Arduino"&gt;Wikipedia 上的介绍&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;简单的说：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Arduino 是一个开放源代码的单片机，它使用了 Atmel AVR 单片机，采用了基于开放源代码的软硬件平台，构建于开放源代码 simple I/O 接口板。开发语言为 Arduino programming language（基于 Wiring 语言），开发环境基于 Processing 。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="story of arduino"&gt;Story of Arduino&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;wikipedia 上的&lt;a href="http://zh.wikipedia.org/wiki/Arduino"&gt;小故事&lt;/a&gt;：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Arduino 的核心开发团队成员包括：Massimo Banzi，David Cuartielles，Tom Igoe，Gianluca Martino，David Mellis 和 Nicholas Zambetti。&lt;/p&gt;
+&lt;p&gt;据说 Massimo Banzi 之前是意大利 Ivrea 一家高科技设计学校的老师。他的学生们经常抱怨找不到便宜好用的微控制器。2005 年冬天， Massimo Banzi 跟 David Cuartielles 讨论了这个问题。David Cuartielles 是一个西班牙籍芯片工程师，当时在这所学校做访问学者。两人决定设计自己的电路板，并引入了 Banzi 的学生 David Mellis 为电路板设计编程语言。两天以后，David Mellis 就写出了程式码。又过了三天，电路板就完工了。这块电路板被命名为 Arduino。几乎任何人，即使不懂电脑编程，也能用 Arduino 做出很酷的东西，比如对传感器作出回应，闪烁灯光，还能控制马达。随后 Banzi，Cuartielles，和 Mellis 把设计图放到了网上。保持设计的开放源码理念，因为版权法可以监管开源软件，却很难用在硬件上，他们决定采用共享创意许可。共享创意是为保护开放版权行为而出现的类似 GPL 的一种许可（license）。在共享创意许可下，任何人都被允许生产电路板的复制品，还能重新设计，甚至销售原设计的复制品。你不需要付版税，甚至不用取得 Arduino 团队的许可。然而，如果你重新发布了引用设计，你必须说明原始 Arduino 团队的贡献。如果你调整或改动了电路板，你的最新设计必须使用相同或类似的共享创意许可，以保证新版本的 Arduino 电路板也会一样的自由和开放。唯一被保留的只有 Arduino 这个名字。它被注册成了商标。如果有人想用这个名字卖电路板，那他们可能必须付一点商标费用给 Arduino 的核心开发团队成员。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="why is arduino"&gt;Why is Arduino&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;a href="http://arduino.cc/en/Guide/Introduction"&gt;官网介绍&lt;/a&gt;：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;There are many other microcontrollers and microcontroller platforms available for physical computing. Parallax Basic Stamp, Netmedia's BX-24, Phidgets, MIT's Handyboard, and many others offer similar functionality. All of these tools take the messy details of microcontroller programming and wrap it up in an easy-to-use package. &lt;strong&gt;Arduino also simplifies the process of working with microcontrollers, but it offers some advantage for teachers, students, and interested amateurs over other systems:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Inexpensive&lt;/li&gt;
+&lt;li&gt;Cross-platform (Windows, Linux, Macintosh OSX)&lt;/li&gt;
+&lt;li&gt;Simple, clear programming environment&lt;/li&gt;
+&lt;li&gt;Open source and extensible software&lt;/li&gt;
+&lt;li&gt;Open source and extensible hardware&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="how-to develope"&gt;How-to Develope&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;h3 id="ide installation"&gt;IDE installation&lt;/h3&gt;
+&lt;p&gt;官网上有 Windows, Linux, Mac 的详细安装步骤：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://arduino.cc/en/Guide/Windows"&gt;for Windows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://playground.arduino.cc/Learning/Linux"&gt;for Linux&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Linux 安装过程&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;方法一：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;解决包依赖关系：安装 openjdk-7-jre (openjdk-6-jre, sun's java 6 runtime, the sun-java6-jre package, the oracle JRE 7 应该也可以 )&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get install openjdk-7-jre
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;下载合适的 &lt;a href="http://arduino.cc/en/Main/Software"&gt;Arduino IDE&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;解压、切换到解压路径，运行目录下的 &lt;code&gt;arduino&lt;/code&gt; 脚本&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;tar -zxvf arduino-1.0.5-linux32.tgz
+&lt;span class="nb"&gt;cd&lt;/span&gt; arduino-1.0.5
+./arduino
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;方法二 (for Ubuntu)：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;下载 &amp;amp; 安装&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get install arduino arduino-core
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;运行&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ arduino
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="dev"&gt;Dev&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;IDE&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Arduino IDE 是用 Java 写的跨平台的程序，它源自 &lt;a href="http://en.wikipedia.org/wiki/Processing_(programming_language)"&gt;Processing programming language&lt;/a&gt; 和 &lt;a href="http://en.wikipedia.org/wiki/Wiring_(development_platform)"&gt;Wiring&lt;/a&gt; 项目的 IDE 。它是为艺术家和其他不熟悉软件开发的新手而设计的。它包含一个有语法高亮、括号匹配、自动缩进功能的代码编辑器，还可以通过一个按键完成编译程序 (compile) 和烧录至电路板 (upload) 的功能。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Programming&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一个 Arduino 程序 / 代码 称为 "&lt;em&gt;Sketch&lt;/em&gt;"。Arduino 程序是用 C/C++ 写成的，Arduino IDE 含有一个名叫 "Wiring" 的代码库 ( 源自于 Wiring 项目 )，这样子可以大幅度简化常用 I/O 操作，用户只需要定义两个函数就可以写出一个可以运行的程序：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;setup()&lt;/em&gt; : 系统上电或者复位时启动，只运行一次，初始化配置&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;loop()&lt;/em&gt; : 一直循环被调用，直到断电&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Arduino 的示例程序 "Blink"：( 等同于 C 的 hello world，对于硬件最简单就是控制一个 LED 的亮灭 )&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/*&lt;/span&gt;
+&lt;span class="cm"&gt;Blink&lt;/span&gt;
+&lt;span class="cm"&gt;Turns on an LED on for one second, then off for one second, repeatedly.&lt;/span&gt;
+
+&lt;span class="cm"&gt;This example code is in the public domain.&lt;/span&gt;
+&lt;span class="cm"&gt;*/&lt;/span&gt;
+
+&lt;span class="c1"&gt;// Pin 13 has an LED connected on most Arduino boards.&lt;/span&gt;
+&lt;span class="c1"&gt;// give it a name:&lt;/span&gt;
+&lt;span class="kr"&gt;int&lt;/span&gt; &lt;span class="n"&gt;led&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;// the setup routine runs once when you press reset:&lt;/span&gt;
+&lt;span class="kr"&gt;void&lt;/span&gt; &lt;span class="nb"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;                
+  &lt;span class="c1"&gt;// initialize the digital pin as an output.&lt;/span&gt;
+  &lt;span class="nf"&gt;pinMode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;led&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;OUTPUT&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;     
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// the loop routine runs over and over again forever:&lt;/span&gt;
+&lt;span class="kr"&gt;void&lt;/span&gt; &lt;span class="nb"&gt;loop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nf"&gt;digitalWrite&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;led&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;HIGH&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;   &lt;span class="c1"&gt;// turn the LED on (HIGH is the voltage level)&lt;/span&gt;
+  &lt;span class="nf"&gt;delay&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;               &lt;span class="c1"&gt;// wait for a second&lt;/span&gt;
+  &lt;span class="nf"&gt;digitalWrite&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;led&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;LOW&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;    &lt;span class="c1"&gt;// turn the LED off by making the voltage LOW&lt;/span&gt;
+  &lt;span class="nf"&gt;delay&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;               &lt;span class="c1"&gt;// wait for a second&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;上面的这段代码对于一个标准 C++ 编译器来说是无效的，事实上当我们按下 IDE 界面上的 "Upload to I/O board" 按钮时，IDE 会拷贝一份代码，在开头加上 &lt;code&gt;include&lt;/code&gt; 指示，在结尾加上一个很简单的 &lt;code&gt;main()&lt;/code&gt; 函数，这样它就是一个有效的 C++ 程序了。&lt;/p&gt;
+&lt;p&gt;Arduino 使用 &lt;a href="http://en.wikipedia.org/wiki/GNU_toolchain"&gt;GNU toolchain&lt;/a&gt; 和 AVR Libc 来编译程序的，使用 AVRdude 把程序下载到板子上。因为 Arduino 平台采用的是 Atmel 的微控制器，所以 Atmel 的开发环境 AVR Studio 或者更新的 Atmel Studio 应该也可以作为 Arduino 的开发环境。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;学习资源&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Arduino 的联合创始人 Massimo Banzi 的 Tutorial Series Vedio&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.youku.com/playlist_show/id_19440139.html"&gt;优酷视频地址&lt;/a&gt;，一共 11 课，涵盖最基本的面包板搭电路、I/O 接口控制、传感器控制、网络应用等方面，如果有编程基础，很快就可以上手制作自己的设备了～&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.arduino.cn/"&gt;Arduino 中文社区&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.arduino.cn/thread-1066-1-1.html"&gt;论坛教程汇总帖&lt;/a&gt;，因为 Arduino 诞生的一个很大的目的就是为设计师、艺术家、业余爱好者提供更加方便的开发环境，所以，Arduino 的教程对于有编程基础的同学来说是很容易的 ：-P&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://arduino.cc/en/Reference/HomePage"&gt;Arduino Language Reference en&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;官网上关于 Arduino 编程语言的介绍&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.arduino.cn/reference/"&gt;Arduino Language Reference zh&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Arduino 中文社区翻译的 编程语言介绍&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://arduino.cc/en/Tutorial/HomePage"&gt;Arduino Core Functions, Libraries&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;官网上关于 IDE 中 &lt;code&gt;File/Examples/&lt;/code&gt; 下示例程序的说明&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="can kao_1"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://arduino.cc/"&gt;Arduino official website&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://en.wikipedia.org/wiki/Arduino"&gt;Arduino on wiki&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.arduino.cn/"&gt;Arduino 中文社区&lt;/a&gt;&lt;/p&gt;</content><category term="Embedded"></category><category term="Open-source Hardware"></category><category term="Arduino"></category></entry><entry><title>Yocto 从零单排 1 —— 入门</title><link href="https://qiangu.cool/posts/embedded/learning_yocto_from_zero_1_getting_started.html" rel="alternate"></link><published>2014-05-12T12:46:00+08:00</published><updated>2014-05-12T12:46:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2014-05-12:/posts/embedded/learning_yocto_from_zero_1_getting_started.html</id><summary type="html">&lt;p&gt;yocto 从零单排第一期，了解什么是 yocto&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近做嵌入式，开始学习 Yocto 项目相关的知识。网上关于 Yocto 的介绍、博客不少，但是大多数都是英文的。中文博客也有，不过都是一些大牛写的笔记，对于新手来说，并不是很容易懂 , 于是，就有了我的 &amp;ldquo;Yocto 从零单排 &amp;rdquo; ^_^&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Yocto 从零单排第 1 期 &amp;mdash;&amp;mdash; 入门，了解什么是 Yocto&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;学习一个新事物，当然是官网的东西最权威最简洁明了，不易出错（避免二次理解），以下内容来自 &lt;a href="(https://www.yoctoproject.org/)"&gt;Yocto 官网&lt;/a&gt; 和对其的翻译，本文只是我的学习笔记，详细内容见官网：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="(https://www.yoctoproject.org/)"&gt;Yocto Project 官网&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="what &amp;amp; why yocto"&gt;What &amp;amp; Why Yocto&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;h3 id="what is yocto"&gt;What is Yocto&lt;/h3&gt;
+&lt;p&gt;官网上的介绍：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;The Yocto Project is an open source collaboration project that provides templates, tools and methods to help you create custom Linux-based systems for embedded products regardless of the hardware architecture. &lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;也就是说 &lt;em&gt;&amp;ldquo;Yocto 是一个开源协作项目，它通过提供模板、工具和方法来帮助开发者为嵌入式产品订制基于 LInux 的系统，而不用关注硬件结构。&amp;rdquo;&lt;/em&gt; 这样，它就可以极大地简化开发过程，因为你不用再从头裁剪一个完整的 Linux 发布版本，后者通常包括许多你并不需要的软件。&lt;/p&gt;
+&lt;p&gt;它由许多硬件制造商、开源操作系统提供商和电子器件公司一起合作于 2010 年建立，目的是为了使混乱的嵌入式 Linux 开发更简单有序。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P.S.&lt;/strong&gt; Yocto 项目有时也被称为 "Umbrella" 项目&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;P.P.S.&lt;/strong&gt; yocto 的名字是委员会决定的，这个词本来是国际单位中的最小的单位，表示 10^-24，也就是千万亿分之一，在此寓意 &amp;ldquo; 基本的粒子 &amp;rdquo; &amp;mdash;&amp;mdash; 贯穿嵌入式 Linux 开发过程的工具。&lt;/p&gt;
+&lt;h3 id="why using yocto"&gt;Why using Yocto&lt;/h3&gt;
+&lt;p&gt;它是一个完整的嵌入式 Linux 开发环境，包含工具 (tools)、元数据 (metadata) 和文档 (documentation)&amp;mdash;&amp;mdash; 你需要的一切。这些免费工具 ( 包含仿真环境 emulation environments、调试器 debuggers、应用程序开发工具 Application Toolkit Generator) 很容易上手，功能强大，并且它们可以让系统开发以最优化的方式不断前进，而不用担心在系统原形阶段的投资损失。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="yocto project charter_1"&gt;Yocto Project Charter&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;Yocto 作为一个开源项目，其本质就是欢迎大大小小的参与者。&lt;/p&gt;
+&lt;p&gt;Yocto 的目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;为进一步的开发、定制 LInux 平台，基于 Linux 系统的开发提供一个写作平台&lt;/li&gt;
+&lt;li&gt;鼓励 Linux 平台开发的标准化和组建的重利用&lt;/li&gt;
+&lt;li&gt;专注于创造一个构建系统的基础设施和技术，能够满足所有用户的需求，并增加了缺失的功能 &amp;mdash;&amp;mdash; 来自于 OpenEmbedded 架构&lt;/li&gt;
+&lt;li&gt;文档化可以用到的工具和方法，使开发人员更容易使用它们&lt;/li&gt;
+&lt;li&gt;尽可能地保证这些开发工具和系统架构无关&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="governance &amp;amp; administration"&gt;Governance &amp;amp;  Administration&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;Yocto 是一个开源项目，它由维护者和 &lt;a href="(https://www.yoctoproject.org/about/governance/advisory-board)"&gt;Yocto Project Advisory Board&lt;/a&gt; 领导。&lt;/p&gt;
+&lt;h3 id="technical leadership"&gt;Technical Leadership&lt;/h3&gt;
+&lt;p&gt;Yocto 项目的 &lt;a href="(https://www.yoctoproject.org/about/governance/technical-leadership)"&gt;technical leadership&lt;/a&gt; 和 Linux Kernel 的类似，是一个分级的、任人唯贤的，由一个 &amp;ldquo; 仁慈的独裁者 &amp;rdquo;(benevolent dictator) 领导的组织。组织的上层负责决策，同时也是下层子系统的领导者，下层维护者负责处理细节问题，比如 bug 和补丁。&lt;/p&gt;
+&lt;p&gt;Yocto 项目架构师：Richard Purdie&lt;/p&gt;
+&lt;p&gt;子系统 / BSP 层维护者：...&lt;/p&gt;
+&lt;h3 id="the yocto project community"&gt;The Yocto Project Community&lt;/h3&gt;
+&lt;p&gt;Yocto 是由社区的专家和志愿者共同协助设计、开发的，他们统称为贡献者 (contributors)，贡献者包括任何可能对 Yocto 有贡献的人，比如代码开发人员、文档编写者、兴趣小组、管理小组、维护者和技术领导小组等。&lt;/p&gt;
+&lt;p&gt;下图简明说明了 Yocto 项目社区的各个成员之间的相互影响的关系：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="yocto-community" src="https://www.yoctoproject.org/sites/yoctoproject.org/files/page/os63yoctodev.org-diagramv11.png"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="linux foundation_1"&gt;Linux Foundation&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;a href="(http://www.linuxfoundation.org/)"&gt;Linux Foundation&lt;/a&gt; 是一个致力于促进 Linux 发展的非盈利组织，关于它的主要事实：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;赞助 Linux 的创造者 Linus Torvalds 的工作&lt;/li&gt;
+&lt;li&gt;持有 Linux 商标&lt;/li&gt;
+&lt;li&gt;经营着 Linux.com，每个月拥有活跃的 2000,000 的 Linux 开发人员和用户 &lt;/li&gt;
+&lt;li&gt;主持着多个推进或标准化 Linux 的工作小组&lt;/li&gt;
+&lt;li&gt;举行世界上顶尖的 Linux 会议，包括 LinuxCon&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="the linux foundation and the yocto project"&gt;The Linux Foundation and the Yocto Project&lt;/h3&gt;
+&lt;p&gt;Linux Foundation 是业界最大的非盈利组织，作为 Linux 的维护者和 Linux 创造者 Linus Torvalds 的雇主，没有比它更适合 Yocto 项目生存的了。Linux Foundation 主持 Yocto 项目作为一个开源项目，它提供了一个厂商中立的协作环境。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="yocto project jian jie_1"&gt;Yocto Project 简介&lt;/h2&gt;
+&lt;hr/&gt;
+&lt;p&gt;Yocto 项目中有很多独立的子项目，这些子项目在嵌入式 Linux 开发中扮演着重要的角色，Yocto 项目则整合它们使它们可以相互协同工作。&lt;/p&gt;
+&lt;h3 id="openembedded core"&gt;Openembedded Core&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Metadata Set&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;元数据集 (Metadata Set) 按 " 层 " 进行排列，这样一来每一层都可以为下面的层提供单独的功能。基层是 OpenEmbedded-Core 或 oe-core，提供了所有构建项目所必需的常见配方 (recipes)、类和相关功能。&lt;/p&gt;
+&lt;p&gt;Openembedded Core 包含了 核心方法 (recipes) 的基础层、类 (classes) 和 相关文档，它们是各种嵌入式 Linux 系统 ( 包含 Yocto 在内 ) 的共同基础。Openembedded Core 由 Yocto Project 和 OpenEmbedded 项目共同维护，将 Yocto 和 Openembedded 分开的层是 meta-yocto 层，该层提供了 Pocky 发行版配置和一组核心的参考 BSP。&lt;/p&gt;
+&lt;p&gt;Openembedded 项目本身是一个 ie 独立的开源项目，具有可与 Yocto 项目交换的配方 (recipes)，但两者具有不同的治理和范围。&lt;/p&gt;
+&lt;h3 id="swabber"&gt;Swabber&lt;/h3&gt;
+&lt;p&gt;Swabber 可以提供一种检测主机系统的机制，一旦检测到问题，你就可以分析这是否真的是个问题。&lt;/p&gt;
+&lt;h3 id="application development toolkit (adt)"&gt;Application Development Toolkit (ADT)&lt;/h3&gt;
+&lt;p&gt;Application Development Toolkit (ADT) 能够让系统开发人员为他们使用 Yocto Project 工具创建的发行版提供软件开发工具包 (SDK)，为应用程序开发人员提供了一种针对系统开发人员提供的软件栈进行开发的方法。ADT 包含一个交叉编译工具链、调试和分析工具，以及 QEMU 仿真和支持脚本。ADT 还为那些喜欢使用集成开发环境 (IDE) 的人提供了一个 Eclipse 插件。&lt;/p&gt;
+&lt;h3 id="autobuilder"&gt;AutoBuilder&lt;/h3&gt;
+&lt;p&gt;AutoBuilder 是一款能够不断自动构建 Yocto 的工具，它启用自动化的 Quality Assurance(QA) 活动。&lt;/p&gt;
+&lt;h3 id="bitbake"&gt;BitBake&lt;/h3&gt;
+&lt;p&gt;BitBake 是一个构建引擎。它读取配方 (recipes) 并按照配方来获取、构建程序包，并将结果导入可启动的系统映像中。BitBake 是 Yocto 项目的核心组件。&lt;/p&gt;
+&lt;h3 id="build appliance"&gt;Build Appliance&lt;/h3&gt;
+&lt;p&gt;Build Applicance 是一台运行 Hob 的虚拟机，它可以让你在非 Linux 环境下构建启动一个基于 Yocto 的嵌入式系统镜像。并不建议在日常开发中使用 Build Applicance，应该将其用在测试和体验 Yocto 项目上。&lt;/p&gt;
+&lt;h3 id="cross-prelink"&gt;Cross-Prelink&lt;/h3&gt;
+&lt;p&gt;Cross-Prelink 为交叉编译开发环境提供预链接，这样可以在应用程序启动时提高其性能表现。&lt;/p&gt;
+&lt;h3 id="eclipse ide plug-in"&gt;Eclipse IDE Plug-in&lt;/h3&gt;
+&lt;p&gt;Eclipse IDE Plug-in 把 Yocto ADT 和工具链集成到 Eclipse IDE 中。&lt;/p&gt;
+&lt;h3 id="eglibc"&gt;EGLIBC&lt;/h3&gt;
+&lt;p&gt;Embedded GLIBC (EGLIBC) 是 GNU C Library (GLIBC) 的一个变体，旨在能够在嵌入式系统上运行。EGLIBC 的目标包括减少内存占用、让组件可配置、更好地支持交叉编译和交叉测试。EGLIBC 是 Yocto Project 的一部分，但在它自己的治理结构内加以维护。&lt;/p&gt;
+&lt;h3 id="hob"&gt;Hob&lt;/h3&gt;
+&lt;p&gt;Hob 是 BitBake 的图形前端，它的主要目的是使常用命令更加方便使用。&lt;/p&gt;
+&lt;h3 id="matchbox"&gt;Matchbox&lt;/h3&gt;
+&lt;p&gt;Matchbox 是 一个基于 X Window 系统的开源环境，主要用于非桌面系统、屏幕大小、输入方式或系统资源有限的嵌入式设备中，比如手持设备、机顶盒、电话亭等。&lt;/p&gt;
+&lt;h3 id="poky"&gt;Poky&lt;/h3&gt;
+&lt;p&gt;Poky 是 Yocto Project 的一个参考构建系统。它包含 BitBake、OpenEmbedded-Core、一个板卡支持包 (BSP) 以及整合到构建过程中的其他任何程序包或层。Poky 这一名称也指使用参考构建系统得到的默认 Linux 发行版，它可能极其小 (core-image-minimal)，也可能是带有 GUI 的整个 Linux 系统 (core-image-sato)。&lt;/p&gt;
+&lt;p&gt;你可以将 Poky 构建系统看作是整个项目的一个参考系统，即运行中进程的一个工作示例。在下载 Yocto Project 时，实际上也下载了可用于构建默认系统的这些工具、实用程序、库、工具链和元数据的实例。这一参考系统以及它创建的参考发行版都被命名为 Poky。你还可以将此作为一个起点来创建您自己的发行版，当然，你可以对此发行版随意命名。&lt;/p&gt;
+&lt;p&gt;构建一个系统必须有工具链 (toolchain)：一个编译器 (compiler)、汇编器 (assembler)、链接器 (linker) 以及为给定架构创建二进制可执行文件所需的其他二进制实用程序 (other binary utilities)。Poky 使用了 GNU Compiler Collection (GCC)，不过你也可以指定其他工具链。Poky 使用了一种名为交叉编译 (cross-compilation) 的技术：在一个架构上使用工具链为另一个架构构建二进制可执行文件（例如，在基于 x86 的系统上构建 ARM
+发行版）。开发人员常常在嵌入式系统开发中使用交叉编译来利用主机系统的高性能。&lt;/p&gt;
+&lt;h3 id="pseudo"&gt;Pseudo&lt;/h3&gt;
+&lt;p&gt;构建一个系统时，有时候有必要把自己模拟为系统管理员进行一些操作，比如定义某个文件的归属权和权限配置等。Pseudo 是一个可以模拟 root 的程序，使普通用户也可以具有 root 权限。&lt;/p&gt;
+&lt;h3 id="toaster"&gt;Toaster&lt;/h3&gt;
+&lt;p&gt;Toaster 是一个 API，它基于 web 界面来使用 BitBake，你可以通过浏览器来查阅 Toaster 收集到的你的系统的相关信息。&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;h2 id="can kao_1"&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="(https://www.yoctoproject.org/)"&gt;Yocto Project 官网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.ibm.com/developerworks/linux/library/l-yocto-linux/index.html?ca=dat"&gt;Build custom embedded Linux distributions with the Yocto Projec&lt;/a&gt;&lt;/p&gt;</content><category term="Embedded"></category><category term="Yocto"></category></entry></feed>

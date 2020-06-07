@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="翻译 &amp; 总结 git-flow 原文" />
+<meta name="keywords" content="Git, Workflow">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="Git Flow 小结"/>
+<meta property="og:description" content="翻译 &amp; 总结 git-flow 原文"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/posts/tools/git_flow_summary.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-24 12:55:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="Tools"/>
+<meta property="article:tag" content="Git"/>
+<meta property="article:tag" content="Workflow"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; Git Flow 小结</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="git_flow_summary">Git Flow 小结</h1>
+    <p>
+      Posted on 2020-05-24 12:55 in <a href="https://qiangu.cool/category/tools.html">Tools</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Git Flow 小结">Git Flow 小结</a><ul><li><a class="toc-href" href="#why git" title="Why Git">Why Git</a></li><li><a class="toc-href" href="#decentralized &amp; centralized" title="Decentralized &amp; Centralized">Decentralized &amp; Centralized</a></li><li><a class="toc-href" href="#main branch" title="Main Branch">Main Branch</a></li><li><a class="toc-href" href="#supporting branch" title="Supporting Branch">Supporting Branch</a><ul><li><a class="toc-href" href="#feature branches" title="Feature Branches">Feature Branches</a></li><li><a class="toc-href" href="#release branch" title="Release Branch">Release Branch</a></li><li><a class="toc-href" href="#hotfix branches" title="Hotfix Branches">Hotfix Branches</a></li></ul></li><li><a class="toc-href" href="#summary_1" title="Summary">Summary</a></li><li><a class="toc-href" href="#practice -- git-flow" title="Practice -- git-flow">Practice -- git-flow</a><ul><li><a class="toc-href" href="#install" title="Install">Install</a></li><li><a class="toc-href" href="#setup" title="Setup">Setup</a></li><li><a class="toc-href" href="#features" title="Features">Features</a></li><li><a class="toc-href" href="#release" title="Release">Release</a></li><li><a class="toc-href" href="#hotfix" title="Hotfix">Hotfix</a></li><li><a class="toc-href" href="#zsh extension" title="Zsh Extension">Zsh Extension</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <p>git-flow 是 Vincent Driessen 在 2010 年写的文章 <a class="reference external" href="https://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a> 中提出的一种管理 git branch 的模型，当时 git 才刚刚被发明出来。经过 10 来年的发展，已经有很多公司都采用这种方式作为标准流程来管理自己的软件开发了。如果像 Web App 这类的持续交付 continuous delivery 的软件，可以采用更简单的 <a class="reference external" href="https://guides.github.com/introduction/flow/">GitHub Flow</a>，但是对于传统的那种版本概念非常清晰的软件，git-flow 还是非常适用的。下面的内容是原文的简单汇总和翻译，完整内容请看原文。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>这里还有一篇翻译：<a class="reference external" href="http://www.ruanyifeng.com/blog/2012/07/git.html">Git 分支管理策略</a></p>
+<p class="last">Git 的工作流程有很多中，git-flow 是之前最流行的做法。就像作者自己所说，git-flow 非常适合传统的软件开发，但是对于 CI/CD 的项目，则显得太繁琐，推荐使用 Github FLow 和 GitLab FLow，这里有相关的翻译和介绍：<a class="reference external" href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html">Git 工作流程</a></p>
+</div>
+<hr class="docutils"/>
+<img alt="GitFlow Diagram" src="https://nvie.com/img/git-model@2x.png"/>
+<div class="section" id="why-git">
+<h2 id="why git">Why Git</h2>
+<p>网上有很多 Git 和 SVN 这种集中式的代码管理系统优缺点的对比。简而言之，Git 从根本上改变了程序员对 branch/merge 的思考方式，</p>
+<ul class="simple">
+<li>SVN 方式：merge 要非常小心 conflict，一般很久才 merge 一次</li>
+<li>Git 方式：每天都会进行，是日常工作的一部分</li>
+</ul>
+<p>Git 让码农的生活更加容易。</p>
+</div>
+<div class="section" id="decentralized-centralized">
+<h2 id="decentralized &amp; centralized">Decentralized &amp; Centralized</h2>
+<p>Git 实际上是一个分布式的管理系统，并不存在技术意义上真正的 central repo，但是因为需要一个大家都能访问的服务器节点（比如 GitHub）方便相互之间同步，所以在 Git 中一般把这个服务器节点叫做 <tt class="docutils literal">origin</tt>。项目中的所有成员都和 origin 打交道，完成 <tt class="docutils literal">pull</tt>, <tt class="docutils literal">push</tt> 等操作。</p>
+<p>有时候对于某个比较大的 feature，可能需要多个同学一起完成，这个时候相关的同学可以组成一个 subteam，他们相互之间进行 pull/push，如下图所示，Alice 和 Bob，Alice 和 David，David 和 Clair 组成了 3 个 subteam。要组建 subteam 也非常简单，Alice 只需要定义一个 <tt class="docutils literal">git remote</tt>，指向 Bob 的 repo 地址即可。</p>
+<img alt="Decentralized &amp; Centralized Diagram" src="https://nvie.com/img/centr-decentr@2x.png"/>
+</div>
+<div class="section" id="main-branch">
+<h2 id="main branch">Main Branch</h2>
+<p>主分支一共有两条，即服务器上的 central repo 应该有两条生命期无限长的 branch，</p>
+<ul class="simple">
+<li><tt class="docutils literal">master</tt></li>
+<li><tt class="docutils literal">develop</tt></li>
+</ul>
+<p>每个小组成员都应该对 <tt class="docutils literal">origin/master</tt> 分支非常熟悉，它是发布产品的主分支，<tt class="docutils literal">HEAD</tt> 指向的永远是可以随时在产品中部署的代码。</p>
+<p>而 <tt class="docutils literal">origin/develop</tt> 分支是用来发布新 feature 的主分支，<tt class="docutils literal">HEAD</tt> 指向的代码永远指向最新交付的新功能。有些人把它叫做 集成分支，顾名思义它是用来做集成的，也就是所有开发者会把开发的新 feature 代码都集成到这个分支中，为 release 做准备。所有 nightly build 都应该用这个分支的代码。</p>
+<p>当 develop 分支上的代码保持稳定，达到可以 release 的程度了，所有的修改都要通过某种方式 merge 回 master 分支，并且用版本号打个 tag（具体方法后面 release 分支一节描述）。所以每次 merge 回 master，都是发布了一个新的产品 release，所以可以利用 Git 提供的 hook 函数实现只要 master 有新的 commit，就自动编译和推送最新代码到产品服务器上。</p>
+</div>
+<div class="section" id="supporting-branch">
+<h2 id="supporting branch">Supporting Branch</h2>
+<p>除了 master 和 develop 两个主分支，还有一些支持性的分支以实现小组成员之间的并行开发，比如跟踪不同的新 feature，修改 bug 等。和主分支不同都是，这些支持性的分支的生命周期是有限的。这里一共定义了 3 种分支，</p>
+<ul class="simple">
+<li><tt class="docutils literal">Feature branches</tt></li>
+<li><tt class="docutils literal">Release branches</tt></li>
+<li><tt class="docutils literal">Hotfix branch</tt></li>
+</ul>
+<p>这 3 个分支每个都有非常明确的目的，使用也非常严格，从哪个分支中 branch 出来，最终 merge 到哪个 branch 都有严格要求。这些 branch 从技术上来说就是普通的 branch，并无特殊之处，但是因为我们特殊的用法所以将其归为一大类。</p>
+<div class="section" id="feature-branches">
+<h3 id="feature branches">Feature Branches</h3>
+<ul class="simple">
+<li>来源：可能是 <tt class="docutils literal">develop</tt></li>
+<li>终点：必须是 <tt class="docutils literal">develop</tt></li>
+<li>命名规则：除了 master, develop, release-*, hotfix-* 之外，其他名字都可以</li>
+</ul>
+<p>顾名思义，Feature 分支的目的就是为了开发新 feature，有时候开始开发新 feature 的时候并不知道最终 merge 回哪个 release 分支，只要开始开发这个 feature，那么该 feature 分支就会一直存在，直到最后 merge 回 develop 或者是丢弃掉（中途放弃开发）。</p>
+<p>Feature 分支一般只存在于相关开发者的本地 repo 中，并不会存在 origin 上，除非是多和协作共同完成一个大 feature 的情况。</p>
+<ol class="arabic">
+<li><p class="first">创建 feature 分支</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>// creating a new feature branch
+git checkout -b feature-xxx develop
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">结束 feature 分支</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span>// merge back to develop branch
+git checkout develop
+git merge --no-ff feature-xxx
+git branch -d feature-xxx
+git push origin develop
+</pre></div>
+</td></tr></table><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">用 <tt class="docutils literal"><span class="pre">--no-ff</span></tt> 来保留 branch 信息。</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="release-branch">
+<h3 id="release branch">Release Branch</h3>
+<ul class="simple">
+<li>来源：可能是 <tt class="docutils literal">develop</tt></li>
+<li>终点：必须是 <tt class="docutils literal">develop</tt> &amp; <tt class="docutils literal">master</tt></li>
+<li>命名规则：release-*</li>
+</ul>
+<p>Release 分支的作用是为最终产品发布做准备，在这个 branch 上允许做最后一刻的修改，比如微小的 bug 修改，为发布准备 meta-data（版本号，build 日期等等），在 release 分支上做这些事情的好处是可以保持 develop 分支的干净整洁。</p>
+<p>创建 release 分支的时间点非常关键，主要有两方面的约束，</p>
+<ol class="arabic simple">
+<li>不能太早，相关功能的代码要全部 ready：当前要发布的 release 包含的新 feature 必须都已经合入 develop 之中</li>
+<li>不能太晚，代码要防污染：不能包含下一次 release 对应的 feature 代码</li>
+</ol>
+<p>约束 1 要求 <tt class="docutils literal">develop</tt> 分支（几乎）完成了新 release 的所有功能才可以创建 <tt class="docutils literal">release</tt> 分支。约束 2 要求未来下一次 release 的 feature 代码则一定不能合并进来，这些新 feature 必须等到创建当前 release 之后才能合进 develop 分支。</p>
+<p>在创建了 release 分支之后，develop 分支就可以为 &ldquo; 下一次 release&rdquo; 做准备了。</p>
+<ol class="arabic">
+<li><p class="first">创建 release 分支</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git checkout -b release-1.2 develop
+./bump-version.sh <span class="m">1</span>.2
+git commit -a -m <span class="s2">"Bumped version number to 1.2"</span>
+</pre></div>
+</td></tr></table><p>创建好的 release 分支可能会存在一段时间，这段时间内如果有 bug 修改，应该在 release 分支上，而不是 develop 上。新 feature 禁止直接加到 release 分支上，而是应该加到 develop 上，等待下一次的 release。</p>
+</li>
+<li><p class="first">结束 release 分支</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git checkout master
+git merge --no-ff release-1.2
+git tag -a <span class="m">1</span>.2
+git checkout develop
+git merge -no-ff release-1.2
+git branch -d release-1.2
+</pre></div>
+</td></tr></table><p>当 release 分支最终达到可以 release 状态的时候，需要做的事情有</p>
+<ul class="simple">
+<li>把 release 分支 merge 回 master（前面描述过，master 的每个结点都是一个 release 版本）</li>
+<li>给 master 分支打 tag，方便以后回溯版本</li>
+<li>把 release 分支 merge 回 develop 分支（保存 release 分支上的 bug 修改）</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="hotfix-branches">
+<h3 id="hotfix branches">Hotfix Branches</h3>
+<ul class="simple">
+<li>来源：可能是 <tt class="docutils literal">master</tt></li>
+<li>终点：必须是 <tt class="docutils literal">develop</tt> &amp; <tt class="docutils literal">master</tt></li>
+<li>命名规则：hotfix-*</li>
+</ul>
+<p>hotfix 分支的作用和 release 有点类似，也是为了新产品发布，但是它是计划之外的。hoftfix 是为了应对那种意外发现的，急待解决的产品 bug，如果发现产品上有一个马上就要解决的重大 bug，那么就可以从 master 的该节点上创建一个 hotfix 分支。</p>
+<p>典型场景：</p>
+<p>突然发现 master 分支上正在使用的产品版本（比如说是 release-1.2）有一个致命 bug，但是 develop 分支因为合入了新 feature，还没有稳定，不能直接在 develop 分支上进行修复，此时就需要创建一个 hotfix 分支。</p>
+<p>由上面的例子可以看出，hotfix 分支存在的意义是让团队中的一部分人来进行快速的产品 fix，另外一部分人仍然按照计划进行开发，相互不影响。</p>
+<ol class="arabic">
+<li><p class="first">创建一个 hotfix 分支</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git checkout -b hotfix-1.2.1 master
+./bump-version.sh <span class="m">1</span>.2.1
+git commit -a -m <span class="s2">"Bumped version number to 1.2.1"</span>
+</pre></div>
+</td></tr></table><p>在修改完 bug 之后，把修改结果 commit</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git commit -m <span class="s2">"FIxed severe production problem"</span>
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">结束 hotfix 分支</p>
+<p>最后 bugfix 的内容除了要 merge 回 master，还要 merge 回 develop，以保证下一次 release 的时候这个 bug 已经被修复了。这个过程和结束 release  分支很类似。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git checkout master
+git merge --no-ff hotfix-1.2.1
+git tag -a <span class="m">1</span>.2.1
+git checkout -b develop
+git merge --no-ff hotfix-1.2.1
+git branch -d hotfix-1.2.1
+</pre></div>
+</td></tr></table><p>有个特殊情况：<strong>如果存在一个 release 分支，那么应该将 hotfix 分支 merge 到 release 分支，而不是 develop 分支</strong>。Merge 到 release 的 bugfix 代码最终会随着 release 代码一起合入到 develop 分支中，不需要担心丢失。（如果 develop 分支需要马上就合入这个 bugfix，等不到 release  分支结束，那么也可以将 bugfix 合入到 develop 中。）</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="summary">
+<h2 id="summary_1">Summary</h2>
+<p>这个模型并没有提出什么惊人的新概念，但是在实际工作中非常有用，这个优雅的模型可以让整个 team 中的成员对 branch 分支有一个共同的认识。</p>
+</div>
+<div class="section" id="practice-git-flow">
+<h2 id="practice -- git-flow">Practice -- git-flow</h2>
+<p>上面是原文的翻译和总结，在实践中，有个 git 扩展 <tt class="docutils literal"><span class="pre">git-flow</span></tt> 工具可以帮助我们遵守这套规则。这里有一篇 <a class="reference external" href="https://danielkummer.github.io/git-flow-cheatsheet/">git flow cheatsheet</a> 方便查看。</p>
+<div class="section" id="install">
+<h3 id="install">Install</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install git-flow
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="setup">
+<h3 id="setup">Setup</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow init
+</pre></div>
+</td></tr></table><p>回答一系列问题即可，推荐使用默认值</p>
+</div>
+<div class="section" id="features">
+<h3 id="features">Features</h3>
+<ol class="arabic">
+<li><p class="first">创建一个 feature 分支：</p>
+<ul class="simple">
+<li>基于 develop 创建了一个新 feature 分支，并切换过去</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow feature start MYFEATURE
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">结束一个 feature 分支：</p>
+<ul class="simple">
+<li>把 MYFEATURE 分支 merge 回 develop 分支</li>
+<li>删除该 feature 分支</li>
+<li>切换回 develop 分支</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow feature finish MYFEATURE
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">发布一个 feature</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow feature publish MYFEATURE
+</pre></div>
+</td></tr></table><p>把 feature 分支发布到 remote 服务器，方便其他人使用</p>
+</li>
+<li><p class="first">获取一个其他人发布的 feature</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow feature pull origin MYFEATURE
+</pre></div>
+</td></tr></table></li>
+</ol>
+</div>
+<div class="section" id="release">
+<h3 id="release">Release</h3>
+<ol class="arabic">
+<li><p class="first">创建一个 release 分支</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow release start RELEASE <span class="o">[</span>BASE<span class="o">]</span>
+</pre></div>
+</td></tr></table><p>通过一个可选项 [BASE] 来制定 develop 上的某个特定节点</p>
+</li>
+<li><p class="first">把 release 分支的结果发布给其他开发者</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow release publish RELEASE
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">结束一个 release 分支</p>
+<ul class="simple">
+<li>把 release 分支 merge 回 master 分支</li>
+<li>用 release 分支的名字给 master 打 tag</li>
+<li>把 release 分支 merge 回 develop 分支</li>
+<li>删除 release 分支</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow release finish RELEASE
+</pre></div>
+</td></tr></table><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">别忘了把你的 tag push 到远程 repo：git push origin --tags</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="hotfix">
+<h3 id="hotfix">Hotfix</h3>
+<ol class="arabic">
+<li><p class="first">创建一个 hotfix 分支</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow hotfix start VERSION <span class="o">[</span>BASENAME<span class="o">]</span>
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">结束一个 hotfix 分支</p>
+<ul class="simple">
+<li>把 hotfix 分支 merge 回 develop 和 master 分支</li>
+<li>用 hotfix 的 version 给 master 分支打 tag</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git flow hotfix finish VERSION
+</pre></div>
+</td></tr></table></li>
+</ol>
+</div>
+<div class="section" id="zsh-extension">
+<h3 id="zsh extension">Zsh Extension</h3>
+<p>zsh 里面有两个相关插件，</p>
+<ul class="simple">
+<li><tt class="docutils literal">git flow completion</tt>，自动补全</li>
+<li><tt class="docutils literal"><span class="pre">git-flow</span></tt>，提供命令的各种 alias</li>
+</ul>
+<p>给 zsh 安装 <a class="reference external" href="https://github.com/bobthecow/git-flow-completion">git flow completion</a> 插件的步骤，</p>
+<ol class="arabic">
+<li><p class="first">下载插件</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git clone https://github.com/bobthecow/git-flow-completion ~/.oh-my-zsh/custom/plugins/git-flow-completion
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">更新 <tt class="docutils literal">.zshrc</tt> 文件</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nv">plugins</span><span class="o">=(</span>&lt;some-plugin&gt; &lt;another-plugin&gt; git-flow-completion<span class="o">)</span>
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">重新 source 之后就可以看到自动补全的效果了</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="ref">
+<h2 id="ref_1">Ref</h2>
+<p><a class="reference external" href="https://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a></p>
+<p><a class="reference external" href="https://danielkummer.github.io/git-flow-cheatsheet/">git flow cheatsheet</a></p>
+</div>
+
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/git.html">Git</a>
+      <a href="https://qiangu.cool/tag/workflow.html">Workflow</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/cs/learning_peps_series_4_pep202_and_pep274.html" title="PEP 学习系列 #4 —— PEP202 & PEP274">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="https://qiangu.cool/posts/cs/learning_peps_series_5_pep234_and_pep279.html" title="PEP 学习系列 #5 —— PEP234 & PEP 279">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="总结使用 Ctags/Cscope/Taglist 的使用方法。" />
+<meta name="keywords" content="vim, ctags, cscope, taglist">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="学习 Vim 之 Ctags/Cscope/Taglist"/>
+<meta property="og:description" content="总结使用 Ctags/Cscope/Taglist 的使用方法。"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/posts/tools/learning_vim_ctags_cscope_taglist.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-01-25 21:32:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="Tools"/>
+<meta property="article:tag" content="vim"/>
+<meta property="article:tag" content="ctags"/>
+<meta property="article:tag" content="cscope"/>
+<meta property="article:tag" content="taglist"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; 学习 Vim 之 Ctags/Cscope/Taglist</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="learning_vim_ctags_cscope_taglist">学习 Vim 之 Ctags/Cscope/Taglist</h1>
+    <p>
+      Posted on 2015-01-25 21:32 in <a href="https://qiangu.cool/category/tools.html">Tools</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Vim 之 Ctags/Cscope/Taglist">学习 Vim 之 Ctags/Cscope/Taglist</a><ul><li><a class="toc-href" href="#background" title="Background">Background</a></li><li><a class="toc-href" href="#ctags" title="Ctags">Ctags</a><ul><li><a class="toc-href" href="#intro" title="Intro">Intro</a></li><li><a class="toc-href" href="#install" title="Install">Install</a></li><li><a class="toc-href" href="#config" title="Config">Config</a></li><li><a class="toc-href" href="#usage" title="Usage">Usage</a></li></ul></li><li><a class="toc-href" href="#cscope_1" title="Cscope">Cscope</a><ul><li><a class="toc-href" href="#intro_1" title="Intro">Intro</a></li><li><a class="toc-href" href="#install_1" title="Install">Install</a></li><li><a class="toc-href" href="#usage_1" title="Usage">Usage</a></li><li><a class="toc-href" href="#config_1" title="Config">Config</a></li></ul></li><li><a class="toc-href" href="#taglist_1" title="Taglist">Taglist</a><ul><li><a class="toc-href" href="#intro_2" title="Intro">Intro</a></li><li><a class="toc-href" href="#install_2" title="Install">Install</a></li><li><a class="toc-href" href="#config_2" title="Config">Config</a></li><li><a class="toc-href" href="#usage_2" title="Usage">Usage</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <h2 id="background">Background</h2>
+<hr/>
+<p>tags 文件是一种非常有用的文件，本文的内容都是基于 <code>tag</code> 的，所以首先得了解什么是 tag？</p>
+<p>Vim Manual 里面的简单介绍就足够我们进行下面的内容了。查看 Manual：</p>
+<div class="highlight"><pre><span></span><span class="p">:</span><span class="n">help</span> <span class="n">tagsrch</span>
+</pre></div>
+<p>使用 tags 文件的步骤：</p>
+<ol>
+<li>
+<p>首先使用 tag 工具（ctags、cscope 等）生成 tags 文件</p>
+</li>
+<li>
+<p>其次，将 tags 文件路径导入到 Vim 中，让 Vim 知道从哪个 tags 文件中查找。</p>
+</li>
+<li>
+<p>最后，使用 Vim 的命令查找 tag。</p>
+</li>
+</ol>
+<p><br/></p>
+<h2 id="ctags">Ctags</h2>
+<hr/>
+<h3 id="intro">Intro</h3>
+<p><a href="ctags.sourceforge.net/">Ctags 官网</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Ctags">wiki</a></p>
+<blockquote>
+<p><strong>Ctags</strong> is a programming tool that generates an index (or tag) file of names found in source and header files of various programming languages. Depending on the language, functions, variables, class members, macros and so on may be indexed. These tags allow definitions to be quickly and easily located by a text editor or other utility. Alternatively, there is also an output mode that generates a cross reference file, listing information about various names found in a set of language files in human-readable form.</p>
+</blockquote>
+<p>manpage: </p>
+<div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">ctags</span>
+</pre></div>
+<p>vim Manual：</p>
+<div class="highlight"><pre><span></span><span class="p">:</span><span class="n">help</span> <span class="mi">29</span><span class="p">.</span><span class="mi">1</span>
+<span class="p">:</span><span class="n">help</span> <span class="n">ctags</span>
+</pre></div>
+<p>简而言之，Ctags 是一个可以自动提取源文件和头文件中函数、变量、类成员、宏定义等元素的工具，然后它会建立一个 tags 文件，其他编辑器（比如我们使用的 Vim）可以读取这个 tags 文件，从而快速定位代码的位置。</p>
+<p>使用 <code>ctags --list-language</code> 可以查看 ctags 支持的语言，使用 <code>ctags --list-maps</code> 可以查看哪些后缀名对应对应的语言。</p>
+<h3 id="install">Install</h3>
+<p>ctags 是 Unix 系统自带的一个工具，但是功能比较少，所以一般使用 Exuberant Ctags。在 Linux 上，Exuberant Ctags 是默认的 Ctags 程序。如果系统中没有安装的话，我们可以从官网上下载源码编译安装，或者直接 apt-get 安装。</p>
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">exuberant</span><span class="o">-</span><span class="n">ctags</span>
+</pre></div>
+<h3 id="config">Config</h3>
+<p>我们要使用 tags，第一步就是生成 tags 文件。生成 tags 文件时，ex-ctags 提供了很多参数供我们控制生成结果，详细内容可以查看其 manpage，这里有 easwy 大神翻译的中文版：</p>
+<p><a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/">Exuberant Ctags 中文手册</a></p>
+<p>我们可以将配置写在 .vimrc 中：</p>
+<div class="highlight"><pre><span></span> <span class="k">set</span> <span class="n">tags</span> <span class="o">=</span><span class="n">tags</span><span class="p">;</span>
+ <span class="k">map</span> <span class="o">&lt;</span><span class="k">C</span><span class="o">-</span><span class="n">F12</span><span class="o">&gt;</span> <span class="p">:</span><span class="o">!</span><span class="n">ctags</span> <span class="o">-</span><span class="n">R</span> <span class="c1">--c++-kinds=+p --fields=+iaS --extra=+q .&lt;CR&gt;</span>
+</pre></div>
+<p>这样，我们只需要按 Ctrl-F12 即可自动生成 C++ 项目的 tags 文件。</p>
+<h3 id="usage">Usage</h3>
+<p>Vim 提供了接口可以调用 tags 文件，它使用一个栈来记录我们在文件中跳转的位置。ctags 其 manual page 中有说明如何在 Vi 中使用 ctags：</p>
+<ol>
+<li>
+<p><code>vi -t tags</code> 打开 vi，并且将光标停留在 <code>tag</code> 定义的地方</p>
+</li>
+<li>
+<p><code>:ta tag</code> 寻找 <code>tag</code></p>
+</li>
+<li>
+<p><code>Ctrl-]</code> 寻找光标处 tag 的定义</p>
+</li>
+<li>
+<p><code>Ctrl-T</code> 返回到 tag 的前一个位置</p>
+</li>
+<li>
+<p><code>tnext</code> 如果某个 tag（比如函数）有多次定义，会匹配到多个结果，本命令跳到下一个结果。</p>
+</li>
+<li>
+<p><code>tprevious</code> 同上，跳转到前一个匹配结果</p>
+</li>
+<li>
+<p><code>tfirst</code> 跳转到第一个匹配结果</p>
+</li>
+<li>
+<p><code>tlast</code> 跳转到最后一个匹配结果</p>
+</li>
+<li>
+<p><code>:ts tag</code> 同上，列出所有匹配到 tag 的结果</p>
+</li>
+<li>
+<p><code>:tags</code> 显示 tagstack 中的内容，即我们的跳转记录</p>
+</li>
+</ol>
+<p><br/></p>
+<h2 id="cscope_1">Cscope</h2>
+<hr/>
+<h3 id="intro_1">Intro</h3>
+<p><a href="http://cscope.sourceforge.net/">Cscope 官网</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Cscope">cscope wiki</a>:</p>
+<blockquote>
+<p>cscope is a console mode or text-based graphical interface that allows computer programmers or software developers to search C source code (there is limited support for other languages). It is often used on very large projects to find source code, functions, declarations, definitions and regular expressions given a text string. cscope is free and available under a BSD License. The original developer of cscope is Joe Steffen.</p>
+</blockquote>
+<p>man page:</p>
+<div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">cscope</span>
+</pre></div>
+<p>Vim help:</p>
+<div class="highlight"><pre><span></span><span class="p">:</span><span class="n">help</span> <span class="n">if_cscop</span>
+</pre></div>
+<p>The following text is taken from a version of the cscope man page:</p>
+<blockquote>
+<p>Cscope is an interactive screen-oriented tool that helps you:</p>
+<ul>
+<li>
+<p>Learn how a C program works without endless flipping through a thick listing.</p>
+</li>
+<li>
+<p>Locate the section of code to change to fix a bug without having to learn the entire program.</p>
+</li>
+<li>
+<p>Examine the effect of a proposed change such as adding a value to an enum variable.</p>
+</li>
+<li>
+<p>Verify that a change has been made in all source files such as adding an argument to an existing function.</p>
+</li>
+<li>
+<p>Rename a global variable in all source files.</p>
+</li>
+<li>
+<p>Change a constant to a preprocessor symbol in selected lines of files.</p>
+</li>
+</ul>
+<p>It is designed to answer questions like:</p>
+<ul>
+<li>
+<p>Where is this symbol used?</p>
+</li>
+<li>
+<p>Where is it defined?</p>
+</li>
+<li>
+<p>Where did this variable get its value?</p>
+</li>
+<li>
+<p>What is this global symbol's definition?</p>
+</li>
+<li>
+<p>Where is this function in the source files?</p>
+</li>
+<li>
+<p>What functions call this function?</p>
+</li>
+<li>
+<p>What functions are called by this function?</p>
+</li>
+<li>
+<p>Where does the message "out of space" come from?</p>
+</li>
+<li>
+<p>Where is this source file in the directory structure?</p>
+</li>
+<li>
+<p>What files include this header file?</p>
+</li>
+</ul>
+<p>Cscope answers these questions from a symbol database that it builds the
+ first time it is used on the source files.  On a subsequent call, cscope
+ rebuilds the database only if a source file has changed or the list of
+ source files is different.  When the database is rebuilt the data for the
+ unchanged files is copied from the old database, which makes rebuilding
+ much faster than the initial build.</p>
+</blockquote>
+<p>简而言之，就是 ctags 的加强版，ctags 只能让我们跳转到某个 tag 的定义之处，但是无法让我们知道这个 tag 还在哪里出现过，或者被哪个函数调用过，这时候就需要 cscope 来大显身手了～</p>
+<p><strong>P.S.</strong></p>
+<p>cscope 对 C/C++ 支持比较好，当然我们也可以自己定制来支持其他语言，比如 Java，Python 等。</p>
+<h3 id="install_1">Install</h3>
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">cscope</span>
+</pre></div>
+<h3 id="usage_1">Usage</h3>
+<p>联合使用 Cscope + Vim 的流程：</p>
+<ol>
+<li>
+<p>使用 cscope 生成数据库文件</p>
+<div class="highlight"><pre><span></span><span class="n">cscope</span> <span class="o">-</span><span class="n">Rbkq</span>
+</pre></div>
+<p>其中参数的含义：</p>
+<ul>
+<li>
+<p>-R 递归，对子目录也建立数据库</p>
+</li>
+<li>
+<p>-b 只生成数据库，不进入 scope 界面</p>
+</li>
+<li>
+<p>-k 生成数据库时，不搜索 <code>/usr/include</code> 目录</p>
+</li>
+<li>
+<p>-q 生成 <code>cscope.in.out</code> 和 <code>cscope.po.out</code> 文件，加快查找速度</p>
+</li>
+</ul>
+<p>更详细的参数见 man page。</p>
+</li>
+<li>
+<p>将数据库导入 Vim 中</p>
+<p>cd 到源文件目录下，执行上一步操作，然后打开 vim 输入下面的命令：</p>
+<div class="highlight"><pre><span></span><span class="err">：</span><span class="n">cs</span> <span class="k">add</span> <span class="p">.</span><span class="o">/</span><span class="n">cscope</span>
+</pre></div>
+</li>
+<li>
+<p>在 Vim 中查找</p>
+<p>通用格式为 <code>:cs find -option label</code>。</p>
+<p>option 可以有很多种模式，在 Vim 中使用 <code>:help cscope-find</code> 来查看 option：</p>
+<div class="highlight"><pre><span></span><span class="mi">0</span> <span class="k">or</span> <span class="n">s</span><span class="p">:</span> <span class="n">Find</span> <span class="n">this</span> <span class="k">C</span> <span class="n">symbol</span>
+<span class="mi">1</span> <span class="k">or</span> <span class="k">g</span><span class="p">:</span> <span class="n">Find</span> <span class="n">this</span> <span class="n">definition</span>
+<span class="mi">2</span> <span class="k">or</span> <span class="n">d</span><span class="p">:</span> <span class="n">Find</span> <span class="n">functions</span> <span class="k">called</span> <span class="k">by</span> <span class="n">this</span> <span class="k">function</span>
+<span class="mi">3</span> <span class="k">or</span> <span class="k">c</span><span class="p">:</span> <span class="n">Find</span> <span class="n">functions</span> <span class="n">calling</span> <span class="n">this</span> <span class="k">function</span>
+<span class="mi">4</span> <span class="k">or</span> <span class="n">t</span><span class="p">:</span> <span class="n">Find</span> <span class="n">this</span> <span class="nb">text</span> <span class="n">string</span>
+<span class="mi">6</span> <span class="k">or</span> <span class="n">e</span><span class="p">:</span> <span class="n">Find</span> <span class="n">this</span> <span class="n">egrep</span> <span class="n">pattern</span>
+<span class="mi">7</span> <span class="k">or</span> <span class="n">f</span><span class="p">:</span> <span class="n">Find</span> <span class="n">this</span> <span class="n">file</span>
+<span class="mi">8</span> <span class="k">or</span> <span class="n">i</span><span class="p">:</span> <span class="n">Find</span> <span class="n">files</span> <span class="o">#</span><span class="k">including</span> <span class="n">this</span> <span class="n">file</span>
+</pre></div>
+</li>
+</ol>
+<h3 id="config_1">Config</h3>
+<p>Vim 的 cscope 接口提供了一些参数，可以让我们更加灵活地使用 cscope，可以用 <code>help if_cscop</code> 来查看完整的说明，这里有一份前辈翻译的中文版</p>
+<p><a href="http://blog.csdn.net/dengxiayehu/article/details/6330200">Cscope 的使用（领略 Vim + Cscope 的强大魅力）</a></p>
+<p>下面我找了几个常用的选项：</p>
+<ol>
+<li>
+<p>cscopequickfix</p>
+<p>vim 提供了 <code>cscopequickfix</code> 选项，让查找结果在 quickfix 的窗口显示。</p>
+</li>
+<li>
+<p>同时使用 cscope ctags </p>
+<p>设置 <code>cst</code> 选项，可以同时查找 cscope 和 ctags，查找顺序有 <code>csto</code> 选项来决定。</p>
+</li>
+<li>
+<p><code>:ctags</code> 等同于 <code>:cs find g</code></p>
+</li>
+</ol>
+<p>为了省事，我们可以将一些参数设置写在 .vimrc 文件中，Vim help 中有推荐设置，下面是我修改过的配置：</p>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="nv">has</span><span class="ss">(</span><span class="s2">"</span><span class="s">cscope</span><span class="s2">"</span><span class="ss">)</span>
+    <span class="nv">set</span> <span class="nv">csprg</span><span class="o">=/</span><span class="nv">usr</span><span class="o">/</span><span class="nv">bin</span><span class="o">/</span><span class="nv">cscope</span>
+    <span class="nv">set</span> <span class="nv">cscopequickfix</span><span class="o">=</span><span class="nv">s</span><span class="o">-</span>,<span class="nv">c</span><span class="o">-</span>,<span class="nv">d</span><span class="o">-</span>,<span class="nv">i</span><span class="o">-</span>,<span class="nv">t</span><span class="o">-</span>,<span class="nv">e</span><span class="o">-</span>
+    <span class="s2">"</span><span class="s">set cst </span><span class="s2">"</span><span class="nv">keep</span> <span class="nv">the</span> <span class="nv">regular</span> <span class="nv">tag</span> <span class="nv">behavior</span>
+    <span class="s2">"</span><span class="s">set csto=0 </span><span class="s2">"</span><span class="nv">keep</span> <span class="nv">the</span> <span class="nv">regular</span> <span class="nv">tag</span> <span class="nv">behavior</span>
+    <span class="nv">set</span> <span class="nv">nocsverb</span>
+    <span class="s2">"</span><span class="s"> add any database in current directory</span>
+    <span class="k">if</span> <span class="nv">filereadable</span><span class="ss">(</span><span class="s2">"</span><span class="s">cscope.out</span><span class="s2">"</span><span class="ss">)</span>
+        <span class="nv">cs</span> <span class="nv">add</span> <span class="nv">cscope</span>.<span class="nv">out</span>
+    <span class="s2">"</span><span class="s"> else add database pointed to by environment</span>
+    <span class="k">elseif</span> <span class="mh">$C</span><span class="nv">SCOPE_DB</span> <span class="o">!=</span> <span class="s2">""</span>
+        <span class="nv">cs</span> <span class="nv">add</span> <span class="mh">$C</span><span class="nv">SCOPE_DB</span>
+    <span class="k">endif</span>
+    <span class="nv">set</span> <span class="nv">csverb</span>
+<span class="k">endif</span>
+
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">_</span><span class="o">&gt;</span><span class="nv">s</span> :<span class="nv">cs</span> <span class="nv">find</span> <span class="nv">s</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">_</span><span class="o">&gt;</span><span class="nv">g</span> :<span class="nv">cs</span> <span class="nv">find</span> <span class="nv">g</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">_</span><span class="o">&gt;</span><span class="nv">c</span> :<span class="nv">cs</span> <span class="nv">find</span> <span class="nv">c</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">_</span><span class="o">&gt;</span><span class="nv">t</span> :<span class="nv">cs</span> <span class="nv">find</span> <span class="nv">t</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">_</span><span class="o">&gt;</span><span class="nv">e</span> :<span class="nv">cs</span> <span class="nv">find</span> <span class="nv">e</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">_</span><span class="o">&gt;</span><span class="nv">f</span> :<span class="nv">cs</span> <span class="nv">find</span> <span class="nv">f</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cfile&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">_</span><span class="o">&gt;</span><span class="nv">i</span> :<span class="nv">cs</span> <span class="nv">find</span> <span class="nv">i</span> <span class="o">^&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cfile&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>$<span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">_</span><span class="o">&gt;</span><span class="nv">d</span> :<span class="nv">cs</span> <span class="nv">find</span> <span class="nv">d</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+
+<span class="s2">"</span><span class="s"> Using 'CTRL-spacebar' then a search type makes the vim window</span>
+<span class="s2">"</span><span class="s"> split horizontally, with search result displayed in</span>
+<span class="s2">"</span><span class="s"> the new window.</span>
+
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">s</span> :<span class="nv">scs</span> <span class="nv">find</span> <span class="nv">s</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">g</span> :<span class="nv">scs</span> <span class="nv">find</span> <span class="nv">g</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">c</span> :<span class="nv">scs</span> <span class="nv">find</span> <span class="nv">c</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">t</span> :<span class="nv">scs</span> <span class="nv">find</span> <span class="nv">t</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">e</span> :<span class="nv">scs</span> <span class="nv">find</span> <span class="nv">e</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">f</span> :<span class="nv">scs</span> <span class="nv">find</span> <span class="nv">f</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cfile&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">i</span> :<span class="nv">scs</span> <span class="nv">find</span> <span class="nv">i</span> <span class="o">^&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cfile&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>$<span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">d</span> :<span class="nv">scs</span> <span class="nv">find</span> <span class="nv">d</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+
+<span class="s2">"</span><span class="s"> Hitting CTRL-space *twice* before the search type does a vertical</span>
+<span class="s2">"</span><span class="s"> split instead of a horizontal one</span>
+
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">s</span>
+    \:<span class="nv">vert</span> <span class="nv">scs</span> <span class="nv">find</span> <span class="nv">s</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">g</span>
+    \:<span class="nv">vert</span> <span class="nv">scs</span> <span class="nv">find</span> <span class="nv">g</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">c</span>
+    \:<span class="nv">vert</span> <span class="nv">scs</span> <span class="nv">find</span> <span class="nv">c</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">t</span>
+    \:<span class="nv">vert</span> <span class="nv">scs</span> <span class="nv">find</span> <span class="nv">t</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">e</span>
+    \:<span class="nv">vert</span> <span class="nv">scs</span> <span class="nv">find</span> <span class="nv">e</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">i</span>
+    \:<span class="nv">vert</span> <span class="nv">scs</span> <span class="nv">find</span> <span class="nv">i</span> <span class="o">^&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cfile&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>$<span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+<span class="nv">nmap</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">Space</span><span class="o">&gt;</span><span class="nv">d</span>
+    \:<span class="nv">vert</span> <span class="nv">scs</span> <span class="nv">find</span> <span class="nv">d</span> <span class="o">&lt;</span><span class="nv">C</span><span class="o">-</span><span class="nv">R</span><span class="o">&gt;=</span><span class="nv">expand</span><span class="ss">(</span><span class="s2">"</span><span class="s">&lt;cword&gt;</span><span class="s2">"</span><span class="ss">)</span><span class="o">&lt;</span><span class="nv">CR</span><span class="o">&gt;&lt;</span><span class="nv">CR</span><span class="o">&gt;</span>
+</pre></div>
+<p><br/></p>
+<h2 id="taglist_1">Taglist</h2>
+<hr/>
+<h3 id="intro_2">Intro</h3>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=273">Taglist 官网</a></p>
+<p>使用过 VS 的人都知道，在左侧有一个窗口专门显示当前代码文件中的宏、函数、变量定义，并且随着文件切换自动更新。我们这里介绍的 Taglist 完成的就是类似的功能，让我们可以高效地浏览代码。不过要使用 Taglist，首先要安装前面介绍的 Ctags。</p>
+<blockquote>
+<p>The "Tag List" plugin is a source code browser plugin for Vim and provides an overview of the structure of source code files and allows 
+you to efficiently browse through source code files for different programming languages. </p>
+</blockquote>
+<h3 id="install_2">Install</h3>
+<p>与前面的 ctags、cscope 不同的是，taglist 是一款 Vim 插件。如果使用 Vundle 来管理、安装插件，在 .vimrc 中添加</p>
+<div class="highlight"><pre><span></span><span class="n">Bundle</span> <span class="s1">'taglist.vim'</span>
+</pre></div>
+<p>然后打开 vi，然后输入命令 <code>:BundleInstall</code> 即可。</p>
+<h3 id="config_2">Config</h3>
+<p>使用 <code>:help taglist</code> 查看帮助。</p>
+<p>使用 <code>:TlistToggle</code> 切换是否显示 Taglist 窗口。</p>
+<p>我们可以直接在 .vimrc 中添加以下设置：</p>
+<div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">Tlist_Show_One_File</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">let</span> <span class="n">Tlist_Exit_OnlyWindow</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">let</span> <span class="n">Tlist_SHow_Menu</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">let</span> <span class="n">Tlist_File_Fold_Auto_Close</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+<h3 id="usage_2">Usage</h3>
+<p>在 taglist 窗口，我们可以使用下面的一些快捷键：</p>
+<ul>
+<li>
+<p><code>=</code> 折叠所有 tag</p>
+</li>
+<li>
+<p><code>-</code> 折叠单个 tag</p>
+</li>
+<li>
+<p><code>+</code> 打开一个折叠</p>
+</li>
+<li>
+<p><code>x</code> taglist 窗口放大 / 缩小，方便查看 tag</p>
+</li>
+<li>
+<p><code>u</code> 更新 taglist</p>
+</li>
+<li>
+<p><code>sapce</code> 显示光标处 tag 的原型定义</p>
+</li>
+</ul>
+<p><strong>P.S.</strong></p>
+<p>配合另外一个窗口管理插件 winmanager，我们可以将我们的 Vim 打造成一个伪 IDE :D</p>
+<p><br/></p>
+<h2 id="ref_1">Ref</h2>
+<p><a href="http://blog.csdn.net/alexdboy/article/details/3871707">ctags 的使用及相关参数介绍</a></p>
+<p><a href="http://easwy.com/blog/archives/exuberant-ctags-chinese-manual/">Exuberant Ctags 中文手册</a></p>
+<p><a href="http://easwy.com/blog/archives/advanced-vim-skills-use-ctags-tag-file/">vi/vim 使用进阶 : 使用标签 (tag) 文件</a></p>
+<p><a href="http://cscope.sourceforge.net/">cscope 官网</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Cscope">cscope wiki</a></p>
+<p><a href="http://blog.csdn.net/dengxiayehu/article/details/6330200">Cscope 的使用（领略 Vim + Cscope 的强大魅力）</a></p>
+<p><a href="http://www.vim.org/scripts/script.php?script_id=273">Taglist 官网</a></p>
+<p><a href="http://easwy.com/blog/archives/advanced-vim-skills-taglist-plugin/">vi/vim 使用进阶 : 使用 taglist 插件</a></p>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/vim.html">vim</a>
+      <a href="https://qiangu.cool/tag/ctags.html">ctags</a>
+      <a href="https://qiangu.cool/tag/cscope.html">cscope</a>
+      <a href="https://qiangu.cool/tag/taglist.html">taglist</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/ic/doxygen_for_verilog.html" title="针对 Verilog 的 Doxygen">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="https://qiangu.cool/posts/tools/learning_vim_markdown.html" title="在 Vim 中写 Markdown 文件">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_survival.html">学习 Vim 存活</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
+    </ul>
+  </div>
+
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,655 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="Patterson and Hennessy 读书笔记，前言 + 第一章" />
+<meta name="keywords" content="Patterson and Hennessy">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="Patterson and Hennessy 学习系列 #0 —— Preface &amp; Chapter 1"/>
+<meta property="og:description" content="Patterson and Hennessy 读书笔记，前言 + 第一章"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/drafts/learning_patterson_and_hennessy_series_0_preface_and_chapter_1.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-06-01 12:55:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="IC"/>
+<meta property="article:tag" content="Patterson and Hennessy"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; Patterson and Hennessy 学习系列 #0 —— Preface &amp; Chapter 1</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="learning_patterson_and_hennessy_series_0_preface_and_chapter_1">Patterson and Hennessy 学习系列 #0 —— Preface & Chapter 1</h1>
+    <p>
+      Posted on 2020-06-01 12:55 in <a href="https://qiangu.cool/category/ic.html">IC</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Patterson and Hennessy 学习系列 #0 &mdash;&mdash; Preface &amp; Chapter 1">Patterson and Hennessy 学习系列 #0 &mdash;&mdash; Preface &amp; Chapter 1</a><ul><li><a class="toc-href" href="#preface" title="Preface">Preface</a><ul><li><a class="toc-href" href="#about this book" title="About This Book">About This Book</a></li><li><a class="toc-href" href="#about other book" title="About Other Book">About Other Book</a></li></ul></li><li><a class="toc-href" href="#chapter 1 computer abstractions and technology_1" title="Chapter 1 Computer Abstractions and Technology">Chapter 1 Computer Abstractions and Technology</a><ul><li><a class="toc-href" href="#understanding program performance" title="Understanding Program Performance">Understanding Program Performance</a></li><li><a class="toc-href" href="#8 great ideas in computer architecture" title="8 Great Ideas in Computer Architecture">8 Great Ideas in Computer Architecture</a></li><li><a class="toc-href" href="#performance" title="Performance">Performance</a><ul><li><a class="toc-href" href="#defining performance" title="Defining Performance">Defining Performance</a></li><li><a class="toc-href" href="#measuring performance" title="Measuring Performance">Measuring Performance</a></li><li><a class="toc-href" href="#the classic cpu performance equation" title="The Classic CPU Performance Equation">The Classic CPU Performance Equation</a></li></ul></li><li><a class="toc-href" href="#the power wall_1" title="The Power Wall">The Power Wall</a></li><li><a class="toc-href" href="#the switch from uniprocessors to multiprocessors" title="The Switch from Uniprocessors to Multiprocessors">The Switch from Uniprocessors to Multiprocessors</a></li><li><a class="toc-href" href="#fallacies and pitfalls" title="Fallacies and Pitfalls">Fallacies and Pitfalls</a></li></ul></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <p><img alt="Organization" src="/images/patterson_and_hennessy/computer_organization.png"/></p>
+<ul>
+<li><a href="https://www.amazon.com/Computer-Organization-Design-RISC-V-Architecture/dp/0128122757">Computer Organization and Design</a> 俗称 Patterson and Hennessy</li>
+<li><a href="https://www.amazon.com/Computer-Architecture-Quantitative-Approach-Kaufmann/dp/0128119055/">Computer Architecture: A Quantitative Approach</a> 俗称 Hennessy and Patterson</li>
+</ul>
+<p>关于这两位大师和这两本计算机体系结构领域的圣经无需再赘述，这个系列是以前的读书笔记，翻出来重新整理一下算是温故而知新吧。</p>
+<hr/>
+<h2 id="preface">Preface</h2>
+<blockquote>
+<p>The most beautiful thing we can experience is the mysterious. It is the source of all true art and science.</p>
+<p>-- Albert Einstein, What I Believe, 1930</p>
+</blockquote>
+<h3 id="about this book">About This Book</h3>
+<p>作者的观点：<strong>对于下一个十年内的大部分码农来说，如果想写出可以在并行计算机上高效运行的程序，则必须理解软硬件接口。</strong></p>
+<p>这本书的读者包括，</p>
+<ul>
+<li>几乎没有汇编 / 逻辑设计基础，但是需要理解基本的计算机组成原理</li>
+<li>有汇编 / 逻辑设计基础，但是想了解如何设计一个计算机，或者想理解一个系统是如何工作以及为何性能如此</li>
+</ul>
+<h3 id="about other book">About Other Book</h3>
+<p>前面提到的另外一本书：<a href="https://www.amazon.com/Computer-Architecture-Quantitative-Approach-Kaufmann/dp/0128119055/">Computer Architecture\: A Quantitative Approach</a>，</p>
+<ul>
+<li>用坚实的工程基础和量化的 cost/performance 折中分析方法来描述计算机体系结构中的主要原则</li>
+<li>基于商用的实际系统，结合例子和评测数据，总结出一些实际中的设计经验</li>
+<li>证明体系结构可以通过量化而不是描述性的方式学习</li>
+<li>目标读者是严肃的，想仔细理解计算机系统的专家</li>
+</ul>
+<p>而 Patterson &amp; Hennessy 这本书的读者并不是都想成为计算机体系结构的专家。这本书并不是前者的子集，还包括了一些其他知识，比如编译器、操作系统、数据库等等。</p>
+<h2 id="chapter 1 computer abstractions and technology_1">Chapter 1 Computer Abstractions and Technology</h2>
+<blockquote>
+<p>Civilization advances by extending the number of important operations which we can perform without thinking about them.</p>
+<p>-- Alfred North Whithead, An Introduction to Mathematics, 1911</p>
+</blockquote>
+<h3 id="understanding program performance">Understanding Program Performance</h3>
+<p>一个程序的性能取决于很多因素的组合，包括，</p>
+<ul>
+<li>程序用到的算法的效率</li>
+<li>把程序翻译成机器指令的软件工具</li>
+<li>计算机执行指令的效率（包括 I/O 操作）</li>
+</ul>
+<p>下表总结了这些因素是如何影响程序性能的：</p>
+<table>
+<thead>
+<tr>
+<th>软件 / 硬件</th>
+<th>如何影响到性能</th>
+<th>哪一章会涉及到</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>算法</td>
+<td>决定了源码级别的语句数量，I/O 操作的数量</td>
+<td>整本书</td>
+</tr>
+<tr>
+<td>编程语言、编译器、架构</td>
+<td>决定了每句源码对应的计算机指令数量</td>
+<td>第 2, 3 章</td>
+</tr>
+<tr>
+<td>处理器、memory 系统</td>
+<td>决定了指令的执行速度</td>
+<td>第 4, 5, 6 章</td>
+</tr>
+<tr>
+<td>I/O 系统（硬件 &amp; 操作系统）</td>
+<td>决定了 I/O 操作的速度</td>
+<td>第 4, 5, 6 章</td>
+</tr>
+</tbody>
+</table>
+<p>书里面以一个实例（矩阵和向量的乘法）来证明这些因素的影响，通过一系列的优化，例子的性能最终提高了大概 200 倍！</p>
+<ul>
+<li>第 3 章在 <code>data-level parallelism</code> 层次，使用 C 语言的 intrinsics 可以使性能提高 3.8 倍</li>
+<li>第 4 章在 <code>instruction-level parallelism</code> 层级，使用 loop unrolling 实现指令的多发射，乱序执行，可以使性能提高 2.3 倍</li>
+<li>第 5 章在 <code>memory hierarchy optimization</code> 层次，使用 cache blocking 可以使性能提高 2.0 到 2.5 倍</li>
+<li>第 6 章在 <code>thread-level parallelism</code> 层次，使用 parallel for loops in OpenMP 实现多核计算，可以使性能提高 4 到 14 倍</li>
+</ul>
+<h3 id="8 great ideas in computer architecture">8 Great Ideas in Computer Architecture</h3>
+<p>设计计算机系统中的 8 个最伟大的思想，从第一台计算机到现在，这些思想仍然被广泛采用。</p>
+<ol>
+<li>
+<p><strong>Design for Moore's Law</strong></p>
+<p>摩尔定律：电路的集成度每 18 ~ 24 个月翻一倍。</p>
+<p>Intel 的创始人之一 Gordon Moore 在 1965 年作出的预测。因为计算机的设计周期长达数年时间，很有可能项目结束时候的工艺和项目开始时相差非常大，所以设计者要预测未来技术的发展，不能对标当下的技术水平，防止做出来的时候 spec 已经落后了。</p>
+<p>从目前的趋势来看，由于物理技术的限制摩尔定律很有可能失效，Intel 也被大家戏称为牙膏厂。为了继续获得性能的提升，大家纷纷转向 ASIC 芯片，比如目前如火如荼的 AI 硬加速芯片。</p>
+</li>
+<li>
+<p><strong>Use Abstraction to Simplify Desing</strong></p>
+<p>不管是硅农还是码农都要发明一些技术来提高自己的效率，否则由于摩尔定义，资源动不动翻倍会导致设计时间变得非常长。其中一个非常重要的技术就是在不同层次进行抽象，把底层的实现细节通过抽象隐藏起来，只提供一个高层的简单接口。</p>
+<p>通过抽象，顶层可以不关心底层的实现细节，只专注于自己的功能，抽象带来的 &ldquo; 模块化设计 &rdquo; 可以大幅提高效率。</p>
+<p>这个思想应用非常广泛，典型代表是 OSI 的参考模型。</p>
+</li>
+<li>
+<p><strong>Make the Common Case Fast</strong></p>
+<p>不同领域的共同规律：common case 比 corner case 更重要，而且 common case 也比 corner case 更加容易提升性能。加速 common case 的前提是要知道什么是 common case，而这一点很多时候只有通过仔细的实验和分析才能确定。</p>
+<p>俗话常说 &ldquo; 抓住主要矛盾 &rdquo;，&ldquo; 好钢用在刀刃上 &rdquo;，这个思想就是要求我们能分清问题的主次，把大部分的精力投入到主要问题上，获得更高的全局收益。</p>
+</li>
+<li>
+<p><strong>Performance via Parallelism</strong></p>
+<p>显而易见，并行的性能更高。十个人搬转的速度当然比一个人更快。</p>
+</li>
+<li>
+<p><strong>Performance via Pipelining</strong></p>
+<p>流水线实际上是并行的一种，但是因为它实在是太重要，太基础了，在计算机系统中应用太广泛了，所以单独列出来。</p>
+<p>经典故事 &ldquo; 汽车装配流水线 &rdquo;。</p>
+</li>
+<li>
+<p><strong>Performance via Prediction</strong></p>
+<p>有时候，不一定非要等到完全确定之后再开始做一件事情，提前预测开始做往往获得的性能更高，前提是从错误中恢复的代价不高。</p>
+<p>典型代表：CPU 中的预测技术。</p>
+</li>
+<li>
+<p><strong>Hierarchy of Memories</strong></p>
+<p>码农一般都想要让 memory 尽可能的速度快、容量大、价格便宜，而这是矛盾的，硅农的解决方法是用 memories hierarchy 兼顾各个指标： </p>
+<p><code>L1 cache &gt;&gt; L2 cache &gt;&gt; L3 cache &gt;&gt; DDR &gt;&gt; Disk</code></p>
+</li>
+<li>
+<p><strong>Dependability via Redundancy</strong></p>
+<p>计算机不光要速度快，还要可靠。任何硬件都有可能出错，解决方法就是冗余。</p>
+<p>某些对可靠性要求非常高的应用系统都是通过冗余备份来提高可靠性，比如航天，大型服务器。</p>
+</li>
+</ol>
+<h3 id="performance">Performance</h3>
+<h4 id="defining performance">Defining Performance</h4>
+<p>套用知乎名言：&ldquo; 先问是不是，再问为什么 &rdquo;（狗头保命）。性能是一个很宽泛的问题，在仔细展开讨论之前必须先定义清楚一个问题：</p>
+<p>Q：计算机的性能是什么？</p>
+<p>因为计算机自身的类型多种多样（PC，server，embedded），它们使用了各种各样的技术来提升硬件性能；再加上软件的大小和复杂度也有区别，所以要确定计算机的性能是一个复杂的问题。书里面举例了一个 &ldquo; 如何比较飞机性能 &rdquo; 的问题，实际上下面三个问题是很类似的。</p>
+<ol>
+<li>确定 / 比较 计算机的性能</li>
+<li>确定 / 比较 飞机的性能</li>
+<li>确定 / 比较 汽车的性能（更接地气）</li>
+</ol>
+<p>他们的共性就是评价标准是多维的，飞机 / 汽车有最大巡航里程、最快巡航速度、最大载客量等指标，计算机也有执行时间、典型功耗、体积（芯片的 PPA）等指标。下面我们做第一条约束，</p>
+<p><strong>我们定义计算机的性能是一个时间的函数，也就是说我们并不关心其他因素（比如价格、体积等）。</strong></p>
+<ul>
+<li>
+<p><code>response time</code> = <code>execution time</code>：计算机完成一个任务的总时间，包括硬盘访问、内存访问、I/O 操作、操作系统开销、CPU 执行时间等等，一般 PC 和移动设备最关心这个指标</p>
+</li>
+<li>
+<p><code>throughput</code> = <code>bandwidth</code>：单位时间内完成的任务量。一般 servers 更关心这个指标</p>
+</li>
+</ul>
+<p>所以很多时候我们要根据类型来区分不同的计算机，对每个类型采用不同的 {performance matrics, applications} 的组合作为 benchmark。</p>
+<p>在接下来的前几章中我们主要关心的是 response time，对于这个指标，性能最大意味着 response time 最小，所以可以这么定义计算机的性能：</p>
+<div class="math">$$Performance_X = \frac{1}{Execution\ time_X}$$</div>
+<p>在比较两个不同的计算机时，&ldquo;X 比 Y 快 n 倍 &rdquo; = &ldquo;X 的速度是 Y 的 n 倍 &rdquo; 指的是同一个意思，即</p>
+<div class="math">$$\frac{Performance_X}{Performance_Y} = n$$</div>
+<p>为了简单起见，统一使用 &ldquo;X 的速度是 Y 的 n 倍 &rdquo;（<code>as fast as</code>）这种方式。因为 performance 和 execution time 是倒数关系，为了避免歧义，约定下面的描述</p>
+<ul>
+<li>improve performance = increase performance</li>
+<li>improve execution time = decrease execution time</li>
+</ul>
+<h4 id="measuring performance">Measuring Performance</h4>
+<p>根据前面的讨论，我们把 time 作为 performance 的度量标准：完成等量的任务，花费时间最短的计算机的性能最高。但是即使把性能约束在时间这个维度上，依然不够明确，因为 &ldquo; 时间 &rdquo; 也有很多种。</p>
+<ul>
+<li><code>wall clock time</code> = <code>response time</code> = <code>elapsed time</code>，表示完成任务的总时间，包含了所有因素</li>
+<li>
+<p><code>CPU execution time</code> = <code>CPU time</code> = <code>user CPU time</code> + <code>system CPU time</code>，表示 CPU 在特定任务上花费的计算时间</p>
+<ul>
+<li><code>user CPU time</code>，表示 CPU 在这个程序本身上花费的时间</li>
+<li><code>system CPU time</code>，表示 CPU 在这个程序相关的操作系统上花费的时间</li>
+<li>要区分这两个时间实际上是很困难的，因为很难明确定义操作系统的哪些活动是对应哪个特定程序的，而且不同的操作系统的功能也不相同</li>
+</ul>
+</li>
+</ul>
+<p>为了保持一致，使用下面的术语，</p>
+<ul>
+<li><code>system performance</code> 指的是一个空载系统上的 <code>elapsed time</code></li>
+<li><code>CPU performance</code> 指的是 <code>user time</code></li>
+</ul>
+<h4 id="the classic cpu performance equation">The Classic CPU Performance Equation</h4>
+<p>一个程序的执行时间 = 这个程序包含的 cycle 数 &times; 每个 cycle 的时长，所以有下面的公式，</p>
+<div class="math">$$CPU\ execution\ time = CPU\ clock\ cycles * clock\ cycle\ time\tag{1}$$</div>
+<p>其中一个程序包含的 cycle 数 = 包含的所有指令数 &times; 平均每条指令的 cycle 数，即</p>
+<div class="math">$$CPU\ clock\ cycles = Instructions * Average\ clock\ cycles\ per\ Instr\tag{2}$$</div>
+<p>这里涉及到一个非常重要的概念 <code>clock cycles per instruction</code>，也简称为 <strong><code>CPI</code></strong>，表示执行一条指令花费的 cycle 数。因为不同的指令完成的任务不同，花费的时间也不同，所以 CPI 指的是所有指令的平均 cycle 数。有了 CPI， 两个使用相同 ISA 的不同计算机之间的比较就很容易了，因为它们的指令条数肯定是一样多的。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CPI 不仅和具体的硬件实现有关，而且和程序也有关系，不同的程序用到的指令类型和数量必然是不相等的，算出来的平均数也不相等。</p>
+<p>CPI 实际上是有可能小于 1 的，所以有些人用 CPI 的倒数作为另外一个指标，<code>instructions per clock cycle</code>，简称 <code>IPC</code>。</p>
+</div>
+<p>把公式 2 带入到公式 1 之中，就可以得到经典的 CPU 性能公式：</p>
+<div class="math">$$CPU\ time = Instruction\ count * CPI * Clock\ cycle\ time\tag{3}$$</div>
+<p>也可以写成，</p>
+<div class="math">$$CPU\ time = \frac{Instruction\ count * CPI}{Clock\ rate}\tag{4}$$</div>
+<p>这个公式其实就是下面公式，只不过给了每个元素一个新的定义，</p>
+<div class="math">$$Time = \frac{Seconds}{Program} = \frac{Instructions}{Program} * \frac{Clock\ cycles}{Instruction} * \frac{Seconds}{Clock\ cycle}\tag{5}$$</div>
+<p>永远都要记住：<strong>只有 time 是最可靠的指标，其他子指标比如指令条数、CPI 等都不可靠。</strong></p>
+<p>下表列出了影响一个程序的 performance 的因素，以及具体的影响方式，</p>
+<table>
+<thead>
+<tr>
+<th>硬件 / 软件</th>
+<th>影响到了什么</th>
+<th>如何影响的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>算法</td>
+<td>Instrcution count, CPI</td>
+<td>算法决定了一共有多少条指令和指令类型</td>
+</tr>
+<tr>
+<td>编程语言</td>
+<td>Instrcution count, CPI</td>
+<td>不同的编程语言翻译出的指令数量和类型也不相同</td>
+</tr>
+<tr>
+<td>编译器</td>
+<td>Instrcution count, CPI</td>
+<td>编译器是算法和底层指令之间的桥梁，必然会影响到具体的指令翻译</td>
+</tr>
+<tr>
+<td>ISA</td>
+<td>Instrcution count, CPI, clock rate</td>
+<td>ISA 对 3 个因素都有影响</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the power wall_1">The Power Wall</h3>
+<p>功耗分为两部分：动态功耗、静态功耗。</p>
+<p>动态功耗可以通过公式算出来，</p>
+<div class="math">$$Power \propto \frac{1}{2} * Capacitive\ load * Voltage^2 * Frequency\ switched\tag{6}$$</div>
+<p>其中 <code>Frequency switched</code> 是时钟频率的函数，<code>Capacitive load</code> 是晶体管的 fanout 和工艺的函数。</p>
+<p>下图是 Intel X86 架构芯片 30 年间 8 代 CPU 的时钟频率和 power 关系图，</p>
+<p><img alt="power" src="/imges/patterson_and_hennessy/power.png"/></p>
+<p>从图中可以看到，随着时间发展，时钟频率提高了近 1000 倍，但是 power 只提高了大概 30 倍，原因就在于电压的不断降低。</p>
+<p>从前面 performance 的讨论可以知道，我们不能采用降低时钟频率的方式来降功耗，因为这会伤害到性能。那么我们可以无限降低电压吗？答案是不行，现在业界遇到的问题就是电压不能再低了，否则晶体管就像水龙头一样，无法完全关闭。这就是所谓的功耗墙。虽然动态功耗是 CMOS 功耗中的大头，但是静态功耗也逐渐占据主角，在服务器中静态功耗能达到 40%，所以人们发明了各种技术来降低静态功耗，但是电压很难再进一步降低了。</p>
+<h3 id="the switch from uniprocessors to multiprocessors">The Switch from Uniprocessors to Multiprocessors</h3>
+<p>遇到了功耗墙怎么办？只能舍弃这 30 年来的老路线（提频），选择另外一条路线：多核。</p>
+<p>在过去，码农不需要改任何一行代码，就可以每 18 个月让自己的程序性能翻倍（摩尔定律），但是现在由于摩尔定律的失效，码农必须重新写他们的程序，以充分利用多个核。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>强制要求码农转换到并行编程是一件高风险的事情（Intel 的安腾系列处理器）。但是，随着多核概念的普及，令人吃惊的事实是，整个 IT 界似乎都在打赌码农们最终都会转向显式的并行编程。</p>
+</div>
+<p>为什么并行编程这么难推广呢？</p>
+<ul>
+<li>编程困难，人的大脑更适合线性思维，很难处理并行的事情，编程也是同理</li>
+<li>调度困难，必须要减少核之间的通信和同步开销，防止这些额外的开销抵消并行带来的性能提升</li>
+</ul>
+<h3 id="fallacies and pitfalls">Fallacies and Pitfalls</h3>
+<ul>
+<li><code>Fallacies</code> 谬论：错误概念</li>
+<li><code>Pitfalls</code> 陷阱：特定条件下成立的规律的错误推广</li>
+</ul>
+<p><strong>陷阱：期望局部的性能提升和整体性能成比例</strong></p>
+<p><code>common case fast</code> 思想对整体性能的提升效果取决于 common case 到底有多 common，典型例子就是 <a href="https://en.wikipedia.org/wiki/Amdahl%27s_law">Amdahl's Law</a>。</p>
+<p>假设一个程序运行时间是 100s，其中 80s 是乘法运算，那么应该把乘法运算的性能提高到原来的多少倍才能使总计算时间减小到 20s 呢？</p>
+<p>根据 Amdahl 定律，</p>
+<div class="math">$$T^* = \frac{T_{improved}}{Amout\ of\ improve} + T_{unaffected}\tag{7}$$</div>
+<p>在这个例子里，有</p>
+<div class="math">$$20 = \frac{80}{n} + 20$$</div>
+<p>可以知道实际上不可能达到 20s 的。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CPU 性能计算公式和 Amdahl 定律是设计系统时候的常用工具。</p>
+</div>
+<p><strong>谬论：利用率低的计算机功耗也低</strong></p>
+<p>实际上 Google 的服务器上 10% 的负载消耗了 33% 的功耗。</p>
+<p><strong>谬论：性能设计和能效设计是不相关的事情</strong></p>
+<p>能量是功耗在时间上的积分，所以如果通过软硬件优化减少了程序的计算时间，就能同时降低功耗。</p>
+<p><strong>陷阱：把性能公式中的子集作为评价性能的标准</strong></p>
+<p>前面已经描述过，只有把 3 个因素都考虑进去，得到的性能结果才是可靠的，取其中任何一个、两个子指标都会导致不可靠的结果。比如，常用的 <code>MIPS(million instructions per second)</code> 指标，</p>
+<div class="math">$$MIPS = \frac{Instrcution\ count}{Execution\ time * 10^6}\tag{8}$$</div>
+<p>MIPS 描述的是指令执行速度，计算机越快相应的 MIPS 指标就越高。MIPS 指标非常容易理解，但是把它作为性能指标是有问题的，</p>
+<ol>
+<li>只考虑了指令执行速度，但是没考虑指令的数量，对于不同 ISA 的计算机，不能直接比较它们的 MIPS</li>
+<li>
+<p>即使是同一台计算机，MIPS 值也会随着程序的不同而变化，没有固定值</p>
+<p>实际上，把公式 3 和公式 8 可以得到下面的公式，</p>
+<p>
+<div class="math">$$MIPS = \frac{clock\ rate}{CPI * 10^6}$$</div>
+</p>
+<p>因为 CPI 是个变化值，所以 MIPS 也是个变化值。</p>
+</li>
+<li>
+<p>如果一个程序的指令数量变多，但是同时每条指令的执行速度变快，那么 MIPS 的值就完全不能反映出实际的真实性能</p>
+<p>比如下面这个例子，</p>
+<table>
+<thead>
+<tr>
+<th>测量方式</th>
+<th>计算机 A</th>
+<th>计算机 B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>指令数</td>
+<td>10 billion</td>
+<td>8 billion</td>
+</tr>
+<tr>
+<td>时钟频率</td>
+<td>4 GHz</td>
+<td>4 GHz</td>
+</tr>
+<tr>
+<td>CPI</td>
+<td>1.0</td>
+<td>1.1</td>
+</tr>
+</tbody>
+</table>
+<p>可以算出来 A 比 B 的 MIPS 指标高，但实际上 A 的性能比 B 差，MIPS 指标和真实情况背道而驰。</p>
+</li>
+</ol>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'blue ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/patterson-and-hennessy.html">Patterson and Hennessy</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+  </div>
+
+
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

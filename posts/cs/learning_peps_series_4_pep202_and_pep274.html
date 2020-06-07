@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="List &amp; Dict Comprehensions 学习笔记" />
+<meta name="keywords" content="PEP, python">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="PEP 学习系列 #4 —— PEP202 &amp; PEP274"/>
+<meta property="og:description" content="List &amp; Dict Comprehensions 学习笔记"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/posts/cs/learning_peps_series_4_pep202_and_pep274.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-05-16 20:58:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="CS"/>
+<meta property="article:tag" content="PEP"/>
+<meta property="article:tag" content="python"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; PEP 学习系列 #4 —— PEP202 &amp; PEP274</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="learning_peps_series_4_pep202_and_pep274">PEP 学习系列 #4 —— PEP202 & PEP274</h1>
+    <p>
+      Posted on 2020-05-16 20:58 in <a href="https://qiangu.cool/category/cs.html">CS</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="PEP 学习系列 #4 &mdash;&mdash; PEP202 &amp; PEP274">PEP 学习系列 #4 &mdash;&mdash; PEP202 &amp; PEP274</a><ul><li><a class="toc-href" href="#what is list comprehensions" title="What is List Comprehensions">What is List Comprehensions</a><ul><li><a class="toc-href" href="#examples" title="Examples">Examples</a></li></ul></li><li><a class="toc-href" href="#why comprehensions_1" title="Why Comprehensions">Why Comprehensions</a></li><li><a class="toc-href" href="#understanding and using list comprehensions" title="Understanding and Using List Comprehensions">Understanding and Using List Comprehensions</a><ul><li><a class="toc-href" href="#yi shu xue de jiao du li jie  list comprehensions" title="以数学的角度理解 list comprehensions">以数学的角度理解 list comprehensions</a></li><li><a class="toc-href" href="#ru he xie  list comprehensions" title="如何写 list comprehensions">如何写 list comprehensions</a></li><li><a class="toc-href" href="#xun huan qian tao de  list comprehensions" title="循环嵌套的 list comprehensions">循环嵌套的 list comprehensions</a></li><li><a class="toc-href" href="#ti gao  list comprehensions de ke du xing" title="提高 list comprehensions 的可读性">提高 list comprehensions 的可读性</a></li><li><a class="toc-href" href="#xiao jie" title="小结">小结</a></li></ul></li><li><a class="toc-href" href="#dict comprehensions_1" title="Dict Comprehensions">Dict Comprehensions</a><ul><li><a class="toc-href" href="#examples_1" title="Examples">Examples</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <h2 id="what is list comprehensions">What is List Comprehensions</h2>
+<p><a href="https://www.python.org/dev/peps/pep-0202/">PEP 202 -- List Comprehensions 原文链接</a>。</p>
+<p>List Comprehensions 是一种 python 语法扩展，它可以实现用 for 和 if 语句直接构建 list。</p>
+<h3 id="examples">Examples</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span>&gt;&gt;&gt; print <span class="o">[</span>i <span class="k">for</span> i in range<span class="o">(</span><span class="m">10</span><span class="o">)]</span>
+<span class="o">[</span><span class="m">0</span>, <span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span>, <span class="m">4</span>, <span class="m">5</span>, <span class="m">6</span>, <span class="m">7</span>, <span class="m">8</span>, <span class="m">9</span><span class="o">]</span>
+
+&gt;&gt;&gt; print <span class="o">[</span>i <span class="k">for</span> i in range<span class="o">(</span><span class="m">20</span><span class="o">)</span> <span class="k">if</span> i%2 <span class="o">==</span> <span class="m">0</span><span class="o">]</span>
+<span class="o">[</span><span class="m">0</span>, <span class="m">2</span>, <span class="m">4</span>, <span class="m">6</span>, <span class="m">8</span>, <span class="m">10</span>, <span class="m">12</span>, <span class="m">14</span>, <span class="m">16</span>, <span class="m">18</span><span class="o">]</span>
+
+&gt;&gt;&gt; <span class="nv">nums</span> <span class="o">=</span> <span class="o">[</span><span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span>, <span class="m">4</span><span class="o">]</span>
+&gt;&gt;&gt; <span class="nv">fruit</span> <span class="o">=</span> <span class="o">[</span><span class="s2">"Apples"</span>, <span class="s2">"Peaches"</span>, <span class="s2">"Pears"</span>, <span class="s2">"Bananas"</span><span class="o">]</span>
+&gt;&gt;&gt; print <span class="o">[(</span>i, f<span class="o">)</span> <span class="k">for</span> i in nums <span class="k">for</span> f in fruit<span class="o">]</span>
+<span class="o">[(</span><span class="m">1</span>, <span class="s1">'Apples'</span><span class="o">)</span>, <span class="o">(</span><span class="m">1</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">1</span>, <span class="s1">'Pears'</span><span class="o">)</span>, <span class="o">(</span><span class="m">1</span>, <span class="s1">'Bananas'</span><span class="o">)</span>,
+ <span class="o">(</span><span class="m">2</span>, <span class="s1">'Apples'</span><span class="o">)</span>, <span class="o">(</span><span class="m">2</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">2</span>, <span class="s1">'Pears'</span><span class="o">)</span>, <span class="o">(</span><span class="m">2</span>, <span class="s1">'Bananas'</span><span class="o">)</span>,
+ <span class="o">(</span><span class="m">3</span>, <span class="s1">'Apples'</span><span class="o">)</span>, <span class="o">(</span><span class="m">3</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">3</span>, <span class="s1">'Pears'</span><span class="o">)</span>, <span class="o">(</span><span class="m">3</span>, <span class="s1">'Bananas'</span><span class="o">)</span>,
+ <span class="o">(</span><span class="m">4</span>, <span class="s1">'Apples'</span><span class="o">)</span>, <span class="o">(</span><span class="m">4</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">4</span>, <span class="s1">'Pears'</span><span class="o">)</span>, <span class="o">(</span><span class="m">4</span>, <span class="s1">'Bananas'</span><span class="o">)]</span>
+&gt;&gt;&gt;&gt; print <span class="o">[(</span>i, f<span class="o">)</span> <span class="k">for</span> i in nums <span class="k">for</span> f in fruit <span class="k">if</span> f<span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="o">==</span> <span class="s2">"P"</span><span class="o">]</span>
+<span class="o">[(</span><span class="m">1</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">1</span>, <span class="s1">'Pears'</span><span class="o">)</span>,
+ <span class="o">(</span><span class="m">2</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">2</span>, <span class="s1">'Pears'</span><span class="o">)</span>,
+ <span class="o">(</span><span class="m">3</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">3</span>, <span class="s1">'Pears'</span><span class="o">)</span>,
+ <span class="o">(</span><span class="m">4</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">4</span>, <span class="s1">'Pears'</span><span class="o">)]</span>
+&gt;&gt;&gt; print <span class="o">[(</span>i, f<span class="o">)</span> <span class="k">for</span> i in nums <span class="k">for</span> f in fruit <span class="k">if</span> f<span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="o">==</span> <span class="s2">"P"</span> <span class="k">if</span> i%2 <span class="o">==</span> <span class="m">1</span><span class="o">]</span>
+<span class="o">[(</span><span class="m">1</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">1</span>, <span class="s1">'Pears'</span><span class="o">)</span>, <span class="o">(</span><span class="m">3</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">3</span>, <span class="s1">'Pears'</span><span class="o">)]</span>
+&gt;&gt;&gt; print <span class="o">[</span>i <span class="k">for</span> i in zip<span class="o">(</span>nums, fruit<span class="o">)</span> <span class="k">if</span> i<span class="o">[</span><span class="m">0</span><span class="o">]</span>%2<span class="o">==</span><span class="m">0</span><span class="o">]</span>
+<span class="o">[(</span><span class="m">2</span>, <span class="s1">'Peaches'</span><span class="o">)</span>, <span class="o">(</span><span class="m">4</span>, <span class="s1">'Bananas'</span><span class="o">)]</span>
+</pre></div>
+</td></tr></table>
+<h2 id="why comprehensions_1">Why Comprehensions</h2>
+<p>如果想用从一个 list 中挑选出一部分满足条件的元素组成一个新的 list，该怎么做？</p>
+<ul>
+<li>方法一：最直观简单的方法，写一个 <code>for</code> 循环，然后从中挨个挑选出符合条件的元素</li>
+<li>方法二：使用函数式编程中的 <code>map()</code>/<code>filter()</code></li>
+</ul>
+<p>既然方法一和方法二都能实现相同的功能，为什么还需要再提出 list comprehensions 呢？</p>
+<p>答案是：为了更加优雅的构建 list。</p>
+<p>方法一虽然简单但是很臃肿，方法二要调用两个函数（<code>map</code>/<code>filter</code>, <code>lambda</code>）仍然不够简化，所以出现了 <code>list comprehensions</code>， 它实际上来自于函数式编程语言 Haskell，<strong>提供了另外一种更加简洁的实现方法（Simple is better than complex.）</strong>。</p>
+<h2 id="understanding and using list comprehensions">Understanding and Using List Comprehensions</h2>
+<h3 id="yi shu xue de jiao du li jie  list comprehensions">以数学的角度理解 list comprehensions</h3>
+<p>下面这个集合表示从自然数中挑选出符合条件 <code>x &gt; 5</code> 且 <code>x &lt; 10</code> 的所有元素，</p>
+<div class="math">$$new\_list = \{x | x \in N, x &gt; 0, x &lt; 10\}$$</div>
+<p>下面是 Python 的实现版本，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">new_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">N</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</td></tr></table>
+<p>对比一下 python 版本的代码就可以知道两者非常相似，只不过 python 用 for 和 if 语句来描述数学中的条件表达式。尤其是 python 中有集合 <code>set</code> 的概念，set 也是可以写成 comprehensions 形式的，这个时候就和数学就完全等价了。</p>
+<h3 id="ru he xie  list comprehensions">如何写 list comprehensions</h3>
+<p>因为 list comprehensions 本质是 for 和 if 的简洁写法，所以我们可以总结出一个模板，只要满足这个模板的 for 循环就可以改成写 list comprehensions.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="nv">item</span> <span class="nv">in</span> <span class="nv">old_list</span>:
+    <span class="k">if</span> <span class="nv">condition</span><span class="ss">(</span><span class="nv">item</span><span class="ss">)</span>:
+        <span class="nv">new_list</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">func</span><span class="ss">(</span><span class="nv">item</span><span class="ss">))</span>
+</pre></div>
+</td></tr></table>
+<p>可以改写成下面的形式</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">new_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">old_list</span> <span class="k">if</span> <span class="n">condition</span><span class="p">(</span><span class="n">item</span><span class="p">)]</span>
+</pre></div>
+</td></tr></table>
+<h3 id="xun huan qian tao de  list comprehensions">循环嵌套的 list comprehensions</h3>
+<p>循环嵌套的 list comprehensions 例子：将矩阵展平，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+        <span class="n">flattened</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>可以写成</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flattend</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+</pre></div>
+</td></tr></table>
+<h3 id="ti gao  list comprehensions de ke du xing">提高 list comprehensions 的可读性</h3>
+<p>因为 python 支持在括号之间断行，所以前面的例子，可以该写成下面的形式以提高可读性：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">new_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">func</span><span class="p">(</span><span class="n">itme</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">old_list</span>
+    <span class="k">if</span> <span class="n">condition</span><span class="p">(</span><span class="n">itme</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flattend</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">n</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">row</span>
+<span class="p">]</span>
+</pre></div>
+</td></tr></table>
+<h3 id="xiao jie">小结</h3>
+<p>无论是单层还是嵌套的 for 循环，改成 list comprehensions 的方法其实方法非常简单，就是把普通的 for 循环调整了顺序，将循环内的语句写在了最前面，剩余部分按原顺序写就可以了。</p>
+<ul>
+<li>上面的语法只适用于一个元素（the Right One）</li>
+<li>不允许写成 <code>[x, y for ...]</code> 形式，但是可以写成一个 tuple 元素的形式 <code>[(x, y) for ...]</code></li>
+<li>允许嵌套形式 <code>[...  for x... for y...]</code>，就像嵌套循环一样，最后一个 index 是变化最快的</li>
+</ul>
+<p>GvR 也说 <code>map()</code> / <code>filter()</code> 函数用起来实在太繁琐了，我们应该多使用 comprehensions。但是我们应该记住，谨防滥用。</p>
+<blockquote>
+<p>filter and map should die and be subsumed into list comprehensions, not grow more variants. I'd rather introduce built-ins that do iterator algebra (e.g. the iterzip that I've often used as an example).</p>
+</blockquote>
+<p><em>（关于 <code>iterator</code>，后面的学习笔记中会有介绍。）</em></p>
+<h2 id="dict comprehensions_1">Dict Comprehensions</h2>
+<p><a href="https://www.python.org/dev/peps/pep-0274/">PEP 274 -- Dict Comprehensions 原文链接</a>。</p>
+<p>dict comprehensions 和 list comprehensions 非常相似，不同之处是用 <code>{}</code> 而不是 <code>[]</code>。同时，关键字 <code>for</code> 前面的部分表达式改成了用冒号隔开的 key-value 对。</p>
+<h3 id="examples_1">Examples</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="p">{</span><span class="n">i</span> <span class="p">:</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="o">+</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)}</span>
+<span class="p">{</span><span class="mi">0</span> <span class="p">:</span> <span class="s1">'A'</span><span class="p">,</span> <span class="mi">1</span> <span class="p">:</span> <span class="s1">'B'</span><span class="p">,</span> <span class="mi">2</span> <span class="p">:</span> <span class="s1">'C'</span><span class="p">,</span> <span class="mi">3</span> <span class="p">:</span> <span class="s1">'D'</span><span class="p">}</span>
+</pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">someDict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()}</span> <span class="o">==</span> <span class="n">someDict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="mi">1</span>
+</pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">list_of_email_addrs</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">'barry@zope.com'</span>   <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'barry@python.org'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'guido@python.org'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">invert</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">return</span> <span class="p">{</span><span class="n">v</span> <span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()}</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span> <span class="p">:</span> <span class="s1">'A'</span><span class="p">,</span> <span class="mi">1</span> <span class="p">:</span> <span class="s1">'B'</span><span class="p">,</span> <span class="mi">2</span> <span class="p">:</span> <span class="s1">'C'</span><span class="p">,</span> <span class="mi">3</span> <span class="p">:</span> <span class="s1">'D'</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">invert</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="p">{</span><span class="s1">'A'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'B'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'C'</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'D'</span> <span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+</pre></div>
+</td></tr></table>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="p">{(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> <span class="n">k</span><span class="o">+</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)}</span>
+<span class="o">...</span> <span class="p">{(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">6</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">3</span><span class="p">,</span>
+   <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span>
+   <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span>
+   <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span> <span class="mi">5</span><span class="p">}</span>
+</pre></div>
+</td></tr></table>
+<h2 id="ref_1">Ref</h2>
+<p><a href="https://treyhunner.com/2015/12/python-list-comprehensions-now-in-color/">Python List Comprehensions: Explained Visually</a></p>
+<p><a href="https://www.jianshu.com/p/dd85d2cd89d1">用数学思维理解 Comprehension</a></p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'blue ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/pep.html">PEP</a>
+      <a href="https://qiangu.cool/tag/python.html">python</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/cs/learning_peps_series_3_pep20.html" title="PEP 学习系列 #3 —— PEP20">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="https://qiangu.cool/posts/tools/git_flow_summary.html" title="Git Flow 小结">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/cs/learning_peps_series_0_pep0.html">PEP 学习系列 #0 —— PEP0</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/learning_peps_series_1_pep8.html">PEP 学习系列 #1 —— PEP8</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/learning_peps_series_3_pep20.html">PEP 学习系列 #3 —— PEP20</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/learning_peps_series_5_pep234_and_pep279.html">PEP 学习系列 #5 —— PEP234 & PEP 279</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/learning_peps_series_6_pep255_and_pep289.html">PEP 学习系列 #6 —— PEP255 & PEP289</a></li>
+    </ul>
+  </div>
+
+      <p>This post is part 5 of the "Learning PEPs" series:</p>
+      <ol class="parts">
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/learning_peps_series_0_pep0.html'>PEP 学习系列 #0 —— PEP0</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/learning_peps_series_1_pep8.html'>PEP 学习系列 #1 —— PEP8</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/learning_peps_series_2_pep257.html'>PEP 学习系列 #2 —— PEP257</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/learning_peps_series_3_pep20.html'>PEP 学习系列 #3 —— PEP20</a>
+              </li>
+              <li class="active">
+                  <a href='https://qiangu.cool/posts/cs/learning_peps_series_4_pep202_and_pep274.html'>PEP 学习系列 #4 —— PEP202 & PEP274</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/learning_peps_series_5_pep234_and_pep279.html'>PEP 学习系列 #5 —— PEP234 & PEP 279</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/learning_peps_series_6_pep255_and_pep289.html'>PEP 学习系列 #6 —— PEP255 & PEP289</a>
+              </li>
+      </ol>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,714 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="总结初步配置 Vim，让 Vim 更顺手 。" />
+<meta name="keywords" content="Vim">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="学习 Vim 初步配置 Vim"/>
+<meta property="og:description" content="总结初步配置 Vim，让 Vim 更顺手 。"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/posts/tools/learning_vim_vimrc_preliminary.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-04-16 12:44:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="Tools"/>
+<meta property="article:tag" content="Vim"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; 学习 Vim 初步配置 Vim</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="learning_vim_vimrc_preliminary">学习 Vim 初步配置 Vim</h1>
+    <p>
+      Posted on 2014-04-16 12:44 in <a href="https://qiangu.cool/category/tools.html">Tools</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Vim 初步配置 Vim">学习 Vim 初步配置 Vim</a><ul><li><a class="toc-href" href="#zai na li pei zhi  vim" title="在哪里配置 Vim">在哪里配置 Vim</a></li><li><a class="toc-href" href="#ying she  esc jian" title="映射 esc 键">映射 esc 键</a></li><li><a class="toc-href" href="#she zhi yan se zhu ti  colorscheme" title="设置颜色主题 colorscheme">设置颜色主题 colorscheme</a></li><li><a class="toc-href" href="#bian xie  .vimrc" title="编写 .Vimrc">编写 .Vimrc</a><ul><li><a class="toc-href" href="#pei zhi  vim te xing" title="配置 Vim 特性">配置 Vim 特性</a></li></ul></li><li><a class="toc-href" href="#can kao_1" title="参考">参考</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <p>总结初步配置 Vim，让 Vim 更顺手 。</p>
+<p><br/></p>
+<h2 id="zai na li pei zhi  vim">在哪里配置 Vim</h2>
+<hr/>
+<p><a href="http://book.douban.com/subject/6126937/">学习 Vi 和 Vim 编辑器</a>：</p>
+<blockquote>
+<p>Vim 依照特定顺序寻找初始化的信号，它执行找到的第一组指令（可以是 环境变量 or 配置文件），然后开始编辑工作 。所以，Vim 在下列清单中遇到的第一个项目，就是清单中被执行的唯一项目 。书寻如下：</p>
+<ol>
+<li>
+<p><code>VIMINIT</code> 。它是环境变量，如果不为空，Vim 把它的内容当作 ex 命令执行</p>
+</li>
+<li>
+<p>用户 <code>vimrc</code> 文件 。</p>
+</li>
+<li>
+<p><code>exrc</code> 选项 。如果设置了 Vim 的 exrc 选项，它会寻找三个额外的配置文件 。</p>
+</li>
+</ol>
+</blockquote>
+<p><code>vimrc</code>（vim runtime configure）文件一般有 3 个：</p>
+<ol>
+<li>
+<p>/etc/vim/vimrc</p>
+<p>本配置文件影响所有的用户，一般不应该更改这个配置文件，因为谁也不能保证别人的喜好和自己一样 。</p>
+</li>
+<li>
+<p>/usr/share/vim/vimrc</p>
+<p>输入命令</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span> ll /usr/share/vim/vimrc
+</pre></div>
+</td></tr></table>
+<p>就可以看到，本文件是 <code>/etc/vim/vimrc</code> 的软链接 。</p>
+</li>
+<li>
+<p>~/.vimrc</p>
+<p>一般来说，配置 vim 就是在这个文件中配置，如果不存在的话 <code>touch</code> 一个新文件并命名 <code>。vimrc</code> 。我们在下面说的配置都是在本文件中配置 。</p>
+</li>
+</ol>
+<p><br/></p>
+<h2 id="ying she  esc jian">映射 <code>esc</code> 键</h2>
+<hr/>
+<p>因为历史原因，Joy 设计 vi 时采用的键盘和我们现在用的标准键盘布局并不一样，当时他的键盘的 <code>esc</code> 键在现在我们的 <code>Caps Lock</code> 键的位置，所以才设计使用 <code>esc</code> 作为模式转换键 。为了更加方便顺手地使用 vim，当然要把这两个键相互调换一下 。</p>
+<p>在 vim 的官网上就有介绍如何实现两个按键的调换</p>
+<p><a href="http://vim.wikia.com/wiki/Map_caps_lock_to_escape_in_XWindows">Map caps lock to escape in XWindows</a></p>
+<p>具体方法，在 <code>～/</code> 目录下新建一个文件，加入一下内容</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span>! Swap caps lock and escape
+remove <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
+keysym <span class="nv">Escape</span> <span class="o">=</span> Caps_Lock
+keysym <span class="nv">Caps_Lock</span> <span class="o">=</span> Escape
+add <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
+</pre></div>
+</td></tr></table>
+<p>保存为 .speedswrapper</p>
+<p>然后输入命令</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>xmodmap ~/.speedswrapper
+</pre></div>
+</td></tr></table>
+<p>这时，对于整个系统范围，这两个键已经调换了位置 。</p>
+<p><br/></p>
+<h2 id="she zhi yan se zhu ti  colorscheme">设置颜色主题 colorscheme</h2>
+<hr/>
+<p>Vim 自带一些颜色主题，一般存放在 <code>/usr/share/vim/vim7x</code> 目录下（我的 Vim 版本为 7.3，所以路径为 <code>/usr/share/vim/vim73</code>）.</p>
+<p>如果对系统自带的主题不满意，网上有很多不错的主题，个人最喜欢 <a href="https://github.com/tomasr/molokai">molikai</a> 主题，把下载下来的配色文件拷贝到 <code>usr/share/vim/vim73</code> 路径下，打开 vim 后 输入</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:colorscheme molikai
+</pre></div>
+</td></tr></table>
+<p>就 ok 了～ 不过这个方法在关闭 vim 后就恢复了，要想省去每次都输命令的烦恼，只需要在下一步 .vimrc 文件中加入以下内容就可以了</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>colorscheme molikai
+</pre></div>
+</td></tr></table>
+<p><br/></p>
+<h2 id="bian xie  .vimrc">编写 .Vimrc</h2>
+<hr/>
+<p>vimrc 文件是配置 Vim 编辑特性比较好的地方，差不多任何 Vim 选项都能在次文件中被设置为打开或者关闭，而且它特别适合设置全局变量与定义函数、缩写、按键映射 。</p>
+<ul>
+<li>
+<p>注释以双引号 <code>&ldquo;</code> 开始，可位于一行的任何 2 位置，所有位于双引号后面的文本，包括双引号都会被视为注释而忽略</p>
+</li>
+<li>
+<p>可以用冒号 <code>:</code> 表示 ex 命令</p>
+</li>
+</ul>
+<h3 id="pei zhi  vim te xing">配置 Vim 特性</h3>
+<p>vimrc 配置很简单，网上有很多人都分享了自己的配置方案 。我找到一份注释良好的<a href="https://github.com/amix/vimrc">配置范例</a>，这篇博客的作者总结了自己 8 年的使用经验，给出了两份配置文件，基本版 <a href="https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim">Basic</a> 和 终极版<a href="https://github.com/amix/vimrc">Ultimate</a> 。</p>
+<p>作为码农，当然要选择终极版了～不过个人喜欢用 Vundle 管理我的 Vim 插件（计划下篇博客记录我的配置过程），不是很喜欢作者选择的所有插件，想自己定制插件组合，那么目前只需要看 基础版就足够了 。</p>
+<p>copy 了一份基础版到自己的 github 中，有备无患 :-D</p>
+<p><a href="">Copy of basic vimrc configure file</a></p>
+<p>我自己的配置文件：</p>
+<p><a href="">My .vimrc file</a></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">"</span> General
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">set nocompatible</span>
+<span class="s2">"</span> Set how many lines of <span class="nb">history</span> VIM has to rememer
+<span class="nb">set</span> <span class="nv">history</span><span class="o">=</span><span class="m">800</span>
+
+<span class="s2">" Enable filetype plugins</span>
+<span class="s2">filetype plugin on</span>
+<span class="s2">filetype indent on</span>
+
+<span class="s2">"</span> Set to auto <span class="nb">read</span> when a file is changed from the outside
+<span class="nb">set</span> autoread
+
+<span class="s2">" Set leader key</span>
+<span class="s2">let mapleader = "</span>,<span class="s2">"</span>
+<span class="s2">let g:mapleader = "</span>,<span class="s2">"</span>
+
+<span class="s2">"</span> fast saving
+nmap &lt;leader&gt;w :w!&lt;cr&gt;
+
+<span class="s2">" fast saving</span>
+<span class="s2">nmap &lt;leader&gt;q :q!&lt;cr&gt;</span>
+
+<span class="s2">"</span> fast editing
+nmap &lt;leader&gt;aq :qa&lt;cr&gt;
+
+<span class="s2">""""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">" Vim user interface</span>
+<span class="s2">""""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">"</span> Set <span class="m">20</span> lines to the cursor
+<span class="nb">set</span> <span class="nv">so</span><span class="o">=</span><span class="m">20</span>
+
+<span class="s2">" Turn on the wild menu</span>
+<span class="s2">set wildmenu</span>
+
+<span class="s2">"</span> Ignore complited files
+<span class="nb">set</span> <span class="nv">wildignore</span><span class="o">=</span>*.o,*~,*.pyc
+
+<span class="s2">" Always show current postion</span>
+<span class="s2">set ruler</span>
+
+<span class="s2">"</span> Highlight current line
+<span class="nb">set</span> cursorline
+
+<span class="s2">" Height of command bar</span>
+<span class="s2">set cmdheight=2</span>
+
+<span class="s2">"</span> A buffer becomes hidden when it is abandoned
+<span class="nb">set</span> hid
+
+<span class="s2">" Configure backsapce so it acts as it should act</span>
+<span class="s2">set backspace=eol,start,indent</span>
+<span class="s2">set whichwrap+=&lt;,&gt;,h,l</span>
+
+<span class="s2">"</span> Ignore <span class="k">case</span> when searching
+<span class="nb">set</span> ignorecase
+
+<span class="s2">" When searching try to be smart about cases</span>
+<span class="s2">set smartcase</span>
+
+<span class="s2">"</span> Highlight search results
+<span class="nb">set</span> hlsearch
+
+<span class="s2">" Make search act like in morden browsers</span>
+<span class="s2">set incsearch</span>
+
+<span class="s2">"</span> Don<span class="err">'</span>t redraw <span class="k">while</span> executing marcros
+<span class="nb">set</span> lazyredraw
+
+<span class="s2">" For regular expressions turn magic on</span>
+<span class="s2">set magic</span>
+
+<span class="s2">"</span> Show matching brackets when text indicator is over them
+<span class="nb">set</span> showmatch
+<span class="s2">" How many tenths of a second to blink when matching brackets</span>
+<span class="s2">set mat=2</span>
+
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">" Colors and Fonts</span>
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">" Enable syntax highlight</span>
+<span class="s2">syntax enable</span>
+<span class="s2">colorscheme molokai</span>
+<span class="s2">set background=dark</span>
+<span class="s2">:set t_Co=256</span>
+
+<span class="s2">"</span> Set utf8 as standard encoding and en_US as the standard language
+<span class="nb">set</span> <span class="nv">encoding</span><span class="o">=</span>utf8
+
+<span class="s2">" Use Unix as the standard file type</span>
+<span class="s2">set ffs=unix,dos,mac</span>
+
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">" Files, backups and undo</span>
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">" Turn backup off, since most stuff is in SVN. git et.c anyway</span>
+<span class="s2">set nobackup</span>
+<span class="s2">set nowb</span>
+<span class="s2">set noswapfile</span>
+
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">" Text, tab and indent related</span>
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">" Use sapce instead of tabs</span>
+<span class="s2">set expandtab</span>
+
+<span class="s2">"</span> Be smart when using tabs
+<span class="nb">set</span> smarttab
+
+<span class="s2">" 1 tab = 4 spaces</span>
+<span class="s2">set shiftwidth=4</span>
+<span class="s2">set tabstop=4</span>
+
+<span class="s2">"</span> Linebreak on <span class="m">500</span> characters
+<span class="nb">set</span> lbr
+<span class="nb">set</span> <span class="nv">tw</span><span class="o">=</span><span class="m">500</span>
+
+<span class="nb">set</span> ai <span class="s2">"Auto indent</span>
+<span class="s2">set si "</span>Smart indent
+<span class="nb">set</span> wrap <span class="s2">"Wrap lines</span>
+
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">" Moving around, tabs, windows and buffers</span>
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">" Treat long lines as break lines</span>
+<span class="s2">map j gj</span>
+<span class="s2">map k gk</span>
+
+<span class="s2">"</span> Smart way to move between windows
+map &lt;C-j&gt; &lt;C-w&gt;j
+map &lt;C-k&gt; &lt;C-w&gt;k
+map &lt;C-h&gt; &lt;C-w&gt;h
+map &lt;C-l&gt; &lt;C-w&gt;l
+
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">"</span> Status line
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">"</span> Show line number
+<span class="nb">set</span> number
+
+<span class="s2">" Always show the status line</span>
+<span class="s2">set statusline=%F%m%r%h%w\ [FORMAT=%{&amp;ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}</span>
+<span class="s2">""set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l</span>
+
+
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">" Spell checking</span>
+<span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+<span class="s2">" Pressing ,ss will toggle and untoggle spell checking</span>
+<span class="s2">map &lt;leader&gt;ss :setlocal spell!&lt;cr&gt;</span>
+<span class="s2">map &lt;leader&gt;sn ]s</span>
+<span class="s2">map &lt;leader&gt;sp [s</span>
+<span class="s2">map &lt;leader&gt;sa zg</span>
+</pre></div>
+</td></tr></table>
+<p><br/></p>
+<h2 id="can kao_1">参考</h2>
+<p><a href="http://book.douban.com/subject/6126937/">学习 vi 和 Vim 编辑器</a></p>
+<p><a href="https://github.com/amix/vimrc">The Ultimate vimrc</a></p>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/vim.html">Vim</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/misc/how_to_use_gmail_elegantly.html" title="如何优雅地使用 Gmail">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="https://qiangu.cool/posts/tools/learning_vim_vundle.html" title="学习 Vim 使用 Vundle 管理插件">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_survival.html">学习 Vim 存活</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
+    </ul>
+  </div>
+
+      <p>This post is part 2 of the "Learning Vim" series:</p>
+      <ol class="parts">
+              <li >
+                  <a href='https://qiangu.cool/posts/tools/learning_vim_survival.html'>学习 Vim 存活</a>
+              </li>
+              <li class="active">
+                  <a href='https://qiangu.cool/posts/tools/learning_vim_vimrc_preliminary.html'>学习 Vim 初步配置 Vim</a>
+              </li>
+      </ol>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

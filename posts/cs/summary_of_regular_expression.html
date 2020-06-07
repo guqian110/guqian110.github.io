@@ -1,0 +1,642 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="regular expression 学习笔记" />
+<meta name="keywords" content="regular expression">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="Regular Expression 小结"/>
+<meta property="og:description" content="regular expression 学习笔记"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/posts/cs/summary_of_regular_expression.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-04-27 00:00:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="CS"/>
+<meta property="article:tag" content="regular expression"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; Regular Expression 小结</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="summary_of_regular_expression">Regular Expression 小结</h1>
+    <p>
+      Posted on 2015-04-27 00:00 in <a href="https://qiangu.cool/category/cs.html">CS</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Regular Expression 小结">Regular Expression 小结</a><ul><li><a class="toc-href" href="#what is a re?" title="What Is a RE?">What Is a RE?</a></li><li><a class="toc-href" href="#basic" title="Basic">Basic</a></li><li><a class="toc-href" href="#simple match patterns" title="Simple Match Patterns">Simple Match Patterns</a></li><li><a class="toc-href" href="#boundaries" title="Boundaries">Boundaries</a></li><li><a class="toc-href" href="#alternation, groups, and backreferences" title="Alternation, Groups, and Backreferences">Alternation, Groups, and Backreferences</a></li><li><a class="toc-href" href="#character classes" title="Character Classes">Character Classes</a></li><li><a class="toc-href" href="#matching unicode and other characters" title="Matching Unicode and Other Characters">Matching Unicode and Other Characters</a></li><li><a class="toc-href" href="#quantifiers" title="Quantifiers">Quantifiers</a><ul><li><a class="toc-href" href="#greedy, lazy, and possessive" title="Greedy, Lazy, and Possessive">Greedy, Lazy, and Possessive</a></li><li><a class="toc-href" href="#basic quantifiers" title="Basic Quantifiers">Basic Quantifiers</a></li><li><a class="toc-href" href="#range syntax" title="Range Syntax">Range Syntax</a></li><li><a class="toc-href" href="#lazy quantifiers" title="Lazy Quantifiers">Lazy Quantifiers</a></li><li><a class="toc-href" href="#possessive quantifiers" title="Possessive Quantifiers">Possessive Quantifiers</a></li></ul></li><li><a class="toc-href" href="#lookarounds_1" title="Lookarounds">Lookarounds</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <p>看完了 <a href="http://book.douban.com/subject/6959486/">Introducing Regular Expressions</a>，记录一下学习笔记。这本书是非常简单的入门书，一天时间就能看完。作者还推荐了基本进阶书：</p>
+<p><a href="http://book.douban.com/subject/1872091/">Mastering Regular Expressions</a></p>
+<p><a href="http://book.douban.com/subject/3443904/">Regular Expressions Cookbook</a></p>
+<p><a href="http://book.douban.com/subject/2363803/">Regular Expression Pocket Reference</a></p>
+<p><em>看完这本书，基本上已经满足项目中简单的 RE 需求，以后需要深入的话，再补这几本书。</em></p>
+<p><br/></p>
+<h2 id="what is a re?">What Is a RE?</h2>
+<hr/>
+<p>引用 Ken Thompson 的话：</p>
+<blockquote>
+<p>A regular expression is a pattern which specifies a set of strings of characters; it is said
+to match certain strings.</p>
+</blockquote>
+<p><br/></p>
+<h2 id="basic">Basic</h2>
+<hr/>
+<ul>
+<li>
+<p>metacharacters</p>
+<p>元字符，在表达式中有特殊的含义，也是保留字。一共有 14 个：</p>
+<div class="highlight"><pre><span></span><span class="p">.</span>   <span class="o">//</span> <span class="err">匹配任意字符</span>
+<span class="err">\</span>   <span class="o">//</span> <span class="err">对字符转义</span>
+<span class="o">|</span>   <span class="o">//</span> <span class="err">选择操作（或）</span>
+<span class="o">^</span>   <span class="o">//</span> <span class="err">行起始</span>
+<span class="err">$</span>   <span class="o">//</span> <span class="err">行结束</span>
+<span class="o">?</span>   <span class="o">//</span> <span class="err">匹配</span> <span class="mi">0</span> <span class="err">或</span> <span class="mi">1</span> <span class="err">次</span>
+<span class="o">*</span>   <span class="o">//</span> <span class="err">匹配</span> <span class="mi">0</span> <span class="err">或</span> <span class="err">多次</span>
+<span class="o">+</span>   <span class="o">//</span> <span class="err">匹配</span> <span class="mi">1</span> <span class="err">或</span> <span class="err">多次</span>
+<span class="p">[]</span>  <span class="o">//</span> <span class="err">字符组符号</span>
+<span class="err">{}</span>  <span class="o">//</span> <span class="err">量词或代码块符号</span>
+<span class="p">()</span>  <span class="o">//</span> <span class="err">分组符号</span>
+</pre></div>
+</li>
+<li>
+<p>character shorthand</p>
+<p>也叫做 character escape，中文翻译成：&ldquo; 字符组简写 &rdquo; / &ldquo; 转义字符 &rdquo;，常用简写：</p>
+<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">d</span>      <span class="o">//</span> <span class="err">数字字符，</span><span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
+<span class="err">\</span><span class="n">D</span>      <span class="o">//</span> <span class="err">非数字字符，</span> <span class="o">=</span> <span class="p">[</span><span class="o">^</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
+<span class="err">\</span><span class="n">w</span>      <span class="o">//</span> <span class="err">单词字符</span>
+<span class="err">\</span><span class="n">W</span>      <span class="o">//</span> <span class="err">非单词字符</span>
+<span class="err">\</span><span class="n">s</span>      <span class="o">//</span> <span class="err">空格</span>
+<span class="err">\</span><span class="n">n</span>      <span class="o">//</span> <span class="err">换行</span>
+<span class="err">\</span><span class="n">r</span>      <span class="o">//</span> <span class="err">回车</span>
+<span class="err">\</span><span class="n">b</span>      <span class="o">//</span> <span class="err">单词边界</span>
+<span class="err">\</span><span class="n">a</span>      <span class="o">//</span> <span class="err">报警符</span>
+<span class="err">\</span><span class="n">cx</span>     <span class="o">//</span> <span class="err">控制字符</span>
+</pre></div>
+</li>
+</ul>
+<h2 id="simple match patterns">Simple Match Patterns</h2>
+<hr/>
+<p>几个常见的模式匹配：</p>
+<ul>
+<li>
+<p>string literals</p>
+<p>使用普通字符。</p>
+</li>
+<li>
+<p>digits</p>
+<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">d</span>      <span class="o">//</span> <span class="err">简写形式</span>
+<span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>   <span class="o">//</span> <span class="mi">0</span><span class="o">~</span><span class="mi">9</span> <span class="err">任意一个数字</span>
+<span class="p">[</span><span class="mi">1278</span><span class="p">]</span>  <span class="o">//</span> <span class="err">限定备选集合为</span> <span class="mi">1</span><span class="err">，</span><span class="mi">2</span><span class="err">，</span><span class="mi">7</span><span class="err">，</span><span class="mi">8</span>
+</pre></div>
+</li>
+<li>
+<p>non-digits</p>
+<p><em>大写的简写形式</em> 或者 <em>取反</em> 即可：</p>
+<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">D</span>
+<span class="p">[</span><span class="o">^</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
+<span class="p">[</span><span class="o">^</span><span class="err">\</span><span class="n">d</span><span class="p">]</span>
+</pre></div>
+</li>
+<li>
+<p>word characters</p>
+<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">w</span>              <span class="o">//</span> <span class="err">简写形式</span>
+<span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>     <span class="o">//</span> <span class="n">a</span><span class="o">~</span><span class="n">z</span><span class="err">、</span><span class="n">A</span><span class="o">~</span><span class="n">Z</span><span class="err">、</span><span class="mi">0</span><span class="o">~</span><span class="mi">9</span> <span class="err">任意一个字符</span>
+</pre></div>
+</li>
+<li>
+<p>non-word characters</p>
+<p><em>大写的简写形式</em> 或者 <em>取反</em> 即可：</p>
+<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">W</span>
+<span class="p">[</span><span class="o">^</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
+<span class="p">[</span><span class="o">^</span><span class="err">\</span><span class="n">w</span><span class="p">]</span>
+</pre></div>
+</li>
+<li>
+<p>whitespace</p>
+<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">s</span>
+<span class="p">[</span> <span class="err">\</span><span class="n">t</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+</li>
+<li>
+<p>any characters</p>
+<div class="highlight"><pre><span></span><span class="p">.</span>
+</pre></div>
+</li>
+</ul>
+<p><br/></p>
+<h2 id="boundaries">Boundaries</h2>
+<hr/>
+<ul>
+<li>
+<p>行首、行尾</p>
+<div class="highlight"><pre><span></span><span class="o">^</span>       <span class="o">//</span> <span class="err">行首</span>
+<span class="err">$</span>       <span class="o">//</span> <span class="err">行尾</span>
+</pre></div>
+</li>
+<li>
+<p>单词边界</p>
+<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">b</span>      <span class="o">//</span> <span class="err">单词边界</span>
+<span class="err">\</span><span class="o">&lt;</span>      <span class="o">//</span> <span class="err">单词开头</span>
+<span class="err">\</span><span class="o">&gt;</span>      <span class="o">//</span> <span class="err">单词结尾</span>
+</pre></div>
+</li>
+<li>
+<p>非单词边界</p>
+<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">B</span>
+</pre></div>
+</li>
+</ul>
+<p><br/></p>
+<h2 id="alternation, groups, and backreferences">Alternation, Groups, and Backreferences</h2>
+<hr/>
+<ul>
+<li>
+<p>Alternation</p>
+<p>比如要匹配 THE 或者 The 或者 the，使用如下的语法</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="n">THE</span><span class="o">|</span><span class="n">The</span><span class="o">|</span><span class="n">the</span><span class="p">)</span>
+</pre></div>
+</li>
+<li>
+<p>Subpatterns</p>
+<p>THE、The、the 是 3 个子模式：</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="n">THE</span><span class="o">|</span><span class="n">The</span><span class="o">|</span><span class="n">the</span><span class="p">)</span>
+</pre></div>
+<p>括号对于子模式不是必须的：</p>
+<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">b</span><span class="o">[</span><span class="n">tT</span><span class="o">]</span><span class="n">h</span><span class="o">[</span><span class="n">ceinry</span><span class="o">]*</span><span class="err">\</span><span class="n">b</span><span class="w"></span>
+</pre></div>
+<p>可以匹配 the、The、their 等单词，严格意义上中括号内的叫做 字符组 <code>character classes</code>，不过因为两者有近似的功能，所以也可以将其做一类。</p>
+</li>
+<li>
+<p>Capturing Groups and Backreferences</p>
+<p>对于括号 () 内的模式进行捕获，将其存储在临时内存中，然后可以通过后向引用重用已捕获的内容。</p>
+<p>重引用时 <code>\1</code>、<code>$1</code> 表示对第一个分组的引用；<code>\2</code>、<code>$2</code> 表示对第二个分组的引用；依次类推。</p>
+</li>
+<li>
+<p>Non-Capturing Groups</p>
+<p>对于之后不会进行引用的分组，可以使用非捕获分组，因为不会对其分配内存所以可以提高性能。</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="o">?</span><span class="p">:</span><span class="n">THE</span><span class="o">|</span><span class="n">The</span><span class="o">|</span><span class="n">the</span><span class="p">)</span>
+</pre></div>
+</li>
+</ul>
+<p><br/></p>
+<h2 id="character classes">Character Classes</h2>
+<hr/>
+<ul>
+<li>
+<p>Character Classes</p>
+<p>也叫做 方括号表达式，字符组可以帮助我们匹配特定字符或者特定的字符序列：</p>
+<p>匹配特定字符</p>
+<div class="highlight"><pre><span></span><span class="o">[</span><span class="n">aeiou</span><span class="o">]</span><span class="w">         </span><span class="o">//</span><span class="w"> </span><span class="n">匹配元音字符</span><span class="w"></span>
+</pre></div>
+<p>匹配特定字符序列：</p>
+<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">24680</span><span class="p">]</span><span class="err">\</span><span class="n">b</span>      <span class="o">//</span> <span class="err">匹配</span> <span class="mi">10</span><span class="err">～</span><span class="mi">19</span> <span class="err">之间的偶数</span>
+</pre></div>
+</li>
+<li>
+<p>Negated Character Classes</p>
+<p>匹配与字符组不匹配的字符，方法就是在开头加上 脱字符 <code>^</code>：</p>
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="o">^</span><span class="n">aeiou</span><span class="p">]</span>    <span class="o">//</span> <span class="err">不想匹配元音字符</span>
+</pre></div>
+</li>
+<li>
+<p>Union and Difference</p>
+<p>字符组可以像集合一样操作（如求并集、求差集），实际上字符组还有一个名字就叫做 字符集 <code>character set</code>。</p>
+<p>并集：</p>
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">3</span><span class="p">][</span><span class="mi">6</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>      <span class="o">//</span> <span class="err">匹配</span> <span class="mi">0</span><span class="o">~</span><span class="mi">3</span> <span class="err">或者</span> <span class="mi">6</span><span class="o">~</span><span class="mi">9</span> <span class="err">之间的数字</span>
+</pre></div>
+<p>差集：</p>
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="o">&amp;&amp;</span><span class="p">[</span><span class="o">^</span><span class="n">m</span><span class="o">-</span><span class="n">r</span><span class="p">]]</span>   <span class="o">//</span> <span class="err">匹配</span> <span class="n">a</span><span class="o">~</span><span class="n">z</span> <span class="err">之间，但是排除</span> <span class="n">m</span><span class="o">~</span><span class="n">r</span> <span class="err">之间的字符</span>
+</pre></div>
+</li>
+<li>
+<p>POSIX Character Classes</p>
+<p><code>POSIX</code> (Portable Operating System Interface ) 是 IEEE 维护的一系列标准，格式如下：</p>
+<div class="highlight"><pre><span></span><span class="k">[[: xxxx:]]</span>
+<span class="na">[[:^ xxxx:]]        // 取反匹配</span>
+</pre></div>
+<p>其中 xxxx 取值为 digit、word 等，举例：</p>
+<div class="highlight"><pre><span></span><span class="p">[[:</span><span class="n">alnum</span><span class="p">:]]</span>         <span class="o">//</span> <span class="err">匹配字母和数字</span>
+<span class="p">[[:</span><span class="n">alpha</span><span class="p">:]]</span>         <span class="o">//</span> <span class="err">匹配大写或小写字母</span>
+<span class="p">[[:</span><span class="n">ascii</span><span class="p">:]]</span>         <span class="o">//</span> <span class="err">匹配</span> <span class="n">ASCII</span> <span class="err">范围内的字符</span>
+</pre></div>
+<p>一般不常用 POSIX 格式。</p>
+</li>
+</ul>
+<p><br/></p>
+<h2 id="matching unicode and other characters">Matching Unicode and Other Characters</h2>
+<hr/>
+<ul>
+<li>
+<p>Matching a Unicode Character</p>
+<div class="highlight"><pre><span></span><span class="o">/</span><span class="n">uxxxx</span>      <span class="o">//</span> <span class="n">syntax</span>
+<span class="o">/</span><span class="n">u00e9</span>      <span class="o">//</span> <span class="o">=</span> <span class="nb">character</span> <span class="err">&eacute;</span> 
+<span class="o">/</span><span class="n">u6c60</span>      <span class="o">//</span> <span class="o">=</span> <span class="nb">character</span> <span class="err">池</span>
+</pre></div>
+</li>
+<li>
+<p>Matching Characters with Octal Numbers</p>
+<div class="highlight"><pre><span></span><span class="o">`</span><span class="err">\</span><span class="n">xxx</span><span class="o">`</span>      <span class="o">//</span> <span class="n">xxx</span> <span class="err">是</span> <span class="mi">3</span> <span class="err">位</span> <span class="mi">8</span> <span class="err">进制数字</span>
+</pre></div>
+<p>比如 &eacute; 也可以用 <code>\351</code> 来匹配。</p>
+</li>
+<li>
+<p>Matching Control Characters</p>
+<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">cx</span>         <span class="o">//</span> <span class="n">x</span> <span class="err">是想匹配的控制字符</span>
+<span class="err">\</span><span class="k">c</span><span class="o">@</span>         <span class="o">//</span> <span class="err">空字符</span> <span class="mi">0</span><span class="p">.</span><span class="k">NUll</span>
+<span class="err">\</span><span class="n">cG</span>         <span class="o">//</span> <span class="err">报警字符</span> <span class="n">BEL</span>
+<span class="err">\</span><span class="n">cH</span>         <span class="o">//</span> <span class="err">退格符</span> <span class="n">Backspcace</span>
+</pre></div>
+</li>
+</ul>
+<p><br/></p>
+<h2 id="quantifiers">Quantifiers</h2>
+<hr/>
+<h3 id="greedy, lazy, and possessive">Greedy, Lazy, and Possessive</h3>
+<p>量词的属性有 贪婪，懒惰，占有。</p>
+<ul>
+<li>
+<p>Greedy</p>
+<p>所谓 &ldquo; 贪婪 &rdquo; 就是说 在匹配前会选定尽可能多的内容，也就是整个输入。然后开始匹配时，会首先匹配整个字符串，如果失败，则回退一个字符，重新匹配（这个过程叫做回溯 backtracking），直到找到匹配的内容或者没有字符可以尝试为止。</p>
+<p>量词的默认属性是贪婪的。</p>
+<p>形象的描述是：它先 &ldquo; 吃 &rdquo; 进所有的字符，然后每次 &ldquo; 吐 &rdquo; 出一点，慢慢咀嚼消化 ...</p>
+<blockquote>
+<p>It takes a mouthful, then spits back a little at a time, chewing on what it just ate.</p>
+</blockquote>
+</li>
+<li>
+<p>Lazy</p>
+<p>量词的另外一种策略。从待匹配的内容起始位置开始尝试匹配，每次检查字符串的一个字符，寻找匹配内容，最后会尝试匹配整个字符串。</p>
+<p>形象的描述是：它每次只吃一点。</p>
+<blockquote>
+<p>It chews one nibble at a time</p>
+</blockquote>
+</li>
+<li>
+<p>Possessive</p>
+<p>占有量词会抓取整个目标，然后尝试寻找匹配。不过它只尝试一次，不会回溯。</p>
+<p>形象的描述是：它不 &ldquo; 咀嚼 &rdquo; 而是直接 &ldquo; 吞咽 &rdquo;，然后才想知道 &ldquo; 吃 &rdquo; 的是什么。</p>
+<blockquote>
+<p>It doesn&rsquo;t chew; it just swallows, then wonders what it just ate. </p>
+</blockquote>
+</li>
+</ul>
+<h3 id="basic quantifiers">Basic Quantifiers</h3>
+<ul>
+<li><code>?</code>    匹配 0 或 1 次</li>
+<li><code>+</code>    匹配 1 或 多次</li>
+<li><code>*</code>    匹配 0 或 多次</li>
+</ul>
+<p>这些量词默认是贪心的，也就是说第一次尝试时会尽可能多地匹配字符。</p>
+<p><code>.*</code> 叫做 <code>Kleene star</code>，以纪念 RE 的发明人 Stephen Kleene。</p>
+<h3 id="range syntax">Range Syntax</h3>
+<ul>
+<li><code>{n}</code>   精确匹配 n 次</li>
+<li><code>{n,}</code>  匹配 n 次 或 多次</li>
+<li><code>{m,n}</code> 匹配 m 至 n 次</li>
+<li><code>{0,1}</code> 与 <code>?</code> 相同（0 或 1 次）</li>
+<li><code>{1,0}</code> 与 <code>+</code> 相同（1 或 多次）</li>
+<li><code>{0,}</code>  与 <code>*</code> 相同（0 或 多次）</li>
+</ul>
+<h3 id="lazy quantifiers">Lazy Quantifiers</h3>
+<p>懒惰的意思就是匹配尽可能少的字符，它就是个懒虫！它总会找到匹配下限。比如 5*?，它不会匹配任何内容，因为 * 的下限是 0 次；再比如 5+?，它只会匹配 1 个 5，因为 + 的下限是 1 次；再比如 5{2,5}?，它只会匹配 2 个 5，因为下限是 2。</p>
+<ul>
+<li>?? </li>
+<li>+?</li>
+<li>*?</li>
+<li>{n}?</li>
+<li>{n,}?</li>
+<li>{m,n}?</li>
+</ul>
+<p>上面这些加了 ? 的 RE 表示懒惰匹配，也就是 <em>找下限</em>。</p>
+<h3 id="possessive quantifiers">Possessive Quantifiers</h3>
+<p>占有式量词就是贪婪式量词的弱化版，只在第一次进行匹配，如果失败就停止，而不是继续回溯下去。它会将自己的输入</p>
+<ul>
+<li>?+</li>
+<li>++</li>
+<li>*+</li>
+<li>{n}+</li>
+<li>{n,}+</li>
+<li>{m,n}+</li>
+</ul>
+<p>这些量词后面加了 + 的 RE 表示占有匹配，也就是只检查第一次尝试。</p>
+<p><br/></p>
+<h2 id="lookarounds_1">Lookarounds</h2>
+<hr/>
+<p>环视 是一种非捕获分组，它的作用是检查模式的前 / 后的内容来匹配，也成为 零宽度断言 <code>zero-width
+assertions</code>。</p>
+<ul>
+<li>
+<p>Positive Lookaheads</p>
+<p>正前瞻。 pattern 之后必须紧随着 lookaround 的才会被匹配。</p>
+<p>比如想找到所有之后紧随着一个 marinere 的 ancyent ：</p>
+<div class="highlight"><pre><span></span><span class="n">ancyent</span> <span class="p">(</span><span class="o">?=</span><span class="n">marinere</span><span class="p">)</span>
+</pre></div>
+</li>
+<li>
+<p>Negative Lookaheads</p>
+<p>反前瞻。对正前瞻的取反，也就是 pattern 之后必须没有 lookarounds 的才会被匹配。</p>
+<p>比如想找到所有后面没有 marinere 的 ancyent：</p>
+<div class="highlight"><pre><span></span><span class="n">ancyent</span> <span class="p">(</span><span class="o">?!</span><span class="n">marinere</span><span class="p">)</span>
+</pre></div>
+</li>
+<li>
+<p>Positive Lookbehinds</p>
+<p>正后顾。后顾和前瞻的方向相反，检查 pattern 之前的内容，之前有 lookarounds 的 pattern 才会被匹配到。</p>
+<p>比如想找到所有之前有 ancyent 的 marinere：</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="o">?&lt;=</span><span class="n">ancyent</span><span class="p">)</span> <span class="n">marinere</span>
+</pre></div>
+</li>
+<li>
+<p>Negative Lookbehinds</p>
+<p>反后顾。对正后顾的取反，也就是 pattern 之前必须没有 lookarounds，才会被匹配。</p>
+<p>比如想找到所有之前不存在 ancyent 的 marinere：</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="o">?&lt;!</span><span class="n">ancyent</span><span class="p">)</span> <span class="n">marinere</span>
+</pre></div>
+</li>
+</ul>
+<p>关于正、反；前瞻、后顾可以用下面的规律记：</p>
+<p><strong>前瞻 / 后顾：</strong>以 lookarounds 为原点，</p>
+<ul>
+<li>
+<p>pattern 在 lookarounds 之前就是 前瞻</p>
+</li>
+<li>
+<p>pattern 在 lookarounds 之后就是 后顾</p>
+</li>
+</ul>
+<p><strong>正 / 反：</strong></p>
+<ul>
+<li>
+<p>如果条件是 lookarounds   存在，就是 正</p>
+</li>
+<li>
+<p>如果条件是 lookarounds 不存在，就是 负</p>
+</li>
+</ul>
+<p><br/></p>
+<p>了解了这些基础知识，基本上就可以读懂、书写 RE 了，还需要的就是平时多加思考练习，然后看更加高阶的书了。</p>
+<p><br/></p>
+<h2 id="ref">Ref</h2>
+<p><a href="http://book.douban.com/subject/6959486/">Introducing Regular Expressions</a></p>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/regular-expression.html">regular expression</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/ic/verilog_hdl_coding_style_guide.html" title="Verilog HDL coding style">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="https://qiangu.cool/posts/tools/learning_vim_lookupfile_plugin.html" title="学习 Vim 之 lookupfile 插件">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

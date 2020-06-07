@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="闲来无聊，在 Ubuntu 下 wine 了一个 WarCraft 3 玩" />
+<meta name="keywords" content="Wine, WarCraft">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="在 Ubuntu 下运行 WarCraft"/>
+<meta property="og:description" content="闲来无聊，在 Ubuntu 下 wine 了一个 WarCraft 3 玩"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/posts/misc/run_warcraft_on_ubuntu.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-04-10 10:58:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="Misc"/>
+<meta property="article:tag" content="Wine"/>
+<meta property="article:tag" content="WarCraft"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; 在 Ubuntu 下运行 WarCraft</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="run_warcraft_on_ubuntu">在 Ubuntu 下运行 WarCraft</h1>
+    <p>
+      Posted on 2014-04-10 10:58 in <a href="https://qiangu.cool/category/misc.html">Misc</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="在 Ubuntu 下运行 WarCraft">在 Ubuntu 下运行 WarCraft</a><ul><li><a class="toc-href" href="#an zhuang  wine" title="安装 Wine">安装 Wine</a></li><li><a class="toc-href" href="#kao bei  warcraft" title="拷贝 WarCraft">拷贝 WarCraft</a></li><li><a class="toc-href" href="#pei zhi  wine &amp; warcraft" title="配置 Wine &amp; WarCraft">配置 Wine &amp; WarCraft</a><ul><li><a class="toc-href" href="#cd key zhu ce biao wen ti" title="CD key 注册表问题">CD key 注册表问题</a></li><li><a class="toc-href" href="#fen bian lu wen ti" title="分辨率问题">分辨率问题</a></li><li><a class="toc-href" href="#hua mian qia" title="画面卡">画面卡</a></li></ul></li><li><a class="toc-href" href="#yun xing_1" title="运行">运行</a><ul><li><a class="toc-href" href="#zhong duan xia" title="终端下">终端下</a></li><li><a class="toc-href" href="#zhuo mian qi dong qi" title="桌面启动器">桌面启动器</a></li></ul></li><li><a class="toc-href" href="#can kao_1" title="参考">参考</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <p>闲来无聊，在 Ubuntu 下 wine 了一个 WarCraft 3 玩</p>
+<p>在实验室的 &rdquo; 老爷车 &ldquo; 电脑上运行。稍微有一点卡，在 5 年前买的笔记本（core 2 T6600, 4G RAM）上运行就感觉不到卡了 。</p>
+<p>实验室电脑配置：</p>
+<p>Processor: Pentium(R) Dual-Core CPU E5200 @ 2.50GHz &times; 2 </p>
+<p>Graphics: Gallium 0.4 on NV86</p>
+<p>Memory: 2.0 GiB</p>
+<p>OS type: 32-bit</p>
+<p><br/></p>
+<h2 id="an zhuang  wine">安装 Wine</h2>
+<hr/>
+<p><a href="http://en.wikipedia.org/wiki/Wine_(software)">Wine</a> 是 wine is not an emulator 的缩写，它可以在 x86、x86-64 上容许类 Unix 操作系统在 X Window System 下运行 Microsoft Windows 程序的软件 . 它的官方网址：http://www.winehq.org/</p>
+<p>方法一：</p>
+<p>Ubuntu 软件仓里搜索 Wine，就可以找到 <code>Wine Windows Program Loader</code>，直接安装即可</p>
+<p>方法二：</p>
+<p>使用 <code>apt-get</code></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>apt-cache search wine
+suod apt-get install wine
+</pre></div>
+</td></tr></table>
+<p>P.S. 若是其他系统，找不到对应的二进制包，可以直接从官网上下载源码，自己编译（官网上有详细的 <a href="http://wiki.winehq.org/FAQ_zhcn">FAQ</a>）</p>
+<p><br/></p>
+<h2 id="kao bei  warcraft">拷贝 WarCraft</h2>
+<hr/>
+<p>如果是双系统，则不必拷贝 WarCraft 文件夹，因为我电脑上只有 Ubuntu，所以从同学那里拷贝了一个，放在了 <code>～/</code> 目录下 。</p>
+<p><br/></p>
+<h2 id="pei zhi  wine &amp; warcraft">配置 Wine &amp; WarCraft</h2>
+<hr/>
+<h3 id="cd key zhu ce biao wen ti">CD key 注册表问题</h3>
+<p>直接以 wine 运行 <code>war3.exe</code> 时提示没有 CD key，在 WarCraft 目录下找到了两个注册表文件，<code>War3.reg</code> 和 <code>一键导入 .reg</code> 。</p>
+<p>在终端下导入注册表</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine regedit
+</pre></div>
+</td></tr></table>
+<p>然后导入这两个文件，再次尝试，还是不行 ...</p>
+<p>不急，游戏目录下还有一个程序叫 <code>War3RegFixer.exe</code>，看名字就知道是我们需要的</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine War3RegFixer.exe
+</pre></div>
+</td></tr></table>
+<p>因为我的 Ubuntu 是英文版的，打开后是乱码 ...</p>
+<p><img alt="war3regfixer" src="/images/run-warcraft-on-ubuntu/war3regfixer.png"/></p>
+<p>找了一台 Windows 电脑，运行了一下，按照向导就可以修复 CD key 的问题 。</p>
+<h3 id="fen bian lu wen ti">分辨率问题</h3>
+<p>第一次运行的结果一般不会全屏，处女座的强迫症犯了，还好比较简单 ：D</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine regedit
+</pre></div>
+</td></tr></table>
+<p>找到 <code>HKEY_CURRENT_USER/Software/Blizzard Entertainment/Warcraft III/Video</code>，里面有两个注册表值 <code>resheight</code> 和 <code>reswidth</code>，将他们设为和当前分辨率相同的十进制数值就可以了。</p>
+<h3 id="hua mian qia">画面卡</h3>
+<p>因为 Wine 对 DirectX 的支持还不够好，如果电脑配置比较低，运行的时候添加参数 <code>-opengl</code> 就可以了，为了避免每次运行都要输入参数，可以在注册表 <code>HKEY_CURRENT_USER/Software/Blizzard Entertainment/Warcraft III/</code> 下新建整数（DWORD），名为 <code>Gfx OpenGL</code>，值为 1 。</p>
+<p><br/></p>
+<h2 id="yun xing_1">运行</h2>
+<h3 id="zhong duan xia">终端下</h3>
+<p>现在就可以在终端下运行 war3.exe 了</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine war3.exe
+</pre></div>
+</td></tr></table>
+<p>熟悉的画面就出来了～</p>
+<p>这样子运行如果切出游戏，有时会导致 war3 崩溃或者切换不出去。一个解决方法是以窗口模式运行，只需要添加参数 <code>-window</code> 即可</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine war3.exe -window
+</pre></div>
+</td></tr></table>
+<p>效果如下</p>
+<p><img alt="war3window" src="/images/run-warcraft-on-ubuntu/war3window.png"/></p>
+<p>不过个人不是很喜欢，因为鼠标总是超出窗口，极其不方便，影响游戏操作和感受 ：D</p>
+<h3 id="zhuo mian qi dong qi">桌面启动器</h3>
+<p>我们可以为 war3 添加一个桌面启动器，这样就不用进入终端启动了</p>
+<p>新建文件 <code>frozen-throne.desktop</code> 文件，添加以下内容</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>Desktop Entry<span class="o">]</span>
+<span class="nv">Version</span> <span class="o">=</span> <span class="m">1</span>.0
+<span class="nv">Name</span> <span class="o">=</span> Frozen Throne
+<span class="nv">Exec</span> <span class="o">=</span> /home/chien/WarCraft/war3.exe
+<span class="nv">Terminal</span> <span class="o">=</span> <span class="nb">false</span>
+<span class="nv">Icon</span> <span class="o">=</span> /home/chien/WarCraft/war3.jpg
+<span class="nv">Type</span> <span class="o">=</span> Application
+</pre></div>
+</td></tr></table>
+<p>然后把这个文件移动到 <code>/usr/share/applicants/</code> ，这时在 unity 中搜索 <code>froz</code>，就能看到我们刚才新建的启动器了～</p>
+<p><img alt="war3desktop" src="/images/run-warcraft-on-ubuntu/war3desktop.png"/></p>
+<p><br/></p>
+<p>至此，就可以在 Ubuntu 下享受 War3 了</p>
+<p>gl hf！</p>
+<p><br/></p>
+<h2 id="can kao_1">参考</h2>
+<p><a href="http://linux-wiki.cn/wiki/zh-hans/%E7%94%A8Wine%E8%BF%90%E8%A1%8C%E9%AD%94%E5%85%BD%E4%BA%89%E9%9C%B8III">用 Wine 运行魔兽争霸 III</a></p>
+<p><a href="http://blog.ubuntusoft.com/wine-warcraft-3.html#.U0Xt11SSx38">Wine 魔兽争霸 3 的一些设置</a></p>
+<p><a href="http://hi.baidu.com/chenwzox/item/4e6346f1575a7ab231c199b4">Wine 魔兽争霸 3，流畅运行 + 键盘操作 + 窗口化</a></p>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/wine.html">Wine</a>
+      <a href="https://qiangu.cool/tag/warcraft.html">WarCraft</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/book/steve_jobs_review.html" title="乔布斯传 书评">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="https://qiangu.cool/posts/misc/how_to_use_gmail_elegantly.html" title="如何优雅地使用 Gmail">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>
