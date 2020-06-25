@@ -1,0 +1,1576 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="Decorator 学习笔记" />
+<meta name="keywords" content="PEP, python">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="Python 学习笔记 #8 —— Deorator 装饰器"/>
+<meta property="og:description" content="Decorator 学习笔记"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/posts/cs/python_notes_8_decorator.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-06-07 22:39:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="CS"/>
+<meta property="article:tag" content="PEP"/>
+<meta property="article:tag" content="python"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; Python 学习笔记 #8 —— Deorator 装饰器</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="python_notes_8_decorator">Python 学习笔记 #8 —— Deorator 装饰器</h1>
+    <p>
+      Posted on 2020-06-07 22:39 in <a href="https://qiangu.cool/category/cs.html">CS</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Python 学习笔记 #8 &mdash;&mdash; Deorator 装饰器">Python 学习笔记 #8 &mdash;&mdash; Deorator 装饰器</a><ul><li><a class="toc-href" href="#what decorator" title="What Decorator">What Decorator</a></li><li><a class="toc-href" href="#why decorator" title="Why Decorator">Why Decorator</a></li><li><a class="toc-href" href="#understanding decorator" title="Understanding Decorator">Understanding Decorator</a><ul><li><a class="toc-href" href="#everything is a object" title="Everything is a Object">Everything is a Object</a></li><li><a class="toc-href" href="#nestedfunction" title="NestedFunction">NestedFunction</a></li><li><a class="toc-href" href="#function as return value" title="Function as Return Value">Function as Return Value</a></li><li><a class="toc-href" href="#function as parameter" title="Function as Parameter">Function as Parameter</a></li><li><a class="toc-href" href="#put it all" title="Put it All">Put it All</a></li><li><a class="toc-href" href="#decorator with arguments" title="Decorator with Arguments">Decorator with Arguments</a></li></ul></li><li><a class="toc-href" href="#decorator class_1" title="Decorator Class">Decorator Class</a></li><li><a class="toc-href" href="#build-in decorator" title="Build-in Decorator">Build-in Decorator</a></li><li><a class="toc-href" href="#class decorator" title="Class Decorator">Class Decorator</a></li><li><a class="toc-href" href="#caveats" title="Caveats">Caveats</a></li><li><a class="toc-href" href="#using 3rd lib" title="Using 3rd Lib">Using 3rd Lib</a></li><li><a class="toc-href" href="#example" title="Example">Example</a></li><li><a class="toc-href" href="#design decorator" title="Design Decorator">Design Decorator</a><ul><li><a class="toc-href" href="#name choice" title="Name Choice">Name Choice</a></li><li><a class="toc-href" href="#goals" title="Goals">Goals</a></li><li><a class="toc-href" href="#current syntax" title="Current Syntax">Current Syntax</a></li><li><a class="toc-href" href="#syntax alternatives" title="Syntax Alternatives">Syntax Alternatives</a></li></ul></li><li><a class="toc-href" href="#summary_1" title="Summary">Summary</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <p><a href="https://www.python.org/dev/peps/pep-0318/">PEP 318 -- Decorators for Functions and Methods 原文链接</a>。</p>
+<p><a href="https://www.python.org/dev/peps/pep-3129/">PEP 3129 -- Class Decorators 原文链接</a></p>
+<hr/>
+<h2 id="what decorator">What Decorator</h2>
+<p>一句话解释 decorator：</p>
+<p><strong>Decorator 是函数调用上的一种 &ldquo; 装饰 &rdquo;，这些装饰本质上是一个（高阶）函数，接受一个 callable 对象作为参数，（可选）返回一个 callable 对象，完成对目标的装饰。</strong></p>
+<p>一般来说，作为参数的 callable 对象就是等着被装饰的目标函数，而且这些函数自身也都带有参数，此时 decorator 就是一个高阶函数，返回值是一个闭包函数。</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>函数式编程的背景知识是理解 Decorator 的关键。</p>
+</div>
+<p>举例如下，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nd">@dec2</span>
+<span class="nd">@dec1</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>等价于</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+    <span class="k">pass</span>
+<span class="n">func</span> <span class="o">=</span> <span class="n">dec2</span><span class="p">(</span><span class="n">dec1</span><span class="p">(</span><span class="n">func</span><span class="p">))</span>
+</pre></div>
+</td></tr></table>
+<h2 id="why decorator">Why Decorator</h2>
+<p>为什么需要定义 decorator 呢？一般来说，decorator 是给原函数增加一些额外的 &ldquo; 装饰 &rdquo;，比如 log，profiler 等操作。使用 decorator 带来的好处是，</p>
+<ol>
+<li>可以将这些事务性的代码和原函数代码隔离开</li>
+<li>decorator 可以在其他地方复用</li>
+</ol>
+<p>使用 decorator <strong>让代码更加优美，也提高代码了的可读性。</strong> 体现了 python 之禅的理念：</p>
+<blockquote>
+<ol>
+<li><strong>Beautiful is better than ugly.</strong></li>
+<li><strong>Readability counts.</strong></li>
+</ol>
+</blockquote>
+<p>在引入 decorator 之前，如果想对函数做变换（<code>transformation</code>），只能将变换的代码放在函数体的最后，这样写出的代码很笨拙不容易理解。比如将 class 中的 method 定义为静态方法：</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">perform</span> <span class="n">method</span> <span class="n">operation</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="nb">classmethod</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>这种方法在函数体很长时可读性就很差，而且为了声明一个函数把同一个名字重复写 3 次的做法也很不 Pythonic，所以 Python 为此专门发明了一种新语法糖：用 <code>@</code> 符号表示的 decorator。比如下面这个函数经过了两次变换，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">pass</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">synchronized</span><span class="p">(</span><span class="n">lock</span><span class="p">)(</span><span class="n">foo</span><span class="p">)</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="nb">classmethod</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>就可以改写成这样的形式，写出来的代码看起来很简洁，也很有高级感。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nd">@classmethod</span>
+<span class="nd">@synchronized</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>Decorator 是在 python2.4 中才引入的，实际上在此之前的 python2.2 中就已经有两个 decorator 了：<code>classmethod()</code> 和 <code>staticmethod()</code>。当时大家都认为很快就会在整个 python 语言中加入这种语法支持。所以你可能会好奇为什么花了这么久的时间大家才达成共识，拖到 python2.4 才完成这项功能。下面列举了一些主要原因，</p>
+<ul>
+<li>decorator 的位置，几乎每个人都同意把 decorating/transforming 放在函数体的最后是不合适的，但是应该放在哪里却无法达成共识</li>
+<li>语法约束，Python 是一门约束非常强的语言以防你 &ldquo; 把事情搞砸 &rdquo;（包括视觉上和语法上），最好不要有让新手产生错误理解的语法</li>
+<li>大家都不熟悉 decorator 的概念，对于理解线性代数或者是已经掌握了一门其他编程语言的人来说，大部分 Python 代码都是非常直观的。几乎没有人在 Python 之前接触过 decorator 的概念</li>
+<li>关于语法的讨论一般来说更加容易引起争论</li>
+</ul>
+<h2 id="understanding decorator">Understanding Decorator</h2>
+<p>如果仅从面向过程 / 面向对象的角度是很难理解 decorator 语法的，这是因为 decorator 的很多概念实际上来自于函数式编程，所以如果先接受了一些基本的函数式编程的概念，decorator 就很容易理解了。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>FP 中最基本的概念：函数作为一等公民，和变量有同等地位，下面的概念都源自于这个最基本的原理。</p>
+</div>
+<p>下面的代码例子来自于参考资料 <a href="https://github.com/yasoob/intermediatePython/blob/master/decorators.rst">Intermediate Python</a>。</p>
+<h3 id="everything is a object">Everything is a Object</h3>
+<p>Python 中万物皆为对象 Object，数字、list、tuple、dict、function、method 这些都是对象，因为函数是对象，而且和变量有同等地位，我们可以创建变量指向同一个对象，自然也可以创建一个函数的引用，通过引用来调用这个函数，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hi</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"yasoob"</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">"hi "</span> <span class="o">+</span> <span class="n">name</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">hi</span><span class="p">())</span>
+<span class="c1"># output: 'hi yasoob'</span>
+
+<span class="c1"># We can even assign a function to a variable like</span>
+<span class="n">greet</span> <span class="o">=</span> <span class="n">hi</span>
+<span class="c1"># We are not using parentheses here because we are not calling the function hi</span>
+<span class="c1"># instead we are just putting it into the greet variable. Let's try to run this</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">greet</span><span class="p">())</span>
+<span class="c1"># output: 'hi yasoob'</span>
+
+<span class="c1"># Let's see what happens if we delete the old hi function!</span>
+<span class="k">del</span> <span class="n">hi</span>
+<span class="k">print</span><span class="p">(</span><span class="n">hi</span><span class="p">())</span>
+<span class="c1">#outputs: NameError</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">greet</span><span class="p">())</span>
+<span class="c1">#outputs: 'hi yasoob'</span>
+</pre></div>
+</td></tr></table>
+<h3 id="nestedfunction">NestedFunction</h3>
+<p>因为函数和变量的地位相同，我们可以在函数内定义变量，自然也可以在函数内定义新的函数，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hi</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"yasoob"</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">"now you are inside the hi() function"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">greet</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">"now you are in the greet() function"</span>
+
+    <span class="k">def</span> <span class="nf">welcome</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">"now you are in the welcome() function"</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">greet</span><span class="p">())</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">welcome</span><span class="p">())</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">"now you are back in the hi() function"</span><span class="p">)</span>
+
+<span class="n">hi</span><span class="p">()</span>
+<span class="c1">#output:now you are inside the hi() function</span>
+<span class="c1">#       now you are in the greet() function</span>
+<span class="c1">#       now you are in the welcome() function</span>
+<span class="c1">#       now you are back in the hi() function</span>
+
+<span class="c1"># This shows that whenever you call hi(), greet() and welcome()</span>
+<span class="c1"># are also called. However the greet() and welcome() functions</span>
+<span class="c1"># are not available outside the hi() function e.g:</span>
+
+<span class="n">greet</span><span class="p">()</span>
+<span class="c1">#outputs: NameError: name 'greet' is not defined</span>
+</pre></div>
+</td></tr></table>
+<h3 id="function as return value">Function as Return Value</h3>
+<p>因为函数和变量的地位相同，变量可以作为函数的返回值，自然函数也可以作为函数的返回值。（注意，函数名后面加上括号表示调用该函数，不加括号则表示这个函数的引用）</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hi</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"yasoob"</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">greet</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">"now you are in the greet() function"</span>
+
+    <span class="k">def</span> <span class="nf">welcome</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s2">"now you are in the welcome() function"</span>
+
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"yasoob"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">greet</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">welcome</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">hi</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="c1">#outputs: &lt;function greet at 0x7f2143c01500&gt;</span>
+
+<span class="c1">#This clearly shows that `a` now points to the greet() function in hi()</span>
+<span class="c1">#Now try this</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">())</span>
+<span class="c1">#outputs: now you are in the greet() function</span>
+</pre></div>
+</td></tr></table>
+<h3 id="function as parameter">Function as Parameter</h3>
+<p>因为函数和变量的地位相同，变量可以作为函数的参数，自然函数也可以作为函数的参数。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hi</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">"hi yasoob!"</span>
+
+<span class="k">def</span> <span class="nf">doSomethingBeforeHi</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">"I am doing some boring work before executing hi()"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">func</span><span class="p">())</span>
+
+<span class="n">doSomethingBeforeHi</span><span class="p">(</span><span class="n">hi</span><span class="p">)</span>
+<span class="c1">#outputs:I am doing some boring work before executing hi()</span>
+<span class="c1">#        hi yasoob!</span>
+</pre></div>
+</td></tr></table>
+<h3 id="put it all">Put it All</h3>
+<p>有了前面的这几个概念，decorator 的理解就非常简单了：</p>
+<ol>
+<li>首先 decorator 是一个高阶函数，它可以接收一个（被装饰的函数）函数作为自己的参数</li>
+<li>其次 decorator 返回值也是一个函数（闭包函数），它完成对目标的装饰</li>
+<li>经过 decorator 装饰之后，调用原函数时，实际上执行的是 decorator 的返回值</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>因为我们实际调用的是 decorator 的返回值，所以打印原函数的 <code>__name__</code> 时得到的就不再是原函数的名字了，这和一般的预期不符，我们希望的效果是 &ldquo;decorator 是透明的 &rdquo;。python 提供了工具 <code>functool.wraps</code> 来解决问题，本质上，<code>wraps()</code> 也是一个装饰器。</p>
+</div>
+<p>根据这两点，我们就可以写出一个自己的 log decorator 了，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">ctime</span><span class="p">,</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s2">"["</span> <span class="o">+</span> <span class="n">ctime</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"]"</span> <span class="o">+</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">" was called"</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+
+<span class="nd">@log</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="nd">@log</span>
+<span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+
+
+<span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sub</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>上面代码中的 log 函数是一个 decorator，只有一个参数 func，接收被装饰的函数名，它的返回值是定义在自己内部的 wrapper 函数；因为 wrapper 函数用到了上层 log 函数的变量 func，所以它是一个闭包函数。func 自带的参数通过 wrapper 的 <code>args</code> 和 <code>kwargs</code> 传递到内部。这段代码运行结果如下，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>[Fri Jun 12 23:07:12 2020]add was called
+[Fri Jun 12 23:07:13 2020]sub was called
+</pre></div>
+</td></tr></table>
+<h3 id="decorator with arguments">Decorator with Arguments</h3>
+<p>前面的这个 log 例子中的 decorator 不带参数，无法区分装饰的目标，统一把 log 输出到 stdout 中。如果我们想把不同操作的 log 保存在不同文件中，该怎么做呢？显然 decorator 必须要能够再接收一个额外的参数，实际上直接给 log 函数增加新参数是不行的，我们只能采用一种曲线救国的方式：</p>
+<p><strong>在 decorator 外面再包一层函数，这个函数的功能是接收参数并且返回我们想要的实现装饰功能的 ( 闭包 ) 函数。</strong>一般带参数的 decorator 的形式如下，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nd">@decomaker</span><span class="p">(</span><span class="n">deco_args</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span> <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>这段代码等价于</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">foo</span> <span class="o">=</span> <span class="n">decomaker</span><span class="p">(</span><span class="n">deco_args</span><span class="p">)(</span><span class="n">foo</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>这种形式看起来依然比较难理解，实际等效于下面的形式，首先 decomaker 使用 deco_args 作为参数，返回闭包函数赋值给 deco，然后 deco 对 foo 进行装饰。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">deco</span> <span class="o">=</span> <span class="n">decomaker</span><span class="p">(</span><span class="n">deco_args</span><span class="p">)</span>
+<span class="n">foo</span> <span class="o">=</span> <span class="n">deco</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>所以 log 的例子修改如下，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">ctime</span><span class="p">,</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">log_to_file</span><span class="p">(</span><span class="n">log_file</span><span class="o">=</span><span class="s1">'operator.log'</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">log_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">log_string</span> <span class="o">=</span> <span class="s2">"["</span> <span class="o">+</span> <span class="n">ctime</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"] "</span> <span class="o">+</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">" was called"</span>
+            <span class="k">print</span> <span class="n">log_string</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">log_file</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">)</span> <span class="k">as</span> <span class="n">opened_file</span><span class="p">:</span>
+                <span class="n">opened_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">log_string</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
+    <span class="k">return</span> <span class="n">log_decorator</span>
+
+
+<span class="nd">@log_to_file</span><span class="p">(</span><span class="s1">'add.log'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="nd">@log_to_file</span><span class="p">(</span><span class="s1">'sub.log'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+
+
+<span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sub</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>log_to_file 是一个有参 decorator，接收一个名为 log_file 的参数，并返回 log_decorator 函数。运行之后会在显示 log 记录的同时把记录写入到对应的两个文件中。</p>
+<h2 id="decorator class_1">Decorator Class</h2>
+<p>前面介绍的语法是 function 装饰 function，实际上 decorator 也可以写成 class 的形式，class 作为 decorator 只需要实现下面两点即可，</p>
+<ul>
+<li>一个 <code>__init__</code> 方法，用来接收被 decorated 的函数名</li>
+<li>一个 <code>__call__</code> 方法，实现装饰效果</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>实际上成为 decorator 的要求只有一个：它必须接受一个 callable 对象作为参数，并且返回一个 callable 对象。根据这个约束，上面两点就很容易理解了。</p>
+<p>根据这个约束，可以推测出一个事实：如果 func 本身不需要参数而且 decorator 本身也不需要的参数，那么 decorator 也不需要写成返回闭包函数的形式，下面的代码也能正常运行。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dec</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s2">"decorating "</span> <span class="o">+</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="k">return</span> <span class="n">func</span>
+
+<span class="k">def</span> <span class="nf">dec2</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s2">"decorating again "</span> <span class="o">+</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="k">return</span> <span class="n">func</span>
+
+<span class="nd">@dec2</span>
+<span class="nd">@dec</span>
+<span class="k">def</span> <span class="nf">say_hello</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s2">"hello"</span>
+
+<span class="n">say_hello</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+<p>不过这种 decorator 的限制比较强，自身和目标函数都不能带参数，可能实用性不大，但是可以帮助我们理解 decorator 的概念。因为一般函数都 decorator 都是带参数的，所以就像前面的例子表现的一样 decorator 大部分情况下都是一个返回闭包的高阶函数。</p>
+<p>关于这个约束，实际上接收 callable 对象作为参数是必须的，返回 callable 对象则不一定，如果这个 decorator 设计成不需要后续再串接其他 decorator，那么返回值就不必是 callable 对象，如内建的 properity 等。</p>
+</div>
+<p>用 class 实现 decorator 的好处是保持用法不变的同时代码更加清晰，而且可以通过继承扩展出新的 decorator。继续以 log 装饰器为例，首先我们把它改造成 class 形式，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">ctime</span><span class="p">,</span> <span class="n">sleep</span>
+
+<span class="k">class</span> <span class="nc">BasicLog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""A basic log class."""</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">log_string</span> <span class="o">=</span> <span class="s2">"["</span> <span class="o">+</span> <span class="n">ctime</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"] "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">" was called"</span>
+        <span class="k">print</span> <span class="n">log_string</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="nd">@BaiscLog</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="nd">@BasicLog</span>
+<span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+
+
+<span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sub</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>这个 BasicLog 的效果和最开始的 log decorator 效果是一样的，不过看起来更清晰一点，后期扩展也更容易。显然，这个 BasicLog 无法接收参数，所以也不能根据不同操作保存到不同 log 文件中。我们改造一下它，让它可以接收参数。需要注意的是：无法在 BasicLog 的基础上直接通过简单的继承构造出一个新的 decorator，而应该做如下修改：</p>
+<ul>
+<li><code>__init__</code> 不再接收 func 参数，而是接收 class 参数</li>
+<li><code>__call__</code> 接收 func 参数并实现装饰效果</li>
+</ul>
+<p>这里的改动类似于 function 形式的 decorator，无参数时 <code>__call__</code> 就是需要返回的闭包函数，它直接完成装饰工作；有参数时，<code>__init__</code> 用来接收其他参数，而 <code>__call__</code> 变成了一个原来闭包函数的 wrapper，它负责接受 func 参数，定义在 <code>__call__</code> 内部的闭包函数 deco 完成真正的装饰工作。</p>
+<p>修改后的新 decorator 如下，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">ctime</span><span class="p">,</span> <span class="n">sleep</span>
+
+<span class="k">class</span> <span class="nc">FileLog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""A log class for writing log into files."""</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">'operator.log'</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">deco</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">log_string</span> <span class="o">=</span> <span class="s2">"["</span> <span class="o">+</span> <span class="n">ctime</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"] "</span> <span class="o">+</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">" was called"</span>
+            <span class="k">print</span> <span class="n">log_string</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_file_name</span><span class="p">,</span> <span class="s1">'a'</span><span class="p">)</span> <span class="k">as</span> <span class="n">opened_file</span><span class="p">:</span>
+                <span class="n">opened_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">log_string</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">deco</span>
+
+<span class="nd">@FileLog</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="s1">'add.log'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="nd">@FileLog</span><span class="p">(</span><span class="n">file_name</span><span class="o">=</span><span class="s1">'sub.log'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+
+<span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sub</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<h2 id="build-in decorator">Build-in Decorator</h2>
+<ol>
+<li>
+<p>@propority</p>
+<p>可以把 class 的 method 伪装成属性，本来 <code>Foo.func()</code> 的调用方法就变成了 <code>Foo.func</code> 形式，可以让调用者写出简短的代码，同时又能保证对参数的检查等操作。</p>
+</li>
+<li>
+<p>@staticmethod</p>
+</li>
+<li>@calssmethod</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这三个内置 decorator 的返回结果都不是 callable 对象，所以它们只能放在 decorator 的最外层，后面有个相关例子。</p>
+</div>
+<h2 id="class decorator">Class Decorator</h2>
+<p>Decorator 不仅可以装饰 function，它也可以装饰 class。</p>
+<p>在 python2.4 引入 decorator 的时候，只能用于 function 或者是 method，class 是无法使用 decorator 的。几乎可以确定地说，decorator 能实现的功能用 metaclass 同样可以实现，但是 metaclass 的方式太过晦涩，由于 Guido 的坚持反对，直到在 PEP3129 中讨论了 class 的 decorator 之后，在 python3.0 中最终加入 class decorator。</p>
+<p>Class decorator 的设计目标和语法和 function decorator 完全相同，唯一的区别就是你在 &ldquo; 装饰 &rdquo; class 对象。语法如下，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+  <span class="k">pass</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">foo</span><span class="p">(</span><span class="n">bar</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+
+
+<span class="nd">@foo</span>
+<span class="nd">@bar</span>
+<span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+  <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>随便写个 class 然后直接用前面的 log 函数进行装饰，代码如下，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">ctime</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s2">"["</span> <span class="o">+</span> <span class="n">ctime</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"] "</span> <span class="o">+</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">" was called"</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@log</span>
+<span class="k">class</span> <span class="nc">People</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""Class for general people."""</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s2">"My name is "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="k">def</span> <span class="nf">change_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">new_name</span>
+        <span class="k">print</span> <span class="s2">"Change name to "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<span class="n">Jack</span> <span class="o">=</span> <span class="n">People</span><span class="p">(</span><span class="s1">'Jack'</span><span class="p">)</span>
+<span class="n">Jack</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="n">Jack</span><span class="o">.</span><span class="n">change_name</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
+<span class="n">Jack</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+<p>运行结果如下</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>[Fri Jun 12 23:16:27 2020] People was called
+My name is Jack
+Change name to Tom
+My name is Tom
+</pre></div>
+</td></tr></table>
+<p>运行结果和我们的预期不符，只有例化对象时调用了 log 进行装饰，调用其他方法时却没有调用。</p>
+<p>最无脑的解决方法是给每个方法前面都加上装饰，虽然这样修改之后结果如我们预期，但是这种方法违反了 DRY 原则，每个方法都要手动加上装饰，以后新增方法也要添加，如果不需要 log 功能又要逐行删掉所有的装饰语句，这很不 pythonic。我们期望的效果是：只在 class 的定义处只做一次装饰声明，实现对内部所有方法的装饰。</p>
+<p>修改方法一：根据前面的思路对于 class 的 decorator，显然输入参数是一个 class，最终返回的也是一个 class，只需要在函数内部对输入 class 的 <code>__getattribute__</code> 方法进行特殊定义即可。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">ctime</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">new_log</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+
+    <span class="n">orig_getattribute</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="fm">__getattribute__</span>
+
+    <span class="k">def</span> <span class="nf">new_getattribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s2">"["</span> <span class="o">+</span> <span class="n">ctime</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"] "</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">" was called"</span>
+        <span class="k">return</span> <span class="n">orig_getattribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="bp">cls</span><span class="o">.</span><span class="fm">__getattribute__</span> <span class="o">=</span> <span class="n">new_getattribute</span>
+
+    <span class="k">return</span> <span class="bp">cls</span>
+
+<span class="nd">@new_log</span>
+<span class="k">class</span> <span class="nc">People</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""Class for general people."""</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s2">"My name is "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="k">def</span> <span class="nf">change_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">new_name</span>
+        <span class="k">print</span> <span class="s2">"Change name to "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<span class="n">Jack</span> <span class="o">=</span> <span class="n">People</span><span class="p">(</span><span class="s1">'Jack'</span><span class="p">)</span>
+<span class="n">Jack</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="n">Jack</span><span class="o">.</span><span class="n">change_name</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
+<span class="n">Jack</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+<p>方法二：要修改一个 class 的行为，除了上面的方法之外还有一种就是给原始 class 包一层，只需要修改 wrapper class 的 <code>__getattr__</code> 方法即可通过代理和授权实现 decorator 的效果。代码如下，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">ctime</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">new_log</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">NewCls</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">"""Decorated new class."""</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">NewCls</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">origin_inst</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="nd">@staticmethod</span>
+        <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+            <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="k">print</span> <span class="s2">"["</span> <span class="o">+</span> <span class="n">ctime</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"] "</span> <span class="o">+</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">" was called"</span>
+                <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">wrapper</span>
+
+        <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin_inst</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">NewCls</span>
+
+
+<span class="nd">@new_log</span>
+<span class="k">class</span> <span class="nc">People</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""Class for general people."""</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s2">"My name is "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="k">def</span> <span class="nf">change_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">new_name</span>
+        <span class="k">print</span> <span class="s2">"Change name to "</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<span class="n">Jack</span> <span class="o">=</span> <span class="n">People</span><span class="p">(</span><span class="s1">'Jack'</span><span class="p">)</span>
+<span class="n">Jack</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="n">Jack</span><span class="o">.</span><span class="n">change_name</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
+<span class="n">Jack</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+<p>运行结果如下，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>[Fri Jun 12 23:20:51 2020] get_name was called
+My name is Jack
+[Fri Jun 12 23:20:51 2020] change_name was called
+Change name to Tom
+[Fri Jun 12 23:20:51 2020] get_name was called
+My name is Tom
+</pre></div>
+</td></tr></table>
+<h2 id="caveats">Caveats</h2>
+<p>这部分内容来自于参考链接 <a href="https://www.cnblogs.com/cicaday/p/python-decorator.html">详解 Python 的装饰器</a>，非常有意思，搬运过来记录一下。</p>
+<p>第一个例子如下，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">html_tags</span><span class="p">(</span><span class="n">tag_name</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s1">'begin outer function.'</span>
+    <span class="k">def</span> <span class="nf">wrapper_</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s2">"begin of inner wrapper function."</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s2">"&lt;{tag}&gt;{content}&lt;/{tag}&gt;"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="n">tag_name</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s1">'end of inner wrapper function.'</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
+    <span class="k">print</span> <span class="s1">'end of outer function'</span>
+    <span class="k">return</span> <span class="n">wrapper_</span>
+
+<span class="nd">@html_tags</span><span class="p">(</span><span class="s1">'b'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'Toby'</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">'Hello {}!'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+<span class="n">hello</span><span class="p">()</span>
+<span class="n">hello</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+<p>这段代码的运行结果如下，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>begin outer function.
+end of outer function
+begin of inner wrapper function.
+end of inner wrapper function.
+&lt;b&gt;Hello Toby!&lt;/b&gt;
+&lt;b&gt;Hello Toby!&lt;/b&gt;
+</pre></div>
+</td></tr></table>
+<p>这个结果说明一旦一个函数被装饰过，那么以后就再也无法调用原函数了，原函数名指向的是被装饰过的函数，而且是最里层的那个闭包函数。所以尽量把逻辑都写在最里层的闭包内，以防出现与预期不符的结果。</p>
+<p>第二个例子，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Car</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+    <span class="nd">@logging</span>  <span class="c1"># 装饰实例方法，OK</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s2">"{} is running!"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="nd">@logging</span>  <span class="c1"># 装饰静态方法，Failed</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">check_model_for</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Car</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s2">"The model of your car is {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s2">"{} is not a car!"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+<span class="sd">"""</span>
+<span class="sd">Traceback (most recent call last):</span>
+<span class="sd">...</span>
+<span class="sd">  File "example_4.py", line 10, in logging</span>
+<span class="sd">    @wraps(func)</span>
+<span class="sd">  File "C:\Python27\lib\functools.py", line 33, in update_wrapper</span>
+<span class="sd">    setattr(wrapper, attr, getattr(wrapped, attr))</span>
+<span class="sd">AttributeError: 'staticmethod' object has no attribute '__module__'</span>
+<span class="sd">"""</span>
+</pre></div>
+</td></tr></table>
+<p>这个例子证明了 <code>@staticmethod</code> 返回的 staticmethod 对象不是 callable 的，所以无法再继续传递给其他 decorator。解决方法也很简单，调整一下顺序将 staticmethod 放在最后就好了。</p>
+<h2 id="using 3rd lib">Using 3rd Lib</h2>
+<p><a href="https://github.com/micheles/decorator">decorator.py</a> 和 <a href="https://pypi.org/project/wrapt/">wrapt</a> 都是帮助我们写 decorator 的第三方包，使用它们的好处是一方面可以减少函数嵌套的层数，像前面带参数的 decorator 要嵌套定义 3 层，看起来有点难懂；另一方面可以帮我们解决函数签名等问题。详细内容直接看官方文档即可。</p>
+<h2 id="example">Example</h2>
+<p><a href="https://www.python.org/dev/peps/pep-0318/">PEP318</a> 和 <a href="https://wiki.python.org/moin/PythonDecoratorLibrary">Python Decorator Library</a> 中列举了很多可以直接使用的 decorator 例子，具体使用方法直接看原文即可。</p>
+<h2 id="design decorator">Design Decorator</h2>
+<p>这部分是扩展阅读。PEP318 提到了很多设计 decorator 时的考虑因素和对比取舍，了解这些背景知识可以增加我们对 Python 的理解。下面是一些内容的翻译和笔记。</p>
+<h3 id="name choice">Name Choice</h3>
+<p>很多人抱怨 decorator 这个名字，因为它和实际的用法并不一致，之所以选择这个名字，很可能是借鉴了编译器领域的术语，可能以后会换成一个更加合适的名字。</p>
+<h3 id="goals">Goals</h3>
+<p>Decorator 的设计目标包括，</p>
+<ul>
+<li>这种语法应该能适用于任何 wrapper，包括用户自定义的函数以及已经存在的内建函数 <code>classmethod()</code>、<code>staticmethod()</code>，这个要求也意味着 decorator 的语法要能支持传参</li>
+<li>能支持多个 wrapper 嵌套</li>
+<li>语法要足够明显，至少要让新手写代码时可以安全地忽略它的存在</li>
+<li>一旦解释就应该很容易记住 "that ...[is] easy to remember once explained."</li>
+<li>方便未来扩展</li>
+<li>容易书写，代码会经常使用这种语法</li>
+<li>不会增加快速浏览代码的难度，应该很容易搜索</li>
+<li>不要使其他工具难以支持</li>
+<li>允许将来的编译器做优化，未来会有一个 python 的 JIT 编译器，所以需要把 decorator 放在函数定义的前面</li>
+<li>从函数的结尾处挪到函数的开头，more in your face</li>
+</ul>
+<h3 id="current syntax">Current Syntax</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nd">@dec2</span>
+<span class="nd">@dec1</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>等价于</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+    <span class="k">pass</span>
+<span class="n">func</span> <span class="o">=</span> <span class="n">dec2</span><span class="p">(</span><span class="n">dec1</span><span class="p">(</span><span class="n">func</span><span class="p">))</span>
+</pre></div>
+</td></tr></table>
+<p>这样就不需要像原来那样再定义一个同名的变量，多做一次赋值。decorator 就在函数声明的附近，<code>@</code> 符号可以明确表明这里有一些新语法。</p>
+<p>Decorator 的顺序设计是为了和数学中的函数规则相匹配，比如 <span class="math">\((g \circ f)(x)\)</span> 和 <span class="math">\(g(f(x))\)</span> 是等价的，在 python 中，<code>@g @f def foo()</code> 会翻译成 <code>foo=g(f(foo))</code>。</p>
+<p>decorator 语法允许调用一个返回 decorator 的函数，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nd">@decomaker</span><span class="p">(</span><span class="n">argA</span><span class="p">,</span> <span class="n">argB</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>这段代码等价于</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">func</span> <span class="o">=</span> <span class="n">decomaker</span><span class="p">(</span><span class="n">argA</span><span class="p">,</span> <span class="n">argB</span><span class="p">,</span> <span class="o">...</span><span class="p">)(</span><span class="n">func</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>之所以允许一个函数返回 decorator，部分原因是 @ 符号可以看作是一个表达式（虽然在语法上仅限于作用在函数上），所以任何时候调用都会返回这个表达式。</p>
+<h3 id="syntax alternatives">Syntax Alternatives</h3>
+<p>实际上在确定最终的语法之前，还有很多变种语法，下面列举了几大类，从中可以看到 python 设计的思路和决策取舍，增加对 python 的理解。</p>
+<ol>
+<li>
+<p>Decorator Location</p>
+<p>一种写法如下，把 decorator 放在 def 和函数名，或者是函数名和参数表之间，其缺点是无法使用 <code>def foo(</code> 来 grep 寻找函数定义，而且有多个 decorator 时代码会变得非常笨重。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nd">@classmethod</span> <span class="n">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nd">@accepts</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">),</span><span class="nd">@returns</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="n">bar</span><span class="p">(</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">foo</span> <span class="nd">@classmethod</span> <span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">bar</span> <span class="nd">@accepts</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">),</span><span class="nd">@returns</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="p">(</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>另外一种写法是把 decorator 放在参数表和行尾的冒号之间，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">)</span> <span class="nd">@classmethod</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">)</span> <span class="nd">@accepts</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">),</span><span class="nd">@returns</span><span class="p">(</span><span class="nb">float</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>Guido 总结了下面几个理由来反对这种写法，</p>
+<ul>
+<li>隐藏了关键信息</li>
+<li>如果参数表和 decorator 都很长，很容易忘记两者之间的转化</li>
+<li>decorator 在行中间，cut/copy 重用很麻烦</li>
+</ul>
+<p>还有一种写法把 decorator 放在函数体内部的开头 docstring 的位置，这种写法的主要问题是要先 &ldquo; 偷窥 &rdquo; 一下函数内部才能确定 decorators，而且 decorator 在函数运行的时候并不会被执行。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">):</span>
+    <span class="nd">@accepts</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span>
+    <span class="nd">@returns</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>还有一种写法是产生一个新的代码块，这种写法的问题是 decorated 和 undecorated 函数的缩进不一样。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">decorate</span><span class="p">:</span>
+    <span class="nb">classmethod</span>
+    <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="n">decorate</span><span class="p">:</span>
+    <span class="n">accepts</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">returns</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>Syntax forms</p>
+<ul>
+<li>
+<p>使用 <code>@decorator</code> 方式</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nd">@classmethod</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="nd">@accepts</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span>
+<span class="nd">@returns</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>主要的反对意见是之前的 Python 中没有用到 @ 符号（IPython 和 Leo 中用到了），而且  @ 符号没有实际含义。</p>
+</li>
+<li>
+<p>使用 <code>|decorator</code> 方式</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">|</span><span class="nb">classmethod</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="o">|</span><span class="n">accepts</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">)</span>
+<span class="o">|</span><span class="n">returns</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>这种语法的好处是 IPython 和 Leo 不会冲突，缺点是 <code>|</code> 符号和大写字母 <code>I</code>、小写字母 <code>i</code> 很像。</p>
+</li>
+<li>
+<p>使用 list 语法</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nb">classmethod</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="p">[</span><span class="n">accepts</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">),</span> <span class="n">returns</span><span class="p">(</span><span class="nb">float</span><span class="p">)]</span>
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>主要问题是 list 语法是有实际含义的，而且这种写法无法很清楚地表明这就是一个 decorator。</p>
+</li>
+<li>
+<p>使用其他括号的 list 语法，&lt;...&gt;, [[...]] 等</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">classmethod</span><span class="o">&gt;</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="n">arg2</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="o">&lt;</span><span class="n">accepts</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">),</span> <span class="n">returns</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">&gt;</span>
+<span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</td></tr></table>
+<p>两个方括号的写法只能表明 decorator 不是一个 list，而 &lt;&gt; 的方式解析起来很麻烦，而且容易和大于、小于号产生歧义。</p>
+</li>
+<li>
+<p>使用 <code>decorator()</code> 函数</p>
+<p>这个函数其实是一个使用内省机制实现操作内部函数的 magic function，Guido 坚决反对这种用法，因为不引入新语法，这种写法看起来 &ldquo; 魔力值 &rdquo; 会非常高，</p>
+<blockquote>
+<p>Using functions with "action-at-a-distance" through sys.settraceback may be okay for an obscure feature that can't be had any other way yet doesn't merit changes to the language, but that's not the situation for decorators. The widely held view here is that decorators need to be added as a syntactic feature to avoid the problems with the postfix notation used in 2.2 and 2.3. Decorators are slated to be an important new language feature and their design needs to be forward-looking, not constrained by what can be implemented in 2.3.</p>
+</blockquote>
+</li>
+<li>
+<p>使用新的关键字 / block</p>
+<p>这种写法用到了新的关键字 <code>using</code>，而且 block 看起来是个普通的代码块，但实际上它并不是，如果在 block 内尝试写语句则会报错，这会让使用者非常困扰。Guido 拒绝了这种方案，</p>
+<blockquote>
+<p>... the syntactic form of an indented block strongly suggests that its contents should be a sequence of statements, but in fact it is not -- only expressions are allowed, and there is an implicit "collecting" of these expressions going on until they can be applied to the subsequent function definition. ...</p>
+<p>... the keyword starting the line that heads a block draws a lot of attention to it. This is true for "if", "while", "for", "try", "def" and "class". But the "using" keyword (or any other keyword in its place) doesn't deserve that attention; the emphasis should be on the decorator or decorators inside the suite, since those are the important modifiers to the function definition that follows. ...</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+<p>Why @</p>
+<p>Javadoc 和 Java1.5 用到了  @ 符号作为标记，这种用法和 python 非常相似。之前的 Python 版本不支持  @ 符号意味着这些代码无法在旧版本的 python 上运行，所以也就不会导致微妙的语法错误，这也意味着 decorator 的声明不再有歧义。即使这样仍然有人认为 @ 符号的选用太过随意，提议用其他符号来代替，比如 |, [|...|], <em>[...]</em>, &lt;...&gt; 等等。</p>
+</li>
+</ol>
+<h2 id="summary_1">Summary</h2>
+<p>Decorator 是一个高阶函数，可以在不影响目标函数的前提下，对其进行装饰，实现一些增强 / 辅助效果。Decorator 可以是 function 形式也可以是 class 形式，它修饰的对象可以是 function 也可以是 class。</p>
+<h2 id="ref">Ref</h2>
+<p><a href="https://book.douban.com/subject/3112503/">Python 核心编程</a></p>
+<p><a href="https://github.com/yasoob/intermediatePython/blob/master/decorators.rst">Intermediate Python</a></p>
+<p><a href="https://coolshell.cn/articles/11265.html">Python 修饰器的函数式编程</a></p>
+<p><a href="https://www.cnblogs.com/cicaday/p/python-decorator.html">详解 Python 的装饰器</a></p>
+<p><a href="https://www.codementor.io/@sheena/advanced-use-python-decorators-class-function-du107nxsv">Advanced Uses of Python Decorators</a></p>
+<p><a href="https://wiki.python.org/moin/PythonDecoratorLibrary">Python Decorator Library</a></p>
+<p><a href="https://book.douban.com/subject/26381341/">Python Cookbook</a></p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'blue ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/pep.html">PEP</a>
+      <a href="https://qiangu.cool/tag/python.html">python</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/cs/python_notes_7_generator.html" title="Python 学习笔记 #7 —— Generator 生成器">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+  </div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_4_the_zen_of_python.html">Python 学习笔记 #4 —— Python 之禅</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html">Python 学习笔记 #3 —— Docstring 风格</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_5_comprehension.html">Python 学习笔记 #5 —— Comprehension 解析式</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_1_pep8_style.html">Python 学习笔记 #1 —— PEP8 编程风格</a></li>
+    </ul>
+  </div>
+
+      <p>This post is part 9 of the "Python Notes" series:</p>
+      <ol class="parts">
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_0_summary.html'>Python 学习笔记 #0 —— 新的开始</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_1_pep8_style.html'>Python 学习笔记 #1 —— PEP8 编程风格</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_2_pep8_in_practice.html'>Python 学习笔记 #2 —— PEP8 实践</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html'>Python 学习笔记 #3 —— Docstring 风格</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_4_the_zen_of_python.html'>Python 学习笔记 #4 —— Python 之禅</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_5_comprehension.html'>Python 学习笔记 #5 —— Comprehension 解析式</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_6_iterator.html'>Python 学习笔记 #6 —— Iterator 迭代器</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_7_generator.html'>Python 学习笔记 #7 —— Generator 生成器</a>
+              </li>
+              <li class="active">
+                  <a href='https://qiangu.cool/posts/cs/python_notes_8_decorator.html'>Python 学习笔记 #8 —— Deorator 装饰器</a>
+              </li>
+      </ol>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

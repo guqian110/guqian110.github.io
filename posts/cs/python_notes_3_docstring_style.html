@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="翻译 PEP257 -- Docstring Conventions" />
+<meta name="keywords" content="PEP, python">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="Python 学习笔记 #3 —— Docstring 风格"/>
+<meta property="og:description" content="翻译 PEP257 -- Docstring Conventions"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-04-26 19:20:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="CS"/>
+<meta property="article:tag" content="PEP"/>
+<meta property="article:tag" content="python"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; Python 学习笔记 #3 —— Docstring 风格</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="python_notes_3_docstring_style">Python 学习笔记 #3 —— Docstring 风格</h1>
+    <p>
+      Posted on 2020-04-26 19:20 in <a href="https://qiangu.cool/category/cs.html">CS</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Python 学习笔记 #3 &mdash;&mdash; Docstring 风格">Python 学习笔记 #3 &mdash;&mdash; Docstring 风格</a><ul><li><a class="toc-href" href="#zhai yao" title="摘要">摘要</a></li><li><a class="toc-href" href="#ji ben yuan li" title="基本原理">基本原理</a></li><li><a class="toc-href" href="#biao zhun" title="标准">标准</a><ul><li><a class="toc-href" href="#docstrings shi shi yao" title="Docstrings 是什么">Docstrings 是什么</a></li><li><a class="toc-href" href="#dan xing  docstrings" title="单行 Docstrings">单行 Docstrings</a></li><li><a class="toc-href" href="#duo xing  docstrings" title="多行 Docstrings">多行 Docstrings</a></li><li><a class="toc-href" href="#chu li  docstrings de suo jin" title="处理 Docstrings 的缩进">处理 Docstrings 的缩进</a></li></ul></li><li><a class="toc-href" href="#can kao_1" title="参考">参考</a></li><li><a class="toc-href" href="#fu :shi jian" title="附：实践">附：实践</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <p><a href="https://www.python.org/dev/peps/pep-0257/">PEP 257 -- Docstring Conventions 原文链接</a></p>
+<table>
+<thead>
+<tr>
+<th>item</th>
+<th>detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PEP</td>
+<td>257</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>Docstring Conventions</td>
+</tr>
+<tr>
+<td>Author</td>
+<td>David Goodger <goodger at="" python.org="">, Guido van Rossum <guido at="" python.org=""></guido></goodger></td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Active</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>Informational</td>
+</tr>
+<tr>
+<td>Created</td>
+<td>29-May-2001</td>
+</tr>
+<tr>
+<td>Post-History</td>
+<td>13-Jun-2001</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="zhai yao">摘要</h2>
+<p>本文描述了 Python docstrings 的语法和惯例。</p>
+<h2 id="ji ben yuan li">基本原理</h2>
+<p>本文的目的是在 high-level 的层次对 docstrings 结构进行标准化：应该包含哪些内容，以及如何表述（docstrings 内部不需要任何的标记性语法）。本文的内容是惯例，而不是严格的语法或法律。</p>
+<blockquote>
+<p>"A universal convention supplies all of maintainability, clarity, consistency, and a foundation for good programming habits too. What it doesn't do is insist that you follow it against your will. That's Python!"</p>
+<p>&mdash;Tim Peters on comp.lang.python, 2001-06-16</p>
+</blockquote>
+<p>如果你违法了这些惯例，最差的结果也只不过是你的作品看起来比较丑陋。但是一些软件（比如 <a href="docutils.sourceforge.net">Docutils</a> 系统）会感知到 docstrings，所以遵守这些惯例可以让你获得最好的结果。</p>
+<h2 id="biao zhun">标准</h2>
+<h3 id="docstrings shi shi yao">Docstrings 是什么</h3>
+<p>docstrings 是一个字符串，是 <code>module</code>, <code>function</code>, <code>class</code>, <code>method</code> 中的第一个语句，这些字符会变成该 object 的特殊属性 <code>__doc__</code>。</p>
+<p>所有的 module 都应该有 docstrings，module 中所有可以导出的 function 和 class 也都应该有 docstrings。class 的 public method（包括 <code>__init__</code> 构造器）也应该有 docstrings。一个 package 可以在自己目录下面 <code>__init__.py</code> 文件的 docstrings 中进行描述。</p>
+<p>Python 文件中其他位置的字符串也可以成为文档的一部分，它们无法被 Python 的字节码编译器识别，runtime 的时候也无法访问（也就是说，没有赋值给 <code>__doc__</code> 属性），但是有两种类型的 docstrings 可以被软件工具识别出来：</p>
+<ol>
+<li>在 module, class, <code>__init__</code> 方法的顶层，简单赋值语句后面的字符串，叫做 &ldquo;attribute docstrings&rdquo;</li>
+<li>在 docstrings 之后紧跟着出现的字符串，叫做 &ldquo;additional docstrings&rdquo;</li>
+</ol>
+<p>关于这两种 docstrings 的详细描述请参考 <a href="https://www.python.org/dev/peps/pep-0258/">PEP258 "Docutils Design Specification"</a>。</p>
+<p>为了保持一致性，永远使用三个双引号 <code>"""triple double quotes"""</code> 包围 docstrings。如果在 docstrings 中使用到了反斜线，请使用 <code>r"""raw triple double quotes"""</code>，对于使用 Unicode 字符的情况，请使用 <code>u"""Unicode triple quoted string"""</code>。</p>
+<p>docstrings 有两种形式：单行、多行。</p>
+<h3 id="dan xing  docstrings">单行 Docstrings</h3>
+<p>单行 docstrings 显而易见，就是只有一行。举例，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kos_root</span><span class="p">():</span>
+    <span class="sd">"""Return the pathname of the KOS root directory."""</span>
+    <span class="k">global</span> <span class="n">_kos_root</span>
+    <span class="k">if</span> <span class="n">_kos_root</span><span class="p">:</span> <span class="k">return</span> <span class="n">_kos_root</span>
+    <span class="o">...</span>
+</pre></div>
+</td></tr></table>
+<p>注意：</p>
+<ul>
+<li>即使是单行的情况，仍然使用三双引号，方便以后扩展成多行的情况</li>
+<li>开头和结尾的引号在同一行，这样看起来要美观一些</li>
+<li>docstrings 前后没有空行</li>
+<li>docstrings 用一个以句号结尾的短语，它用命令性的方式规定了 function/method 的效果（比如 &ldquo;Do this&rdquo;，&ldquo;Return that&rdquo;），而不是描述性的方式（比如，不要写成这样 "Returns the pathname..."）</li>
+<li>
+<p>单行的 docstrings 不应该是 function/method 的参数的重新声明（可以通过内省实现），不要写成这样</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="sd">"""function(a, b) -&gt; list"""</span>
+</pre></div>
+</td></tr></table>
+<p>这种类型的 docstrings 只适合于 C 函数（比如内建函数），因为 C 没有内省机制。然而内省无法决定返回值的类型，所以要在 docstrings 中进行说明。所以 docstrings 应该优先选择下面的方式，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="sd">"""Do X and return a list."""</span>
+</pre></div>
+</td></tr></table>
+</li>
+</ul>
+<h3 id="duo xing  docstrings">多行 Docstrings</h3>
+<p>多行 docstrings 的结构分为 2 段，第一段是一个类似于单行 docstrings 的总结行，第二段是更详细的描述，两段之间用一个空行隔开。总结行可能会被自动化索引工具使用到，所以让它的长度保持在一行内，并且用空行和其他部分隔开非常重要。总结行可以放在开头引号的同一行，也可以放到下一行。整个 docstrings 和引号的缩进保持一致（见下面的例子）。</p>
+<p>class 的 docstrings 的后面要插入一（多）个空行。一般来说 class 的 methods 之间会通过一个空行进行隔离，docstrings 也需要一个空行来和第一个 method 进行隔离。</p>
+<p>一个脚本（作为一个单独的程序）的 docstrings 应该可以当作 Usage message 来使用，当使用不正确的参数（或者是表示 help 的 -h 参数）调用脚本时打印出这些内容。这种 docstrings 应该包含脚本的功能、命令行语法、环境变量、文件等信息。Usage message 可以非常详细（内容长达几个全屏），达到可以指导一个新用户正确使用本脚本命令，这个信息也可以作为高级用户查询所有选项和参数的快速参考。</p>
+<p>一个 module 的 docstrings 应该列出所有可以被导出的 class，exception 和 function 以及其他 objects，每个对象都有一个单行的总结性描述（这些总结比 docstrings 的总结行更简洁）。</p>
+<p>一个 package 的 docstrings（比如，<code>__init__.py</code> 的 docstrings）也应该列出可以导出的 module 和 subpackage。</p>
+<p>一个 function/method 的 docstrings 应该总结它的行为，描述它的参数，返回值，副作用，抛出的 exception，调用时的约束。同时应该指出可选参数，无论 keyword 参数是不是接口的一部分，都应该进行描述。</p>
+<p>一个 class 的 docstrings 应该总结它的行为，列出 public method 和 instance varibale。如果它本身的设计目的是子类化，并且针对 subclass 留有额外的接口，那么这个额外接口应该在 docstrings 中单独列出来。构造器应该在 <code>__init__</code> 方法的 docstrings 中描述，其他的 method 都在自己的 docstrings 中进行描述。</p>
+<p>如果一个 subclass 的大部分行为都继承自另外一个 class，那么它的 docstrings 应该提到这一点并且总结两者的不同之处。用动词 <code>override</code> 来说明 subclass 的方法重写了 superclass 的同名方法；用动词 <code>extend</code> 来表示 subclass 的方法调用了 superclass 的同名方法，并且添加了自己额外的功能。</p>
+<p>在 docstrings 中涉及到 function/method 的参数时不要用 Emacs 的大写惯例。Python 对大小写敏感而且参数的名字可以用作是 keyword 参数，所以 docstrings 应该使用正确的参数名字。最好按照每行一个参数的形式列出来。举例，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">complex</span><span class="p">(</span><span class="n">real</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="sd">"""Form a complex number.</span>
+
+<span class="sd">    Keyword arguments:</span>
+<span class="sd">    real -- the real part (default 0.0)</span>
+<span class="sd">    imag -- the imaginary part (default 0.0)</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">imag</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">real</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">complex_zero</span>
+    <span class="o">...</span>
+</pre></div>
+</td></tr></table>
+<p>除非是所有内容都可以在一行内完全放下，否则把结尾的引号单独放在一行，这样 Emacs 的 <code>fill-paragraph</code> 命令就可以使用了。</p>
+<h3 id="chu li  docstrings de suo jin">处理 Docstrings 的缩进</h3>
+<p>docstrings 工具可以对 docstrings 的第二行及以后的行进行整体的缩进删除，删除的长度是后面这些行中的最小缩进，也就是说后面这些行的缩进最小化。第一行 docstrings 的任何缩进都是没有用的，会被删除。后续行的缩进也会被保留下来。应该删掉 docstrings 开头和结尾的空行。</p>
+<p>因为代码比描述更准确，这里贴出来这个规则（算法）的实现，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">trim</span><span class="p">(</span><span class="n">docstring</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">docstring</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">''</span>
+    <span class="c1"># Convert tabs to spaces (following the normal Python rules)</span>
+    <span class="c1"># and split into a list of lines:</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">docstring</span><span class="o">.</span><span class="n">expandtabs</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="c1"># Determine minimum indentation (first line doesn't count):</span>
+    <span class="n">indent</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxint</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">stripped</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">stripped</span><span class="p">:</span>
+            <span class="n">indent</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">indent</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">stripped</span><span class="p">))</span>
+    <span class="c1"># Remove indentation (first line is special):</span>
+    <span class="n">trimmed</span> <span class="o">=</span> <span class="p">[</span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+    <span class="k">if</span> <span class="n">indent</span> <span class="o">&lt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxint</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">trimmed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">indent</span><span class="p">:]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+    <span class="c1"># Strip off trailing and leading blank lines:</span>
+    <span class="k">while</span> <span class="n">trimmed</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">trimmed</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">trimmed</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">trimmed</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">trimmed</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">trimmed</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># Return a single string:</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">trimmed</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>下面这个例子中的 docstrings 包含两个换行符号，所以一共有 3 行，第一行和最后一行是空行，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="sd">"""</span>
+<span class="sd">    This is the second line of the docstring.</span>
+<span class="sd">    """</span>
+</pre></div>
+</td></tr></table>
+<p>在命令行中运行一下看看，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>&gt;&gt;&gt; print repr(foo.__doc__)
+'\n    This is the second line of the docstring.\n    '
+&gt;&gt;&gt; foo.__doc__.splitlines()
+['', '    This is the second line of the docstring.', '    ']
+&gt;&gt;&gt; trim(foo.__doc__)
+'This is the second line of the docstring.'
+</pre></div>
+</td></tr></table>
+<p>一旦经过 trim 处理， 下面这两种 docstring 是等效的，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="sd">"""A multi-line</span>
+<span class="sd">    docstring.</span>
+<span class="sd">    """</span>
+
+<span class="k">def</span> <span class="nf">bar</span><span class="p">():</span>
+    <span class="sd">"""</span>
+<span class="sd">    A multi-line</span>
+<span class="sd">    docstring.</span>
+<span class="sd">    """</span>
+</pre></div>
+</td></tr></table>
+<h2 id="can kao_1">参考</h2>
+<p>参考阅读</p>
+<p><a href="https://www.python.org/dev/peps/pep-0256/">PEP 256 -- Docstring Processing System Framework</a></p>
+<p><a href="https://www.python.org/dev/peps/pep-0258/">PEP 258 -- Docutils Design Specification</a></p>
+<h2 id="fu :shi jian">附：实践</h2>
+<p>使用 <a href="https://github.com/PyCQA/flake8-docstrings">flake8-docstrings</a> 工具来帮助自己检查 docstrings 是否符合规范。</p>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/pep.html">PEP</a>
+      <a href="https://qiangu.cool/tag/python.html">python</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/cs/python_notes_2_pep8_in_practice.html" title="Python 学习笔记 #2 —— PEP8 实践">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+    <a class="btn float-right" href="https://qiangu.cool/posts/cs/python_notes_4_the_zen_of_python.html" title="Python 学习笔记 #4 —— Python 之禅">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
+  </div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_4_the_zen_of_python.html">Python 学习笔记 #4 —— Python 之禅</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Deorator 装饰器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_5_comprehension.html">Python 学习笔记 #5 —— Comprehension 解析式</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_1_pep8_style.html">Python 学习笔记 #1 —— PEP8 编程风格</a></li>
+    </ul>
+  </div>
+
+      <p>This post is part 4 of the "Python Notes" series:</p>
+      <ol class="parts">
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_0_summary.html'>Python 学习笔记 #0 —— 新的开始</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_1_pep8_style.html'>Python 学习笔记 #1 —— PEP8 编程风格</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_2_pep8_in_practice.html'>Python 学习笔记 #2 —— PEP8 实践</a>
+              </li>
+              <li class="active">
+                  <a href='https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html'>Python 学习笔记 #3 —— Docstring 风格</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_4_the_zen_of_python.html'>Python 学习笔记 #4 —— Python 之禅</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_5_comprehension.html'>Python 学习笔记 #5 —— Comprehension 解析式</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_6_iterator.html'>Python 学习笔记 #6 —— Iterator 迭代器</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_7_generator.html'>Python 学习笔记 #7 —— Generator 生成器</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/cs/python_notes_8_decorator.html'>Python 学习笔记 #8 —— Deorator 装饰器</a>
+              </li>
+      </ol>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,477 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="Patterson and Hennessy 读书笔记，第三章" />
+<meta name="keywords" content="Patterson and Hennessy">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="Patterson and Hennessy 学习笔记 #3 —— Chapter 3 Arithmetic For Computers"/>
+<meta property="og:description" content="Patterson and Hennessy 读书笔记，第三章"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/drafts/learning_patterson_and_hennessy_notes_3_chapter_3.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-06-13 12:55:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="IC"/>
+<meta property="article:tag" content="Patterson and Hennessy"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; Patterson and Hennessy 学习笔记 #3 —— Chapter 3 Arithmetic For Computers</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="learning_patterson_and_hennessy_notes_3_chapter_3">Patterson and Hennessy 学习笔记 #3 —— Chapter 3 Arithmetic For Computers</h1>
+    <p>
+      Posted on 2020-06-13 12:55 in <a href="https://qiangu.cool/category/ic.html">IC</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Patterson and Hennessy 学习笔记 #3 &mdash;&mdash; Chapter 3 Arithmetic For Computers">Patterson and Hennessy 学习笔记 #3 &mdash;&mdash; Chapter 3 Arithmetic For Computers</a><ul><li><a class="toc-href" href="#integer" title="Integer">Integer</a><ul><li><a class="toc-href" href="#addition &amp; subtraction" title="Addition &amp; Subtraction">Addition &amp; Subtraction</a></li><li><a class="toc-href" href="#multiplication" title="Multiplication">Multiplication</a></li><li><a class="toc-href" href="#division" title="Division">Division</a></li></ul></li><li><a class="toc-href" href="#float point_1" title="Float Point">Float Point</a><ul><li><a class="toc-href" href="#ieee 754 floating point standard" title="IEEE 754 Floating Point Standard">IEEE 754 Floating Point Standard</a></li><li><a class="toc-href" href="#arithmetic" title="Arithmetic">Arithmetic</a></li><li><a class="toc-href" href="#subword parallelism" title="Subword Parallelism">Subword Parallelism</a></li></ul></li><li><a class="toc-href" href="#fallacies and pitfalls_1" title="Fallacies and Pitfalls">Fallacies and Pitfalls</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <blockquote>
+<p>Numerical precision is the very soul of science.</p>
+<p>-- Sir D'arcy Wentworth Thompson,On Grwth and Form, 1917</p>
+</blockquote>
+<h2 id="integer">Integer</h2>
+<h3 id="addition &amp; subtraction">Addition &amp; Subtraction</h3>
+<p><strong>处理 overflow</strong></p>
+<p>因为寄存器位宽是有限的，所以会产生 overflow，一般计算机都提供了 overflow 检测。对于补码形式的 signed 类型数据检测方法很简单，根据操作数、结果的符号位以及操作类型分类讨论判断即可。而对于 unsigned 类型而言，一般这些数据都是用来计算内存地址，产生的 overflow 都被忽略了。编译器可以用 branch 指令来检测 unsigned 类型数据是否发生了 overflow：加法的结果是否比任何一个加数都小，或者减法的结果是否比任何一个减数都大。</p>
+<p>检测出发生了 overflow 之后应该怎么办呢？C 和 Java 会忽略 integer 的 overflow，但是 Ada 和 Fortran 要求必须通知程序，所以程序猿或者是编程环境要决定发生 overflow 时该如何处理。</p>
+<p>和 overflow 相对的有一种不常见的处理：饱和处理 saturation。这种操作一般都出现在多媒体的相关处理中，比如音量的最大限度等例子。</p>
+<p><strong>实现方案：</strong></p>
+<p>加法器的速度取决于进位链的速度，有很多技术会预测进位 bit，其最坏的结果就是进位时间是 log2(W) 的函数（其中 W 是加法器的位宽）。这些预测信号的逻辑门更少所以速度更快，付出的代价就是消耗了更多的硬件资源来预测进位信号的正确值，最流行的结构就是超前进位加法器 <code>carry lookahead</code>。</p>
+<h3 id="multiplication">Multiplication</h3>
+<p><span class="math">\(1010 * 1011 = 0110\_1110\)</span>，动手算一下就知道将 1010 和 1011 解释成 10 进制数或者是 2 进制等式都是成立的，因为他们的原理都一样：移位相加。</p>
+<p><strong>实现方案：</strong></p>
+<ol>
+<li>
+<p>最简单直接的思路：模仿人类手工计算过程，相与 -&gt; 移位 -&gt; 相加</p>
+<p>具体模块框图见原文。</p>
+</li>
+<li>
+<p>更快速的实现方案：资源换速度，乘法器展开</p>
+<p>前面的方案只有一个硬件通过若干次重复计算后累加出结果，将这个过程展开（unroll）就可以得到一个更快的（latency 更小）方案：给乘数的每一 bit 都和被乘数相与，然后相邻 bit 的结果相加，显然宽度是 W 的乘法只需要 W 个加法器，latency 是 W 个加法器 latency 的总和。显然这个组合逻辑太大了时钟频率很可能上不去。继续优化的思路是：采用并行树的方式。latency 只有 <span class="math">\(log2(W)\)</span> 次加法，代价是消耗了更多的硬件资源。</p>
+</li>
+<li>
+<p>ALU 中的方案：</p>
+<p>使用前面提到的超前进位加法器 <code>carry save adders</code> 来构造乘法器，速度更快而且可以做成 pipeline 形式，提高吞吐率。</p>
+</li>
+</ol>
+<p><strong>Signed 处理</strong></p>
+<p>Q：如何处理 signed/unsigned？
+A：最简单的方法，先将 signed 转化为 unsigned，符号位单独处理（这个规则也适用于 signed 数据的其他运算）</p>
+<h3 id="division">Division</h3>
+<p>比乘法的使用频率更底，也更诡异，可能会出现无效运算：除数为 0 的情况。</p>
+<div class="math">$$Dividend = Quotient * Divisor + Remainder$$</div>
+<p><strong>实现方案：</strong></p>
+<ol>
+<li>
+<p>最简单直接的思路：与乘法器同理，模仿人类手工计算过程，移位 -&gt; 相减</p>
+<p>具体模块框图见原文。</p>
+</li>
+<li>
+<p>快速的除法器：<code>RST division</code></p>
+<p>无法直接像乘法那样展开成多个加法器来加速，因为除法必须先算出前一次迭代结果的符号位之后才能开始下一次的迭代。加速除法的思路：每次迭代产生商的若干 bit，而不仅仅是 1bit。RST division 技术就是每次迭代的时候，基于 dividend 和 remainder 的高位 bit 来预测 quotient 的若干 bit，如果预测错了后面的步骤需要纠正这个错误。目前一般是每次预测 quotient 的 4bit 结果，这个算法的准确度取决于查找表中的是否有合适的数据。</p>
+</li>
+<li>
+<p>更快的除法器：<code>non-restoring division</code></p>
+<p>前面两种都是 restoring 除法，每次迭代相减的结果是负数，需要将 divisor 恢复回去。不恢复的数学原理是：</p>
+<p>
+<div class="math">$$(r+d)*2-d=r*2+d*2-d=r*2+d$$</div>
+</p>
+</li>
+<li>
+<p>更更快的除法器：<code>non-performing division</code></p>
+<p>如果移位相减的结果是负数，则不保存减法的结果，平均减少 1/3 的算术操作。</p>
+</li>
+</ol>
+<p><strong>Signed 处理</strong></p>
+<p>Q：如何处理 signed/unsigned？
+A：需要特别注意 signed 除法必须保证 <span class="math">\(-(x \div y)=(-x)\div y\)</span>，也即<strong>保证 dividend 和 remainder 的符号必须相同。</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>RISC-V 除法指令会忽略 overflow，所以软件必须自己检测 quotient 是否发生了溢出；对于除 0 运算也是一样，软件必须自己检测。</p>
+</div>
+<h2 id="float point_1">Float Point</h2>
+<ul>
+<li>科学计数法：小数点左边只有 1 位整数的表示方法</li>
+<li><code>normalized number</code>：没有 leading 0s</li>
+</ul>
+<p>对于二进制浮点数，标准格式是：</p>
+<div class="math">$$1.xxxxx\ast2^{yyyy}$$</div>
+<p>因为 word 的位宽是固定的，所以浮点数必须在 fraction 和 exponent 之间做折中，也就是精度和范围之间的取舍，</p>
+<ul>
+<li>增加 fraction 的 bit 位数可以提高精度但是会减小表示的范围</li>
+<li>增加 exponent 的 bit 位数可以扩大表示范围，但是会降低表示精度</li>
+</ul>
+<p>如 chapter 2 所述，<strong>一个好的设计需要有合理的折中。</strong></p>
+<p>float 数的表示方法实际上就是 sign-and-magnitude 方式，1bit 符号 + E bit 指数 + F bit 尾数，表示的数据大小为，</p>
+<div class="math">$$(-1)^S * F * 2^E$$</div>
+<p><strong>处理 overflow</strong></p>
+<p>float 同理也会有 overflow 和 underflow，</p>
+<ul>
+<li>overflow：正的指数太大无法完整保存在 exponent 字段</li>
+<li>underflow：负的指数太大无法完整保存在 exponent 字段</li>
+</ul>
+<p>解决 overflow/underflow 的方法很简单粗暴，增加 bit 即可：即 double 数据类型。</p>
+<p>如果发生了 overflow/underflow 应该怎么通知用户呢？一些计算机会发出 exception 或者是 interrupts，然后由异常 / 中断处理程序来完成后续工作。但是 RISC-V 不会发出 exception 和 interrupt，而是要求软件查询 <code>floating-point control and status register (fcsr)</code> 这个寄存器来判断是否发生了 overflow/underflow。</p>
+<h3 id="ieee 754 floating point standard">IEEE 754 Floating Point Standard</h3>
+<p>1980 年之后的所有 PC 都遵守这个标准，754 对浮点数做了进一步的规定，对许多特殊数都有定义，比如正负无穷和 NaN 等，具体标准内容略。</p>
+<h3 id="arithmetic">Arithmetic</h3>
+<p><strong>加法：</strong></p>
+<p>和人类手工计算过程类似，</p>
+<ol>
+<li>首先对齐 exponent</li>
+<li>然后计算 fraction</li>
+<li>对结果进行 normalize</li>
+<li>对结果进行 round</li>
+</ol>
+<p><strong>乘法：</strong></p>
+<ol>
+<li>指数部分相加</li>
+<li>尾数部分相乘</li>
+<li>normalize 乘积</li>
+<li>round 乘积</li>
+<li>设置符号位</li>
+</ol>
+<h3 id="subword parallelism">Subword Parallelism</h3>
+<p>多媒体处理一般处理的数据要比 word 窄，而且这些数据的操作都是相同的，所以就出现了一种新技术：通过对进位链的分割，实现 word 内部的数据的并行计算，相比于收益来说这种分割的代价是非常小的。</p>
+<p>这种在一个 word 内部进行并行操作的技术叫做 <code>subword parallelism</code>，有时候也分到更加宏观的类别 <code>data parallelism</code> 中，这中技术有时候也叫做 <code>vector</code> 或者是 <code>SIMD</code>。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>目前 RISC-V 的向量指令还处于 draft 阶段，但是显然向量指令在未来必不可少的。</p>
+</div>
+<h2 id="fallacies and pitfalls_1">Fallacies and Pitfalls</h2>
+<ul>
+<li><code>Fallacies</code> 谬论：错误概念</li>
+<li><code>Pitfalls</code> 陷阱：特定条件下成立的规律的错误推广</li>
+</ul>
+<p>计算的错误和谬论一般都是因为计算机的数据是有限位宽的，而自然数是无限的。</p>
+<p><strong>谬论：就像左移指令可以代替 2 的指数次的乘法，右移指令可以代替除数是 2 的指数的除法运算。</strong></p>
+<p>对于 unsigned 类型来说的确如此，但是对于 signed 类型的数据则显然不对，负数右移后在高位补充符号位，最后会永远是 -1，不会变成 0。</p>
+<p><strong>陷阱：结合律不适用于浮点运算</strong></p>
+<p>对于 integer 的运算，即使会发生 overflow 结合律也是适用的。但是对于浮点数，结合律是不适用的，因为计算机内的浮点数是用有限的 bit 来近似真实的数字，无法保存 overflow 的数字。这里有意思的是，对于定点的整数而言即使发生了 overflow 结合律仍然是适用的，找个例子就可以验证下面的等式是成立的，</p>
+<div class="math">$$-128+127+3 = -128+(127+3) = -128+(-126)=2$$</div>
+<p>原因也很简单：整数运算 overflow 只会影响高位 bit，低位 bit 是不受影响的。</p>
+<p><strong>谬论：并行执行策略不仅适用于 integer 类型，也适用于 float 类型</strong></p>
+<p>上一条已经证明了结合律不适用于 float 类型，所以并行执行策略不一定适合 float 类型。所以写并行代码并且使用了浮点数的时候，程序猿要自己判断结果是不是可靠的，处理这个问题的领域叫做数值分析，关于这个问题本身就可以写一本书了。这也是 <code>LAPACK</code> 和 <code>SCALAPAK</code> 这类数学库流行的原因，它们的顺序执行和并行执行都已经被验证过是有效的。</p>
+<p><strong>谬论：只有理论数学家才关心 float 数的精度问题</strong></p>
+<p>一个经典故事，Intel 的 Pentium 系列处理器就出现过相关问题，为此付出了 5 亿美元召回有 bug 的芯片。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'blue ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/patterson-and-hennessy.html">Patterson and Hennessy</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+  </div>
+
+
+      <p>This post is part <built-in method index of unicode object at 0x7f64eef328d0> of the "" series:</p>
+      <ol class="parts">
+      </ol>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>
