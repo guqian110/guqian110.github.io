@@ -10,32 +10,32 @@
 
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+    <link rel="stylesheet" type="text/css" href="../../theme/stylesheet/style.min.css">
 
     <link id="dark-theme-style" rel="stylesheet" type="text/css"
           media="(prefers-color-scheme: dark)"
-    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+    href="../../theme/stylesheet/dark-theme.min.css">
 
     <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
               media="(prefers-color-scheme: dark)"
-          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+          href="../../theme/pygments/monokai.min.css">
     <link id="pygments-light-theme" rel="stylesheet" type="text/css"
               media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
-          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+          href="../../theme/pygments/monokai.min.css">
 
-    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
-    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
-    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
-    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
-    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
-    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+    <script src="../../theme/tipuesearch/jquery.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="../../tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="../../theme/tipuesearch/tipuesearch.min.css" />
 
-  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
-  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
-  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
 
 
-    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
 
 
     <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
@@ -71,11 +71,11 @@
 <meta property="og:title" content="Python 学习笔记 #6 —— Iterator 迭代器"/>
 <meta property="og:description" content="Iterator 学习笔记"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="https://qiangu.cool/posts/cs/python_notes_6_iterator.html"/>
+<meta property="og:url" content="../../posts/cs/python_notes_6_iterator.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2020-05-24 22:47:00+08:00"/>
 <meta property="article:modified_time" content=""/>
-<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:author" content="../../author/qian-gu.html">
 <meta property="article:section" content="CS"/>
 <meta property="article:tag" content="PEP"/>
 <meta property="article:tag" content="python"/>
@@ -94,12 +94,12 @@
 <body >
   <aside>
     <div>
-      <a href="https://qiangu.cool">
+      <a href="../..">
         <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
       </a>
 
       <h1>
-        <a href="https://qiangu.cool">Qian Gu</a>
+        <a href="../..">Qian Gu</a>
       </h1>
 
 <p>Read >> Think >> Write</p>
@@ -113,7 +113,7 @@
 
               <li>
                 <a target="_blank"
-                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                   href="../../pages/about-me.html#about-me">
                   About Me
                 </a>
               </li>
@@ -149,14 +149,14 @@
   <main>
 
     <nav>
-      <a href="https://qiangu.cool">Home</a>
+      <a href="../..">Home</a>
 
       <a href="/authors.html">Authors</a>
       <a href="/archives.html">Archives</a>
       <a href="/categories.html">Categories</a>
       <a href="/tags.html">Tags</a>
 
-      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+      <a href="/feeds/all.atom.xml">Atom</a>
 
     </nav>
 
@@ -165,23 +165,22 @@
       
     <h1 id="python_notes_6_iterator">Python 学习笔记 #6 —— Iterator 迭代器</h1>
     <p>
-      Posted on 2020-05-24 22:47 in <a href="https://qiangu.cool/category/cs.html">CS</a>
+      Posted on 2020-05-24 22:47 in <a href="../../category/cs.html">CS</a>
 
     </p>
   </header>
 
 
   <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="Python 学习笔记 #6 &mdash;&mdash; Iterator 迭代器">Python 学习笔记 #6 &mdash;&mdash; Iterator 迭代器</a><ul><li><a class="toc-href" href="#what is iterator" title="What is Iterator">What is Iterator</a><ul><li><a class="toc-href" href="#iteratable vs iterator" title="Iteratable vs Iterator">Iteratable vs Iterator</a></li></ul></li><li><a class="toc-href" href="#why iterator_1" title="Why Iterator">Why Iterator</a></li><li><a class="toc-href" href="#construct iterator" title="Construct Iterator">Construct Iterator</a><ul><li><a class="toc-href" href="#using iter" title="Using iter">Using iter</a></li><li><a class="toc-href" href="#using itertools" title="Using itertools">Using itertools</a></li><li><a class="toc-href" href="#user define class" title="User Define Class">User Define Class</a></li></ul></li><li><a class="toc-href" href="#using iterator_1" title="Using Iterator">Using Iterator</a><ul><li><a class="toc-href" href="#sequence" title="Sequence">Sequence</a></li><li><a class="toc-href" href="#dict" title="Dict">Dict</a></li><li><a class="toc-href" href="#file" title="File">File</a></li><li><a class="toc-href" href="#restrictions" title="Restrictions">Restrictions</a></li></ul></li><li><a class="toc-href" href="#special iterator_1" title="Special Iterator">Special Iterator</a><ul><li><a class="toc-href" href="#enumerate()" title="enumerate()">enumerate()</a></li><li><a class="toc-href" href="#zip()" title="zip()">zip()</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Python 学习笔记 #6 &mdash;&mdash; Iterator 迭代器">Python 学习笔记 #6 &mdash;&mdash; Iterator 迭代器</a><ul><li><a class="toc-href" href="#what is iterator" title="What is Iterator">What is Iterator</a></li><li><a class="toc-href" href="#iteratable vs iterator" title="Iteratable vs Iterator">Iteratable vs Iterator</a></li><li><a class="toc-href" href="#why iterator" title="Why Iterator">Why Iterator</a></li><li><a class="toc-href" href="#construct iterator" title="Construct Iterator">Construct Iterator</a><ul><li><a class="toc-href" href="#bit" title="BIT">BIT</a></li><li><a class="toc-href" href="#delegate" title="Delegate">Delegate</a></li><li><a class="toc-href" href="#implement iterator protocal" title="Implement Iterator Protocal">Implement Iterator Protocal</a></li><li><a class="toc-href" href="#generator" title="Generator">Generator</a></li></ul></li><li><a class="toc-href" href="#using iterator_1" title="Using Iterator">Using Iterator</a><ul><li><a class="toc-href" href="#sequence" title="Sequence">Sequence</a></li><li><a class="toc-href" href="#dict" title="Dict">Dict</a></li><li><a class="toc-href" href="#file" title="File">File</a></li><li><a class="toc-href" href="#restrictions" title="Restrictions">Restrictions</a></li></ul></li><li><a class="toc-href" href="#special iterator_1" title="Special Iterator">Special Iterator</a><ul><li><a class="toc-href" href="#reversed iterator" title="Reversed Iterator">Reversed Iterator</a></li><li><a class="toc-href" href="#using itertools" title="Using itertools">Using itertools</a></li><li><a class="toc-href" href="#enumerate()" title="enumerate()">enumerate()</a></li><li><a class="toc-href" href="#zip()" title="zip()">zip()</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
   </div>
 
   <div>
     <h2 id="what is iterator">What is Iterator</h2>
 <p><a href="https://www.python.org/dev/peps/pep-0234/">PEP 234 -- Iterators 原文链接</a>。</p>
-<p>Sequence 是 python 中的一种数据结构，它们的成员是有序排列的，可以通过下标来访问特定元素，比如字符串、list、tuple 等都是 sequence。很多时候我们需要对 sequence 进行顺序访问，最简单的方法是写一个 for 循环，通过计数的方式实现迭代。但是计数的方式很原始也不高效，所以 python 提供了 iterator 来迭代 sequence。</p>
+<p>Sequence 是 python 中的一种数据结构，它们的成员是有序排列的，可以通过下标来访问特定元素，比如字符串、list、tuple 等都是 sequence。很多时候我们需要对 sequence 进行顺序访问，最简单的方法是写一个 for 循环，通过计数的方式实现迭代。但是计数的方式很原始也不高效，所以 python 提供了 iterator 来迭代 sequence。Iterator 在 Python 中使用非常广泛，它不仅对 sequence 的支持是无缝的，它还能迭代那些具有 sequence 的行为但实际上并不是 sequence 的对象，比如 dict 的 keys 以及 file。</p>
 <p>Iterator 实际上是一个实现了工厂模式的对象，它通过 <code>next()</code> 方法来获取元素，而不是通过 index 计数来实现。for 循环只要调用 iterator 的 next 方法，就能获得 sequence 中的下一项，当迭代完所有的 item 后，再次调用会返回一个 <code>StopIteration</code> 的异常，这个异常并不代表发生了错误，而是告诉调用者，迭代已经完成了。</p>
-<p>Iterator 对 sequence 的支持是无缝的，除此之外它还能迭代那些具有 sequence 的行为但实际上并不是 sequence 的对象，比如 dict 的 keys 以及 file。</p>
-<h3 id="iteratable vs iterator">Iteratable vs Iterator</h3>
+<h2 id="iteratable vs iterator">Iteratable vs Iterator</h2>
 <p><strong>含有 <code>__iter__()</code> 或 <code>__getitem__()</code> 方法的对象称为 &ldquo; 可迭代对象 &rdquo;：<code>Iteratable</code></strong></p>
 <p>可以用 <code>isinstance()</code> 判断一个对象是否为 <code>Iteratable</code> 对象，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -240,7 +239,7 @@
 </pre></div>
 </td></tr></table>
 <p>结论：<strong>对于 <code>Iterable</code> 对象，我们可以直接用 for 循环来迭代。</strong></p>
-<h2 id="why iterator_1">Why Iterator</h2>
+<h2 id="why iterator">Why Iterator</h2>
 <p>翻译自 PEP234：</p>
 <ul>
 <li>提供了一种可扩展的 iterator 接口</li>
@@ -252,40 +251,36 @@
 </ul>
 <h2 id="construct iterator">Construct Iterator</h2>
 <p>如何得到一个迭代器呢？</p>
-<h3 id="using iter">Using <code>iter</code></h3>
-<p>只需要调用内建函数 <code>iter()</code> 即可，有两种调用方式：</p>
+<h3 id="bit">BIT</h3>
+<p>对于 Python 内建数据类型，比如容器，只需要用内建函数 <code>iter()</code> 就可以得到对应的迭代器，具体有两种调用方式：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">iter</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 <span class="nb">iter</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">sentinel</span><span class="p">)</span>
 </pre></div>
 </td></tr></table>
 <ul>
-<li><code>iter(obj)</code>，iter 会检查 obj 是否为 sequence，如果是，则返回一个迭代器</li>
-<li><code>iter(func, sentinel)</code>，iter 会重复调用 func，直到迭代的值为 sentinel</li>
+<li><code>iter(obj)</code>，返回一个迭代器</li>
+<li><code>iter(func, sentinel)</code>，iter 会重复调用 func，直到迭代返回值为 sentinel 时停止迭代</li>
 </ul>
-<h3 id="using itertools">Using <code>itertools</code></h3>
-<p>Python 内建的工具包，可以产生一系列各种各样的 iterator，比如无穷迭代器 <code>count()</code>, <code>cycle()</code>, <code>repeat()</code>，有限长度的 <code>accumulate()</code>, <code>compress()</code>, <code>chain()</code> 等。</p>
+<h3 id="delegate">Delegate</h3>
+<p>如果是一个自定义容器，内部包含一个 list、tuple、dict 等可迭代对象，那么可以直接在自定义容器中定义一个 <code>__iter()__</code> 方法，将迭代请求委托到容器内容对象上。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_children</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="n">counter</span> <span class="o">=</span> <span class="n">count</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>  <span class="c1"># 10</span>
-<span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>  <span class="c1"># 11</span>
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">)</span>
 </pre></div>
 </td></tr></table>
-<p><code>itertools</code> 常见的 iterator 有：</p>
-<ul>
-<li>生成切片： <code>itertools.islice()</code></li>
-<li>丢弃部分数据： <code>itertools.dropwhile()</code></li>
-<li>产生所有排列组合： <code>itertools.permutations()</code></li>
-<li>一次性迭代不同容器内的元素： <code>itertools.chain()</code></li>
-</ul>
-<p><strong>总结：遇到看似复杂的迭代任务，不要着急自己写复杂的 for index 循环，也不要自己尝试写一个 iterator，而是应该首先看看 <code>itertools</code> 里面是否提供了相关功能，往往有惊喜。</strong></p>
-<h3 id="user define class">User Define Class</h3>
-<p>只要一个 class 实现了下面两个方法，就可以当作迭代器来使用，</p>
+<h3 id="implement iterator protocal">Implement Iterator Protocal</h3>
+<p>有时候内建类型的迭代协议无法满足我们的需求，这个时候可以自行实现迭代协议。只要一个 class 实现了下面两个方法，就可以当作迭代器来使用，</p>
 <ul>
 <li>一个 <code>__iter()__</code> 方法，返回值是 <code>self</code></li>
 <li>一个 <code>next()</code> 方法，返回一个 item 或者是 StopIteration 异常</li>
@@ -295,9 +290,9 @@
 <li>任意一个实现了 <code>__iter()__</code> 或 <code>__getitme__()</code> 的对象，都可以用 for 循环来迭代 &mdash;&mdash; <strong>Iterable 对象</strong></li>
 <li>任意一个实现了 <code>next()</code> 的对象都可以当作是 iterator &mdash;&mdash; <strong>Iterator 协议</strong></li>
 </ul>
-<p>迭代的概念本身只涉及第二种协议，容器类的对象一般都支持第一种协议。目前 iterator 要求这两种协议都支持，支持第一种协议的目的是为了让 iterator 同时也是一个 Iterable，这样它的行为和 sequence 类似，特别是在用 for 循环中使用 iterator 的场景。</p>
+<p>迭代的概念本身只涉及第二种协议，容器类的对象一般都支持第一种协议。目前 iterator 要求这两种协议都支持，支持第一种协议的目的是为了让 iterator 同时也是 Iterable，这样它的行为和 sequence 类似，特别是在用 for 循环中使用 iterator 的场景。</p>
 <p><strong>example：</strong></p>
-<p>定义一个产生随机 sequence 的 class（存储在 randSeq.py），</p>
+<p>定义一个产生随机 sequence 的 class，然后使用 for 循环迭代该对象，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -310,7 +305,12 @@
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
 
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span>
 
@@ -323,15 +323,6 @@
 
     <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-</td></tr></table>
-<p>使用 for 循环调用该 class 对象，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ranSeq</span> <span class="kn">import</span> <span class="n">RandSeq</span>
 
 <span class="n">seq</span> <span class="o">=</span> <span class="n">RandSeq</span><span class="p">((</span><span class="s1">'rock'</span><span class="p">,</span> <span class="s1">'paper'</span><span class="p">,</span> <span class="s1">'scissors'</span><span class="p">))</span>
 
@@ -345,6 +336,26 @@
 <span class="nb">isinstance</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">)</span>  <span class="c1"># True</span>
 </pre></div>
 </td></tr></table>
+<h3 id="generator">Generator</h3>
+<p>Generator 是一种特殊的 iterator，最典型的例子就是 Fibonacci 数列。可以直接根据需要写一个 generator 直接调用，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">frange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">increment</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">while</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">stop</span><span class="p">:</span>
+        <span class="n">yiled</span> <span class="n">x</span>
+        <span class="n">x</span> <span class="o">+=</span> <span class="n">increment</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">frange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>如果 generator 涉及到比较复杂的控制（比如暴露属性等），可以把 generator 函数扩展成 class 形式。比如前面的 RandSeq 例子可以扩展出更加复杂的功能，然后将 <code>__iter__</code> 内部的 return 改为 yield 即可。</p>
 <h2 id="using iterator_1">Using Iterator</h2>
 <h3 id="sequence">Sequence</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -442,7 +453,10 @@
 </pre></div>
 </td></tr></table>
 <h3 id="restrictions">Restrictions</h3>
-<p><strong>在用 iterator 时，sequence/dict 的内容是不能被修改的。</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在用 iterator 时，sequence/dict 的内容是不能被修改的。</p>
+</div>
 <p>sequence 中除了 list，其它（tuple 和 string）都是不可变的，所以只需要注意 list 的情况即可。对于 dict，只允许对一个已经存在的 key 设置它的值，其他操作（增加 / 删除 /<code>update()</code>）都是不允许的。原因就是 iterator 和实际对象是绑定在一起的，一旦修改了原对象，效果会马上体现出来。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -463,6 +477,36 @@
 </td></tr></table>
 <p>实际上，在 python 的迭代器出现之前，这个限制就已经存在了，比如 C++ 也有类似的约束。</p>
 <h2 id="special iterator_1">Special Iterator</h2>
+<h3 id="reversed iterator">Reversed Iterator</h3>
+<p>获得一个反向迭代器的方式：</p>
+<ul>
+<li>调用 BIF <code>reversed()</code></li>
+<li>实现 <code>__reversed__()</code> 方法</li>
+<li>将对象转化为 list 对象</li>
+<li>使用 generator</li>
+</ul>
+<p>直接使用 <code>reversed()</code> 的问题在于待处理的对象必须是大小确定的，如果一个对象大小不固定而且又没有实现 <code>__reversed__()</code> 方法，那么直接将其转化为 list 对象可能会占用大量内存，更优的做法是在 <code>__reversed__()</code> 中定义一个 generator。</p>
+<h3 id="using itertools">Using <code>itertools</code></h3>
+<p>Python 内建的工具包，可以产生一系列各种各样的 iterator，比如无穷迭代器 <code>count()</code>, <code>cycle()</code>, <code>repeat()</code>，有限长度的 <code>accumulate()</code>, <code>compress()</code>, <code>chain()</code> 等。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
+
+<span class="n">counter</span> <span class="o">=</span> <span class="n">count</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>  <span class="c1"># 10</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>  <span class="c1"># 11</span>
+</pre></div>
+</td></tr></table>
+<p><code>itertools</code> 常见的 iterator 有：</p>
+<ul>
+<li>生成切片： <code>itertools.islice()</code></li>
+<li>丢弃部分数据： <code>itertools.dropwhile()</code></li>
+<li>产生所有排列组合： <code>itertools.permutations()</code></li>
+<li>一次性迭代不同容器内的元素： <code>itertools.chain()</code></li>
+</ul>
+<p><strong>总结：遇到看似复杂的迭代任务，不要着急自己写复杂的 for index 循环或者是 iterator，而是应该首先看看 <code>itertools</code> 里面是否提供了相关功能，往往有惊喜。</strong></p>
 <h3 id="enumerate()"><code>enumerate()</code></h3>
 <p>如果想在迭代对象时，同时知道对应的索引，该怎么办？</p>
 <p>或许你会想在 iterator 的基础上，再加一个计数器，在每次 for 循环中不断自增，类似这样，</p>
@@ -520,6 +564,7 @@
 <p><a href="https://www.python.org/dev/peps/pep-0234/">PEP 234 -- Iterator</a></p>
 <p><a href="https://www.python.org/dev/peps/pep-0234/">PEP 279 -- The enumerate() built-in function</a></p>
 <p><a href="https://book.douban.com/subject/3112503/">Python 核心编程</a></p>
+<p><a href="https://book.douban.com/subject/26381341/">Python Cookbook</a></p>
 <p><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017323698112640">迭代器 - 廖雪峰的官方网站</a></p>
 <p><a href="https://nvie.com/posts/iterators-vs-generators/">Iterables vs. Iterators vs. Generators</a></p>
 <p><a href="https://foofish.net/iterators-vs-generators.html">完全理解 Python 迭代对象、迭代器、生成器</a></p>
@@ -527,17 +572,17 @@
 
   <div class="tag-cloud">
     <p>
-      <a href="https://qiangu.cool/tag/pep.html">PEP</a>
-      <a href="https://qiangu.cool/tag/python.html">python</a>
+      <a href="../../tag/pep.html">PEP</a>
+      <a href="../../tag/python.html">python</a>
     </p>
   </div>
 
 
   <div class="neighbors">
-    <a class="btn float-left" href="https://qiangu.cool/posts/tools/git_flow_summary.html" title="Git Flow 小结">
+    <a class="btn float-left" href="../../posts/tools/git_flow_summary.html" title="Git Flow 小结">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
-    <a class="btn float-right" href="https://qiangu.cool/posts/cs/python_notes_7_generator.html" title="Python 学习笔记 #7 —— Generator 生成器">
+    <a class="btn float-right" href="../../posts/cs/python_notes_7_generator.html" title="Python 学习笔记 #7 —— Generator 生成器">
       Next Post <i class="fa fa-angle-right"></i>
     </a>
   </div>
@@ -545,42 +590,48 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_4_the_zen_of_python.html">Python 学习笔记 #4 —— Python 之禅</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Deorator 装饰器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html">Python 学习笔记 #3 —— Docstring 风格</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_5_comprehension.html">Python 学习笔记 #5 —— Comprehension 解析式</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_1_pep8_style.html">Python 学习笔记 #1 —— PEP8 编程风格</a></li>
+      <li><a href="../../posts/cs/python_notes_1_pep8_style.html">Python 学习笔记 #1 —— PEP8 编程风格</a></li>
+      <li><a href="../../posts/cs/python_notes_0_summary.html">Python 学习笔记 #0 —— 新的开始</a></li>
+      <li><a href="../../posts/cs/python_notes_10_fp_in_python.html">Python 学习笔记 #10 —— Python 中的 FP</a></li>
+      <li><a href="../../posts/cs/python_notes_3_docstring_style.html">Python 学习笔记 #3 —— Docstring 风格</a></li>
+      <li><a href="../../posts/cs/python_notes_9_function_arguments.html">Python 学习笔记 #9 —— Function Arguments 函数参数</a></li>
     </ul>
   </div>
 
       <p>This post is part 7 of the "Python Notes" series:</p>
       <ol class="parts">
               <li >
-                  <a href='https://qiangu.cool/posts/cs/python_notes_0_summary.html'>Python 学习笔记 #0 —— 新的开始</a>
+                  <a href='../../posts/cs/python_notes_0_summary.html'>Python 学习笔记 #0 —— 新的开始</a>
               </li>
               <li >
-                  <a href='https://qiangu.cool/posts/cs/python_notes_1_pep8_style.html'>Python 学习笔记 #1 —— PEP8 编程风格</a>
+                  <a href='../../posts/cs/python_notes_1_pep8_style.html'>Python 学习笔记 #1 —— PEP8 编程风格</a>
               </li>
               <li >
-                  <a href='https://qiangu.cool/posts/cs/python_notes_2_pep8_in_practice.html'>Python 学习笔记 #2 —— PEP8 实践</a>
+                  <a href='../../posts/cs/python_notes_2_pep8_in_practice.html'>Python 学习笔记 #2 —— PEP8 实践</a>
               </li>
               <li >
-                  <a href='https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html'>Python 学习笔记 #3 —— Docstring 风格</a>
+                  <a href='../../posts/cs/python_notes_3_docstring_style.html'>Python 学习笔记 #3 —— Docstring 风格</a>
               </li>
               <li >
-                  <a href='https://qiangu.cool/posts/cs/python_notes_4_the_zen_of_python.html'>Python 学习笔记 #4 —— Python 之禅</a>
+                  <a href='../../posts/cs/python_notes_4_the_zen_of_python.html'>Python 学习笔记 #4 —— Python 之禅</a>
               </li>
               <li >
-                  <a href='https://qiangu.cool/posts/cs/python_notes_5_comprehension.html'>Python 学习笔记 #5 —— Comprehension 解析式</a>
+                  <a href='../../posts/cs/python_notes_5_comprehension.html'>Python 学习笔记 #5 —— Comprehension 解析式</a>
               </li>
               <li class="active">
-                  <a href='https://qiangu.cool/posts/cs/python_notes_6_iterator.html'>Python 学习笔记 #6 —— Iterator 迭代器</a>
+                  <a href='../../posts/cs/python_notes_6_iterator.html'>Python 学习笔记 #6 —— Iterator 迭代器</a>
               </li>
               <li >
-                  <a href='https://qiangu.cool/posts/cs/python_notes_7_generator.html'>Python 学习笔记 #7 —— Generator 生成器</a>
+                  <a href='../../posts/cs/python_notes_7_generator.html'>Python 学习笔记 #7 —— Generator 生成器</a>
               </li>
               <li >
-                  <a href='https://qiangu.cool/posts/cs/python_notes_8_decorator.html'>Python 学习笔记 #8 —— Deorator 装饰器</a>
+                  <a href='../../posts/cs/python_notes_8_decorator.html'>Python 学习笔记 #8 —— Decorator 装饰器</a>
+              </li>
+              <li >
+                  <a href='../../posts/cs/python_notes_9_function_arguments.html'>Python 学习笔记 #9 —— Function Arguments 函数参数</a>
+              </li>
+              <li >
+                  <a href='../../posts/cs/python_notes_10_fp_in_python.html'>Python 学习笔记 #10 —— Python 中的 FP</a>
               </li>
       </ol>
 
@@ -617,7 +668,7 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   <span class="footer-separator">|</span>
   Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
   <script id="dark-theme-script"
-          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          src="../../theme/dark-theme/dark-theme.min.js"
           data-enable-auto-detect-theme="True"
           data-default-theme="ligtht"
           type="text/javascript">
@@ -644,7 +695,7 @@ Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a 
   "@context" : "http://schema.org",
   "@type" : "Blog",
   "name": " Qian's Blog ",
-  "url" : "https://qiangu.cool",
+  "url" : "../..",
   "image": "/images/logo.png",
   "description": "Qian's Thoughts and Writings"
 }

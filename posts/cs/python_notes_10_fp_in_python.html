@@ -1,0 +1,583 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../../theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="../../theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="../../theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="../../theme/pygments/monokai.min.css">
+
+    <script src="../../theme/tipuesearch/jquery.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="../../theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="../../tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="../../theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="../../theme/font-awesome/css/solid.css">
+
+
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="函数参数小结" />
+<meta name="keywords" content="PEP, python">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="Python 学习笔记 #10 —— Python 中的 FP"/>
+<meta property="og:description" content="函数参数小结"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="../../posts/cs/python_notes_10_fp_in_python.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-06-21 11:19:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="../../author/qian-gu.html">
+<meta property="article:section" content="CS"/>
+<meta property="article:tag" content="PEP"/>
+<meta property="article:tag" content="python"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; Python 学习笔记 #10 —— Python 中的 FP</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="../..">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="../..">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="../../pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="../..">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="python_notes_10_fp_in_python">Python 学习笔记 #10 —— Python 中的 FP</h1>
+    <p>
+      Posted on 2020-06-21 11:19 in <a href="../../category/cs.html">CS</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Python 学习笔记 #10 &mdash;&mdash; Python 中的 FP">Python 学习笔记 #10 &mdash;&mdash; Python 中的 FP</a><ul><li><a class="toc-href" href="#functional programming" title="Functional Programming">Functional Programming</a></li><li><a class="toc-href" href="#lambda" title="Lambda">Lambda</a></li><li><a class="toc-href" href="#high-order function" title="High-order Function">High-order Function</a></li><li><a class="toc-href" href="#filter, map, reduce" title="Filter, Map, Reduce">Filter, Map, Reduce</a><ul><li><a class="toc-href" href="#filter" title="Filter">Filter</a></li><li><a class="toc-href" href="#map" title="Map">Map</a></li><li><a class="toc-href" href="#reduce" title="Reduce">Reduce</a></li></ul></li><li><a class="toc-href" href="#partial function application_1" title="Partial Function Application">Partial Function Application</a></li><li><a class="toc-href" href="#practice" title="Practice">Practice</a></li><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <h2 id="functional programming">Functional Programming</h2>
+<p>函数式编程是一种编程范式，和面向过程、面向对象并列。大家都知道世界观和方法论，用中国古话就是道和术。就编程而言解决一个问题的方法有很多，不同方法的具体实现就是术，但是我们可以对这戏方法进行归类，归类的依据就是道，也就是编程范式：</p>
+<ul>
+<li>
+<p>面向过程：一切问题都可以通过一些数据（变量）和一些操作（函数）进行处理，只需要按照步骤处理数据就可以解决问题，其中数据和操作是相互独立没有关系的，典型例子是 C 语言</p>
+</li>
+<li>
+<p>面向对象：数据和操作是有关联的，它们都是一个类（对象）的属性，根据问题建模出若干对象，在对象之间进行交互就能解决问题，典型例子是 C++</p>
+</li>
+<li>
+<p>函数式编程：源自于数学中的函数，基本上数学中函数有什么特点，编程语言中的函数就有相同特点，比如函数是一等公民，引用透明，没有副作用等</p>
+</li>
+</ul>
+<p>函数式编程本身是一个大而广的问题，而且 Python 不是也不大可能成为一种函数式编程语言，但是它有很多函数式编程的特点。函数式编程是一种思想，很多老手都无法准确定义什么是函数式编程，这里只是简单写写学习笔记。</p>
+<h2 id="lambda">Lambda</h2>
+<p><code>lambda</code> 函数的主要用途是定义特殊的函数，</p>
+<ul>
+<li>首先它必须很小，小到只有一行表达式</li>
+<li>其次它只会别调用一次（实际上因为 lambda 函数是匿名函数，没有函数名自然其他地方也无法调用）</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>lambda  [arg1 [, arg2, ... argN]: expression
+</pre></div>
+</td></tr></table>
+<p>把一个常规函数转换成 lambda 函数的方法很简单：把 def 替换成 lambda，并且省略掉函数名和参数的括号，以及 return 关键字。可以通过下面的变形来理解 lambda 函数，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+
+<span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+</pre></div>
+</td></tr></table>
+<h2 id="high-order function">High-order Function</h2>
+<p>高阶函数在学习 decorator 时已经接触过了，可以接收 function 作为参数，或者返回值的函数就是高阶函数，典型例子就是各种 decorator。</p>
+<p>Python 中的所有函数都是 &rdquo; 一等公民 &ldquo;，一等公民是指具有下面一项或几项特点的对象，</p>
+<ul>
+<li>runtime 时创建</li>
+<li>可以赋值给一个变量或者是数据结构中的一个元素</li>
+<li>可以作为参数进行传递</li>
+<li>可以作为函数的返回值</li>
+</ul>
+<p>因此 Python 中的所有函数都可以作为高阶函数来使用。</p>
+<h2 id="filter, map, reduce">Filter, Map, Reduce</h2>
+<p>这几个高阶函数都定义在 functools 模块中。</p>
+<h3 id="filter">Filter</h3>
+<p><code>filter</code> 函数顾名思义，就像一个过滤器一样，把符合条件的东西（数据）过滤出来，它接收两个参数，第一个参数是过滤函数；第二个参数是 <code>iterable</code> 对象，也就是待处理的数据对象。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>filter(function, iterable)
+</pre></div>
+</td></tr></table>
+<p>举例说明，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">odd</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">filter</span><span class="p">(</span><span class="n">odd</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+<span class="c1"># [1, 3, 5]</span>
+</pre></div>
+</td></tr></table>
+<p>odd 是个过滤函数，如果数据是奇数则返回 1，偶数返回 0，也就是说会把奇数过滤出来。如果 odd 函数只在这里使用一次的话，可以结合前面的 lambda 函数写出更简洁的代码，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+<span class="c1"># [1, 3, 5]</span>
+</pre></div>
+</td></tr></table>
+<p>仔细观察一下 filter 函数就会发现它的功能和 list comprehension 非常相似，都是迭代一个 <code>iterable</code> 对象并筛选出符合条件的数据。所以上面的例子可以用 list comprehension 重写成下面的样子，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">print</span> <span class="p">[</span><span class="n">num</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</td></tr></table>
+<p>显然 list comprehension 的版本更加简洁，更加 <code>Pythonic</code>。</p>
+<h3 id="map">Map</h3>
+<p><code>map</code> 函数和 filter 函数类似，不同之处在于做映射而不是过滤。它也接收两个参数，第一个参数是映射函数，第二个参数是 <code>iterable</code> 对象，也就是待处理的数据对象。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>map(function, iterable)
+</pre></div>
+</td></tr></table>
+<p>举例说明，将上面的挑选奇数的例子改成求平方，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+<span class="c1"># [0, 1, 4, 9, 16, 25]</span>
+</pre></div>
+</td></tr></table>
+<p>同理也可以写出 lambda 形式和 list comprehension，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># using lambda</span>
+<span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+<span class="c1"># [0, 1, 4, 9, 16, 25]</span>
+
+<span class="c1"># list comprehension</span>
+<span class="k">print</span> <span class="p">[</span><span class="n">num</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)]</span>
+<span class="c1"># [0, 1, 4, 9, 16, 25]</span>
+</pre></div>
+</td></tr></table>
+<h3 id="reduce">Reduce</h3>
+<p><code>reduce</code> 函数顾名思义，就是把一个 <code>iterable</code> 对象归并缩减成一个单一的值。它的语法规则也 filter，map 类似。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>reduce(function, iterable)
+</pre></div>
+</td></tr></table>
+<p>举例说明，将前面例子中的函数改为求和。普通模式的代码略，下面是 lambda 方式，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># lambda</span>
+<span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="n">m</span> <span class="o">+</span> <span class="n">n</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+<span class="c1"># 15</span>
+</pre></div>
+</td></tr></table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>map 和 reduce 函数非常有名，Google 大牛 Jeff Dean 的著名论文 <a href="https://research.google/pubs/pub62/">MapReduce: Simplified Data Processing on Large Clusters</a> 介绍了 map/reduce 的基本思想，而之前非常火的大数据处理框架 Hadoop 底层实现的一个组件就是 map/reduce。大数据处理一般需要很多太计算机分布式计算，而 FP 天然就支持并行处理，不需要锁和同步，所以应用很广泛。</p>
+</div>
+<h2 id="partial function application_1">Partial Function Application</h2>
+<p>3 个容易混淆的概念，</p>
+<ul>
+<li>数学的偏函数：定义域上部分有定义的函数，也就是说定义域中某些值没有映射值</li>
+<li>柯里化 <code>curring</code>，它指把一个有多参数的函数分解成一系列单参数的函数的过程</li>
+<li>部分函数应用 partial function application, PFA，函数调用的结果，在调用时只提供了部分参数</li>
+</ul>
+<p>经典例子，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">exponent</span><span class="p">):</span> 
+    <span class="k">return</span> <span class="n">base</span> <span class="o">**</span> <span class="n">exponent</span>
+
+<span class="n">square</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">power</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cube</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">power</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># 9</span>
+<span class="k">print</span> <span class="n">cube</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># 27</span>
+</pre></div>
+</td></tr></table>
+<p>实际上，partial 接收的参数有 3 个，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">partical</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_args</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>一般创建 PFA 固定参数时都是采用关键字的方式，比如上面例子中固化 exponent 参数。在实际调用 square 时，会把位置参数放到 <code>*args</code>, <code>**kw_args</code> 的左边（必须符合 Python 的参数定义约束）。所以上面的例子实际上等价于，</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">kw1</span> <span class="o">=</span> <span class="p">{</span><span class="err">&rsquo;</span><span class="n">exponent</span><span class="err">&lsquo;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">kw2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'exponent'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="n">square</span> <span class="o">=</span> <span class="n">power</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">**</span><span class="n">kw1</span><span class="p">)</span>
+<span class="n">cube</span> <span class="o">=</span> <span class="n">power</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">**</span><span class="n">kw2</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+<p>但是如果下面这个例子中，我们就想固化中间的参数怎么办？显然调用 sum2 时只能通过关键字的方式传参。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sum4</span><span class="p">(</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">,</span> <span class="n">num3</span><span class="p">,</span> <span class="n">num4</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s1">'num1 = '</span><span class="p">,</span> <span class="n">num1</span>
+    <span class="k">print</span> <span class="s1">'num2 = '</span><span class="p">,</span> <span class="n">num2</span>
+    <span class="k">print</span> <span class="s1">'num3 = '</span><span class="p">,</span> <span class="n">num3</span>
+    <span class="k">print</span> <span class="s1">'num4 = '</span><span class="p">,</span> <span class="n">num4</span>
+    <span class="k">return</span> <span class="n">num1</span> <span class="o">+</span> <span class="n">num2</span> <span class="o">+</span> <span class="n">num3</span> <span class="o">+</span> <span class="n">num4</span>
+
+<span class="n">sum2</span> <span class="o">=</span> <span class="n">paritcal</span><span class="p">(</span><span class="n">sum4</span><span class="p">,</span> <span class="n">num2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">sum2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="c1"># TypeError: sum() got multiple values for keyword argument 'num2'</span>
+<span class="n">sum2</span><span class="p">(</span><span class="n">num1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num4</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="c1"># num1 = 1</span>
+<span class="c1"># num2 = 2</span>
+<span class="c1"># num3 = 3</span>
+<span class="c1"># num4 = 4</span>
+<span class="c1"># 10</span>
+</pre></div>
+</td></tr></table>
+<p>如果固化参数时没有用关键字，那么实际上就是按顺序固化</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">sum3</span> <span class="o">=</span> <span class="n">partical</span><span class="p">(</span><span class="n">sum4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">sum3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="c1"># num1 = 1</span>
+<span class="c1"># num2 = 3</span>
+<span class="c1"># num3 = 2</span>
+<span class="c1"># num4 = 4</span>
+<span class="c1"># 10</span>
+</pre></div>
+</td></tr></table>
+<p>可以看到 PFA 和待默认参数的函数很类似，但是 PFA 更灵活，原始函数不必提供参数默认值，而且可以得到很多偏函数调用，每个都能选择给不同参数默认值。</p>
+<h2 id="practice">Practice</h2>
+<p>只使用这几个简单函数就可以把所有面向过程的代码都改写成 FP 的形式，但是转换出来的代码新手比较难理解，这很不 Pythonic（具体参考<a href="https://debugtalk.com/post/python-functional-programming-getting-started/">这篇文章</a>），我们也不应该这么做。Python 本身没有专门设计成一门函数式编程语言，在可预见的将来可以也不会变成函数式语言，Python 能流行起来很大的原因就是它的语法非常接近自然语言有很高的可读性，一方面 Python 在一直吸取 FP 的要素，比如 list comprehension 等语法，另外一方面虽然 FP 的代码更接近抽象层，但是实际上能习惯看数学表达式的人本来就不多而且 FP 目前也没有大面积推广，显然 Python 类似自然语言的语法可读性更好。如果呆板地为了 FP 而舍弃 Python 自身的精髓显然是一件非常愚蠢的事情。</p>
+<p>那么在 Python 中到底应该怎么运用 FP 呢？这里有两篇博客介绍了一些经验。</p>
+<p><a href="https://kite.com/blog/python/functional-programming/">Best Practices for Using Functional Programming in Python</a></p>
+<p><a href="https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming">A practical introduction to functional programming</a></p>
+<ul>
+<li>尽可能地写 pure function</li>
+<li>尽可能地避免使用 mutability 对象</li>
+<li>有限地使用 class，改用 module 来代替 class（待讨论）</li>
+<li>不要滥用 lambda 和 high-order function</li>
+<li>必要时使用 generator</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>函数式编程是美丽而纯粹的，Python 是一门多范式编程语言并且支持 FP。事实上很多大牛 Python 程序猿都非常反感 Python 中的 FP，因为它很不 Pythonic。个人认为到底要不要在 Python 中使用 FP 取决于实际应用，不能削足适履强行套用，也不能无脑抵制。核心思想还是 The Zen of Python，有时候简单地使用 lambda, PFA 可以简化代码，提高可读性；在不影响可读性的情况下尽量将函数写出 pure 形式也可以提高代码的健壮性。</p>
+<h2 id="ref">Ref</h2>
+<p><a href="https://docs.python.org/3/howto/functional.html">Functional Programming HOWTO</a></p>
+<p><a href="https://book.douban.com/subject/3112503/">Python 核心编程</a></p>
+<p><a href="https://book.douban.com/subject/26381341/">Python Cookbook</a></p>
+<p><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017328525009056">函数式编程 - 廖雪峰的官方网站</a></p>
+<p><a href="https://kite.com/blog/python/functional-programming/">Best Practices for Using Functional Programming in Python</a></p>
+<p><a href="https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming">A practical introduction to functional programming</a></p>
+<p><a href="https://hackernoon.com/learn-functional-python-in-10-minutes-to-2d1651dece6f">Learn Functional Python Syntax in 10 Minutes [Tutorial]</a></p>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="../../tag/pep.html">PEP</a>
+      <a href="../../tag/python.html">python</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="../../posts/cs/python_notes_9_function_arguments.html" title="Python 学习笔记 #9 —— Function Arguments 函数参数">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+  </div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="../../posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
+      <li><a href="../../posts/cs/python_notes_1_pep8_style.html">Python 学习笔记 #1 —— PEP8 编程风格</a></li>
+      <li><a href="../../posts/cs/python_notes_0_summary.html">Python 学习笔记 #0 —— 新的开始</a></li>
+      <li><a href="../../posts/cs/python_notes_3_docstring_style.html">Python 学习笔记 #3 —— Docstring 风格</a></li>
+      <li><a href="../../posts/cs/python_notes_9_function_arguments.html">Python 学习笔记 #9 —— Function Arguments 函数参数</a></li>
+    </ul>
+  </div>
+
+      <p>This post is part 11 of the "Python Notes" series:</p>
+      <ol class="parts">
+              <li >
+                  <a href='../../posts/cs/python_notes_0_summary.html'>Python 学习笔记 #0 —— 新的开始</a>
+              </li>
+              <li >
+                  <a href='../../posts/cs/python_notes_1_pep8_style.html'>Python 学习笔记 #1 —— PEP8 编程风格</a>
+              </li>
+              <li >
+                  <a href='../../posts/cs/python_notes_2_pep8_in_practice.html'>Python 学习笔记 #2 —— PEP8 实践</a>
+              </li>
+              <li >
+                  <a href='../../posts/cs/python_notes_3_docstring_style.html'>Python 学习笔记 #3 —— Docstring 风格</a>
+              </li>
+              <li >
+                  <a href='../../posts/cs/python_notes_4_the_zen_of_python.html'>Python 学习笔记 #4 —— Python 之禅</a>
+              </li>
+              <li >
+                  <a href='../../posts/cs/python_notes_5_comprehension.html'>Python 学习笔记 #5 —— Comprehension 解析式</a>
+              </li>
+              <li >
+                  <a href='../../posts/cs/python_notes_6_iterator.html'>Python 学习笔记 #6 —— Iterator 迭代器</a>
+              </li>
+              <li >
+                  <a href='../../posts/cs/python_notes_7_generator.html'>Python 学习笔记 #7 —— Generator 生成器</a>
+              </li>
+              <li >
+                  <a href='../../posts/cs/python_notes_8_decorator.html'>Python 学习笔记 #8 —— Decorator 装饰器</a>
+              </li>
+              <li >
+                  <a href='../../posts/cs/python_notes_9_function_arguments.html'>Python 学习笔记 #9 —— Function Arguments 函数参数</a>
+              </li>
+              <li class="active">
+                  <a href='../../posts/cs/python_notes_10_fp_in_python.html'>Python 学习笔记 #10 —— Python 中的 FP</a>
+              </li>
+      </ol>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="../../theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "../..",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>
