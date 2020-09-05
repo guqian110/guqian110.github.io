@@ -190,12 +190,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nv">def</span> <span class="nv">fib</span><span class="ss">()</span>:
-    <span class="nv">prev</span>, <span class="nv">curr</span> <span class="o">=</span> <span class="mi">0</span>, <span class="mi">1</span>
-    <span class="k">while</span> <span class="nv">True</span>:
-        <span class="nv">yield</span> <span class="nv">curr</span>
-        <span class="nv">prev</span>, <span class="nv">curr</span> <span class="o">=</span> <span class="nv">curr</span>, <span class="nv">prev</span> <span class="o">+</span> <span class="nv">curr</span>
-</pre></div>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="err">def fib():</span>
+<span class="err">    prev, curr = 0, 1</span>
+<span class="err">    while True:</span>
+<span class="err">        yield curr</span>
+<span class="err">        prev, curr = curr, prev + curr</span>
+</code></pre></div>
 </td></tr></table>
 <h3 id="generator expression">Generator Expression</h3>
 <p>另外一种得到 generator 的方法是 generator expressions，<a href="https://www.python.org/dev/peps/pep-0289/">PEP 289 -- Generator Expressions 原文链接</a>。</p>
@@ -223,7 +223,7 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/etc/motd'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/etc/motd'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
 <span class="n">longest</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">allLines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -232,7 +232,7 @@
     <span class="k">if</span> <span class="n">linelen</span> <span class="o">&gt;</span> <span class="n">longest</span><span class="p">:</span>
         <span class="n">longest</span> <span class="o">=</span> <span class="n">linelen</span>
 <span class="k">return</span> <span class="n">longest</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>版本二：针对版本一，使用 list comprehensions 简化代码，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -243,7 +243,7 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/etc/motd'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/etc/motd'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
 <span class="n">longest</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">allLines</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -252,33 +252,33 @@
     <span class="k">if</span> <span class="n">linelen</span> <span class="o">&gt;</span> <span class="n">longest</span><span class="p">:</span>
         <span class="n">longest</span> <span class="o">=</span> <span class="n">linelen</span>
 <span class="k">return</span> <span class="n">longest</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>版本一和版本二的问题在于，<code>readlines</code> 会把所有文件内容都读出来，不适用于大文件的情况。因为迭代器是支持文件类型的，所以我们可以用迭代器来替换 <code>readlines</code>。而且我们已经获取到行内容了，可以直接把行长度存下来，而不是行内容。这里的优化有两个：iterator 的使用可以简化代码，直接保存行长度节省内存。版本三的代码如下，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/etc/motd'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/etc/motd'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
 <span class="n">longest</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">allLines</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">allLines</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>版本三的代码的问题在于，因为 allLines 本质上还是一个 list，所以虽然使用了迭代器，仍然需要把整个文件都读到内存中。这个时候就该 generator expressions 出场了，用它来代替 list comprehensions，然后把它放到 max 函数里面，就有版本四的代码，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/etc/motd'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/etc/motd'</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
 <span class="n">longest</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">f</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <span class="k">return</span> <span class="n">longest</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>至此，已经不存在占用内存过大的问题了。不过还可以进一步将其简化为一行代码，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/etc/motd'</span><span class="p">))</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/etc/motd'</span><span class="p">))</span>
+</code></pre></div>
 </td></tr></table>
 <p>最终版的代码非常简洁，用 1 行代码高性能地实现了前面 9 行低效代码的功能，同时也不晦涩。</p>
 <h2 id="list comprehension &amp; iterator &amp; generator">List Comprehension &amp; Iterator &amp; Generator</h2>
@@ -314,11 +314,11 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_0_summary.html">Python 学习笔记 #0 —— 新的开始</a></li>
       <li><a href="https://qiangu.cool/posts/cs/python_notes_10_fp_in_python.html">Python 学习笔记 #10 —— Python 中的 FP</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html">Python 学习笔记 #3 —— Docstring 风格</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_9_function_arguments.html">Python 学习笔记 #9 —— Function Arguments 函数参数</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_5_comprehension.html">Python 学习笔记 #5 —— Comprehension 解析式</a></li>
     </ul>
   </div>
 

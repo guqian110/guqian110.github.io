@@ -197,7 +197,7 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">rfd</span><span class="p">)</span> <span class="k">begin</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="p">(</span><span class="n">rfd</span><span class="p">)</span> <span class="k">begin</span>
     <span class="n">start</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="p">;</span>
 <span class="k">end</span>
 <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">busy</span><span class="p">)</span> <span class="k">begin</span>
@@ -206,7 +206,7 @@
 <span class="k">else</span> <span class="k">begin</span>
     <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">start</span><span class="p">;</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>但是仿真出来的结果显示 IP core 根本就没有工作，后来改了这两个信号的先后关系，</p>
 <p><em>新思路：程序将输入 start 置有效，通知 IP core 需要调用，然后 IP core 根据自己的状态给出标识信号（rfd / busy），外部电路等到 rfd 有效时才输入需要变换的信号。</em></p>
@@ -222,7 +222,7 @@
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">posedge</span> <span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
         <span class="n">start</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="p">;</span>
     <span class="k">end</span>
@@ -235,7 +235,7 @@
         <span class="k">end</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>这样子程序就可以正常运行了。</p>
 <h3 id="rfd / dv port"><code>RFD / DV</code> port</h3>
@@ -263,8 +263,8 @@
 <p>The initial value and reset value of CP_LEN is 0 (no cyclic prefix). The core uses the log2(point size) MSBs of CP_LEN for the cyclic prefix length. So, when the point size decreases, the leftover LSBs are ignored. This effectively scales the cyclic prefix length with the point size, keeping them in approximately constant proportion. However, all bits of CP_LEN are latched into the core on CP_LEN_WE and are used in later transforms if the point size increases.</p>
 </blockquote>
 <p>仔细读了一遍才明白，CP_LEN 起作用的是高位的数据 &mdash;&mdash; 从 MSB 起共 log2(point size) 位。比如我测试程序设置的最大点数为 4096，这是 CP_LEN 的位宽为 12 比特，但是在程序运行过程中，我重配置为 64 点，所以这时候应该从 CP_LEN 的最高位数起，共 log2(64) = 6 比特数据起作用。如果我想设置 CP 的长度为 8 点，则应该如下</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">cp_len</span> <span class="o">&lt;=</span> <span class="mh">12</span><span class="mb">'b001000</span><span class="n">_000000</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">cp_len</span> <span class="o">&lt;=</span> <span class="mh">12</span><span class="mb">'b001000</span><span class="n">_000000</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 <p>这时候，如下图所示，结果与预期相符。</p>
 <p><img alt="cp" src="/images/xilinx_fft_core_notes/cp.png"/></p>
@@ -356,13 +356,13 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="p">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">63</span><span class="p">];</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="p">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">63</span><span class="p">];</span>
 <span class="n">y</span> <span class="p">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 <span class="n">re</span> <span class="p">=</span> <span class="nb">real</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
 <span class="n">im</span> <span class="p">=</span> <span class="nb">imag</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
 <span class="n">fprintf</span><span class="p">(</span><span class="s">'%f'</span><span class="p">,</span> <span class="n">re</span><span class="p">);</span>
 <span class="n">fprintf</span><span class="p">(</span><span class="s">'%f'</span><span class="p">,</span> <span class="n">im</span><span class="p">);</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="conclusion">Conclusion</h3>
 <p>FFT IP core 仿真结果：</p>

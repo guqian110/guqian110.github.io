@@ -203,7 +203,7 @@
 <p>假设小球完整转一圈所花费的时间为 T，转动的角度为 2&pi;，则我们可以定义</p>
 <p><strong>模拟角频率</strong> <code>&Omega; = 2&pi;/T</code>，单位是 rad / s</p>
 <p>来描述小球的转动速率的快慢。</p>
-<p>当 t = 2&pi; 时，y = sin(&Omega;*2&pi;)，这时候可以看出 &Omega; 的物理含义：<strong>在 2&pi; 的时间内，小球所完成的圈数。</strong></p>
+<p>当 t = 2&pi; 时，y = sin(&Omega;<em>2&pi;)，这时候可以看出 &Omega; 的物理含义：</em><em>在 2&pi; 的时间内，小球所完成的圈数。</em>*</p>
 <p>下面的 Matlab 小程序演示了 2&pi; 时间内 &Omega; 和周期的对应关系：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -212,15 +212,15 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="p">=</span> <span class="mi">0</span><span class="p">:</span> <span class="nb">pi</span><span class="o">/</span><span class="mi">50</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="p">;</span>
-<span class="k">for</span> <span class="n">OMEGA</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">4</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">t</span> <span class="p">=</span> <span class="mi">0</span><span class="p">:</span> <span class="nb">pi</span><span class="o">/</span><span class="mi">50</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="p">;</span>
+<span class="n">for</span> <span class="s">OMEGA</span> <span class="s">=</span> <span class="s">1:4</span>
     <span class="n">y</span><span class="p">(:,</span><span class="n">OMEGA</span><span class="p">)</span> <span class="p">=</span> <span class="nb">sin</span><span class="p">(</span><span class="n">OMEGA</span><span class="o">*</span><span class="n">t</span><span class="p">);</span>
     <span class="n">str</span><span class="p">{</span><span class="n">OMEGA</span><span class="p">}</span> <span class="p">=</span> <span class="p">[</span><span class="s">'OMEGA='</span><span class="p">,</span> <span class="n">num2str</span><span class="p">(</span><span class="n">OMEGA</span><span class="p">)];</span>
-<span class="k">end</span>
-<span class="n">h</span> <span class="p">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span> <span class="n">grid</span> <span class="n">on</span><span class="p">;</span>
+<span class="n">end</span>
+<span class="s">h</span> <span class="s">=</span> <span class="s">plot(t,</span> <span class="s">y)</span><span class="p">;</span> <span class="n">grid</span> <span class="s">on</span><span class="p">;</span>
 <span class="n">xlabel</span><span class="p">(</span><span class="s">'t / s'</span><span class="p">);</span> <span class="n">ylabel</span><span class="p">(</span><span class="s">'amp'</span><span class="p">);</span> <span class="n">title</span><span class="p">(</span><span class="s">'y = sin(OMEGA*t)'</span><span class="p">);</span>
 <span class="n">legend</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>结果如下图：</p>
 <p><img alt="OMEGA" src="/images/summary-of-frequency-in-digital-signal-processing/OMEGA.jpg"/></p>
@@ -240,15 +240,15 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="p">=</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="mi">100</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
-<span class="k">for</span> <span class="n">f</span> <span class="p">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">4</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">t</span> <span class="p">=</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="mi">100</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">for</span> <span class="s">f</span> <span class="s">=</span> <span class="s">1:4</span>
     <span class="n">y</span><span class="p">(:,</span><span class="n">f</span><span class="p">)</span> <span class="p">=</span> <span class="nb">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">pi</span><span class="o">*</span><span class="n">f</span><span class="o">*</span><span class="n">t</span><span class="p">);</span>
     <span class="n">str</span><span class="p">{</span><span class="n">f</span><span class="p">}</span> <span class="p">=</span> <span class="p">[</span><span class="s">'f='</span><span class="p">,</span> <span class="n">num2str</span><span class="p">(</span><span class="n">f</span><span class="p">)];</span>
-<span class="k">end</span>
-<span class="n">h</span> <span class="p">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">);</span> <span class="n">grid</span> <span class="n">on</span><span class="p">;</span>
+<span class="n">end</span>
+<span class="s">h</span> <span class="s">=</span> <span class="s">plot(t,y)</span><span class="p">;</span> <span class="n">grid</span> <span class="s">on</span><span class="p">;</span>
 <span class="n">xlabel</span><span class="p">(</span><span class="s">'t / s'</span><span class="p">);</span> <span class="n">ylabel</span><span class="p">(</span><span class="s">'amp'</span><span class="p">);</span> <span class="n">title</span><span class="p">(</span><span class="s">'y = sin(2*pi*f*t)'</span><span class="p">);</span>
 <span class="n">legend</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>结果如下图：</p>
 <p><img alt="f" src="/images/summary-of-frequency-in-digital-signal-processing/f.jpg"/></p>

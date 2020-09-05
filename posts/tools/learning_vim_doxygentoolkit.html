@@ -211,13 +211,13 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 <ol>
 <li>
 <p>在 Vundle 中加入：</p>
-<div class="highlight"><pre><span></span><span class="n">Bundle</span> <span class="s1">'DoxygenToolkit.vim'</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Bundle 'DoxygenToolkit.vim'</span>
+</code></pre></div>
 </li>
 <li>
 <p>打开 Vim，输入命令：</p>
-<div class="highlight"><pre><span></span><span class="p">:</span><span class="n">BundleInstall</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">:BundleInstall</span>
+</code></pre></div>
 </li>
 </ol>
 <p>Vundle 会自动完成安装 :-D</p>
@@ -227,31 +227,31 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 <ol>
 <li>
 <p>在 .vimrc 中我特别配置了以下命令：</p>
-<div class="highlight"><pre><span></span>    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_briefTag_funcName</span> <span class="o">=</span> <span class="s2">"</span><span class="s">yes</span><span class="s2">"</span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">let</span><span class="w"> </span><span class="nl">g</span><span class="p">:</span><span class="n">DoxygenToolkit_briefTag_funcName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"yes"</span><span class="w"></span>
 
-    <span class="s2">"</span><span class="s"> for C++ style, change the '@' to '\'</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_commentType</span> <span class="o">=</span> <span class="s2">"</span><span class="s">C++</span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_briefTag_pre</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\\</span><span class="s">brief </span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_templateParamTag_pre</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\\</span><span class="s">tparam </span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_paramTag_pre</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\\</span><span class="s">param </span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_returnTag</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\\</span><span class="s">return </span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_throwTag_pre</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\\</span><span class="s">throw </span><span class="s2">"</span> <span class="s2">"</span><span class="s"> @exception is also valid</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_fileTag</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\\</span><span class="s">file </span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_dateTag</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\\</span><span class="s">date </span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_authorTag</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\\</span><span class="s">author </span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_versionTag</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\\</span><span class="s">version </span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_blockTag</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\\</span><span class="s">name </span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_classTag</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\\</span><span class="s">class </span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">DoxygenToolkit_authorName</span> <span class="o">=</span> <span class="s2">"</span><span class="s">Qian Gu, guqian110@gmail.com</span><span class="s2">"</span>
-    <span class="nv">let</span> <span class="nv">g</span>:<span class="nv">doxygen_enhanced_color</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="s2">"</span><span class="s">let g:load_doxygen_syntax = 1</span>
-</pre></div>
+<span class="w">    </span><span class="ss">" for C++ style, change the '@' to '\'</span>
+<span class="ss">    let g:DoxygenToolkit_commentType = "</span><span class="n">C</span><span class="o">++</span><span class="ss">"</span>
+<span class="ss">    let g:DoxygenToolkit_briefTag_pre = "</span><span class="err">\\</span><span class="n">brief</span><span class="w"> </span><span class="ss">"</span>
+<span class="ss">    let g:DoxygenToolkit_templateParamTag_pre = "</span><span class="err">\\</span><span class="n">tparam</span><span class="w"> </span><span class="ss">"</span>
+<span class="ss">    let g:DoxygenToolkit_paramTag_pre = "</span><span class="err">\\</span><span class="n">param</span><span class="w"> </span><span class="ss">"</span>
+<span class="ss">    let g:DoxygenToolkit_returnTag = "</span><span class="err">\\</span><span class="k">return</span><span class="w"> </span><span class="ss">"</span>
+<span class="ss">    let g:DoxygenToolkit_throwTag_pre = "</span><span class="err">\\</span><span class="k">throw</span><span class="w"> </span><span class="ss">" "</span><span class="w"> </span><span class="nv">@exception</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">valid</span><span class="w"></span>
+<span class="w">    </span><span class="n">let</span><span class="w"> </span><span class="nl">g</span><span class="p">:</span><span class="n">DoxygenToolkit_fileTag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"\\file "</span><span class="w"></span>
+<span class="w">    </span><span class="n">let</span><span class="w"> </span><span class="nl">g</span><span class="p">:</span><span class="n">DoxygenToolkit_dateTag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"\\date "</span><span class="w"></span>
+<span class="w">    </span><span class="n">let</span><span class="w"> </span><span class="nl">g</span><span class="p">:</span><span class="n">DoxygenToolkit_authorTag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"\\author "</span><span class="w"></span>
+<span class="w">    </span><span class="n">let</span><span class="w"> </span><span class="nl">g</span><span class="p">:</span><span class="n">DoxygenToolkit_versionTag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"\\version "</span><span class="w"></span>
+<span class="w">    </span><span class="n">let</span><span class="w"> </span><span class="nl">g</span><span class="p">:</span><span class="n">DoxygenToolkit_blockTag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"\\name "</span><span class="w"></span>
+<span class="w">    </span><span class="n">let</span><span class="w"> </span><span class="nl">g</span><span class="p">:</span><span class="n">DoxygenToolkit_classTag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"\\class "</span><span class="w"></span>
+<span class="w">    </span><span class="n">let</span><span class="w"> </span><span class="nl">g</span><span class="p">:</span><span class="n">DoxygenToolkit_authorName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">"Qian Gu, guqian110@gmail.com"</span><span class="w"></span>
+<span class="w">    </span><span class="n">let</span><span class="w"> </span><span class="nl">g</span><span class="p">:</span><span class="n">doxygen_enhanced_color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="err">"</span><span class="n">let</span><span class="w"> </span><span class="nl">g</span><span class="p">:</span><span class="n">load_doxygen_syntax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+</code></pre></div>
 </li>
 <li>
 <p>即使前一步中设置了 C++ 风格，但是生成的 Lisence 仍然是 <code>//</code>，而不是我们想要的 <code>///</code>，所以我们还需要修改原脚本（line 362~363）为：</p>
-<div class="highlight"><pre><span></span><span class="n">let</span> <span class="k">g</span><span class="p">:</span><span class="n">DoxygenToolKit_startCommentBlock</span> <span class="o">=</span> <span class="ss">"/// "</span>
-<span class="n">let</span> <span class="k">g</span><span class="p">:</span><span class="n">DoxygenToolKit_interCommentBlock</span> <span class="o">=</span> <span class="ss">"/// "</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">let g:DoxygenToolKit_startCommentBlock = "/// "</span>
+<span class="err">let g:DoxygenToolKit_interCommentBlock = "/// "</span>
+</code></pre></div>
 </li>
 </ol>
 <h3 id="usage">Usage</h3>
@@ -288,14 +288,14 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">int</span> 
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">int</span> 
 <span class="nf">foo</span><span class="p">(</span><span class="kt">char</span> <span class="n">mychar</span><span class="p">,</span> 
     <span class="kt">int</span> <span class="n">myint</span><span class="p">,</span> 
     <span class="kt">double</span><span class="o">*</span> <span class="n">myarray</span><span class="p">,</span> 
     <span class="kt">int</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">DEFAULT</span><span class="p">)</span> 
 <span class="p">{</span> <span class="c1">//... </span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>那么执行 <code>:Dox</code> 命令之后会生成以下内容</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -307,7 +307,7 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/** </span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="cm">/** </span>
 <span class="cm">* @brief </span>
 <span class="cm">* </span>
 <span class="cm">* @param mychar </span>
@@ -317,7 +317,7 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
 <span class="cm">* </span>
 <span class="cm">* @return </span>
 <span class="cm">*/</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p><br/></p>
 <h2 id="ref_1">Ref</h2>
@@ -346,10 +346,10 @@ in all the file will be treated and placed in a new block DOX_SKIP_BLOCK (or any
     <h4>You might enjoy</h4>
     <ul class="related-posts">
       <li><a href="https://qiangu.cool/posts/tools/learning_vim_survival.html">学习 Vim 存活</a></li>
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_vimrc_preliminary.html">学习 Vim 初步配置 Vim</a></li>
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/embedded/learn_arduino_series_3_intel_galileo_linux.html">学习 Arduino #3 Intel Galileo Linux</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & Modelsim</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_pratical_vim_notes.html">学习 Vim 之《Pratical Vim》读书笔记</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
     </ul>
   </div>
 

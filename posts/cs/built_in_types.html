@@ -188,8 +188,8 @@
 <p><strong>size</strong></p>
 <p>算术类型的存储空间依机器而定，即用多少二进制位 bit 来表示一个数 。C++ 标准规定了每个算术类型的最小存储空间，但它并不阻止编译器使用更大的存储空间 。事实上，对于 <code>int</code> 类型，几乎所有的编译器使用的存储空间都比所要求的大 。</p>
 <p>使用 <code>sizeof()</code> 操作符可以查询对象或类型的大小（以字节为单位），包含头文件</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;limits&gt;</span><span class="cp"></span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;limits&gt;</span><span class="cp"></span>
+</code></pre></div>
 </td></tr></table>
 <p>就可以使用 STL 库中的 <code>numeric_limits&lt;T&gt;::max</code> 和 <code>numeric_limits&lt;T&gt;::min</code> 查询各个内置内类类型的最大值和最小值。</p>
 <p>下面是 Ubuntu amd64 版本上的结果：</p>
@@ -201,11 +201,11 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">signed</span> <span class="kt">short</span> <span class="kt">int</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">signed</span> <span class="kt">short</span> <span class="kt">int</span>
 <span class="kt">unsigned</span> <span class="kt">short</span> <span class="kt">int</span>
 <span class="kt">signed</span> <span class="kt">long</span> <span class="kt">int</span>
 <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">int</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>每一种的数据长短和可以表示的范围都不相同。</p>
 <p>字符类型有两种：<code>char</code> 和 <code>wchar_t</code> 。char 用来表示 <em>基本字符集</em> 中的字符，wchar_t 用于 <em>扩展字符集</em> ，比如汉字和日语 。修饰 int 类型有无符号的 signed 和 unsigned 也可以修饰 char 类型 。</p>
@@ -226,9 +226,9 @@
 <p>于是，编写一个测试小程序就可以知道我们使用的编译器是如何处理的。</p>
 <p>源代码：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">char</span> <span class="n">ch1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">char</span> <span class="n">ch1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 <span class="n">printf</span><span class="p">(</span><span class="s">"ch1 = %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="n">ch1</span><span class="p">);</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>运行结果：</p>
 <p><img alt="char" src="/images/built-in-types/char.png"/></p>
@@ -257,9 +257,9 @@
 <p>赋值 <code>Assigment</code>：擦除变量的当前值并用新值代替</p>
 <p>C++ 提供两种初始化变量的方法：复制初始化（<code>copy-initialization</code>）和直接初始化（<code>direct-initialization</code>）。复制初始化使用 <code>=</code>，直接初始化使用 <code>()</code> 。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">ival</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>    <span class="c1">// copy-initialization</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">ival</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>    <span class="c1">// copy-initialization</span>
 <span class="kt">int</span> <span class="nf">ival</span> <span class="p">(</span><span class="mi">1024</span><span class="p">);</span>    <span class="c1">// direct-initialization</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>使用 <code>=</code> 很容易让人把初始化和赋值混淆在一起，但是在 C++ 中这是两种不同的操作，当涉及到类对象时，两种不同的初始化方式的区别是很微妙的。目前先不考虑这点，只需要知道直接初始化语法更灵活而且效率高。</p>
 <h3 id="nei zhi lei xing chu shi hua">内置类型初始化</h3>
@@ -277,30 +277,30 @@
 <p>混合类型表达式，操作数被转换为相同类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">ival</span><span class="p">;</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">ival</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">dval</span><span class="p">;</span>
 <span class="n">ival</span> <span class="o">&gt;=</span> <span class="n">dval</span><span class="p">;</span>   <span class="c1">// ival converted to double</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
 <p>用作条件表达式被转化为 bool 型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">ival</span><span class="p">;</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">ival</span><span class="p">;</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">ival</span><span class="p">)</span>       <span class="c1">// ival converted to bool</span>
 <span class="k">while</span> <span class="p">(</span> <span class="n">cin</span><span class="p">)</span>    <span class="c1">// cin converted to bool</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
 <p>用表达式初始化（赋值）某一变量，表达式被转化为该变量类型</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">ival</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span>    <span class="c1">// 3.14 converted to int</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">ival</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span>    <span class="c1">// 3.14 converted to int</span>
 <span class="kt">int</span> <span class="o">*</span><span class="n">ip</span><span class="p">;</span>
 <span class="n">ip</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>             <span class="c1">// the int 0 converted to a null pointer of type int *</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 </ul>
@@ -336,17 +336,17 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">unsigned</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="kt">signed</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
 <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"unsigned int b' = "</span> <span class="o">&lt;&lt;</span> <span class="kt">unsigned</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>运行结果为</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">b</span><span class="err">'</span> <span class="o">=</span> <span class="mi">4294967276</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">b</span><span class="err">'</span> <span class="o">=</span> <span class="mi">4294967276</span>
 <span class="n">c</span> <span class="o">=</span> <span class="mi">1</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>因为 <code>b = -2</code> 被转化为一个很大的正数 <code>b' = 4294967276</code></p>
 </li>
@@ -378,8 +378,8 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/cs/cosnt_qualifier.html">C++ const 限定符</a></li>
       <li><a href="https://qiangu.cool/posts/tools/doxygen_cpp_comment_style.html">基于 Doxygen 的 C++ 注释风格</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/cosnt_qualifier.html">C++ const 限定符</a></li>
     </ul>
   </div>
 

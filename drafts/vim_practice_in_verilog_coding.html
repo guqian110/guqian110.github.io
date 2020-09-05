@@ -191,7 +191,7 @@
 13
 14
 15
-16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">my_module</span> <span class="p">#(</span>
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="n">my_module</span> <span class="p">#(</span>
     <span class="c1">// clk &amp; rst</span>
     <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
     <span class="k">input</span> <span class="n">rst_n</span><span class="p">,</span>
@@ -207,7 +207,7 @@
     <span class="p">)</span>
     <span class="c1">// do something</span>
 <span class="k">endmodule</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>在集成的时候，把端口信号复制出来后要大批量的重复操作，</p>
 <ul>
@@ -248,7 +248,7 @@
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">qa</span>                      # <span class="k">start</span> record
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">qa</span>                      # <span class="k">start</span> record
 $                       # <span class="k">jump</span> <span class="k">to</span> head of line
 /<span class="p">,</span>                      # find comma
 <span class="k">d</span>$                      # delete <span class="k">all</span> after comma
@@ -261,11 +261,11 @@ A                       # insert
 <span class="p">(),</span>                     # insert 
 esc                     # back <span class="k">to</span> normal <span class="k">view</span>
 <span class="k">q</span>                       # quit record
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>录完之后，一段 macro 存在寄存器 a 中，要使用的时候，用 visual 模式选中目标行之后输入下面的命令即可，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">:&lt;&gt;</span>normal @<span class="k">a</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">:&lt;&gt;</span>normal @<span class="k">a</span>
+</code></pre></div>
 </td></tr></table>
 <p>意思是在选中的行上重复寄存器 a 中的 macro。</p>
 <p>上面的例子效果如下所示，</p>
@@ -285,11 +285,11 @@ esc                     # back <span class="k">to</span> normal <span class="k">
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_bufexplorer_nerdtree_winmanager_powerline.html">学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件</a></li>
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_pratical_vim_notes.html">学习 Vim 之《Pratical Vim》读书笔记</a></li>
       <li><a href="https://qiangu.cool/posts/tools/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_bufexplorer_nerdtree_winmanager_powerline.html">学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
     </ul>
   </div>
 

@@ -239,29 +239,29 @@
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">add_4</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="no">C</span><span class="p">);</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="n">add_4</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">C</span><span class="p">);</span>
 
     <span class="k">input</span>   <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">x</span><span class="p">;</span>
     <span class="k">input</span>   <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">y</span><span class="p">;</span>
     <span class="k">output</span>  <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="n">sum</span><span class="p">;</span>
-    <span class="k">output</span>          <span class="no">C</span><span class="p">;</span>
+    <span class="k">output</span>          <span class="n">C</span><span class="p">;</span>
 
-    <span class="k">assign</span> <span class="p">{</span><span class="no">C</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+    <span class="k">assign</span> <span class="p">{</span><span class="n">C</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
 
 <span class="k">endmodule</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="cheng fa">乘法</h3>
 <p>第一种方法，最简单，直接使用运算符 <code>*</code>，如下所示 。但是这种方法写出来的代码效率很低，甚至有时候是不可综合的，实际应用中基本不会采用这种方法。</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">p</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">assign</span> <span class="n">p</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 <p>第二种方法是自己写代码实现乘法运算，或者是使用 IP COre。一般 FPGA 中都集成了硬核的乘法器，所以可以有两种方案来实现乘法器，DSP48 硬核 或者是 Slice 搭建 。</p>
 <h3 id="chu fa">除法</h3>
 <p>除法是四则基本运算中最复杂的，也是最难实现的。除法可以看作是乘法的逆运算，但除法要复杂的多，最大的区别是乘法中的一些操作可以并行支持，通过流水线提高计算速度，但是除法必须顺序执行，运算最耗时间。</p>
 <p>Verilog 提供了除法运算符 <code>/</code>，如下所示。但是只有在除数为 2 或者 2 的整幂次时才是可综合的，其余情况都不可综合 。</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">q</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 <p>常用的方法是采用 IP Core，可以完成定点数和浮点数两类算法。</p>
 <h3 id="cordic suan fa">Cordic 算法</h3>

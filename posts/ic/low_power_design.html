@@ -195,8 +195,8 @@
 </li>
 </ol>
 <p>综上，ASIC 的总功耗定义为：</p>
-<div class="highlight"><pre><span></span><span class="n">Ptotal</span> <span class="o">=</span> <span class="n">Pdynamic</span> <span class="o">+</span> <span class="n">Pstatic</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Ptotal = Pdynamic + Pstatic</span>
+</code></pre></div>
 <p>其中，动态功耗占了主要部分，典型应用中，动态功耗占到总功耗的 80% 。</p>
 <p><br/></p>
 <h2 id="power reduction power reduction">Power Reduction Power Reduction</h2>
@@ -244,21 +244,21 @@
 <h3 id="low power software">Low Power Software</h3>
 <p>软件设计部分也可以像硬件设计一样，在设计时就进行一些优化，得到更加绿色、高效的系统。</p>
 <p>比如，将下面的两个循环合并为一个：</p>
-<div class="highlight"><pre><span></span><span class="o">//</span> <span class="nv">code1</span>
-<span class="k">for</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">n</span>
-    <span class="k">do</span> <span class="nv">a</span><span class="c1">;</span>
+<div class="highlight"><pre><span></span><code><span class="o">//</span> <span class="n">code1</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">to</span> <span class="n">n</span>
+    <span class="k">do</span> <span class="n">a</span><span class="p">;</span>
 <span class="k">end</span>
 
-<span class="k">for</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">n</span>
-    <span class="k">do</span> <span class="nv">b</span><span class="c1">;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">to</span> <span class="n">n</span>
+    <span class="k">do</span> <span class="n">b</span><span class="p">;</span>
 <span class="k">end</span>
 
-<span class="o">//</span> <span class="nv">code2</span>
-<span class="k">for</span> <span class="nv">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">n</span>
-    <span class="k">do</span> <span class="nv">a</span><span class="c1">;</span>
-    <span class="k">do</span> <span class="nv">b</span><span class="c1">;</span>
+<span class="o">//</span> <span class="n">code2</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">to</span> <span class="n">n</span>
+    <span class="k">do</span> <span class="n">a</span><span class="p">;</span>
+    <span class="k">do</span> <span class="n">b</span><span class="p">;</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 <p>因为减少了循环计数器（初始化、递增、比较），所以循环指令数目就减少了。</p>
 <h3 id="choice of processor">Choice of Processor</h3>
 <p>选择处理器会对整体功耗产生明显影响。（高级话题，以后再补）</p>
@@ -302,72 +302,72 @@
 <p>还有一种方法是将 FSM 进行分解为两个，两个小的 FSM 组合起来等效于原始的 FSM。当一个的 FSM 激活时，可以关闭另外一个 FSM，这样绝大多数时间内只需要给较小且更有效率的子 FSM 提供时钟，从而降低了功耗。</p>
 <h3 id="binary number representation">Binary Number Representation</h3>
 <p>虽然在大多数应用中，补码比原码更方便，但是有些特殊应用中，在切换过程中原码更有优势。比如 0 和 -1 分别用原码和补码表示：</p>
-<div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Signed</span> <span class="n">Magnitude</span>
+<div class="highlight"><pre><span></span><code><span class="o">//</span> <span class="n">Signed</span> <span class="n">Magnitude</span>
 <span class="mi">0</span>  <span class="o">-&gt;</span> <span class="mi">00000000</span>
 <span class="o">-</span><span class="mi">1</span> <span class="o">-&gt;</span> <span class="mi">10000001</span>
 
 <span class="o">//</span> <span class="mi">2</span><span class="err">'</span><span class="n">s</span> <span class="n">compliment</span>
 <span class="mi">0</span>  <span class="o">-&gt;</span> <span class="mi">00000000</span>
 <span class="o">-</span><span class="mi">1</span> <span class="o">-&gt;</span> <span class="mi">11111111</span>
-</pre></div>
+</code></pre></div>
 <p>当从 0 变为 1 时，原码只需要变化两位，而补码所有位都会变化。</p>
 <h3 id="basic gated clock">Basic Gated Clock</h3>
 <p>门控时钟在 Architecture 部分已经说过了，这里从 RTL 的角度再重复一下。RTL 的代码风格会影响到最终的实现结果，所以应该在编写 RTL 的时候需要特别注意。</p>
-<div class="highlight"><pre><span></span><span class="o">//</span> <span class="nv">bad</span> <span class="nv">example</span>
-<span class="nv">always</span> @<span class="ss">(</span><span class="nv">posedge</span> <span class="nv">clk</span> <span class="nv">or</span> <span class="nv">negedge</span> <span class="nv">rst_n</span><span class="ss">)</span> <span class="nv">begin</span>
-    <span class="k">if</span> <span class="ss">(</span><span class="o">!</span><span class="nv">rst_n</span><span class="ss">)</span>
-        <span class="nv">test_ff</span> <span class="o">&lt;=</span> <span class="mi">32</span><span class="s1">'</span><span class="s">b0;</span>
-    <span class="k">else</span>
-        <span class="nv">test_ff</span> <span class="o">&lt;=</span> <span class="nv">test_next</span><span class="c1">;</span>
-<span class="k">end</span>
+<div class="highlight"><pre><span></span><code><span class="o">//</span> <span class="n">bad</span> <span class="n">example</span>
+<span class="n">always</span> <span class="o">@</span><span class="p">(</span><span class="n">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="n">negedge</span> <span class="n">rst_n</span><span class="p">)</span> <span class="k">begin</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span>
+        <span class="n">test_ff</span> <span class="o">&lt;=</span> <span class="mi">32</span><span class="s1">'b0;</span>
+<span class="s1">    else</span>
+<span class="s1">        test_ff &lt;= test_next;</span>
+<span class="s1">end</span>
 
-<span class="nv">assign</span> <span class="nv">test_next</span> <span class="o">=</span> <span class="nv">load_cond</span> ? <span class="nv">test_data</span> : <span class="nv">test_ff</span><span class="c1">;</span>
+<span class="s1">assign test_next = load_cond ? test_data : test_ff;</span>
 
-<span class="o">//</span> <span class="nv">good</span> <span class="nv">example</span>
-<span class="nv">always</span> @<span class="ss">(</span><span class="nv">posedge</span> <span class="nv">clk</span> <span class="nv">or</span> <span class="nv">negedge</span> <span class="nv">rst_n</span><span class="ss">)</span> <span class="nv">begin</span>
-    <span class="k">if</span> <span class="ss">(</span><span class="o">!</span><span class="nv">rst_n</span><span class="ss">)</span>
-        <span class="nv">test_ff</span> <span class="o">&lt;=</span> <span class="mi">32</span><span class="s1">'</span><span class="s">b0;</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="ss">(</span><span class="nv">load_cond</span><span class="ss">)</span>
-        <span class="nv">test_ff</span> <span class="o">&lt;=</span> <span class="nv">test_data</span><span class="c1">;</span>
+<span class="s1">// good example</span>
+<span class="s1">always @(posedge clk or negedge rst_n) begin</span>
+<span class="s1">    if (!rst_n)</span>
+<span class="s1">        test_ff &lt;= 32'</span><span class="n">b0</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">load_cond</span><span class="p">)</span>
+        <span class="n">test_ff</span> <span class="o">&lt;=</span> <span class="n">test_data</span><span class="p">;</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 <h3 id="one hot encoded multiplexer">One Hot Encoded Multiplexer</h3>
 <p>Mux 的编码方案也可以采用独热码的方式，从而减少开关切换的数目，降低功耗。</p>
 <h3 id="removing redundant transactions">Removing Redundant Transactions</h3>
 <p>有时候，一些没有意义的数据切换去掉，从而降低功耗。比如前级的逻辑产生一些数据，但是在后级逻辑中没有使用，这时候就可以修改设计，在前面一级就关闭，在需要数据的时候，让真正生成数据的电路工作。</p>
 <h3 id="resource sharing">Resource Sharing</h3>
 <p>如果有一些相同的操作，那么可以使用资源共享的方法，避免运算逻辑重复出现。</p>
-<div class="highlight"><pre><span></span><span class="o">//</span> <span class="nv">bad</span> <span class="nv">example</span>
-<span class="nv">always</span> @<span class="o">*</span> <span class="nv">begin</span>
-    <span class="nv">case</span> <span class="ss">(</span><span class="nv">SEL</span><span class="ss">)</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b000: OUT = 1</span><span class="s1">'</span><span class="nv">b0</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b001: OUT = 1</span><span class="s1">'</span><span class="nv">b1</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b010: OUT = (value1 == value2);</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b011: OUT = (value1 != value2);</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b100: OUT = (value1 &gt;= value2);</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b101: OUT = (value1 &lt;= value2);</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b110: OUT = (value1 &lt;  value2);</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b111: OUT = (value1 &gt;  value2);</span>
-    <span class="nv">endcase</span>
-<span class="k">end</span>
+<div class="highlight"><pre><span></span><code><span class="o">//</span> <span class="nt">bad</span> <span class="nt">example</span>
+<span class="nt">always</span> <span class="o">@*</span> <span class="nt">begin</span>
+    <span class="nt">case</span> <span class="o">(</span><span class="nt">SEL</span><span class="o">)</span>
+        <span class="nt">3</span><span class="s1">'b000: OUT = 1'</span><span class="nt">b0</span><span class="o">;</span>
+        <span class="nt">3</span><span class="s1">'b001: OUT = 1'</span><span class="nt">b1</span><span class="o">;</span>
+        <span class="nt">3</span><span class="s1">'b010: OUT = (value1 == value2);</span>
+<span class="s1">        3'</span><span class="nt">b011</span><span class="o">:</span> <span class="nt">OUT</span> <span class="o">=</span> <span class="o">(</span><span class="nt">value1</span> <span class="o">!=</span> <span class="nt">value2</span><span class="o">);</span>
+        <span class="nt">3</span><span class="s1">'b100: OUT = (value1 &gt;= value2);</span>
+<span class="s1">        3'</span><span class="nt">b101</span><span class="o">:</span> <span class="nt">OUT</span> <span class="o">=</span> <span class="o">(</span><span class="nt">value1</span> <span class="o">&lt;=</span> <span class="nt">value2</span><span class="o">);</span>
+        <span class="nt">3</span><span class="s1">'b110: OUT = (value1 &lt;  value2);</span>
+<span class="s1">        3'</span><span class="nt">b111</span><span class="o">:</span> <span class="nt">OUT</span> <span class="o">=</span> <span class="o">(</span><span class="nt">value1</span> <span class="o">&gt;</span>  <span class="nt">value2</span><span class="o">);</span>
+    <span class="nt">endcase</span>
+<span class="nt">end</span>
 
-<span class="o">//</span> <span class="nv">good</span> <span class="nv">example</span>
-<span class="nv">assign</span> <span class="nv">cmp_equal</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">value1</span> <span class="o">==</span> <span class="nv">value2</span><span class="ss">)</span><span class="c1">;</span>
-<span class="nv">assign</span> <span class="nv">cmp_greater</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">value1</span> <span class="o">&gt;</span> <span class="nv">value2</span><span class="ss">)</span><span class="c1">;</span>
+<span class="o">//</span> <span class="nt">good</span> <span class="nt">example</span>
+<span class="nt">assign</span> <span class="nt">cmp_equal</span> <span class="o">=</span> <span class="o">(</span><span class="nt">value1</span> <span class="o">==</span> <span class="nt">value2</span><span class="o">);</span>
+<span class="nt">assign</span> <span class="nt">cmp_greater</span> <span class="o">=</span> <span class="o">(</span><span class="nt">value1</span> <span class="o">&gt;</span> <span class="nt">value2</span><span class="o">);</span>
 
-<span class="nv">always</span> @<span class="o">*</span> <span class="nv">begin</span>
-    <span class="nv">case</span> <span class="ss">(</span><span class="nv">SEL</span><span class="ss">)</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b000: OUT = 1</span><span class="s1">'</span><span class="nv">b0</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b001: OUT = 1</span><span class="s1">'</span><span class="nv">b1</span><span class="c1">;</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b010: OUT = cmp_equal;</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b011: OUT = !cmp_equal;</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b100: OUT = (cmp_equal || cmp_greater);</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b101: OUT = !cmp_greater;</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b110: OUT = !cmp_equal &amp;&amp; !cmp_greater;</span>
-        <span class="mi">3</span><span class="s1">'</span><span class="s">b111: OUT = cmp_greater;</span>
-    <span class="nv">endcase</span>
-<span class="k">end</span>
-</pre></div>
+<span class="nt">always</span> <span class="o">@*</span> <span class="nt">begin</span>
+    <span class="nt">case</span> <span class="o">(</span><span class="nt">SEL</span><span class="o">)</span>
+        <span class="nt">3</span><span class="s1">'b000: OUT = 1'</span><span class="nt">b0</span><span class="o">;</span>
+        <span class="nt">3</span><span class="s1">'b001: OUT = 1'</span><span class="nt">b1</span><span class="o">;</span>
+        <span class="nt">3</span><span class="s1">'b010: OUT = cmp_equal;</span>
+<span class="s1">        3'</span><span class="nt">b011</span><span class="o">:</span> <span class="nt">OUT</span> <span class="o">=</span> <span class="o">!</span><span class="nt">cmp_equal</span><span class="o">;</span>
+        <span class="nt">3</span><span class="s1">'b100: OUT = (cmp_equal || cmp_greater);</span>
+<span class="s1">        3'</span><span class="nt">b101</span><span class="o">:</span> <span class="nt">OUT</span> <span class="o">=</span> <span class="o">!</span><span class="nt">cmp_greater</span><span class="o">;</span>
+        <span class="nt">3</span><span class="s1">'b110: OUT = !cmp_equal &amp;&amp; !cmp_greater;</span>
+<span class="s1">        3'</span><span class="nt">b111</span><span class="o">:</span> <span class="nt">OUT</span> <span class="o">=</span> <span class="nt">cmp_greater</span><span class="o">;</span>
+    <span class="nt">endcase</span>
+<span class="nt">end</span>
+</code></pre></div>
 <h3 id="using ripple counters for low power">Using Ripple Counters for Low Power</h3>
 <p>行波计数器属于异步设计，会给时序分析，电路的可靠性带来很多问题。所以一般要避免使用的。不过在一些低速的应用中（比如数码管显示），仍然可以使用行波计数器来降低功耗。</p>
 <h3 id="bus inversion">Bus Inversion</h3>

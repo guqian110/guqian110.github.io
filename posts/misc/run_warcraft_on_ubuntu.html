@@ -192,9 +192,9 @@
 <p>方法二：</p>
 <p>使用 <code>apt-get</code></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>apt-cache search wine
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>apt-cache search wine
 suod apt-get install wine
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>P.S. 若是其他系统，找不到对应的二进制包，可以直接从官网上下载源码，自己编译（官网上有详细的 <a href="http://wiki.winehq.org/FAQ_zhcn">FAQ</a>）</p>
 <p><br/></p>
@@ -207,21 +207,21 @@ suod apt-get install wine
 <h3 id="cd key zhu ce biao wen ti">CD key 注册表问题</h3>
 <p>直接以 wine 运行 <code>war3.exe</code> 时提示没有 CD key，在 WarCraft 目录下找到了两个注册表文件，<code>War3.reg</code> 和 <code>一键导入 .reg</code> 。</p>
 <p>在终端下导入注册表</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine regedit
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>wine regedit
+</code></pre></div>
 </td></tr></table>
 <p>然后导入这两个文件，再次尝试，还是不行 ...</p>
 <p>不急，游戏目录下还有一个程序叫 <code>War3RegFixer.exe</code>，看名字就知道是我们需要的</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine War3RegFixer.exe
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>wine War3RegFixer.exe
+</code></pre></div>
 </td></tr></table>
 <p>因为我的 Ubuntu 是英文版的，打开后是乱码 ...</p>
 <p><img alt="war3regfixer" src="/images/run-warcraft-on-ubuntu/war3regfixer.png"/></p>
 <p>找了一台 Windows 电脑，运行了一下，按照向导就可以修复 CD key 的问题 。</p>
 <h3 id="fen bian lu wen ti">分辨率问题</h3>
 <p>第一次运行的结果一般不会全屏，处女座的强迫症犯了，还好比较简单 ：D</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine regedit
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>wine regedit
+</code></pre></div>
 </td></tr></table>
 <p>找到 <code>HKEY_CURRENT_USER/Software/Blizzard Entertainment/Warcraft III/Video</code>，里面有两个注册表值 <code>resheight</code> 和 <code>reswidth</code>，将他们设为和当前分辨率相同的十进制数值就可以了。</p>
 <h3 id="hua mian qia">画面卡</h3>
@@ -230,13 +230,13 @@ suod apt-get install wine
 <h2 id="yun xing_1">运行</h2>
 <h3 id="zhong duan xia">终端下</h3>
 <p>现在就可以在终端下运行 war3.exe 了</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine war3.exe
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>wine war3.exe
+</code></pre></div>
 </td></tr></table>
 <p>熟悉的画面就出来了～</p>
 <p>这样子运行如果切出游戏，有时会导致 war3 崩溃或者切换不出去。一个解决方法是以窗口模式运行，只需要添加参数 <code>-window</code> 即可</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>wine war3.exe -window
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>wine war3.exe -window
+</code></pre></div>
 </td></tr></table>
 <p>效果如下</p>
 <p><img alt="war3window" src="/images/run-warcraft-on-ubuntu/war3window.png"/></p>
@@ -250,14 +250,14 @@ suod apt-get install wine
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">[</span>Desktop Entry<span class="o">]</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="o">[</span>Desktop Entry<span class="o">]</span>
 <span class="nv">Version</span> <span class="o">=</span> <span class="m">1</span>.0
 <span class="nv">Name</span> <span class="o">=</span> Frozen Throne
 <span class="nv">Exec</span> <span class="o">=</span> /home/chien/WarCraft/war3.exe
 <span class="nv">Terminal</span> <span class="o">=</span> <span class="nb">false</span>
 <span class="nv">Icon</span> <span class="o">=</span> /home/chien/WarCraft/war3.jpg
 <span class="nv">Type</span> <span class="o">=</span> Application
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>然后把这个文件移动到 <code>/usr/share/applicants/</code> ，这时在 unity 中搜索 <code>froz</code>，就能看到我们刚才新建的启动器了～</p>
 <p><img alt="war3desktop" src="/images/run-warcraft-on-ubuntu/war3desktop.png"/></p>

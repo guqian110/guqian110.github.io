@@ -243,12 +243,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kos_root</span><span class="p">():</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">kos_root</span><span class="p">():</span>
     <span class="sd">"""Return the pathname of the KOS root directory."""</span>
     <span class="k">global</span> <span class="n">_kos_root</span>
     <span class="k">if</span> <span class="n">_kos_root</span><span class="p">:</span> <span class="k">return</span> <span class="n">_kos_root</span>
     <span class="o">...</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>注意：</p>
 <ul>
@@ -259,15 +259,15 @@
 <li>
 <p>单行的 docstrings 不应该是 function/method 的参数的重新声明（可以通过内省实现），不要写成这样</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
 <span class="sd">"""function(a, b) -&gt; list"""</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>这种类型的 docstrings 只适合于 C 函数（比如内建函数），因为 C 没有内省机制。然而内省无法决定返回值的类型，所以要在 docstrings 中进行说明。所以 docstrings 应该优先选择下面的方式，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
 <span class="sd">"""Do X and return a list."""</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 </ul>
@@ -290,7 +290,7 @@
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">complex</span><span class="p">(</span><span class="n">real</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">complex</span><span class="p">(</span><span class="n">real</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
     <span class="sd">"""Form a complex number.</span>
 
 <span class="sd">    Keyword arguments:</span>
@@ -300,7 +300,7 @@
     <span class="k">if</span> <span class="n">imag</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">real</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">complex_zero</span>
     <span class="o">...</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>除非是所有内容都可以在一行内完全放下，否则把结尾的引号单独放在一行，这样 Emacs 的 <code>fill-paragraph</code> 命令就可以使用了。</p>
 <h3 id="chu li  docstrings de suo jin">处理 Docstrings 的缩进</h3>
@@ -329,7 +329,7 @@
 21
 22
 23
-24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">trim</span><span class="p">(</span><span class="n">docstring</span><span class="p">):</span>
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">trim</span><span class="p">(</span><span class="n">docstring</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">docstring</span><span class="p">:</span>
         <span class="k">return</span> <span class="s1">''</span>
     <span class="c1"># Convert tabs to spaces (following the normal Python rules)</span>
@@ -353,17 +353,17 @@
         <span class="n">trimmed</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="c1"># Return a single string:</span>
     <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">trimmed</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>下面这个例子中的 docstrings 包含两个换行符号，所以一共有 3 行，第一行和最后一行是空行，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
     <span class="sd">"""</span>
 <span class="sd">    This is the second line of the docstring.</span>
 <span class="sd">    """</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>在命令行中运行一下看看，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -371,13 +371,13 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>&gt;&gt;&gt; print repr(foo.__doc__)
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print repr(foo.__doc__)
 '\n    This is the second line of the docstring.\n    '
 &gt;&gt;&gt; foo.__doc__.splitlines()
 ['', '    This is the second line of the docstring.', '    ']
 &gt;&gt;&gt; trim(foo.__doc__)
 'This is the second line of the docstring.'
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>一旦经过 trim 处理， 下面这两种 docstring 是等效的，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -389,7 +389,7 @@
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
     <span class="sd">"""A multi-line</span>
 <span class="sd">    docstring.</span>
 <span class="sd">    """</span>
@@ -399,7 +399,7 @@
 <span class="sd">    A multi-line</span>
 <span class="sd">    docstring.</span>
 <span class="sd">    """</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h2 id="can kao_1">参考</h2>
 <p>参考阅读</p>
@@ -429,11 +429,11 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_0_summary.html">Python 学习笔记 #0 —— 新的开始</a></li>
       <li><a href="https://qiangu.cool/posts/cs/python_notes_10_fp_in_python.html">Python 学习笔记 #10 —— Python 中的 FP</a></li>
       <li><a href="https://qiangu.cool/posts/cs/python_notes_9_function_arguments.html">Python 学习笔记 #9 —— Function Arguments 函数参数</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_7_generator.html">Python 学习笔记 #7 —— Generator 生成器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
     </ul>
   </div>
 

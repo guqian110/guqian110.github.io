@@ -206,7 +206,7 @@
 24
 25
 26
-27</pre></div></td><td class="code"><div class="highlight"><pre><span></span>&gt;&gt;&gt; print [i for i in range(10)]
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print [i for i in range(10)]
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 
@@ -233,7 +233,7 @@
 [(1, 'Peaches'), (1, 'Pears'), (3, 'Peaches'), (3, 'Pears')]
 &gt;&gt;&gt; print [i for i in zip(nums, fruit) if i[0]%2==0]
 [(2, 'Peaches'), (4, 'Bananas')]
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h2 id="why comprehensions_1">Why Comprehensions</h2>
 <p>如果想用从一个 list 中挑选出一部分满足条件的元素组成一个新的 list，该怎么做？</p>
@@ -249,35 +249,35 @@
 <p>下面这个集合表示从自然数中挑选出符合条件 <code>x &gt; 5</code> 且 <code>x &lt; 10</code> 的所有元素，</p>
 <div class="math">$$new\_list = \{x | x \in N, x &gt; 0, x &lt; 10\}$$</div>
 <p>下面是 Python 的实现版本，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">new_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">N</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">]</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">new_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">N</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">]</span>
+</code></pre></div>
 </td></tr></table>
 <p>对比一下 python 版本的代码就可以知道两者非常相似，只不过 python 用 for 和 if 语句来描述数学中的条件表达式。尤其是 python 中有集合 <code>set</code> 的概念，set 也是可以写成 comprehensions 形式的，这个时候就和数学就完全等价了。</p>
 <h3 id="ru he xie  list comprehensions">如何写 list comprehensions</h3>
 <p>因为 list comprehensions 本质是 for 和 if 的简洁写法，所以我们可以总结出一个模板，只要满足这个模板的 for 循环就可以改成写 list comprehensions.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">old_list</span><span class="p">:</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">old_list</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">condition</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
         <span class="n">new_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>可以改写成下面的形式</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">new_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">old_list</span> <span class="k">if</span> <span class="n">condition</span><span class="p">(</span><span class="n">item</span><span class="p">)]</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">new_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">old_list</span> <span class="k">if</span> <span class="n">condition</span><span class="p">(</span><span class="n">item</span><span class="p">)]</span>
+</code></pre></div>
 </td></tr></table>
 <h3 id="xun huan qian tao de  list comprehensions">循环嵌套的 list comprehensions</h3>
 <p>循环嵌套的 list comprehensions 例子：将矩阵展平，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">:</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
         <span class="n">flattened</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>可以写成</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">flattend</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">flattend</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+</code></pre></div>
 </td></tr></table>
 <h3 id="ti gao  list comprehensions de ke du xing">提高 list comprehensions 的可读性</h3>
 <p>因为 python 支持在括号之间断行，所以前面的例子，可以改写成下面的形式以提高可读性：</p>
@@ -292,7 +292,7 @@
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">new_list</span> <span class="o">=</span> <span class="p">[</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">new_list</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">func</span><span class="p">(</span><span class="n">itme</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">old_list</span>
     <span class="k">if</span> <span class="n">condition</span><span class="p">(</span><span class="n">itme</span><span class="p">)</span>
@@ -304,7 +304,7 @@
     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span>
     <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">row</span>
 <span class="p">]</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="xiao jie">小结</h3>
 <p>无论是单层还是嵌套的 for 循环，改成 list comprehensions 的方法其实方法非常简单，就是把普通的 for 循环调整了顺序，将循环内的语句写在了最前面，剩余部分按原顺序写就可以了。</p>
@@ -345,7 +345,7 @@
 22
 23
 24
-25</pre></div></td><td class="code"><div class="highlight"><pre><span></span>&gt;&gt;&gt; print {i : chr(65+i) for i in range(4)}
+25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print {i : chr(65+i) for i in range(4)}
 {0 : 'A', 1 : 'B', 2 : 'C', 3 : 'D'}
 
 
@@ -370,14 +370,14 @@
    (0, 2): 2, (3, 0): 3, (0, 3): 3, (1, 1): 2, (1, 0): 1,
    (0, 0): 0, (1, 2): 3, (2, 0): 2, (1, 3): 4, (2, 2): 4, (
    2, 3): 5}
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h2 id="set comprehensions">Set Comprehensions</h2>
 <p>set comprehensions 和 list comprehensions 非常相似，唯一的区别就是用 <code>{}</code> 而不是 <code>[]</code>。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">squared</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]}</span>
-<span class="k">print</span><span class="p">(</span><span class="n">squared</span><span class="p">)</span>
-</pre></div>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">squared</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">squared</span><span class="p">)</span>
+</code></pre></div>
 </td></tr></table>
 <p>显然因为最终生成的是集合，所以重复元素只会保存一个。</p>
 <h2 id="ref">Ref</h2>
@@ -467,11 +467,11 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_0_summary.html">Python 学习笔记 #0 —— 新的开始</a></li>
       <li><a href="https://qiangu.cool/posts/cs/python_notes_10_fp_in_python.html">Python 学习笔记 #10 —— Python 中的 FP</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html">Python 学习笔记 #3 —— Docstring 风格</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_9_function_arguments.html">Python 学习笔记 #9 —— Function Arguments 函数参数</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_7_generator.html">Python 学习笔记 #7 —— Generator 生成器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
     </ul>
   </div>
 

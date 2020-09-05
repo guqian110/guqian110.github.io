@@ -203,8 +203,8 @@
 <li>
 <p>/usr/share/vim/vimrc</p>
 <p>输入命令</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span> ll /usr/share/vim/vimrc
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code> ll /usr/share/vim/vimrc
+</code></pre></div>
 </td></tr></table>
 <p>就可以看到，本文件是 <code>/etc/vim/vimrc</code> 的软链接 。</p>
 </li>
@@ -224,17 +224,17 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span>! Swap caps lock and escape
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>! Swap caps lock and escape
 remove <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
 keysym <span class="nv">Escape</span> <span class="o">=</span> Caps_Lock
 keysym <span class="nv">Caps_Lock</span> <span class="o">=</span> Escape
 add <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>保存为 .speedswrapper</p>
 <p>然后输入命令</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>xmodmap ~/.speedswrapper
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>xmodmap ~/.speedswrapper
+</code></pre></div>
 </td></tr></table>
 <p>这时，对于整个系统范围，这两个键已经调换了位置 。</p>
 <p><br/></p>
@@ -242,12 +242,12 @@ add <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
 <hr/>
 <p>Vim 自带一些颜色主题，一般存放在 <code>/usr/share/vim/vim7x</code> 目录下（我的 Vim 版本为 7.3，所以路径为 <code>/usr/share/vim/vim73</code>）.</p>
 <p>如果对系统自带的主题不满意，网上有很多不错的主题，个人最喜欢 <a href="https://github.com/tomasr/molokai">molikai</a> 主题，把下载下来的配色文件拷贝到 <code>usr/share/vim/vim73</code> 路径下，打开 vim 后 输入</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>:colorscheme molikai
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>:colorscheme molikai
+</code></pre></div>
 </td></tr></table>
 <p>就 ok 了～ 不过这个方法在关闭 vim 后就恢复了，要想省去每次都输命令的烦恼，只需要在下一步 .vimrc 文件中加入以下内容就可以了</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>colorscheme molikai
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>colorscheme molikai
+</code></pre></div>
 </td></tr></table>
 <p><br/></p>
 <h2 id="bian xie  .vimrc">编写 .Vimrc</h2>
@@ -421,7 +421,7 @@ add <span class="nv">Lock</span> <span class="o">=</span> Caps_Lock
 151
 152
 153
-154</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
+154</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
 <span class="s2">"</span> General
 <span class="s2">"""""""""""""""""""""""""""""""""""""""""""""""""""""""""</span>
 <span class="s2">set nocompatible</span>
@@ -575,7 +575,7 @@ map &lt;C-l&gt; &lt;C-w&gt;l
 <span class="s2">map &lt;leader&gt;sn ]s</span>
 <span class="s2">map &lt;leader&gt;sp [s</span>
 <span class="s2">map &lt;leader&gt;sa zg</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p><br/></p>
 <h2 id="can kao_1">参考</h2>
@@ -602,11 +602,11 @@ map &lt;C-l&gt; &lt;C-w&gt;l
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_bufexplorer_nerdtree_winmanager_powerline.html">学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件</a></li>
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_pratical_vim_notes.html">学习 Vim 之《Pratical Vim》读书笔记</a></li>
       <li><a href="https://qiangu.cool/posts/tools/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_bufexplorer_nerdtree_winmanager_powerline.html">学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
     </ul>
   </div>
 

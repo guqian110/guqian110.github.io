@@ -190,7 +190,7 @@
 <li>声明类型时不传递参数，在后面的语句中赋值（适合有条件赋值）</li>
 <li>用 <code>RegNext()</code>声明的同时传参，那么在每个时钟上升沿都会采样该值（适合无条件打拍）</li>
 </ol>
-<div class="highlight"><pre><span></span><span class="c1">// method 1</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// method 1</span>
 <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="nc">Reg</span><span class="o">(</span><span class="nc">UInt</span><span class="o">())</span>
 <span class="n">when</span> <span class="o">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span> <span class="n">x</span><span class="o">:=</span> <span class="n">y</span><span class="o">}</span>
   <span class="o">.</span><span class="n">elsewhen</span> <span class="o">(</span><span class="n">b</span> <span class="o">&gt;</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span><span class="n">x</span> <span class="o">:=</span> <span class="n">z</span><span class="o">}</span>
@@ -199,7 +199,7 @@
 <span class="c1">// method 2</span>
 <span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="n">io</span><span class="o">.</span><span class="n">x</span>
 <span class="k">val</span> <span class="n">z</span> <span class="k">=</span> <span class="nc">RegNext</span><span class="o">(</span><span class="n">y</span><span class="o">)</span>
-</pre></div>
+</code></pre></div>
 <p>需要注意的是，如果是用 <code>when</code> 语句有条件的赋值，那么要保证等号两边的数据类型和宽度相匹配，对于无条件赋值则无须这么做，因为编译器会根据右边的变量自动推断左边的寄存器类型和位宽。</p>
 <h2 id="kong zhi yu ju_1">控制语句</h2>
 <h3 id="for loop">for loop</h3>
@@ -211,7 +211,7 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">// exclusive n</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">// exclusive n</span>
 <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">until</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
     <span class="o">...</span>
 <span class="o">}</span>
@@ -220,7 +220,7 @@
 <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
     <span class="o">...</span>
 <span class="o">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="if-elseif-if">if-elseif-if</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -229,14 +229,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="o">(&lt;</span><span class="n">condition1</span><span class="o">&gt;)</span> <span class="o">{</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="o">(&lt;</span><span class="n">condition1</span><span class="o">&gt;)</span> <span class="o">{</span>
     <span class="o">...</span>
     <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(&lt;</span><span class="n">condition2</span><span class="o">&gt;)</span> <span class="o">{</span>
         <span class="o">...</span>
     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
         <span class="o">...</span>
     <span class="o">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="when">when</h3>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -246,7 +246,7 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">// when clause</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">// when clause</span>
 <span class="n">when</span> <span class="o">(&lt;</span><span class="n">condition1</span><span class="o">&gt;)</span> <span class="o">{...}</span>
 <span class="o">.</span><span class="n">elsewhen</span> <span class="o">(&lt;</span><span class="n">condition2</span><span class="o">)</span> <span class="o">{...}</span>
 <span class="o">.</span><span class="n">elsewhen</span> <span class="o">(&lt;</span><span class="n">condition3</span><span class="o">)</span> <span class="o">{...}</span>
@@ -254,7 +254,7 @@
 
 <span class="c1">// unless clause</span>
 <span class="n">unless</span> <span class="o">(&lt;</span><span class="n">condition</span><span class="o">)</span> <span class="o">{...}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="assignments and re-assignments">Assignments and Re-assignments</h3>
 <p>这是 chisel 的独特语法，在 chisel 中第一次定义变量时，必须使用 <code>=</code> 来告诉 chisel 生成这样一个硬件资源，之后如果想改变这个硬件的值，即重新赋值则必须使用 <code>:=</code>。</p>
@@ -265,9 +265,9 @@
 <h3 id="bit extraction">Bit Extraction</h3>
 <p>和 verilog 类似，提取 bit 位的语法不同而已，<code>[:]</code> 改成了 <code>(,)</code>。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">x_to_y</span> <span class="k">=</span> <span class="n">value</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">val</span> <span class="n">x_to_y</span> <span class="k">=</span> <span class="n">value</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">x_of_value</span> <span class="k">=</span> <span class="n">value</span><span class="o">(</span><span class="n">x</span><span class="o">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="bit concatenation">Bit Concatenation</h3>
 <p>和 verilog 的 bit 拼接不同，chisel 使用 <code>Cat()</code> 函数来实现 bit 拼接，和 bit 提取一样，高位部分是第一个参数，低位部分是第二个参数。<code>Cat()</code> 函数的实现在 chisel 的 util 包，不在 core 内，所以需要先 import 才能使用。</p>
@@ -277,14 +277,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">chisel3.util.Cat</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nn">chisel3.util.Cat</span>
 <span class="c1">// or import all the utility definitions </span>
 <span class="c1">// import chisel3.util._</span>
 
 <span class="k">val</span> <span class="n">A</span> <span class="k">=</span> <span class="nc">UInt</span><span class="o">(</span><span class="mf">32.</span><span class="n">W</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">B</span> <span class="k">=</span> <span class="nc">UInt</span><span class="o">(</span><span class="mf">32.</span><span class="n">W</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">bus</span> <span class="k">=</span> <span class="nc">Cat</span><span class="o">(</span><span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="o">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="bit inference">Bit Inference</h3>
 <p>很多运算结果的位宽会比操作数更宽，比如加法和乘法，在传统的 verilog 编码中，硅农们必须手动指定每个 reg/wire 的位宽。相比之下，chisel 的一个强大功能是可以自动推断信号的位宽，所以它能节省广大硅农的很多时间，而且自动推断不会产生眼花手抖等情况，bug 率也大幅下降，妈妈再也不用担心我的代码位宽不匹配了 XD。</p>
@@ -358,7 +358,7 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">// method 1: using RegInit()</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">// method 1: using RegInit()</span>
 <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="nc">RegInit</span><span class="o">(</span><span class="mf">0.</span><span class="o">(</span><span class="mf">1.</span><span class="n">W</span><span class="o">))</span>
 
 <span class="c1">// method 2: using reset.toBool</span>
@@ -367,7 +367,7 @@
 <span class="o">}</span> <span class="o">.</span><span class="n">elsewhen</span><span class="o">(</span><span class="n">io</span><span class="o">.</span><span class="n">enable</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">x</span> <span class="o">:=</span> <span class="n">y</span>
 <span class="o">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>下面用一个 4bit 的 shift register 实例来说明，</p>
 <p>版本一：使用 <code>RegInit()</code> 的代码，</p>
@@ -393,7 +393,7 @@
 20
 21
 22
-23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">package</span> <span class="nn">examples</span>
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">package</span> <span class="nn">examples</span>
 
 <span class="k">import</span> <span class="nn">chisel3._</span>
 
@@ -416,7 +416,7 @@
   <span class="o">}</span>
   <span class="n">io</span><span class="o">.</span><span class="n">out</span> <span class="o">:=</span> <span class="n">r3</span>
 <span class="o">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>版本二：使用 <code>reset.toBool</code> 的代码如下，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -445,7 +445,7 @@
 24
 25
 26
-27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">package</span> <span class="nn">examples</span>
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">package</span> <span class="nn">examples</span>
 
 <span class="k">import</span> <span class="nn">chisel3._</span>
 
@@ -472,7 +472,7 @@
   <span class="o">}</span>
   <span class="n">io</span><span class="o">.</span><span class="n">out</span> <span class="o">:=</span> <span class="n">r3</span>
 <span class="o">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>两个版本生成的 rtl 是一样的，核心部分如下，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -513,7 +513,7 @@
 36
 37
 38
-39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">ResetShiftRegister</span><span class="p">(</span>
+39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="n">ResetShiftRegister</span><span class="p">(</span>
   <span class="k">input</span>        <span class="n">clock</span><span class="p">,</span>
   <span class="k">input</span>        <span class="n">reset</span><span class="p">,</span>
   <span class="k">input</span>  <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">io_in</span><span class="p">,</span>
@@ -552,7 +552,7 @@
     <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">endmodule</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h2 id="uint class">UInt Class</h2>
 <p>UInt（无符号整数类型）等价于 verilog 中的 unsigned 类型，UInt 运算的操作数类型必须也是 UInt 类型，支持的常见运算有，</p>
@@ -653,7 +653,7 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">change</span> <span class="k">=</span> <span class="n">io</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="n">io</span><span class="o">.</span><span class="n">b</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">val</span> <span class="n">change</span> <span class="k">=</span> <span class="n">io</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="n">io</span><span class="o">.</span><span class="n">b</span>
 <span class="n">when</span> <span class="o">(</span><span class="n">change</span><span class="o">)</span> <span class="o">{</span>
     <span class="c1">//...</span>
 <span class="o">}</span> <span class="o">.</span><span class="n">otherwise</span> <span class="o">{</span>
@@ -662,7 +662,7 @@
 
 <span class="k">val</span> <span class="n">true_value</span>  <span class="k">=</span> <span class="kc">true</span><span class="o">.</span><span class="n">B</span>
 <span class="k">val</span> <span class="n">false_value</span> <span class="k">=</span> <span class="n">flase</span><span class="o">.</span><span class="n">B</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h2 id="casting between types">Casting Between Types</h2>
 <p>chisel 要求赋值表达式的两边数据类型是一致的。如果直接把一个 Bool 类型的变量赋值给一个 UInt 类型会报错，正确做法是显式地进行转换，</p>
@@ -670,12 +670,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">io</span> <span class="k">=</span> <span class="nc">IO</span><span class="o">(</span><span class="k">new</span> <span class="nc">Bundle</span><span class="o">{</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">val</span> <span class="n">io</span> <span class="k">=</span> <span class="nc">IO</span><span class="o">(</span><span class="k">new</span> <span class="nc">Bundle</span><span class="o">{</span>
     <span class="k">val</span> <span class="n">in</span> <span class="k">=</span> <span class="nc">Input</span><span class="o">(</span><span class="nc">UInt</span><span class="o">(</span><span class="mf">2.</span><span class="n">W</span><span class="o">))</span>
     <span class="k">val</span> <span class="n">out</span> <span class="k">=</span> <span class="nc">Ouptut</span><span class="o">(</span><span class="nc">UInt</span><span class="o">(</span><span class="mf">1.</span><span class="n">W</span><span class="o">))</span>
 <span class="o">})</span>
 <span class="n">io</span><span class="o">.</span><span class="n">out</span> <span class="o">:=</span> <span class="o">(</span><span class="n">in</span> <span class="o">===</span> <span class="mf">0.</span><span class="n">U</span><span class="o">).</span><span class="n">asUInt</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>常见的类型转换：</p>
 <ul>
@@ -700,7 +700,7 @@
 13
 14
 15
-16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Adder4</span> <span class="k">extends</span> <span class="nc">Module</span> <span class="o">{</span>
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Adder4</span> <span class="k">extends</span> <span class="nc">Module</span> <span class="o">{</span>
     <span class="k">val</span> <span class="n">io</span> <span class="k">=</span> <span class="nc">IO</span><span class="o">(</span><span class="k">new</span> <span class="nc">Bundle</span> <span class="o">{</span>
         <span class="k">val</span> <span class="n">A</span>    <span class="k">=</span> <span class="nc">Input</span><span class="o">(</span><span class="nc">UInt</span><span class="o">(</span><span class="mf">4.</span><span class="n">W</span><span class="o">))</span>
         <span class="k">val</span> <span class="n">B</span>    <span class="k">=</span> <span class="nc">Input</span><span class="o">(</span><span class="nc">UInt</span><span class="o">(</span><span class="mf">4.</span><span class="n">W</span><span class="o">))</span>
@@ -716,28 +716,28 @@
     <span class="k">val</span> <span class="n">s0</span> <span class="k">=</span> <span class="nc">Adder0</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">sum</span>
     <span class="c1">// other bits ...</span>
 <span class="o">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h2 id="vec class">Vec Class</h2>
 <p><code>Vec</code> 类等价于 verilog 中的寄存器组，语法如下，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">myVec</span> <span class="k">=</span> <span class="nc">Vec</span><span class="o">(</span><span class="nc">Seq</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span> <span class="o">&lt;</span><span class="n">number</span> <span class="n">of</span> <span class="n">elements</span><span class="o">&gt;</span> <span class="o">)</span> <span class="o">{</span> <span class="o">&lt;</span><span class="n">data</span> <span class="n">type</span><span class="o">})</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">val</span> <span class="n">myVec</span> <span class="k">=</span> <span class="nc">Vec</span><span class="o">(</span><span class="nc">Seq</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span> <span class="o">&lt;</span><span class="n">number</span> <span class="n">of</span> <span class="n">elements</span><span class="o">&gt;</span> <span class="o">)</span> <span class="o">{</span> <span class="o">&lt;</span><span class="n">data</span> <span class="n">type</span><span class="o">})</span>
+</code></pre></div>
 </td></tr></table>
 <p>有点类似 C++ 中的 vector，需要指明内部存放的数据类型，但是还需要额外指定 vector 的长度，举例如下，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">ufix_vec10</span> <span class="o">:=</span> <span class="nc">Vect</span><span class="o">(</span><span class="nc">Seq</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span> <span class="o">{</span> <span class="nc">UInt</span><span class="o">(</span><span class="mf">5.</span><span class="n">W</span><span class="o">)</span> <span class="o">})</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">val</span> <span class="n">ufix_vec10</span> <span class="o">:=</span> <span class="nc">Vect</span><span class="o">(</span><span class="nc">Seq</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span> <span class="o">{</span> <span class="nc">UInt</span><span class="o">(</span><span class="mf">5.</span><span class="n">W</span><span class="o">)</span> <span class="o">})</span>
 <span class="k">val</span> <span class="n">reg_vec32</span> <span class="k">=</span> <span class="nc">Reg</span><span class="o">(</span><span class="nc">Vec</span><span class="o">(</span><span class="nc">Seq</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="mi">32</span><span class="o">)</span> <span class="o">{</span> <span class="nc">UInt</span><span class="o">()</span> <span class="o">}))</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>给 vec 中的元素赋值或访问特定元素的方法，也和 verilog 类似，只不过是用 <code>()</code>，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">reg5</span> <span class="k">=</span> <span class="n">reg_vec</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">val</span> <span class="n">reg5</span> <span class="k">=</span> <span class="n">reg_vec</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
 <span class="n">reg_vec32</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span> <span class="o">:=</span> <span class="mf">0.</span><span class="n">U</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>还能用 vec 来例化一组 module，此时语法稍微有点不一样，因为 module 的数据类型和内置的 primitive 类型不一样，应该用 module 的 io Bundle，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="nc">FullAdders</span> <span class="k">=</span> <span class="nc">Vec</span><span class="o">(</span><span class="nc">Seq</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="mi">16</span><span class="o">)</span> <span class="o">{</span> <span class="nc">Module</span><span class="o">(</span><span class="k">new</span> <span class="nc">FullAdder</span><span class="o">()).</span><span class="n">io</span> <span class="o">})</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">val</span> <span class="nc">FullAdders</span> <span class="k">=</span> <span class="nc">Vec</span><span class="o">(</span><span class="nc">Seq</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="mi">16</span><span class="o">)</span> <span class="o">{</span> <span class="nc">Module</span><span class="o">(</span><span class="k">new</span> <span class="nc">FullAdder</span><span class="o">()).</span><span class="n">io</span> <span class="o">})</span>
+</code></pre></div>
 </td></tr></table>
 <h2 id="parameterization">Parameterization</h2>
 <p>chisel 也可以实现 verilog 的参数化，</p>
@@ -745,18 +745,18 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="n">FIFO</span>(<span class="n">width:</span> <span class="nb">Int</span>, <span class="n">depth:</span> <span class="nb">Int</span>) <span class="n">extends</span> <span class="nb">Module</span> {...}
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="n">FIFO</span>(<span class="n">width:</span> <span class="nb">Int</span>, <span class="n">depth:</span> <span class="nb">Int</span>) <span class="n">extends</span> <span class="n">Module</span> {...}
 
-<span class="n">val</span> <span class="n">fifo1</span> = <span class="nb">Module</span>(<span class="nb">new</span> <span class="n">FIFO</span>(<span class="mi">16</span>, <span class="mi">32</span>))
-<span class="n">val</span> <span class="n">fifo2</span> = <span class="nb">Module</span>(<span class="nb">new</span> <span class="n">FIFO</span>(<span class="n">width</span> = <span class="mi">16</span>, <span class="n">depth</span> = <span class="mi">32</span>))
-<span class="n">val</span> <span class="n">fifo3</span> = <span class="n">Moudle</span>(<span class="nb">new</span> <span class="n">FIFO</span>(<span class="n">depth</span> = <span class="mi">32</span>, <span class="n">width</span> = <span class="mi">16</span>))
-</pre></div>
+<span class="nb">val</span> <span class="n">fifo1</span> = <span class="n">Module</span>(<span class="nb">new</span> <span class="n">FIFO</span>(<span class="mi">16</span>, <span class="mi">32</span>))
+<span class="nb">val</span> <span class="n">fifo2</span> = <span class="n">Module</span>(<span class="nb">new</span> <span class="n">FIFO</span>(<span class="n">width</span> = <span class="mi">16</span>, <span class="n">depth</span> = <span class="mi">32</span>))
+<span class="nb">val</span> <span class="n">fifo3</span> = <span class="n">Moudle</span>(<span class="nb">new</span> <span class="n">FIFO</span>(<span class="n">depth</span> = <span class="mi">32</span>, <span class="n">width</span> = <span class="mi">16</span>))
+</code></pre></div>
 </td></tr></table>
 <h2 id="built in primitives">Built In Primitives</h2>
 <p>和 verilog 类似，chisel 中也定义了很多原语，这些原语和编译器绑定在一起，可以直接使用，比如 <code>Reg</code>, <code>UInt</code>, <code>Bundle</code>, <code>Mem</code> 和 <code>Vec</code> 等。</p>
 <p><code>Mux</code> 原语，有三个输入，<code>select</code> 信号是 Bool 类型，<code>A</code> 和 <code>B</code> 可以是任意类型，任意宽度的信号，只要他们的类型一致即可。当 select 为 <code>true</code> 时输出 <code>A</code>，反之 select 是 <code>flase</code> 时输出 <code>B</code>。</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="k">out</span> <span class="o">=</span> <span class="n">Mux</span><span class="p">(</span><span class="k">select</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="err">val out = Mux(select, A, B)</span>
+</code></pre></div>
 </td></tr></table>
 <h2 id="writing scala testbenches">Writing Scala Testbenches</h2>
 <p>模板：</p>
@@ -771,8 +771,8 @@
 <p>如果是自己创建项目，需要按照 sbt 的规则创建目录，很麻烦。推荐使用官方提供的模板 [chisel template][tempalte]，在其基础上修改是最省事的。</p>
 <h2 id="memory">Memory</h2>
 <p>只读 memory 可以用 <code>Vec</code> 实现，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">numbers</span> <span class="k">=</span> <span class="nc">Vec</span><span class="o">(</span><span class="mf">0.</span><span class="n">U</span><span class="o">,</span> <span class="mf">1.</span><span class="n">U</span><span class="o">,</span> <span class="mf">2.</span><span class="n">U</span><span class="o">,</span> <span class="mf">3.</span><span class="n">U</span><span class="o">)</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">val</span> <span class="n">numbers</span> <span class="k">=</span> <span class="nc">Vec</span><span class="o">(</span><span class="mf">0.</span><span class="n">U</span><span class="o">,</span> <span class="mf">1.</span><span class="n">U</span><span class="o">,</span> <span class="mf">2.</span><span class="n">U</span><span class="o">,</span> <span class="mf">3.</span><span class="n">U</span><span class="o">)</span>
+</code></pre></div>
 </td></tr></table>
 <p>可读可写的 memory 用原语 <code>Mem</code>实现，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -797,7 +797,7 @@
 20
 21
 22
-23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">// asynchronous read</span>
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">// asynchronous read</span>
 <span class="k">val</span> <span class="nc">CombMem</span> <span class="k">=</span> <span class="nc">Mem</span><span class="o">(&lt;</span><span class="n">size</span><span class="o">&gt;,</span> <span class="o">&lt;</span><span class="n">type</span><span class="o">&gt;)</span>
 
 <span class="c1">// synchromous read</span>
@@ -820,12 +820,12 @@
 <span class="n">when</span> <span class="o">(</span><span class="n">re</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">read_port</span> <span class="o">:=</span> <span class="n">myMem</span><span class="o">(</span><span class="n">raddr</span><span class="o">)</span>
 <span class="o">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>注意：chisel 中 <code>Mem</code> 不能指定初始化值。</p>
 <h2 id="def">def</h2>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>
+</code></pre></div>
 </td></tr></table>
 <h2 id="ref">Ref</h2>
 <p><a href="https://github.com/ucb-bar/chisel-tutorial">Chisel Tutorial Wiki</a></p>
@@ -843,7 +843,7 @@
   </div>
 
 
-      <p>This post is part <built-in method index of unicode object at 0x7f150f402630> of the "" series:</p>
+      <p>This post is part <built-in method index of str object at 0x7fd8586a65b0> of the "" series:</p>
       <ol class="parts">
       </ol>
 

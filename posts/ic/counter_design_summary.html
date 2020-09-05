@@ -256,16 +256,16 @@
 35
 36
 37
-38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">free_run_bin_counter</span><span class="p">(</span>
+38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="n">free_run_bin_counter</span><span class="p">(</span>
     <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">max_tick</span><span class="p">,</span> <span class="n">q</span>
     <span class="p">);</span>
 
-    <span class="k">parameter</span>   <span class="no">N</span> <span class="o">=</span> <span class="mh">8</span><span class="p">;</span>
+    <span class="k">parameter</span>   <span class="n">N</span> <span class="o">=</span> <span class="mh">8</span><span class="p">;</span>
 
     <span class="k">input</span>                     <span class="n">clk</span><span class="p">;</span>
     <span class="k">input</span>                     <span class="n">rst</span><span class="p">;</span>
     <span class="k">output</span>  <span class="kt">reg</span>               <span class="n">max_tick</span><span class="p">;</span>
-    <span class="k">output</span>  <span class="kt">reg</span>  <span class="p">[</span><span class="no">N</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">q</span><span class="p">;</span>
+    <span class="k">output</span>  <span class="kt">reg</span>  <span class="p">[</span><span class="n">N</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">q</span><span class="p">;</span>
 
     <span class="c1">// count</span>
     <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
@@ -284,7 +284,7 @@
             <span class="n">max_tick</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="k">else</span> <span class="k">begin</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="p">{</span><span class="no">N</span><span class="p">{</span><span class="mh">1</span><span class="mb">'b1</span><span class="p">}})</span> <span class="k">begin</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="p">{</span><span class="n">N</span><span class="p">{</span><span class="mh">1</span><span class="mb">'b1</span><span class="p">}})</span> <span class="k">begin</span>
                 <span class="n">max_tick</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="p">;</span>
             <span class="k">end</span>
             <span class="k">else</span> <span class="k">begin</span>
@@ -294,7 +294,7 @@
     <span class="k">end</span>
 
 <span class="k">endmodule</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="bcd counter (mod-m counter)">BCD Counter (mod-m counter)</h3>
 <p>人类更习惯使用十进制进行计数，十进制一共有 10 个符号，我们只需要从 4 bit 的二进制计数器中选取 10 个数字，只使用这 10 个数字进行计数即可，通常去掉 1010 ~ 1111 这 6 个数字，即使用 8421BCD 码 来对十进制数进行编码、计数，即 BCD Counter。</p>
@@ -342,16 +342,16 @@
 40
 41
 42
-43</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">bcd_counter</span><span class="p">(</span>
+43</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="n">bcd_counter</span><span class="p">(</span>
     <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">max_tick</span><span class="p">,</span> <span class="n">q</span>
     <span class="p">);</span>
 
-    <span class="k">parameter</span>   <span class="no">N</span> <span class="o">=</span> <span class="mh">4</span><span class="p">,</span>  <span class="c1">// number of bits in counter</span>
-                <span class="no">M</span> <span class="o">=</span> <span class="mh">10</span><span class="p">;</span> <span class="c1">// mod-M</span>
+    <span class="k">parameter</span>   <span class="n">N</span> <span class="o">=</span> <span class="mh">4</span><span class="p">,</span>  <span class="c1">// number of bits in counter</span>
+                <span class="n">M</span> <span class="o">=</span> <span class="mh">10</span><span class="p">;</span> <span class="c1">// mod-M</span>
 
     <span class="k">input</span>       <span class="n">clk</span><span class="p">;</span>
     <span class="k">input</span>       <span class="n">rst</span><span class="p">;</span>
-    <span class="k">output</span>  <span class="kt">reg</span>  <span class="p">[</span><span class="no">N</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>    <span class="n">q</span><span class="p">;</span>
+    <span class="k">output</span>  <span class="kt">reg</span>  <span class="p">[</span><span class="n">N</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>    <span class="n">q</span><span class="p">;</span>
     <span class="k">output</span>  <span class="kt">reg</span>                 <span class="n">max_tick</span><span class="p">;</span>
 
     <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
@@ -360,7 +360,7 @@
             <span class="n">q</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="k">else</span> <span class="k">begin</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="p">(</span><span class="no">M</span> <span class="o">-</span> <span class="mh">1</span><span class="p">))</span> <span class="k">begin</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="mh">1</span><span class="p">))</span> <span class="k">begin</span>
                 <span class="n">q</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
             <span class="k">end</span>
             <span class="k">else</span> <span class="k">begin</span>
@@ -375,7 +375,7 @@
             <span class="n">max_tick</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="k">else</span> <span class="k">begin</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="p">(</span><span class="no">M</span> <span class="o">-</span> <span class="mh">1</span><span class="p">))</span> <span class="k">begin</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="p">(</span><span class="n">M</span> <span class="o">-</span> <span class="mh">1</span><span class="p">))</span> <span class="k">begin</span>
                 <span class="n">max_tick</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="p">;</span>
             <span class="k">end</span>
             <span class="k">else</span> <span class="k">begin</span>
@@ -385,7 +385,7 @@
     <span class="k">end</span>
 
 <span class="k">endmodule</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="ring counter">Ring Counter</h3>
 <p>基于线性移位寄存器 <a href="http://en.wikipedia.org/wiki/Linear_feedback_shift_register"><code>LFSR</code> (Linear feedback shift register) </a> 可以衍生出两种计数器：<a href="http://en.wikipedia.org/wiki/Ring_counter">环形计数器 (ring counter)</a> 和 扭环计数器（约翰逊计数器）。</p>
@@ -444,25 +444,25 @@
 35
 36
 37
-38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">ring_counter</span><span class="p">(</span>
+38</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="n">ring_counter</span><span class="p">(</span>
     <span class="n">clk</span><span class="p">,</span> <span class="n">rst</span><span class="p">,</span> <span class="n">max_tick</span><span class="p">,</span> <span class="n">q</span>
     <span class="p">);</span>
 
-    <span class="k">parameter</span>   <span class="no">N</span> <span class="o">=</span> <span class="mh">10</span><span class="p">;</span>
+    <span class="k">parameter</span>   <span class="n">N</span> <span class="o">=</span> <span class="mh">10</span><span class="p">;</span>
 
     <span class="k">input</span>       <span class="n">clk</span><span class="p">;</span>
     <span class="k">input</span>       <span class="n">rst</span><span class="p">;</span>
     <span class="k">output</span>  <span class="kt">reg</span>                 <span class="n">max_tick</span><span class="p">;</span>
-    <span class="k">output</span>  <span class="kt">reg</span>  <span class="p">[</span><span class="no">N</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>    <span class="n">q</span><span class="p">;</span>
+    <span class="k">output</span>  <span class="kt">reg</span>  <span class="p">[</span><span class="n">N</span> <span class="o">-</span> <span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>    <span class="n">q</span><span class="p">;</span>
 
     <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
             <span class="c1">// reset</span>
             <span class="n">q</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
-            <span class="n">q</span><span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+            <span class="n">q</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mh">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="k">else</span> <span class="k">begin</span>
-            <span class="n">q</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">q</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">1</span><span class="p">]};</span>    <span class="c1">// right shift</span>
+            <span class="n">q</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">q</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">1</span><span class="p">]};</span>    <span class="c1">// right shift</span>
         <span class="k">end</span>
     <span class="k">end</span>
 
@@ -482,7 +482,7 @@
     <span class="k">end</span>
 
 <span class="k">endmodule</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="johnson counter">Johnson Counter</h3>
 <p>在 ring counter 的反馈链路中加入一个反相器，就好象把一个环扭了一下，所以称为 扭环计数器 (Johnson Counter)</p>
@@ -494,8 +494,8 @@
 <p>最大的缺点就是一旦它进入了错误状态，则永远无法返回到正确状态，除非外界干预。</p>
 <p><strong>Code</strong></p>
 <p>首先，将前面例子第 行的反馈语句修改一下，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="o">~</span><span class="n">q</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">1</span><span class="p">]};</span>    <span class="c1">// right shift</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">q</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="o">~</span><span class="n">q</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">1</span><span class="p">]};</span>    <span class="c1">// right shift</span>
+</code></pre></div>
 </td></tr></table>
 <p>同时，计数器的终点也要进行相应的修改，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -503,13 +503,13 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">1</span><span class="p">]</span> <span class="o">==</span> <span class="mh">1</span> <span class="o">&amp;&amp;</span> <span class="n">q</span><span class="p">[</span><span class="no">N</span><span class="o">-</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0</span><span class="p">)</span> <span class="k">begin</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mh">1</span><span class="p">]</span> <span class="o">==</span> <span class="mh">1</span> <span class="o">&amp;&amp;</span> <span class="n">q</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0</span><span class="p">)</span> <span class="k">begin</span>
     <span class="n">max_tick</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="p">;</span>
 <span class="k">end</span>
 <span class="k">else</span> <span class="k">begin</span>
     <span class="n">max_tick</span> <span class="o">&lt;=</span> <span class="mh">0</span><span class="p">;</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="ripple counter">Ripple Counter</h3>
 <p>前面总结的这些计数器都是同步计数器，组成它们的 flip-flop 是由同一个脉冲信号触发的。还有一种计数器是异步计数器，它内部的 flip-flop 不是由同一个脉冲信号触发的。由于 FPGA 特殊的结构原因，在 FPGA 中应该使用同步设计，所以一般 FPGA 不会使用这种计数器。</p>

@@ -189,14 +189,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Iterable</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Iterable</span>
 
 <span class="nb">isinstance</span><span class="p">([],</span> <span class="n">Iterable</span><span class="p">)</span>  <span class="c1"># True</span>
 <span class="nb">isinstance</span><span class="p">({},</span> <span class="n">Iterable</span><span class="p">)</span>  <span class="c1"># True</span>
 <span class="nb">isinstance</span><span class="p">(</span><span class="s1">'abc'</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span> <span class="c1"># True</span>
 <span class="nb">isinstance</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span>  <span class="c1"># False</span>
 <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Iterable</span><span class="p">)</span>  <span class="c1"># True</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p><strong>实现了 <code>next()</code> 方法的对象称为迭代器：<code>Iterator</code></strong></p>
 <p>可以用 <code>isinstance()</code> 判断一个对象是否为 <code>Iterator</code> 对象，</p>
@@ -206,21 +206,21 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Iterator</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Iterator</span>
 
 <span class="nb">isinstance</span><span class="p">([],</span> <span class="n">Iterator</span><span class="p">)</span>  <span class="c1"># False</span>
 <span class="nb">isinstance</span><span class="p">({},</span> <span class="n">Iterator</span><span class="p">)</span>  <span class="c1"># False</span>
 <span class="nb">isinstance</span><span class="p">(</span><span class="s1">'abc'</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">)</span>  <span class="c1"># False</span>
 <span class="nb">isinstance</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">)</span>  <span class="c1"># False</span>
 <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Iterator</span><span class="p">)</span>  <span class="c1"># True</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p><strong><code>lsit</code>, <code>dict</code>, <code>str</code> 等都是 <code>Iterable</code>，但不是 <code>Iterator</code>，可以用 <code>iter()</code> 得到其对应的 <code>Iterator</code></strong></p>
 <p>实际上，python 的 for 循环作用于 Iterable 时，会自动调用 <code>iter()</code> 来得到对应的 Iterator，然后不断调用 next 获取其中的元素，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">:</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">:</span>
     <span class="n">do_something_to</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>Python 在底层实现时，会自动替换成下面的方式，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -229,14 +229,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">fetch</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
-<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">fetch</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">i</span> <span class="o">=</span> <span class="n">fetch</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
         <span class="k">break</span>
     <span class="n">do_something_to</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>结论：<strong>对于 <code>Iterable</code> 对象，我们可以直接用 for 循环来迭代。</strong></p>
 <h2 id="why iterator">Why Iterator</h2>
@@ -254,9 +254,9 @@
 <h3 id="bit">BIT</h3>
 <p>对于 Python 内建数据类型，比如容器，只需要用内建函数 <code>iter()</code> 就可以得到对应的迭代器，具体有两种调用方式：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">iter</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">iter</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
 <span class="nb">iter</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">sentinel</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <ul>
 <li><code>iter(obj)</code>，返回一个迭代器</li>
@@ -270,14 +270,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_children</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_children</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="implement iterator protocal">Implement Iterator Protocal</h3>
 <p>有时候内建类型的迭代协议无法满足我们的需求，这个时候可以自行实现迭代协议。只要一个 class 实现了下面两个方法，就可以当作迭代器来使用，</p>
@@ -310,7 +310,7 @@
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="ch">#! /usr/bin/env python</span>
 
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span>
 
@@ -327,14 +327,14 @@
 <span class="n">seq</span> <span class="o">=</span> <span class="n">RandSeq</span><span class="p">((</span><span class="s1">'rock'</span><span class="p">,</span> <span class="s1">'paper'</span><span class="p">,</span> <span class="s1">'scissors'</span><span class="p">))</span>
 
 <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">item</span>
-</pre></div>
+    <span class="nb">print</span> <span class="n">item</span>
+</code></pre></div>
 </td></tr></table>
 <p>也可以像前面介绍的一样，用 <code>isinstance()</code> 来检查，说明我们的 RandSeq 类既是一个 Iterable 也是一个 Iterator。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">isinstance</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span>  <span class="c1"># True</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">isinstance</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span>  <span class="c1"># True</span>
 <span class="nb">isinstance</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">)</span>  <span class="c1"># True</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="generator">Generator</h3>
 <p>Generator 是一种特殊的 iterator，最典型的例子就是 Fibonacci 数列。可以直接根据需要写一个 generator 直接调用，</p>
@@ -345,15 +345,15 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">frange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">increment</span><span class="p">):</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">frange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">increment</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">start</span>
     <span class="k">while</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">stop</span><span class="p">:</span>
         <span class="n">yiled</span> <span class="n">x</span>
         <span class="n">x</span> <span class="o">+=</span> <span class="n">increment</span>
 
 <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">frange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-</pre></div>
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div>
 </td></tr></table>
 <p>如果 generator 涉及到比较复杂的控制（比如暴露属性等），可以把 generator 函数扩展成 class 形式。比如前面的 RandSeq 例子可以扩展出更加复杂的功能，然后将 <code>__iter__</code> 内部的 return 改为 yield 即可。</p>
 <h2 id="using iterator_1">Using Iterator</h2>
@@ -369,7 +369,7 @@
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">myTuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="s1">'xyz'</span><span class="p">,</span> <span class="mf">45.67</span><span class="p">)</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">myTuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="s1">'xyz'</span><span class="p">,</span> <span class="mf">45.67</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">i</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">myTuple</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">i</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 <span class="mi">123</span>
@@ -381,7 +381,7 @@
 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
   <span class="n">File</span> <span class="s2">"&lt;stdin&gt;, line 1, in &lt;module&gt;</span>
 <span class="ne">StopIteration</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="dict">Dict</h3>
 <ul>
@@ -390,11 +390,11 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">:</span> <span class="o">...</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">:</span> <span class="o">...</span>
 
 <span class="c1"># equivalent to</span>
 <span class="k">if</span> <span class="nb">dict</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="o">...</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <ul>
 <li>dict 内部还实现了一个 <code>tp_iter</code> 的函数，可以产生一个针对所有 keys 的高效迭代器。所以可以这么写，</li>
@@ -402,11 +402,11 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">:</span> <span class="o">...</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">:</span> <span class="o">...</span>
 
 <span class="c1"># equivalent to, but much faster than</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="o">...</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>只要不违反 &ldquo; 禁止修改 dict 内容 &rdquo; 的约束，就可以这么用。</p>
 <ul>
@@ -416,12 +416,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">():</span> <span class="o">...</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">():</span> <span class="o">...</span>
 
 <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span> <span class="o">...</span>
 
 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">dict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span> <span class="o">...</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="file">File</h3>
 <p>file 对象内部实现了 <code>tp_iter</code> 方法，所以访问文件内容的代码可以写得更简洁，</p>
@@ -437,20 +437,20 @@
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">myFile</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">line</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">myFile</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="n">line</span>
 
 <span class="c1"># as a shorthand for</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="nb">file</span><span class="o">.</span><span class="n">readline</span><span class="p">,</span> <span class="s2">""</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">line</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">,</span> <span class="s2">""</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="n">line</span>
 
 <span class="c1"># equivalent, but faster than</span>
 <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="n">line</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
         <span class="k">break</span>
-    <span class="k">print</span> <span class="n">line</span>
-</pre></div>
+    <span class="nb">print</span> <span class="n">line</span>
+</code></pre></div>
 </td></tr></table>
 <h3 id="restrictions">Restrictions</h3>
 <div class="admonition note">
@@ -465,7 +465,7 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># legal</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># legal</span>
 <span class="n">myDict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">myDict</span><span class="p">:</span>
     <span class="n">myDict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">myDict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
@@ -473,7 +473,7 @@
 <span class="c1"># illegal</span>
 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">myDict</span><span class="p">:</span>
     <span class="k">del</span> <span class="n">myDict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>实际上，在 python 的迭代器出现之前，这个限制就已经存在了，比如 C++ 也有类似的约束。</p>
 <h2 id="special iterator_1">Special Iterator</h2>
@@ -492,12 +492,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
 
 <span class="n">counter</span> <span class="o">=</span> <span class="n">count</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>  <span class="c1"># 10</span>
 <span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>  <span class="c1"># 11</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p><code>itertools</code> 常见的 iterator 有：</p>
 <ul>
@@ -515,13 +515,13 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">]</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">]</span>
 
 <span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">my_list</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span>
+    <span class="nb">print</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>但是这种写法很丑陋，最优雅的答案是用内建函数 <code>enumerate()</code>，它的返回值是一个 <code>enumerate</code> 对象，本质上就是个迭代器，返回一个由 index 和 value 组成的 tuple。</p>
 <p><a href="https://www.python.org/dev/peps/pep-0234/">PEP 279</a> 介绍了这个函数的实现原理，如下</p>
@@ -531,20 +531,20 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">collection</span><span class="p">):</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">enumerate</span><span class="p">(</span><span class="n">collection</span><span class="p">):</span>
     <span class="s1">'Generates an indexed series: (0, coll[0]), (1, coll[1]) ...'</span>
     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>
     <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">yield</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">it</span><span class="o">.</span><span class="n">next</span><span class="p">())</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>使用方法：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">my_list</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span>
-</pre></div>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">my_list</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="n">idx</span><span class="p">,</span> <span class="n">val</span>
+</code></pre></div>
 </td></tr></table>
 <h3 id="zip()"><code>zip()</code></h3>
 <p>如果想同时迭代多个对象，每次迭代分别从中取出一个元素，应该怎么办？</p>
@@ -553,12 +553,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">]</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-    <span class="k">print</span> <span class="n">i</span>
-</pre></div>
+    <span class="nb">print</span> <span class="n">i</span>
+</code></pre></div>
 </td></tr></table>
 <h2 id="ref_1">Ref</h2>
 <p><a href="https://www.python.org/dev/peps/pep-0234/">PEP 234 -- Iterator</a></p>
@@ -590,11 +590,11 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_0_summary.html">Python 学习笔记 #0 —— 新的开始</a></li>
       <li><a href="https://qiangu.cool/posts/cs/python_notes_10_fp_in_python.html">Python 学习笔记 #10 —— Python 中的 FP</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html">Python 学习笔记 #3 —— Docstring 风格</a></li>
       <li><a href="https://qiangu.cool/posts/cs/python_notes_9_function_arguments.html">Python 学习笔记 #9 —— Function Arguments 函数参数</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_7_generator.html">Python 学习笔记 #7 —— Generator 生成器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_5_comprehension.html">Python 学习笔记 #5 —— Comprehension 解析式</a></li>
     </ul>
   </div>
 

@@ -259,7 +259,7 @@
 13
 14
 15
-16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 
 <span class="c1"># Aligned with opening delimiter.</span>
 <span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span><span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
@@ -269,13 +269,13 @@
 <span class="k">def</span> <span class="nf">long_function_name</span><span class="p">(</span>
         <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span> <span class="n">var_three</span><span class="p">,</span>
         <span class="n">var_four</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">var_one</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">var_one</span><span class="p">)</span>
 
 <span class="c1"># Hanging indents should add a level.</span>
 <span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span>
     <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
     <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -287,7 +287,7 @@
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Wrong:</span>
 
 <span class="c1"># Arguments on first line forbidden when not using vertical alignment.</span>
 <span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span><span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
@@ -297,18 +297,18 @@
 <span class="k">def</span> <span class="nf">long_function_name</span><span class="p">(</span>
     <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span> <span class="n">var_three</span><span class="p">,</span>
     <span class="n">var_four</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">var_one</span><span class="p">)</span>
-</pre></div>
+    <span class="nb">print</span><span class="p">(</span><span class="n">var_one</span><span class="p">)</span>
+</code></pre></div>
 </td></tr></table>
 <p>对于后续的行，4 个 space 的规则是可选的，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Hanging indents *may* be indented to other than 4 spaces.</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Hanging indents *may* be indented to other than 4 spaces.</span>
 <span class="n">foo</span> <span class="o">=</span> <span class="n">long_function_name</span><span class="p">(</span>
   <span class="n">var_one</span><span class="p">,</span> <span class="n">var_two</span><span class="p">,</span>
   <span class="n">var_three</span><span class="p">,</span> <span class="n">var_four</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>如果 if 语句的条件部分太长以至于要写成多行的形式，要注意，一个双字符的关键字（比如 if）加上一个空格，再加上右括号，会天然形成一个 4 space 的缩进。这会导致条件语句和 if 内部的嵌套语句（本身也是 4 space 缩进）产生视觉冲突。本文没有明确规定如何（是否需要）进一步在视觉上区分条件语句和内嵌语句，可选但是不限于下面几种方式：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -326,7 +326,7 @@
 13
 14
 15
-16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># No extra indentation.</span>
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># No extra indentation.</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">this_is_one_thing</span> <span class="ow">and</span>
     <span class="n">that_is_another_thing</span><span class="p">):</span>
     <span class="n">do_something</span><span class="p">()</span>
@@ -342,7 +342,7 @@
 <span class="k">if</span> <span class="p">(</span><span class="n">this_is_one_thing</span>
         <span class="ow">and</span> <span class="n">that_is_another_thing</span><span class="p">):</span>
     <span class="n">do_something</span><span class="p">()</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>（也可参考下面关于二元操作符前后断行的讨论）</p>
 <p>右括号可以和最后一行第一个非空格字符对齐，</p>
@@ -353,7 +353,7 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span>
     <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>
     <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
     <span class="p">]</span>
@@ -361,7 +361,7 @@
     <span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span>
     <span class="s1">'d'</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">,</span> <span class="s1">'f'</span><span class="p">,</span>
     <span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>也可以和第一行的第一个字符对齐，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -371,7 +371,7 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span>
     <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>
     <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
 <span class="p">]</span>
@@ -379,7 +379,7 @@
     <span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span>
     <span class="s1">'d'</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">,</span> <span class="s1">'f'</span><span class="p">,</span>
 <span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <blockquote>
 <p>注：<code>hanging indentation</code> 是指除了首行之外，其他行都缩进的打印风格。在 python 中，这个术语指的是一个带括号的语句，左括号是该行的最后一个字符，除了右括号，剩余行都会加上缩进</p>
@@ -400,10 +400,10 @@
 <p>反斜线 <code>\</code> 有时候还是有用的，比如较长的 <code>with</code> 语句不能使用括号的方式，所以只能选择反斜线。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/path/to/some/file/you/want/to/read'</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_1</span><span class="p">,</span> \
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'/path/to/some/file/you/want/to/read'</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_1</span><span class="p">,</span> \
      <span class="nb">open</span><span class="p">(</span><span class="s1">'/path/to/some/file/being/written'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_2</span><span class="p">:</span>
     <span class="n">file_2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_1</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>（对于这种 with 语句，可以参考前面讨论 if 语句的处理方式）</p>
 <p>这种情况的另外一个例子是 <code>assert</code> 语句。</p>
@@ -416,14 +416,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Wrong:</span>
 <span class="c1"># operators sit far away from their operands</span>
 <span class="n">income</span> <span class="o">=</span> <span class="p">(</span><span class="n">gross_wages</span> <span class="o">+</span>
           <span class="n">taxable_interest</span> <span class="o">+</span>
           <span class="p">(</span><span class="n">dividends</span> <span class="o">-</span> <span class="n">qualified_dividends</span><span class="p">)</span> <span class="o">-</span>
           <span class="n">ira_deduction</span> <span class="o">-</span>
           <span class="n">student_loan_interest</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>为了解决这个可读性的问题，数学家和出版商遵循了相反的约定。Donald Knuth 在他的 <em><code>Computer and Typesetting</code></em> 系列中解释了传统的规则：&ldquo; 虽然段落中的公式总是在二元操作符、关系操作符的后面断开，但是单独显示出来的公式却总是在二元操作符的前面断开。&rdquo;</p>
 <p>遵循数学家的传统通常可以得到可读性更好的代码：</p>
@@ -433,14 +433,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="c1"># easy to match operators with operands</span>
 <span class="n">income</span> <span class="o">=</span> <span class="p">(</span><span class="n">gross_wages</span>
           <span class="o">+</span> <span class="n">taxable_interest</span>
           <span class="o">+</span> <span class="p">(</span><span class="n">dividends</span> <span class="o">-</span> <span class="n">qualified_dividends</span><span class="p">)</span>
           <span class="o">-</span> <span class="n">ira_deduction</span>
           <span class="o">-</span> <span class="n">student_loan_interest</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>在 python 代码中，在二元符号之前或之后都可以断行，只要在本地保持一致即可。对于新写的代码，推荐使用 Knuth 的风格。</p>
 <h3 id="kong xing">空行</h3>
@@ -473,19 +473,19 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="c1"># Wrong:</span>
 <span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>但是这么写也是 ok 的，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -508,16 +508,16 @@
 <p>推荐使用绝对路径导入，因为当 import 系统配置不正确时（比如 package 内的一个目录以 <code>sys.path</code> 结尾），这么做的可读性更好，性能也更好（至少 error 信息更加清晰）。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mypkg.sibling</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">mypkg.sibling</span>
 <span class="kn">from</span> <span class="nn">mypkg</span> <span class="kn">import</span> <span class="n">sibling</span>
 <span class="kn">from</span> <span class="nn">mypkg.sibling</span> <span class="kn">import</span> <span class="n">example</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>然而，显式的相对路径也是一种可接受的方案，特别是使用绝对路径会导致不必要的复杂 package 布局的情况。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sibling</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sibling</span>
 <span class="kn">from</span> <span class="nn">.sibling</span> <span class="kn">import</span> <span class="n">example</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>标准库中的代码应该避免复杂的 package 布局，并且永远使用绝对路径 import。</p>
 <p>隐式的相对路径 import 永远都不应该使用，在 python 3 中已经删除了它。</p>
@@ -525,15 +525,15 @@
 <li>
 <p>当从一个包含 class 的 module 中 import 一个 class 时，一般可以这么写，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myclass</span> <span class="kn">import</span> <span class="n">MyClass</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">myclass</span> <span class="kn">import</span> <span class="n">MyClass</span>
 <span class="kn">from</span> <span class="nn">foo.bar.yourclass</span> <span class="kn">import</span> <span class="n">YourClass</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>如果这种拼写方式导致名字冲突，那么可以这么写，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">myclass</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">myclass</span>
 <span class="kn">import</span> <span class="nn">foo.bar.yourclass</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>然后在代码中使用 <code>myclass.Myclass</code> 和 <code>foo.bar.yourcalss.YourClass</code>。</p>
 </li>
@@ -556,7 +556,7 @@
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">"""This is the example module.</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="sd">"""This is the example module.</span>
 
 <span class="sd">This module does stuff.</span>
 <span class="sd">"""</span>
@@ -569,7 +569,7 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>注：</p>
 <p><code>dunber</code> 指的是 <code>Double</code> + <code>Underscore</code> 的合体，指那些带双下划线的 method 或 attribute，如 <code>__init__</code>、<code>__main__</code>、<code>__verison__</code> 等。</p>
@@ -590,12 +590,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="n">spam</span><span class="p">(</span><span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">{</span><span class="n">eggs</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
 
 <span class="c1"># Wrong:</span>
 <span class="n">spam</span><span class="p">(</span> <span class="n">ham</span><span class="p">[</span> <span class="mi">1</span> <span class="p">],</span> <span class="p">{</span> <span class="n">eggs</span><span class="p">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -604,12 +604,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="n">foo</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span>
 
 <span class="c1"># Wrong:</span>
 <span class="n">bar</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -618,12 +618,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
-<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span> <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span> <span class="nb">print</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span>
 
 <span class="c1"># Wrong:</span>
-<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">4</span> <span class="p">:</span> <span class="k">print</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span> <span class="p">;</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="p">,</span> <span class="n">x</span>
-</pre></div>
+<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">4</span> <span class="p">:</span> <span class="nb">print</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span> <span class="p">;</span> <span class="n">x</span> <span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="p">,</span> <span class="n">x</span>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -639,7 +639,7 @@
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">ham</span><span class="p">[:</span><span class="mi">9</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span><span class="p">:]</span>
 <span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="p">:</span><span class="n">upper</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="p">:</span><span class="n">upper</span><span class="p">:],</span> <span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="p">::</span><span class="n">step</span><span class="p">]</span>
 <span class="n">ham</span><span class="p">[</span><span class="n">lower</span><span class="o">+</span><span class="n">offset</span> <span class="p">:</span> <span class="n">upper</span><span class="o">+</span><span class="n">offset</span><span class="p">]</span>
@@ -651,7 +651,7 @@
 <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span> <span class="mi">9</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span> <span class="p">:</span><span class="mi">9</span><span class="p">],</span> <span class="n">ham</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">9</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
 <span class="n">ham</span><span class="p">[</span><span class="n">lower</span> <span class="p">:</span> <span class="p">:</span> <span class="n">upper</span><span class="p">]</span>
 <span class="n">ham</span><span class="p">[</span> <span class="p">:</span> <span class="n">upper</span><span class="p">]</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -660,12 +660,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="n">spam</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># Wrong:</span>
 <span class="n">spam</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -674,12 +674,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="n">dct</span><span class="p">[</span><span class="s1">'key'</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 
 <span class="c1"># Wrong:</span>
 <span class="n">dct</span> <span class="p">[</span><span class="s1">'key'</span><span class="p">]</span> <span class="o">=</span> <span class="n">lst</span> <span class="p">[</span><span class="n">index</span><span class="p">]</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -692,7 +692,7 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">long_variable</span> <span class="o">=</span> <span class="mi">3</span>
@@ -701,7 +701,7 @@
 <span class="n">x</span>             <span class="o">=</span> <span class="mi">1</span>
 <span class="n">y</span>             <span class="o">=</span> <span class="mi">2</span>
 <span class="n">long_variable</span> <span class="o">=</span> <span class="mi">3</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 </ul>
@@ -727,7 +727,7 @@
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="n">submitted</span> <span class="o">+=</span> <span class="mi">1</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
@@ -740,7 +740,7 @@
 <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
 <span class="n">hypot2</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span>
 <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -751,14 +751,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="p">):</span> <span class="o">...</span>
 <span class="k">def</span> <span class="nf">munge</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">PosInt</span><span class="p">:</span> <span class="o">...</span>
 
 <span class="c1"># Wrong:</span>
 <span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span><span class="n">AnyStr</span><span class="p">):</span> <span class="o">...</span>
 <span class="k">def</span> <span class="nf">munge</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">PosInt</span><span class="p">:</span> <span class="o">...</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -769,14 +769,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="k">def</span> <span class="nf">complex</span><span class="p">(</span><span class="n">real</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">magic</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">real</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">imag</span><span class="p">)</span>
 
 <span class="c1"># Wrong:</span>
 <span class="k">def</span> <span class="nf">complex</span><span class="p">(</span><span class="n">real</span><span class="p">,</span> <span class="n">imag</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">magic</span><span class="p">(</span><span class="n">r</span> <span class="o">=</span> <span class="n">real</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="n">imag</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>当参数有类型注释且有默认值时，要在 <code>=</code> 周围加上空格</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -785,14 +785,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
-<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="n">sep</span><span class="p">:</span> <span class="n">AnyStr</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span> <span class="o">...</span>
-<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">AnyStr</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span> <span class="o">...</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="n">sep</span><span class="p">:</span> <span class="n">AnyStr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span> <span class="o">...</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="n">AnyStr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span> <span class="o">...</span>
 
 <span class="c1"># Wrong:</span>
-<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span> <span class="o">...</span>
+<span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> <span class="o">...</span>
 <span class="k">def</span> <span class="nf">munge</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">AnyStr</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span> <span class="o">...</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -802,21 +802,21 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">'blah'</span><span class="p">:</span>
     <span class="n">do_blah_thing</span><span class="p">()</span>
 <span class="n">do_one</span><span class="p">()</span>
 <span class="n">do_two</span><span class="p">()</span>
 <span class="n">do_three</span><span class="p">()</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>最好不要这样，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Wrong:</span>
 <span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">'blah'</span><span class="p">:</span> <span class="n">do_blah_thing</span><span class="p">()</span>
 <span class="n">do_one</span><span class="p">();</span> <span class="n">do_two</span><span class="p">();</span> <span class="n">do_three</span><span class="p">()</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -825,11 +825,11 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Wrong:</span>
 <span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">'blah'</span><span class="p">:</span> <span class="n">do_blah_thing</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span> <span class="n">total</span> <span class="o">+=</span> <span class="n">x</span>
 <span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="n">delay</span><span class="p">()</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>绝对不要这样，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -842,32 +842,32 @@
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Wrong:</span>
 <span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">'blah'</span><span class="p">:</span> <span class="n">do_blah_thing</span><span class="p">()</span>
 <span class="k">else</span><span class="p">:</span> <span class="n">do_non_blah_thing</span><span class="p">()</span>
 
 <span class="k">try</span><span class="p">:</span> <span class="n">something</span><span class="p">()</span>
 <span class="k">finally</span><span class="p">:</span> <span class="n">cleanup</span><span class="p">()</span>
 
-<span class="n">do_one</span><span class="p">();</span> <span class="n">do_two</span><span class="p">();</span> <span class="n">do_three</span><span class="p">(</span><span class="nb">long</span><span class="p">,</span> <span class="n">argument</span><span class="p">,</span>
+<span class="n">do_one</span><span class="p">();</span> <span class="n">do_two</span><span class="p">();</span> <span class="n">do_three</span><span class="p">(</span><span class="n">long</span><span class="p">,</span> <span class="n">argument</span><span class="p">,</span>
                              <span class="nb">list</span><span class="p">,</span> <span class="n">like</span><span class="p">,</span> <span class="n">this</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">'blah'</span><span class="p">:</span> <span class="n">one</span><span class="p">();</span> <span class="n">two</span><span class="p">();</span> <span class="n">three</span><span class="p">()</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 </ul>
 <h2 id="shi yao shi hou shi yong wei bu dou hao_1">什么时候使用尾部逗号</h2>
 <p>尾部逗号一般是可选的，除非是在构造单元素的 <code>tuple</code> 时它是强制性必须存在的，在 python2 的 <code>print</code> 中逗号是语法的一部分。为了清晰起见，推荐用（冗余的）圆括号包围起来：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="n">FILES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'setup.cfg'</span><span class="p">,)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Wrong:</span>
 <span class="n">FILES</span> <span class="o">=</span> <span class="s1">'setup.cfg'</span><span class="p">,</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>使用版本控制系统时冗余的尾部逗号通常非常有用，比如随着时间发展，由值或者是参数组成的 <code>list</code>，<code>import</code> 的内容不断增多的时候，在最后加上尾部逗号非常有用。一般的写法是每个值一行，然后在最后添加一个元素后面加上尾部逗号，最后在下面的另外一行加上右括号。但是如果元素都在同一行，那么就没有理由加尾部逗号（除非是上面提到的单元素 tuple）：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -877,22 +877,22 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="n">FILES</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">'setup.cfg'</span><span class="p">,</span>
     <span class="s1">'tox.ini'</span><span class="p">,</span>
     <span class="p">]</span>
 <span class="n">initialize</span><span class="p">(</span><span class="n">FILES</span><span class="p">,</span>
-           <span class="n">error</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+           <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
            <span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Wrong:</span>
 <span class="n">FILES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'setup.cfg'</span><span class="p">,</span> <span class="s1">'tox.ini'</span><span class="p">,]</span>
-<span class="n">initialize</span><span class="p">(</span><span class="n">FILES</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="bp">True</span><span class="p">,)</span>
-</pre></div>
+<span class="n">initialize</span><span class="p">(</span><span class="n">FILES</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">True</span><span class="p">,)</span>
+</code></pre></div>
 </td></tr></table>
 <h2 id="zhu shi">注释</h2>
 <p>和代码相冲突的注释比没有注释更糟糕，在代码改变之后永远第一时间更新相关注释。</p>
@@ -908,12 +908,12 @@
 <p>谨慎地使用行内注释。</p>
 <p>行内注释指的是和代码在同一行的注释，行内注释和代码应该用至少 2 个空格隔开，且以一个 <code>#</code> + 一个空格开始。</p>
 <p>行内注释一般没有必要，事实上还会分散注意力。不要写类似下面的注释，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>                 <span class="c1"># Increment x</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>                 <span class="c1"># Increment x</span>
+</code></pre></div>
 </td></tr></table>
 <p>但是有时候，这样写是很有用的，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>                 <span class="c1"># Compensate for border</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>                 <span class="c1"># Compensate for border</span>
+</code></pre></div>
 </td></tr></table>
 <h3 id="docstring">docstring</h3>
 <p>docstirng 的规则总结在 <a href="https://www.python.org/dev/peps/pep-0257/">PEP257</a> 内，其内容永远都不会改变。</p>
@@ -926,11 +926,11 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">"""Return a foobang</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="sd">"""Return a foobang</span>
 
 <span class="sd">Optional plotz says to frobnicate the bizbaz first.</span>
 <span class="sd">"""</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -983,8 +983,8 @@
 </li>
 <li>
 <p><code>single_trailing_underscore_</code>，用来避免和 python 内部的关键字相冲突</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Tkinter</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">(</span><span class="n">master</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">'ClassName'</span><span class="p">)</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Tkinter</span><span class="o">.</span><span class="n">Toplevel</span><span class="p">(</span><span class="n">master</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s1">'ClassName'</span><span class="p">)</span>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -1012,11 +1012,11 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
 
-<span class="n">VT_co</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'VT_co'</span><span class="p">,</span> <span class="n">covariant</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">KT_contra</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'KT_contra'</span><span class="p">,</span> <span class="n">contravariant</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</pre></div>
+<span class="n">VT_co</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'VT_co'</span><span class="p">,</span> <span class="n">covariant</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">KT_contra</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">'KT_contra'</span><span class="p">,</span> <span class="n">contravariant</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
 </td></tr></table>
 <h4 id="exception de ming zi">Exception 的名字</h4>
 <p>因为 exception 应该是个 class，所以使用 class 的规则即可。但是，如果某个 exception 确实是个 error，则应该给它加上 <code>Error</code> 后缀。</p>
@@ -1086,12 +1086,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
-<span class="k">if</span> <span class="n">foo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
+<span class="k">if</span> <span class="n">foo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 
 <span class="c1"># Wrong:</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">foo</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-</pre></div>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">foo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -1105,12 +1105,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
 
 <span class="c1"># Wrong:</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>前一种形式意味着生成的 function 对象是 <code>f</code> 而不是通用的 <code>&lt;lambda&gt;</code>。这在回溯和 stirng 显示的时候更加有用。赋值语句会消除 lambda 表达式优于显式使用 def 语句的唯一优势。（即 lambda 表达式可以内嵌在一个更大的表达式中）</p>
 </li>
@@ -1134,12 +1134,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Yes</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Yes</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">platform_specific_module</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="n">platform_specific_module</span> <span class="o">=</span> <span class="bp">None</span>
-</pre></div>
+    <span class="n">platform_specific_module</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div>
 </td></tr></table>
 <p>一个光秃秃的 <code>except:</code> 块会捕捉到 <code>SystemExit</code> 和 <code>KeyboardInterrupt</code>，导致很难通过 <code>Control-C</code> 的方式中断一个程序，而且会掩盖其他问题。如果你想捕获程序的所有异常，使用 <code>except Exception:</code>（光秃秃的 <code>except</code> 相当于 <code>except BaseException:</code>）。</p>
 <p>允许使用使用光秃秃的 except 的两种情况：</p>
@@ -1157,11 +1157,11 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
     <span class="n">process_data</span><span class="p">()</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
     <span class="k">raise</span> <span class="n">DataProcessingFailedError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">))</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>这个语法只有 python3 才支持，它可以避免和原来基于逗号的语法之间的歧义。</p>
 </li>
@@ -1184,7 +1184,7 @@
 12
 13
 14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
@@ -1199,7 +1199,7 @@
 <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
     <span class="c1"># Will also catch KeyError raised by handle_value()</span>
     <span class="k">return</span> <span class="n">key_not_found</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -1213,14 +1213,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">begin_transaction</span><span class="p">():</span>
     <span class="n">do_stuff_in_transaction</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
 
 <span class="c1"># Wrong:</span>
 <span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
     <span class="n">do_stuff_in_transaction</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>后面这个例子没有提供任何信息来指示 <code>__enter__</code> 和 <code>__exit__</code> 两个 method 除了在 tansaction 之后关闭连接之外做的其他事情，。在这种情况下，明确指明很重要。</p>
 </li>
@@ -1249,17 +1249,17 @@
 20
 21
 22
-23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 
 <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
 <span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
 <span class="c1"># Wrong:</span>
@@ -1272,7 +1272,7 @@
     <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -1286,12 +1286,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="k">if</span> <span class="n">foo</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">):</span>
 
 <span class="c1"># Wrong:</span>
 <span class="k">if</span> <span class="n">foo</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'bar'</span><span class="p">:</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -1300,16 +1300,16 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
 
 <span class="c1"># Wrong:</span>
 <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>如果检查一个对象是否为 string，记得它有可能是个 unicode string！在 python 2 中，<code>str</code> 和 <code>unicode</code> 有相同的基类 <code>basestring</code>，所以你可以这么做：</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+</code></pre></div>
 </td></tr></table>
 <p>注意在 python 3 里面，<code>unicode</code> 和 <code>basestring</code> 都不再存在了（只有 <code>str</code>），并且 bytes 对象不再是 string 的一种，它是整数序列。</p>
 </li>
@@ -1321,14 +1321,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">seq</span><span class="p">:</span>
 <span class="k">if</span> <span class="n">seq</span><span class="p">:</span>
 
 <span class="c1"># Wrong:</span>
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -1340,18 +1340,18 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 <span class="k">if</span> <span class="n">greeting</span><span class="p">:</span>
 
 <span class="c1"># Wrong:</span>
-<span class="k">if</span> <span class="n">greeting</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
-</pre></div>
+<span class="k">if</span> <span class="n">greeting</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</code></pre></div>
 </td></tr></table>
 <p>更糟糕的情况：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
-<span class="k">if</span> <span class="n">greeting</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
-</pre></div>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Wrong:</span>
+<span class="k">if</span> <span class="n">greeting</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -1361,13 +1361,13 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Wrong:</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Wrong:</span>
 <span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">42</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 </ul>
@@ -1388,8 +1388,8 @@
 </li>
 <li>
 <p>如果代码想用另外一种方式使用函数注解，推荐在文件顶部添加这样一条注释：</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">type</span><span class="p">:</span> <span class="k">ignore</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="err"># type: ignore</span>
+</code></pre></div>
 </td></tr></table>
 <p>这会告诉 type checker 忽略所有的注解（在 <a href="https://www.python.org/dev/peps/pep-0484">PEP484</a> 中可以找到更加详细的关于细颗粒度的关闭 type checker 的报错）</p>
 </li>
@@ -1428,7 +1428,7 @@
 12
 13
 14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Correct:</span>
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># Correct:</span>
 
 <span class="n">code</span><span class="p">:</span> <span class="nb">int</span>
 
@@ -1443,7 +1443,7 @@
 
 <span class="k">class</span> <span class="nc">Test</span><span class="p">:</span>
     <span class="n">result</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">0</span>  <span class="c1"># No spaces around equality sign</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -1479,11 +1479,11 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_0_summary.html">Python 学习笔记 #0 —— 新的开始</a></li>
       <li><a href="https://qiangu.cool/posts/cs/python_notes_10_fp_in_python.html">Python 学习笔记 #10 —— Python 中的 FP</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html">Python 学习笔记 #3 —— Docstring 风格</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_9_function_arguments.html">Python 学习笔记 #9 —— Function Arguments 函数参数</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_7_generator.html">Python 学习笔记 #7 —— Generator 生成器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
     </ul>
   </div>
 

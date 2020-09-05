@@ -214,12 +214,12 @@
 <p><strong>无向图</strong></p>
 <p>由 3 个节点组成的一个无向图。
 脚本（example1.dot）：</p>
-<div class="highlight"><pre><span></span><span class="n">graph</span> <span class="n">example1</span> <span class="err">{</span>
-    <span class="n">node1</span> <span class="c1">-- node2</span>
-    <span class="n">node2</span> <span class="c1">-- node3</span>
-    <span class="n">node3</span> <span class="c1">-- node4</span>
+<div class="highlight"><pre><span></span><code><span class="err">graph example1 {</span>
+<span class="err">    node1 -- node2</span>
+<span class="err">    node2 -- node3</span>
+<span class="err">    node3 -- node4</span>
 <span class="err">}</span>
-</pre></div>
+</code></pre></div>
 <p>结果：</p>
 <p><img alt="example1" src="/images/drawing-fsm-state-diagram-using-graphviz/example1.png"/></p>
 </li>
@@ -227,12 +227,12 @@
 <p><strong>有向图</strong></p>
 <p>还是上面的例子，不过修改为有向图。</p>
 <p>脚本（example2.dot）：</p>
-<div class="highlight"><pre><span></span><span class="n">digraph</span> <span class="n">example2</span> <span class="err">{</span>
-    <span class="n">node1</span> <span class="o">-&gt;</span> <span class="n">node2</span>
-    <span class="n">node2</span> <span class="o">-&gt;</span> <span class="n">node3</span>
-    <span class="n">node3</span> <span class="o">-&gt;</span> <span class="n">nod31</span>
+<div class="highlight"><pre><span></span><code><span class="err">digraph example2 {</span>
+<span class="err">    node1 -&gt; node2</span>
+<span class="err">    node2 -&gt; node3</span>
+<span class="err">    node3 -&gt; nod31</span>
 <span class="err">}</span>
-</pre></div>
+</code></pre></div>
 <p>结果：</p>
 <p><img alt="example2" src="/images/drawing-fsm-state-diagram-using-graphviz/example2.png"/></p>
 </li>
@@ -240,7 +240,7 @@
 <p><strong>添加属性</strong></p>
 <p>我们还可以控制 node 的属性（节点形状、颜色、边箭头的形状等），来产生不同的结果。</p>
 <p>脚本（example3.dot）：</p>
-<div class="highlight"><pre><span></span><span class="n">digraph</span> <span class="n">example3</span> <span class="err">{</span>
+<div class="highlight"><pre><span></span><code><span class="n">digraph</span> <span class="n">example3</span> <span class="err">{</span>
     <span class="n">node1</span> <span class="o">-&gt;</span> <span class="n">node2</span>
     <span class="n">node2</span> <span class="o">-&gt;</span> <span class="n">node3</span>
     <span class="n">node3</span> <span class="o">-&gt;</span> <span class="n">node1</span>
@@ -249,7 +249,7 @@
     <span class="n">node2</span> <span class="p">[</span><span class="n">shape</span> <span class="o">=</span> <span class="n">triangle</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="ss">"state2"</span><span class="p">,</span> <span class="n">fillcolor</span> <span class="o">=</span> <span class="ss">"#345678"</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="n">filled</span><span class="p">]</span>
     <span class="n">node3</span> <span class="p">[</span><span class="n">shape</span> <span class="o">=</span> <span class="n">box</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="ss">"state3"</span><span class="p">,</span> <span class="n">fillcolor</span> <span class="o">=</span> <span class="ss">"#567890"</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="n">unfilled</span><span class="p">]</span>
 <span class="err">}</span>
-</pre></div>
+</code></pre></div>
 <p>结果：</p>
 <p><img alt="example3" src="/images/drawing-fsm-state-diagram-using-graphviz/example3.png"/></p>
 </li>
@@ -257,12 +257,12 @@
 <p><strong>标注</strong></p>
 <p>上面的结果和我们的状态转移图相比，还差一点就是转移箭头边上的标注，我们可以在 edge 后面加上 <code>label</code> 属性来标注信息。</p>
 <p>脚本（example4.dot）：</p>
-<div class="highlight"><pre><span></span><span class="n">digraph</span> <span class="n">example4</span> <span class="err">{</span>
-    <span class="n">node1</span> <span class="o">-&gt;</span> <span class="n">node2</span> <span class="p">[</span><span class="n">label</span> <span class="o">=</span> <span class="ss">"condition1"</span><span class="p">]</span>
-    <span class="n">node2</span> <span class="o">-&gt;</span> <span class="n">node3</span> <span class="p">[</span><span class="n">label</span> <span class="o">=</span> <span class="ss">"condition2"</span><span class="p">]</span>
-    <span class="n">node3</span> <span class="o">-&gt;</span> <span class="n">node1</span> <span class="p">[</span><span class="n">label</span> <span class="o">=</span> <span class="ss">"condition3"</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><code><span class="err">digraph example4 {</span>
+<span class="err">    node1 -&gt; node2 [label = "condition1"]</span>
+<span class="err">    node2 -&gt; node3 [label = "condition2"]</span>
+<span class="err">    node3 -&gt; node1 [label = "condition3"]</span>
 <span class="err">}</span>
-</pre></div>
+</code></pre></div>
 <p>结果：</p>
 <p><img alt="example4" src="/images/drawing-fsm-state-diagram-using-graphviz/example4.png"/></p>
 </li>
@@ -270,36 +270,36 @@
 <p>以上的 4 个例子就足够我们画 FSM 的状态转移图了。更加详细的说明参考官方文档和一篇文章：<a href="http://www.openfoundry.org/en/foss-programs/8820-graphviz-">Graphviz - 用指令來畫關係圖吧！</a></p>
 <h3 id="command">Command</h3>
 <p>Graphviz 的命令格式为</p>
-<div class="highlight"><pre><span></span><span class="n">cmd</span> <span class="p">[</span> <span class="n">flags</span> <span class="p">]</span> <span class="p">[</span> <span class="n">input</span> <span class="n">files</span> <span class="p">]</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">cmd</span> <span class="p">[</span> <span class="n">flags</span> <span class="p">]</span> <span class="p">[</span> <span class="n">input</span> <span class="n">files</span> <span class="p">]</span>
+</code></pre></div>
 <p>其中，cmd 可以是它包含的几个工具 <code>dot</code>、<code>neato</code>、<code>circo</code>、<code>fdp</code>、<code>osage</code>、<code>sfdp</code>、<code>twopi</code>，我们可以查看 man <cmd> 来看它们的区别，也可以直接运行看结果中的区别。</cmd></p>
 <p>其中，flags 可以设置相关属性，比如 <code>-Tformat</code>，如果我们需要产生 PNG 图片，那么这里就应该是 <code>-Tpng</code>；再比如 <code>-o</code> 设置输出目的地。</p>
 <p>所以我们上面 example1 的命令格式为</p>
-<div class="highlight"><pre><span></span><span class="n">dot</span> <span class="n">example1</span><span class="p">.</span><span class="n">dot</span> <span class="o">-</span><span class="n">Tpng</span> <span class="o">-</span><span class="n">o</span> <span class="n">exampl1</span><span class="p">.</span><span class="n">png</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">dot example1.dot -Tpng -o exampl1.png</span>
+</code></pre></div>
 <p>example2，example3，exampl4 同理。</p>
 <p><br/></p>
 <h2 id="example_1">Example</h2>
 <hr/>
 <p>下面是实际程序中的一个例子：</p>
 <p>dot 脚本：</p>
-<div class="highlight"><pre><span></span><span class="n">digraph</span> <span class="n">fsm</span> <span class="err">{</span>                                                               
-       <span class="ss">"a"</span> <span class="o">-&gt;</span> <span class="ss">"a"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"a"</span> <span class="o">-&gt;</span> <span class="ss">"b"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/0"</span><span class="p">]</span>
-       <span class="ss">"b"</span> <span class="o">-&gt;</span> <span class="ss">"c"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"b"</span> <span class="o">-&gt;</span> <span class="ss">"d"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/0"</span><span class="p">]</span>
-       <span class="ss">"c"</span> <span class="o">-&gt;</span> <span class="ss">"a"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"c"</span> <span class="o">-&gt;</span> <span class="ss">"d"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/0"</span><span class="p">]</span>
-       <span class="ss">"d"</span> <span class="o">-&gt;</span> <span class="ss">"e"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"d"</span> <span class="o">-&gt;</span> <span class="ss">"f"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/1"</span><span class="p">]</span>
-       <span class="ss">"e"</span> <span class="o">-&gt;</span> <span class="ss">"a"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"e"</span> <span class="o">-&gt;</span> <span class="ss">"f"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/1"</span><span class="p">]</span>
-       <span class="ss">"f"</span> <span class="o">-&gt;</span> <span class="ss">"f"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/1"</span><span class="p">]</span>
-       <span class="ss">"f"</span> <span class="o">-&gt;</span> <span class="ss">"g"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"g"</span> <span class="o">-&gt;</span> <span class="ss">"a"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"0/0"</span><span class="p">]</span>
-       <span class="ss">"g"</span> <span class="o">-&gt;</span> <span class="ss">"f"</span> <span class="p">[</span><span class="n">label</span><span class="o">=</span> <span class="ss">"1/1"</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><code><span class="err">digraph fsm {                                                               </span>
+<span class="err">       "a" -&gt; "a" [label= "0/0"]</span>
+<span class="err">       "a" -&gt; "b" [label= "1/0"]</span>
+<span class="err">       "b" -&gt; "c" [label= "0/0"]</span>
+<span class="err">       "b" -&gt; "d" [label= "1/0"]</span>
+<span class="err">       "c" -&gt; "a" [label= "0/0"]</span>
+<span class="err">       "c" -&gt; "d" [label= "1/0"]</span>
+<span class="err">       "d" -&gt; "e" [label= "0/0"]</span>
+<span class="err">       "d" -&gt; "f" [label= "1/1"]</span>
+<span class="err">       "e" -&gt; "a" [label= "0/0"]</span>
+<span class="err">       "e" -&gt; "f" [label= "1/1"]</span>
+<span class="err">       "f" -&gt; "f" [label= "1/1"]</span>
+<span class="err">       "f" -&gt; "g" [label= "0/0"]</span>
+<span class="err">       "g" -&gt; "a" [label= "0/0"]</span>
+<span class="err">       "g" -&gt; "f" [label= "1/1"]</span>
 <span class="err">}</span>
-</pre></div>
+</code></pre></div>
 <p>使用 dot 生成的结果：</p>
 <p><img alt="fsm_dot" src="/images/drawing-fsm-state-diagram-using-graphviz/fsm_dot.png"/></p>
 <p>使用 circo 生成的结果：</p>

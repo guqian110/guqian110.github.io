@@ -210,20 +210,20 @@
 <ol>
 <li>
 <p>开启 telnet 服务</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>system<span class="o">(</span><span class="s2">"telnetd -l /bin/sh"</span><span class="o">)</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>system<span class="o">(</span><span class="s2">"telnetd -l /bin/sh"</span><span class="o">)</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
 <p>设置 IP 地址</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>system<span class="o">(</span><span class="s2">"ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up"</span><span class="o">)</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>system<span class="o">(</span><span class="s2">"ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up"</span><span class="o">)</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
 <p>将板子的以太网配置状态显示在 serial monitor 中</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>system<span class="o">(</span><span class="s2">"ifconfig eth0 &gt; /dev/ttyACM0"</span><span class="o">)</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>system<span class="o">(</span><span class="s2">"ifconfig eth0 &gt; /dev/ttyACM0"</span><span class="o">)</span>
+</code></pre></div>
 </td></tr></table>
 </li>
 </ol>
@@ -245,7 +245,7 @@
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kr">void</span> <span class="nb">setup</span><span class="p">()</span> <span class="p">{</span>
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kr">void</span> <span class="nb">setup</span><span class="p">()</span> <span class="p">{</span>
   <span class="c1">// put your setup code here, to run once:</span>
   <span class="c1">// Initial serial prot</span>
   <span class="nf">Serial</span><span class="p">.</span><span class="nf">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
@@ -263,7 +263,7 @@
 
   <span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="step 2: connect,upload">Step 2: Connect，Upload</h3>
 <ol>
@@ -289,16 +289,16 @@
 </li>
 <li>
 <p>查看 PC 的网络配置</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ ifconfig eth0
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>$ ifconfig eth0
+</code></pre></div>
 </td></tr></table>
 <p>查询结果</p>
 <p><img alt="pc_ethernet_quary" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_quary.png"/></p>
 </li>
 <li>
 <p>打开 PC 的终端 Terminal，使用 telnet 登录</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>telnet <span class="m">169</span>.254.1.1
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>telnet <span class="m">169</span>.254.1.1
+</code></pre></div>
 </td></tr></table>
 <p>登录结果，如图</p>
 <p><img alt="pc_ethernet_login" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_telnet_login.png"/></p>
@@ -411,19 +411,19 @@
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> home
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> home
 $ <span class="nb">pwd</span>
 
 // result is root dirctory
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>解决方法就是将命令写在一行</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> home<span class="p">;</span> <span class="nb">pwd</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> home<span class="p">;</span> <span class="nb">pwd</span>
 
 // result is home directory
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p><br/></p>
 <h2 id="reference">Reference</h2>
@@ -453,11 +453,11 @@ $ <span class="nb">pwd</span>
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
-      <li><a href="https://qiangu.cool/posts/tools/learning_vim_survival.html">学习 Vim 存活</a></li>
       <li><a href="https://qiangu.cool/posts/embedded/learn_arduino_series_2_intel_galileo_development_board.html">学习 Arduino #2 初识 Intel Galileo 开发板</a></li>
       <li><a href="https://qiangu.cool/posts/embedded/learn_arduino_series_1_getting_started.html">学习 Arduino #1 Arduino 入门</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_doxygentoolkit.html">学习 Vim 插件 DoxygenToolKit.vim</a></li>
       <li><a href="https://qiangu.cool/posts/tools/install_ise_modelsim_on_ubuntu.html">Ubuntu 下安装 ISE & Modelsim</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_survival.html">学习 Vim 存活</a></li>
     </ul>
   </div>
 

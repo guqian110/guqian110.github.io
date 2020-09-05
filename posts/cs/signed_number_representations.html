@@ -187,10 +187,10 @@
 <p>用 8 bit 表示一个数字，因为有符号位的存在，可以表示的范围为 (-127, -0, +0, +127) 。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>+5 的 机器数 = 0000_0101 ；真值 = + 000_0101
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>+5 的 机器数 = 0000_0101 ；真值 = + 000_0101
 
 -5 的 机器数 = 1000_0101 ；真值 = - 000_0101
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>这种机器数的编码方式称为 <a href="http://en.wikipedia.org/wiki/Signed_magnitude#Signed_magnitude_representation"><em>原码</em></a> (<code>signed-magnitude</code>) ，是机器数编码方式中的一种。</p>
 <blockquote>
@@ -204,19 +204,19 @@
 <h4 id="bian ma gui ze">编码规则</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>正数：  0_xxxxxxx
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>正数：  0_xxxxxxx
 
 负数：  1_xxxxxxx
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>8 bit 的原码可以表示的范围是 [ -127, -0, +0, +127 ]，共 255 个数</p>
 <h4 id="ji suan fa ze">计算法则</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span># 两数符号相同：  低位相加，最高位的符号位不变（当低位相加产生进位时，溢出 Overflow）
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code># 两数符号相同：  低位相加，最高位的符号位不变（当低位相加产生进位时，溢出 Overflow）
 
 # 两数符号不同：  比较绝对值的大小，差的绝对值 = 大数 - 小数 ，符号位和大数的符号位相同
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h4 id="que dian">缺点</h4>
 <ol>
@@ -252,10 +252,10 @@
 <h4 id="bian ma gui ze_1">编码规则</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>正数    反码 = 原码
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>正数    反码 = 原码
 
 负数    反码 = 符号位不变，其他位取反
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>8 bit 的反码可以表示的范围是 [ -127, -0, +0, +127 ]，共 255 个数</p>
 <h4 id="ji suan fa ze_1">计算法则</h4>
@@ -297,10 +297,10 @@
 <h4 id="bian ma gui ze_2">编码规则</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>正数    补码 = 原码
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>正数    补码 = 原码
 
 负数    补码 = 反码 + 1
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>8 bit 补码可以表示的范围是 [ -128, -1, +0, +127 ]，共 256 个数 。</p>
 <p>目前大多数计算机内部使用的都是补码，所以对于编程中的 32 位 <code>int</code> 型变量，它可以表示的范围就是 [ -2^32, +2^32 - 1] 。</p>
@@ -320,13 +320,13 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>如果有个手表的时间为 6 点，实际时间为 4 点，那么如何校准呢？
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>如果有个手表的时间为 6 点，实际时间为 4 点，那么如何校准呢？
 
 答案有两种方法：
 
 1. 逆时针转动  2，也就是做 减法 6 - 2 = 4
 2. 顺时针转动 10, 也就是做 加法 (6 + 10) mod 12 = 4
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>从这个例子中就可以很明白的看到 <em>减法</em> 是如何转化为 <em>加法</em> 的，也就是如何将一个 <em>负数</em> 转化为 <em>正数</em>的 。</p>
 <p>即有公式：</p>
@@ -368,13 +368,13 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>  1000_0010              130                  -126
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>  1000_0010              130                  -126
 + 1111_1000     =&gt;   +   256          =&gt;  +   -  8
 --------------      ---------------      -----------
 1_0111_1010              122 + 256             122
 
                        无符号数（ok）        有符号数（error）
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>计算机的加法器在做完计算之后，根据最高位产生的进位设置 <em>进位标志</em> ，同时根据最高位和次高位产生的进位的异或设置 <em>溢出标志</em> 。</p>
 <p>如果看作无符号数 130 和 248 相加，计算结果是 122 进 1，也就是 122+256，这个结果是对的 ; 如果把这两个操作数看作有符号数 -126 和 -8 相加，计算结果是错的，因为产生了溢出 。</p>

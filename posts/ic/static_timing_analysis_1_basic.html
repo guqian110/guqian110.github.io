@@ -195,8 +195,8 @@
 <p>时钟信号要提供给整个电路的时序单元，所以时钟信号线非常长，并构成分布式的 RC 网路。它的延时与时钟线的长度、时序单元的负载电容、个数有关，由于时钟线长度及负载不同，会导致时钟信号到达相邻两个时序单元的时间不同，这个时间上的偏差就是 时钟偏移 <code>Skew</code>。如下图所示：</p>
 <p><img alt="skew" src="/images/static-timing-analysis-1-basic/skew.jpg"/></p>
 <p>假设时钟信号达到两个 DFF 的延时分别为 Tc1 和 Tc2，用 Tskew 来表示它们之间的时钟偏移，则计算公式如下：</p>
-<div class="highlight"><pre><span></span><span class="n">Tskew</span> <span class="o">=</span> <span class="n">Tc2</span> <span class="o">-</span> <span class="n">Tc1</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Tskew = Tc2 - Tc1</span>
+</code></pre></div>
 <p>根据差值可以分为正偏移和负偏移：</p>
 <ul>
 <li>
@@ -375,8 +375,8 @@
 </blockquote>
 <h3 id="theory">Theory</h3>
 <p>STA 是基于前面介绍的时序路径的，在分析时，计算时序路径上数据信号的到达时间和要求时间的差值，以判断是否存在违反设计规则的错误。</p>
-<div class="highlight"><pre><span></span><span class="n">Slack</span> <span class="o">=</span> <span class="n">Trequired_time</span> <span class="o">-</span> <span class="n">Tarrival_time</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Slack = Trequired_time - Tarrival_time</span>
+</code></pre></div>
 <p>如果时序裕量 Slack 为正，表示满足时序，负值表示不满足时序。STA 按照上式分析设计中所有路径，如果 Slack 为负值，则该路径为影响设计的关键路径，需要修改设计以达到时序要求。</p>
 <p>STA 是通过 &ldquo; 穷举法 &rdquo; 抽取整个设计电路的所有时序路径，按照约束条件分析电路中是否有违反设计规则的问题，并计算出设计的最高频率。</p>
 <p><br/></p>
@@ -431,15 +431,15 @@
 <p>数据的时延：Tc1 + Tco + Tcomb</p>
 <p>时钟的时延：Tc2 + T  </p>
 <p>要满足 setup time 的要求，则有 Tc2 + T - (Tc1 + Tco + Tcomb) &gt;= Tsu，整理一下即：</p>
-<div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">&gt;=</span> <span class="n">Tsu</span> <span class="o">+</span> <span class="n">Tco</span> <span class="o">+</span> <span class="n">Tcomb</span> <span class="o">-</span> <span class="n">Tskew</span>     <span class="c1">--Eq1</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">T &gt;= Tsu + Tco + Tcomb - Tskew     --Eq1</span>
+</code></pre></div>
 <p>所以可以确定出系统的最大工作频率：</p>
-<div class="highlight"><pre><span></span><span class="n">Fmax</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">Tsu</span> <span class="o">+</span> <span class="n">Tco</span> <span class="o">+</span> <span class="n">Tcomb</span> <span class="o">-</span> <span class="n">Tskew</span><span class="p">)</span>     <span class="c1">-- Eq2</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Fmax &lt;= 1 / (Tsu + Tco + Tcomb - Tskew)     -- Eq2</span>
+</code></pre></div>
 <p>因为 Tc1, Tc2, Tco, Tsu 都是固定值，所以一个系统的最大工作频率取决 Tcomb。</p>
 <p>而对于 hold time，则有不等式：Tc1 + Tco + Tcomb &gt; Tc2 + Th，整理一下就有：</p>
-<div class="highlight"><pre><span></span><span class="n">Tco</span> <span class="o">+</span> <span class="n">Tcomb</span> <span class="o">-</span> <span class="n">Tskew</span> <span class="o">&gt;</span> <span class="n">Th</span>        <span class="c1">-- Eq3</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Tco + Tcomb - Tskew &gt; Th        -- Eq3</span>
+</code></pre></div>
 <p>上一级 DFF 的输出数据不能传输太快，侵占了下一级 DFF 正在锁存的 hold time，也就是说限制了数据的传输速度的上限。</p>
 <p>有了前面的 3 个公式，就可以解决大部分问题了。比如华为某年的笔试题：</p>
 <p>下图中时钟周期为 T, 触发器 D1 的建立时间最大为 T1max，最小为 T1min。组合逻辑电路最大延迟为 T2max, 最小为 T2min。问，触发器 D2 的建立时间 T3 和保持时间应满足什么条件 ?</p>
@@ -447,11 +447,11 @@
 <p>答：</p>
 <p>题目中 Tco = 0，Tskew = 0</p>
 <p>对于 setup time 的要求，将 Tco = 0，Tskew = 0 代入 Eq1 得：</p>
-<div class="highlight"><pre><span></span><span class="n">Tsu</span> <span class="o">&lt;=</span> <span class="err">{</span><span class="n">T</span> <span class="o">-</span> <span class="n">Tcomb</span><span class="err">}</span><span class="k">min</span> <span class="o">=</span> <span class="n">T</span> <span class="o">-</span> <span class="n">T2max</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Tsu &lt;= {T - Tcomb}min = T - T2max</span>
+</code></pre></div>
 <p>对于 hold time 的要求，将 Tco = 0，Tskew = 0 代入 Eq2 得：</p>
-<div class="highlight"><pre><span></span><span class="n">Th</span> <span class="o">&lt;=</span> <span class="err">{</span><span class="n">Tcomb</span><span class="err">}</span><span class="k">min</span> <span class="o">=</span> <span class="n">T2min</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Th &lt;= {Tcomb}min = T2min</span>
+</code></pre></div>
 <p><br/></p>
 <h2 id="ref_1">Ref</h2>
 <p><a href="http://book.douban.com/subject/11523088/">Xilinx FPGA 开发实用教程</a></p>

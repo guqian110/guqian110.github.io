@@ -242,11 +242,11 @@
 <h3 id="xcorr">xcorr</h3>
 <p>在 Matlab 中，计算自相关和互相关，可以使用同一个函数：<code>xcorr</code>。</p>
 <p>自相关：</p>
-<div class="highlight"><pre><span></span><span class="k">c</span> <span class="o">=</span> <span class="n">xcorr</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">c = xcorr(x);</span>
+</code></pre></div>
 <p>互相关：</p>
-<div class="highlight"><pre><span></span><span class="k">c</span> <span class="o">=</span> <span class="n">xcorr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">c = xcorr(x, y);</span>
+</code></pre></div>
 <p>因为两个长度为 N 的序列进行相关，可以知道最多有 2N - 1 个非 0 的移位相乘结果，所以 xcorr 的返回结果就是长度为 2N - 1 的向量。（如果其中一个序列的长度小于 N，则会先补零再计算相关）</p>
 <p>用 <code>help xcorr</code> 来查看详细的函数说明。</p>
 <p>下面举个使用例子：</p>
@@ -256,18 +256,18 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
 <span class="n">y</span> <span class="p">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">];</span>
 
 <span class="c">%correlation</span>
 <span class="n">c1</span> <span class="p">=</span> <span class="n">xcorr</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 <span class="n">c2</span> <span class="p">=</span> <span class="n">xcorr</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
 <span class="n">c3</span> <span class="p">=</span> <span class="n">xcorr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">);</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>对于序列 x = [1, 2, 3]，移位相乘、求和，可以得到结果：</p>
-<div class="highlight"><pre><span></span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">3, 8, 14, 8, 3</span>
+</code></pre></div>
 <p>对于序列 y 类似。</p>
 <p>对于 x、y 的互相关，当两个序列对齐的时候，相关性最高（归一化后为 1，意味着两个序列线性相关）</p>
 <p>xcorr 默认的返回结果是没有经过归一化的，而通常的应用中都要求归一化以得到精确的估计。解决这一问题的方法就是使用 xcorr 函数提供的 <code>option</code> 选项：</p>
@@ -289,14 +289,14 @@
 <p>可以用 <code>corrcoef</code> 函数来求两个序列的相关系数，函数的返回值为一个 2&times;2 的矩阵，对角线上的值为两个序列的自相关系数，非对角线上的值为两个序列的互相关系数。</p>
 <p>在上面的例子中加入下面两句：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="p">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">];</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">z</span> <span class="p">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">];</span>
 <span class="n">c4</span> <span class="p">=</span> <span class="n">corrcoef</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">z</span><span class="p">);</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>返回结果为</p>
-<div class="highlight"><pre><span></span><span class="mi">1</span>   <span class="o">-</span><span class="mi">1</span>
-<span class="o">-</span><span class="mi">1</span>   <span class="mi">1</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">1   -1</span>
+<span class="err">-1   1</span>
+</code></pre></div>
 <p>因为 z 是 x 的线性函数，且系数为 -1，所以非对角线上的值为 -1。</p>
 <p><br/></p>
 <h2 id="ref_1">Ref</h2>

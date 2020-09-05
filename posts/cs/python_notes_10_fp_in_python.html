@@ -196,16 +196,16 @@
 <li>首先它必须很小，小到只有一行表达式</li>
 <li>其次它只会别调用一次（实际上因为 lambda 函数是匿名函数，没有函数名自然其他地方也无法调用）</li>
 </ul>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>lambda  [arg1 [, arg2, ... argN]: expression
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>lambda  [arg1 [, arg2, ... argN]: expression
+</code></pre></div>
 </td></tr></table>
 <p>把一个常规函数转换成 lambda 函数的方法很简单：把 def 替换成 lambda，并且省略掉函数名和参数的括号，以及 return 关键字。可以通过下面的变形来理解 lambda 函数，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
 
 <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h2 id="high-order function">High-order Function</h2>
 <p>高阶函数在学习 decorator 时已经接触过了，可以接收 function 作为参数，或者返回值的函数就是高阶函数，典型例子就是各种 decorator。</p>
@@ -221,8 +221,8 @@
 <p>这几个高阶函数都定义在 functools 模块中。</p>
 <h3 id="filter">Filter</h3>
 <p><code>filter</code> 函数顾名思义，就像一个过滤器一样，把符合条件的东西（数据）过滤出来，它接收两个参数，第一个参数是过滤函数；第二个参数是 <code>iterable</code> 对象，也就是待处理的数据对象。</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>filter(function, iterable)
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>filter(function, iterable)
+</code></pre></div>
 </td></tr></table>
 <p>举例说明，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -230,31 +230,31 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">odd</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">odd</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span>
 
 <span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-<span class="k">print</span> <span class="nb">filter</span><span class="p">(</span><span class="n">odd</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+<span class="nb">print</span> <span class="nb">filter</span><span class="p">(</span><span class="n">odd</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
 <span class="c1"># [1, 3, 5]</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>odd 是个过滤函数，如果数据是奇数则返回 1，偶数返回 0，也就是说会把奇数过滤出来。如果 odd 函数只在这里使用一次的话，可以结合前面的 lambda 函数写出更简洁的代码，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-<span class="k">print</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
 <span class="c1"># [1, 3, 5]</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>仔细观察一下 filter 函数就会发现它的功能和 list comprehension 非常相似，都是迭代一个 <code>iterable</code> 对象并筛选出符合条件的数据。所以上面的例子可以用 list comprehension 重写成下面的样子，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">print</span> <span class="p">[</span><span class="n">num</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span><span class="p">]</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">print</span> <span class="p">[</span><span class="n">num</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span><span class="p">]</span>
+</code></pre></div>
 </td></tr></table>
 <p>显然 list comprehension 的版本更加简洁，更加 <code>Pythonic</code>。</p>
 <h3 id="map">Map</h3>
 <p><code>map</code> 函数和 filter 函数类似，不同之处在于做映射而不是过滤。它也接收两个参数，第一个参数是映射函数，第二个参数是 <code>iterable</code> 对象，也就是待处理的数据对象。</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>map(function, iterable)
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>map(function, iterable)
+</code></pre></div>
 </td></tr></table>
 <p>举例说明，将上面的挑选奇数的例子改成求平方，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -262,13 +262,13 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
 
 <span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-<span class="k">print</span> <span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+<span class="nb">print</span> <span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
 <span class="c1"># [0, 1, 4, 9, 16, 25]</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>同理也可以写出 lambda 形式和 list comprehension，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -278,30 +278,30 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># using lambda</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># using lambda</span>
 <span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-<span class="k">print</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+<span class="nb">print</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
 <span class="c1"># [0, 1, 4, 9, 16, 25]</span>
 
 <span class="c1"># list comprehension</span>
-<span class="k">print</span> <span class="p">[</span><span class="n">num</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)]</span>
+<span class="nb">print</span> <span class="p">[</span><span class="n">num</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)]</span>
 <span class="c1"># [0, 1, 4, 9, 16, 25]</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="reduce">Reduce</h3>
 <p><code>reduce</code> 函数顾名思义，就是把一个 <code>iterable</code> 对象归并缩减成一个单一的值。它的语法规则也 filter，map 类似。</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>reduce(function, iterable)
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>reduce(function, iterable)
+</code></pre></div>
 </td></tr></table>
 <p>举例说明，将前面例子中的函数改为求和。普通模式的代码略，下面是 lambda 方式，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># lambda</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># lambda</span>
 <span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-<span class="k">print</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="n">m</span> <span class="o">+</span> <span class="n">n</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="n">m</span> <span class="o">+</span> <span class="n">n</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span>
 <span class="c1"># 15</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -325,32 +325,32 @@
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 
 <span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">exponent</span><span class="p">):</span> 
     <span class="k">return</span> <span class="n">base</span> <span class="o">**</span> <span class="n">exponent</span>
 
 <span class="n">square</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">power</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">cube</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">power</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">square</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="c1"># 9</span>
-<span class="k">print</span> <span class="n">cube</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">cube</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="c1"># 27</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>实际上，partial 接收的参数有 3 个，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">partical</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_args</span><span class="p">)</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">partical</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_args</span><span class="p">)</span>
+</code></pre></div>
 </td></tr></table>
 <p>一般创建 PFA 固定参数时都是采用关键字的方式，比如上面例子中固化 exponent 参数。在实际调用 square 时，会把位置参数放到 <code>*args</code>, <code>**kw_args</code> 的左边（必须符合 Python 的参数定义约束）。所以上面的例子实际上等价于，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">kw1</span> <span class="o">=</span> <span class="p">{</span><span class="err">&rsquo;</span><span class="n">exponent</span><span class="err">&lsquo;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">kw1</span> <span class="o">=</span> <span class="p">{</span><span class="err">&rsquo;</span><span class="n">exponent</span><span class="err">&lsquo;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
 <span class="n">kw2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'exponent'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
 <span class="n">square</span> <span class="o">=</span> <span class="n">power</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">**</span><span class="n">kw1</span><span class="p">)</span>
 <span class="n">cube</span> <span class="o">=</span> <span class="n">power</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">**</span><span class="n">kw2</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>但是如果下面这个例子中，我们就想固化中间的参数怎么办？显然调用 sum2 时只能通过关键字的方式传参。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -368,11 +368,11 @@
 13
 14
 15
-16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sum4</span><span class="p">(</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">,</span> <span class="n">num3</span><span class="p">,</span> <span class="n">num4</span><span class="p">):</span>
-    <span class="k">print</span> <span class="s1">'num1 = '</span><span class="p">,</span> <span class="n">num1</span>
-    <span class="k">print</span> <span class="s1">'num2 = '</span><span class="p">,</span> <span class="n">num2</span>
-    <span class="k">print</span> <span class="s1">'num3 = '</span><span class="p">,</span> <span class="n">num3</span>
-    <span class="k">print</span> <span class="s1">'num4 = '</span><span class="p">,</span> <span class="n">num4</span>
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sum4</span><span class="p">(</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">,</span> <span class="n">num3</span><span class="p">,</span> <span class="n">num4</span><span class="p">):</span>
+    <span class="nb">print</span> <span class="s1">'num1 = '</span><span class="p">,</span> <span class="n">num1</span>
+    <span class="nb">print</span> <span class="s1">'num2 = '</span><span class="p">,</span> <span class="n">num2</span>
+    <span class="nb">print</span> <span class="s1">'num3 = '</span><span class="p">,</span> <span class="n">num3</span>
+    <span class="nb">print</span> <span class="s1">'num4 = '</span><span class="p">,</span> <span class="n">num4</span>
     <span class="k">return</span> <span class="n">num1</span> <span class="o">+</span> <span class="n">num2</span> <span class="o">+</span> <span class="n">num3</span> <span class="o">+</span> <span class="n">num4</span>
 
 <span class="n">sum2</span> <span class="o">=</span> <span class="n">paritcal</span><span class="p">(</span><span class="n">sum4</span><span class="p">,</span> <span class="n">num2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num3</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -384,7 +384,7 @@
 <span class="c1"># num3 = 3</span>
 <span class="c1"># num4 = 4</span>
 <span class="c1"># 10</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>如果固化参数时没有用关键字，那么实际上就是按顺序固化</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -393,14 +393,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">sum3</span> <span class="o">=</span> <span class="n">partical</span><span class="p">(</span><span class="n">sum4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">sum3</span> <span class="o">=</span> <span class="n">partical</span><span class="p">(</span><span class="n">sum4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="n">sum3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="c1"># num1 = 1</span>
 <span class="c1"># num2 = 3</span>
 <span class="c1"># num3 = 2</span>
 <span class="c1"># num4 = 4</span>
 <span class="c1"># 10</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>可以看到 PFA 和待默认参数的函数很类似，但是 PFA 更灵活，原始函数不必提供参数默认值，而且可以得到很多偏函数调用，每个都能选择给不同参数默认值。</p>
 <h2 id="practice">Practice</h2>
@@ -439,16 +439,19 @@
     <a class="btn float-left" href="https://qiangu.cool/posts/cs/python_notes_9_function_arguments.html" title="Python 学习笔记 #9 —— Function Arguments 函数参数">
       <i class="fa fa-angle-left"></i> Previous Post
     </a>
+    <a class="btn float-right" href="https://qiangu.cool/posts/tools/learning_vim_pratical_vim_notes.html" title="学习 Vim 之《Pratical Vim》读书笔记">
+      Next Post <i class="fa fa-angle-right"></i>
+    </a>
   </div>
 
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_0_summary.html">Python 学习笔记 #0 —— 新的开始</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html">Python 学习笔记 #3 —— Docstring 风格</a></li>
       <li><a href="https://qiangu.cool/posts/cs/python_notes_9_function_arguments.html">Python 学习笔记 #9 —— Function Arguments 函数参数</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_7_generator.html">Python 学习笔记 #7 —— Generator 生成器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_5_comprehension.html">Python 学习笔记 #5 —— Comprehension 解析式</a></li>
     </ul>
   </div>
 

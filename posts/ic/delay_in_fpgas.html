@@ -235,24 +235,24 @@ interval is the fact that the switches in the output stage of a digital componen
 <li>
 <p>对于上升、下降、关闭时延，可以使用逗号按照顺序将三者分开：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="p">#(</span><span class="mh">1</span><span class="p">,</span> <span class="mh">2</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">assign</span> <span class="p">#(</span><span class="mh">1</span><span class="p">,</span> <span class="mh">2</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
 <span class="k">assign</span> <span class="p">#(</span><span class="mh">1</span><span class="p">,</span> <span class="mh">2</span><span class="p">,</span> <span class="mh">3</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>第一句表示一个异或门上升时延为 1，下降时延为 2，关闭和 X 时延为两者中的最小值，即 1；</p>
 <p>第二句表示一个异或门的上升、下降、关闭时延分别是 1，2，3，X 时延为 3 者中的最小值，即 1。</p>
 </li>
 <li>
 <p>对于最小值、典型值、最大值可以使用分号按照 min:typ:max 的顺序，将 3 者分开：</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">assgin</span> <span class="p">#(</span><span class="mh">2</span><span class="o">:</span><span class="mh">3</span><span class="o">:</span><span class="mh">4</span><span class="p">,</span> <span class="mh">3</span><span class="o">:</span><span class="mh">4</span><span class="o">:</span><span class="mh">5</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">assgin</span> <span class="p">#(</span><span class="mh">2</span><span class="o">:</span><span class="mh">3</span><span class="o">:</span><span class="mh">4</span><span class="p">,</span> <span class="mh">3</span><span class="o">:</span><span class="mh">4</span><span class="o">:</span><span class="mh">5</span><span class="p">)</span> <span class="n">A_xor_wire</span> <span class="o">=</span> <span class="n">eq0</span> <span class="o">^</span> <span class="n">eq1</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 <p>表示上升时延的 min:typ:max = 2:3:4，下降时延的 min:typ:max = 3:4:5。</p>
 </li>
 </ul>
 <p>需要注意到一点是，<strong>当延时出现在 wire 信号的定义处时，会和普通的赋值语句中的延时稍有不同。</strong></p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="p">#</span><span class="mh">10</span> <span class="n">wireA</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">wire</span> <span class="p">#</span><span class="mh">10</span> <span class="n">wireA</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 <p>这个叫做 <code>net delay</code>，它是和 wireA 绑定的，对 wireA 进行的任何赋值必须延迟 10 个时间单位之后才有效。当在连续赋值语句中，延时是属于连续赋值语句的一部分，而不属于 net，所以只在这一句中有效，对其他赋值语句没有影响。</p>
 <p><strong>一般来说，assign 语句中的延时特性会被综合工具忽略。</strong>因为综合工具需要完成的功能就是将代码描述映射为逻辑电路，而逻辑电路中的延时是由最基本的单元库和走线延时决定的，用户是无法对逻辑单元指定延时长度的，只能在综合、实现时添加时序约束条件，使工具尽量满足要求。</p>
@@ -335,23 +335,23 @@ chains can cause various design problems, including an increase in a design&rsqu
 <ol>
 <li>
 <p>left-hand-side</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">#</span><span class="mh">5</span> <span class="n">y</span> <span class="o">=</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">#</span><span class="mh">5</span> <span class="n">y</span> <span class="o">=</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
 <p>right-hand-side</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="p">#</span><span class="mh">5</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">y</span> <span class="o">=</span> <span class="p">#</span><span class="mh">5</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 </li>
 </ol>
 <p>但是这两种方法都有可能存在问题：</p>
 <p>以描述一个输出延迟为 12ns 的加法器，如果我们在左边添加延时，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">ci</span><span class="p">)</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">ci</span><span class="p">)</span>
     <span class="p">#</span><span class="mh">12</span> <span class="p">{</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>在下图时序中可以看到，当 t = 15 时，a 发生变化，触发 always 块，模块计算新的求和结果。但是，在接下来的 t = 15 ~ 24 内，a、b、ci 分别发生了变化，所以当从触发开始，到 12ns 过后该输出结果时，计算结果的值使用的是当前最新的值（可以看到，ci 的变化和输出之间仅仅有 3ns &lt; 12ns），而非触发时刻的值。</p>
 <p><img alt="timing1" src="/images/delay-in-fpgas/timing1.png"/></p>
@@ -362,9 +362,9 @@ chains can cause various design problems, including an increase in a design&rsqu
 </blockquote>
 <p>如果我们在右边添加延时，同样也会有问题。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">ci</span><span class="p">)</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">ci</span><span class="p">)</span>
     <span class="p">{</span><span class="n">ci</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="p">#</span><span class="mh">12</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>假设在 t = 15 时刻，a 发生变化，触发 always 块，模块会对当前的值进行采样，并且在 12ns 之后将采样结果输出，而在这 12ns 期间，输入端的任何变化都会被忽略，这意味着错误的旧值会一直保持下去，直到有新的变化重新触发。</p>
 <blockquote>
@@ -377,22 +377,22 @@ chains can cause various design problems, including an increase in a design&rsqu
 <ol>
 <li>
 <p>left-hand-side</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">#</span><span class="mh">5</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">#</span><span class="mh">5</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
 <p>right-hand-side</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">&lt;=</span> <span class="p">#</span><span class="mh">5</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">y</span> <span class="o">&lt;=</span> <span class="p">#</span><span class="mh">5</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 </li>
 </ol>
 <p>仍然使用上面加法器的例子，如果我们在左边添加延时，会和阻塞赋值存在一样的问题：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">ci</span><span class="p">)</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">ci</span><span class="p">)</span>
     <span class="p">#</span><span class="mh">12</span> <span class="p">{</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>当 t = 15 时，触发 always 块，但是输出时结果时，使用的是最新时刻的值。</p>
 <p>事实上，在任何非阻塞赋值的左边添加延时都会存在类似的问题。</p>
@@ -402,9 +402,9 @@ chains can cause various design problems, including an increase in a design&rsqu
 </blockquote>
 <p>在非阻塞赋值的右边添加延时，会准确地描述前面介绍的 <code>transport delays</code>：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">ci</span><span class="p">)</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">ci</span><span class="p">)</span>
     <span class="p">{</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">&lt;=</span> <span class="p">#</span><span class="mh">12</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>当 t = 15 时刻，a 发生变化触发 always 块，此时会立刻对输入进行采样，然后等待 12ns 之后输出；在将这一时间存放在时间队列之后，always 块会被下一个变化时间重新触发，这意味着输出会随着输入的变化在 12ns 之后变化，如下图所示：</p>
 <p><img alt="timing2" src="/images/delay-in-fpgas/timing2.png"/></p>
@@ -417,13 +417,13 @@ chains can cause various design problems, including an increase in a design&rsqu
 </blockquote>
 <h3 id="continuous assignment">Continuous assignment</h3>
 <p>连续赋值语句中，只能在左侧添加延时，在右边添加延时是非法的：</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="p">#</span><span class="mh">5</span> <span class="n">y</span> <span class="o">=</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">assign</span> <span class="p">#</span><span class="mh">5</span> <span class="n">y</span> <span class="o">=</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 <p>在连续赋值语句的左边添加延时，会准确描述惯性延时（<code>inertial delay</code>），一般推荐使用这种方式。</p>
 <p>以上面的加法器为例：</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="p">#</span><span class="mh">12</span> <span class="p">{</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">assign</span> <span class="p">#</span><span class="mh">12</span> <span class="p">{</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">ci</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 <p>如下图，在 t = 15 时刻，a 发生变化触发 assign 语句，应该在 t = 27 时刻输出结果，但是在 t = 17, 19, 21 时刻，a，b 分别发生了变化，这会导致有 3 个新的值，最终会只输出最后一个值（在 t = 21 + 12 = 33 时刻）。</p>
 <p><img alt="timing3" src="/images/delay-in-fpgas/timing3.png"/></p>
@@ -432,11 +432,11 @@ chains can cause various design problems, including an increase in a design&rsqu
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">ci</span><span class="p">)</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">always</span> <span class="p">@(</span><span class="n">a</span> <span class="k">or</span> <span class="n">b</span> <span class="k">or</span> <span class="n">ci</span><span class="p">)</span>
     <span class="n">tmp</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
 
 <span class="k">assign</span> <span class="p">#</span><span class="mh">12</span> <span class="p">{</span><span class="n">co</span><span class="p">,</span> <span class="n">sum</span><span class="p">}</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>仍然会准确描述组合逻辑中的 inertial delay。在每个输入变化时，tmp 的值都会改变，在 tmp 改变的 12ns 之后，连续赋值的输出发生变化。tmp 一旦发生变化，assign 会重新赋值，重新延时，所以这种方式会准确描述组合逻辑的 inertial delay。</p>
 <blockquote>

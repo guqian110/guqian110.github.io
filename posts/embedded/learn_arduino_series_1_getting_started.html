@@ -230,8 +230,8 @@
 <ol>
 <li>
 <p>解决包依赖关系：安装 openjdk-7-jre (openjdk-6-jre, sun's java 6 runtime, the sun-java6-jre package, the oracle JRE 7 应该也可以 )</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install openjdk-7-jre
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>sudo apt-get install openjdk-7-jre
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -239,10 +239,10 @@
 </li>
 <li>解压、切换到解压路径，运行目录下的 <code>arduino</code> 脚本<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>tar -zxvf arduino-1.0.5-linux32.tgz
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>tar -zxvf arduino-1.0.5-linux32.tgz
 <span class="nb">cd</span> arduino-1.0.5
 ./arduino
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 </ol>
@@ -250,14 +250,14 @@
 <ol>
 <li>
 <p>下载 &amp; 安装</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install arduino arduino-core
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>sudo apt-get install arduino arduino-core
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
 <p>运行</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ arduino
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>$ arduino
+</code></pre></div>
 </td></tr></table>
 </li>
 </ol>
@@ -294,7 +294,7 @@
 21
 22
 23
-24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="cm">/*</span>
 <span class="cm">Blink</span>
 <span class="cm">Turns on an LED on for one second, then off for one second, repeatedly.</span>
 
@@ -318,7 +318,7 @@
   <span class="nf">digitalWrite</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="kr">LOW</span><span class="p">);</span>    <span class="c1">// turn the LED off by making the voltage LOW</span>
   <span class="nf">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>               <span class="c1">// wait for a second</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>上面的这段代码对于一个标准 C++ 编译器来说是无效的，事实上当我们按下 IDE 界面上的 "Upload to I/O board" 按钮时，IDE 会拷贝一份代码，在开头加上 <code>include</code> 指示，在结尾加上一个很简单的 <code>main()</code> 函数，这样它就是一个有效的 C++ 程序了。</p>
 <p>Arduino 使用 <a href="http://en.wikipedia.org/wiki/GNU_toolchain">GNU toolchain</a> 和 AVR Libc 来编译程序的，使用 AVRdude 把程序下载到板子上。因为 Arduino 平台采用的是 Atmel 的微控制器，所以 Atmel 的开发环境 AVR Studio 或者更新的 Atmel Studio 应该也可以作为 Arduino 的开发环境。</p>

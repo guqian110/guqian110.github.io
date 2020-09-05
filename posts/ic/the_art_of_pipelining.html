@@ -201,15 +201,15 @@
 <p>下面是没有流水的设计：</p>
 <p><img alt="no_pipe" src="/images/the-art-of-pipelining/no_pipeline.png"/></p>
 <p>可以计算出第一级 DFF 到第二级 DFF 之间数据路径的时延为 </p>
-<div class="highlight"><pre><span></span><span class="n">Tff</span> <span class="o">=</span> <span class="n">Tco</span> <span class="o">+</span> <span class="n">Tcomb</span>
-    <span class="o">=</span> <span class="n">Tco</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">Tadder</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Tff = Tco + Tcomb</span>
+<span class="err">    = Tco + 3*Tadder</span>
+</code></pre></div>
 <p>下面是插入两级流水的设计：</p>
 <p><img alt="piple" src="/images/the-art-of-pipelining/pipeline.png"/></p>
 <p>现在相邻的两级 DFF 之间的组合逻辑只有 1 级加法器，而不是原来的 3 级，这时数据路径的时延为</p>
-<div class="highlight"><pre><span></span><span class="n">Tff</span> <span class="o">=</span> <span class="n">Tco</span> <span class="o">+</span> <span class="n">Tcomb</span>
-    <span class="o">=</span> <span class="n">Tco</span> <span class="o">+</span> <span class="n">Tadder</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Tff = Tco + Tcomb</span>
+<span class="err">    = Tco + Tadder</span>
+</code></pre></div>
 <p>显然，采用流水后 Tff 更小，系统能够达到的工作时钟频率也就更高。</p>
 <p><br/></p>
 <h2 id="performance increase from pipelining">Performance Increase from Pipelining</h2>
@@ -227,44 +227,44 @@
 <p>如下图所示，两个 DFF 之间存在着大规模的组合逻辑：</p>
 <p><img alt="before" src="/images/the-art-of-pipelining/before.png"/></p>
 <p>组合逻辑的时延决定了系统的最大工作频率（也即时钟周期 T 的最小值），此时</p>
-<div class="highlight"><pre><span></span><span class="n">latency</span> <span class="o">=</span> <span class="n">Tcomb</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span>               <span class="c1">-- Eq1</span>
-<span class="n">Tbefore</span> <span class="o">=</span> <span class="n">latency</span> <span class="o">=</span> <span class="n">Tcomb</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span>     <span class="c1">-- Eq2</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">latency = Tcomb + Treg + Tclk               -- Eq1</span>
+<span class="err">Tbefore = latency = Tcomb + Treg + Tclk     -- Eq2</span>
+</code></pre></div>
 <p>其中 Treg 表示 DFF 带来的时延，Tclk 表示时钟的 skew 和 jitter 带来的时延。</p>
 <p>在使用流水之后，如下图所示：</p>
 <p><img alt="after" src="/images/the-art-of-pipelining/after.png"/></p>
 <p>此时，每个 stage 的周期为</p>
-<div class="highlight"><pre><span></span><span class="n">Tstage</span> <span class="o">=</span> <span class="p">(</span><span class="n">Tcomb</span><span class="p">)</span><span class="n">stage</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Tstage = (Tcomb)stage + Treg + Tclk</span>
+</code></pre></div>
 <p>而时延最大的那个 stage 决定了系统的最大工作频率（也即时钟周期 Tclk 的最小值），此时</p>
-<div class="highlight"><pre><span></span><span class="n">Tpipe</span> <span class="o">=</span> <span class="k">max</span><span class="err">{</span><span class="p">(</span><span class="n">Tcomb</span><span class="p">)</span><span class="n">stage</span><span class="err">}</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span>
+<div class="highlight"><pre><span></span><code><span class="n">Tpipe</span> <span class="o">=</span> <span class="k">max</span><span class="err">{</span><span class="p">(</span><span class="n">Tcomb</span><span class="p">)</span><span class="n">stage</span><span class="err">}</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span>
 
 <span class="n">latency</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">Tpipe</span>
-</pre></div>
+</code></pre></div>
 <p>在理想状况下，各 stage 的时延应该相等，从而达到最小的 latency。即</p>
-<div class="highlight"><pre><span></span><span class="n">Tcombi</span> <span class="o">=</span> <span class="n">Tcomb</span> <span class="o">/</span> <span class="n">n</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Tcombi = Tcomb / n</span>
+</code></pre></div>
 <p>所以，最小的流水周期 Tpipe 为</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="n">Tpipe</span><span class="p">)</span><span class="k">min</span> <span class="o">=</span> <span class="n">Tcomb</span> <span class="o">/</span> <span class="n">n</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">(Tpipe)min = Tcomb / n + Treg + Tclk</span>
+</code></pre></div>
 <p>代入 latency 的表达式，有</p>
-<div class="highlight"><pre><span></span><span class="n">latency</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">Tpipe</span><span class="p">)</span><span class="k">min</span>
+<div class="highlight"><pre><span></span><code><span class="n">latency</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">Tpipe</span><span class="p">)</span><span class="k">min</span>
         <span class="o">=</span> <span class="n">Tcomb</span> <span class="o">+</span> <span class="n">n</span><span class="p">(</span><span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span><span class="p">)</span>                <span class="c1">-- Eq3</span>
 
 <span class="n">Tafter</span>  <span class="o">=</span> <span class="n">Tpipe</span> <span class="o">=</span> <span class="n">Tcomb</span> <span class="o">/</span> <span class="n">n</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span>       <span class="c1">-- Eq4</span>
-</pre></div>
+</code></pre></div>
 <p>首先比较系统的工作频率，或者 throughout（Eq2 和 Eq4）：</p>
-<div class="highlight"><pre><span></span><span class="n">Fafter</span> <span class="o">/</span> <span class="n">Fbefore</span> <span class="o">=</span> <span class="n">Tbefore</span> <span class="o">/</span> <span class="n">Tafter</span>
-                 <span class="o">=</span> <span class="p">(</span><span class="n">Tcomb</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">Tcomb</span><span class="o">/</span><span class="n">n</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Fafter / Fbefore = Tbefore / Tafter</span>
+<span class="err">                 = (Tcomb + Treg + Tclk) / (Tcomb/n + Treg + Tclk)</span>
+</code></pre></div>
 <p>显然这个数 &gt; 1，即</p>
 <p><strong>conclusion</strong>: 系统的工作频率和 throughout 得到了提升。</p>
 <p>如果定义 k = (Treg + Tclk) / (Tcomb  + Treg + Tclk)，为 reg 和 clk 占的总周期的比例，则</p>
-<div class="highlight"><pre><span></span><span class="n">Fafter</span> <span class="o">/</span> <span class="n">Fbefore</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">[(</span><span class="mi">1</span><span class="o">-</span><span class="n">k</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">k</span><span class="p">]</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Fafter / Fbefore = 1 / [(1-k/n) + k]</span>
+</code></pre></div>
 <p>其次，比较 latency（Eq1 和 Eq3）：</p>
-<div class="highlight"><pre><span></span><span class="n">Lafter</span> <span class="o">/</span> <span class="n">Lbefore</span> <span class="o">=</span> <span class="p">[</span><span class="n">Tcomb</span> <span class="o">+</span> <span class="n">n</span><span class="p">(</span><span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span><span class="p">)]</span> <span class="o">/</span> <span class="p">(</span><span class="n">Tcomb</span> <span class="o">+</span> <span class="n">Treg</span> <span class="o">+</span> <span class="n">Tclk</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Lafter / Lbefore = [Tcomb + n(Treg + Tclk)] / (Tcomb + Treg + Tclk)</span>
+</code></pre></div>
 <p>显然这个数 &gt; 1，即</p>
 <p><strong>conclusion</strong>: 系统的 latency 增加了（增加的很小，近似可以忽略）。</p>
 <p>最后比较面积：</p>
@@ -337,17 +337,17 @@
 <hr/>
 <p>将前面总结的 &ldquo; 在组合逻辑路径中插入 DFF，形成流水 &rdquo; 的思路进一步扩展，可以得到更加上层的流水思想。<a href="http://www.amazon.com/Advanced-FPGA-Design-Architecture-Implementation/dp/0470054379/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1432020884&amp;sr=1-1&amp;keywords=advanced+fpga+design">Advanced FPGA Design: Architecture, Implementation, and Optimization</a> 中介绍了一个算法中使用流水的例子，其关键在于 &ldquo; 拆开环路 &rdquo;：</p>
 <p>假设要计算 x^3 这个值，下面这段软件的代码</p>
-<div class="highlight"><pre><span></span><span class="nv">Xpower</span> <span class="o">=</span> <span class="mi">1</span><span class="c1">;</span>
-<span class="k">for</span> <span class="ss">(</span><span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">; i &lt; 3; i++)</span>
-    <span class="nv">Xpower</span> <span class="o">=</span> <span class="nv">X</span> <span class="o">*</span> <span class="nv">Xpower</span><span class="c1">;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Xpower = 1;</span>
+<span class="err">for (i = 0; i &lt; 3; i++)</span>
+<span class="err">    Xpower = X * Xpower;</span>
+</code></pre></div>
 <p>将这段软件代码翻译成 Verilog 代码，重复使用相同的寄存器和计算资源，得到的结果如下：</p>
 <p><img alt="iterative" src="/images/the-art-of-pipelining/iterative.png"/></p>
 <p>这种迭代的方法无法实现并行计算，其性能：</p>
-<div class="highlight"><pre><span></span><span class="n">Throughput</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">/</span><span class="mi">1</span><span class="p">,</span> <span class="k">or</span> <span class="mi">8</span> <span class="n">bits</span> <span class="o">/</span><span class="n">clock</span>
-<span class="n">Latency</span> <span class="o">=</span> <span class="mi">3</span> <span class="n">clocks</span>
-<span class="n">Timing</span> <span class="o">=</span> <span class="n">One</span> <span class="n">multiplier</span> <span class="n">delay</span> <span class="k">in</span> <span class="n">the</span> <span class="n">critical</span> <span class="n">path</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Throughput = 8 /1, or 8 bits /clock</span>
+<span class="err">Latency = 3 clocks</span>
+<span class="err">Timing = One multiplier delay in the critical path</span>
+</code></pre></div>
 <p>而使用 pipeline 的方法</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -358,25 +358,25 @@
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">// stage 1</span>
-<span class="no">X1</span> <span class="o">&lt;=</span> <span class="no">X</span><span class="p">;</span>
-<span class="n">Xpower1</span> <span class="o">&lt;=</span> <span class="no">X</span><span class="p">;</span>
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">// stage 1</span>
+<span class="n">X1</span> <span class="o">&lt;=</span> <span class="n">X</span><span class="p">;</span>
+<span class="n">Xpower1</span> <span class="o">&lt;=</span> <span class="n">X</span><span class="p">;</span>
 
 <span class="c1">// stage 2</span>
-<span class="no">X2</span> <span class="o">&lt;=</span> <span class="no">X1</span><span class="p">;</span>
-<span class="n">Xpower2</span> <span class="o">&lt;=</span> <span class="n">Xpower1</span> <span class="o">*</span> <span class="no">X1</span><span class="p">;</span>
+<span class="n">X2</span> <span class="o">&lt;=</span> <span class="n">X1</span><span class="p">;</span>
+<span class="n">Xpower2</span> <span class="o">&lt;=</span> <span class="n">Xpower1</span> <span class="o">*</span> <span class="n">X1</span><span class="p">;</span>
 
 <span class="c1">// stage 3</span>
-<span class="n">Xpower</span> <span class="o">&lt;=</span> <span class="n">Xpower2</span> <span class="o">*</span> <span class="no">X2</span><span class="p">;</span>
-</pre></div>
+<span class="n">Xpower</span> <span class="o">&lt;=</span> <span class="n">Xpower2</span> <span class="o">*</span> <span class="n">X2</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 <p>得到的结果如下图：</p>
 <p><img alt="pipeline" src="/images/the-art-of-pipelining/pipelined.png"/></p>
 <p>可以并行计算，其性能：</p>
-<div class="highlight"><pre><span></span><span class="n">Throughput</span> <span class="o">=</span> <span class="mi">8</span> <span class="n">bits</span> <span class="o">/</span> <span class="n">clock</span> <span class="p">(</span><span class="n">assuming</span> <span class="n">one</span> <span class="k">new</span> <span class="k">input</span> <span class="n">per</span> <span class="n">clock</span><span class="p">)</span>
-<span class="n">Latency</span> <span class="o">=</span> <span class="n">Betw</span> <span class="n">een</span> <span class="n">one</span> <span class="k">and</span> <span class="n">two</span> <span class="n">multiplier</span> <span class="n">delays</span><span class="p">,</span> <span class="mi">0</span> <span class="n">clocks</span>
-<span class="n">Timing</span> <span class="o">=</span> <span class="n">Two</span> <span class="n">multiplier</span> <span class="n">delays</span> <span class="k">in</span> <span class="n">the</span> <span class="n">critical</span> <span class="n">path</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">Throughput = 8 bits / clock (assuming one new input per clock)</span>
+<span class="err">Latency = Betw een one and two multiplier delays, 0 clocks</span>
+<span class="err">Timing = Two multiplier delays in the critical path</span>
+</code></pre></div>
 <p>可以看到，throughout 的提升是以面积为代价的。</p>
 <p><br/></p>
 <h2 id="ref">Ref</h2>

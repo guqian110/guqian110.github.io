@@ -183,13 +183,13 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
 
 <span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">add</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h2 id="default argument">Default Argument</h2>
 <p>如果定义函数时给参数默认值，那么在调用函数时可以传递也可以不传递这个参数，不传递时使用默认值。默认参数的好处是，</p>
@@ -206,22 +206,22 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
 
 <span class="n">add2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">add2</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>结合关键字参数和默认参数，就可以实现 &ldquo; 跳过缺失参数 &rdquo; 的效果，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add3</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add3</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="o">+</span><span class="n">c</span>
 
 <span class="n">add3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>默认参数并没有看上去的那么简单。首先，对默认参数的赋值只会在函数定义的时候绑定一次。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -232,8 +232,8 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">spam</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">spam</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">x</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="mi">42</span>
 <span class="n">spam</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -241,7 +241,7 @@
 <span class="n">x</span> <span class="o">=</span> <span class="mi">23</span>
 <span class="n">spam</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="c1"># 1 42</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>其次，给默认参数赋的值应该是不可变对象，如果默认值是可变容器的话，应该用 None 作为默认值。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -249,25 +249,25 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_end</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="p">[]):</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_end</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="p">[]):</span>
     <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'END'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">L</span>
 
 <span class="n">add_end</span><span class="p">()</span>
 <span class="n">add_end</span><span class="p">()</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>连续调用两次就会发现问题。修改方法也很简单，将默认值改成 <code>None</code> 即可。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_end</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">L</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_end</span><span class="p">(</span><span class="n">L</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">L</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">L</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'END'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">L</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>和 C++ 中的 const 一样，使用不变对象的好处有很多，首先它不会有修改数据导致错误的情况，其次多任务时也不必加锁，同时读取也没有关系。由这个例子就可以推出一个规则，如果一个变量可以定义为不变对象，那么尽量设计成不变对象。</p>
 <hr/>
@@ -279,7 +279,7 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
     <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
         <span class="nb">sum</span> <span class="o">+=</span> <span class="n">number</span>
@@ -287,7 +287,7 @@
 
 <span class="nb">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="nb">sum</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>这种方式的问题在于：调用函数时必须先组装出一个容器对象，而利用变长参数则可以直接省去组装过程。因为普通参数有 positional 和 keyword 两种参数类型，所以变长参数也可以分为两类：变长位置参数、关键字参数。</p>
 <hr/>
@@ -301,7 +301,7 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="o">*</span><span class="n">numbers</span><span class="p">):</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="o">*</span><span class="n">numbers</span><span class="p">):</span>
     <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">:</span>
         <span class="nb">sum</span> <span class="o">+=</span> <span class="n">number</span>
@@ -310,15 +310,15 @@
 <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">sum</span><span class="p">()</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>实际调用时就不再需要组装的步骤，直接将参数挨个传递进去即可。如果已经有了一个 tuple 或者 list 对象，将其一一拆开传递进去是合法的，但是这样做太繁琐，可以直接在对象前面加上一个星号，将其转换成变长位置参数，这种写法是非常常见的。实际上星号后面的参数无论本身就是一个 tuple 还是 list，都会转化成一个 tuple 传递给函数，显然 tuple 内的元素可以是任意多个。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 <span class="nb">sum</span><span class="p">(</span><span class="o">*</span><span class="n">nums</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h2 id="var_keyword argument">var_keyword Argument</h2>
 <p>与普通关键字参数对应的就是变长关键字参数 var_keyword argument，一个函数可以接收一个 <code>dict</code> 对象作为普通参数，也可以将其定义为变长关键字参数。定义方法就是在参数名前面加上两个 <code>*</code>，</p>
@@ -327,21 +327,21 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">person</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">'name:'</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s1">'age:'</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="s1">'other:'</span><span class="p">,</span> <span class="n">kw</span><span class="p">)</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">person</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'name:'</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s1">'age:'</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="s1">'other:'</span><span class="p">,</span> <span class="n">kw</span><span class="p">)</span>
 
 <span class="n">person</span><span class="p">(</span><span class="s1">'Michael'</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
 <span class="n">person</span><span class="p">(</span><span class="s1">'Bob'</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="n">city</span><span class="o">=</span><span class="s1">'Beijing'</span><span class="p">)</span>
 <span class="n">person</span><span class="p">(</span><span class="s1">'Adam'</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="n">gender</span><span class="o">=</span><span class="s1">'M'</span><span class="p">,</span> <span class="n">job</span><span class="o">=</span><span class="s1">'Engineer'</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>同理，可以将 dict 拆开后传递，也可以将 dict 转换成变长关键字参数，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">extra</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'city'</span><span class="p">:</span> <span class="s1">'Beijing'</span><span class="p">,</span> <span class="s1">'job'</span><span class="p">:</span> <span class="s1">'Engineer'</span><span class="p">}</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">extra</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'city'</span><span class="p">:</span> <span class="s1">'Beijing'</span><span class="p">,</span> <span class="s1">'job'</span><span class="p">:</span> <span class="s1">'Engineer'</span><span class="p">}</span>
 <span class="n">person</span><span class="p">(</span><span class="s1">'Jack'</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="n">city</span><span class="o">=</span><span class="n">extra</span><span class="p">[</span><span class="s1">'city'</span><span class="p">],</span> <span class="n">job</span><span class="o">=</span><span class="n">extra</span><span class="p">[</span><span class="s1">'job'</span><span class="p">])</span>
 <span class="n">person</span><span class="p">(</span><span class="s1">'Jack'</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="o">**</span><span class="n">extra</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>而且可以验证，上面例子中的 <code>**kw</code> 是 <code>extra</code> 的一份拷贝，操作 kw 不会影响 extra。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -351,15 +351,15 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">change</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">change</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kw</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="n">kw</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'hello'</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">kw</span><span class="p">)</span>
 
 <span class="n">extra</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'city'</span><span class="p">:</span> <span class="s1">'Beijing'</span><span class="p">,</span> <span class="s1">'job'</span><span class="p">:</span> <span class="s1">'Engineer'</span><span class="p">}</span>
 <span class="n">person</span><span class="p">(</span><span class="s1">'Jack'</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="o">**</span><span class="n">extra</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
-</pre></div>
+<span class="nb">print</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+</code></pre></div>
 </td></tr></table>
 <h2 id="keyword-only argument">Keyword-only Argument</h2>
 <p><a href="https://www.python.org/dev/peps/pep-3102/">PEP 3102 -- Keyword-Only Arguments 原文链接</a></p>
@@ -367,15 +367,15 @@
 <p>我们已经知道普通的 position arguments 可以按照位置隐式地传递，也可以通过关键字的方式显式地传递，而且 Python 支持可变参数 var_positional arguments，但是前提是 position arguments 必须全部放到 var_positional arguments 的前面（左边）。这个约束有时候并不是我们想要的，如前所述如果一个函数既想要一组  var_positional arguments 也想要几个可选的 keyword 参数，那么只能通过定义 keyword argument 的方式进行传递，然后在函数内部从这个 dict 中提取出 keyword。这样做有时候不太方便，而且有时候出于安全或者是提高代码可读性的考虑，我们想定义只能通过 keyword 方式传参的参数，因此引入了 keyword-only 参数。</p>
 <p>定义 keyword-only 参数的方法很简单，只要稍微改动一下之前的规则，允许常规参数出现在变长位置参数的后面即可，这时候这个常规参数就是 keyword-only 参数了，它必须通过关键字的方式进行传递：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">person</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">job</span><span class="p">)</span>
-</pre></div>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">person</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">job</span><span class="p">)</span>
+</code></pre></div>
 </td></tr></table>
 <p>如果一个函数本身不需要接收可变参数，按照前面的规则就必须给它传递一个冗余的可变参数，但是这样做很不安全，所以进一步修改一下规则，把这个冗余的可变参数名省略掉只剩下一个单独的星号，如下面的形式即可。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">person</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">job</span><span class="p">)</span>
-</pre></div>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">person</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">job</span><span class="p">)</span>
+</code></pre></div>
 </td></tr></table>
 <p>keyword-only 参数也可以有默认值，如果它带有默认值，那么调用函数时可以不传递新参数，否则必须传参。</p>
 <h2 id="positional-only arguments">Positional-only Arguments</h2>
@@ -396,8 +396,8 @@
 <li>关键字参数 <code>**kw_args</code> 必须作为最后一个参数出现</li>
 </ul>
 <p>结合这两条就可以知道，keyword-only 参数只能出现在 <code>*args</code> 和 <code>**kw_args</code> 之间，所以函数的参数必须是下面的顺序：</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">positional</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">keyword_only</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_args</span><span class="p">)</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">positional</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">keyword_only</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_args</span><span class="p">)</span>
+</code></pre></div>
 </td></tr></table>
 <p>需要注意的是，如果调用函数时存在 <code>**args</code> 惨素而且忽略了 default 参数，那么 <code>**args</code> 会填到 default 寄存器的位置中。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -411,8 +411,8 @@
  9
 10
 11
-12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">show_param</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_args</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">"a = "</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">b = '</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">c = '</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">*args = '</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">d = '</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">**kw_args'</span><span class="p">,</span> <span class="n">kw_args</span><span class="p">)</span>
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">show_param</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="o">**</span><span class="n">kw_args</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"a = "</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">b = '</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">c = '</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">*args = '</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">d = '</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">**kw_args'</span><span class="p">,</span> <span class="n">kw_args</span><span class="p">)</span>
 
 <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="n">kw_args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"param1"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">"param2"</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
@@ -423,7 +423,7 @@
 <span class="c1"># *args =  (5,) </span>
 <span class="c1"># d =  3 </span>
 <span class="c1"># **kw_args {'param1': 6, 'param2': 7}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>虽然 Python 支持各种方式的参数，但是实际应用中最好尽量减少参数组合，提高代码可读性。</p>
 <h2 id="ref">Ref</h2>
@@ -452,11 +452,11 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_0_summary.html">Python 学习笔记 #0 —— 新的开始</a></li>
       <li><a href="https://qiangu.cool/posts/cs/python_notes_10_fp_in_python.html">Python 学习笔记 #10 —— Python 中的 FP</a></li>
-      <li><a href="https://qiangu.cool/posts/cs/python_notes_3_docstring_style.html">Python 学习笔记 #3 —— Docstring 风格</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_8_decorator.html">Python 学习笔记 #8 —— Decorator 装饰器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_7_generator.html">Python 学习笔记 #7 —— Generator 生成器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_6_iterator.html">Python 学习笔记 #6 —— Iterator 迭代器</a></li>
+      <li><a href="https://qiangu.cool/posts/cs/python_notes_5_comprehension.html">Python 学习笔记 #5 —— Comprehension 解析式</a></li>
     </ul>
   </div>
 

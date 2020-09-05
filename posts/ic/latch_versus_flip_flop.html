@@ -365,8 +365,8 @@
 <p>在电路设计中，要对 Latch 特别谨慎，如果综合出和设计意图不一致的 Latch，会导致设计错误，包括仿真和综合。因此，要避免产生意外的 Latch。</p>
 <h4 id="reason">Reason</h4>
 <p>如果组合逻辑完全不使用 always 语句，那么就不会产生 latch，比如</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">dout</span> <span class="o">=</span> <span class="n">din</span> <span class="o">?</span> <span class="n">x</span> <span class="o">:</span> <span class="n">y</span><span class="p">;</span>
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">assign</span> <span class="n">dout</span> <span class="o">=</span> <span class="n">din</span> <span class="o">?</span> <span class="n">x</span> <span class="o">:</span> <span class="n">y</span><span class="p">;</span>
+</code></pre></div>
 </td></tr></table>
 <p>电路不需要保存 dout 的前一个值，所以不会产生 latch。</p>
 <p>如果组合逻辑使用了 always 语句，那么就有可能产生 Latch ：</p>
@@ -378,12 +378,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">din_a</span> <span class="k">or</span> <span class="n">din_b</span><span class="p">)</span> <span class="k">begin</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">always</span> <span class="p">@(</span><span class="n">din_a</span> <span class="k">or</span> <span class="n">din_b</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">din_a</span><span class="p">)</span> <span class="k">begin</span>
         <span class="n">dout</span> <span class="o">=</span> <span class="n">din_b</span><span class="p">;</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>RTL Schematic:</p>
 <p><img alt="if_latch" src="/images/latch_versus_flip_flop/if_latch.png"/></p>
@@ -396,13 +396,13 @@
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">din_c</span> <span class="k">or</span> <span class="n">din_a</span> <span class="k">or</span> <span class="n">din_b</span><span class="p">)</span> <span class="k">begin</span>
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">always</span> <span class="p">@(</span><span class="n">din_c</span> <span class="k">or</span> <span class="n">din_a</span> <span class="k">or</span> <span class="n">din_b</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">case</span> <span class="p">(</span><span class="n">din_c</span><span class="p">)</span>
         <span class="mh">2</span><span class="mb">'b00</span><span class="o">:</span> <span class="n">dout</span> <span class="o">=</span> <span class="n">din_a</span><span class="p">;</span>
         <span class="mh">2</span><span class="mb">'b01</span><span class="o">:</span> <span class="n">dout</span> <span class="o">=</span> <span class="n">din_b</span><span class="p">;</span>
     <span class="k">endcase</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>RTL Schematic:</p>
 <p><img alt="case_latch" src="/images/latch_versus_flip_flop/case_latch.png"/></p>
@@ -421,7 +421,7 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">din_a</span> <span class="k">or</span> <span class="n">din_b</span><span class="p">)</span> <span class="k">begin</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">always</span> <span class="p">@(</span><span class="n">din_a</span> <span class="k">or</span> <span class="n">din_b</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">din_a</span><span class="p">)</span> <span class="k">begin</span>
         <span class="n">dout</span> <span class="o">=</span> <span class="n">din_b</span><span class="p">;</span>
     <span class="k">end</span>
@@ -429,7 +429,7 @@
         <span class="n">dout</span> <span class="o">=</span> <span class="n">din_a</span><span class="p">;</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>RTL Schematic:</p>
 <p><img alt="if-else" src="/images/latch_versus_flip_flop/if_else.png"/></p>
@@ -443,14 +443,14 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">din_c</span> <span class="k">or</span> <span class="n">din_a</span> <span class="k">or</span> <span class="n">din_b</span><span class="p">)</span> <span class="k">begin</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">always</span> <span class="p">@(</span><span class="n">din_c</span> <span class="k">or</span> <span class="n">din_a</span> <span class="k">or</span> <span class="n">din_b</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">case</span> <span class="p">(</span><span class="n">din_c</span><span class="p">)</span>
         <span class="mh">2</span><span class="mb">'b00</span><span class="o">:</span> <span class="n">dout</span> <span class="o">=</span> <span class="n">din_a</span><span class="p">;</span>
         <span class="mh">2</span><span class="mb">'b01</span><span class="o">:</span> <span class="n">dout</span> <span class="o">=</span> <span class="n">din_b</span><span class="p">;</span>
         <span class="k">default</span><span class="o">:</span> <span class="n">dout</span> <span class="o">=</span> <span class="mh">2</span><span class="mb">'b00</span><span class="p">;</span>
     <span class="k">endcase</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>RTL Schemtatic:</p>
 <p><img alt="case-default" src="/images/latch_versus_flip_flop/case_default.png"/></p>
@@ -463,51 +463,51 @@
 <p>因此较好的应用规则是 :<strong>要学会分析是否需要锁存器以及代码是否会产生意想不到的锁存器。只有这样才能灵活运用锁存器。</strong></p>
 <p>下面通过实例来给予说明。</p>
 <p><strong>example1</strong>: 通过 Verilog HDL 实现序列最大值搜索程序，并保持检测到的最大值</p>
-<div class="highlight"><pre><span></span>  <span class="nv">module</span> <span class="nv">latch_demo</span><span class="ss">(</span>  
-          <span class="nv">din</span>,<span class="nv">dout</span>  
-      <span class="ss">)</span><span class="c1">;  </span>
-      <span class="nv">input</span>   [<span class="mi">7</span>:<span class="mi">0</span>] <span class="nv">din</span><span class="c1">;  </span>
-      <span class="nv">output</span> [<span class="mi">7</span>:<span class="mi">0</span>] <span class="nv">dout</span><span class="c1">;</span>
+<div class="highlight"><pre><span></span><code>  <span class="nt">module</span> <span class="nt">latch_demo</span><span class="o">(</span>  
+          <span class="nt">din</span><span class="o">,</span><span class="nt">dout</span>  
+      <span class="o">);</span>  
+      <span class="nt">input</span>   <span class="cp">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">din</span><span class="o">;</span>  
+      <span class="nt">output</span> <span class="cp">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">dout</span><span class="o">;</span>
 
-      <span class="nv">reg</span>      [<span class="mi">7</span>:<span class="mi">0</span>] <span class="nv">dout</span><span class="c1">;</span>
+      <span class="nt">reg</span>      <span class="cp">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">dout</span><span class="o">;</span>
 
-  <span class="nv">always</span> @ <span class="ss">(</span><span class="nv">din</span><span class="ss">)</span> <span class="nv">begin</span>  
-       <span class="k">if</span> <span class="ss">(</span><span class="nv">din</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="ss">)</span>  
-            <span class="nv">dout</span> <span class="o">=</span> <span class="nv">din</span><span class="c1">;  </span>
-  <span class="k">end</span>
+  <span class="nt">always</span> <span class="o">@</span> <span class="o">(</span><span class="nt">din</span><span class="o">)</span> <span class="nt">begin</span>  
+       <span class="nt">if</span> <span class="o">(</span><span class="nt">din</span> <span class="o">&gt;</span> <span class="nt">127</span><span class="o">)</span>  
+            <span class="nt">dout</span> <span class="o">=</span> <span class="nt">din</span><span class="o">;</span>  
+  <span class="nt">end</span>
 
-  <span class="nv">endmodule</span>
-</pre></div>
+  <span class="nt">endmodule</span>
+</code></pre></div>
 <p>上述代码在 ISE 中的综合结果会给出设计中包含 Latch 的警告。但实际上，abmax_tmp 锁存器正是我们需要的，所以，虽然有警告，但是代码设计是没有问题的。将上述代码的 if 语句补全：</p>
-<div class="highlight"><pre><span></span> <span class="k">if</span> <span class="ss">(</span><span class="nv">a</span> <span class="o">&gt;</span> <span class="nv">abmax_tmp</span><span class="ss">)</span>  
-      <span class="nv">abmax_tmp</span> <span class="o">=</span> <span class="nv">a</span><span class="c1">;  </span>
-  <span class="k">else</span>  
-      <span class="nv">abmax_tmp</span> <span class="o">=</span> <span class="nv">abmax_tmp</span><span class="c1">;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err"> if (a &gt; abmax_tmp)  </span>
+<span class="err">      abmax_tmp = a;  </span>
+<span class="err">  else  </span>
+<span class="err">      abmax_tmp = abmax_tmp;</span>
+</code></pre></div>
 <p>经过综合后，仍然有 Latch 的警告。无论 Latch 是否是用户需要的，ISE 都会给出警告，主要原因就是 Latch 对整个设计的时序性能影响较大。所以，在设计中要尽量避免 Latch，但是确实需要使用的情况，也可以使用。</p>
 <p><strong>example2:</strong> 用 Verilog HDL 实现一个锁存器，当输入数据大于 127 时，将输入数据输出，否则输出 0</p>
 <p>不期望的 latch 指的是与设计意图不符，产生的 Latch。主要问题在于设计人员没有合理使用 Verilog HDL 语言，常见的原因是对条件语句（if、casse）的分支描述不完整，导致电路的功能不是预期的，发生了错误。</p>
-<div class="highlight"><pre><span></span>  <span class="nv">module</span> <span class="nv">latch_demo</span><span class="ss">(</span>  
-      <span class="nv">din</span>,<span class="nv">dout</span>  
-  <span class="ss">)</span><span class="c1">;  </span>
-  <span class="nv">input</span>   [<span class="mi">7</span>:<span class="mi">0</span>] <span class="nv">din</span><span class="c1">;  </span>
-  <span class="nv">output</span>  [<span class="mi">7</span>:<span class="mi">0</span>] <span class="nv">dout</span><span class="c1">;</span>
+<div class="highlight"><pre><span></span><code>  <span class="nt">module</span> <span class="nt">latch_demo</span><span class="o">(</span>  
+      <span class="nt">din</span><span class="o">,</span><span class="nt">dout</span>  
+  <span class="o">);</span>  
+  <span class="nt">input</span>   <span class="cp">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">din</span><span class="o">;</span>  
+  <span class="nt">output</span>  <span class="cp">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">dout</span><span class="o">;</span>
 
-  <span class="nv">reg</span>      [<span class="mi">7</span>:<span class="mi">0</span>] <span class="nv">dout</span><span class="c1">;</span>
+  <span class="nt">reg</span>      <span class="cp">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">dout</span><span class="o">;</span>
 
-  <span class="nv">always</span> @ <span class="ss">(</span><span class="nv">din</span><span class="ss">)</span> <span class="nv">begin</span>  
-       <span class="k">if</span> <span class="ss">(</span><span class="nv">din</span> <span class="o">&gt;</span> <span class="mi">127</span><span class="ss">)</span>  
-            <span class="nv">dout</span> <span class="o">=</span> <span class="nv">din</span><span class="c1">;  </span>
-  <span class="k">end</span>
+  <span class="nt">always</span> <span class="o">@</span> <span class="o">(</span><span class="nt">din</span><span class="o">)</span> <span class="nt">begin</span>  
+       <span class="nt">if</span> <span class="o">(</span><span class="nt">din</span> <span class="o">&gt;</span> <span class="nt">127</span><span class="o">)</span>  
+            <span class="nt">dout</span> <span class="o">=</span> <span class="nt">din</span><span class="o">;</span>  
+  <span class="nt">end</span>
 
-  <span class="nv">endmodule</span>
-</pre></div>
+  <span class="nt">endmodule</span>
+</code></pre></div>
 <p>综合后的结果，在比较器后面级联了锁存器，这是因为 if 语句缺少 else 分支造成的。查看仿真结果，当输入小于 127 时，输出保持了上次的 127，不是 0，没有达到设计要求。修改方法很简单，就是将 if-else 补全。</p>
-<div class="highlight"><pre><span></span>   <span class="k">if</span> <span class="ss">(</span><span class="nv">din</span> <span class="o">&gt;</span> <span class="mi">127</span> <span class="ss">)</span>
-       <span class="nv">dout</span> <span class="o">=</span> <span class="nv">din</span><span class="c1">;  </span>
-   <span class="k">else</span>  
-       <span class="nv">dout</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">   if (din &gt; 127 )</span>
+<span class="err">       dout = din;  </span>
+<span class="err">   else  </span>
+<span class="err">       dout = 0;</span>
+</code></pre></div>
 <p>在 ISE 中综合后的结果中，可以看到补全 if-else 后，在比较器后面级联了与门，代替原来的锁存器，仿真结果也正确。</p>
 </blockquote>
 <h3 id="conclusion">Conclusion</h3>

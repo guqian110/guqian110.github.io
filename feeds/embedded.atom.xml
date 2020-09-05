@@ -33,20 +33,20 @@
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;开启 telnet 服务&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;system&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"telnetd -l /bin/sh"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;system&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"telnetd -l /bin/sh"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;设置 IP 地址&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;system&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;system&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"ifconfig eth0 169.254.1.1 netmask 255.255.0.0 up"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;将板子的以太网配置状态显示在 serial monitor 中&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;system&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"ifconfig eth0 &amp;gt; /dev/ttyACM0"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;system&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"ifconfig eth0 &amp;gt; /dev/ttyACM0"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -68,7 +68,7 @@
 15
 16
 17
-18&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kr"&gt;void&lt;/span&gt; &lt;span class="nb"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+18&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kr"&gt;void&lt;/span&gt; &lt;span class="nb"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="c1"&gt;// put your setup code here, to run once:&lt;/span&gt;
   &lt;span class="c1"&gt;// Initial serial prot&lt;/span&gt;
   &lt;span class="nf"&gt;Serial&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;begin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;9600&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -86,7 +86,7 @@
 
   &lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;h3 id="step 2: connect,upload"&gt;Step 2: Connect，Upload&lt;/h3&gt;
 &lt;ol&gt;
@@ -112,16 +112,16 @@
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;查看 PC 的网络配置&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ifconfig eth0
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig eth0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;查询结果&lt;/p&gt;
 &lt;p&gt;&lt;img alt="pc_ethernet_quary" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_ethernet_quary.png"/&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;打开 PC 的终端 Terminal，使用 telnet 登录&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;telnet &lt;span class="m"&gt;169&lt;/span&gt;.254.1.1
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;telnet &lt;span class="m"&gt;169&lt;/span&gt;.254.1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;登录结果，如图&lt;/p&gt;
 &lt;p&gt;&lt;img alt="pc_ethernet_login" src="/images/learning-arduino-series-3-intel-galileo-linux/pc_telnet_login.png"/&gt;&lt;/p&gt;
@@ -234,19 +234,19 @@
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
-4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; home
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; home
 $ &lt;span class="nb"&gt;pwd&lt;/span&gt;
 
 // result is root dirctory
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;解决方法就是将命令写在一行&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
-3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; home&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;pwd&lt;/span&gt;
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; home&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;pwd&lt;/span&gt;
 
 // result is home directory
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 &lt;h2 id="reference"&gt;Reference&lt;/h2&gt;
@@ -301,8 +301,8 @@ $ &lt;span class="nb"&gt;pwd&lt;/span&gt;
 &lt;p&gt;Linux 连接板子和 PC&lt;/p&gt;
 &lt;p&gt;在 Windows 下第一次连接系统自动安装驱动肯定会失败的，需要我们手动指定驱动文件的路径。&lt;/p&gt;
 &lt;p&gt;在 Linux 终端下，必须以 &lt;code&gt;sudo&lt;/code&gt; 权限运行 IDE，否则即使板子已经连接了 PC，在 IDE 下的 &lt;code&gt;Tools\Serial Port&lt;/code&gt; 是 disable 的，不能选择端口&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo ./arduino &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ sudo ./arduino &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -389,8 +389,8 @@ $ &lt;span class="nb"&gt;pwd&lt;/span&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;解决包依赖关系：安装 openjdk-7-jre (openjdk-6-jre, sun's java 6 runtime, the sun-java6-jre package, the oracle JRE 7 应该也可以 )&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get install openjdk-7-jre
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo apt-get install openjdk-7-jre
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -398,10 +398,10 @@ $ &lt;span class="nb"&gt;pwd&lt;/span&gt;
 &lt;/li&gt;
 &lt;li&gt;解压、切换到解压路径，运行目录下的 &lt;code&gt;arduino&lt;/code&gt; 脚本&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
-3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;tar -zxvf arduino-1.0.5-linux32.tgz
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;tar -zxvf arduino-1.0.5-linux32.tgz
 &lt;span class="nb"&gt;cd&lt;/span&gt; arduino-1.0.5
 ./arduino
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -409,14 +409,14 @@ $ &lt;span class="nb"&gt;pwd&lt;/span&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;下载 &amp;amp; 安装&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo apt-get install arduino arduino-core
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo apt-get install arduino arduino-core
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;运行&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ arduino
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ arduino
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -453,7 +453,7 @@ $ &lt;span class="nb"&gt;pwd&lt;/span&gt;
 21
 22
 23
-24&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cm"&gt;/*&lt;/span&gt;
+24&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cm"&gt;/*&lt;/span&gt;
 &lt;span class="cm"&gt;Blink&lt;/span&gt;
 &lt;span class="cm"&gt;Turns on an LED on for one second, then off for one second, repeatedly.&lt;/span&gt;
 
@@ -477,7 +477,7 @@ $ &lt;span class="nb"&gt;pwd&lt;/span&gt;
   &lt;span class="nf"&gt;digitalWrite&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;led&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kr"&gt;LOW&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;    &lt;span class="c1"&gt;// turn the LED off by making the voltage LOW&lt;/span&gt;
   &lt;span class="nf"&gt;delay&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;               &lt;span class="c1"&gt;// wait for a second&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;上面的这段代码对于一个标准 C++ 编译器来说是无效的，事实上当我们按下 IDE 界面上的 "Upload to I/O board" 按钮时，IDE 会拷贝一份代码，在开头加上 &lt;code&gt;include&lt;/code&gt; 指示，在结尾加上一个很简单的 &lt;code&gt;main()&lt;/code&gt; 函数，这样它就是一个有效的 C++ 程序了。&lt;/p&gt;
 &lt;p&gt;Arduino 使用 &lt;a href="http://en.wikipedia.org/wiki/GNU_toolchain"&gt;GNU toolchain&lt;/a&gt; 和 AVR Libc 来编译程序的，使用 AVRdude 把程序下载到板子上。因为 Arduino 平台采用的是 Atmel 的微控制器，所以 Atmel 的开发环境 AVR Studio 或者更新的 Atmel Studio 应该也可以作为 Arduino 的开发环境。&lt;/p&gt;

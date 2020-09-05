@@ -278,8 +278,8 @@
 &lt;li&gt;黄色星星   表示一般重要文件&lt;/li&gt;
 &lt;li&gt;红色叹号 表示非常重要邮件&lt;/li&gt;
 &lt;li&gt;紫色问号   表示未处理完，将来还需要处理&lt;/li&gt;
-&lt;li&gt;绿色对号   表示已经处理完，暂时一段时间都不需要处理的邮件，除非我手动搜索&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;has&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;green&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;check&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;li&gt;绿色对号   表示已经处理完，暂时一段时间都不需要处理的邮件，除非我手动搜索&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;has&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;green&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;check&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id="guo lu qi"&gt;过滤器&lt;/h3&gt;
@@ -309,9 +309,9 @@
 &lt;p&gt;方法二：&lt;/p&gt;
 &lt;p&gt;使用 &lt;code&gt;apt-get&lt;/code&gt;&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
-2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;apt-cache search wine
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;apt-cache search wine
 suod apt-get install wine
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;P.S. 若是其他系统，找不到对应的二进制包，可以直接从官网上下载源码，自己编译（官网上有详细的 &lt;a href="http://wiki.winehq.org/FAQ_zhcn"&gt;FAQ&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;&lt;br/&gt;&lt;/p&gt;
@@ -324,21 +324,21 @@ suod apt-get install wine
 &lt;h3 id="cd key zhu ce biao wen ti"&gt;CD key 注册表问题&lt;/h3&gt;
 &lt;p&gt;直接以 wine 运行 &lt;code&gt;war3.exe&lt;/code&gt; 时提示没有 CD key，在 WarCraft 目录下找到了两个注册表文件，&lt;code&gt;War3.reg&lt;/code&gt; 和 &lt;code&gt;一键导入 .reg&lt;/code&gt; 。&lt;/p&gt;
 &lt;p&gt;在终端下导入注册表&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wine regedit
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;wine regedit
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;然后导入这两个文件，再次尝试，还是不行 ...&lt;/p&gt;
 &lt;p&gt;不急，游戏目录下还有一个程序叫 &lt;code&gt;War3RegFixer.exe&lt;/code&gt;，看名字就知道是我们需要的&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wine War3RegFixer.exe
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;wine War3RegFixer.exe
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;因为我的 Ubuntu 是英文版的，打开后是乱码 ...&lt;/p&gt;
 &lt;p&gt;&lt;img alt="war3regfixer" src="/images/run-warcraft-on-ubuntu/war3regfixer.png"/&gt;&lt;/p&gt;
 &lt;p&gt;找了一台 Windows 电脑，运行了一下，按照向导就可以修复 CD key 的问题 。&lt;/p&gt;
 &lt;h3 id="fen bian lu wen ti"&gt;分辨率问题&lt;/h3&gt;
 &lt;p&gt;第一次运行的结果一般不会全屏，处女座的强迫症犯了，还好比较简单 ：D&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wine regedit
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;wine regedit
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;找到 &lt;code&gt;HKEY_CURRENT_USER/Software/Blizzard Entertainment/Warcraft III/Video&lt;/code&gt;，里面有两个注册表值 &lt;code&gt;resheight&lt;/code&gt; 和 &lt;code&gt;reswidth&lt;/code&gt;，将他们设为和当前分辨率相同的十进制数值就可以了。&lt;/p&gt;
 &lt;h3 id="hua mian qia"&gt;画面卡&lt;/h3&gt;
@@ -347,13 +347,13 @@ suod apt-get install wine
 &lt;h2 id="yun xing_1"&gt;运行&lt;/h2&gt;
 &lt;h3 id="zhong duan xia"&gt;终端下&lt;/h3&gt;
 &lt;p&gt;现在就可以在终端下运行 war3.exe 了&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wine war3.exe
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;wine war3.exe
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;熟悉的画面就出来了～&lt;/p&gt;
 &lt;p&gt;这样子运行如果切出游戏，有时会导致 war3 崩溃或者切换不出去。一个解决方法是以窗口模式运行，只需要添加参数 &lt;code&gt;-window&lt;/code&gt; 即可&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wine war3.exe -window
-&lt;/pre&gt;&lt;/div&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;wine war3.exe -window
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;效果如下&lt;/p&gt;
 &lt;p&gt;&lt;img alt="war3window" src="/images/run-warcraft-on-ubuntu/war3window.png"/&gt;&lt;/p&gt;
@@ -367,14 +367,14 @@ suod apt-get install wine
 4
 5
 6
-7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;Desktop Entry&lt;span class="o"&gt;]&lt;/span&gt;
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;[&lt;/span&gt;Desktop Entry&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="nv"&gt;Version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;.0
 &lt;span class="nv"&gt;Name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; Frozen Throne
 &lt;span class="nv"&gt;Exec&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /home/chien/WarCraft/war3.exe
 &lt;span class="nv"&gt;Terminal&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;
 &lt;span class="nv"&gt;Icon&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /home/chien/WarCraft/war3.jpg
 &lt;span class="nv"&gt;Type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; Application
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;p&gt;然后把这个文件移动到 &lt;code&gt;/usr/share/applicants/&lt;/code&gt; ，这时在 unity 中搜索 &lt;code&gt;froz&lt;/code&gt;，就能看到我们刚才新建的启动器了～&lt;/p&gt;
 &lt;p&gt;&lt;img alt="war3desktop" src="/images/run-warcraft-on-ubuntu/war3desktop.png"/&gt;&lt;/p&gt;

@@ -195,33 +195,33 @@ to match certain strings.</p>
 <li>
 <p>metacharacters</p>
 <p>元字符，在表达式中有特殊的含义，也是保留字。一共有 14 个：</p>
-<div class="highlight"><pre><span></span><span class="p">.</span>   <span class="o">//</span> <span class="err">匹配任意字符</span>
-<span class="err">\</span>   <span class="o">//</span> <span class="err">对字符转义</span>
-<span class="o">|</span>   <span class="o">//</span> <span class="err">选择操作（或）</span>
-<span class="o">^</span>   <span class="o">//</span> <span class="err">行起始</span>
-<span class="err">$</span>   <span class="o">//</span> <span class="err">行结束</span>
-<span class="o">?</span>   <span class="o">//</span> <span class="err">匹配</span> <span class="mi">0</span> <span class="err">或</span> <span class="mi">1</span> <span class="err">次</span>
-<span class="o">*</span>   <span class="o">//</span> <span class="err">匹配</span> <span class="mi">0</span> <span class="err">或</span> <span class="err">多次</span>
-<span class="o">+</span>   <span class="o">//</span> <span class="err">匹配</span> <span class="mi">1</span> <span class="err">或</span> <span class="err">多次</span>
-<span class="p">[]</span>  <span class="o">//</span> <span class="err">字符组符号</span>
-<span class="err">{}</span>  <span class="o">//</span> <span class="err">量词或代码块符号</span>
-<span class="p">()</span>  <span class="o">//</span> <span class="err">分组符号</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">.   // 匹配任意字符</span>
+<span class="err">\   // 对字符转义</span>
+<span class="err">|   // 选择操作（或）</span>
+<span class="err">^   // 行起始</span>
+<span class="err">$   // 行结束</span>
+<span class="err">?   // 匹配 0 或 1 次</span>
+<span class="err">*   // 匹配 0 或 多次</span>
+<span class="err">+   // 匹配 1 或 多次</span>
+<span class="err">[]  // 字符组符号</span>
+<span class="err">{}  // 量词或代码块符号</span>
+<span class="err">()  // 分组符号</span>
+</code></pre></div>
 </li>
 <li>
 <p>character shorthand</p>
 <p>也叫做 character escape，中文翻译成：&ldquo; 字符组简写 &rdquo; / &ldquo; 转义字符 &rdquo;，常用简写：</p>
-<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">d</span>      <span class="o">//</span> <span class="err">数字字符，</span><span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
-<span class="err">\</span><span class="n">D</span>      <span class="o">//</span> <span class="err">非数字字符，</span> <span class="o">=</span> <span class="p">[</span><span class="o">^</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
-<span class="err">\</span><span class="n">w</span>      <span class="o">//</span> <span class="err">单词字符</span>
-<span class="err">\</span><span class="n">W</span>      <span class="o">//</span> <span class="err">非单词字符</span>
-<span class="err">\</span><span class="n">s</span>      <span class="o">//</span> <span class="err">空格</span>
-<span class="err">\</span><span class="n">n</span>      <span class="o">//</span> <span class="err">换行</span>
-<span class="err">\</span><span class="n">r</span>      <span class="o">//</span> <span class="err">回车</span>
-<span class="err">\</span><span class="n">b</span>      <span class="o">//</span> <span class="err">单词边界</span>
-<span class="err">\</span><span class="n">a</span>      <span class="o">//</span> <span class="err">报警符</span>
-<span class="err">\</span><span class="n">cx</span>     <span class="o">//</span> <span class="err">控制字符</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">\d      // 数字字符，= [0-9]</span>
+<span class="err">\D      // 非数字字符， = [^0-9]</span>
+<span class="err">\w      // 单词字符</span>
+<span class="err">\W      // 非单词字符</span>
+<span class="err">\s      // 空格</span>
+<span class="err">\n      // 换行</span>
+<span class="err">\r      // 回车</span>
+<span class="err">\b      // 单词边界</span>
+<span class="err">\a      // 报警符</span>
+<span class="err">\cx     // 控制字符</span>
+</code></pre></div>
 </li>
 </ul>
 <h2 id="simple match patterns">Simple Match Patterns</h2>
@@ -234,43 +234,43 @@ to match certain strings.</p>
 </li>
 <li>
 <p>digits</p>
-<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">d</span>      <span class="o">//</span> <span class="err">简写形式</span>
-<span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>   <span class="o">//</span> <span class="mi">0</span><span class="o">~</span><span class="mi">9</span> <span class="err">任意一个数字</span>
-<span class="p">[</span><span class="mi">1278</span><span class="p">]</span>  <span class="o">//</span> <span class="err">限定备选集合为</span> <span class="mi">1</span><span class="err">，</span><span class="mi">2</span><span class="err">，</span><span class="mi">7</span><span class="err">，</span><span class="mi">8</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">\d      // 简写形式</span>
+<span class="err">[0-9]   // 0~9 任意一个数字</span>
+<span class="err">[1278]  // 限定备选集合为 1，2，7，8</span>
+</code></pre></div>
 </li>
 <li>
 <p>non-digits</p>
 <p><em>大写的简写形式</em> 或者 <em>取反</em> 即可：</p>
-<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">D</span>
-<span class="p">[</span><span class="o">^</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
-<span class="p">[</span><span class="o">^</span><span class="err">\</span><span class="n">d</span><span class="p">]</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">\D</span>
+<span class="err">[^0-9]</span>
+<span class="err">[^\d]</span>
+</code></pre></div>
 </li>
 <li>
 <p>word characters</p>
-<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">w</span>              <span class="o">//</span> <span class="err">简写形式</span>
-<span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>     <span class="o">//</span> <span class="n">a</span><span class="o">~</span><span class="n">z</span><span class="err">、</span><span class="n">A</span><span class="o">~</span><span class="n">Z</span><span class="err">、</span><span class="mi">0</span><span class="o">~</span><span class="mi">9</span> <span class="err">任意一个字符</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">\w              // 简写形式</span>
+<span class="err">[a-zA-Z0-9]     // a~z、A~Z、0~9 任意一个字符</span>
+</code></pre></div>
 </li>
 <li>
 <p>non-word characters</p>
 <p><em>大写的简写形式</em> 或者 <em>取反</em> 即可：</p>
-<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">W</span>
-<span class="p">[</span><span class="o">^</span><span class="n">a</span><span class="o">-</span><span class="n">zA</span><span class="o">-</span><span class="n">Z0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
-<span class="p">[</span><span class="o">^</span><span class="err">\</span><span class="n">w</span><span class="p">]</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">\W</span>
+<span class="err">[^a-zA-Z0-9]</span>
+<span class="err">[^\w]</span>
+</code></pre></div>
 </li>
 <li>
 <p>whitespace</p>
-<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">s</span>
-<span class="p">[</span> <span class="err">\</span><span class="n">t</span><span class="err">\</span><span class="n">r</span><span class="err">\</span><span class="n">n</span><span class="p">]</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">\s</span>
+<span class="err">[ \t\r\n]</span>
+</code></pre></div>
 </li>
 <li>
 <p>any characters</p>
-<div class="highlight"><pre><span></span><span class="p">.</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">.</span>
+</code></pre></div>
 </li>
 </ul>
 <p><br/></p>
@@ -279,21 +279,21 @@ to match certain strings.</p>
 <ul>
 <li>
 <p>行首、行尾</p>
-<div class="highlight"><pre><span></span><span class="o">^</span>       <span class="o">//</span> <span class="err">行首</span>
-<span class="err">$</span>       <span class="o">//</span> <span class="err">行尾</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">^       // 行首</span>
+<span class="err">$       // 行尾</span>
+</code></pre></div>
 </li>
 <li>
 <p>单词边界</p>
-<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">b</span>      <span class="o">//</span> <span class="err">单词边界</span>
-<span class="err">\</span><span class="o">&lt;</span>      <span class="o">//</span> <span class="err">单词开头</span>
-<span class="err">\</span><span class="o">&gt;</span>      <span class="o">//</span> <span class="err">单词结尾</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">\b      // 单词边界</span>
+<span class="err">\&lt;      // 单词开头</span>
+<span class="err">\&gt;      // 单词结尾</span>
+</code></pre></div>
 </li>
 <li>
 <p>非单词边界</p>
-<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">B</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">\B</span>
+</code></pre></div>
 </li>
 </ul>
 <p><br/></p>
@@ -303,17 +303,17 @@ to match certain strings.</p>
 <li>
 <p>Alternation</p>
 <p>比如要匹配 THE 或者 The 或者 the，使用如下的语法</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="n">THE</span><span class="o">|</span><span class="n">The</span><span class="o">|</span><span class="n">the</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">(THE|The|the)</span>
+</code></pre></div>
 </li>
 <li>
 <p>Subpatterns</p>
 <p>THE、The、the 是 3 个子模式：</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="n">THE</span><span class="o">|</span><span class="n">The</span><span class="o">|</span><span class="n">the</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">(THE|The|the)</span>
+</code></pre></div>
 <p>括号对于子模式不是必须的：</p>
-<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">b</span><span class="o">[</span><span class="n">tT</span><span class="o">]</span><span class="n">h</span><span class="o">[</span><span class="n">ceinry</span><span class="o">]*</span><span class="err">\</span><span class="n">b</span><span class="w"></span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">\</span><span class="n">b</span><span class="o">[</span><span class="n">tT</span><span class="o">]</span><span class="n">h</span><span class="o">[</span><span class="n">ceinry</span><span class="o">]*</span><span class="err">\</span><span class="n">b</span><span class="w"></span>
+</code></pre></div>
 <p>可以匹配 the、The、their 等单词，严格意义上中括号内的叫做 字符组 <code>character classes</code>，不过因为两者有近似的功能，所以也可以将其做一类。</p>
 </li>
 <li>
@@ -324,8 +324,8 @@ to match certain strings.</p>
 <li>
 <p>Non-Capturing Groups</p>
 <p>对于之后不会进行引用的分组，可以使用非捕获分组，因为不会对其分配内存所以可以提高性能。</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="o">?</span><span class="p">:</span><span class="n">THE</span><span class="o">|</span><span class="n">The</span><span class="o">|</span><span class="n">the</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">(?:THE|The|the)</span>
+</code></pre></div>
 </li>
 </ul>
 <p><br/></p>
@@ -336,39 +336,39 @@ to match certain strings.</p>
 <p>Character Classes</p>
 <p>也叫做 方括号表达式，字符组可以帮助我们匹配特定字符或者特定的字符序列：</p>
 <p>匹配特定字符</p>
-<div class="highlight"><pre><span></span><span class="o">[</span><span class="n">aeiou</span><span class="o">]</span><span class="w">         </span><span class="o">//</span><span class="w"> </span><span class="n">匹配元音字符</span><span class="w"></span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="o">[</span><span class="n">aeiou</span><span class="o">]</span><span class="w">         </span><span class="o">//</span><span class="w"> </span><span class="n">匹配元音字符</span><span class="w"></span>
+</code></pre></div>
 <p>匹配特定字符序列：</p>
-<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">24680</span><span class="p">]</span><span class="err">\</span><span class="n">b</span>      <span class="o">//</span> <span class="err">匹配</span> <span class="mi">10</span><span class="err">～</span><span class="mi">19</span> <span class="err">之间的偶数</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">\b[1][24680]\b      // 匹配 10～19 之间的偶数</span>
+</code></pre></div>
 </li>
 <li>
 <p>Negated Character Classes</p>
 <p>匹配与字符组不匹配的字符，方法就是在开头加上 脱字符 <code>^</code>：</p>
-<div class="highlight"><pre><span></span><span class="p">[</span><span class="o">^</span><span class="n">aeiou</span><span class="p">]</span>    <span class="o">//</span> <span class="err">不想匹配元音字符</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">[^aeiou]    // 不想匹配元音字符</span>
+</code></pre></div>
 </li>
 <li>
 <p>Union and Difference</p>
 <p>字符组可以像集合一样操作（如求并集、求差集），实际上字符组还有一个名字就叫做 字符集 <code>character set</code>。</p>
 <p>并集：</p>
-<div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">3</span><span class="p">][</span><span class="mi">6</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>      <span class="o">//</span> <span class="err">匹配</span> <span class="mi">0</span><span class="o">~</span><span class="mi">3</span> <span class="err">或者</span> <span class="mi">6</span><span class="o">~</span><span class="mi">9</span> <span class="err">之间的数字</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">[0-3][6-9]      // 匹配 0~3 或者 6~9 之间的数字</span>
+</code></pre></div>
 <p>差集：</p>
-<div class="highlight"><pre><span></span><span class="p">[</span><span class="n">a</span><span class="o">-</span><span class="n">z</span><span class="o">&amp;&amp;</span><span class="p">[</span><span class="o">^</span><span class="n">m</span><span class="o">-</span><span class="n">r</span><span class="p">]]</span>   <span class="o">//</span> <span class="err">匹配</span> <span class="n">a</span><span class="o">~</span><span class="n">z</span> <span class="err">之间，但是排除</span> <span class="n">m</span><span class="o">~</span><span class="n">r</span> <span class="err">之间的字符</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">[a-z&amp;&amp;[^m-r]]   // 匹配 a~z 之间，但是排除 m~r 之间的字符</span>
+</code></pre></div>
 </li>
 <li>
 <p>POSIX Character Classes</p>
 <p><code>POSIX</code> (Portable Operating System Interface ) 是 IEEE 维护的一系列标准，格式如下：</p>
-<div class="highlight"><pre><span></span><span class="k">[[: xxxx:]]</span>
+<div class="highlight"><pre><span></span><code><span class="k">[[: xxxx:]]</span>
 <span class="na">[[:^ xxxx:]]        // 取反匹配</span>
-</pre></div>
+</code></pre></div>
 <p>其中 xxxx 取值为 digit、word 等，举例：</p>
-<div class="highlight"><pre><span></span><span class="p">[[:</span><span class="n">alnum</span><span class="p">:]]</span>         <span class="o">//</span> <span class="err">匹配字母和数字</span>
-<span class="p">[[:</span><span class="n">alpha</span><span class="p">:]]</span>         <span class="o">//</span> <span class="err">匹配大写或小写字母</span>
-<span class="p">[[:</span><span class="n">ascii</span><span class="p">:]]</span>         <span class="o">//</span> <span class="err">匹配</span> <span class="n">ASCII</span> <span class="err">范围内的字符</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">[[:alnum:]]         // 匹配字母和数字</span>
+<span class="err">[[:alpha:]]         // 匹配大写或小写字母</span>
+<span class="err">[[:ascii:]]         // 匹配 ASCII 范围内的字符</span>
+</code></pre></div>
 <p>一般不常用 POSIX 格式。</p>
 </li>
 </ul>
@@ -378,24 +378,24 @@ to match certain strings.</p>
 <ul>
 <li>
 <p>Matching a Unicode Character</p>
-<div class="highlight"><pre><span></span><span class="o">/</span><span class="n">uxxxx</span>      <span class="o">//</span> <span class="n">syntax</span>
-<span class="o">/</span><span class="n">u00e9</span>      <span class="o">//</span> <span class="o">=</span> <span class="nb">character</span> <span class="err">&eacute;</span> 
-<span class="o">/</span><span class="n">u6c60</span>      <span class="o">//</span> <span class="o">=</span> <span class="nb">character</span> <span class="err">池</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">/uxxxx      // syntax</span>
+<span class="err">/u00e9      // = character &eacute; </span>
+<span class="err">/u6c60      // = character 池</span>
+</code></pre></div>
 </li>
 <li>
 <p>Matching Characters with Octal Numbers</p>
-<div class="highlight"><pre><span></span><span class="o">`</span><span class="err">\</span><span class="n">xxx</span><span class="o">`</span>      <span class="o">//</span> <span class="n">xxx</span> <span class="err">是</span> <span class="mi">3</span> <span class="err">位</span> <span class="mi">8</span> <span class="err">进制数字</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">`\xxx`      // xxx 是 3 位 8 进制数字</span>
+</code></pre></div>
 <p>比如 &eacute; 也可以用 <code>\351</code> 来匹配。</p>
 </li>
 <li>
 <p>Matching Control Characters</p>
-<div class="highlight"><pre><span></span><span class="err">\</span><span class="n">cx</span>         <span class="o">//</span> <span class="n">x</span> <span class="err">是想匹配的控制字符</span>
-<span class="err">\</span><span class="k">c</span><span class="o">@</span>         <span class="o">//</span> <span class="err">空字符</span> <span class="mi">0</span><span class="p">.</span><span class="k">NUll</span>
-<span class="err">\</span><span class="n">cG</span>         <span class="o">//</span> <span class="err">报警字符</span> <span class="n">BEL</span>
-<span class="err">\</span><span class="n">cH</span>         <span class="o">//</span> <span class="err">退格符</span> <span class="n">Backspcace</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">\cx         // x 是想匹配的控制字符</span>
+<span class="err">\c@         // 空字符 0.NUll</span>
+<span class="err">\cG         // 报警字符 BEL</span>
+<span class="err">\cH         // 退格符 Backspcace</span>
+</code></pre></div>
 </li>
 </ul>
 <p><br/></p>
@@ -479,29 +479,29 @@ assertions</code>。</p>
 <p>Positive Lookaheads</p>
 <p>正前瞻。 pattern 之后必须紧随着 lookaround 的才会被匹配。</p>
 <p>比如想找到所有之后紧随着一个 marinere 的 ancyent ：</p>
-<div class="highlight"><pre><span></span><span class="n">ancyent</span> <span class="p">(</span><span class="o">?=</span><span class="n">marinere</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">ancyent (?=marinere)</span>
+</code></pre></div>
 </li>
 <li>
 <p>Negative Lookaheads</p>
 <p>反前瞻。对正前瞻的取反，也就是 pattern 之后必须没有 lookarounds 的才会被匹配。</p>
 <p>比如想找到所有后面没有 marinere 的 ancyent：</p>
-<div class="highlight"><pre><span></span><span class="n">ancyent</span> <span class="p">(</span><span class="o">?!</span><span class="n">marinere</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">ancyent (?!marinere)</span>
+</code></pre></div>
 </li>
 <li>
 <p>Positive Lookbehinds</p>
 <p>正后顾。后顾和前瞻的方向相反，检查 pattern 之前的内容，之前有 lookarounds 的 pattern 才会被匹配到。</p>
 <p>比如想找到所有之前有 ancyent 的 marinere：</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="o">?&lt;=</span><span class="n">ancyent</span><span class="p">)</span> <span class="n">marinere</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">(?&lt;=ancyent) marinere</span>
+</code></pre></div>
 </li>
 <li>
 <p>Negative Lookbehinds</p>
 <p>反后顾。对正后顾的取反，也就是 pattern 之前必须没有 lookarounds，才会被匹配。</p>
 <p>比如想找到所有之前不存在 ancyent 的 marinere：</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="o">?&lt;!</span><span class="n">ancyent</span><span class="p">)</span> <span class="n">marinere</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">(?&lt;!ancyent) marinere</span>
+</code></pre></div>
 </li>
 </ul>
 <p>关于正、反；前瞻、后顾可以用下面的规律记：</p>

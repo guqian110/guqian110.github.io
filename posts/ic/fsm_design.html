@@ -318,52 +318,52 @@
 71
 72
 73
-74</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="c1">// synopsys enum code</span>
-                     <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d0</span><span class="p">,</span>
-                       <span class="no">S1</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d1</span><span class="p">,</span>
-                       <span class="no">S2</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d2</span><span class="p">,</span>
-                       <span class="no">S3</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d3</span><span class="p">,</span>
-                    <span class="no">ERROR</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d4</span><span class="p">;</span>
+74</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">parameter</span>   <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="c1">// synopsys enum code</span>
+                     <span class="n">IDLE</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d0</span><span class="p">,</span>
+                       <span class="n">S1</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d1</span><span class="p">,</span>
+                       <span class="n">S2</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d2</span><span class="p">,</span>
+                       <span class="n">S3</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d3</span><span class="p">,</span>
+                    <span class="n">ERROR</span> <span class="o">=</span> <span class="mh">5</span><span class="mi">'d4</span><span class="p">;</span>
 
 <span class="c1">// synopsys state_vector state</span>
 <span class="kt">reg</span>     <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="c1">// synopsys enum code</span>
-                <span class="no">CS</span><span class="p">,</span> <span class="no">NS</span><span class="p">;</span>
+                <span class="n">CS</span><span class="p">,</span> <span class="n">NS</span><span class="p">;</span>
 
 <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
-        <span class="no">CS</span>       <span class="o">&lt;=</span> <span class="mh">5</span><span class="mi">'d0</span><span class="p">;</span>
-        <span class="no">CS</span><span class="p">[</span><span class="no">IDLE</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+        <span class="n">CS</span>       <span class="o">&lt;=</span> <span class="mh">5</span><span class="mi">'d0</span><span class="p">;</span>
+        <span class="n">CS</span><span class="p">[</span><span class="n">IDLE</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
     <span class="k">end</span>
     <span class="k">else</span> <span class="k">begin</span>
-        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">NS</span><span class="p">;</span>
+        <span class="n">CS</span> <span class="o">&lt;=</span> <span class="n">NS</span><span class="p">;</span>
     <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="k">always</span> <span class="p">@</span><span class="o">*</span> <span class="k">begin</span>
-    <span class="no">NS</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b0</span><span class="p">;</span>
+    <span class="n">NS</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b0</span><span class="p">;</span>
     <span class="k">case</span> <span class="p">(</span><span class="mh">1</span><span class="mb">'b1</span><span class="p">)</span>     <span class="c1">// synopsys full_case parallel_case</span>
-        <span class="no">CS</span><span class="p">[</span><span class="no">IDLE</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
+        <span class="n">CS</span><span class="p">[</span><span class="n">IDLE</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="n">NS</span><span class="p">[</span><span class="n">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
         <span class="k">end</span>
-        <span class="no">CS</span><span class="p">[</span><span class="no">S1</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
+        <span class="n">CS</span><span class="p">[</span><span class="n">S1</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="n">NS</span><span class="p">[</span><span class="n">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
         <span class="k">end</span>
-        <span class="no">CS</span><span class="p">[</span><span class="no">S2</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
+        <span class="n">CS</span><span class="p">[</span><span class="n">S2</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="n">NS</span><span class="p">[</span><span class="n">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
         <span class="k">end</span>
-        <span class="no">CS</span><span class="p">[</span><span class="no">S3</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
+        <span class="n">CS</span><span class="p">[</span><span class="n">S3</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="n">NS</span><span class="p">[</span><span class="n">ERROR</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
         <span class="k">end</span>
-        <span class="no">CS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">restart</span><span class="p">)</span>    <span class="no">NS</span><span class="p">[</span><span class="no">IDLE</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
+        <span class="n">CS</span><span class="p">[</span><span class="n">ERROR</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">restart</span><span class="p">)</span>    <span class="n">NS</span><span class="p">[</span><span class="n">IDLE</span><span class="p">]</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">'b1</span><span class="p">;</span>
     <span class="k">endcase</span>
 <span class="k">end</span>
 
@@ -374,25 +374,25 @@
     <span class="k">else</span> <span class="k">begin</span>
         <span class="c1">// default output</span>
         <span class="k">case</span> <span class="p">(</span><span class="mh">1</span><span class="mb">'b1</span><span class="p">)</span>
-            <span class="no">NS</span><span class="p">[</span><span class="no">IDLE</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
+            <span class="n">NS</span><span class="p">[</span><span class="n">IDLE</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
                 <span class="c1">// ...</span>
             <span class="k">end</span>
-            <span class="no">NS</span><span class="p">[</span><span class="no">S1</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
+            <span class="n">NS</span><span class="p">[</span><span class="n">S1</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
                 <span class="c1">// ...</span>
             <span class="k">end</span>
-            <span class="no">NS</span><span class="p">[</span><span class="no">S2</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
+            <span class="n">NS</span><span class="p">[</span><span class="n">S2</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
                 <span class="c1">// ...</span>
             <span class="k">end</span>
-            <span class="no">NS</span><span class="p">[</span><span class="no">S3</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
+            <span class="n">NS</span><span class="p">[</span><span class="n">S3</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
                 <span class="c1">// ...</span>
             <span class="k">end</span>
-            <span class="no">NS</span><span class="p">[</span><span class="no">ERROR</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
+            <span class="n">NS</span><span class="p">[</span><span class="n">ERROR</span><span class="p">]</span><span class="o">:</span> <span class="k">begin</span>
                 <span class="c1">// ...</span>
             <span class="k">end</span>
         <span class="k">endcase</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>需要注意的是 synopsys FSM 的语法：</p>
 <ul>
@@ -464,16 +464,16 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">// Synchronous Reset</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">// Synchronous Reset</span>
 <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
-        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+        <span class="n">CS</span> <span class="o">&lt;=</span> <span class="n">IDLE</span><span class="p">;</span>
     <span class="k">end</span>
     <span class="k">else</span> <span class="k">begin</span>
-        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">NS</span><span class="p">;</span>
+        <span class="n">CS</span> <span class="o">&lt;=</span> <span class="n">NS</span><span class="p">;</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -601,51 +601,51 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 70
 71
 72
-73</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="c1">// synopsys enum code</span>
-                     <span class="no">IDLE</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b00001</span><span class="p">,</span>
-                       <span class="no">S1</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b00010</span><span class="p">,</span>
-                       <span class="no">S2</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b00100</span><span class="p">,</span>
-                       <span class="no">S3</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b01000</span><span class="p">,</span>
-                    <span class="no">ERROR</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b10000</span><span class="p">;</span>
+73</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">parameter</span>   <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="c1">// synopsys enum code</span>
+                     <span class="n">IDLE</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b00001</span><span class="p">,</span>
+                       <span class="n">S1</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b00010</span><span class="p">,</span>
+                       <span class="n">S2</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b00100</span><span class="p">,</span>
+                       <span class="n">S3</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b01000</span><span class="p">,</span>
+                    <span class="n">ERROR</span> <span class="o">=</span> <span class="mh">5</span><span class="mb">'b10000</span><span class="p">;</span>
 
 <span class="c1">// synopsys state_vector state</span>
 <span class="kt">reg</span>     <span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>   <span class="c1">// synopsys enum code</span>
-                <span class="no">CS</span><span class="p">,</span> <span class="no">NS</span><span class="p">;</span>
+                <span class="n">CS</span><span class="p">,</span> <span class="n">NS</span><span class="p">;</span>
 
 <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="k">begin</span>
-        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">IDLE</span><span class="p">;</span>
+        <span class="n">CS</span> <span class="o">&lt;=</span> <span class="n">IDLE</span><span class="p">;</span>
     <span class="k">end</span>
     <span class="k">else</span> <span class="k">begin</span>
-        <span class="no">CS</span> <span class="o">&lt;=</span> <span class="no">NS</span><span class="p">;</span>
+        <span class="n">CS</span> <span class="o">&lt;=</span> <span class="n">NS</span><span class="p">;</span>
     <span class="k">end</span>
 <span class="k">end</span>
 
 <span class="k">always</span> <span class="p">@</span><span class="o">*</span> <span class="k">begin</span>
-    <span class="no">NS</span> <span class="o">=</span> <span class="mh">5</span><span class="p">'</span><span class="n">bx</span><span class="p">;</span>
-    <span class="k">case</span> <span class="p">(</span><span class="no">CS</span><span class="p">)</span>     <span class="c1">// synopsys full_case parallel_case</span>
+    <span class="n">NS</span> <span class="o">=</span> <span class="mh">5</span><span class="p">'</span><span class="n">bx</span><span class="p">;</span>
+    <span class="k">case</span> <span class="p">(</span><span class="n">CS</span><span class="p">)</span>     <span class="c1">// synopsys full_case parallel_case</span>
         <span class="nl">IDLE:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span> <span class="o">=</span> <span class="no">ERROR</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="n">NS</span> <span class="o">=</span> <span class="n">ERROR</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="nl">S1:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span> <span class="o">=</span> <span class="no">ERROR</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="n">NS</span> <span class="o">=</span> <span class="n">ERROR</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="nl">S2:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span> <span class="o">=</span> <span class="no">ERROR</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="n">NS</span> <span class="o">=</span> <span class="n">ERROR</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="nl">S3:</span> <span class="k">begin</span>
             <span class="k">if</span> <span class="p">()</span>       <span class="c1">//...</span>
             <span class="k">else</span> <span class="k">if</span> <span class="p">()</span>  <span class="c1">//...</span>
-            <span class="k">else</span>        <span class="no">NS</span> <span class="o">=</span> <span class="no">ERROR</span><span class="p">;</span>
+            <span class="k">else</span>        <span class="n">NS</span> <span class="o">=</span> <span class="n">ERROR</span><span class="p">;</span>
         <span class="k">end</span>
         <span class="nl">ERROR:</span> <span class="k">begin</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">restart</span><span class="p">)</span>    <span class="no">NS</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">restart</span><span class="p">)</span>    <span class="n">NS</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>
     <span class="k">endcase</span>
 <span class="k">end</span>
 
@@ -655,7 +655,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
     <span class="k">end</span>
     <span class="k">else</span> <span class="k">begin</span>
         <span class="c1">// default output</span>
-        <span class="k">case</span> <span class="p">(</span><span class="no">NS</span><span class="p">)</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">NS</span><span class="p">)</span>
             <span class="nl">IDLE:</span> <span class="k">begin</span>
                 <span class="c1">// ...</span>
             <span class="k">end</span>
@@ -674,7 +674,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
         <span class="k">endcase</span>
     <span class="k">end</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>======================== 分割线 =============================</p>
 <h3 id="safe fsm">Safe FSM</h3>
@@ -689,10 +689,10 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>在第二段 <code>always</code> 中，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">default</span><span class="o">:</span> <span class="n">begian</span>
-    <span class="no">NS</span> <span class="o">=</span> <span class="no">IDLE</span><span class="p">;</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">default</span><span class="o">:</span> <span class="n">begian</span>
+    <span class="n">NS</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>
 <span class="k">end</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>这里应该赋值 <code>8'bx</code> 更合理，因为状态机上电时处于未知状态，所以应该赋值 <code>x</code> 更符合实际，但是这样赋值必须有个条件，就是必须所有的状态编码都全部被使用了，不然就会出现锁死现象，FSM 无法返回工作状态。我们前面使用的是 One-Hot 编码方式，有大量无效状态，所以这里不能赋值为 <code>x</code>。</p>
 </li>
@@ -710,31 +710,31 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <p>显式地定义定义一个 ERROR state</p>
 <p>如模板所示。</p>
 <p>比如一个 FSM，有 4 个状态，分别是 IDLE、S1、S2、S3，那么额外定义一个 ERROR 状态机的框图如下：</p>
-<div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>   <span class="n">IDLE</span>  <span class="o">=</span> <span class="mi">5</span><span class="s1">'d0,</span>
-<span class="s1">                    S1    = 5'</span><span class="n">d1</span><span class="p">,</span>
-                    <span class="n">S2</span>    <span class="o">=</span> <span class="mi">5</span><span class="s1">'d2,</span>
-<span class="s1">                    S3    = 5'</span><span class="n">d3</span><span class="p">,</span>
-                    <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="err">'</span><span class="n">d4</span><span class="p">;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">parameter   [4:0]   IDLE  = 5'd0,</span>
+<span class="err">                    S1    = 5'd1,</span>
+<span class="err">                    S2    = 5'd2,</span>
+<span class="err">                    S3    = 5'd3,</span>
+<span class="err">                    ERROR = 5'd4;</span>
+</code></pre></div>
 <p>在每个 case item 中，最后添加一个 else 分支且 <code>NS[ERROR] = 1'b1</code>，并且多加一个 case item</p>
-<div class="highlight"><pre><span></span><span class="nv">CS</span>[<span class="nv">ERROR</span>]: <span class="nv">begin</span>
-    <span class="k">if</span> <span class="ss">(</span><span class="nv">restart</span><span class="ss">)</span> <span class="nv">NS</span>[<span class="nv">IDLE</span>] <span class="o">=</span> <span class="mi">1</span><span class="s1">'</span><span class="s">b1;</span>
-<span class="k">end</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">CS</span><span class="o">[</span><span class="n">ERROR</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="k">begin</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">restart</span><span class="p">)</span><span class="w"> </span><span class="n">NS</span><span class="o">[</span><span class="n">IDLE</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="err">'</span><span class="n">b1</span><span class="p">;</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</code></pre></div>
 </li>
 <li>
 <p>zero-idle</p>
 <p>在状态定义时，不用显式地定义一个 ERROR 状态，而是用全 0 状态表示 ERROR 状态：</p>
-<div class="highlight"><pre><span></span><span class="k">parameter</span>   <span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>   <span class="n">IDLE</span>  <span class="o">=</span> <span class="mi">5</span><span class="s1">'d1,</span>
-<span class="s1">                    S1    = 5'</span><span class="n">d2</span><span class="p">,</span>
-                    <span class="n">S2</span>    <span class="o">=</span> <span class="mi">5</span><span class="s1">'d3,</span>
-<span class="s1">                    S3    = 5'</span><span class="n">d4</span><span class="p">;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">parameter   [4:1]   IDLE  = 5'd1,</span>
+<span class="err">                    S1    = 5'd2,</span>
+<span class="err">                    S2    = 5'd3,</span>
+<span class="err">                    S3    = 5'd4;</span>
+</code></pre></div>
 <p>多加一个 case item：</p>
-<div class="highlight"><pre><span></span><span class="o">~|</span><span class="nv">CS</span>: <span class="nv">begin</span>
-    <span class="k">if</span><span class="ss">(</span><span class="nv">restart</span><span class="ss">)</span> <span class="nv">NS</span>[<span class="nv">IDLE</span>] <span class="o">=</span> <span class="mi">1</span><span class="s1">'</span><span class="s">b1;</span>
-<span class="k">end</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="o">~|</span><span class="nl">CS</span><span class="p">:</span><span class="w"> </span><span class="k">begin</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">restart</span><span class="p">)</span><span class="w"> </span><span class="n">NS</span><span class="o">[</span><span class="n">IDLE</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="err">'</span><span class="n">b1</span><span class="p">;</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+</code></pre></div>
 </li>
 </ol>
 <p>对比两种方式，我觉得第一种更能体现出设计意图，所以在模板中选择这种方式。</p>
@@ -744,8 +744,8 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <ol>
 <li>
 <p>如果使用 &ldquo; 非 index one-hot + 非 reverse case&rdquo; 的方法，那么在第二个 always block 中，在 case 前给 NS 一个默认值（如下）</p>
-<div class="highlight"><pre><span></span><span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">'</span><span class="n">bx</span><span class="p">;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NS = 8'bx;</span>
+</code></pre></div>
 <p>这是个很有用的小技巧，它可以帮助我们在综合前发现状态是否完备：如果状态完备，则在下面的 <code>case</code> 中会给 <code>NS</code> 合适的值；如果状态不完备，则状态机会进入错误状态，输出不定，仿真时可以很快的发现。而且，综合工具对于 <code>x</code> 采取的态度是 <code>don't care</code>，综合时会自动将其忽略，生成的电路最简洁。</p>
 </li>
 <li>
@@ -753,22 +753,22 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 <ul>
 <li>
 <p>NS 必须赋值为全 0：</p>
-<div class="highlight"><pre><span></span><span class="n">NS</span> <span class="o">=</span> <span class="mi">8</span><span class="err">'</span><span class="n">b0</span><span class="p">;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">NS = 8'b0;</span>
+</code></pre></div>
 </li>
 <li>
 <p>使用 synopsys 综合指令</p>
 <p>一般的原则是尽量不要使用综合指令，这里是个特殊情况。</p>
-<div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">synopsys</span> <span class="n">full_case</span> <span class="n">parallel_case</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">// synopsys full_case parallel_case</span>
+</code></pre></div>
 </li>
 <li>
 <p>default 分支</p>
 <p>使用了综合指令，则 default 分支在综合时就没有必要，但是仿真器并不能识别综合指令，所以在行为仿真的时候仍然需要 default 分支，所以可以用下面的方法：</p>
-<div class="highlight"><pre><span></span><span class="o">//</span> <span class="nt">synopsys</span> <span class="nt">translate_off</span>
-<span class="nt">default</span><span class="o">:</span> <span class="o">$</span><span class="nt">display</span><span class="o">(</span><span class="s2">"FSM is dead!"</span><span class="o">);</span>
-<span class="o">//</span> <span class="nt">synopsys</span> <span class="nt">translate_on</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">// synopsys translate_off</span>
+<span class="c">default: $display("FSM is dead!");</span>
+<span class="err">// synopsys translate_on</span>
+</code></pre></div>
 </li>
 </ul>
 <p>采用 index one-hot + reverse case 的方式，这里违背了 case 语句本身满足 full_case、parallel_case 的原则，使用了综合指令、并且省掉了 default 分支，是唯一的例外情况，其他情况下都应该遵守这一原则！</p>
@@ -810,7 +810,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">case</span> <span class="p">(</span><span class="no">NS</span><span class="p">)</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">case</span> <span class="p">(</span><span class="n">NS</span><span class="p">)</span>
     <span class="nl">IDLE:</span> <span class="k">begin</span>
         <span class="c1">// ....</span>
     <span class="k">end</span>
@@ -819,7 +819,7 @@ one-hot 和 reverse case 相结合，可以得到一种更加简洁的电路（�
         <span class="c1">// ...</span>
     <span class="k">end</span>
 <span class="k">endcase</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>就可以提前判断下一状态的输出，节省了一个节拍，使输出和状态变化同步。</p>
 <p><strong>example</strong></p>
@@ -865,10 +865,10 @@ Design using NC-Verilog and BuildGates</a></p>
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
-      <li><a href="https://qiangu.cool/posts/ic/verilog_hdl_coding_style_guide.html">Verilog HDL coding style</a></li>
-      <li><a href="https://qiangu.cool/posts/ic/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
-      <li><a href="https://qiangu.cool/posts/ic/doxygen_for_verilog.html">针对 Verilog 的 Doxygen</a></li>
       <li><a href="https://qiangu.cool/posts/ic/drawing_fsm_state_diagram_using_graphviz.html">利用 Graphviz 画 FSM 状态图</a></li>
+      <li><a href="https://qiangu.cool/posts/ic/verilog_hdl_coding_style_guide.html">Verilog HDL coding style</a></li>
+      <li><a href="https://qiangu.cool/posts/ic/doxygen_for_verilog.html">针对 Verilog 的 Doxygen</a></li>
+      <li><a href="https://qiangu.cool/posts/ic/writing_synthesizable_code.html">编写可综合的 Verilog HDL 代码</a></li>
     </ul>
   </div>
 

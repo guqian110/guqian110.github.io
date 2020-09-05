@@ -208,30 +208,30 @@
 <p>而 Gray 编码就没有这样的问题，Gray 码有很多优点，应用很广泛，就不再重复了。（比如在 FIFO 设计中，内部就有 Gray 和 Binary 的相互转换）</p>
 <p>下面的例子，通过<strong>将端口位宽参数化</strong>，实现了可配置的转换模块：</p>
 <p><strong>example1:</strong></p>
-<div class="highlight"><pre><span></span>#<span class="nv">verilog</span>
-<span class="nv">module</span> <span class="nv">gray2bin</span> #<span class="ss">(</span><span class="nv">parameter</span> <span class="nv">SIZE</span> <span class="o">=</span> <span class="mi">8</span><span class="ss">)</span>
-    <span class="ss">(</span><span class="nv">input</span>  [<span class="nv">SIZE</span><span class="o">-</span><span class="mi">1</span> : <span class="mi">0</span>]    <span class="nv">gray</span>,
-     <span class="nv">output</span> [<span class="nv">SIZE</span><span class="o">-</span><span class="mi">1</span> : <span class="mi">0</span>]    <span class="nv">bin</span><span class="ss">)</span><span class="c1">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">#verilog</span><span class="w"></span>
+<span class="k">module</span><span class="w"> </span><span class="n">gray2bin</span><span class="w"> </span><span class="err">#</span><span class="p">(</span><span class="k">parameter</span><span class="w"> </span><span class="k">SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="k">input</span><span class="w">  </span><span class="o">[</span><span class="n">SIZE-1 : 0</span><span class="o">]</span><span class="w">    </span><span class="n">gray</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="k">output</span><span class="w"> </span><span class="o">[</span><span class="n">SIZE-1 : 0</span><span class="o">]</span><span class="w">    </span><span class="n">bin</span><span class="p">);</span><span class="w"></span>
 
-    <span class="nv">generate</span>
-        <span class="nv">genvar</span> <span class="nv">i</span><span class="c1">;</span>
-        <span class="k">for</span> <span class="ss">(</span><span class="nv">i</span> <span class="o">=</span> <span class="mi">0</span><span class="c1">; i &lt; SIZE; i = i + 1)</span>
-        <span class="nv">begin</span>:<span class="nv">bit</span>
-            <span class="nv">assign</span> <span class="nv">bin</span>[<span class="nv">i</span>] <span class="o">=</span> <span class="o">^</span><span class="nv">gray</span>[<span class="nv">SIZE</span><span class="o">-</span><span class="mi">1</span> : <span class="nv">i</span>]<span class="c1">;</span>
-        <span class="k">end</span>
-    <span class="nv">endgenerate</span>
+<span class="w">    </span><span class="n">generate</span><span class="w"></span>
+<span class="w">        </span><span class="n">genvar</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="k">SIZE</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">begin</span><span class="err">:</span><span class="nc">bit</span><span class="w"></span>
+<span class="w">            </span><span class="n">assign</span><span class="w"> </span><span class="n">bin</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">^</span><span class="n">gray</span><span class="o">[</span><span class="n">SIZE-1 : i</span><span class="o">]</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">end</span><span class="w"></span>
+<span class="w">    </span><span class="n">endgenerate</span><span class="w"></span>
 
-<span class="nv">endmodule</span>
+<span class="n">endmodule</span><span class="w"></span>
 
-#<span class="nv">verilog</span>
-<span class="nv">module</span> <span class="nv">bin2gray</span> #<span class="ss">(</span><span class="nv">parameter</span> <span class="nv">SIZE</span> <span class="o">=</span> <span class="mi">8</span><span class="ss">)</span>
-    <span class="ss">(</span><span class="nv">input</span>  [<span class="nv">SIZE</span><span class="o">-</span><span class="mi">1</span> : <span class="mi">0</span>]    <span class="nv">bin</span>,
-     <span class="nv">output</span> [<span class="nv">SIZE</span><span class="o">-</span><span class="mi">1</span> : <span class="mi">0</span>]    <span class="nv">gray</span><span class="ss">)</span><span class="c1">;</span>
+<span class="n">#verilog</span><span class="w"></span>
+<span class="k">module</span><span class="w"> </span><span class="n">bin2gray</span><span class="w"> </span><span class="err">#</span><span class="p">(</span><span class="k">parameter</span><span class="w"> </span><span class="k">SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="k">input</span><span class="w">  </span><span class="o">[</span><span class="n">SIZE-1 : 0</span><span class="o">]</span><span class="w">    </span><span class="n">bin</span><span class="p">,</span><span class="w"></span>
+<span class="w">     </span><span class="k">output</span><span class="w"> </span><span class="o">[</span><span class="n">SIZE-1 : 0</span><span class="o">]</span><span class="w">    </span><span class="n">gray</span><span class="p">);</span><span class="w"></span>
 
-    <span class="nv">assign</span> <span class="nv">gray</span> <span class="o">=</span> <span class="nv">bin</span> <span class="o">^</span> {<span class="mi">1</span><span class="s1">'</span><span class="s">b0, bin[SIZE-1 : 1] };</span>
+<span class="w">    </span><span class="n">assign</span><span class="w"> </span><span class="n">gray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bin</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="err">{</span><span class="mi">1</span><span class="err">'</span><span class="n">b0</span><span class="p">,</span><span class="w"> </span><span class="n">bin</span><span class="o">[</span><span class="n">SIZE-1 : 1</span><span class="o">]</span><span class="w"> </span><span class="err">}</span><span class="p">;</span><span class="w"></span>
 
-<span class="nv">endmodule</span>
-</pre></div>
+<span class="n">endmodule</span><span class="w"></span>
+</code></pre></div>
 <p><br/></p>
 <h2 id="crc">CRC</h2>
 <hr/>
@@ -258,10 +258,10 @@
 18
 19
 20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">general_crc</span>
-    <span class="p">#(</span><span class="k">parameter</span>  <span class="no">WIDTH</span> <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
-                 <span class="p">[</span><span class="no">WIDTH</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="no">INIT_VALUE</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span>
-                 <span class="p">[</span><span class="no">WIDTH</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="no">CRC_EQUATION</span> <span class="o">=</span> <span class="mh">0</span><span class="p">)</span>
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="n">general_crc</span>
+    <span class="p">#(</span><span class="k">parameter</span>  <span class="n">WIDTH</span> <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+                 <span class="p">[</span><span class="n">WIDTH</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">INIT_VALUE</span> <span class="o">=</span> <span class="mh">0</span><span class="p">,</span>
+                 <span class="p">[</span><span class="n">WIDTH</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>  <span class="n">CRC_EQUATION</span> <span class="o">=</span> <span class="mh">0</span><span class="p">)</span>
 
     <span class="p">(</span><span class="k">input</span>                          <span class="n">clk</span><span class="p">,</span>
      <span class="k">input</span>                          <span class="n">rst</span><span class="p">,</span>
@@ -273,13 +273,13 @@
                                                 <span class="c1">// out from dout</span>
      <span class="k">input</span>                          <span class="n">din</span><span class="p">,</span>
      <span class="k">output</span>                         <span class="n">dout</span><span class="p">,</span>
-     <span class="k">output</span>  <span class="kt">reg</span>    <span class="p">[</span><span class="no">WIDTH</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>   <span class="n">crc_value</span>   <span class="c1">// parallel out crc_value</span>
+     <span class="k">output</span>  <span class="kt">reg</span>    <span class="p">[</span><span class="n">WIDTH</span><span class="o">-</span><span class="mh">1</span> <span class="o">:</span> <span class="mh">0</span><span class="p">]</span>   <span class="n">crc_value</span>   <span class="c1">// parallel out crc_value</span>
      <span class="p">);</span>
 
     <span class="c1">// implementation code</span>
 
 <span class="k">endmodule</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>在调用时，通过传递合适的参数即可实现不同的 CRC 模块。</p>
 <p><br/></p>
@@ -296,12 +296,12 @@
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="no">`ifdef</span>  <span class="no">FPGA</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="no">`ifdef</span>  <span class="n">FPGA</span>
     <span class="c1">// instantiate module for FPGA</span>
 <span class="no">`else</span>
     <span class="c1">// instantiate module for ASIC</span>
 <span class="no">`endif</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>这种方法的缺点主要有：</p>
 <ol>
@@ -439,12 +439,12 @@
 <hr/>
 <p>运用模块化的设计思想，提取公共代码，设计子模块，通过子模块实现大模块的设计，虽然参数化以后 GPIO 看起来比较复杂，但是这个模块是很通用的，设计好之后只需要修改参数就可以重复使用了。这在设计期间，修改起来非常方便。</p>
 <p>整个 GPIO 由 5  个模块组成：</p>
-<div class="highlight"><pre><span></span><span class="n">gpio</span><span class="p">.</span><span class="n">v</span> <span class="p">(</span><span class="n">module</span> <span class="n">gpio</span><span class="p">)</span>
- <span class="o">|</span><span class="n">___gpio_params</span><span class="p">.</span><span class="n">v</span> <span class="p">(</span><span class="k">parameters</span> <span class="n">define</span><span class="p">)</span>
- <span class="o">|</span><span class="n">___gpio_reg</span><span class="p">.</span><span class="n">v</span>    <span class="p">(</span><span class="n">module</span> <span class="n">gpio_reg</span><span class="p">)</span>
- <span class="o">|</span><span class="n">___gpio_check</span><span class="p">.</span><span class="n">v</span>  <span class="p">(</span><span class="n">module</span> <span class="n">gpio_check</span><span class="p">)</span>
- <span class="o">|</span><span class="n">___gpio_sync</span><span class="p">.</span><span class="n">v</span>   <span class="p">(</span><span class="n">module</span> <span class="n">gpio_sync2_reg</span><span class="o">/</span><span class="n">gpio_sync3_reg</span><span class="o">/</span><span class="n">gpio_sync_pulse</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">gpio.v (module gpio)</span>
+<span class="err"> |___gpio_params.v (parameters define)</span>
+<span class="err"> |___gpio_reg.v    (module gpio_reg)</span>
+<span class="err"> |___gpio_check.v  (module gpio_check)</span>
+<span class="err"> |___gpio_sync.v   (module gpio_sync2_reg/gpio_sync3_reg/gpio_sync_pulse)</span>
+</code></pre></div>
 <p>具体代码略，直接看书</p>
 <p><br/></p>
 <h2 id="busmatrix">BusMatrix</h2>

@@ -217,16 +217,16 @@
 <hr/>
 <p>Matlab 的 <code>Communications System Toolbox</code> 中提供了大量的常用函数，其中就有卷积编码函数 <code>convenc</code>。我们就是基于这个函数实现 LTE 中的咬尾卷积编码。</p>
 <p>通过</p>
-<div class="highlight"><pre><span></span><span class="n">help</span> <span class="n">convenc</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">help convenc</span>
+</code></pre></div>
 <p>和 hlep browser，可以查到这个函数的用法，简单解释如下 :</p>
 <p>convenc 函数有几种方式来调用：</p>
-<div class="highlight"><pre><span></span><span class="n">CODE</span> <span class="o">=</span> <span class="n">convenc</span><span class="p">(</span><span class="n">MSG</span><span class="p">,</span> <span class="n">TRELLIS</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">CODE</span> <span class="o">=</span> <span class="n">convenc</span><span class="p">(</span><span class="n">MSG</span><span class="p">,</span> <span class="n">TRELLIS</span><span class="p">)</span>
 
 <span class="n">CODE</span> <span class="o">=</span> <span class="n">convenc</span><span class="p">(</span><span class="n">MSG</span><span class="p">,</span> <span class="n">TRELLIS</span><span class="p">,</span> <span class="n">PUNCPAT</span><span class="p">)</span>
 
 <span class="n">CODE</span> <span class="o">=</span> <span class="n">convenc</span><span class="p">(...,</span> <span class="n">INIT_STATE</span><span class="p">)</span>
-</pre></div>
+</code></pre></div>
 <ul>
 <li>
 <p>第一个参数 <code>MSG</code> 是待编码的信息比特</p>
@@ -235,22 +235,22 @@
 <p>第二个参数 <code>TRELLIS</code> 是编码器的栅格描述</p>
 <p>TRELLIS 是 Matlab 内部定义的一种数据结构，它的值可以按照语法定义，更方便的方法是通过 <code>poly2trellis</code> 这个函数，由多项式描述方式转化得到。</p>
 <p>查阅 poly2trellis 的 help 就可以看到它的用法。</p>
-<div class="highlight"><pre><span></span><span class="n">trellis</span> <span class="o">=</span> <span class="n">poly2trellis</span><span class="p">(</span><span class="n">ConstraintLength</span><span class="p">,</span> <span class="n">CodeGenerator</span><span class="p">)</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">trellis = poly2trellis(ConstraintLength, CodeGenerator)</span>
+</code></pre></div>
 <p>其中，<code>ConstraintLength</code> 是个 1&times;k 维的向量，表示编码器的约束长度；<code>CodeGenerator</code> 是个 k&times;n 维的向量，表示编码器中各个寄存器的抽头。</p>
 <p>help 中以一个 2/3 码率的编码器为例，其结构如下图所示：</p>
 <p><img alt="exmaple" src="/images/tail-bitting-convolutional-code-implementation-in-matlab-and-fpga/example.png"/></p>
 <p>两组寄存器的长度分别为 4 和 3，所以 constraintlength 的取值为 [5, 4]；将每路输出的抽头用 8 进制来表示，即可得到 codegenerator 的取值 [27, 33, 0; 0, 5, 13]，表示第一路输出由第一组寄存器的 27 组合方式 + 第二组寄存器的 0 组合方式得到，第二路输出由第一组寄存器的 33 组合方式 + 第二组寄存器的 5 组合方式得到，第三路同理。</p>
 <p>应用到我们的编码器中，很容易写出其栅格描述</p>
-<div class="highlight"><pre><span></span><span class="n">tre</span> <span class="o">=</span> <span class="n">poly2trellis</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="p">[</span><span class="mi">133</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">165</span><span class="p">]);</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">tre = poly2trellis(7, [133, 171, 165]);</span>
+</code></pre></div>
 </li>
 <li>
 <p>第三个参数 INIT_STATE 是移位寄存器的初始值</p>
 <p><code>INIT_STATE</code> 用来设定寄存器的初始状态，其取值就是寄存器的值。</p>
 <p>在下面的程序中，我们的测试向量的最后 6 bit 为 010110，所以对应的</p>
-<div class="highlight"><pre><span></span><span class="n">init</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">init = 22;</span>
+</code></pre></div>
 </li>
 </ul>
 <p>综上，可以写出 matlab 程序来实现咬尾卷积编码，如下：</p>
@@ -262,7 +262,7 @@
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">clear</span><span class="p">;</span>  
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">clear</span><span class="p">;</span>  
 <span class="c">% using a to test coder</span>
 <span class="n">a</span> <span class="p">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">];</span>
 <span class="c">% describe the coder</span>
@@ -271,11 +271,11 @@
 <span class="n">init</span> <span class="p">=</span> <span class="mi">22</span><span class="p">;</span>
 <span class="c">% encode</span>
 <span class="n">b</span> <span class="p">=</span> <span class="n">convenc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">tre</span><span class="p">,</span> <span class="n">init</span><span class="p">);</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>得到的编码结果是：</p>
-<div class="highlight"><pre><span></span><span class="mi">0</span>  <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mi">0</span>   <span class="mi">0</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">0  1   0   1   0   1   1   1   0   0   1   1   0   1   1   1   0   0   1   1   0   1   0   0</span>
+</code></pre></div>
 <p>数据的格式是将 3 位并行结果串行输出： d00, d01, d02, d10, d11, d12, ...</p>
 <p><br/></p>
 <h2 id="c implementation">C Implementation</h2>
@@ -305,7 +305,7 @@
 22
 23
 24
-25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">encode_signal</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">coded_bits</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">origin_bits</span><span class="p">,</span> <span class="kt">int</span> <span class="n">origin_bits_len</span><span class="p">)</span>
+25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">encode_signal</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">coded_bits</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">origin_bits</span><span class="p">,</span> <span class="kt">int</span> <span class="n">origin_bits_len</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="kt">int</span> <span class="o">*</span><span class="n">LSR</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">*</span><span class="mi">6</span><span class="p">);</span>
 
@@ -330,7 +330,7 @@
 
     <span class="n">free</span><span class="p">(</span><span class="n">LSR</span><span class="p">);</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h2 id="verlog implementation">Verlog Implementation</h2>
 <hr/>

@@ -230,17 +230,17 @@ Package management systems are designed to save organizations time and money thr
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>dpkg -i peackage.deb        // install
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>dpkg -i peackage.deb        // install
 dpkg -r package.deb         // remove
 dpkg -l <span class="o">[</span>optional pattern<span class="o">]</span>  // list installed package
 dpkg --configure package    // configure package
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h4 id="xiang xi yong fa">详细用法</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>dpkg --help
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>dpkg --help
 man dpkg
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h3 id="apt_1">Apt</h3>
 <p><a href="http://en.wikipedia.org/wiki/Advanced_Packaging_Tool">Advanced Packaging Tool on wiki</a></p>
@@ -254,22 +254,22 @@ man dpkg
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span>apt-get install package             // install
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>apt-get install package             // install
 apt-get remove package              // remove
 apt-cache search package            // search
 apt-get update                      // update <span class="nb">source</span> list
 apt-get upgrade                     // upgrade installed software
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h4 id="xiang xi yong fa_1">详细用法</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>man apt
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>man apt
 man apt-get
 man apt-update
 man apt-upgrade
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h4 id="cai dan">彩蛋</h4>
 <ul>
@@ -286,14 +286,14 @@ man apt-upgrade
 </li>
 </ul>
 <blockquote>
-<div class="highlight"><pre><span></span>          <span class="p">(</span><span class="n">__</span><span class="p">)</span> 
-          <span class="p">(</span><span class="n">oo</span><span class="p">)</span> 
-    <span class="o">/</span><span class="c1">------\/ </span>
-   <span class="o">/</span> <span class="o">|</span>    <span class="o">||</span>   
-  <span class="o">*</span>  <span class="o">/</span><span class="err">\</span><span class="c1">---/\ </span>
-     <span class="o">~~</span>   <span class="o">~~</span>   
-   <span class="p">....</span><span class="ss">"Have you mooed today?"</span><span class="p">...</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">          (__) </span>
+<span class="err">          (oo) </span>
+<span class="err">    /------\/ </span>
+<span class="err">   / |    ||   </span>
+<span class="err">  *  /\---/\ </span>
+<span class="err">     ~~   ~~   </span>
+<span class="err">   ...."Have you mooed today?"...</span>
+</code></pre></div>
 </blockquote>
 <h3 id="aptitude_1">Aptitude</h3>
 <p><a href="http://en.wikipedia.org/wiki/Aptitude_(software)">aptitude on wiki</a></p>
@@ -308,20 +308,20 @@ man apt-upgrade
 4
 5
 6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span>aptitude install package
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>aptitude install package
 aptitude remove package
 aptitude clean
 aptitude search package
 aptitude show string
 aptitude update
 aptitude dist-update
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h4 id="xiang xi yong fa_2">详细用法</h4>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>man aptitude
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>man aptitude
 aptitude -h
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <h4 id="cai dan_1">彩蛋</h4>
 <p><img alt="aptitude" src="/images/learning-linux-package-management/aptitude.png"/></p>
@@ -337,8 +337,8 @@ aptitude -h
 <p>有些软件要求的库的版本高于 (&gt;=)xx.xxx，有些软件要求库的版本必须是 (=)xx.xxx，如果我们的库不能满足要求则无法安装软件 。一般 <code>apt-get</code> 会处理比较简单的依赖关系，但是有些依赖关系 <code>apt-get</code> 并不能解决 。这时候可以试试 <code>aptitude</code> 。</p>
 <h3 id="wen ti">问题</h3>
 <p>为新安装的 Ubuntu 安装开发环境时，遇到了库版本过高的问题，执行下面的命令</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install build-essential
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>sudo apt-get install build-essential
+</code></pre></div>
 </td></tr></table>
 <p>结果 apt-get 提示有不满足依赖关系的包</p>
 <blockquote>
@@ -366,8 +366,8 @@ The following packages have unmet dependencies:
 E: Unable to correct problems, you have held broken packages.</p>
 </blockquote>
 <p>于是我们手动安装特定的库</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install dpkg-dev
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>sudo apt-get install dpkg-dev
+</code></pre></div>
 </td></tr></table>
 <p>结果提示我们库版本过高</p>
 <blockquote>
@@ -407,12 +407,12 @@ E: Unable to correct problems, you have held broken packages.</p>
 <li>
 <p>apt-get 直接指定安装特定的版本</p>
 <p>首先查询是否提供低版本的包</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>apt-cache showpkg package_name
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>apt-cache showpkg package_name
+</code></pre></div>
 </td></tr></table>
 <p>若有则指定安装某个版本</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install <span class="nv">package_name</span><span class="o">=</span>version
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>sudo apt-get install <span class="nv">package_name</span><span class="o">=</span>version
+</code></pre></div>
 </td></tr></table>
 </li>
 <li>
@@ -420,8 +420,8 @@ E: Unable to correct problems, you have held broken packages.</p>
 </li>
 </ol>
 <p>我采用的第二种方法：</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo aptitude install build-essential
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>sudo aptitude install build-essential
+</code></pre></div>
 </td></tr></table>
 <p>结果如下</p>
 <blockquote>

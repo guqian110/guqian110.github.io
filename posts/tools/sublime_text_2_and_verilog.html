@@ -193,8 +193,8 @@
 <hr/>
 <p>ST 是自带 Vim 模式的（Vintage Mode），但是这个模式默认是没有开启的，毕竟对于大多数普通人来说， Vim 实在是不太友好 ...</p>
 <p>打开 ST 的 <code>Preferences/Setting - Defalut</code>，在最后一行有句</p>
-<div class="highlight"><pre><span></span><span class="ss">"ignored_packages"</span><span class="p">:</span> <span class="p">[</span><span class="ss">"Vintage"</span><span class="p">]</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">"ignored_packages": ["Vintage"]</span>
+</code></pre></div>
 <p>只需要将方括号中的 Vintage 去掉就可以了。推荐在 Setting - User 中修改。</p>
 <p><a href="https://www.sublimetext.com/docs/2/vintage.html">官方说明</a></p>
 <p><br/></p>
@@ -218,8 +218,8 @@
 </li>
 <li>
 <p>在控制台中粘贴以下命令</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span><span class="nn">os</span><span class="p">;</span> <span class="n">pf</span><span class="o">=</span><span class="s1">'Package Control.sublime-package'</span><span class="p">;</span> <span class="n">ipp</span><span class="o">=</span><span class="n">sublime</span><span class="o">.</span><span class="n">installed_packages_path</span><span class="p">();</span> <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">else</span> <span class="bp">None</span><span class="p">;</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">install_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="o">.</span><span class="n">ProxyHandler</span><span class="p">()));</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ipp</span><span class="p">,</span><span class="n">pf</span><span class="p">),</span><span class="s1">'wb'</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">'http://sublime.wbond.net/'</span><span class="o">+</span><span class="n">pf</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span><span class="s1">'%20'</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">());</span> <span class="k">print</span> <span class="s1">'Please restart Sublime Text to finish installation'</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span><span class="nn">os</span><span class="p">;</span> <span class="n">pf</span><span class="o">=</span><span class="s1">'Package Control.sublime-package'</span><span class="p">;</span> <span class="n">ipp</span><span class="o">=</span><span class="n">sublime</span><span class="o">.</span><span class="n">installed_packages_path</span><span class="p">();</span> <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ipp</span><span class="p">)</span> <span class="k">else</span> <span class="bp">None</span><span class="p">;</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">install_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">urllib2</span><span class="o">.</span><span class="n">ProxyHandler</span><span class="p">()));</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ipp</span><span class="p">,</span><span class="n">pf</span><span class="p">),</span><span class="s1">'wb'</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">'http://sublime.wbond.net/'</span><span class="o">+</span><span class="n">pf</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span><span class="s1">'%20'</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">());</span> <span class="k">print</span> <span class="s1">'Please restart Sublime Text to finish installation'</span>
+</code></pre></div>
 </li>
 <li>
 <p>安装完成之后，重启 ST 即可</p>
@@ -239,7 +239,7 @@
 <p>因为插件作者只添加了异步高有效复位方式的 <code>always</code> 块，而我们同步和异步两种方式都可能会用到，所以，我添加同步复位的 Snippet</p>
 <p>ST 2 的 Package 都存放在 <code>/home/.config/sublime-text-2/Packages</code> 目录下面，我们需要修改的就是这个目录下的 <code>Verilog/Snippets</code> 下的 <code>.tmSnippet</code> 文件。修改后的结果如下：</p>
 <p><strong>always_async.tmSnippet</strong></p>
-<div class="highlight"><pre><span></span><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;</span>
 <span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;dict&gt;</span>
@@ -263,9 +263,9 @@ end<span class="nt">&lt;/string&gt;</span>
     <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
 <span class="nt">&lt;/dict&gt;</span>
 <span class="nt">&lt;/plist&gt;</span>
-</pre></div>
+</code></pre></div>
 <p><strong>always_sync.tmSnippet</strong></p>
-<div class="highlight"><pre><span></span><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;</span>
 <span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;dict&gt;</span>
@@ -289,60 +289,60 @@ end<span class="nt">&lt;/string&gt;</span>
     <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
 <span class="nt">&lt;/dict&gt;</span>
 <span class="nt">&lt;/plist&gt;</span>
-</pre></div>
+</code></pre></div>
 <p>修改之后的结果如下图所示：</p>
 <p><img alt="always" src="/images/sublime-text-2-and-verilog/always.gif"/></p>
 <h3 id="if-else">if-else</h3>
 <p>原来的 if snippet 没有 else 分支，所以，添加了一个有 else 分支的 if 语句。</p>
 <p><strong>if.tmSnippet</strong></p>
-<div class="highlight"><pre><span></span><span class="o">&lt;</span>?<span class="nv">xml</span> <span class="nv">version</span><span class="o">=</span><span class="s2">"</span><span class="s">1.0</span><span class="s2">"</span> <span class="nv">encoding</span><span class="o">=</span><span class="s2">"</span><span class="s">UTF-8</span><span class="s2">"</span>?<span class="o">&gt;</span>
-<span class="o">&lt;!</span><span class="nv">DOCTYPE</span> <span class="nv">plist</span> <span class="nv">PUBLIC</span> <span class="s2">"</span><span class="s">-//Apple//DTD PLIST 1.0//EN</span><span class="s2">"</span> <span class="s2">"</span><span class="s">http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd</span><span class="s2">"</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nv">plist</span> <span class="nv">version</span><span class="o">=</span><span class="s2">"</span><span class="s">1.0</span><span class="s2">"</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nv">dict</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">content</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="k">if</span> <span class="ss">(</span><span class="mh">$1</span><span class="ss">)</span> <span class="nv">begin</span>
-    <span class="mh">$0</span>
-<span class="k">end</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">name</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="k">if</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">scope</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="nv">source</span>.<span class="nv">verilog</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">tabTrigger</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="k">if</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">uuid</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="mi">1</span><span class="nv">ADE2F84</span><span class="o">-</span><span class="nv">DDB8</span><span class="o">-</span><span class="mi">4878</span><span class="o">-</span><span class="mi">8</span><span class="nv">BFC</span><span class="o">-</span><span class="nv">B7FC2F391C6C</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="nv">dict</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="nv">plist</span><span class="o">&gt;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if ($1) begin
+    $0
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</code></pre></div>
 <p><strong>if-else.tmSnippet</strong></p>
-<div class="highlight"><pre><span></span><span class="o">&lt;</span>?<span class="nv">xml</span> <span class="nv">version</span><span class="o">=</span><span class="s2">"</span><span class="s">1.0</span><span class="s2">"</span> <span class="nv">encoding</span><span class="o">=</span><span class="s2">"</span><span class="s">UTF-8</span><span class="s2">"</span>?<span class="o">&gt;</span>
-<span class="o">&lt;!</span><span class="nv">DOCTYPE</span> <span class="nv">plist</span> <span class="nv">PUBLIC</span> <span class="s2">"</span><span class="s">-//Apple//DTD PLIST 1.0//EN</span><span class="s2">"</span> <span class="s2">"</span><span class="s">http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd</span><span class="s2">"</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nv">plist</span> <span class="nv">version</span><span class="o">=</span><span class="s2">"</span><span class="s">1.0</span><span class="s2">"</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nv">dict</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">content</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="k">if</span> <span class="ss">(</span><span class="mh">$1</span><span class="ss">)</span> <span class="nv">begin</span>
-    <span class="mh">$2</span>
-<span class="k">end</span>
-<span class="k">else</span> <span class="nv">begin</span>
-    <span class="mh">$0</span>
-<span class="k">end</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">name</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="nv">if_else</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">scope</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="nv">source</span>.<span class="nv">verilog</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">tabTrigger</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="nv">if_else</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">uuid</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="mi">1</span><span class="nv">ADE2F84</span><span class="o">-</span><span class="nv">DDB8</span><span class="o">-</span><span class="mi">4878</span><span class="o">-</span><span class="mi">8</span><span class="nv">BFC</span><span class="o">-</span><span class="nv">B7FC2F391C6C</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="nv">dict</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="nv">plist</span><span class="o">&gt;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if ($1) begin
+    $2
+end
+else begin
+    $0
+end<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if_else<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>if_else<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</code></pre></div>
 <p>修改后的结果如下图：</p>
 <p><img alt="if-else" src="/images/sublime-text-2-and-verilog/if-else.gif"/></p>
 <h3 id="parameter">parameter</h3>
 <p>原来是没有 parameter 的 snippets 的，拷贝一份其他的 snippet，修改其中的一些设置，即可</p>
 <p><strong>parameter.tmSnippet</strong></p>
-<div class="highlight"><pre><span></span><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;</span>
 <span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;dict&gt;</span>
@@ -360,45 +360,45 @@ end<span class="nt">&lt;/string&gt;</span>
     <span class="nt">&lt;string&gt;</span>1ADE2F84-DDB8-4878-8BFC-B7FC2F391C6C<span class="nt">&lt;/string&gt;</span>
 <span class="nt">&lt;/dict&gt;</span>
 <span class="nt">&lt;/plist&gt;</span>
-</pre></div>
+</code></pre></div>
 <p>修改后的结果如下图所示：</p>
 <p><img alt="parameter" src="/images/sublime-text-2-and-verilog/parameter.gif"/></p>
 <h3 id="case">case</h3>
 <p>原来是没有 case 的 snippet，方法同上，可以修改出我们想要的 case snippet</p>
 <p><strong>case.tmSnippet</strong></p>
-<div class="highlight"><pre><span></span><span class="o">&lt;</span>?<span class="nv">xml</span> <span class="nv">version</span><span class="o">=</span><span class="s2">"</span><span class="s">1.0</span><span class="s2">"</span> <span class="nv">encoding</span><span class="o">=</span><span class="s2">"</span><span class="s">UTF-8</span><span class="s2">"</span>?<span class="o">&gt;</span>
-<span class="o">&lt;!</span><span class="nv">DOCTYPE</span> <span class="nv">plist</span> <span class="nv">PUBLIC</span> <span class="s2">"</span><span class="s">-//Apple//DTD PLIST 1.0//EN</span><span class="s2">"</span> <span class="s2">"</span><span class="s">http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd</span><span class="s2">"</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nv">plist</span> <span class="nv">version</span><span class="o">=</span><span class="s2">"</span><span class="s">1.0</span><span class="s2">"</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nv">dict</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">content</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="nv">case</span> <span class="ss">(</span><span class="mh">$1</span><span class="ss">)</span>
-    <span class="mh">$2</span>: <span class="nv">begin</span>
-        <span class="mh">$3</span>
-    <span class="k">end</span>
-    <span class="mh">$4</span>: <span class="nv">begin</span>
-        <span class="mh">$5</span>
-    <span class="k">end</span>
-    <span class="mh">$6</span>: <span class="nv">begin</span>
-        <span class="mh">$7</span>
-    <span class="k">end</span>
-    <span class="mh">$8</span>: <span class="nv">begin</span>
-        <span class="mh">$9</span>
-    <span class="k">end</span>
-    <span class="nv">default</span>: <span class="nv">begin</span>
-        <span class="mh">$10</span>
-    <span class="k">end</span>
-<span class="nv">endcase</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">name</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="nv">case</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">scope</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="nv">source</span>.<span class="nv">verilog</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">tabTrigger</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="nv">case</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">key</span><span class="o">&gt;</span><span class="nv">uuid</span><span class="o">&lt;/</span><span class="nv">key</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nv">string</span><span class="o">&gt;</span><span class="mi">026</span><span class="nv">B3DA6</span><span class="o">-</span><span class="nv">E1B4</span><span class="o">-</span><span class="mi">4</span><span class="nv">F09</span><span class="o">-</span><span class="nv">B7B6</span><span class="o">-</span><span class="mi">9485</span><span class="nv">ADEF34DC</span><span class="o">&lt;/</span><span class="nv">string</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="nv">dict</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="nv">plist</span><span class="o">&gt;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/Prop    ertyList-1.0.dtd"&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>content<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case ($1)
+    $2: begin
+        $3
+    end
+    $4: begin
+        $5
+    end
+    $6: begin
+        $7
+    end
+    $8: begin
+        $9
+    end
+    default: begin
+        $10
+    end
+endcase<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>name<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>scope<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>source.verilog<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>tabTrigger<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>case<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;key&gt;</span>uuid<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;string&gt;</span>026B3DA6-E1B4-4F09-B7B6-9485ADEF34DC<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</code></pre></div>
 <p>修改后的效果如下：</p>
 <p><img alt="case" src="/images/sublime-text-2-and-verilog/case.gif"/></p>
 <p><br/></p>
@@ -407,8 +407,8 @@ end<span class="nt">&lt;/string&gt;</span>
 <p>代码编辑器之于程序员就像武器之于战士，其重要性不需赘述，本文记录一下设置 SublimeText 为 Vivado 的代码编辑器的过程。</p>
 <p>Ref: <a href="http://steamforge.net/wiki/index.php/How_to_setup_an_external_text_editor_in_Xilinx_ISE_%26_EDK">How to setup an external text editor in Xilinx ISE &amp; EDK</a></p>
 <p>是讲 ISE 和 EDK 的设置，同理可以将其推广到 Vivado 中，其实 Vivado 已经将常见的编辑器列出来了，其中就包含 Sublime，但是因为我没有将 Sublime 包含在系统路径中，所以需要选择 custom editor 选项：</p>
-<div class="highlight"><pre><span></span><span class="nl">D</span><span class="p">:</span><span class="o">/</span><span class="n">Sublime_Text_3</span><span class="o">/</span><span class="n">sublime_text</span><span class="p">.</span><span class="n">exe</span> <span class="p">[</span><span class="n">file</span> <span class="n">name</span><span class="p">]</span><span class="o">:</span><span class="p">[</span><span class="n">line</span> <span class="n">number</span><span class="p">]</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="nl">D</span><span class="p">:</span><span class="o">/</span><span class="n">Sublime_Text_3</span><span class="o">/</span><span class="n">sublime_text</span><span class="p">.</span><span class="n">exe</span> <span class="p">[</span><span class="n">file</span> <span class="n">name</span><span class="p">]</span><span class="o">:</span><span class="p">[</span><span class="n">line</span> <span class="n">number</span><span class="p">]</span>
+</code></pre></div>
 <p>即可。</p>
 <p><br/></p>
 <p>上面仅仅说了非常基本的几个设置，和我在写 Verilog 时自己添加的几个 snippet，其他的 ST 的使用技巧官方和非官方的 ref 有非常详细的介绍，另外其他人也有很多文章介绍～</p>

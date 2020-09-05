@@ -192,8 +192,8 @@
 </blockquote>
 <h3 id="installation">Installation</h3>
 <p>官方网站上有各个平台（Windows/Unix/Linnux/Mac）的安装文件和源码，在 Ubuntu 13.10 saucy 下，直接使用 apt-get 安装即可：</p>
-<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="k">get</span> <span class="n">install</span> <span class="n">graphviz</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">sudo apt-get install graphviz</span>
+</code></pre></div>
 <h3 id="more">More</h3>
 <p>更多详细的介绍见官网的 About、Documentation、Wiki、FAQ。</p>
 <p><br/></p>
@@ -210,16 +210,16 @@
 <ol>
 <li>
 <p>下载源代码</p>
-<div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">doxygen</span><span class="o">/</span><span class="n">doxygen</span><span class="p">.</span><span class="n">git</span>
-<span class="n">cd</span> <span class="n">doxygen</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">git clone https://github.com/doxygen/doxygen.git</span>
+<span class="err">cd doxygen</span>
+</code></pre></div>
 </li>
 <li>
 <p>安装</p>
-<div class="highlight"><pre><span></span><span class="p">.</span><span class="o">/</span><span class="n">configure</span>
-<span class="n">make</span>
-<span class="n">make</span> <span class="n">install</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">./configure</span>
+<span class="err">make</span>
+<span class="err">make install</span>
+</code></pre></div>
 </li>
 </ol>
 <p>安装成功之后，在 <code>/usr/bin/</code> 或者 <code>/usr/local/bin</code> 目录下可以查看到二进制 <code>doxygen</code> 文件。</p>
@@ -242,8 +242,8 @@
 <li>
 <p>创建一个配置文件</p>
 <p>Doxygen 使用一个配置文件来工作，，每个项目都应该有一个自己对应的配置文件。我们可以使用 <code>doxygen -g</code> 来让 Doxygen 自动生成一个参考配置文件，然后修改其中个别配置即可 .</p>
-<div class="highlight"><pre><span></span><span class="n">doxygen</span> <span class="o">-</span><span class="k">g</span> <span class="o">&lt;</span><span class="n">config</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">doxygen -g &lt;config-file&gt;</span>
+</code></pre></div>
 <p><strong>常用配置：</strong></p>
 <ul>
 <li>
@@ -271,8 +271,8 @@
 </li>
 <li>
 <p>运行 Doxygen</p>
-<div class="highlight"><pre><span></span><span class="n">doxygen</span> <span class="o">&lt;</span><span class="n">config</span><span class="o">-</span><span class="n">file</span><span class="o">&gt;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">doxygen &lt;config-file&gt;</span>
+</code></pre></div>
 <p>如果前一步没有指定配置文件的名字的话，直接运行 <code>doxygen</code> 即可。</p>
 <p>运行完之后，就可以在指定的输出目录中看到结果，用浏览器可以看到 HTML 版本的结果。</p>
 </li>
@@ -302,73 +302,73 @@
 <li>
 <p><strong>JavaDoc Style</strong></p>
 <p>即在 C 风格注释块开始使用两个星号 <code>*</code>：</p>
-<div class="highlight"><pre><span></span><span class="cm">/**</span>
-<span class="cm">* ... text ...</span>
-<span class="cm">*/</span><span class="w"></span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">/**</span>
+<span class="err">* ... text ...</span>
+<span class="err">*/</span>
+</code></pre></div>
 </li>
 <li>
 <p><strong>Qt Style</strong></p>
 <p>即在 C 风格注释块开始处添加一个叹号 <code>!</code>：</p>
-<div class="highlight"><pre><span></span><span class="cm">/*!</span>
-<span class="cm">* ... text ...</span>
-<span class="cm">*/</span><span class="w"></span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">/*!</span>
+<span class="err">* ... text ...</span>
+<span class="err">*/</span>
+</code></pre></div>
 </li>
 <li>
 <p><strong>C++ Comment Style</strong></p>
 <p>使用连续两个以上的 C++ 注释行组成注释块，并且每行要多写一个 <code>/</code> 或者 <code>!</code>：</p>
-<div class="highlight"><pre><span></span><span class="o">///</span>
-<span class="o">///</span> <span class="p">...</span> <span class="nb">text</span> <span class="p">...</span>
-<span class="o">///</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">///</span>
+<span class="err">/// ... text ...</span>
+<span class="err">///</span>
+</code></pre></div>
 <p>or</p>
-<div class="highlight"><pre><span></span><span class="o">//!</span>
-<span class="o">//!</span> <span class="p">...</span> <span class="nb">text</span> <span class="p">...</span>
-<span class="o">//!</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">//!</span>
+<span class="err">//! ... text ...</span>
+<span class="err">//!</span>
+</code></pre></div>
 </li>
 <li>
 <p>第四种格式，有的人喜欢让自己的注释更加醒目一些：</p>
-<div class="highlight"><pre><span></span><span class="o">/////////////////////////////////////////////////</span>
-<span class="o">///</span> <span class="p">...</span> <span class="nb">text</span> <span class="p">...</span>
-<span class="o">/////////////////////////////////////////////////</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">/////////////////////////////////////////////////</span>
+<span class="err">/// ... text ...</span>
+<span class="err">/////////////////////////////////////////////////</span>
+</code></pre></div>
 </li>
 </ol>
 <p>对于简单注释（brief description），也有以下的几种方案：</p>
 <ol>
 <li>
 <p>可以选用以上其中一种风格，然后加入 <code>\brief</code> 命令来标明 brief 的开始。这种方式以段落的结尾作为结束。所以在 brief 后要写 detailed 的话，需要空一行。</p>
-<div class="highlight"><pre><span></span><span class="cm">/* \brief Brief description.</span>
-<span class="cm">*         Brief description continued.</span>
-<span class="cm">*</span>
-<span class="cm">*  Detailed description starts here.</span>
-<span class="cm">*/</span><span class="w"></span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">/* \brief Brief description.</span>
+<span class="err">*         Brief description continued.</span>
+<span class="err">*</span>
+<span class="err">*  Detailed description starts here.</span>
+<span class="err">*/</span>
+</code></pre></div>
 </li>
 <li>
 <p>如果选择 JavaDoc 的风格，并且在配置文件中设置 <code>JAVADOC_AUTOBRIEF = YES</code> 的话，Doxygen 会自动将第一句话作为 brief description，这个句子以 <code>. + 空格 / 空行</code> 结束。</p>
-<div class="highlight"><pre><span></span><span class="cm">/** Brief description which ends at this dot. Details follow</span>
-<span class="cm">*   here.</span>
-<span class="cm">*/</span><span class="w"></span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">/** Brief description which ends at this dot. Details follow</span>
+<span class="err">*   here.</span>
+<span class="err">*/</span>
+</code></pre></div>
 <p>这种方式对多行的 C++ 特殊注释风格也有效：</p>
-<div class="highlight"><pre><span></span><span class="o">///</span> <span class="n">Brief</span> <span class="n">description</span> <span class="n">which</span> <span class="n">ends</span> <span class="k">at</span> <span class="n">this</span> <span class="n">dot</span><span class="p">.</span> <span class="n">Details</span> <span class="n">follow</span>
-<span class="o">///</span> <span class="n">here</span><span class="p">.</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">/// Brief description which ends at this dot. Details follow</span>
+<span class="err">/// here.</span>
+</code></pre></div>
 </li>
 <li>
 <p>第三种方法是使用不多于一行的特殊 C++ 风格注释，下面是两个例子：</p>
-<div class="highlight"><pre><span></span><span class="o">///</span> <span class="n">Brief</span> <span class="n">description</span><span class="p">.</span>
-<span class="cm">/** Detailed description. */</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">/// Brief description.</span>
+<span class="err">/** Detailed description. */</span>
+</code></pre></div>
 <p>或者：（这种情况下，必须用空行把 brief 和 detailed 分开，同时 <code>JAVADOC_AUTOBRIEF = NO</code>）</p>
-<div class="highlight"><pre><span></span><span class="o">//!</span> <span class="n">Brief</span> <span class="n">description</span><span class="p">.</span>
+<div class="highlight"><pre><span></span><code><span class="o">//!</span> <span class="n">Brief</span> <span class="n">description</span><span class="p">.</span>
 
 <span class="o">//!</span> <span class="n">Detailed</span> <span class="n">description</span> 
 <span class="o">//!</span> <span class="n">starts</span> <span class="n">here</span><span class="p">.</span>
-</pre></div>
+</code></pre></div>
 </li>
 </ol>
 <p>Doxygen 和其他的文档系统的一个不同之处就是它允许把注释写在实体的定义（包括全局函数）之前。这样，就可以把注释直接写在源文件里面而不是头文件中，从而使头文件更加紧凑，而且功能的实现人员也更容易阅读注释。<strong>所以，一个折衷方案就是在声明前写 brief description，在定义前写 detailed description。</strong></p>
@@ -376,21 +376,21 @@
 <p>在注释结构体、类、枚举类型等时，有时习惯将注释写在代码的后面，而不是前面。因为 Doxygen 默认注释是解释后面的代码，所以这时候就需要在注释中添加一个额外的 <code>&lt;</code> 来标明是注释前面的内容。</p>
 <p><strong>example：</strong></p>
 <p>Qt 风格的注释：</p>
-<div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">var</span><span class="p">;</span> <span class="cm">/*!&lt; Detailed description after the member */</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">int var; /*!&lt; Detailed description after the member */</span>
+</code></pre></div>
 <p>或者：</p>
-<div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">var</span><span class="p">;</span> <span class="cm">/**&lt; Detailed description after the member */</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">int var; /**&lt; Detailed description after the member */</span>
+</code></pre></div>
 <p>或者：</p>
-<div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">var</span><span class="p">;</span> <span class="o">//!&lt;</span> <span class="n">Detailed</span> <span class="n">description</span> <span class="k">after</span> <span class="n">the</span> <span class="n">member</span>
-         <span class="o">//!&lt;</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">int var; //!&lt; Detailed description after the member</span>
+<span class="err">         //!&lt;</span>
+</code></pre></div>
 <p>一般来说，我们通常在后面添加的注释都是 brief description 而不是 detailed description，所以更常见的格式如下：</p>
-<div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">var</span><span class="p">;</span> <span class="o">//!&lt;</span> <span class="n">Brief</span> <span class="n">description</span> <span class="k">after</span> <span class="n">the</span> <span class="n">member</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">int var; //!&lt; Brief description after the member</span>
+</code></pre></div>
 <p>或者：</p>
-<div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">var</span><span class="p">;</span> <span class="o">///&lt;</span> <span class="n">Brief</span> <span class="n">description</span> <span class="k">after</span> <span class="n">the</span> <span class="n">member</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">int var; ///&lt; Brief description after the member</span>
+</code></pre></div>
 <p><strong>Warning:</strong></p>
 <p>这种添加 <code>&lt;</code> 的方法只能用在 成员（<code>member</code>）和 参数（<code>parameter</code>）中，不能用在描述文件、类、联合体、名字空间和枚举本身。此外 , 在后面提到的结构化命令（如<code>\class</code>）在这种注释段中是无效的。</p>
 <h4 id="examples">Examples</h4>
@@ -456,7 +456,7 @@
 58
 59
 60
-61</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">//!  A test class. </span>
+61</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">//!  A test class. </span>
 <span class="cm">/*!</span>
 <span class="cm">  A more elaborate class description.</span>
 <span class="cm">*/</span>
@@ -517,7 +517,7 @@
 <span class="cm">    */</span>
     <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">handler</span><span class="p">)(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">);</span>
 <span class="p">};</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>生成的 HTML 网页：http://www.stack.nl/~dimitri/doxygen/manual/examples/qtstyle/html/class_test.html</p>
 <p><strong>JavaDoc style:</strong></p>
@@ -581,7 +581,7 @@
 58
 59
 60
-61</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+61</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="cm">/**</span>
 <span class="cm"> *  A test class. A more elaborate class description.</span>
 <span class="cm"> */</span>
 <span class="k">class</span> <span class="nc">Test</span>
@@ -642,19 +642,19 @@
 <span class="cm">       */</span>
        <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">handler</span><span class="p">)(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="kt">int</span> <span class="n">b</span><span class="p">);</span>
 <span class="p">};</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>生成的 HTML 网页：http://www.stack.nl/~dimitri/doxygen/manual/examples/jdstyle/html/class_test.html</p>
 <h4 id="documentation at other places">Documentation at other places</h4>
 <p>我们之前的例子中注释都是在文件、命名空间、类的声明或者定义之前，或者在它们的成员的前 / 后。虽然一般来说这是很正常的，但是有时候我们需要把代码写在在文档的其他地方。对于文件的注释更是如此，因为对于文件来说，根本就不存在在它之前的地方（"in front of a file"）。</p>
 <p>Doxygen 允许你把注释写在任何地方（例外情况是在函数体内 or 在 C 风格注释块内）。你需要付出的代价就是要在注释块内部多写一些结构化命令（<code>structural command</code>）来标明。所以，<strong>一般来说，我们应该尽量避免使用结构化命令，除非是有其他的特殊要求这样做。</strong></p>
 <p>结构化命令以一个 <code>\</code> 或者 <code>@</code>（JavaDoc 风格）开始，后面接一个命令名字 + 一个（多个）参数。举例如下：</p>
-<div class="highlight"><pre><span></span><span class="cm">/*! \class Test</span>
+<div class="highlight"><pre><span></span><code><span class="cm">/*! \class Test</span>
 <span class="cm">    \brief A test class.</span>
 
 <span class="cm">    A more detailed class description.</span>
 <span class="cm">*/</span><span class="w"></span>
-</pre></div>
+</code></pre></div>
 <p>这个例子中的 <code>\class</code> 指示这个注释块中包含一个 Test 类的文档。其他常用的命名如下：</p>
 <ul>
 <li>
@@ -695,11 +695,11 @@
 <p>对 C++ 类成员进行注释的时候，必须先注释这个类，对于命名空间来说也是如此。对 C 的全局函数、 typedef、enum、 preprocessor definition 进行注释，必须先注释包含它们的文件（通常是头文件）。</p>
 <p><strong>Attention:</strong></p>
 <p>在重复一下容易出错的地方：<strong>在注释全局对象时，必须先注释它们所在的文件。</strong>也就是说，必须包含以下两者之一：</p>
-<div class="highlight"><pre><span></span><span class="cm">/* \file */</span><span class="w"></span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">/* \file */</span>
+</code></pre></div>
 <p>或者</p>
-<div class="highlight"><pre><span></span><span class="cm">/* @file */</span><span class="w"></span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">/* @file */</span>
+</code></pre></div>
 <p>下面是官网上的一个 C 头文件的例子：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -747,7 +747,7 @@
 44
 45
 46
-47</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/*! \file structcmd.h</span>
+47</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="cm">/*! \file structcmd.h</span>
 <span class="cm">\brief A Documented file.</span>
 
 <span class="cm">    Details.</span>
@@ -794,16 +794,16 @@
 <span class="kt">int</span> <span class="nf">close</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
 <span class="kt">size_t</span> <span class="nf">write</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">);</span>
 <span class="kt">int</span> <span class="nf">read</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">char</span> <span class="o">*</span><span class="p">,</span><span class="kt">size_t</span><span class="p">);</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>上面这个例子中的每个注释块都包含了一条结构化命令，所以这些注释可以放在文件的其他位置或者放在其他文件中，不会影响到最终生成的文档。这种方法的坏处在于我们实际上写了两遍原型，当做修改时我们必须同时修改代码和注释。因此，我们在使用前应该仔细考虑是否真的需要结构化命令，并且尽可能避免使用它。一个常见的现象就是在函数前的注释块中包含了 <code>\fn</code> 命令，显然这是冗余的，除了导致错误，这个命令毫无作用。</p>
 <p>如果我们对以 .dox, .txt, .doc 结尾的文件注释，那么 Doxygen 会自动忽略这些文件。</p>
 <p>如果我们有一个 Doxygen 无法解析的文件，但是仍然像注释它，那么就使用 <code>\verbinclude</code> 这个命令：</p>
-<div class="highlight"><pre><span></span><span class="cm">/*! \file myscript.sh</span>
-<span class="cm">*   Look at this nice srcipt.</span>
-<span class="cm">*  \verbinlcude mycript.sh</span>
-<span class="cm">*/</span><span class="w"></span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="err">/*! \file myscript.sh</span>
+<span class="err">*   Look at this nice srcipt.</span>
+<span class="err">*  \verbinlcude mycript.sh</span>
+<span class="err">*/</span>
+</code></pre></div>
 <p>还要确定在配置文件中 <code>INPUT</code> 变量显式地说明这个脚本文件，或者 <code>FILE_PATTERNS</code> 变量必须包含<code>.sh</code> 文件扩展名并且可以通过 <code>EXAMPLE_PATH</code> 变量寻找到这个文件。</p>
 <h4 id="anatomy of a comment block">Anatomy of a comment block</h4>
 <p>前面介绍了如何对代码进行注释，并且讨论了两种不同的注释：brief 和 detailed，还讨论了如何使用结构化命令。</p>

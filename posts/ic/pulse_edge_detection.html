@@ -214,7 +214,7 @@
 24
 25
 26
-27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="no">DETECT_EDGE</span> <span class="p">(</span>  
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="n">DETECT_EDGE</span> <span class="p">(</span>  
     <span class="n">clk</span><span class="p">,</span><span class="n">rst_n</span><span class="p">,</span><span class="n">trig_in</span><span class="p">,</span><span class="n">trig_edge</span>  
     <span class="p">);</span>
 
@@ -241,7 +241,7 @@
     <span class="k">assign</span> <span class="n">trigEdge</span> <span class="o">=</span> <span class="n">trig_r1</span> <span class="o">^</span> <span class="n">trig_r2</span><span class="p">;</span>
 
 <span class="k">endmodule</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p><strong>综合结果：</strong></p>
 <p><img alt="rtl1" src="/images/learning-fpga-pulse-edge-detection/rtl1.png"/></p>
@@ -282,7 +282,7 @@
 29
 30
 31
-32</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="no">DETECT_EDGE</span> <span class="p">(</span>  
+32</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="n">DETECT_EDGE</span> <span class="p">(</span>  
     <span class="n">clk</span><span class="p">,</span><span class="n">rst_n</span><span class="p">,</span><span class="n">trig_in</span><span class="p">,</span><span class="n">trig_pos_edge</span><span class="p">,</span><span class="n">trig_neg_edge</span>  
     <span class="p">);</span>
 
@@ -314,7 +314,7 @@
     <span class="k">assign</span> <span class="n">trig_neg_edge</span> <span class="o">=</span> <span class="p">(</span><span class="o">!</span><span class="n">trig_r1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">trig_r2</span><span class="p">;</span>    <span class="c1">// Detect negedge</span>
 
 <span class="k">endmodule</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p><strong>综合结果：</strong></p>
 <p><img alt="rtl2" src="/images/learning-fpga-pulse-edge-detection/rtl2.png"/></p>
@@ -345,7 +345,7 @@
 21
 22
 23
-24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="no">DETECT_EDGE</span> <span class="p">(</span>  
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="n">DETECT_EDGE</span> <span class="p">(</span>  
     <span class="n">clk</span><span class="p">,</span><span class="n">rst_n</span><span class="p">,</span><span class="n">trig_in</span><span class="p">,</span><span class="n">tirg_pos_edge</span><span class="p">,</span><span class="n">trig_neg_edge</span>  
     <span class="p">);</span>
 
@@ -369,7 +369,7 @@
     <span class="k">assign</span> <span class="n">trig_neg_edge</span> <span class="o">=</span> <span class="p">(</span><span class="n">trig_r</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">==</span> <span class="mh">2</span><span class="mb">'b10</span><span class="p">);</span>
 
 <span class="k">endmodule</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p><strong>综合结果：</strong></p>
 <p><img alt="rtl3" src="/images/learning-fpga-pulse-edge-detection/rtl3.png"/></p>
@@ -391,7 +391,7 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>         <span class="c1">// 一旦检测到键值</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>         <span class="c1">// 一旦检测到键值</span>
 <span class="p">{</span>
     <span class="n">Delay</span><span class="p">();</span>            <span class="c1">// 延时 20ms，有效滤除按键的抖动</span>
     <span class="k">if</span><span class="p">(</span><span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>      <span class="c1">// 再次确定键值是否有效</span>
@@ -399,7 +399,7 @@
         <span class="k">do</span> <span class="n">something</span>    <span class="c1">// 执行相应处理</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>这段软消抖程序从机理上看不会有什么问题，通常在软件程序不太 " 繁忙 " 的情况下也能够很好的消抖并做相应处理 。但是如果在延时期间产生了中断，则此中断可能无法得到响应 。</p>
 <p>对于硬件资源丰富的 FPGA 系统，可以使用硬件来减轻软件工作量，通常称之为 <strong>" 硬件加速 "</strong> 。在按键信号输入到软件系统前用逻辑对其进行一下简单的处理即可实现所谓的 " 硬件消抖 "，代码如下：</p>
@@ -424,7 +424,7 @@
 19
 20
 21
-22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">// 对输入信号 inpio 硬件滤波，每 20ms 采样一次当前值</span>
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">// 对输入信号 inpio 硬件滤波，每 20ms 采样一次当前值</span>
 <span class="kt">reg</span><span class="p">[</span><span class="mh">18</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">cnt</span><span class="p">;</span> <span class="c1">//20ms 计数器</span>
 
 <span class="k">always</span> <span class="p">@</span> <span class="p">(</span><span class="k">posedge</span> <span class="n">clk_25m</span> <span class="k">or</span> <span class="k">negedge</span> <span class="n">rst_n</span><span class="p">)</span>
@@ -446,7 +446,7 @@
         <span class="n">inpior</span> <span class="o">&lt;=</span> <span class="n">inpior</span><span class="p">;</span>
 
 <span class="kt">wire</span> <span class="n">inpio_swin</span> <span class="o">=</span> <span class="n">inpior</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">|</span> <span class="n">inpior</span><span class="p">[</span><span class="mh">1</span><span class="p">];</span> <span class="c1">// 前后 20ms 两次锁存值都为 0 时才为 0</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>该程序中设置了一个 20 ms 计数器，通过间隔 20 ms 对输入信号 inpio 采样两次，两次相同则认为键盘输入稳定，得到用硬件逻辑处理后的 inpio_swin 信号则是消抖处理过的信号 。程序不再需要 delay() 来滤波了，也不会出现使用纯软件处理出现的 " 中断失去响应 " 的情况了，这就是 " 硬件加速 " 的效果 。</p>
 <p>我们可以看到，传统单片机等系统大多是串行处理，即顺序执行，只能并行处理一些中断程序 。对于这样的系统，只能采用单纯软件或硬件电路消抖，但都不那么完美 。而对于 FPGA 等并行处理的系统，其优势就很明显，只要片内逻辑资源够用，通过硬件加速软件消抖的处理，完全可以做到按键消抖并行化，不影响系统的实时性 。</p>

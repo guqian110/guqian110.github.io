@@ -248,10 +248,10 @@
 <p>有时候，我们需要在模块运行的过程中切换时钟，切换时钟最简单的方法就是使用 MUX。但是这种方法会造成毛刺（glitch）。如下：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="n">clk_a</span> <span class="k">or</span> <span class="n">clk_b</span> <span class="k">or</span> <span class="n">sel</span><span class="p">)</span> <span class="k">begin</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">always</span> <span class="p">@(</span><span class="n">clk_a</span> <span class="k">or</span> <span class="n">clk_b</span> <span class="k">or</span> <span class="n">sel</span><span class="p">)</span> <span class="k">begin</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">sel</span><span class="p">)</span>    <span class="n">out_clk</span> <span class="o">&lt;=</span> <span class="n">clk_a</span><span class="p">;</span>
     <span class="k">else</span>        <span class="n">out_clk</span> <span class="o">&lt;=</span> <span class="n">clk_b</span><span class="p">;</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>书上提供了一个通用的没有 glitch 的时钟切换模块，支持多个时钟的切换，其中 select 信号必须使用 one-hot 编码。（代码略 ...）</p>
 <p><br/></p>

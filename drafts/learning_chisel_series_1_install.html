@@ -183,9 +183,9 @@
 <p>chisel 依赖于 JAVA 8，所以我们得安装对版本。具体的安装方式有很多，Ubuntu 下最简单的方式是
 安装 openjdk8，</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get update
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>sudo apt-get update
 sudo apt-get install openjdk-8-jdk
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>安装完成后用 <code>java -version</code> 来确认版本。</p>
 <h2 id="install sbt">Install sbt</h2>
@@ -193,11 +193,11 @@ sudo apt-get install openjdk-8-jdk
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">"deb https://dl.bintray.com/sbt/debian /"</span> <span class="p">|</span> sudo tee -a /etc/apt/sources.list.d/sbt.list
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="s2">"deb https://dl.bintray.com/sbt/debian /"</span> <span class="p">|</span> sudo tee -a /etc/apt/sources.list.d/sbt.list
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
 sudo apt-get update
 sudo apt-get install sbt
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 <p>安装之后就可以使用 <code>sbt --help</code> 来查看具体使用方法。</p>
 <h3 id="override sbt repo setting">Override sbt repo setting</h3>
@@ -214,11 +214,11 @@ sudo apt-get install sbt
 </ol>
 <p>第一步 repo 的设置格式如下，</p>
 <p>在 <code>~/.sbt</code> 目录下面新建一个 <code>repositories</code> 的文件，在文件中添加下面的内容即可：</p>
-<div class="highlight"><pre><span></span><span class="k">[repositories]</span>
+<div class="highlight"><pre><span></span><code><span class="k">[repositories]</span>
   <span class="na">local</span>
   <span class="na">mirrors-163: https://mirrors.163.com/maven/repository/maven-public</span>
   <span class="na">maven-central</span>
-</pre></div>
+</code></pre></div>
 <p>sbt 运行时会按照 <code>local &gt; my-maven-repo &gt; my-ivy-repo</code> 的顺序挨个查找。</p>
 <p>第二步在命令行中加上 <code>-Dsbt.override.build.repos=true -v</code> 选项。（其中 <code>-v</code> 是
 为了显示更多信息，方便定位问题）。</p>
@@ -227,8 +227,8 @@ sudo apt-get install sbt
 是 scala 更推崇为每个 project 安装一个版本，所以还推出了 <code>sbt</code> 工具来管理。因为 chisel 
 tutorial 已经建好了 project，我们直接使用即可。</p>
 <p>首先下载 chisel tutorial，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>git clone https://github.com/ucb-bar/chisel-tutorial.git
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>git clone https://github.com/ucb-bar/chisel-tutorial.git
+</code></pre></div>
 </td></tr></table>
 <p>然后 cd 到这个目录下，按照教程直接 <code>sbt run -Dsbt.override.build.repos=true -v</code>，我的
 速度可以达到 200KB/s，可能是因为我网络的原因，经常下载到一半就会自动断掉，查看 log 是服务器
@@ -255,13 +255,13 @@ test Hello Success: 1 tests passed in 6 cycles taking 0.207663 seconds
 <p>verilator 是一款开源免费的仿真器，可以给 verilog 生成 cycle 级别的 C++/SystemC 仿真模型
 ，是 vcs 的免费替代品。最省事的方式是用 <code>apt-get</code> 安装，也可以自己下载源码在本地编
 译。</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install verilator
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>sudo apt-get install verilator
+</code></pre></div>
 </td></tr></table>
 <p>gtkwave 顾名思义，是一款基于 gtk 界面的波形查看工具，是 verdi 的免费替代品，直接用 
 <code>apt-get</code> 安装即可，</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>sudo apt-get install gtkwave
-</pre></div>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>sudo apt-get install gtkwave
+</code></pre></div>
 </td></tr></table>
 <p>至此，chisel 的环境就算全部 ok 了。</p>
 <p><br/></p>
@@ -283,7 +283,7 @@ test Hello Success: 1 tests passed in 6 cycles taking 0.207663 seconds
   </div>
 
 
-      <p>This post is part <built-in method index of unicode object at 0x7f1510325f60> of the "" series:</p>
+      <p>This post is part <built-in method index of str object at 0x7fd858393970> of the "" series:</p>
       <ol class="parts">
       </ol>
 
