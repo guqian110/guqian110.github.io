@@ -1,0 +1,1211 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="记录《Pratical Vim》读书笔记" />
+<meta name="keywords" content="vim">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="学习 Vim 之《Pratical Vim》读书笔记"/>
+<meta property="og:description" content="记录《Pratical Vim》读书笔记"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/posts/tools/learning_vim_pratical_vim_notes.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-08-20 20:45:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="Tools"/>
+<meta property="article:tag" content="vim"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; 学习 Vim 之《Pratical Vim》读书笔记</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="learning_vim_pratical_vim_notes">学习 Vim 之《Pratical Vim》读书笔记</h1>
+    <p>
+      Posted on 2020-08-20 20:45 in <a href="https://qiangu.cool/category/tools.html">Tools</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 Vim 之《Pratical Vim》读书笔记">学习 Vim 之《Pratical Vim》读书笔记</a><ul><li><a class="toc-href" href="#vim jie jue wen ti de fang shi" title="Vim 解决问题的方式">Vim 解决问题的方式</a></li><li><a class="toc-href" href="#yuan ze" title="原则">原则</a></li><li><a class="toc-href" href="#di yi bu fen  mo shi" title="第一部分 模式">第一部分 模式</a><ul><li><a class="toc-href" href="#pu tong mo shi" title="普通模式">普通模式</a></li><li><a class="toc-href" href="#cha ru mo shi" title="插入模式">插入模式</a></li><li><a class="toc-href" href="#ke shi mo shi" title="可视模式">可视模式</a></li><li><a class="toc-href" href="#ming ling xing mo shi" title="命令行模式">命令行模式</a></li></ul></li><li><a class="toc-href" href="#di er bu fen  wen jian_1" title="第二部分 文件">第二部分 文件</a><ul><li><a class="toc-href" href="#guan li duo ge wen jian" title="管理多个文件">管理多个文件</a></li><li><a class="toc-href" href="#da kai ji bao cun wen jian" title="打开及保存文件">打开及保存文件</a></li></ul></li><li><a class="toc-href" href="#di san bu fen  geng kuai di yi dong ji tiao zhuan_1" title="第三部分 更快地移动及跳转">第三部分 更快地移动及跳转</a><ul><li><a class="toc-href" href="#wen jian nei tiao zhuan" title="文件内跳转">文件内跳转</a></li><li><a class="toc-href" href="#wen jian jian tiao zhuan" title="文件间跳转">文件间跳转</a></li></ul></li><li><a class="toc-href" href="#ji cun qi_1" title="寄存器">寄存器</a><ul><li><a class="toc-href" href="#fu zhi yu nian tie" title="复制与粘贴">复制与粘贴</a></li><li><a class="toc-href" href="#hong" title="宏">宏</a></li></ul></li><li><a class="toc-href" href="#mo shi (zheng ze biao da shi )_1" title="模式（正则表达式）">模式（正则表达式）</a><ul><li><a class="toc-href" href="#cha zhao" title="查找">查找</a></li><li><a class="toc-href" href="#ti huan" title="替换">替换</a></li><li><a class="toc-href" href="#global ming ling" title="global 命令">global 命令</a></li></ul></li><li><a class="toc-href" href="#gong ju_1" title="工具">工具</a><ul><li><a class="toc-href" href="#ctags" title="ctags">ctags</a></li><li><a class="toc-href" href="#quickfix" title="Quickfix">Quickfix</a></li><li><a class="toc-href" href="#grep, vimgrep" title="grep, vimgrep">grep, vimgrep</a></li><li><a class="toc-href" href="#zi dong bu quan" title="自动补全">自动补全</a></li><li><a class="toc-href" href="#pin xie jian cha" title="拼写检查">拼写检查</a></li></ul></li><li><a class="toc-href" href="#ref_1" title="Ref">Ref</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <h2 id="vim jie jue wen ti de fang shi">Vim 解决问题的方式</h2>
+<p>理想的编辑模式：用一次按键移动，用另外一次按键执行。</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>从本质上讲，我们的编辑工作是重复性的，不论是修改文档的不同地方，还是在文档内移动，我们都会有很多重复操作。Vim 对重复操作进行了优化，它之所以能高效地重复，是因为它会记录我们最近的操作，让我们用一次按键就能重复上次操作。要想利用这个强大的功能，首先要求我们能够<strong>学会规划按键动作，使得重复时可以完成一项有用的工作</strong>。这一理念是高效使用 Vim 的关键。</p>
+</div>
+<p><strong>面对重复性的工作，我们的口诀就是：修改、重复 <code>.</code>、回退 <code>u</code>。</strong></p>
+<h2 id="yuan ze">原则</h2>
+<ol>
+<li>用好 <code>Esc</code> 键，把撤销单元切成块，使撤销命令作用于单词、句子、段落。一次思考对应一次插入模式</li>
+<li>构造可重复的修改，最好让一次修改是最小原子性的，方便重复任意次，反例， <code>d2w</code> 无法删除 3 个单词</li>
+<li>能重复就别用次数，只有在必要时使用次数。因为次数很容易数错，而不小心多按的重复操作用 u 很容易恢复</li>
+<li>操作符 + 动作命令 = 操作</li>
+<li>只要可能，最好用操作符命令，而不是可视命令</li>
+<li>Ex 命令的强大之处在于可以在多行同时执行，而普通模式一般操作当前光标处</li>
+<li><code>h</code> 和 <code>l</code> 键只有 &ldquo; 差一误差 &rdquo; 时才使用，平时应该用其他键移动光标更高效</li>
+<li>面向字符串的移动更快，面向单词的移动更细粒度</li>
+<li>像 scrabble 玩家那样思考，查找低频字母更高效</li>
+<li>可以用 <code>{motion}</code> 的地方都可以用文本对象，文本对象处理代码更高效</li>
+<li>浏览文件前用 <code>m{A-Z}</code> 可以标记全局位置，方便跳转回原地</li>
+<li>录制宏时确保光标位置是正确的（比如行首），以保证每条命令都可以被重复执行</li>
+<li>替换操作一般分两步实现解耦，第一步写正则表达式匹配，第二步进行替换</li>
+</ol>
+<h2 id="di yi bu fen  mo shi">第一部分 模式</h2>
+<h4 id="pu tong mo shi">普通模式</h4>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>80&lt;C-a&gt;</code></td>
+<td>数字增加 80</td>
+</tr>
+<tr>
+<td><code>80&lt;C-x&gt;</code></td>
+<td>数字减少 80</td>
+</tr>
+</tbody>
+</table>
+<p>操作符命令列表：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>c</code></td>
+<td>修改</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>删除</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>复制到寄存器</td>
+</tr>
+<tr>
+<td><code>g~</code></td>
+<td>反转大小写</td>
+</tr>
+<tr>
+<td><code>gu</code></td>
+<td>转化为小写</td>
+</tr>
+<tr>
+<td><code>gU</code></td>
+<td>转化为大写</td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td>增加缩进</td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td>减少缩进</td>
+</tr>
+<tr>
+<td><code>=</code></td>
+<td>自动缩进</td>
+</tr>
+<tr>
+<td><code>!</code></td>
+<td motion="">使用外部程序过滤 </td>
+</tr>
+</tbody>
+</table>
+<h4 id="cha ru mo shi">插入模式</h4>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;C-h&gt;</code></td>
+<td>删除前一个字符</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;</code></td>
+<td>删除前一个单词</td>
+</tr>
+<tr>
+<td><code>&lt;C-u&gt;</code></td>
+<td>删至行首</td>
+</tr>
+<tr>
+<td><code>&lt;C-o&gt;</code></td>
+<td>切换到插入 - 普通模式（普通模式下 = 回跳前一个跳转位置）</td>
+</tr>
+<tr>
+<td><code>&lt;C-r&gt;{register}</code></td>
+<td>不离开插入模式，粘贴 register 中的文本</td>
+</tr>
+<tr>
+<td><code>&lt;C-r&gt;=</code></td>
+<td>使用表达式寄存器，进行计算</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>切换到替换模式，替换字符</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ke shi mo shi">可视模式</h4>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gv</code></td>
+<td>重选上次高亮选区</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td>切换选区的活动端</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ming ling xing mo shi">命令行模式</h4>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;C-w&gt;</code></td>
+<td>同普通模式</td>
+</tr>
+<tr>
+<td><code>&lt;C-u&gt;</code></td>
+<td>同普通模式</td>
+</tr>
+<tr>
+<td><code>&lt;C-r&gt;{register}</code></td>
+<td>同普通模式</td>
+</tr>
+<tr>
+<td><code>:[range]delete[x]</code></td>
+<td>删除指定范围到寄存器 [x] 中</td>
+</tr>
+<tr>
+<td><code>:[range]yank[x]</code></td>
+<td>复制指定范围到寄存器 [x] 中</td>
+</tr>
+<tr>
+<td><code>:[range]copy{address}</code></td>
+<td address="">复制指定范围到 </td>
+</tr>
+<tr>
+<td><code>:[range]normal{commands}</code></td>
+<td commands="">对指定范围内执行普通模式命令 </td>
+</tr>
+<tr>
+<td><code>:[range]substitude/{patten}/{string}/[flags]</code></td>
+<td>对指定范围内的 patten 替换为 string</td>
+</tr>
+<tr>
+<td><code>:[range]global/{patten}/[cmd]</code></td>
+<td>对指定范围内匹配 pattern 的行执行 cmd</td>
+</tr>
+<tr>
+<td><code>:{start},{end}</code></td>
+<td>指定范围</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>当前行</td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>当前文件中的所有行</td>
+</tr>
+<tr>
+<td><code>'&lt;</code></td>
+<td>高亮区域的首航</td>
+</tr>
+<tr>
+<td><code>'&gt;</code></td>
+<td>高亮区域的尾行</td>
+</tr>
+<tr>
+<td><code>:copy</code></td>
+<td>简写 <code>:t</code></td>
+</tr>
+<tr>
+<td><code>:move</code></td>
+<td>简写 <code>:m</code></td>
+</tr>
+<tr>
+<td><code>@:</code></td>
+<td>重复上次命令</td>
+</tr>
+<tr>
+<td><code>:shell</code></td>
+<td>启动一个临时 shell 会话，用 exit 退出</td>
+</tr>
+<tr>
+<td><code>&lt;C-z&gt;</code></td>
+<td>挂起 vim</td>
+</tr>
+<tr>
+<td><code>fg %[id]</code></td>
+<td>唤醒作业，移到前台</td>
+</tr>
+</tbody>
+</table>
+<h2 id="di er bu fen  wen jian_1">第二部分 文件</h2>
+<h3 id="guan li duo ge wen jian">管理多个文件</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+</code></td>
+<td>缓冲区被修改过</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td>活动缓冲区</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td>隐藏缓冲区</td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>哪个缓冲区在当前窗口可见</td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td>轮换文件</td>
+</tr>
+<tr>
+<td><code>&lt;C-^&gt;</code></td>
+<td>在当前文件和轮换文件之间快速切换</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;s</code></td>
+<td>水平切分</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;v</code></td>
+<td>垂直切分</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;=</code></td>
+<td>等宽等高</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;_</code></td>
+<td>最大化高度</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;|</code></td>
+<td>最大化宽度</td>
+</tr>
+<tr>
+<td><code>[N]&lt;C-w&gt;_</code></td>
+<td>高度设置为 N</td>
+</tr>
+<tr>
+<td><code>[N]&lt;C-w&gt;|</code></td>
+<td>宽度设置为 N</td>
+</tr>
+<tr>
+<td><code>&lt;C-w&gt;T</code></td>
+<td>移动到新标签页</td>
+</tr>
+<tr>
+<td><code>gt</code></td>
+<td>切换到下一个标签页</td>
+</tr>
+<tr>
+<td><code>gT</code></td>
+<td>切换到前一个标签页</td>
+</tr>
+</tbody>
+</table>
+<h3 id="da kai ji bao cun wen jian">打开及保存文件</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:pwd</code></td>
+<td>打印工作目录</td>
+</tr>
+<tr>
+<td><code>:set path+=dir/**</code></td>
+<td>设置 path</td>
+</tr>
+<tr>
+<td><code>:find filename</code></td>
+<td>查找打开文件（必须先设置 path）</td>
+</tr>
+<tr>
+<td><code>:e %</code></td>
+<td>补全当前文件完整路径</td>
+</tr>
+<tr>
+<td><code>:h</code></td>
+<td>去除文件名，保留路径其他部分</td>
+</tr>
+<tr>
+<td><code>:e %:h</code></td>
+<td>补全当前文件所在目录</td>
+</tr>
+</tbody>
+</table>
+<h2 id="di san bu fen  geng kuai di yi dong ji tiao zhuan_1">第三部分 更快地移动及跳转</h2>
+<h3 id="wen jian nei tiao zhuan">文件内跳转</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>光标移动到行首</td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>光标移动到第一个非空白字符</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>光标移动到行尾</td>
+</tr>
+<tr>
+<td><code>ge</code></td>
+<td>光标移动到上一个单词的结尾</td>
+</tr>
+<tr>
+<td><code>f{char}</code></td>
+<td>移动到下一个 char 字符上，<code>;</code> 跳转到下一个匹配项，<code>,</code> 跳转到上一个匹配项</td>
+</tr>
+<tr>
+<td><code>t{char}</code></td>
+<td>移动到下一个 char 之前的字符上，比如删除特定字符 / 符号前的内容等，非常有用</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>查找操作是开操作，不包含当前字符，<code>d/th&lt;CR&gt;</code> 命令会删除当前位置到 th 之前的内容，保留 th 字符</td>
+</tr>
+<tr>
+<td><code>m{a-zA-Z}</code></td>
+<td>大写标记全局可见，小写只能本文件可见</td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>在匹配括号之间跳转，修改成对括号前先执行 %，修改完后用 `` 跳转到对应括号</td>
+</tr>
+<tr>
+<td><code>gi:</code></td>
+<td>从普通模式返回到上次修改的地方，并进入插入模式继续编辑</td>
+</tr>
+</tbody>
+</table>
+<p>文本对象：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a)</code></td>
+<td>包含圆括号在内</td>
+</tr>
+<tr>
+<td><code>a]</code></td>
+<td>包含方括号在内</td>
+</tr>
+<tr>
+<td><code>a&gt;</code></td>
+<td>包含尖括号在内</td>
+</tr>
+<tr>
+<td><code>a'</code></td>
+<td>包含单引号在内</td>
+</tr>
+<tr>
+<td><code>a"</code></td>
+<td>包含双引号在内</td>
+</tr>
+<tr>
+<td><code>a`</code></td>
+<td>包含反引号在内</td>
+</tr>
+<tr>
+<td><code>at</code></td>
+<td>包含 XML 标签在内</td>
+</tr>
+<tr>
+<td><code>i)</code></td>
+<td>圆括号内部</td>
+</tr>
+<tr>
+<td><code>i]</code></td>
+<td>方括号内部</td>
+</tr>
+<tr>
+<td><code>i&gt;</code></td>
+<td>尖括号内部</td>
+</tr>
+<tr>
+<td><code>i'</code></td>
+<td>单引号内部</td>
+</tr>
+<tr>
+<td><code>i"</code></td>
+<td>双引号内部</td>
+</tr>
+<tr>
+<td><code>i`</code></td>
+<td>反引号内部</td>
+</tr>
+<tr>
+<td><code>it</code></td>
+<td>XML 标签内部</td>
+</tr>
+</tbody>
+</table>
+<p>自动标记位置：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>``</code></td>
+<td>当前文件上次跳转动作之前位置</td>
+</tr>
+<tr>
+<td><code>`.</code></td>
+<td>上次修改的地方</td>
+</tr>
+<tr>
+<td><code>`^</code></td>
+<td>上次插入的地方</td>
+</tr>
+<tr>
+<td><code>`[</code></td>
+<td>上次修改 / 复制的起始位置</td>
+</tr>
+<tr>
+<td><code>`]</code></td>
+<td>上次修改 / 复制的结束位置</td>
+</tr>
+<tr>
+<td><code>`&lt;</code></td>
+<td>上次高亮选区的起始位置</td>
+</tr>
+<tr>
+<td><code>`&gt;</code></td>
+<td>上次高亮选区的结束位置</td>
+</tr>
+</tbody>
+</table>
+<h3 id="wen jian jian tiao zhuan">文件间跳转</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;C-o&gt;</code></td>
+<td>后退</td>
+</tr>
+<tr>
+<td><code>&lt;C-i&gt;</code></td>
+<td>前进，插入模式下 = <code>&lt;Tab&gt;</code></td>
+</tr>
+<tr>
+<td><code>gf</code></td>
+<td>跳转到当前光标下的文件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ji cun qi_1">寄存器</h2>
+<h3 id="fu zhi yu nian tie">复制与粘贴</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"{register}y{motion}</code></td>
+<td>指定复制到特定寄存器</td>
+</tr>
+<tr>
+<td><code>&lt;C-r&gt;{register}</code></td>
+<td>在插入模式中使用寄存器</td>
+</tr>
+</tbody>
+</table>
+<p>寄存器：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_</code></td>
+<td>黑洞寄存器</td>
+</tr>
+<tr>
+<td><code>"</code></td>
+<td>无名寄存器</td>
+</tr>
+<tr>
+<td><code>0</code></td>
+<td motion="">复制专用寄存器，只有 y</td>
+</tr>
+<tr>
+<td><code>a-z</code></td>
+<td>有名寄存器，覆盖原始内容</td>
+</tr>
+<tr>
+<td><code>A-Z</code></td>
+<td>有名寄存器，追加到寄存器</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>系统剪切板</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>主剪切板，鼠标中键</td>
+</tr>
+<tr>
+<td><code>=</code></td>
+<td>表达式寄存器</td>
+</tr>
+</tbody>
+</table>
+<p>特殊只读寄存器：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%</code></td>
+<td>当前文件</td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td>轮换文件</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>上次插入的文本</td>
+</tr>
+<tr>
+<td><code>：</code></td>
+<td>上次执行的 Ex 命令</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>上次查找的模式</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hong">宏</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>q{register}</code></td>
+<td>开始 / 结束录制</td>
+</tr>
+<tr>
+<td><code>@{register}</code></td>
+<td>使用宏</td>
+</tr>
+<tr>
+<td><code>@@</code></td>
+<td>最近使用的宏</td>
+</tr>
+<tr>
+<td><code>100@a</code></td>
+<td>重复调用 100 次 a 中的宏</td>
+</tr>
+<tr>
+<td><code>'&lt;, '&gt;normal @a</code></td>
+<td>选中区域，并行执行 a 中的宏</td>
+</tr>
+<tr>
+<td><code>qA</code></td>
+<td>追加到寄存器 a 中</td>
+</tr>
+<tr>
+<td><code>:put a</code></td>
+<td>把 a 中的宏复制到文本中，方便编辑</td>
+</tr>
+<tr>
+<td><code>"ay$</code></td>
+<td>修改后的宏内容复制到 a 中</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mo shi (zheng ze biao da shi )_1">模式（正则表达式）</h2>
+<h3 id="cha zhao">查找</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\v</code></td>
+<td>激活 very magic 搜索模式，假定模式中除 _, 大小写字母，0-9 之外的所有字符都有特殊含义</td>
+</tr>
+<tr>
+<td><code>\V</code></td>
+<td>激活 very nomagic 搜索模式，假定模式中只有 \ 有特殊含义</td>
+</tr>
+<tr>
+<td><code>&lt;</code>, <code>&gt;</code></td>
+<td>单词定界符 , example: <code>/\v&lt;the&gt;&lt;CR&gt;</code> 只会匹配单词 the，忽略 these, they 等</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>正向查找</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>反向查找</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ti huan">替换</h3>
+<p><code>:[range]s/{pattern}/{string}/[flags]</code></p>
+<p>替换域</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\r</code></td>
+<td>换行符</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>制表符</td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td>反斜杠</td>
+</tr>
+<tr>
+<td><code>\={vim script}</code></td>
+<td>执行 vim script，并把返回结果作为替换 string</td>
+</tr>
+<tr>
+<td><code>/{pattern}</code></td>
+<td>第一步匹配</td>
+</tr>
+<tr>
+<td><code>:%s//{string}/g</code></td>
+<td>第二步替换</td>
+</tr>
+<tr>
+<td><code>:%s//&lt;C-r&gt;0/g</code></td>
+<td>把寄存器 0 中的内容作为 string</td>
+</tr>
+<tr>
+<td><code>g&amp;</code></td>
+<td>重复上次替换</td>
+</tr>
+</tbody>
+</table>
+<h3 id="global ming ling">global 命令</h3>
+<p><code>:[range]g[!]/{pattern}/[cmd]</code></p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:g/re/p</code></td>
+<td>g 是 global 简写，re 指正则表达式，p 是 print 简写，整个命令即 grep 的含义</td>
+</tr>
+</tbody>
+</table>
+<h2 id="gong ju_1">工具</h2>
+<h3 id="ctags">ctags</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:! ctags -R</code></td>
+<td>对当前目录递归生成 tag 文件</td>
+</tr>
+<tr>
+<td><code>&lt;C-]&gt;</code></td>
+<td>跳转到定义处</td>
+</tr>
+<tr>
+<td><code>&lt;C-t&gt;</code></td>
+<td>跳转回退</td>
+</tr>
+<tr>
+<td><code>g&lt;C-]&gt;</code></td>
+<td>弹出标签列表供选择，适用于多个匹配项</td>
+</tr>
+</tbody>
+</table>
+<h3 id="quickfix">Quickfix</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:make</code></td>
+<td>再 Vim 内编译</td>
+</tr>
+<tr>
+<td><code>:cnext</code></td>
+<td>下一项</td>
+</tr>
+<tr>
+<td><code>:cprev</code></td>
+<td>前一项</td>
+</tr>
+<tr>
+<td><code>:cfirst</code></td>
+<td>第一项</td>
+</tr>
+<tr>
+<td><code>:clast</code></td>
+<td>最后一项</td>
+</tr>
+<tr>
+<td><code>:copen</code></td>
+<td>打开 quickfix 窗口</td>
+</tr>
+<tr>
+<td><code>:cclose</code></td>
+<td>关闭 quickfix 窗口</td>
+</tr>
+</tbody>
+</table>
+<h3 id="grep, vimgrep">grep, vimgrep</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:grep</code></td>
+<td>调用外部 grep</td>
+</tr>
+<tr>
+<td><code>:vimgrep</code></td>
+<td>调用内部 grep</td>
+</tr>
+</tbody>
+</table>
+<h3 id="zi dong bu quan">自动补全</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;C-n&gt;</code></td>
+<td>普通关键字补全</td>
+</tr>
+<tr>
+<td><code>&lt;C-x&gt;&lt;C-l&gt;</code></td>
+<td>整行补全</td>
+</tr>
+<tr>
+<td><code>&lt;C-x&gt;&lt;C-f&gt;</code></td>
+<td>文件名补全</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pin xie jian cha">拼写检查</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:set sepll</code></td>
+<td>打开</td>
+</tr>
+<tr>
+<td><code>[s</code></td>
+<td>前一个拼写错误</td>
+</tr>
+<tr>
+<td><code>s]</code></td>
+<td>后一个拼写错误</td>
+</tr>
+<tr>
+<td><code>z=</code></td>
+<td>为当前词提供更正建议</td>
+</tr>
+<tr>
+<td><code>zg</code></td>
+<td>把当前词加入到拼写文件中</td>
+</tr>
+<tr>
+<td><code>zw</code></td>
+<td>把当前词从拼写文件中删除</td>
+</tr>
+<tr>
+<td><code>&lt;C-x&gt;s</code></td>
+<td>在插入模式下触发自动补全，完成拼写更正</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ref_1">Ref</h2>
+<p><a href="https://book.douban.com/subject/26967597/">Pratical Vim</a></p>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/vim.html">vim</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/cs/python_notes_10_fp_in_python.html" title="Python 学习笔记 #10 —— Python 中的 FP">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
+  </div>
+
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_signature_plugin.html">学习 Vim 之 vim_signature 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_lookupfile_plugin.html">学习 Vim 之 lookupfile 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_bufexplorer_nerdtree_winmanager_powerline.html">学习 Vim 之 BufExplorer、NERDTree、WinManager、Powerline 插件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_markdown.html">在 Vim 中写 Markdown 文件</a></li>
+      <li><a href="https://qiangu.cool/posts/tools/learning_vim_ctags_cscope_taglist.html">学习 Vim 之 Ctags/Cscope/Taglist</a></li>
+    </ul>
+  </div>
+
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>
