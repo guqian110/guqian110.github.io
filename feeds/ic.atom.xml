@@ -218,9 +218,7 @@
 &lt;p&gt;动态功耗可以通过公式算出来，&lt;/p&gt;
 &lt;div class="math"&gt;$$Power \propto \frac{1}{2} * Capacitive\ load * Voltage^2 * Frequency\ switched\tag{6}$$&lt;/div&gt;
 &lt;p&gt;其中 &lt;code&gt;Frequency switched&lt;/code&gt; 是时钟频率的函数，&lt;code&gt;Capacitive load&lt;/code&gt; 是晶体管的 fanout 和工艺的函数。&lt;/p&gt;
-&lt;p&gt;下图是 Intel X86 架构芯片 30 年间 8 代 CPU 的时钟频率和 power 关系图，&lt;/p&gt;
-&lt;p&gt;&lt;img alt="power" src="/imges/patterson_and_hennessy/power.png"/&gt;&lt;/p&gt;
-&lt;p&gt;从图中可以看到，随着时间发展，时钟频率提高了近 1000 倍，但是 power 只提高了大概 30 倍，原因就在于电压的不断降低。&lt;/p&gt;
+&lt;p&gt;从 Intel X86 架构芯片 30 年间 8 代 CPU 的时钟频率和 power 关系图中可以看到，随着时间发展，时钟频率提高了近 1000 倍，但是 power 只提高了大概 30 倍，原因就在于电压的不断降低。&lt;/p&gt;
 &lt;p&gt;从前面 performance 的讨论可以知道，我们不能采用降低时钟频率的方式来降功耗，因为这会伤害到性能。那么我们可以无限降低电压吗？答案是不行，现在业界遇到的问题就是电压不能再低了，否则晶体管就像水龙头一样，无法完全关闭。虽然动态功耗是 CMOS 功耗中的大头，但是静态功耗也逐渐占据主角，在服务器中静态功耗能达到 40%，所以人们发明了各种技术来降低静态功耗，但是电压很难再进一步降低了。&lt;/p&gt;
 &lt;p&gt;虽然有各种各样的昂贵技术来冷却芯片，但是继续提高功耗对于 PC（甚至是 servers）来说代价太高了，对移动设备就更不用说了，这就是所谓的功耗墙。&lt;/p&gt;
 &lt;h2 id="the switch from uniprocessors to multiprocessors"&gt;The Switch from Uniprocessors to Multiprocessors&lt;/h2&gt;
@@ -2578,7 +2576,7 @@ statements.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="example3" src="/images/static-timing-analysis-2-xilinx-sta/example3.png"/&gt;&lt;/p&gt;
 &lt;p&gt;输入时钟的周期为 5 ns，并且占空比为 50%，两 bit 的数据的有效时间都为 1/2 时钟周期，所以在这个实例中的时序约束应该如下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;NET&lt;/span&gt; &lt;span class="ss"&gt;"SysClk"&lt;/span&gt; &lt;span class="n"&gt;TNM_NET&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="ss"&gt;"SysClk"&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="n"&gt;TIMESPEC&lt;/span&gt; &lt;span class="ss"&gt;"TS_SysClk"&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;PERIOD&lt;/span&gt; &lt;span class="ss"&gt;"SysClk"&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="n"&gt;ns&lt;/span&gt; &lt;span class="n"&gt;HIGH&lt;/span&gt; &lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;TIMESPEC&lt;/span&gt; &lt;span class="ss"&gt;"TS_SysClk"&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;PERIOD&lt;/span&gt; &lt;span class="ss"&gt;"SysClk"&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="n"&gt;ns&lt;/span&gt; &lt;span class="n"&gt;HIGH&lt;/span&gt; &lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="k"&gt;OFFSET&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;IN&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;25&lt;/span&gt; &lt;span class="n"&gt;ns&lt;/span&gt; &lt;span class="k"&gt;VALID&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="n"&gt;ns&lt;/span&gt; &lt;span class="k"&gt;BEFORE&lt;/span&gt; &lt;span class="ss"&gt;"SysClk"&lt;/span&gt; &lt;span class="n"&gt;RISING&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="k"&gt;OFFSET&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;IN&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;25&lt;/span&gt; &lt;span class="n"&gt;ns&lt;/span&gt; &lt;span class="k"&gt;VALID&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="n"&gt;ns&lt;/span&gt; &lt;span class="k"&gt;BEFORE&lt;/span&gt; &lt;span class="ss"&gt;"SysClk"&lt;/span&gt; &lt;span class="n"&gt;FALLING&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;

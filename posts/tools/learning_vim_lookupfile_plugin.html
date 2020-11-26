@@ -226,22 +226,22 @@ find . -not -regex <span class="s1">'.*\.\(png\|gif\)'</span> -type f -printf <s
 <p>lookupfile 插件是大小写敏感的，可以在查找到时候加上 <code>\c</code> 就能忽略大小写，不过这样很麻烦，下面是更加简单的方法，在 .vimrc 中添加下面这段代码即可：</p>
 <div class="highlight"><pre><span></span><code><span class="k">function</span><span class="nf">! LookupFile_IgnoreCaseFunc</span><span class="p">(</span>pattern<span class="p">)</span><span class="w"></span>
 <span class="w">    </span><span class="n">let</span> <span class="n">_tags</span> <span class="p">=</span> <span class="o">&amp;</span><span class="n">tags</span>
-    <span class="n">try</span>
-        <span class="s">let</span> <span class="s">&amp;tags</span> <span class="s">=</span> <span class="s">eval(g:LookupFile_TagExpr)</span>
-        <span class="n">let</span> <span class="s">newpattern</span> <span class="s">=</span> <span class="s">'\c'</span> <span class="s">.</span> <span class="s">a:pattern</span>
-        <span class="n">let</span> <span class="s">tags</span> <span class="s">=</span> <span class="s">taglist(newpattern)</span>
-    <span class="n">catch</span>
-        <span class="s">echohl</span> <span class="s">ErrorMsg</span> <span class="s">|</span> <span class="s">echo</span> <span class="s">"Exception:</span> <span class="s">"</span> <span class="s">.</span> <span class="s">v:exception</span> <span class="s">|</span> <span class="s">echohl</span> <span class="s">NONE</span>
-        <span class="n">return</span> <span class="s">""</span>
-    <span class="n">finally</span>
-        <span class="s">let</span> <span class="s">&amp;tags</span> <span class="s">=</span> <span class="s">_tags</span>
-    <span class="n">endtry</span>
+<span class="n">    try</span>
+<span class="n">        </span><span class="s">let &amp;tags = eval(g:LookupFile_TagExpr)</span><span class="p"></span>
+<span class="n">        let </span><span class="s">newpattern = '\c' . a:pattern</span><span class="p"></span>
+<span class="n">        let </span><span class="s">tags = taglist(newpattern)</span><span class="p"></span>
+<span class="n">    catch</span>
+<span class="n">        </span><span class="s">echohl ErrorMsg | echo "Exception: " . v:exception | echohl NONE</span><span class="p"></span>
+<span class="n">        return </span><span class="s">""</span><span class="p"></span>
+<span class="n">    finally</span>
+<span class="n">        </span><span class="s">let &amp;tags = _tags</span><span class="p"></span>
+<span class="n">    endtry</span>
 
-    <span class="s">"</span> <span class="s">Show</span> <span class="s">the</span> <span class="s">matches</span> <span class="s">for</span> <span class="s">what</span> <span class="s">is</span> <span class="s">typed</span> <span class="s">so</span> <span class="s">far.</span>
-    <span class="n">let</span> <span class="s">files</span> <span class="s">=</span> <span class="s">map(tags,</span> <span class="s">'v:val["filename"]')</span>
-    <span class="n">return</span> <span class="s">files</span>
+<span class="n">    </span><span class="s">" Show the matches for what is typed so far.</span><span class="p"></span>
+<span class="n">    let </span><span class="s">files = map(tags, 'v:val["filename"]')</span><span class="p"></span>
+<span class="n">    return </span><span class="s">files</span><span class="p"></span>
 <span class="n">endfunction</span>
-<span class="s">let</span> <span class="s">g:LookupFile_LookupFunc</span> <span class="s">=</span> <span class="s">'LookupFile_IgnoreCaseFunc'</span>
+<span class="s">let g:LookupFile_LookupFunc = 'LookupFile_IgnoreCaseFunc'</span><span class="p"></span>
 </code></pre></div>
 <h3 id="summary">Summary</h3>
 <p>综上，.vimrc 中的配置内容如下：</p>
