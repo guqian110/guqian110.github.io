@@ -63,24 +63,24 @@
     <meta name="msapplication-TileColor" content="#333333">
 
 <meta name="author" content="Qian Gu" />
-<meta name="description" content="chisel 学习系列汇总" />
-<meta name="keywords" content="chisel">
+<meta name="description" content="Patterson and Hennessy 读书笔记，第四章" />
+<meta name="keywords" content="Patterson and Hennessy">
 
 
 <meta property="og:site_name" content="Qian's Blog"/>
-<meta property="og:title" content="学习 chisel 系列 #0： Chisel 简介及学习路线"/>
-<meta property="og:description" content="chisel 学习系列汇总"/>
+<meta property="og:title" content="Patterson and Hennessy 学习笔记 #4 —— Chapter 4 The Processor"/>
+<meta property="og:description" content="Patterson and Hennessy 读书笔记，第四章"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="https://qiangu.cool/drafts/learning_chisel_series_0_intro_and_roadmap.html"/>
+<meta property="og:url" content="https://qiangu.cool/drafts/learning_patterson_and_hennessy_notes_4_chapter_4.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2020-05-10 14:56:00+08:00"/>
+<meta property="article:published_time" content="2020-12-08 22:28:00+08:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
 <meta property="article:section" content="IC"/>
-<meta property="article:tag" content="chisel"/>
+<meta property="article:tag" content="Patterson and Hennessy"/>
 <meta property="og:image" content="/images/logo.png">
 
-  <title>Qian's Blog &ndash; 学习 chisel 系列 #0： Chisel 简介及学习路线</title>
+  <title>Qian's Blog &ndash; Patterson and Hennessy 学习笔记 #4 —— Chapter 4 The Processor</title>
 
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
@@ -162,40 +162,109 @@
 <article class="single">
   <header>
       
-    <h1 id="learning_chisel_series_0_intro_and_roadmap">学习 chisel 系列 #0： Chisel 简介及学习路线</h1>
+    <h1 id="learning_patterson_and_hennessy_notes_4_chapter_4">Patterson and Hennessy 学习笔记 #4 —— Chapter 4 The Processor</h1>
     <p>
-      Posted on 2020-05-10 14:56 in <a href="https://qiangu.cool/category/ic.html">IC</a>
+      Posted on 2020-12-08 22:28 in <a href="https://qiangu.cool/category/ic.html">IC</a>
 
     </p>
   </header>
 
 
   <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 chisel 系列 #0： Chisel 简介及学习路线">学习 chisel 系列 #0： Chisel 简介及学习路线</a><ul><li><a class="toc-href" href="#chisel intro" title="Chisel Intro">Chisel Intro</a></li><li><a class="toc-href" href="#learning roadmap" title="Learning Roadmap">Learning Roadmap</a></li><li><a class="toc-href" href="#resource" title="Resource">Resource</a></li></ul></li></ul></div>
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Patterson and Hennessy 学习笔记 #4 &mdash;&mdash; Chapter 4 The Processor">Patterson and Hennessy 学习笔记 #4 &mdash;&mdash; Chapter 4 The Processor</a><ul><li><a class="toc-href" href="#intro" title="Intro">Intro</a></li><li><a class="toc-href" href="#fallacies and pitfalls" title="Fallacies and Pitfalls">Fallacies and Pitfalls</a></li></ul></li></ul></div>
   </div>
 
   <div>
-    <p><em>学习 risc-v 的过程中，接触到 Berkeley 的 Chisel，感觉是个非常有希望的语言，能解救广大硅农于水火之中，下面记录一下自己的学习笔记。</em></p>
-<h2 id="chisel intro">Chisel Intro</h2>
-<h2 id="learning roadmap">Learning Roadmap</h2>
-<ol>
-<li><a href="https://mybinder.org/v2/gh/freechipsproject/chisel-bootcamp/master">Online Bootcamp</a></li>
-<li><a href="https://github.com/ucb-bar/chisel-tutorial">Chisel Tutorial</a></li>
-<li><a href="https://github.com/freechipsproject/chisel3/wiki">Chisel3 wiki: A Short users Guide to Chisel</a></li>
-<li>Chisel3</li>
-</ol>
-<p>简单做了个 mind map。</p>
-<h2 id="resource">Resource</h2>
-<p>有用的资源，大部分官网也都列出来了，</p>
+    <blockquote>
+<p>In a major matter, no details are small.</p>
+<p>-- French Proverb</p>
+</blockquote>
+<h2 id="intro">Intro</h2>
+<p>第一章中提到，影响一个计算机性能的因素有 3 个：</p>
 <ul>
-<li>[cheet sheet][cheet sheet]</li>
-<li>[ScalaDoc][scala doc]</li>
+<li>指令总数</li>
+<li>时钟周期</li>
+<li>每条指令的执行时钟数（CPI）</li>
 </ul>
+<p>从第二章可知对于一个特定程序，由编译器和 ISA 共同决定了第一个因素：指令总数。而一个 processor 的实现决定了另外两个因素，所以这章介绍 RISC-V 处理器两种不同实现的 <code>control path</code> 和 <code>data path</code>。</p>
+<h2 id="fallacies and pitfalls">Fallacies and Pitfalls</h2>
+<ul>
+<li><code>Fallacies</code> 谬论：错误概念</li>
+<li><code>Pitfalls</code> 陷阱：特定条件下成立的规律的错误推广</li>
+</ul>
+<p><strong>谬论：就像左移指令可以代替 2 的指数次的乘法，右移指令可以代替除数是 2 的指数的除法运算。</strong></p>
+<p>对于 unsigned 类型来说的确如此，但是对于 signed 类型的数据则显然不对，负数右移后在高位补充符号位，最后会永远是 -1，不会变成 0。</p>
+<p><strong>陷阱：结合律不适用于浮点运算</strong></p>
+<p>对于 integer 的运算，即使会发生 overflow 结合律也是适用的。但是对于浮点数，结合律是不适用的，因为计算机内的浮点数是用有限的 bit 来近似真实的数字，无法保存 overflow 的数字。这里有意思的是，对于定点的整数而言即使发生了 overflow 结合律仍然是适用的，找个例子就可以验证下面的等式是成立的，</p>
+<div class="math">$$-128+127+3 = -128+(127+3) = -128+(-126)=2$$</div>
+<p>原因也很简单：整数运算 overflow 只会影响高位 bit，低位 bit 是不受影响的。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'blue ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
   </div>
 
   <div class="tag-cloud">
     <p>
-      <a href="https://qiangu.cool/tag/chisel.html">chisel</a>
+      <a href="https://qiangu.cool/tag/patterson-and-hennessy.html">Patterson and Hennessy</a>
     </p>
   </div>
 
@@ -203,8 +272,14 @@
   <div class="neighbors">
   </div>
 
+  <div class="related-posts">
+    <h4>You might enjoy</h4>
+    <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_1_chapter_1.html">Patterson and Hennessy 学习笔记 #1 —— Chapter 1 Computer Abstractions and Technology</a></li>
+    </ul>
+  </div>
 
-      <p>This post is part <built-in method index of str object at 0x7f95e51b6230> of the "" series:</p>
+      <p>This post is part <built-in method index of str object at 0x7f95e4efabc0> of the "" series:</p>
       <ol class="parts">
       </ol>
 
