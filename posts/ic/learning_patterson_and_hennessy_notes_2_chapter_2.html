@@ -71,9 +71,9 @@
 <meta property="og:title" content="Patterson and Hennessy 学习笔记 #2 —— Chapter 2 Instructions: Language of the Computer"/>
 <meta property="og:description" content="Patterson and Hennessy 读书笔记，第二章"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="https://qiangu.cool/drafts/learning_patterson_and_hennessy_notes_2_chapter_2.html"/>
+<meta property="og:url" content="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2020-06-13 12:55:00+08:00"/>
+<meta property="article:published_time" content="2020-11-29 21:49:00+08:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
 <meta property="article:section" content="IC"/>
@@ -164,7 +164,7 @@
       
     <h1 id="learning_patterson_and_hennessy_notes_2_chapter_2">Patterson and Hennessy 学习笔记 #2 —— Chapter 2 Instructions: Language of the Computer</h1>
     <p>
-      Posted on 2020-06-13 12:55 in <a href="https://qiangu.cool/category/ic.html">IC</a>
+      Posted on 2020-11-29 21:49 in <a href="https://qiangu.cool/category/ic.html">IC</a>
 
     </p>
   </header>
@@ -245,25 +245,33 @@ handling of those problems.</p>
 <h2 id="signed and unsigned numbers">Signed and Unsigned Numbers</h2>
 <p>参考以前的一篇总结：<a href="https://qiangu.cool/posts/cs/signed_number_representations.html">原码、反码、补码</a></p>
 <h2 id="addressing modes">Addressing Modes</h2>
-<p>RISC-V 一共有 4 种寻找模式，</p>
-<ol>
-<li>
-<p><strong>Immediate addressing，立即数寻址</strong></p>
-<p>操作数是常数，保存在指令当中。</p>
-</li>
-<li>
-<p><strong>Register addressing，寄存器寻址</strong></p>
-<p>操作数保存在寄存器中。</p>
-</li>
-<li>
-<p><strong>Base/displacement addressing，基址寻址</strong></p>
-<p>操作数保存在 memory 中，其地址为寄存器和指令中常数相加的结果。</p>
-</li>
-<li>
-<p><strong>PC-relative addressing，PC 相对寻址</strong></p>
-<p>分支指令中，跳转地址为 PC 和指令中的常数相加的结果。</p>
-</li>
-</ol>
+<p>RISC-V 一共有 4 种寻址模式，</p>
+<table>
+<thead>
+<tr>
+<th>寻址类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Immediate addressing，立即数寻址</strong></td>
+<td>操作数是常数，保存在指令当中</td>
+</tr>
+<tr>
+<td><strong>Register addressing，寄存器寻址</strong></td>
+<td>操作数保存在寄存器中</td>
+</tr>
+<tr>
+<td><strong>Base/displacement addressing，基址寻址</strong></td>
+<td>操作数保存在 memory 中，其地址为寄存器和指令中常数相加的结果</td>
+</tr>
+<tr>
+<td><strong>PC-relative addressing，PC 相对寻址</strong></td>
+<td>分支指令中，跳转地址为 PC 和指令中的常数相加的结果</td>
+</tr>
+</tbody>
+</table>
 <h2 id="fallacies and pitfalls">Fallacies and Pitfalls</h2>
 <ul>
 <li><code>Fallacies</code> 谬论：错误概念</li>
@@ -279,7 +287,7 @@ handling of those problems.</p>
 <li>可移植性差</li>
 <li>难以维护</li>
 </ol>
-<p><strong>陷阱：商用计算机二进制向后兼容的重要性意味着成功的指令及不需要改变</strong></p>
+<p><strong>陷阱：商用计算机二进制向后兼容的重要性意味着成功的指令集不需要改变</strong></p>
 <p>x86 指令的演变用事实说明，在保持向后兼容神圣不可侵犯的同时，也要不断地添加新指令。</p>
 <p><strong>陷阱：忘记 byte 寻址的机器中连续的 word/doubleword 地址相差不是 1</strong></p>
 <p>汇编代码容易出错的例子：必须程序员自己清楚地计算地址，而用高级语言则不需要考虑这些因素。</p>
@@ -296,7 +304,7 @@ handling of those problems.</p>
 <li>使用可以修改的存储器</li>
 </ol>
 <p>基于这两个概念，一台计算机上就可以运行不同的程序，应用在各个领域。</p>
-<p>为机器选择指令集需要在指令数量、单条指令的运行 cycle 数、时钟频率等因素之间做精妙的平衡。本章提供了 3 条准则来指导指令集的作者如何做一些 tricky 的折中，</p>
+<p>为机器选择指令集需要在指令数量、单条指令的运行 cycle 数、时钟频率等因素之间做精妙的平衡。本章提供了 3 条准则来指导指令集的设计者如何做一些 tricky 的折中，</p>
 <ol>
 <li>Simplicity favors regularity.</li>
 <li>Smaller is faster.</li>
@@ -341,6 +349,9 @@ handling of those problems.</p>
 
 
   <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_1_chapter_1.html" title="Patterson and Hennessy 学习笔记 #1 —— Chapter 1 Computer Abstractions and Technology">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
   </div>
 
   <div class="related-posts">
@@ -350,8 +361,14 @@ handling of those problems.</p>
     </ul>
   </div>
 
-      <p>This post is part <built-in method index of str object at 0x7f95e491dc10> of the "" series:</p>
+      <p>This post is part 2 of the "Patterson & Hennessy Notes" series:</p>
       <ol class="parts">
+              <li >
+                  <a href='https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_1_chapter_1.html'>Patterson and Hennessy 学习笔记 #1 —— Chapter 1 Computer Abstractions and Technology</a>
+              </li>
+              <li class="active">
+                  <a href='https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html'>Patterson and Hennessy 学习笔记 #2 —— Chapter 2 Instructions: Language of the Computer</a>
+              </li>
       </ol>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -380,7 +397,7 @@ handling of those problems.</p>
 
     <footer>
 <p>
-  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+  &copy;  2021 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme

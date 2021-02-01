@@ -171,7 +171,7 @@
 
 
   <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 chisel 系列 #2： Chisel Syntax Summary">学习 chisel 系列 #2： Chisel Syntax Summary</a><ul><li><a class="toc-href" href="#chisel tutorial &amp; chisel3" title="Chisel Tutorial &amp; Chisel3">Chisel Tutorial &amp; Chisel3</a></li><li><a class="toc-href" href="#bian liang" title="变量">变量</a><ul><li><a class="toc-href" href="#wire" title="wire">wire</a></li></ul></li><li><a class="toc-href" href="#kong zhi yu ju_1" title="控制语句">控制语句</a><ul><li><a class="toc-href" href="#for loop" title="for loop">for loop</a></li><li><a class="toc-href" href="#if-elseif-if" title="if-elseif-if">if-elseif-if</a></li><li><a class="toc-href" href="#when" title="when">when</a></li><li><a class="toc-href" href="#assignments and re-assignments" title="Assignments and Re-assignments">Assignments and Re-assignments</a></li><li><a class="toc-href" href="#bit extraction" title="Bit Extraction">Bit Extraction</a></li><li><a class="toc-href" href="#bit concatenation" title="Bit Concatenation">Bit Concatenation</a></li><li><a class="toc-href" href="#bit inference" title="Bit Inference">Bit Inference</a></li></ul></li><li><a class="toc-href" href="#fu wei  reset_1" title="复位 reset">复位 reset</a></li><li><a class="toc-href" href="#uint class" title="UInt Class">UInt Class</a></li><li><a class="toc-href" href="#bool class" title="Bool Class">Bool Class</a></li><li><a class="toc-href" href="#casting between types" title="Casting Between Types">Casting Between Types</a></li><li><a class="toc-href" href="#moudule instantiation" title="Moudule Instantiation">Moudule Instantiation</a></li><li><a class="toc-href" href="#vec class" title="Vec Class">Vec Class</a></li><li><a class="toc-href" href="#parameterization" title="Parameterization">Parameterization</a></li><li><a class="toc-href" href="#built in primitives" title="Built In Primitives">Built In Primitives</a></li><li><a class="toc-href" href="#writing scala testbenches" title="Writing Scala Testbenches">Writing Scala Testbenches</a></li><li><a class="toc-href" href="#creating your own project" title="Creating Your Own Project">Creating Your Own Project</a></li><li><a class="toc-href" href="#memory" title="Memory">Memory</a></li><li><a class="toc-href" href="#def" title="def">def</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="学习 chisel 系列 #2： Chisel Syntax Summary">学习 chisel 系列 #2： Chisel Syntax Summary</a><ul><li><a class="toc-href" href="#chisel tutorial &amp; chisel3" title="Chisel Tutorial &amp; Chisel3">Chisel Tutorial &amp; Chisel3</a></li><li><a class="toc-href" href="#scala he  chisel" title="Scala 和 Chisel">Scala 和 Chisel</a></li><li><a class="toc-href" href="#bian liang" title="变量">变量</a><ul><li><a class="toc-href" href="#wire" title="wire">wire</a></li></ul></li><li><a class="toc-href" href="#kong zhi yu ju_1" title="控制语句">控制语句</a><ul><li><a class="toc-href" href="#for loop" title="for loop">for loop</a></li><li><a class="toc-href" href="#if-elseif-if" title="if-elseif-if">if-elseif-if</a></li><li><a class="toc-href" href="#when" title="when">when</a></li><li><a class="toc-href" href="#assignments and re-assignments" title="Assignments and Re-assignments">Assignments and Re-assignments</a></li><li><a class="toc-href" href="#bit extraction" title="Bit Extraction">Bit Extraction</a></li><li><a class="toc-href" href="#bit concatenation" title="Bit Concatenation">Bit Concatenation</a></li><li><a class="toc-href" href="#bit inference" title="Bit Inference">Bit Inference</a></li></ul></li><li><a class="toc-href" href="#fu wei  reset_1" title="复位 reset">复位 reset</a></li><li><a class="toc-href" href="#uint class" title="UInt Class">UInt Class</a></li><li><a class="toc-href" href="#bool class" title="Bool Class">Bool Class</a></li><li><a class="toc-href" href="#casting between types" title="Casting Between Types">Casting Between Types</a></li><li><a class="toc-href" href="#moudule instantiation" title="Moudule Instantiation">Moudule Instantiation</a></li><li><a class="toc-href" href="#vec class" title="Vec Class">Vec Class</a></li><li><a class="toc-href" href="#parameterization" title="Parameterization">Parameterization</a></li><li><a class="toc-href" href="#built in primitives" title="Built In Primitives">Built In Primitives</a></li><li><a class="toc-href" href="#writing scala testbenches" title="Writing Scala Testbenches">Writing Scala Testbenches</a></li><li><a class="toc-href" href="#creating your own project" title="Creating Your Own Project">Creating Your Own Project</a></li><li><a class="toc-href" href="#memory" title="Memory">Memory</a></li><li><a class="toc-href" href="#def" title="def">def</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
   </div>
 
   <div>
@@ -181,6 +181,69 @@
 <p>Tutorial 下面的 <code>doc</code> 目录里面包含了一篇 chisel 入门论文，只要按照 Makefile 中的提示把所有的依赖包都安装好，就可以生成最终的 <a href="">pdf 论文</a>了。</p>
 <p><a href="">Chisel3</a> 官方的 wiki 页面详细介绍了 chisel3 的语法。</p>
 <hr/>
+<h2 id="scala he  chisel">Scala 和 Chisel</h2>
+<p>因为 Chisel 是 Scala 的方言，所以它本质是还是 scala 代码，但是 scala 是一门功能强大的复杂语言，融合了指令式编程、面向对象编程、函数式编程，有很多高级和复杂的概念，学习 scala 的所有特性固然对 chisel 有帮助，但是因为 chisel 只限定于硬件描述领域，所以实际上有些 scala 的特性一般是用不到的，所以如果为了快速入门 chisel，scala 的部分主题是可以跳过的，总结如下表：</p>
+<table>
+<thead>
+<tr>
+<th>Scala 功能</th>
+<th>Chisel 是否用到</th>
+<th>Chisel 主要用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>集合（Array、List、Tuple、Map、Set</td>
+<td>Y</td>
+<td>构建寄存器组等</td>
+</tr>
+<tr>
+<td>内建控制结构</td>
+<td>Y</td>
+<td>重复逻辑、连线</td>
+</tr>
+<tr>
+<td>Class 多态</td>
+<td>N</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Class 继承</td>
+<td>Y</td>
+<td>电路本身没有继承关系，主要用来扩展接口</td>
+</tr>
+<tr>
+<td>特质</td>
+<td>Y</td>
+<td>提取电路公共属性，用来快速修改 / 删除电路功能</td>
+</tr>
+<tr>
+<td>模式匹配</td>
+<td>Y</td>
+<td>快速裁剪、参数化配置电路</td>
+</tr>
+<tr>
+<td>类型参数化</td>
+<td>N</td>
+<td>阅读 Chisel 源码，理解语言的机制，设计电路不会用到</td>
+</tr>
+<tr>
+<td>抽象成员</td>
+<td>N</td>
+<td>理解 Chisel API，设计电路不会用到</td>
+</tr>
+<tr>
+<td>隐式定义</td>
+<td>Y</td>
+<td>和模式匹配配合实现快速裁剪、配置，Chisel 高级功能的重点</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h2 id="bian liang">变量</h2>
 <h3 id="wire">wire</h3>
 <p>用 <code>val</code> 声明一个变量，只要这个变量不是用 <code>Reg</code> 类型来赋值，那么它就会被解释成一个 verilog 中的 <code>wire</code>，因此这个变量也可以随意赋值给其他变量，就像 verilog 中的 <code>wire</code> 的行为一样。</p>
@@ -843,7 +906,7 @@
   </div>
 
 
-      <p>This post is part <built-in method index of str object at 0x7f95e53a7130> of the "" series:</p>
+      <p>This post is part <built-in method index of str object at 0x7fc489a3e9f0> of the "" series:</p>
       <ol class="parts">
       </ol>
 
@@ -873,7 +936,7 @@
 
     <footer>
 <p>
-  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+  &copy;  2021 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme

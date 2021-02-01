@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://qiangu.cool/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://qiangu.cool/theme/pygments/monokai.min.css">
+
+    <script src="https://qiangu.cool/theme/tipuesearch/jquery.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.js"></script>
+    <script src="https://qiangu.cool/theme/tipuesearch/tipuesearch_set.min.js"></script>
+    <script src="https://qiangu.cool/tipuesearch_content.js"></script>
+    <link rel="stylesheet" href="https://qiangu.cool/theme/tipuesearch/tipuesearch.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://qiangu.cool/theme/font-awesome/css/solid.css">
+
+
+    <link href="https://qiangu.cool/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Qian's Blog Atom">
+
+
+    <link rel="shortcut icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon_64x64.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48826831-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="总结 Scoreboard 细节" />
+<meta name="keywords" content="CPU, scoreboard">
+
+
+<meta property="og:site_name" content="Qian's Blog"/>
+<meta property="og:title" content="CPU 关键技术 —— Scoreboard"/>
+<meta property="og:description" content="总结 Scoreboard 细节"/>
+<meta property="og:locale" content="en"/>
+<meta property="og:url" content="https://qiangu.cool/drafts/cpu_scoreboard.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2021-01-13 19:21:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="IC"/>
+<meta property="article:tag" content="CPU"/>
+<meta property="article:tag" content="scoreboard"/>
+<meta property="og:image" content="/images/logo.png">
+
+  <title>Qian's Blog &ndash; CPU 关键技术 —— Scoreboard</title>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-1821536199377100",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://qiangu.cool">
+        <img src="/images/logo.png" alt="Qian Gu" title="Qian Gu">
+      </a>
+
+      <h1>
+        <a href="https://qiangu.cool">Qian Gu</a>
+      </h1>
+
+<p>Read >> Think >> Write</p>
+        <form class="navbar-search" action="/search.html" role="search">
+          <input type="text" name="q" id="tipue_search_input" placeholder="Search...">
+        </form>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="_blank"
+                   href="https://qiangu.cool/pages/about-me.html#about-me">
+                  About Me
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-envelope" href="mailto:guqian110@163.com" target="_blank">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-github" href="https://github.com/guqian110" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/qian_gu" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-rss" href="/feeds/all.atom.xml" target="_blank">
+              <i class="fas fa-rss"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://qiangu.cool">Home</a>
+
+      <a href="/authors.html">Authors</a>
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://qiangu.cool/feeds/all.atom.xml">Atom</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="cpu_scoreboard">CPU 关键技术 —— Scoreboard</h1>
+    <p>
+      Posted on 2021-01-13 19:21 in <a href="https://qiangu.cool/category/ic.html">IC</a>
+
+    </p>
+  </header>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="CPU 关键技术 &mdash;&mdash; Scoreboard">CPU 关键技术 &mdash;&mdash; Scoreboard</a><ul><li><a class="toc-href" href="#why need scoreboard" title="Why need Scoreboard">Why need Scoreboard</a></li><li><a class="toc-href" href="#what is scoreboard" title="What is Scoreboard">What is Scoreboard</a><ul><li><a class="toc-href" href="#hazard" title="Hazard">Hazard</a></li><li><a class="toc-href" href="#scoreboard algorithm" title="Scoreboard Algorithm">Scoreboard Algorithm</a></li></ul></li><li><a class="toc-href" href="#other techniques_1" title="Other Techniques">Other Techniques</a></li><li><a class="toc-href" href="#ref" title="Ref">Ref</a></li></ul></li></ul></div>
+  </div>
+
+  <div>
+    <h2 id="why need scoreboard">Why need Scoreboard</h2>
+<p>流水线是 CPU 设计中的基本概念，为了获得尽可能高的性能，人们发明了各种技术使得流水线保持在全速运行状态。其中最关键的就是<strong>动态调度技术</strong>。如<a href="https://book.douban.com/subject/27190711/">《计算机体系结构》</a>介绍，</p>
+<blockquote>
+<p>现在体系结构的主要矛盾不在运算部件，CPU 中用于做加、减、乘、除的部件只占 CPU 面积的很小一部分，CPU 中的大部分面积被用来给运算部件提供足够的指令和数据。</p>
+</blockquote>
+<p>Scoreboard 是一种非常古老的动态调度算法，发明于 1964 年，最早用在的 CDC 6600 计算机上。Scoreboard 可以使得 CPU 乱序执行（Out-of-Order Execution），从而提高 CPU 的性能。</p>
+<h2 id="what is scoreboard">What is Scoreboard</h2>
+<h3 id="hazard">Hazard</h3>
+<p>乱序执行的基本原理就是：<strong>硬件让不受其他指令影响的指令尽可能早执行，尽早结束，这样才能获取到最高性能。</strong>但是乱序执行的前提是要保证功能正确，如果功能都不正确，那么这一切都没有意义。保证功能正确意味着要解决两大问题：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>资源冒险（<code>structual hazard</code>）</td>
+<td>计算单元一次只能执行一条指令，同时计算多条指令结果不正确</td>
+</tr>
+<tr>
+<td>数据冒险（<code>data hazard</code>）</td>
+<td>计算开始前源操作数必须是 ready 状态，计算结果也要在合适的时间写入寄存器</td>
+</tr>
+</tbody>
+</table>
+<p>产生数据冒险的根本原因就是因为寄存器数量太少了（RV32I 只有 32 个通用寄存器），前后指令流要复用同一个寄存器。假设有无数个寄存器可用，那么自然就不存在数据冒险的问题。根据读写关系数据冒险可以分为 3 种：</p>
+<ul>
+<li><code>RAW</code> (Read-After-Write)：读源操作数的时间不能太早，要等数据准备好再读，避免读到无效数据</li>
+<li><code>WAW</code> (Write-After-Write)：写回执行结果的时间不能太早，要等到前序指令把旧值写入后再写入新值，避免被旧值覆盖</li>
+<li><code>WAR</code> (Write-After-Read)：写回执行结果的时间不能太早，要等到前序指令把旧值读走后再写入新值，避免覆盖仍然有用的旧值</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol>
+<li>数据冒险不包含 RAR(Read-After-Read) 的原因很简单：RAR 对结果的正确性没有任何影响</li>
+<li>这三种数据冒险中，RAW 被成为 &ldquo; 真数据冒险 &rdquo;，因为另外两种冒险实际上并不是真正的数据依赖，而是 &ldquo; 名字相关 &rdquo;，即只是因为使用同一个寄存器名而导致的相关性</li>
+<li>WAW 和 WAR 可以通过<strong>寄存器重命名</strong>技术进行规避，而 RAW 是无法规避的，只能进行流水线停顿。为了减少停顿，一般通过动态调度降低性能损失：<ul>
+<li>数据旁路 Data Bypass Forward：把前序的结果尽可能早地传递给后续需要用它的指令，减少等待时间</li>
+<li>执行后续无关指令，直接消灭等待</li>
+</ul>
+</li>
+<li><code>Tomasulo 算法</code> 可以通过 <code>保留站</code> 和 <code>ROB</code> 实现寄存器重命名，达到上述两个效果</li>
+</ol>
+</div>
+<p>这几种数据依赖关系贯穿于整个流水线的多个阶段：</p>
+<ul>
+<li><strong>发射 Issue</strong>：检查本条指令要读写哪些寄存器，并记录下相关信息。为了保证 WAW，发射本条指令有两个条件必须满足：第一个是前序要写回相同寄存器的指令执行结束后才能发射本条指令；第二个是相关功能单元不是 busy 状态</li>
+<li><strong>读操作数 Read Operands</strong>：在把指令成功发射给相关功能单元之后，还需要准备好源操作数。为了保证 RAW，读取源操作数必须要等到前序写对应寄存器的指令执行结束后在进行</li>
+<li><strong>执行 Execution</strong>：操作数准备就绪后功能单元开始执行，在执行结束时会通知 scoreboard</li>
+<li><strong>写回 Write Back</strong>：执行结束后的结果也不能马上写入到目标寄存器，因为要保证 WAR，即要等到前序要读目标寄存器的指令把数据读走之后才能把新值写入寄存器</li>
+</ul>
+<h3 id="scoreboard algorithm">Scoreboard Algorithm</h3>
+<p>Scoreboard 是一种集中式的控制逻辑，可以同时识别资源冒险和数据冒险，其核心思想是：<strong>记录每一条指令需要用到的寄存器序号和功能单元的状态，持续跟踪，直到数据依赖解除后才把指令发射到相关功能单元。当功能单元执行完毕，结果写回到寄存器后更新相关状态，为后续指令做准备。</strong></p>
+<p>为了实现这个目的，scoreboard 维护了 3 张表：</p>
+<table>
+<thead>
+<tr>
+<th>表格</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>指令状态表 Instruction Status</strong></td>
+<td>记录每条指令的状态，指示处于流水线的哪个 stage</td>
+</tr>
+<tr>
+<td><strong>功能单元状态表 Functional Unit Status</strong></td>
+<td>记录每个功能单元的状态，表的深度 = 功能单元的数量，每个 entry 记录包含 9 个字段<ul><li>Busy[FU]：记录该 FU 的状态</li><li>Op[FU]：记录该 FU 执行的操作</li><li>Fᵢ[FU]：记录该 FU 要写入的寄存器号</li><li>Fⱼ[FU]：记录该 FU 读取的第一个源操作数 src1</li><li>Fₖ[FU]：记录该 FU 读取的第二个源操作数 src2</li><li>Qⱼ[FU]：记录产生该 FU src1 的功能单元</li><li>Qₖ[FU]：记录产生该 FU src2 的功能单元</li><li>Rⱼ[FU]：记录该 FU 的 src1 是否 ready 的状态</li><li>Rₖ[FU]：记录该 FU 的 src2 是否 ready 的状态</li></ul></td>
+</tr>
+<tr>
+<td><strong>寄存器状态表 Register Status</strong></td>
+<td>记录每个寄存器的状态，指示哪个功能单元会写入本寄存器</td>
+</tr>
+</tbody>
+</table>
+<p>第一张表用来判断指令的执行状态，当一条指令走完所有 stage，就可以从表格中删除，为其他指令腾出空间。第二张和第三张表格配合在一起，记录了所有的冒险。因为每条指令的源操作数可能是前一条指令的结果，所以必须记录本条指令的源操作数是谁产生的，即 Qⱼ[FU] 和 Qₖ[FU]；而本条指令的结果也可能是后续指令的源操作数，所以也必须记录目的寄存器的内容是由本条指令产生的，即 Result[dst]。</p>
+<p>算法伪代码如下：</p>
+<p><strong>发射阶段</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>// 在发射阶段：
+// 1. 等待解除 结构冒险 和 数据冒险 WAW + WAR
+// 2. 发射当前指令
+// 3. 用当前指令的信息更新 FU 的状态表
+
+function issue(op, dst, src1, src2)
+    wait until (!Busy[FN] AND !Result[dst]);    // 确认 FU 并且等待解除所有冒险
+    Busy[FU] &larr; Yes;                             // 设置 FU 的状态为 busy
+    Op[FU] &larr; op;                                // 记录 FU 执行的具体操作
+    Fᵢ[FU] &larr; dst;                               // 记录 FU 的 目的寄存器序号
+    Fⱼ[FU] &larr; src1;                              // 记录 FU 的 源寄存器 1 序号
+    Fₖ[FU] &larr; src2;                              // 记录 FU 的 源寄存器 2 序号
+    Qⱼ[FU] &larr; Result[src1];                      // 查表、记录产生 src1 的 FU 名称，如果为 0 表示不需要任何 FU 写这个寄存器
+    Qₖ[FU] &larr; Result[src2];                      // 差表、记录产生 src2 的 FU 名称，如果为 0 表示不需要任何 FU 写这个寄存器
+    Rⱼ[FU] &larr; Qⱼ[FU] == 0;                       // 记录 src1 是否 ready
+    Rₖ[FU] &larr; Qₖ[FU] == 0;                       // 记录 src2 是否 ready
+    Result[dst] &larr; FU;                           // 在寄存器状态表中记录 dst 寄存器的值是由当前 FU 产生的
+</code></pre></div>
+</td></tr></table>
+<p><strong>读操作数</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>// 在读操作数阶段：
+// 1. 等待解除所有 RAW
+// 2. 把数值从源寄存器中读出来
+// 3. 设置源寄存器的状态为 No（Yes 表示寄存器有新值待读出；No 表示寄存器还未写入新值；读出后设置为 No）
+
+function read_oprands(FU)
+    wait until (Rⱼ[FU] AND Rₖ[FU]);     // 等待解除 RAW
+    Rⱼ[FU] &larr; No;                        // 读出数据后把对应的源寄存器状态设置为 No，表示数据已被读出
+    Rₖ[FU] &larr; No;
+    Qⱼ[FU] &larr; Null;                      // RAW 已解除，不再需要记录源操作数的产生源头，复位
+    Qₖ[FU] &larr; Null;
+</code></pre></div>
+</td></tr></table>
+<p><strong>执行阶段</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>// 在执行阶段：FU 执行具体操作
+
+function execute(FU)
+    // Execute whatever FU must do
+</code></pre></div>
+</td></tr></table>
+<p><strong>写回阶段</strong></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>// 在写回阶段：
+// 1. 等待解除所有 WAR
+// 3. 设置 FU 的 busy 状态为 No，为后续指令做准备
+
+function write_back(FU)
+    wait until (&forall;f {(Fⱼ[f]&ne;FₖFU] OR Rⱼ[f]=No) AND (Fₖ[f]&ne;Fᵢ[FU] OR Rₖ[f]=No)})  // 等待解除所有 WAR，即所有活跃指令都不需要读当前要写入的目标寄存器
+    foreach f do
+        if Qⱼ[f]=FU then Rⱼ[f] &larr; Yes;       // 如果某个 FU 要用到当前结果，将它的 ready 设置为 Yes 表明数据已经准备好
+        if Qₖ[f]=FU then Rₖ[f] &larr; Yes;
+    Result[Fᵢ[FU]] &larr; 0;                     // 目标寄存器的值已写入，为后序指令解除 RAW 和 WAW
+    Regfile[Fᵢ[FU]];                        // 执行结果写回目标寄存器
+    Busy[FU] &larr; No;                          // 复位 FU 的 busy 状态，为后序指令做准备
+</code></pre></div>
+</td></tr></table>
+<h2 id="other techniques_1">Other Techniques</h2>
+<p>如果当前指令用到的功能单元处于 busy 状态，Scoreboard 会暂停 issue stage，此时即使有空闲的功能单元也无法执行后续指令，必须要等到解决当前指令的结构冒险。也就是说 scoreboard 只能检查数据冒险，但是无法消除。下面这个例子中，因为前面的 fadd.d 依赖于 fdiv.d，而 fdiv.d 执行时间较长，所以会出现流水线暂停，导致和前序指令之间没有任何数据冒险的 fsub.d 也会被阻塞住。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c">; structural hazard</span>
+<span class="nf">fdiv.d</span>  <span class="no">f0</span> <span class="p">,</span> <span class="no">f2</span><span class="p">,</span> <span class="no">f4</span>
+<span class="nf">fadd.d</span>  <span class="no">f10</span><span class="p">,</span> <span class="no">f0</span><span class="p">,</span> <span class="no">f8</span>
+<span class="nf">fsub.d</span>  <span class="no">f12</span><span class="p">,</span> <span class="no">f8</span><span class="p">,</span> <span class="no">f14</span>
+</code></pre></div>
+</td></tr></table>
+<p>一些寄存器重命名技术，比如 Tomasolu 算法，可以避免上述结构冒险导致的流水线暂停的同时还能消除 WAW 和 WAR，一举两得，获得潜在的性能提升。</p>
+<h2 id="ref">Ref</h2>
+<p><a href="https://en.wikipedia.org/wiki/Scoreboarding">Scoreboard wiki</a></p>
+<p><a href="https://book.douban.com/subject/6795919/">Computer Architecture Appendix C.7</a></p>
+  </div>
+
+  <div class="tag-cloud">
+    <p>
+      <a href="https://qiangu.cool/tag/cpu.html">CPU</a>
+      <a href="https://qiangu.cool/tag/scoreboard.html">scoreboard</a>
+    </p>
+  </div>
+
+
+  <div class="neighbors">
+  </div>
+
+
+      <p>This post is part <built-in method index of str object at 0x7fc48b81ec90> of the "" series:</p>
+      <ol class="parts">
+      </ol>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>
+  &copy;  2021 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://qiangu.cool/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="ligtht"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Qian's Blog ",
+  "url" : "https://qiangu.cool",
+  "image": "/images/logo.png",
+  "description": "Qian's Thoughts and Writings"
+}
+</script>
+<a href="https://github.com/guqian110/guqian110.github.io" class="github-corner" aria-label="View source on Github">
+    <svg width="80"
+         height="80"
+         viewBox="0 0 250 250"
+         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+         aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor"
+              style="transform-origin: 130px 106px;"
+              class="octo-arm">
+        </path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor"
+              class="octo-body">
+        </path>
+    </svg>
+</a>
+<style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <script>
+      $(document).ready(function() {
+        $('#tipue_search_input').tipuesearch();
+      });
+    </script>
+
+</body>
+</html>

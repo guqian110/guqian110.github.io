@@ -73,7 +73,7 @@
 <meta property="og:locale" content="en"/>
 <meta property="og:url" content="https://qiangu.cool/drafts/learning_patterson_and_hennessy_notes_4_chapter_4.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2020-12-08 22:28:00+08:00"/>
+<meta property="article:published_time" content="2020-12-20 22:28:00+08:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
 <meta property="article:section" content="IC"/>
@@ -164,14 +164,14 @@
       
     <h1 id="learning_patterson_and_hennessy_notes_4_chapter_4">Patterson and Hennessy 学习笔记 #4 —— Chapter 4 The Processor</h1>
     <p>
-      Posted on 2020-12-08 22:28 in <a href="https://qiangu.cool/category/ic.html">IC</a>
+      Posted on 2020-12-20 22:28 in <a href="https://qiangu.cool/category/ic.html">IC</a>
 
     </p>
   </header>
 
 
   <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="Patterson and Hennessy 学习笔记 #4 &mdash;&mdash; Chapter 4 The Processor">Patterson and Hennessy 学习笔记 #4 &mdash;&mdash; Chapter 4 The Processor</a><ul><li><a class="toc-href" href="#intro" title="Intro">Intro</a></li><li><a class="toc-href" href="#fallacies and pitfalls" title="Fallacies and Pitfalls">Fallacies and Pitfalls</a></li></ul></li></ul></div>
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Patterson and Hennessy 学习笔记 #4 &mdash;&mdash; Chapter 4 The Processor">Patterson and Hennessy 学习笔记 #4 &mdash;&mdash; Chapter 4 The Processor</a><ul><li><a class="toc-href" href="#intro" title="Intro">Intro</a></li><li><a class="toc-href" href="#a simple implementation scheme" title="A Simple Implementation Scheme">A Simple Implementation Scheme</a></li><li><a class="toc-href" href="#an overview of pipeling" title="An Overview of Pipeling">An Overview of Pipeling</a></li><li><a class="toc-href" href="#a pipelined scheme" title="A Pipelined Scheme">A Pipelined Scheme</a></li><li><a class="toc-href" href="#exceptions" title="Exceptions">Exceptions</a></li><li><a class="toc-href" href="#fallacies and pitfalls" title="Fallacies and Pitfalls">Fallacies and Pitfalls</a></li></ul></li></ul></div>
   </div>
 
   <div>
@@ -186,7 +186,86 @@
 <li>时钟周期</li>
 <li>每条指令的执行时钟数（CPI）</li>
 </ul>
-<p>从第二章可知对于一个特定程序，由编译器和 ISA 共同决定了第一个因素：指令总数。而一个 processor 的实现决定了另外两个因素，所以这章介绍 RISC-V 处理器两种不同实现的 <code>control path</code> 和 <code>data path</code>。</p>
+<p>从第二章可知对于一个特定程序，由编译器和 ISA 共同决定了第一个因素：指令总数。而一个 processor 的实现决定了另外两个因素，所以这章介绍 RISC-V 处理器 <code>control path</code> 和 <code>data path</code> 的两种不同实现方案。</p>
+<h2 id="a simple implementation scheme">A Simple Implementation Scheme</h2>
+<p>从 RISC-V ISA 中挑选出三种具有代表性的指令组成一个小子集，</p>
+<ul>
+<li>代表和 memory 交互的 <code>ld</code>, <code>st</code> 指令</li>
+<li>代表算术 - 逻辑运算的 <code>add</code>, <code>sub</code>, <code>and</code>, <code>or</code> 指令</li>
+<li>代表分支运算的 <code>beq</code> 指令</li>
+</ul>
+<p>这个小子集非常具有代表性，其他指令的处理基本上都和这几个指令类似，搞懂了这几个指令的处理，其他指令的处理也就大同小异。以实现这个小子集为目标，处理器核设计的经典问题如下：</p>
+<ul>
+<li>取指：如何产生下一个 PC</li>
+<li>译码：如何产生内部控制信号</li>
+<li>读操作数：register file 的设计（包括端口数量、实现方式）</li>
+<li>执行：如何根据控制信号复用 ALU 等单元，完成算术运算、分支判断、访存地址计算 etc</li>
+<li>访存：如何访问 memory</li>
+<li>写回：未涉及</li>
+</ul>
+<p>上面几个问题可以分成 <code>control path</code> 和 <code>data path</code> 两大类，各个击破。</p>
+<p><img alt="nopipe" src="/images/learning_patterson_and_hennessy_notes_4_chapter_4/nopipe.png"/></p>
+<p>这个实现方案中一条指令的所有处理都在一个 cycle 内完成，所有组合逻辑都在一起，显然这个方案的主频非常低。虽然 CPI 是 1, 但是时钟周期实在是太长了，所以性能非常差。历史上早期 CPU 的 ISA 非常简单，所以确实曾经用过这种实现方案，但是现在基本是不可接受的。</p>
+<p>因为时钟周期要覆盖最恶劣的组合逻辑路径，所以即使我们尝试使用实现技巧优化大部分常见情况，单周期版本的实现方案的性能不会有任何提升，这和 <strong>common case fast</strong> 这一伟大思想相违背。</p>
+<h2 id="an overview of pipeling">An Overview of Pipeling</h2>
+<p>Pipeline 的基本概念，是在一个很长的组合逻辑路径中插入寄存器，切分成多个小段，这样时钟周期只需要 cover 住 latency 最长的小段即可，因此 Pipeline 可以提高时钟频率。需要注意的是插入寄存器后，处理单条指令的总时间（<code>latency</code>）实际上变长了，因为寄存器翻转也需要时间，但是由于指令可以重叠在一起并行处理，所以 Pipeline 提高系统的吞吐率（<code>throughput</code>），提高了整体性能（所有指令的总处理时间变小）。</p>
+<p>假设整个组合逻辑被切分成 n 个 latency 相似的 stage，每个 stage 的 latency 为 T₀，则单周期方案需要的总时间为</p>
+<div class="math">$$T_{nopipe} = n * T_0$$</div>
+<p>而 pipeline 方案，假设指令之间没有冒险，则所有之间直接可以完美重叠，则每条指令的执行时间为</p>
+<div class="math">$$T_{pipe} = T_0$$</div>
+<p>显然在理想情况下，pipeline 版本的性能近似可以提高 n 倍，流水线切分地越细，每条指令的执行时间 T₀ 就越小，性能越高。一般低端 MCU 大概 2～3 个 stage，而高端 CPU 高达 10 个 stage。</p>
+<p>性能提升 n 倍是非常理想的理论数据，实际上有很多因素导致最终效果稍差：</p>
+<ul>
+<li>stage 并不是均匀切分</li>
+<li>指令之间有冒险，不能完美重叠</li>
+<li>流水线建立和撤销的开销</li>
+</ul>
+<p>很容易就可以分析得出结论：当指令数量非常多时，就近似可以忽略第三个因素。</p>
+<p>虽然 Pipeline 可以提高性能，但是并不是没有代价，其中之一就是电路的复杂化。关于第二个因素 <strong>冒险</strong> 可以分为三类：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>含义</th>
+<th>解决方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>结构冒险 <code>structural hazard</code></td>
+<td>硬件 busy 无法计算下一条指令</td>
+<td>硬件资源复制</td>
+</tr>
+<tr>
+<td>数据冒险 <code>data hazard</code></td>
+<td>数据依赖 RAW 等</td>
+<td><code>forwarding</code> 可以解决部分流水线停顿</td>
+</tr>
+<tr>
+<td>控制冒险 <code>contrl hazard</code>/ 分支冒险 <code>branch hazard</code></td>
+<td><code>prediction</code> 下一条指令，<code>BTB</code>/ <code>BTH</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>基本上每个 stage 都有对应的核心问题需要解决，各种各样的解决方案实现复杂度、消耗的资源和达到的性能都不相同，这些解决方案按照不同的方式组合在一起，就形成了高中低等不同系列的 CPU。关于每个 stage 的问题及解决方案可以扩展出很多内容，更详细的内容略。</p>
+<h2 id="a pipelined scheme">A Pipelined Scheme</h2>
+<p>流水线可以按照很多方式划分，其中最典型的是 MIPS 的 <strong>经典 5 级流水线</strong>：</p>
+<ul>
+<li><code>IF</code>：取指</li>
+<li><code>ID</code>：译码</li>
+<li><code>EX</code>：执行</li>
+<li><code>MEM</code>：访存</li>
+<li><code>WR</code>：写回</li>
+</ul>
+<p>整个 pipeline 里面，大部分数据流都是从左向右流动，只有两条是反向的，而这两条路径会引起两类冒险：</p>
+<ul>
+<li>第一条是 WR 阶段，执行执行结果写回到 regfile 中 ==&gt; 数据冒险</li>
+<li>第二条是 IF 阶段，选择下一条 PC 的取值 ==&gt; 控制冒险</li>
+</ul>
+<p><img alt="pipe" src="/images/learning_patterson_and_hennessy_notes_4_chapter_4/pipe.png"/></p>
+<h2 id="exceptions">Exceptions</h2>
+<p>控制是处理器设计中最难的部分：正确控制和达到高频率都非常困难。控制必须处理的一个问题是 <code>exception</code> 和 <code>interrupt</code>。</p>
 <h2 id="fallacies and pitfalls">Fallacies and Pitfalls</h2>
 <ul>
 <li><code>Fallacies</code> 谬论：错误概念</li>
@@ -275,11 +354,12 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html">Patterson and Hennessy 学习笔记 #2 —— Chapter 2 Instructions: Language of the Computer</a></li>
       <li><a href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_1_chapter_1.html">Patterson and Hennessy 学习笔记 #1 —— Chapter 1 Computer Abstractions and Technology</a></li>
     </ul>
   </div>
 
-      <p>This post is part <built-in method index of str object at 0x7f95e4efabc0> of the "" series:</p>
+      <p>This post is part <built-in method index of str object at 0x7fc4890155d0> of the "" series:</p>
       <ol class="parts">
       </ol>
 
@@ -309,7 +389,7 @@
 
     <footer>
 <p>
-  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+  &copy;  2021 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
