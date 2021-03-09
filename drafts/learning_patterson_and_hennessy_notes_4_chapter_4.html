@@ -171,7 +171,7 @@
 
 
   <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="Patterson and Hennessy 学习笔记 #4 &mdash;&mdash; Chapter 4 The Processor">Patterson and Hennessy 学习笔记 #4 &mdash;&mdash; Chapter 4 The Processor</a><ul><li><a class="toc-href" href="#intro" title="Intro">Intro</a></li><li><a class="toc-href" href="#a simple implementation scheme" title="A Simple Implementation Scheme">A Simple Implementation Scheme</a></li><li><a class="toc-href" href="#an overview of pipeling" title="An Overview of Pipeling">An Overview of Pipeling</a></li><li><a class="toc-href" href="#a pipelined scheme" title="A Pipelined Scheme">A Pipelined Scheme</a></li><li><a class="toc-href" href="#exceptions" title="Exceptions">Exceptions</a></li><li><a class="toc-href" href="#fallacies and pitfalls" title="Fallacies and Pitfalls">Fallacies and Pitfalls</a></li></ul></li></ul></div>
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Patterson and Hennessy 学习笔记 #4 &mdash;&mdash; Chapter 4 The Processor">Patterson and Hennessy 学习笔记 #4 &mdash;&mdash; Chapter 4 The Processor</a><ul><li><a class="toc-href" href="#introduction" title="Introduction">Introduction</a></li><li><a class="toc-href" href="#a simple implementation scheme" title="A Simple Implementation Scheme">A Simple Implementation Scheme</a></li><li><a class="toc-href" href="#an overview of pipeling" title="An Overview of Pipeling">An Overview of Pipeling</a></li><li><a class="toc-href" href="#a pipelined scheme" title="A Pipelined Scheme">A Pipelined Scheme</a></li><li><a class="toc-href" href="#exceptions" title="Exceptions">Exceptions</a></li><li><a class="toc-href" href="#parallelism via instructions" title="Parallelism via Instructions">Parallelism via Instructions</a><ul><li><a class="toc-href" href="#the concept of speculation" title="The Concept of Speculation">The Concept of Speculation</a></li><li><a class="toc-href" href="#static multiple issue" title="Static Multiple Issue">Static Multiple Issue</a></li><li><a class="toc-href" href="#dynamic multiple issue" title="Dynamic Multiple Issue">Dynamic Multiple Issue</a></li><li><a class="toc-href" href="#energy efficiency" title="Energy Efficiency">Energy Efficiency</a></li></ul></li><li><a class="toc-href" href="#fallacies and pitfalls_1" title="Fallacies and Pitfalls">Fallacies and Pitfalls</a></li><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li></ul></li></ul></div>
   </div>
 
   <div>
@@ -179,7 +179,7 @@
 <p>In a major matter, no details are small.</p>
 <p>-- French Proverb</p>
 </blockquote>
-<h2 id="intro">Intro</h2>
+<h2 id="introduction">Introduction</h2>
 <p>第一章中提到，影响一个计算机性能的因素有 3 个：</p>
 <ul>
 <li>指令总数</li>
@@ -220,8 +220,7 @@
 <li>指令之间有冒险，不能完美重叠</li>
 <li>流水线建立和撤销的开销</li>
 </ul>
-<p>很容易就可以分析得出结论：当指令数量非常多时，就近似可以忽略第三个因素。</p>
-<p>虽然 Pipeline 可以提高性能，但是并不是没有代价，其中之一就是电路的复杂化。关于第二个因素 <strong>冒险</strong> 可以分为三类：</p>
+<p>很容易就可以分析得出结论：当指令数量非常多时，近似可以忽略第三个因素。关于第二个因素 <strong>冒险</strong> 可以分为三类：</p>
 <table>
 <thead>
 <tr>
@@ -239,16 +238,27 @@
 <tr>
 <td>数据冒险 <code>data hazard</code></td>
 <td>数据依赖 RAW 等</td>
-<td><code>forwarding</code> 可以解决部分流水线停顿</td>
+<td><code>forward</code> / <code>rename</code></td>
 </tr>
 <tr>
 <td>控制冒险 <code>contrl hazard</code>/ 分支冒险 <code>branch hazard</code></td>
-<td><code>prediction</code> 下一条指令，<code>BTB</code>/ <code>BTH</code></td>
-<td></td>
+<td>取指不正确导致指令不能在预定时钟周期内执行</td>
+<td><code>prediction</code>(<code>BTB</code>/<code>BTH</code>) / delay slot</td>
 </tr>
 </tbody>
 </table>
 <p>基本上每个 stage 都有对应的核心问题需要解决，各种各样的解决方案实现复杂度、消耗的资源和达到的性能都不相同，这些解决方案按照不同的方式组合在一起，就形成了高中低等不同系列的 CPU。关于每个 stage 的问题及解决方案可以扩展出很多内容，更详细的内容略。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>除了存储系统外，pipeline 的有效运作是决定一个处理器 CPI 的最重要因素。不管实现方案是否简单、性能高低，结构冒险、数据冒险、控制冒险这三种冒险是 pipeline 中非常重要的问题。一般来说，</p>
+<ul>
+<li>结构冒险通常发生 FPU 中，因为它无法做到完全的 pipeline</li>
+<li>控制冒险通常发生在整数程序中，因为这些程序中 branch 出现概率很高</li>
+<li>数据冒险在整数、浮点中都会出现，一般浮点因为规则的存储和较低概率的条件分支所以更好处理一些，而整数更难处理一些</li>
+</ul>
+<p>有很多基于软硬件的技术通过调度来减少数据之间的依赖。</p>
+<p>Pipeline 是一个非常伟大的思想，基本上计算机体系结构的非常大一部分都是围绕着它做优化设计，虽然它可以提高性能，但是并不是没有代价，其中之一就是电路的复杂化，现代处理器多发射乱序执行的超标量处理器想想就非常复杂。</p>
+</div>
 <h2 id="a pipelined scheme">A Pipelined Scheme</h2>
 <p>流水线可以按照很多方式划分，其中最典型的是 MIPS 的 <strong>经典 5 级流水线</strong>：</p>
 <ul>
@@ -265,18 +275,304 @@
 </ul>
 <p><img alt="pipe" src="/images/learning_patterson_and_hennessy_notes_4_chapter_4/pipe.png"/></p>
 <h2 id="exceptions">Exceptions</h2>
-<p>控制是处理器设计中最难的部分：正确控制和达到高频率都非常困难。控制必须处理的一个问题是 <code>exception</code> 和 <code>interrupt</code>。</p>
-<h2 id="fallacies and pitfalls">Fallacies and Pitfalls</h2>
+<p>控制通路是处理器设计中最难的部分：正确控制和达到高频率都非常困难。控制必须处理的一个问题是 <code>exception</code> 和 <code>interrupt</code>，它们是除 branch 指令之外可以控制程序流的事件，主要用来处理 CPU 内部的 unexpected 事件，比如未定义的指令格式等。</p>
+<p>许多架构中并不区分这两个概念，统称为 interrupt，比如 x86 。RISC-V 对这两种情况做了区分：</p>
+<ul>
+<li><strong>exception</strong>: 无论是内部还是外部原因，导致程序控制流发生变化的 unexpected change</li>
+<li><strong>interrupt</strong>：只用来描述外部因素导致控制流发生变化的情况</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>事件类型</th>
+<th>由何处产生</th>
+<th>RISC-V 术语</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>系统复位</td>
+<td>外部</td>
+<td>Exception</td>
+</tr>
+<tr>
+<td>I/O 设备请求</td>
+<td>外部</td>
+<td>Interrupt</td>
+</tr>
+<tr>
+<td>用户程序唤醒操作系统</td>
+<td>内部</td>
+<td>Exception</td>
+</tr>
+<tr>
+<td>使用未定义指令</td>
+<td>内部</td>
+<td>Exception</td>
+</tr>
+<tr>
+<td>硬件故障</td>
+<td>内外均可</td>
+<td>两个术语均可</td>
+</tr>
+</tbody>
+</table>
+<p>RISC-V 处理 Exception 时要做的事情就是：保存异常现场，然后把控制权交给操作系统，由操作系统完成合适的处理，比如执行某些提前定义好的处理、定制运行程序、上报 error 等，然后操作系统根据情况决定是否要中止程序还是继续运行。</p>
+<p>操作系统要完成异常处理，必须要知道异常的原因和导致异常的指令，有两种方法传递这个信息：</p>
+<ul>
+<li>使用寄存器保存异常信息（<code>SPEC</code> / <code>SCAUSE</code>）</li>
+<li>使用向量中断 <code>vectored interrupts</code></li>
+</ul>
+<p>RISC-V 中没有使用向量中断，而是使用寄存器作为所有异常的单一入口，所以需要对寄存器内容做一些译码才能知道异常原因。对于 Exception 的处理和 branch 预测失败的处理非常相似，实际上硬件就是把 Exception 当成另外一种形式的 <code>control hazard</code> 来处理：</p>
+<ol>
+<li>
+<p>flush 流水线，然后从一个特定地址（中断处理程序）重新取指</p>
+<p>一般来说，要在 Ex 阶段就要把 Exception 指令 flush 掉，否则错误结果会写入到 dst 寄存器中，导致覆盖原来的有效值。很多时候，发生 Exception 的指令最终还是要正确执行完成的，所以最简单方法就是完成异常处理后重新取指、执行这条指令。</p>
+</li>
+<li>
+<p>保存 Exception 现场</p>
+<p>RISC-V 中定义了两个寄存器来保存异常现场：</p>
+<ul>
+<li>supervisor exception program counter (<code>SPEC</code>) 保存异常指令的地址</li>
+<li>supervisor exception cause register (<code>SCAUSE</code>) 有个特殊字段保存异常原因</li>
+</ul>
+</li>
+</ol>
+<p>Exception 处理中，要把 pipeline 中每一个 Exception 和相对应的指令对应起来是非常难的，所以有些设计者会在非关键情况下放松要求，这种叫做非精确中断 / 异常（<code>imprecise interrupt</code>/<code>imprecise exception</code>），也就是说引起异常的某一条指令，但是硬件记录的其实是另外一条指令，由操作系统去判断具体是哪一条引起的异常。与其相对的，严格要求的叫做精确中断 / 异常（<code>precise interrupt</code>/<code>precise exception</code>）。RISC-V 等一些处理器都支持精确异常，部分原因是非精确异常对操作系统来说很头疼，所以对于 pipeline 很深的设计一般要求要把发生异常时流水线上的所有指令都记录下来，这样做对硬件和软件来说都比较容易（另外一个原因是为了支持虚拟存储器）。</p>
+<h2 id="parallelism via instructions">Parallelism via Instructions</h2>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>这部分只是简述，《量化分析》中花费了一整个章节和附录，一共大概 200 多页来展开详细描述。</p>
+</div>
+<p>如前所述，pipeline 可以挖掘指令之间潜在的并行潜力，这种并行性叫做 Instructions Level Parallelism (<code>ILP</code>)。要想提高 ILP 一共有两种方法：</p>
+<ul>
+<li>
+<p>增加 pipeline 的深度，让更多的指令可以重叠在一起</p>
+<p>stage 切分地越多，时钟频率也越高，理论性能提升上限就越高（前面分析的 n 倍），实际中有其他因素限制，并不是线性无线增长。</p>
+</li>
+<li>
+<p>多发射 <code>multiple issue</code>，复制内部的硬件资源，使得每个周期可以启动更多的指令</p>
+<p>多发射可以让 CPI 的值小于 1，比如一个 5 stage 的 3GHz 4-way 多发射处理器的峰值性能是 1.2 billion instruction/second，最小 CPI 是 0.25，每个 cycle 最多可以并行执行 20 条指令。现在高端处理器一般都是 3～6 发射，一些中端处理器的目标是 IPC = 2。实际上，指令并行多发射的前提条件非常多，比如指令之间有依赖。</p>
+</li>
+</ul>
+<p>实现多发射的方式可以大致分为两类：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>static multiple issue</code> 静态多发射</td>
+<td>编译器在编译时就已经做好了指令发射的判断</td>
+</tr>
+<tr>
+<td><code>dynamic multiple issue</code> 动态多发射</td>
+<td>硬件在执行时做发射的相关判断</td>
+</tr>
+</tbody>
+</table>
+<p>无论是那种实现方式，都需要解决下面这两个问题：</p>
+<ol>
+<li>
+<p>把指令打包到 <code>issue slot</code> 中</p>
+<p>即处理器如何判断在某个 cycle 下应该发射多少条、哪些指令？在静态发射处理器中大部分工作都由编译器负责处理，而在动态发射处理器中，虽然编译器也会做一部分优化工作，比如调整指令顺序，但是大部分工作都是主要由硬件负责完成。</p>
+</li>
+<li>
+<p>处理 <code>data hazard</code> 和 <code>control hazard</code></p>
+<p>在静态处理器中由斌啊一起完成所有的数据冒险和控制冒险，而绝大多数动态发射处理器在运行时通过硬件技术消除冒险。</p>
+</li>
+</ol>
+<p>虽然分成了静态和动态两类，实际上这些方法之间都是相互借鉴的，没有任何一种方法是纯粹独立的。</p>
+<h3 id="the concept of speculation">The Concept of Speculation</h3>
+<p>发掘 ILP 的一个重要方法是推测 Speculation，基于伟大思想之一的 <strong>prediction</strong>，speculation 是一种通过猜测指令运行结果，以使得依赖此指令的其他指令可以提前执行的方法。比如可以推测一个 branch 指令的结果，然后就可以提前执行 branch 之后的其他指令；另外一个例子是假设有 store 和 load 两条指令，推测它们指向不同地址，然后就可以把 load 放在 store 之前运行。</p>
+<p>显然肯定会有推测出错的情况，所以任何推测机制都需要有某种方法可以检查推测结果是否正确，如果出错了要能回滚推测状态的指令结果。</p>
+<p>推测可以由软件完成，也可以由硬件完成。这两种方法处理推测错误的方式也非常不同：</p>
+<ul>
+<li>软件方式：编译器一般会插入额外的检查推测正确性的指令，如果出错了会提供一个修复例程</li>
+<li>硬件方式：先把推测指令的结果 buffer 起来，等待解除了推测状态后写入到 register file/memory 中，如果推测错了则 flush 流水线，重新取正确的指令执行</li>
+</ul>
+<p>如果处理得当，推测可以提高性能，反之会降低性能。下面详细展开静态 / 动态发射两种方案中的推测技术。</p>
+<h3 id="static multiple issue">Static Multiple Issue</h3>
+<p>所有的静态多发射处理器都会用到编译器来辅助完成指令打包和处理冒险这两个问题。某个时钟周期下同时发射的指令叫做 <code>issue packet</code>，可以把它们看成是一条更宽、同时操作多个操作数的 &ldquo; 大指令 &rdquo;，这就是 Very Long Instruction Word （<code>VLIW</code>）。</p>
+<p>大部分静态多发射处理器都依赖于编译器来完成一些冒险处理，但是实现方式千差万别：有些实现中编译器负责移除所有的冒险，比如调度指令顺序，插入 nop 指令等，因此硬件完全不需要任何冒险检测和 stall 控制逻辑；有些实现中编译器只保证 packet 内部无冒险，而 packet 之间的冒险需要硬件负责。</p>
+<p>根据上面的讨论，假设我们有一个简单的静态双发射处理器：</p>
+<ul>
+<li>只允许 ALU/Branch 和 Load/Store 指令打包在一起（嵌入式处理器的常见设计）</li>
+<li>每个 cycle 发射的指令按照 64bit 对齐打包，且 ALU/Branch 在 LSB（通常为了简化译码逻辑，打包指令的格式有严格要求）</li>
+<li>如果不满足打包要求，则使用 Nop 凑数</li>
+<li>编译器负责 packet 内部无冒险，硬件负责处理 packet 之间的冒险</li>
+</ul>
+<p>要实现这个规格，我们需要做下面一些改变：</p>
+<ul>
+<li>新增 packet 之间的冒险检测和 stall 控制逻辑</li>
+<li>register file 新增读写端口</li>
+<li>额外的硬件资源执行指令</li>
+</ul>
+<p>显然双发射最高可以将性能提高 2 倍，但是实际上因为各种开销和限制因素，很难达到理论效果，而且为了有效地挖掘多发射的潜在性能，对编译器和硬件调度技术要求很高。对于循环来说，有一种非常重要的优化技术就是 loop unrolling，即循环展开，通过循环展开把不同迭代次数的指令重叠在一起，从而挖掘出更高的 ILP。</p>
+<p>书里面有个例子，对下面这段程序重排序，使得其在上述双发射处理器上的性能达到尽可能高。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>Loop: ld   x31, 0(x20)      // x31=array element
+      add  x31, x21         // add scalar in x21
+      sd   x31, 0(x20)      // store result
+      addi x20, x20, -8     // decrement pointer
+      blt  x22, x20, Loop   // branch if x20 &gt; x22
+</code></pre></div>
+</td></tr></table>
+<p>仔细分析代码，就可以知道前 3 条指令之间有依赖，最后两条指之间也有依赖，只有一对指令可以打包到一起，所以需要用 4 个 cycle 完成 5 条指令，IPC = 5/4 = 1.25，离理论最大值 2 差距很大。</p>
+<p>重排序结果：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ALU/Branch instr</th>
+<th>Load/Store instr</th>
+<th>clock Cycle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loop</td>
+<td></td>
+<td>ld x31, 0(x20)</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td>addi x20, x20, -8</td>
+<td></td>
+<td>2</td>
+</tr>
+<tr>
+<td></td>
+<td>add x31, x31, x21</td>
+<td></td>
+<td>3</td>
+</tr>
+<tr>
+<td></td>
+<td>blt x22, x20, Loop</td>
+<td>sd x31, 8(x20)</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>按照 4 倍循环展开的结果：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ALU/Branch instr</th>
+<th>Load/Store instr</th>
+<th>clock Cycle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loop</td>
+<td>addi x20, x20, -32</td>
+<td>ld x28, 0(x20)</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>ld x29, 24(x20)</td>
+<td>2</td>
+</tr>
+<tr>
+<td></td>
+<td>add x28, x28, x21</td>
+<td>ld x30, 16(x20)</td>
+<td>3</td>
+</tr>
+<tr>
+<td></td>
+<td>add x29, x29, x21</td>
+<td>ld x31,  8(x20)</td>
+<td>4</td>
+</tr>
+<tr>
+<td></td>
+<td>add x30, x30, x21</td>
+<td>sd x28, 32(x20)</td>
+<td>5</td>
+</tr>
+<tr>
+<td></td>
+<td>add x31, x31, x21</td>
+<td>sd x29, 24(x20)</td>
+<td>6</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>sd x30, 16(x20)</td>
+<td>7</td>
+</tr>
+<tr>
+<td></td>
+<td>blt x22, x20, Loop</td>
+<td>sd x31,  8(x20)</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>经过循环展开后，8 个 cyle 可以完成 14 条指令，IPC = 14/8 = 1.75，如果迭代总次数为 4 次，则总时间由原来的 20 个 cycle 变为 8 个 cycle，而付出的代价就是需要使用额外的 4 个寄存器，同时代码体积也变为原来的 2 倍。</p>
+<h3 id="dynamic multiple issue">Dynamic Multiple Issue</h3>
+<p>动态多发射处理器有个非常有名的外号 &mdash;&mdash; 超标量处理器 <code>superscalar processor</code>，在最简单的超标量处理器中，指令是顺序发射的，由硬件决定当前时钟周期能否发射多少条并行指令。显然在这种超标量处理器上还是需要编译器配合优化才能达到最高的发射速率，得到最好的性能。</p>
+<p>虽然同样都需要编译器调度，但是 superscalar 和 VLIW 在本质上是不同的：</p>
+<ul>
+<li>superscalar 无论有无编译器调度，而且无论发射速率和流水线结构怎么变化，代码都可以正确执行</li>
+<li>VLIW 必须要有编译器调度，而且在不同平台上运行时通常都要重新编译才能正确运行，即使有些处理器正确性可以保证，但是往往因为性能仍然需要重新编译</li>
+</ul>
+<p>许多 superscalar 把动态发射算法扩展成一整套体系：<code>dynamic pipeline scheduling</code>，即动态调度算法。最经典的动态调度算法就是 Tomasolu 算法，涉及到的术语有 <code>reservation station</code>, <code>commit</code>, <code>reorder buffer</code>, <code>out-of-order execution</code>, <code>in-order commit</code> 等，这里不展开描述。</p>
+<p>注意：目前所有动态调度算法都使用 in-order commit。</p>
+<p>既然编译器也可以做调度，为什么 superscalar 还需要用动态调度算法呢？原因大概有 3 个：</p>
+<ul>
+<li>编译器无法预测所有的 stall，特别是 cache miss 等，动态调度可以让处理器隐藏某些 stall</li>
+<li>使用动态分支预测时，如果不搭配动态调度则 ILP 的性能提升非常有限</li>
+<li>静态调度无法适应硬件平台切换，必须重新编译，而动态调度不需要重新编译，对软件不可见，代码复用高</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>现代高性能处理器都可以在每个 cycle 发射多条指令，但是很不幸的是要维持高 issue rate 非常困难。比如，虽然现在处理器都可以达到 4～6 发射的并行读，但几乎没有什么应用可以保持在 2 以上的发射速率，主要原因有两个：</p>
+<ul>
+<li>主要性能瓶颈来自于无法避免的 data hazard，虽然基本无法优化真数据依赖 RAW，但是编译器和硬件通常连是否存在依赖都不确定，所以只能保守地认为存在依赖。一般来说，ILP 总是有优化空间的，但是因为太分散（可能存在于上千条指令之间），编译器和硬件往往力不从心。</li>
+<li>memory hierarchy 的损失会导致 pipeline 无法保持满负荷运行，虽然有些 stall 可以掩盖起来，但是有限的 ILP 无法掩盖所有 stall。</li>
+</ul>
+</div>
+<h3 id="energy efficiency">Energy Efficiency</h3>
+<p>动态调度算法和推测执行虽然可以挖掘 ILP，提高性能，但是代价之一就是更高的功耗。因为现在我们遇到了功耗墙的问题，所以目前的趋势是舍弃超长的 pipeline 和贪婪的推测算法，而是转向多核。</p>
+<h2 id="fallacies and pitfalls_1">Fallacies and Pitfalls</h2>
 <ul>
 <li><code>Fallacies</code> 谬论：错误概念</li>
 <li><code>Pitfalls</code> 陷阱：特定条件下成立的规律的错误推广</li>
 </ul>
-<p><strong>谬论：就像左移指令可以代替 2 的指数次的乘法，右移指令可以代替除数是 2 的指数的除法运算。</strong></p>
-<p>对于 unsigned 类型来说的确如此，但是对于 signed 类型的数据则显然不对，负数右移后在高位补充符号位，最后会永远是 -1，不会变成 0。</p>
-<p><strong>陷阱：结合律不适用于浮点运算</strong></p>
-<p>对于 integer 的运算，即使会发生 overflow 结合律也是适用的。但是对于浮点数，结合律是不适用的，因为计算机内的浮点数是用有限的 bit 来近似真实的数字，无法保存 overflow 的数字。这里有意思的是，对于定点的整数而言即使发生了 overflow 结合律仍然是适用的，找个例子就可以验证下面的等式是成立的，</p>
-<div class="math">$$-128+127+3 = -128+(127+3) = -128+(-126)=2$$</div>
-<p>原因也很简单：整数运算 overflow 只会影响高位 bit，低位 bit 是不受影响的。</p>
+<p><strong>谬论：pipeline 非常简单</strong></p>
+<p>呵呵。</p>
+<p><strong>谬论：pipeline 的概念和实现工艺无关</strong></p>
+<p>显然，工艺的实现难度和代价会反过来影响设计的取舍。</p>
+<p><strong>陷阱：没有考虑到 ISA 的设计会反过来影响到 pipeline 的设计</strong></p>
+<p>很多复杂的 ISA 会导致实现的困难，这也是 RISC-V 的设计目标之一：用简单的 ISA 简化硬件设计，以达到更高的主频和性能。</p>
+<h2 id="summary">Summary</h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<ul>
+<li>pipeline 可以提高 throughput 但是不能减少 latency</li>
+<li>pipeline 和 multiple issue 都可以提高 ILP</li>
+<li>hazard 限制了可以达到的性能上限</li>
+<li>static multiple issue 依赖编译器发现、解决 hazard</li>
+<li>dynamic multiple issue 依赖硬件发现、解决 hazard</li>
+<li>基于软件 / 硬件实现的 scheduling 和 speculation 是降低 data hazard 负面效果的主要手段</li>
+<li>在功耗墙的背景下，现在的趋势是舍弃以前超深的流水线和复杂的推测算法，转向多核，在更粗粒度上寻求并行性</li>
+</ul>
+</div>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -354,12 +650,13 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_3_chapter_3.html">Patterson and Hennessy 学习笔记 #3 —— Chapter 3 Arithmetic For Computers</a></li>
       <li><a href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html">Patterson and Hennessy 学习笔记 #2 —— Chapter 2 Instructions: Language of the Computer</a></li>
       <li><a href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_1_chapter_1.html">Patterson and Hennessy 学习笔记 #1 —— Chapter 1 Computer Abstractions and Technology</a></li>
     </ul>
   </div>
 
-      <p>This post is part <built-in method index of str object at 0x7fc4890155d0> of the "" series:</p>
+      <p>This post is part <built-in method index of str object at 0x7f92a3ecab70> of the "" series:</p>
       <ol class="parts">
       </ol>
 

@@ -171,7 +171,7 @@
 
 
   <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="Patterson and Hennessy 学习笔记 #1 &mdash;&mdash; Chapter 1 Computer Abstractions and Technology">Patterson and Hennessy 学习笔记 #1 &mdash;&mdash; Chapter 1 Computer Abstractions and Technology</a><ul><li><a class="toc-href" href="#understanding program performance" title="Understanding Program Performance">Understanding Program Performance</a></li><li><a class="toc-href" href="#8 great ideas in computer architecture" title="8 Great Ideas in Computer Architecture">8 Great Ideas in Computer Architecture</a></li><li><a class="toc-href" href="#performance" title="Performance">Performance</a><ul><li><a class="toc-href" href="#defining performance" title="Defining Performance">Defining Performance</a></li><li><a class="toc-href" href="#measuring performance" title="Measuring Performance">Measuring Performance</a></li><li><a class="toc-href" href="#the classic cpu performance equation" title="The Classic CPU Performance Equation">The Classic CPU Performance Equation</a></li></ul></li><li><a class="toc-href" href="#the power wall_1" title="The Power Wall">The Power Wall</a></li><li><a class="toc-href" href="#the switch from uniprocessors to multiprocessors" title="The Switch from Uniprocessors to Multiprocessors">The Switch from Uniprocessors to Multiprocessors</a></li><li><a class="toc-href" href="#fallacies and pitfalls" title="Fallacies and Pitfalls">Fallacies and Pitfalls</a></li><li><a class="toc-href" href="#road map for this book" title="Road Map for This Book">Road Map for This Book</a></li></ul></li></ul></div>
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Patterson and Hennessy 学习笔记 #1 &mdash;&mdash; Chapter 1 Computer Abstractions and Technology">Patterson and Hennessy 学习笔记 #1 &mdash;&mdash; Chapter 1 Computer Abstractions and Technology</a><ul><li><a class="toc-href" href="#understanding program performance" title="Understanding Program Performance">Understanding Program Performance</a></li><li><a class="toc-href" href="#8 great ideas in computer architecture" title="8 Great Ideas in Computer Architecture">8 Great Ideas in Computer Architecture</a></li><li><a class="toc-href" href="#performance" title="Performance">Performance</a><ul><li><a class="toc-href" href="#defining performance" title="Defining Performance">Defining Performance</a></li><li><a class="toc-href" href="#measuring performance" title="Measuring Performance">Measuring Performance</a></li><li><a class="toc-href" href="#the classic cpu performance equation" title="The Classic CPU Performance Equation">The Classic CPU Performance Equation</a></li></ul></li><li><a class="toc-href" href="#the power wall_1" title="The Power Wall">The Power Wall</a></li><li><a class="toc-href" href="#the switch from uniprocessors to multiprocessors" title="The Switch from Uniprocessors to Multiprocessors">The Switch from Uniprocessors to Multiprocessors</a></li><li><a class="toc-href" href="#fallacies and pitfalls" title="Fallacies and Pitfalls">Fallacies and Pitfalls</a></li><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li><li><a class="toc-href" href="#road map for this book" title="Road Map for This Book">Road Map for This Book</a></li></ul></li></ul></div>
   </div>
 
   <div>
@@ -181,7 +181,7 @@
 <li><a href="https://www.amazon.com/Computer-Organization-Design-RISC-V-Architecture/dp/0128122757">Computer Organization and Design</a> 俗称 Patterson and Hennessy</li>
 <li><a href="https://www.amazon.com/Computer-Architecture-Quantitative-Approach-Kaufmann/dp/0128119055/">Computer Architecture: A Quantitative Approach</a> 俗称 Hennessy and Patterson</li>
 </ul>
-<p>关于这两位大师和这两本计算机体系结构领域的圣经无需再赘述，这个系列是整理自以前的读书笔记，更新了一些 RISC-V 的相关内容，温故而知新。</p>
+<p>这个系列是整理自以前的读书笔记，更新了一些 RISC-V 的相关内容，温故而知新。</p>
 <p>这两本书有共同内容但是因为定位不同，所以内容也相互补充。<a href="https://www.amazon.com/Computer-Architecture-Quantitative-Approach-Kaufmann/dp/0128119055/">Computer Architecture: A Quantitative Approach</a> 这本书是针对专业人士的，</p>
 <ul>
 <li>用坚实的工程基础和量化的 cost/performance 折中分析方法来描述计算机体系结构中的主要原则</li>
@@ -189,7 +189,7 @@
 <li>证明体系结构可以通过量化而不是描述性的方式学习</li>
 <li>目标读者是严肃的，想仔细理解计算机系统的专家</li>
 </ul>
-<p>而 Patterson &amp; Hennessy 这本书的读者并不是都想成为计算机体系结构的专家。这本书并不是前者的子集，还包括了一些其他知识，比如编译器、操作系统、数据库等等。作者的观点是：<strong>对于下一个十年内的大部分码农来说，如果想写出可以在并行计算机上高效运行的程序，则必须理解软硬件接口。</strong>这本书的读者包括，</p>
+<p>而 Patterson &amp; Hennessy 这本书的读者并不都是想成为计算机体系结构的专家。这本书并不是前者的子集，还包括了一些其他知识，比如编译器、操作系统、数据库等等。作者的观点是：<strong>对于下一个十年内的大部分码农来说，如果想写出可以在并行计算机上高效运行的程序，则必须理解软硬件接口。</strong>这本书的读者包括，</p>
 <ul>
 <li>几乎没有汇编 / 逻辑设计基础，但是需要理解基本的计算机组成原理</li>
 <li>有汇编 / 逻辑设计基础，但是想了解如何设计一个计算机，或者想理解一个系统是如何工作以及为何性能如此</li>
@@ -476,6 +476,18 @@
 <p>可以算出来 A 比 B 的 MIPS 指标高，但实际上 A 的性能比 B 差，MIPS 指标和真实情况背道而驰。</p>
 </li>
 </ol>
+<h2 id="summary">Summary</h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<ul>
+<li>8 个伟大思想是计算机体系结构的基本，应用非常广泛</li>
+<li>计算机程序的性能是多个影响因素的共同作用结果</li>
+<li>性能的定义：<code>response time</code> 和 <code>throughput</code></li>
+<li>经典性能公式</li>
+<li>目前的问题：功耗墙</li>
+<li>功耗墙的解决方法：多核 + 并行</li>
+</ul>
+</div>
 <hr/>
 <h2 id="road map for this book">Road Map for This Book</h2>
 <p>计算机可以划分为经典的 5 部分：<code>datapath</code>, <code>control</code>, <code>memroy</code>, <code>input</code>, <code>output</code>，分别在后续几章介绍：</p>
@@ -569,6 +581,7 @@
   <div class="related-posts">
     <h4>You might enjoy</h4>
     <ul class="related-posts">
+      <li><a href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_3_chapter_3.html">Patterson and Hennessy 学习笔记 #3 —— Chapter 3 Arithmetic For Computers</a></li>
       <li><a href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html">Patterson and Hennessy 学习笔记 #2 —— Chapter 2 Instructions: Language of the Computer</a></li>
     </ul>
   </div>
@@ -580,6 +593,9 @@
               </li>
               <li >
                   <a href='https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html'>Patterson and Hennessy 学习笔记 #2 —— Chapter 2 Instructions: Language of the Computer</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_3_chapter_3.html'>Patterson and Hennessy 学习笔记 #3 —— Chapter 3 Arithmetic For Computers</a>
               </li>
       </ol>
 

@@ -71,9 +71,9 @@
 <meta property="og:title" content="Patterson and Hennessy 学习笔记 #3 —— Chapter 3 Arithmetic For Computers"/>
 <meta property="og:description" content="Patterson and Hennessy 读书笔记，第三章"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="https://qiangu.cool/drafts/learning_patterson_and_hennessy_notes_3_chapter_3.html"/>
+<meta property="og:url" content="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_3_chapter_3.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2020-06-13 12:55:00+08:00"/>
+<meta property="article:published_time" content="2020-12-13 12:55:00+08:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
 <meta property="article:section" content="IC"/>
@@ -164,14 +164,14 @@
       
     <h1 id="learning_patterson_and_hennessy_notes_3_chapter_3">Patterson and Hennessy 学习笔记 #3 —— Chapter 3 Arithmetic For Computers</h1>
     <p>
-      Posted on 2020-06-13 12:55 in <a href="https://qiangu.cool/category/ic.html">IC</a>
+      Posted on 2020-12-13 12:55 in <a href="https://qiangu.cool/category/ic.html">IC</a>
 
     </p>
   </header>
 
 
   <div class="col-lg-3 hidden-xs hidden-sm">
-        <div id="toc"><ul><li><a class="toc-href" href="#" title="Patterson and Hennessy 学习笔记 #3 &mdash;&mdash; Chapter 3 Arithmetic For Computers">Patterson and Hennessy 学习笔记 #3 &mdash;&mdash; Chapter 3 Arithmetic For Computers</a><ul><li><a class="toc-href" href="#integer" title="Integer">Integer</a><ul><li><a class="toc-href" href="#addition &amp; subtraction" title="Addition &amp; Subtraction">Addition &amp; Subtraction</a></li><li><a class="toc-href" href="#multiplication" title="Multiplication">Multiplication</a></li><li><a class="toc-href" href="#division" title="Division">Division</a></li></ul></li><li><a class="toc-href" href="#float point_1" title="Float Point">Float Point</a><ul><li><a class="toc-href" href="#ieee 754 floating point standard" title="IEEE 754 Floating Point Standard">IEEE 754 Floating Point Standard</a></li><li><a class="toc-href" href="#arithmetic" title="Arithmetic">Arithmetic</a></li><li><a class="toc-href" href="#subword parallelism" title="Subword Parallelism">Subword Parallelism</a></li></ul></li><li><a class="toc-href" href="#fallacies and pitfalls_1" title="Fallacies and Pitfalls">Fallacies and Pitfalls</a></li></ul></li></ul></div>
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="Patterson and Hennessy 学习笔记 #3 &mdash;&mdash; Chapter 3 Arithmetic For Computers">Patterson and Hennessy 学习笔记 #3 &mdash;&mdash; Chapter 3 Arithmetic For Computers</a><ul><li><a class="toc-href" href="#integer" title="Integer">Integer</a><ul><li><a class="toc-href" href="#addition &amp; subtraction" title="Addition &amp; Subtraction">Addition &amp; Subtraction</a></li><li><a class="toc-href" href="#multiplication" title="Multiplication">Multiplication</a></li><li><a class="toc-href" href="#division" title="Division">Division</a></li></ul></li><li><a class="toc-href" href="#float point_1" title="Float Point">Float Point</a><ul><li><a class="toc-href" href="#ieee 754 floating point standard" title="IEEE 754 Floating Point Standard">IEEE 754 Floating Point Standard</a></li><li><a class="toc-href" href="#arithmetic" title="Arithmetic">Arithmetic</a></li><li><a class="toc-href" href="#subword parallelism" title="Subword Parallelism">Subword Parallelism</a></li></ul></li><li><a class="toc-href" href="#fallacies and pitfalls_1" title="Fallacies and Pitfalls">Fallacies and Pitfalls</a></li><li><a class="toc-href" href="#summary" title="Summary">Summary</a></li></ul></li></ul></div>
   </div>
 
   <div>
@@ -185,15 +185,15 @@
 <p>因为寄存器位宽是有限的，所以会产生 overflow，一般计算机都提供了 overflow 检测。对于补码形式的 signed 类型数据检测方法很简单，根据操作数、结果的符号位以及操作类型分类讨论判断即可。而对于 unsigned 类型而言，一般这些数据都是用来计算内存地址，产生的 overflow 都被忽略了。编译器可以用 branch 指令来检测 unsigned 类型数据是否发生了 overflow：加法的结果是否比任何一个加数都小，或者减法的结果是否比任何一个减数都大。</p>
 <p>检测出发生了 overflow 之后应该怎么办呢？C 和 Java 会忽略 integer 的 overflow，但是 Ada 和 Fortran 要求必须通知程序，所以程序猿或者是编程环境要决定发生 overflow 时该如何处理。</p>
 <p>和 overflow 相对的有一种不常见的处理：饱和处理 saturation。这种操作一般都出现在多媒体的相关处理中，比如音量的最大限度等例子。</p>
-<p><strong>实现方案：</strong></p>
-<p>加法器的速度取决于进位链的速度，有很多技术会预测进位 bit，其最坏的结果就是进位时间是 log2(W) 的函数（其中 W 是加法器的位宽）。这些预测信号的逻辑门更少所以速度更快，付出的代价就是消耗了更多的硬件资源来预测进位信号的正确值，最流行的结构就是超前进位加法器 <code>carry lookahead</code>。</p>
+<p><strong>实现方案</strong></p>
+<p>加法器的设计是一个非常经典的 IC 话题，它的速度取决于进位链的速度，有很多技术会预测进位 bit，其最坏的结果就是进位时间是 log2(W) 的函数（其中 W 是加法器的位宽）。这些预测信号的逻辑门更少所以速度更快，付出的代价就是消耗了更多的硬件资源来预测进位信号的正确值，最流行的结构就是超前进位加法器 <code>CLA</code>(carry lookahead adder)。</p>
 <h3 id="multiplication">Multiplication</h3>
 <p><span class="math">\(1010 * 1011 = 0110\_1110\)</span>，动手算一下就知道将 1010 和 1011 解释成 10 进制数或者是 2 进制等式都是成立的，因为他们的原理都一样：移位相加。</p>
-<p><strong>实现方案：</strong></p>
+<p><strong>实现方案</strong></p>
 <ol>
 <li>
 <p>最简单直接的思路：模仿人类手工计算过程，相与 -&gt; 移位 -&gt; 相加</p>
-<p>具体模块框图见原文。</p>
+<p>只有一个加法器和移位器，时分复用，具体模块框图见原文。</p>
 </li>
 <li>
 <p>更快速的实现方案：资源换速度，乘法器展开</p>
@@ -201,16 +201,20 @@
 </li>
 <li>
 <p>ALU 中的方案：</p>
-<p>使用前面提到的超前进位加法器 <code>carry save adders</code> 来构造乘法器，速度更快而且可以做成 pipeline 形式，提高吞吐率。</p>
+<p>使用前面提到的超前进位加法器 <code>carry save adders</code> 来构造乘法器，速度更快而且可以做成 pipeline 形式，提高吞吐率。最常见的实现方法是 booth-wallace + CLA 实现。</p>
 </li>
 </ol>
 <p><strong>Signed 处理</strong></p>
-<p>Q：如何处理 signed/unsigned？
-A：最简单的方法，先将 signed 转化为 unsigned，符号位单独处理（这个规则也适用于 signed 数据的其他运算）</p>
+<p>Q：如何处理 signed/unsigned？</p>
+<p>A：最简单的方法，先将 signed 转化为 unsigned，符号位单独处理（这个规则也适用于 signed 数据的其他运算）</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>乘法器的设计和优化也是 IC 设计中的一个经典话题，历经几十年的发展，从最原始的阵列乘法器发展到经典的 booth-wallace 乘法器，目前仍然有很多相关研究和论文，其中大部分都是基于 booth 乘法器的结构或追求性能、或追求面积、或追求功耗等。</p>
+</div>
 <h3 id="division">Division</h3>
 <p>比乘法的使用频率更底，也更诡异，可能会出现无效运算：除数为 0 的情况。</p>
 <div class="math">$$Dividend = Quotient * Divisor + Remainder$$</div>
-<p><strong>实现方案：</strong></p>
+<p><strong>实现方案</strong></p>
 <ol>
 <li>
 <p>最简单直接的思路：与乘法器同理，模仿人类手工计算过程，移位 -&gt; 相减</p>
@@ -233,8 +237,8 @@ A：最简单的方法，先将 signed 转化为 unsigned，符号位单独处�
 </li>
 </ol>
 <p><strong>Signed 处理</strong></p>
-<p>Q：如何处理 signed/unsigned？
-A：需要特别注意 signed 除法必须保证 <span class="math">\(-(x \div y)=(-x)\div y\)</span>，也即<strong>保证 dividend 和 remainder 的符号必须相同。</strong></p>
+<p>Q：如何处理 signed/unsigned？</p>
+<p>A：需要特别注意 signed 除法必须保证 <span class="math">\(-(x \div y)=(-x)\div y\)</span>，也即<strong>保证 dividend 和 remainder 的符号必须相同。</strong></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>RISC-V 除法指令会忽略 overflow，所以软件必须自己检测 quotient 是否发生了溢出；对于除 0 运算也是一样，软件必须自己检测。</p>
@@ -265,7 +269,7 @@ A：需要特别注意 signed 除法必须保证 <span class="math">\(-(x \div y
 <h3 id="ieee 754 floating point standard">IEEE 754 Floating Point Standard</h3>
 <p>1980 年之后的所有 PC 都遵守这个标准，754 对浮点数做了进一步的规定，对许多特殊数都有定义，比如正负无穷和 NaN 等，具体标准内容略。</p>
 <h3 id="arithmetic">Arithmetic</h3>
-<p><strong>加法：</strong></p>
+<p><strong>加法</strong></p>
 <p>和人类手工计算过程类似，</p>
 <ol>
 <li>首先对齐 exponent</li>
@@ -273,7 +277,7 @@ A：需要特别注意 signed 除法必须保证 <span class="math">\(-(x \div y
 <li>对结果进行 normalize</li>
 <li>对结果进行 round</li>
 </ol>
-<p><strong>乘法：</strong></p>
+<p><strong>乘法</strong></p>
 <ol>
 <li>指数部分相加</li>
 <li>尾数部分相乘</li>
@@ -283,17 +287,17 @@ A：需要特别注意 signed 除法必须保证 <span class="math">\(-(x \div y
 </ol>
 <h3 id="subword parallelism">Subword Parallelism</h3>
 <p>多媒体处理一般处理的数据要比 word 窄，而且这些数据的操作都是相同的，所以就出现了一种新技术：通过对进位链的分割，实现 word 内部的数据的并行计算，相比于收益来说这种分割的代价是非常小的。</p>
-<p>这种在一个 word 内部进行并行操作的技术叫做 <code>subword parallelism</code>，有时候也分到更加宏观的类别 <code>data parallelism</code> 中，这中技术有时候也叫做 <code>vector</code> 或者是 <code>SIMD</code>。</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>目前 RISC-V 的向量指令还处于 draft 阶段，但是显然向量指令在未来必不可少的。</p>
+<p>这种在一个 word 内部进行并行操作的技术叫做 <code>subword parallelism</code>，有时候也分到更加宏观的类别 <code>data parallelism</code> 中，这种技术有时候也叫做 <code>vector</code> 或者是 <code>SIMD</code>。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>目前 RISC-V 的向量指令还处于 draft 阶段，但是向量指令是现在的发展趋势，在未来必不可少。</p>
 </div>
 <h2 id="fallacies and pitfalls_1">Fallacies and Pitfalls</h2>
 <ul>
 <li><code>Fallacies</code> 谬论：错误概念</li>
 <li><code>Pitfalls</code> 陷阱：特定条件下成立的规律的错误推广</li>
 </ul>
-<p>计算的错误和谬论一般都是因为计算机的数据是有限位宽的，而自然数是无限的。</p>
+<p>计算的错误和谬论一般都是由 &ldquo; 计算机的数据是有限位宽的，而自然数是无限的 &rdquo; 这一矛盾产生。</p>
 <p><strong>谬论：就像左移指令可以代替 2 的指数次的乘法，右移指令可以代替除数是 2 的指数的除法运算。</strong></p>
 <p>对于 unsigned 类型来说的确如此，但是对于 signed 类型的数据则显然不对，负数右移后在高位补充符号位，最后会永远是 -1，不会变成 0。</p>
 <p><strong>陷阱：结合律不适用于浮点运算</strong></p>
@@ -304,6 +308,15 @@ A：需要特别注意 signed 除法必须保证 <span class="math">\(-(x \div y
 <p>上一条已经证明了结合律不适用于 float 类型，所以并行执行策略不一定适合 float 类型。所以写并行代码并且使用了浮点数的时候，程序猿要自己判断结果是不是可靠的，处理这个问题的领域叫做数值分析，关于这个问题本身就可以写一本书了。这也是 <code>LAPACK</code> 和 <code>SCALAPAK</code> 这类数学库流行的原因，它们的顺序执行和并行执行都已经被验证过是有效的。</p>
 <p><strong>谬论：只有理论数学家才关心 float 数的精度问题</strong></p>
 <p>一个经典故事，Intel 的 Pentium 系列处理器就出现过相关问题，为此付出了 5 亿美元召回有 bug 的芯片。</p>
+<h2 id="summary">Summary</h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<ul>
+<li>基本算术单元是 ALU 的核心组件</li>
+<li>加法器、乘法器、除法器、integer/float 的处理每个 topic 都是经典问题</li>
+<li>不同定位的处理器的性能差别的一个重要因素就是 ALU 中这些组件的实现方式和性能不同，这是个折中取舍的问题</li>
+</ul>
+</div>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -376,6 +389,9 @@ A：需要特别注意 signed 除法必须保证 <span class="math">\(-(x \div y
 
 
   <div class="neighbors">
+    <a class="btn float-left" href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html" title="Patterson and Hennessy 学习笔记 #2 —— Chapter 2 Instructions: Language of the Computer">
+      <i class="fa fa-angle-left"></i> Previous Post
+    </a>
   </div>
 
   <div class="related-posts">
@@ -386,8 +402,17 @@ A：需要特别注意 signed 除法必须保证 <span class="math">\(-(x \div y
     </ul>
   </div>
 
-      <p>This post is part <built-in method index of str object at 0x7fc488f6b580> of the "" series:</p>
+      <p>This post is part 3 of the "Patterson & Hennessy Notes" series:</p>
       <ol class="parts">
+              <li >
+                  <a href='https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_1_chapter_1.html'>Patterson and Hennessy 学习笔记 #1 —— Chapter 1 Computer Abstractions and Technology</a>
+              </li>
+              <li >
+                  <a href='https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html'>Patterson and Hennessy 学习笔记 #2 —— Chapter 2 Instructions: Language of the Computer</a>
+              </li>
+              <li class="active">
+                  <a href='https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_3_chapter_3.html'>Patterson and Hennessy 学习笔记 #3 —— Chapter 3 Arithmetic For Computers</a>
+              </li>
       </ol>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

@@ -280,8 +280,8 @@
 <li>可以通过条件编译的方式解决，但仍然需要注意很多细节</li>
 </ol>
 <h3 id="summary">summary</h3>
-<div class="admonition 本章小结">
-<p class="admonition-title">本章小结</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <ul>
 <li>不要在 $unit 中做任何声明，所有的声明都应该放在有名字的 package 中</li>
 <li>在必要时可以把 package 导入到 $unit 中（比如某些 module/interface 中包含了定义在 package 中的自定义类型）</li>
@@ -419,8 +419,8 @@
 <p>dynamic(run time) cast 动态转化（系统函数 $cast），是不可综合的</p>
 </li>
 </ul>
-<div class="admonition 本章小结">
-<p class="admonition-title">本章小结</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <ul>
 <li>声明只包含 data type（<code>logic</code>, <code>bit</code>），没有 type 时，默认推断出 varibale</li>
 <li>关键字 <code>var</code> 是可选的，并不会影响综合和仿真行为，只是增加代码可读性</li>
@@ -581,8 +581,8 @@
 </code></pre></div>
 </td></tr></table>
 <h3 id="summary_1">summary</h3>
-<div class="admonition 本章小结">
-<p class="admonition-title">本章小结</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <ul>
 <li>typedef 可以提高代码可读性，命名使用 <code>_t</code> 结尾</li>
 <li>enum 是 semi-strong type，可以提高设计的安全，import 时注意 label 的导入</li>
@@ -941,6 +941,11 @@
 <span class="k">endmodule</span>
 </code></pre></div>
 </td></tr></table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>SV 支持设计者自定义数据类型，在设计中某些信号（特别是端口信号）可能在不同模块中的含义是不一样的，所以需要支持数据类型动态变化，这是 union 存在的意义。举例：比如所有的 RV32I 的指令都是 32bit，但是可以分为不同的数据类型，那么可能在 IF 模块中指令信号是通用的 32bit 数据，而在 ID 模块中会变成各种类型的格式，这时候就可以把指令定义为 union 类型。</p>
+<p>Union 只是语言上的小技巧，实现既可以支持自定义类型，又支持类型自动转化的效果，本质是还是一组宽 bit 信号。</p>
+</div>
 <h3 id="array">array</h3>
 <p><strong>unpacked array</strong>：</p>
 <p>Verilog 中的 array 一次只能访问一个元素，或者是一个元素的一个切片，操作多个元素会报错。</p>
@@ -1292,8 +1297,8 @@
 <h3 id="dynamic arrays, associative arrays, sparse arrays, strings">dynamic arrays, associative arrays, sparse arrays, strings</h3>
 <p>这些都是不可综合的。</p>
 <h3 id="summary_2">summary</h3>
-<div class="admonition 本章小结">
-<p class="admonition-title">本章小结</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <ul>
 <li>unpacked/packed struct 都是可综合的</li>
 <li>struct 可以作为端口在 module、interface、task/function 之间连接</li>
@@ -1513,8 +1518,8 @@
 </li>
 </ul>
 <h3 id="summary_3">summary</h3>
-<div class="admonition 本章小结">
-<p class="admonition-title">本章小结</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <ul>
 <li><code>always_comb</code>, <code>always_latch</code>, <code>always_ff</code> 都是可综合的，用它们取代 <code>always</code> 增强设计</li>
 <li>用 void function 代替 tasks，提高设计的安全性</li>
@@ -2228,8 +2233,8 @@
 </code></pre></div>
 </td></tr></table>
 <h3 id="summary_5">summary</h3>
-<div class="admonition 本章小结">
-<p class="admonition-title">本章小结</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <ul>
 <li>必要时给 begin...end 后面加上 name，增强可读性</li>
 <li>nested module 和 `include 配合使用</li>
@@ -2648,8 +2653,8 @@
 <p>interface 可以像 module 一样使用 parameter，也可以使用 generate 语句，所以可以定义参数化的 interface，方便复用。
 （example 10-12）</p>
 <h3 id="summary_6">summary</h3>
-<div class="admonition 本章小结">
-<p class="admonition-title">本章小结</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <ul>
 <li>named interface port 和 generic interface ports 都是可综合的</li>
 <li>modport 的两种使用方式都是可综合的</li>

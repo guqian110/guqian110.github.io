@@ -1,5 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog - IC</title><link href="https://qiangu.cool/" rel="alternate"></link><link href="https://qiangu.cool/feeds/ic.atom.xml" rel="self"></link><id>https://qiangu.cool/</id><updated>2020-11-29T21:49:00+08:00</updated><subtitle>Read &gt;&gt; Think &gt;&gt; Write</subtitle><entry><title>Patterson and Hennessy 学习笔记 #2 —— Chapter 2 Instructions: Language of the Computer</title><link href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html" rel="alternate"></link><published>2020-11-29T21:49:00+08:00</published><updated>2020-11-29T21:49:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-11-29:/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html</id><summary type="html">&lt;p&gt;Patterson and Hennessy 读书笔记，第二章&lt;/p&gt;</summary><content type="html">&lt;blockquote&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Qian's Blog - IC</title><link href="https://qiangu.cool/" rel="alternate"></link><link href="https://qiangu.cool/feeds/ic.atom.xml" rel="self"></link><id>https://qiangu.cool/</id><updated>2020-12-13T12:55:00+08:00</updated><subtitle>Read &gt;&gt; Think &gt;&gt; Write</subtitle><entry><title>Patterson and Hennessy 学习笔记 #3 —— Chapter 3 Arithmetic For Computers</title><link href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_3_chapter_3.html" rel="alternate"></link><published>2020-12-13T12:55:00+08:00</published><updated>2020-12-13T12:55:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-12-13:/posts/ic/learning_patterson_and_hennessy_notes_3_chapter_3.html</id><summary type="html">&lt;p&gt;Patterson and Hennessy 读书笔记，第三章&lt;/p&gt;</summary><content type="html">&lt;blockquote&gt;
+&lt;p&gt;Numerical precision is the very soul of science.&lt;/p&gt;
+&lt;p&gt;-- Sir D'arcy Wentworth Thompson,On Grwth and Form, 1917&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="integer"&gt;Integer&lt;/h2&gt;
+&lt;h3 id="addition &amp;amp; subtraction"&gt;Addition &amp;amp; Subtraction&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;处理 overflow&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;因为寄存器位宽是有限的，所以会产生 overflow，一般计算机都提供了 overflow 检测。对于补码形式的 signed 类型数据检测方法很简单，根据操作数、结果的符号位以及操作类型分类讨论判断即可。而对于 unsigned 类型而言，一般这些数据都是用来计算内存地址，产生的 overflow 都被忽略了。编译器可以用 branch 指令来检测 unsigned 类型数据是否发生了 overflow：加法的结果是否比任何一个加数都小，或者减法的结果是否比任何一个减数都大。&lt;/p&gt;
+&lt;p&gt;检测出发生了 overflow 之后应该怎么办呢？C 和 Java 会忽略 integer 的 overflow，但是 Ada 和 Fortran 要求必须通知程序，所以程序猿或者是编程环境要决定发生 overflow 时该如何处理。&lt;/p&gt;
+&lt;p&gt;和 overflow 相对的有一种不常见的处理：饱和处理 saturation。这种操作一般都出现在多媒体的相关处理中，比如音量的最大限度等例子。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;实现方案&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;加法器的设计是一个非常经典的 IC 话题，它的速度取决于进位链的速度，有很多技术会预测进位 bit，其最坏的结果就是进位时间是 log2(W) 的函数（其中 W 是加法器的位宽）。这些预测信号的逻辑门更少所以速度更快，付出的代价就是消耗了更多的硬件资源来预测进位信号的正确值，最流行的结构就是超前进位加法器 &lt;code&gt;CLA&lt;/code&gt;(carry lookahead adder)。&lt;/p&gt;
+&lt;h3 id="multiplication"&gt;Multiplication&lt;/h3&gt;
+&lt;p&gt;&lt;span class="math"&gt;\(1010 * 1011 = 0110\_1110\)&lt;/span&gt;，动手算一下就知道将 1010 和 1011 解释成 10 进制数或者是 2 进制等式都是成立的，因为他们的原理都一样：移位相加。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;实现方案&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;最简单直接的思路：模仿人类手工计算过程，相与 -&amp;gt; 移位 -&amp;gt; 相加&lt;/p&gt;
+&lt;p&gt;只有一个加法器和移位器，时分复用，具体模块框图见原文。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;更快速的实现方案：资源换速度，乘法器展开&lt;/p&gt;
+&lt;p&gt;前面的方案只有一个硬件通过若干次重复计算后累加出结果，将这个过程展开（unroll）就可以得到一个更快的（latency 更小）方案：给乘数的每一 bit 都和被乘数相与，然后相邻 bit 的结果相加，显然宽度是 W 的乘法只需要 W 个加法器，latency 是 W 个加法器 latency 的总和。显然这个组合逻辑太大了时钟频率很可能上不去。继续优化的思路是：采用并行树的方式。latency 只有 &lt;span class="math"&gt;\(log2(W)\)&lt;/span&gt; 次加法，代价是消耗了更多的硬件资源。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ALU 中的方案：&lt;/p&gt;
+&lt;p&gt;使用前面提到的超前进位加法器 &lt;code&gt;carry save adders&lt;/code&gt; 来构造乘法器，速度更快而且可以做成 pipeline 形式，提高吞吐率。最常见的实现方法是 booth-wallace + CLA 实现。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Signed 处理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q：如何处理 signed/unsigned？&lt;/p&gt;
+&lt;p&gt;A：最简单的方法，先将 signed 转化为 unsigned，符号位单独处理（这个规则也适用于 signed 数据的其他运算）&lt;/p&gt;
+&lt;div class="admonition tip"&gt;
+&lt;p class="admonition-title"&gt;Tip&lt;/p&gt;
+&lt;p&gt;乘法器的设计和优化也是 IC 设计中的一个经典话题，历经几十年的发展，从最原始的阵列乘法器发展到经典的 booth-wallace 乘法器，目前仍然有很多相关研究和论文，其中大部分都是基于 booth 乘法器的结构或追求性能、或追求面积、或追求功耗等。&lt;/p&gt;
+&lt;/div&gt;
+&lt;h3 id="division"&gt;Division&lt;/h3&gt;
+&lt;p&gt;比乘法的使用频率更底，也更诡异，可能会出现无效运算：除数为 0 的情况。&lt;/p&gt;
+&lt;div class="math"&gt;$$Dividend = Quotient * Divisor + Remainder$$&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;实现方案&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;最简单直接的思路：与乘法器同理，模仿人类手工计算过程，移位 -&amp;gt; 相减&lt;/p&gt;
+&lt;p&gt;具体模块框图见原文。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;快速的除法器：&lt;code&gt;RST division&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;无法直接像乘法那样展开成多个加法器来加速，因为除法必须先算出前一次迭代结果的符号位之后才能开始下一次的迭代。加速除法的思路：每次迭代产生商的若干 bit，而不仅仅是 1bit。RST division 技术就是每次迭代的时候，基于 dividend 和 remainder 的高位 bit 来预测 quotient 的若干 bit，如果预测错了后面的步骤需要纠正这个错误。目前一般是每次预测 quotient 的 4bit 结果，这个算法的准确度取决于查找表中的是否有合适的数据。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;更快的除法器：&lt;code&gt;non-restoring division&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;前面两种都是 restoring 除法，每次迭代相减的结果是负数，需要将 divisor 恢复回去。不恢复的数学原理是：&lt;/p&gt;
+&lt;p&gt;
+&lt;div class="math"&gt;$$(r+d)*2-d=r*2+d*2-d=r*2+d$$&lt;/div&gt;
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;更更快的除法器：&lt;code&gt;non-performing division&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如果移位相减的结果是负数，则不保存减法的结果，平均减少 1/3 的算术操作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Signed 处理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Q：如何处理 signed/unsigned？&lt;/p&gt;
+&lt;p&gt;A：需要特别注意 signed 除法必须保证 &lt;span class="math"&gt;\(-(x \div y)=(-x)\div y\)&lt;/span&gt;，也即&lt;strong&gt;保证 dividend 和 remainder 的符号必须相同。&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="admonition note"&gt;
+&lt;p class="admonition-title"&gt;Note&lt;/p&gt;
+&lt;p&gt;RISC-V 除法指令会忽略 overflow，所以软件必须自己检测 quotient 是否发生了溢出；对于除 0 运算也是一样，软件必须自己检测。&lt;/p&gt;
+&lt;/div&gt;
+&lt;h2 id="float point_1"&gt;Float Point&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;科学计数法：小数点左边只有 1 位整数的表示方法&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;normalized number&lt;/code&gt;：没有 leading 0s&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于二进制浮点数，标准格式是：&lt;/p&gt;
+&lt;div class="math"&gt;$$1.xxxxx\ast2^{yyyy}$$&lt;/div&gt;
+&lt;p&gt;因为 word 的位宽是固定的，所以浮点数必须在 fraction 和 exponent 之间做折中，也就是精度和范围之间的取舍，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;增加 fraction 的 bit 位数可以提高精度但是会减小表示的范围&lt;/li&gt;
+&lt;li&gt;增加 exponent 的 bit 位数可以扩大表示范围，但是会降低表示精度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如 chapter 2 所述，&lt;strong&gt;一个好的设计需要有合理的折中。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;float 数的表示方法实际上就是 sign-and-magnitude 方式，1bit 符号 + E bit 指数 + F bit 尾数，表示的数据大小为，&lt;/p&gt;
+&lt;div class="math"&gt;$$(-1)^S * F * 2^E$$&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;处理 overflow&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;float 同理也会有 overflow 和 underflow，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;overflow：正的指数太大无法完整保存在 exponent 字段&lt;/li&gt;
+&lt;li&gt;underflow：负的指数太大无法完整保存在 exponent 字段&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;解决 overflow/underflow 的方法很简单粗暴，增加 bit 即可：即 double 数据类型。&lt;/p&gt;
+&lt;p&gt;如果发生了 overflow/underflow 应该怎么通知用户呢？一些计算机会发出 exception 或者是 interrupts，然后由异常 / 中断处理程序来完成后续工作。但是 RISC-V 不会发出 exception 和 interrupt，而是要求软件查询 &lt;code&gt;floating-point control and status register (fcsr)&lt;/code&gt; 这个寄存器来判断是否发生了 overflow/underflow。&lt;/p&gt;
+&lt;h3 id="ieee 754 floating point standard"&gt;IEEE 754 Floating Point Standard&lt;/h3&gt;
+&lt;p&gt;1980 年之后的所有 PC 都遵守这个标准，754 对浮点数做了进一步的规定，对许多特殊数都有定义，比如正负无穷和 NaN 等，具体标准内容略。&lt;/p&gt;
+&lt;h3 id="arithmetic"&gt;Arithmetic&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;加法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;和人类手工计算过程类似，&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;首先对齐 exponent&lt;/li&gt;
+&lt;li&gt;然后计算 fraction&lt;/li&gt;
+&lt;li&gt;对结果进行 normalize&lt;/li&gt;
+&lt;li&gt;对结果进行 round&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;乘法&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;指数部分相加&lt;/li&gt;
+&lt;li&gt;尾数部分相乘&lt;/li&gt;
+&lt;li&gt;normalize 乘积&lt;/li&gt;
+&lt;li&gt;round 乘积&lt;/li&gt;
+&lt;li&gt;设置符号位&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="subword parallelism"&gt;Subword Parallelism&lt;/h3&gt;
+&lt;p&gt;多媒体处理一般处理的数据要比 word 窄，而且这些数据的操作都是相同的，所以就出现了一种新技术：通过对进位链的分割，实现 word 内部的数据的并行计算，相比于收益来说这种分割的代价是非常小的。&lt;/p&gt;
+&lt;p&gt;这种在一个 word 内部进行并行操作的技术叫做 &lt;code&gt;subword parallelism&lt;/code&gt;，有时候也分到更加宏观的类别 &lt;code&gt;data parallelism&lt;/code&gt; 中，这种技术有时候也叫做 &lt;code&gt;vector&lt;/code&gt; 或者是 &lt;code&gt;SIMD&lt;/code&gt;。&lt;/p&gt;
+&lt;div class="admonition tip"&gt;
+&lt;p class="admonition-title"&gt;Tip&lt;/p&gt;
+&lt;p&gt;目前 RISC-V 的向量指令还处于 draft 阶段，但是向量指令是现在的发展趋势，在未来必不可少。&lt;/p&gt;
+&lt;/div&gt;
+&lt;h2 id="fallacies and pitfalls_1"&gt;Fallacies and Pitfalls&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Fallacies&lt;/code&gt; 谬论：错误概念&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Pitfalls&lt;/code&gt; 陷阱：特定条件下成立的规律的错误推广&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;计算的错误和谬论一般都是由 &amp;ldquo; 计算机的数据是有限位宽的，而自然数是无限的 &amp;rdquo; 这一矛盾产生。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;谬论：就像左移指令可以代替 2 的指数次的乘法，右移指令可以代替除数是 2 的指数的除法运算。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于 unsigned 类型来说的确如此，但是对于 signed 类型的数据则显然不对，负数右移后在高位补充符号位，最后会永远是 -1，不会变成 0。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;陷阱：结合律不适用于浮点运算&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于 integer 的运算，即使会发生 overflow 结合律也是适用的。但是对于浮点数，结合律是不适用的，因为计算机内的浮点数是用有限的 bit 来近似真实的数字，无法保存 overflow 的数字。这里有意思的是，对于定点的整数而言即使发生了 overflow 结合律仍然是适用的，找个例子就可以验证下面的等式是成立的，&lt;/p&gt;
+&lt;div class="math"&gt;$$-128+127+3 = -128+(127+3) = -128+(-126)=2$$&lt;/div&gt;
+&lt;p&gt;原因也很简单：整数运算 overflow 只会影响高位 bit，低位 bit 是不受影响的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;谬论：并行执行策略不仅适用于 integer 类型，也适用于 float 类型&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;上一条已经证明了结合律不适用于 float 类型，所以并行执行策略不一定适合 float 类型。所以写并行代码并且使用了浮点数的时候，程序猿要自己判断结果是不是可靠的，处理这个问题的领域叫做数值分析，关于这个问题本身就可以写一本书了。这也是 &lt;code&gt;LAPACK&lt;/code&gt; 和 &lt;code&gt;SCALAPAK&lt;/code&gt; 这类数学库流行的原因，它们的顺序执行和并行执行都已经被验证过是有效的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;谬论：只有理论数学家才关心 float 数的精度问题&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一个经典故事，Intel 的 Pentium 系列处理器就出现过相关问题，为此付出了 5 亿美元召回有 bug 的芯片。&lt;/p&gt;
+&lt;h2 id="summary"&gt;Summary&lt;/h2&gt;
+&lt;div class="admonition important"&gt;
+&lt;p class="admonition-title"&gt;Important&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;基本算术单元是 ALU 的核心组件&lt;/li&gt;
+&lt;li&gt;加法器、乘法器、除法器、integer/float 的处理每个 topic 都是经典问题&lt;/li&gt;
+&lt;li&gt;不同定位的处理器的性能差别的一个重要因素就是 ALU 中这些组件的实现方式和性能不同，这是个折中取舍的问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'blue ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</content><category term="IC"></category><category term="Patterson and Hennessy"></category></entry><entry><title>Patterson and Hennessy 学习笔记 #2 —— Chapter 2 Instructions: Language of the Computer</title><link href="https://qiangu.cool/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html" rel="alternate"></link><published>2020-11-29T21:49:00+08:00</published><updated>2020-11-29T21:49:00+08:00</updated><author><name>Qian Gu</name></author><id>tag:qiangu.cool,2020-11-29:/posts/ic/learning_patterson_and_hennessy_notes_2_chapter_2.html</id><summary type="html">&lt;p&gt;Patterson and Hennessy 读书笔记，第二章&lt;/p&gt;</summary><content type="html">&lt;blockquote&gt;
 &lt;p&gt;I speak Spanish to God, Italian to women, French to men, and German to my horse.&lt;/p&gt;
 &lt;p&gt;-- Charles V, Holy Roman Emperor&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -168,7 +371,7 @@ handling of those problems.&lt;/p&gt;
 &lt;li&gt;&lt;a href="https://www.amazon.com/Computer-Organization-Design-RISC-V-Architecture/dp/0128122757"&gt;Computer Organization and Design&lt;/a&gt; 俗称 Patterson and Hennessy&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.amazon.com/Computer-Architecture-Quantitative-Approach-Kaufmann/dp/0128119055/"&gt;Computer Architecture: A Quantitative Approach&lt;/a&gt; 俗称 Hennessy and Patterson&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;关于这两位大师和这两本计算机体系结构领域的圣经无需再赘述，这个系列是整理自以前的读书笔记，更新了一些 RISC-V 的相关内容，温故而知新。&lt;/p&gt;
+&lt;p&gt;这个系列是整理自以前的读书笔记，更新了一些 RISC-V 的相关内容，温故而知新。&lt;/p&gt;
 &lt;p&gt;这两本书有共同内容但是因为定位不同，所以内容也相互补充。&lt;a href="https://www.amazon.com/Computer-Architecture-Quantitative-Approach-Kaufmann/dp/0128119055/"&gt;Computer Architecture: A Quantitative Approach&lt;/a&gt; 这本书是针对专业人士的，&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;用坚实的工程基础和量化的 cost/performance 折中分析方法来描述计算机体系结构中的主要原则&lt;/li&gt;
@@ -176,7 +379,7 @@ handling of those problems.&lt;/p&gt;
 &lt;li&gt;证明体系结构可以通过量化而不是描述性的方式学习&lt;/li&gt;
 &lt;li&gt;目标读者是严肃的，想仔细理解计算机系统的专家&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;而 Patterson &amp;amp; Hennessy 这本书的读者并不是都想成为计算机体系结构的专家。这本书并不是前者的子集，还包括了一些其他知识，比如编译器、操作系统、数据库等等。作者的观点是：&lt;strong&gt;对于下一个十年内的大部分码农来说，如果想写出可以在并行计算机上高效运行的程序，则必须理解软硬件接口。&lt;/strong&gt;这本书的读者包括，&lt;/p&gt;
+&lt;p&gt;而 Patterson &amp;amp; Hennessy 这本书的读者并不都是想成为计算机体系结构的专家。这本书并不是前者的子集，还包括了一些其他知识，比如编译器、操作系统、数据库等等。作者的观点是：&lt;strong&gt;对于下一个十年内的大部分码农来说，如果想写出可以在并行计算机上高效运行的程序，则必须理解软硬件接口。&lt;/strong&gt;这本书的读者包括，&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;几乎没有汇编 / 逻辑设计基础，但是需要理解基本的计算机组成原理&lt;/li&gt;
 &lt;li&gt;有汇编 / 逻辑设计基础，但是想了解如何设计一个计算机，或者想理解一个系统是如何工作以及为何性能如此&lt;/li&gt;
@@ -463,6 +666,18 @@ handling of those problems.&lt;/p&gt;
 &lt;p&gt;可以算出来 A 比 B 的 MIPS 指标高，但实际上 A 的性能比 B 差，MIPS 指标和真实情况背道而驰。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2 id="summary"&gt;Summary&lt;/h2&gt;
+&lt;div class="admonition important"&gt;
+&lt;p class="admonition-title"&gt;Important&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;8 个伟大思想是计算机体系结构的基本，应用非常广泛&lt;/li&gt;
+&lt;li&gt;计算机程序的性能是多个影响因素的共同作用结果&lt;/li&gt;
+&lt;li&gt;性能的定义：&lt;code&gt;response time&lt;/code&gt; 和 &lt;code&gt;throughput&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;经典性能公式&lt;/li&gt;
+&lt;li&gt;目前的问题：功耗墙&lt;/li&gt;
+&lt;li&gt;功耗墙的解决方法：多核 + 并行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
 &lt;hr/&gt;
 &lt;h2 id="road map for this book"&gt;Road Map for This Book&lt;/h2&gt;
 &lt;p&gt;计算机可以划分为经典的 5 部分：&lt;code&gt;datapath&lt;/code&gt;, &lt;code&gt;control&lt;/code&gt;, &lt;code&gt;memroy&lt;/code&gt;, &lt;code&gt;input&lt;/code&gt;, &lt;code&gt;output&lt;/code&gt;，分别在后续几章介绍：&lt;/p&gt;

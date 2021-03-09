@@ -62,17 +62,26 @@
     <!-- Microsoft EDGE -->
     <meta name="msapplication-TileColor" content="#333333">
 
-    <meta name="author" content="Qian Gu" />
-    <meta name="description" content="Qian's Thoughts and Writings" />
+<meta name="author" content="Qian Gu" />
+<meta name="description" content="总结 Cache 细节" />
+<meta name="keywords" content="CPU, Cache">
+
+
 <meta property="og:site_name" content="Qian's Blog"/>
-<meta property="og:type" content="blog"/>
-<meta property="og:title" content="Qian's Blog"/>
-<meta property="og:description" content="Qian's Thoughts and Writings"/>
+<meta property="og:title" content="CPU 关键技术 —— Cache"/>
+<meta property="og:description" content="总结 Cache 细节"/>
 <meta property="og:locale" content="en"/>
-<meta property="og:url" content="https://qiangu.cool"/>
+<meta property="og:url" content="https://qiangu.cool/drafts/cpu_cache.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2021-01-13 19:21:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://qiangu.cool/author/qian-gu.html">
+<meta property="article:section" content="IC"/>
+<meta property="article:tag" content="CPU"/>
+<meta property="article:tag" content="Cache"/>
 <meta property="og:image" content="/images/logo.png">
 
-  <title>Qian's Blog</title>
+  <title>Qian's Blog &ndash; CPU 关键技术 —— Cache</title>
 
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
@@ -151,231 +160,71 @@
 
     </nav>
 
-
-
-<article>
+<article class="single">
   <header>
-    <h2><a href="https://qiangu.cool/posts/ic/pulse_edge_detection.html#pulse_edge_detection">脉冲边沿检测</a></h2>
+      
+    <h1 id="cpu_cache">CPU 关键技术 —— Cache</h1>
     <p>
-      Posted on 2014-04-08 18:33 in <a href="https://qiangu.cool/category/ic.html">IC</a>
+      Posted on 2021-01-13 19:21 in <a href="https://qiangu.cool/category/ic.html">IC</a>
 
-          &#8226; Tagged with
-              <a href="https://qiangu.cool/tag/pulse-edge-detection.html">pulse edge detection</a>
     </p>
   </header>
-  <div>
-        <img src="/images/learning-fpga-pulse-edge-detection/pulse.jpg">
-      <p>总结 FPGA 中的脉冲边沿检测方法</p>
-        <br>
-        <a class="btn"
-           href="https://qiangu.cool/posts/ic/pulse_edge_detection.html#pulse_edge_detection">
-          Continue reading
-        </a>
+
+
+  <div class="col-lg-3 hidden-xs hidden-sm">
+        <div id="toc"><ul><li><a class="toc-href" href="#" title="CPU 关键技术 &mdash;&mdash; Cache">CPU 关键技术 &mdash;&mdash; Cache</a><ul><li><a class="toc-href" href="#block size" title="block size">block size</a></li></ul></li></ul></div>
   </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="https://qiangu.cool/posts/ic/learning_fpga_how_to.html#learning_fpga_how_to">(转载) 如何学习 FPGA</a></h2>
+
+  <div>
+    <h4 id="block size">block size</h4>
+<p>较大的 block 的可以更好地利用空间局部性，所以可以降低 miss rate，但是当 block 和 cache 容量的比例大到一定程度时，因为 block 的数量变得很少，此时会有大量的冲突，数据在被再次访问前就已经被替换出去了，而且太大的 block 内部数据的空间局部性也会降低，所以导致 miss rate 反而上升。</p>
+<p>随着 block 的增大，miss rate 的改善逐渐降低，但是在不改变 memory 系统的前提下，miss penalty 会随着 block 的增大而增大，所以当 miss penalty 超过了 miss rate 的收益，cache 的性能就会变低。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>较大 block 会导致较长的传输时间，虽然这部分时间很难优化，但是我们可以隐藏一些数据传输的时间，从而降低 miss penalty。实现这个效果的最简单的技术叫做 <code>early restart</code>：一旦接受到需要的 word 就立即就开始执行，而不是等到整个 block 都返回后才开始执行。许多处理器都在 I-cache 上使用这个技术，而且效果甚佳，这是因为大部分指令访问都具有连续性。这个技术对于 D-cache 来说效果就没那么好了，因为数据访问的预测性没那么好，在传输结束前请求另外一个 block 中 word 的概率很高，而此时前一次请求的数据传输还没有结束，所以仍然会导致处理器 stall。</p>
+<p>还有一种更加复杂的机制叫做 <code>requested word first</code> 或者是 <code>critical word first</code>，这种方案会重新组织 memory 的结构，使得被请求的 word 优先返回，然后按照顺序返回后续数据，最后反卷到 block 的开头部分。这种方法比 early restart 稍微 ie 快一点，但是会受到相同的限制。</p>
+</div>
+  </div>
+
+  <div class="tag-cloud">
     <p>
-      Posted on 2014-04-07 16:16 in <a href="https://qiangu.cool/category/ic.html">IC</a>
-
-          &#8226; Tagged with
-              <a href="https://qiangu.cool/tag/fpga.html">FPGA</a>
+      <a href="https://qiangu.cool/tag/cpu.html">CPU</a>
+      <a href="https://qiangu.cool/tag/cache.html">Cache</a>
     </p>
-  </header>
-  <div>
-      <p>转载一篇初学 FPGA 时看到的文章，感觉对于初学者来说还不错~</p>
-        <br>
-        <a class="btn"
-           href="https://qiangu.cool/posts/ic/learning_fpga_how_to.html#learning_fpga_how_to">
-          Continue reading
-        </a>
   </div>
-  <hr />
+
+
+  <div class="neighbors">
+  </div>
+
+
+      <p>This post is part <built-in method index of str object at 0x7f92a3df2510> of the "" series:</p>
+      <ol class="parts">
+      </ol>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle ads-responsive"
+         data-ad-client="ca-pub-1821536199377100"
+         data-ad-slot="4843941849"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'ChienGu';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+    Please enable JavaScript to view comments.
+</noscript>
+<!-- End Disqus -->
 </article>
-<article>
-  <header>
-    <h2><a href="https://qiangu.cool/posts/tools/learning_linux_ssh.html#learning_linux_ssh">学习 Linux SSH</a></h2>
-    <p>
-      Posted on 2014-04-04 17:00 in <a href="https://qiangu.cool/category/tools.html">Tools</a>
-
-          &#8226; Tagged with
-              <a href="https://qiangu.cool/tag/ssh.html">SSH</a>
-    </p>
-  </header>
-  <div>
-        <img src="/images/learning-linux-ssh/login1.png">
-      <p>学习 SSH、SCP 命令，建立两台电脑相互访问 。</p>
-        <br>
-        <a class="btn"
-           href="https://qiangu.cool/posts/tools/learning_linux_ssh.html#learning_linux_ssh">
-          Continue reading
-        </a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="https://qiangu.cool/posts/ic/writing_synthesizable_code.html#writing_synthesizable_code">编写可综合的 Verilog HDL 代码</a></h2>
-    <p>
-      Posted on 2014-04-04 01:35 in <a href="https://qiangu.cool/category/ic.html">IC</a>
-
-          &#8226; Tagged with
-              <a href="https://qiangu.cool/tag/verilog.html">Verilog</a>,              <a href="https://qiangu.cool/tag/synthesis.html">synthesis</a>
-    </p>
-  </header>
-  <div>
-      <p>总结可综合 Verilog HDL 代码，如何编写可综合的代码</p>
-        <br>
-        <a class="btn"
-           href="https://qiangu.cool/posts/ic/writing_synthesizable_code.html#writing_synthesizable_code">
-          Continue reading
-        </a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="https://qiangu.cool/posts/ic/learning_fpga_getting_started.html#learning_fpga_getting_started">学习 FPGA 入门</a></h2>
-    <p>
-      Posted on 2014-04-03 12:40 in <a href="https://qiangu.cool/category/ic.html">IC</a>
-
-          &#8226; Tagged with
-              <a href="https://qiangu.cool/tag/fpga.html">FPGA</a>
-    </p>
-  </header>
-  <div>
-        <img src="/images/learning-fpga-getting-started/design-flow.jpg">
-      <p>总结 FPGA 的学习经历，温故而知新。</p>
-        <br>
-        <a class="btn"
-           href="https://qiangu.cool/posts/ic/learning_fpga_getting_started.html#learning_fpga_getting_started">
-          Continue reading
-        </a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="https://qiangu.cool/posts/cs/built_in_types.html#built_in_types">C/C++ 内置数据类型</a></h2>
-    <p>
-      Posted on 2014-03-31 13:37 in <a href="https://qiangu.cool/category/cs.html">CS</a>
-
-          &#8226; Tagged with
-              <a href="https://qiangu.cool/tag/c.html">C++</a>,              <a href="https://qiangu.cool/tag/data-type.html">data type</a>
-    </p>
-  </header>
-  <div>
-        <img src="/images/built-in-types/size.png">
-      <p>重读经典 C++ Primer，总结 C++ 内置数据类型。</p>
-        <br>
-        <a class="btn"
-           href="https://qiangu.cool/posts/cs/built_in_types.html#built_in_types">
-          Continue reading
-        </a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="https://qiangu.cool/posts/tools/install_ise_modelsim_on_ubuntu.html#install_ise_modelsim_on_ubuntu">Ubuntu 下安装 ISE & Modelsim</a></h2>
-    <p>
-      Posted on 2014-03-27 20:52 in <a href="https://qiangu.cool/category/tools.html">Tools</a>
-
-          &#8226; Tagged with
-              <a href="https://qiangu.cool/tag/linux.html">Linux</a>,              <a href="https://qiangu.cool/tag/ise.html">ISE</a>,              <a href="https://qiangu.cool/tag/modelsim.html">Modelsim</a>
-    </p>
-  </header>
-  <div>
-        <img src="/images/install-ise-modelsim/ise_start.png">
-      <p>从 Windows 平台转移到 Linux，于是把 FPGA 的开发平台也搬过来，总结一下 ISE 的安装配置过程。</p>
-        <br>
-        <a class="btn"
-           href="https://qiangu.cool/posts/tools/install_ise_modelsim_on_ubuntu.html#install_ise_modelsim_on_ubuntu">
-          Continue reading
-        </a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="https://qiangu.cool/posts/tools/learning_vim_survival.html#learning_vim_survival">学习 Vim 存活</a></h2>
-    <p>
-      Posted on 2014-03-25 21:23 in <a href="https://qiangu.cool/category/tools.html">Tools</a>
-
-          &#8226; Tagged with
-              <a href="https://qiangu.cool/tag/linux.html">Linux</a>,              <a href="https://qiangu.cool/tag/vim.html">Vim</a>
-    </p>
-  </header>
-  <div>
-        <img src="/images/learning-vim-survival/Terminal_ADM3A.png">
-      <p>这个系列的博客是我学习 Vim 过程中的记录和总结，希望可以帮助到和我一样的菜鸟～ 第一篇：入门/存活 Survival</p>
-        <br>
-        <a class="btn"
-           href="https://qiangu.cool/posts/tools/learning_vim_survival.html#learning_vim_survival">
-          Continue reading
-        </a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="https://qiangu.cool/posts/book/code_review.html#code_review">Code 书评</a></h2>
-    <p>
-      Posted on 2014-03-21 16:33 in <a href="https://qiangu.cool/category/book.html">Book</a>
-
-          &#8226; Tagged with
-              <a href="https://qiangu.cool/tag/code.html">Code</a>,              <a href="https://qiangu.cool/tag/review.html">review</a>
-    </p>
-  </header>
-  <div>
-      <p>最近花了一个星期的时间，终于把 Code 看完了，感慨颇深。</p>
-        <br>
-        <a class="btn"
-           href="https://qiangu.cool/posts/book/code_review.html#code_review">
-          Continue reading
-        </a>
-  </div>
-  <hr />
-</article>
-<article>
-  <header>
-    <h2><a href="https://qiangu.cool/posts/cs/signed_number_representations.html#signed_number_representations">原码、反码、补码</a></h2>
-    <p>
-      Posted on 2014-03-19 14:31 in <a href="https://qiangu.cool/category/cs.html">CS</a>
-
-          &#8226; Tagged with
-              <a href="https://qiangu.cool/tag/code.html">Code</a>
-    </p>
-  </header>
-  <div>
-      <p>最近找到一本好书——《编码: 隐匿在计算机软硬件背后的语言》 。作者是大名鼎鼎的 Charles Petzold 。看到用继电器搭建加法器、减法器，讨论二进制编码方式那章，想起一直不是很清楚的原码、反码、补码等，果断 Google、Wiki，于是总结出下文 。</p>
-        <br>
-        <a class="btn"
-           href="https://qiangu.cool/posts/cs/signed_number_representations.html#signed_number_representations">
-          Continue reading
-        </a>
-  </div>
-</article>
-
-  <div class="pagination">
-    <a class="btn float-left" href="https://qiangu.cool/index10.html">
-      <i class="fa fa-angle-left"></i> Older Posts
-    </a>
-    <a class="btn float-right" href="https://qiangu.cool/index8.html">
-      Newer Posts <i class="fa fa-angle-right"></i>
-    </a>
-  </div>
-
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <ins class="adsbygoogle ads-responsive"
-       data-ad-client="ca-pub-1821536199377100"
-       data-ad-slot="1124188687"></ins>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
 
     <footer>
 <p>

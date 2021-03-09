@@ -203,17 +203,18 @@
 </tr>
 </tbody>
 </table>
-<p>产生数据冒险的根本原因就是因为寄存器数量太少了（RV32I 只有 32 个通用寄存器），前后指令流要复用同一个寄存器。假设有无数个寄存器可用，那么自然就不存在数据冒险的问题。根据读写关系数据冒险可以分为 3 种：</p>
+<p>根据读写关系数据冒险可以分为 3 种：</p>
 <ul>
 <li><code>RAW</code> (Read-After-Write)：读源操作数的时间不能太早，要等数据准备好再读，避免读到无效数据</li>
 <li><code>WAW</code> (Write-After-Write)：写回执行结果的时间不能太早，要等到前序指令把旧值写入后再写入新值，避免被旧值覆盖</li>
 <li><code>WAR</code> (Write-After-Read)：写回执行结果的时间不能太早，要等到前序指令把旧值读走后再写入新值，避免覆盖仍然有用的旧值</li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<p>产生 WAW 和 WAR 的根本原因就是因为寄存器数量太少了（RV32I 只有 32 个通用寄存器），前后指令流要复用同一个寄存器。假设有无数个寄存器可用，那么自然就不存在数据冒险的问题。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <ol>
 <li>数据冒险不包含 RAR(Read-After-Read) 的原因很简单：RAR 对结果的正确性没有任何影响</li>
-<li>这三种数据冒险中，RAW 被成为 &ldquo; 真数据冒险 &rdquo;，因为另外两种冒险实际上并不是真正的数据依赖，而是 &ldquo; 名字相关 &rdquo;，即只是因为使用同一个寄存器名而导致的相关性</li>
+<li>这三种数据冒险中，RAW 被称为 &ldquo; 真数据冒险 &rdquo;，因为另外两种冒险实际上并不是真正的数据依赖，而是 &ldquo; 名字相关 &rdquo;，即只是因为使用同一个寄存器名而导致的相关性</li>
 <li>WAW 和 WAR 可以通过<strong>寄存器重命名</strong>技术进行规避，而 RAW 是无法规避的，只能进行流水线停顿。为了减少停顿，一般通过动态调度降低性能损失：<ul>
 <li>数据旁路 Data Bypass Forward：把前序的结果尽可能早地传递给后续需要用它的指令，减少等待时间</li>
 <li>执行后续无关指令，直接消灭等待</li>
@@ -353,7 +354,7 @@ function write_back(FU)
 </code></pre></div>
 </td></tr></table>
 <h2 id="other techniques_1">Other Techniques</h2>
-<p>如果当前指令用到的功能单元处于 busy 状态，Scoreboard 会暂停 issue stage，此时即使有空闲的功能单元也无法执行后续指令，必须要等到解决当前指令的结构冒险。也就是说 scoreboard 只能检查数据冒险，但是无法消除。下面这个例子中，因为前面的 fadd.d 依赖于 fdiv.d，而 fdiv.d 执行时间较长，所以会出现流水线暂停，导致和前序指令之间没有任何数据冒险的 fsub.d 也会被阻塞住。</p>
+<p>一般来说 scoreboard 都是顺序发射，如果当前指令用到的功能单元处于 busy 状态，Scoreboard 会暂停 issue stage，此时即使有空闲的功能单元也无法执行后续指令，必须要等到解决当前指令的结构冒险。也就是说 scoreboard 只能检查数据冒险，但是无法消除。下面这个例子中，因为前面的 fadd.d 依赖于 fdiv.d，而 fdiv.d 执行时间较长，所以会出现流水线暂停，导致和前序指令之间没有任何数据冒险的 fsub.d 也会被阻塞住。</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -381,7 +382,7 @@ function write_back(FU)
   </div>
 
 
-      <p>This post is part <built-in method index of str object at 0x7fc48b81ec90> of the "" series:</p>
+      <p>This post is part <built-in method index of str object at 0x7f92a2989270> of the "" series:</p>
       <ol class="parts">
       </ol>
 
