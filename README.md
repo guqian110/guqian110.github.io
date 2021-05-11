@@ -1,3 +1,3 @@
-# guqian110.github.io
+# qian-gu.github.io
 
-Personal Blog, link to [https://.qiangu.cool](https://.qiangu.cool)
+Personal Blog
